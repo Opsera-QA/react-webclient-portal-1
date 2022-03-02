@@ -5,7 +5,6 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import InsightsCardContainerBase from "components/common/card_containers/InsightsCardContainerBase";
 import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
@@ -13,6 +12,7 @@ import SonarBugsMetricScorecardMetaData from "components/insights/charts/sonar/t
 import SonarCodeSmellsMetricScorecardMetaData from "components/insights/charts/sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecardMetaData";
 import InsightHighlightFieldWithTrendIcon from "components/common/fields/text/InsightHighlightFieldWithTrendIcon";
 import SonarViewActionableInsightsButton from "components/insights/charts/sonar/card/SonarViewActionableInsightsButton";
+import IconBase from "components/common/icons/IconBase";
 
 function SonarSummaryCard({ sonarData, loadData, type }) {
   
@@ -41,7 +41,7 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{sonarMetricScorecardDto.getData("projectName")}</div>        
+        <div><IconBase icon={faFileCode} className={"mr-1"}/>{sonarMetricScorecardDto.getData("projectName")}</div>
         <div><SonarViewActionableInsightsButton dataObject={sonarMetricScorecardDto} /></div>
       </div>
     );

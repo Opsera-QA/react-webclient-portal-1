@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
   const toastContext = useContext(DialogToastContext);
@@ -68,7 +68,7 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
     if (!isLoading && (repositories == null || repositories.length === 0 && argoToolId !== "")) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           No configured Argo repositories availalble for this tool.
         </div>
       );

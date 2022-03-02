@@ -12,7 +12,6 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import {
   METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
@@ -21,6 +20,7 @@ import {
 import ServiceNowTotalIncidentsDataBlock from "../../data_blocks/ServiceNowTotalIncidentsDataBlock";
 import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/ServiceNowTotalResolvedIncidentsDatBlock";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import IconBase from "components/common/icons/IconBase";
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -144,13 +144,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
               <Col xl={9} lg={9} md={8} className={"my-2 p-0 d-flex flex-column align-items-end"}>
                 <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
-                  Average MTTR <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
+                  Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
                   <br></br>
                   Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
-                  <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+                  <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
                   <br></br>
                   MTTR{" "}
-                  <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+                  <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
                 <ResponsiveBar
                   data={metrics}

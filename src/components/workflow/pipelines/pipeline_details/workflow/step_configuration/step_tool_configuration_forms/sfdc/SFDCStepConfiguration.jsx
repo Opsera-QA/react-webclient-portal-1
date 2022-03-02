@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../../common/status_notifications/error";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
 } from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 const SERVICE_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -369,7 +369,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           <Form.Label>Select Registered Tool*</Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              <LoadingIcon className={"text-muted mr-1"}/>
             Loading Jenkins accounts from registry</div>
           ) :(
             <>
@@ -389,7 +389,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
                 </div>
               </> : <>
                 <div className="form-text text-muted p-2">
-                  <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+                  <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
               No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.  Please go to 
                   <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
               </> }
@@ -400,7 +400,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
 
         {(!formData.toolConfigId && formData.jenkinsUrl) &&
         <div className="form-text text-muted mb-3">
-          <FontAwesomeIcon icon={faExclamationTriangle} className="mr-1 yellow" fixedWidth/> 
+          <IconBase icon={faExclamationTriangle} className={"mr-1 yellow"}/>
               Unregistered Tool settings in use.  The settings below can be used in this step, but cannot be updated.  You must register 
               a new Jenkins server in the 
           <Link to="/inventory/tools"> Tool Registry</Link> and add its configuration details. </div>}
@@ -428,7 +428,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           <Form.Label>Select Account*</Form.Label>
           {isAccountSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              <LoadingIcon className={"text-muted mr-1"}/>
               Loading accounts from registry</div>
           ) :(
             <>
@@ -443,7 +443,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
                 /> : 
                 <>
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth/> 
+                    <IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
                 No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.  Please go to 
                     <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to proceed. </div>
                 </> }
@@ -470,7 +470,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           <Form.Label>Select Repository*</Form.Label>
           {isRepoSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> 
+              <LoadingIcon className={"text-muted mr-1"}/>
               Loading repositories from registry</div>
           ) :(
             <>
@@ -482,7 +482,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
                   textField='name'
                   defaultValue={formData.repository ? repoList[repoList.findIndex(x => x.name === formData.repository)] : repoList[0]}
                   setDataFunction={handleRepoChange}
-                /> : <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth/> }
+                /> : <LoadingIcon className={"text-muted mr-1"}/> }
             </>
           )}
           {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
@@ -519,8 +519,8 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
         <Button variant="primary" type="button"  className="mt-3"
           onClick={() => { callbackFunction(); }}> 
           {loading ? 
-            <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-            <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
+            <><LoadingIcon className={"mr-1"}/> Saving</> :
+            <><IconBase icon={faSave} className={"mr-1"}/> Save</> }
         </Button>
       
         <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

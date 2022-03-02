@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,10 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import axios from "axios";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
+import IconBase from "components/common/icons/IconBase";
 
 function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -100,7 +99,7 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
       <div className={className}>
         <div className="text-muted mb-2">
           <div>
-            <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+            <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
             This tag is not currently applied on any dashboard</span>
           </div>
         </div>

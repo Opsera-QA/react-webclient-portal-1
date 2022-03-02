@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFile, faTimes} from "@fortawesome/pro-light-svg-icons";
 import { Row, Col, Button } from "react-bootstrap";
 import regexDefinitions from "utils/regexDefinitions";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import IconBase from "components/common/icons/IconBase";
 
 const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disabled, allowIncompleteItems }) => {
 
@@ -139,7 +139,7 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
       </Button>
     );
   };
@@ -201,7 +201,7 @@ const MongodbRealmSchemaMapInput = ({ dataObject, setDataObject, fieldName, disa
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={faFile} fixedWidth className="mr-2"/>Schema Mapping</div>
+        <div><IconBase icon={faFile} className={"mr-2"}/>Schema Mapping</div>
       </div>
     );
   };

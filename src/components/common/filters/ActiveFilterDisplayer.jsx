@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
   const getFilterActiveButton = (filter, key) => {
     return (
       <span key={key} className="mx-1 badge badge-light filter-badge">
-        <span className="mr-1"><FontAwesomeIcon icon={faFilter} fixedWidth/></span>
+        <span className="mr-1"><IconBase icon={faFilter}/></span>
         <span>{filter["text"]}</span>
         <span className="ml-1 pointer" onClick={() => {removeFilter(filter.filterId);}}>
-          <FontAwesomeIcon icon={faTimes} fixedWidth/>
+          <IconBase icon={faTimes}/>
         </span>
       </span>
     );

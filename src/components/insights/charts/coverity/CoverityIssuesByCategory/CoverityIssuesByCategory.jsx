@@ -6,7 +6,6 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
@@ -19,6 +18,7 @@ import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_med
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
 // import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
 import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
+import IconBase from "components/common/icons/IconBase";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -186,10 +186,10 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
             <Row className="p-1" key={index}>
               <Col lg={12}>
                 {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null && (
-                  <FontAwesomeIcon
+                  <IconBase
                     icon={getIcon(doc?.projectTotalIssuesTrend)}
-                    color={getIconColor(doc?.projectTotalIssuesTrend)}
-                    title={getIconTitle(doc?.projectTotalIssuesTrend)}
+                    iconColor={getIconColor(doc?.projectTotalIssuesTrend)}
+                    iconTitle={getIconTitle(doc?.projectTotalIssuesTrend)}
                   />
                 )}
                 <span style={{ paddingLeft: "2px" }}></span>

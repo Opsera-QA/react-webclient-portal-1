@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Remove iconClassName if unnecessary after refactoring PipelineWorkflowItem.jsx
 function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassName, visible }) {
@@ -27,11 +27,10 @@ function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassNam
     <div className={className}>
       <ButtonTooltip innerText={"Launch Help"}>
         <span>
-          <FontAwesomeIcon
-            onClick={() => {launchHelp();}}
+          <IconBase
+            onClickFunction={() => {launchHelp();}}
             icon={faQuestionCircle}
-            size={size}
-            fixedWidth
+            iconSize={size}
             className={iconClassName ? `${iconClassName} pointer` : "pointer"}
           />
           {getHelpText()}

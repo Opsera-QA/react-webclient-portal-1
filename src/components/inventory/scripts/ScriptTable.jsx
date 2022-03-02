@@ -117,6 +117,7 @@ function ScriptTable(
       metadata={scriptMetadata}
       titleIcon={faFileCode}
       title={"Scripts"}
+      type={"Script"}
       className={"px-2 pb-2"}
     />
   );

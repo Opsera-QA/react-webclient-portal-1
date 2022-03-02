@@ -56,7 +56,6 @@ function PipelineDataMappingManagement() {
     try {
       const response = await pipelineDataMappingActions.getPipelineDataMappingsV2(getAccessToken, cancelSource);
       const mappings = response?.data?.data;
-      console.log("response: " + JSON.stringify(response));
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
         setPipelineDataMappingMetadata({...response?.data?.metadata});

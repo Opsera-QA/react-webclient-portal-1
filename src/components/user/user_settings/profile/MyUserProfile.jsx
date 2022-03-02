@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { Button, Table } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,6 +12,7 @@ import registeredUsersMetadata from "components/admin/registered_users/registere
 import RegisteredUserSummary from "components/admin/registered_users/details/RegisteredUserSummary";
 import AccessRoleField from "components/common/fields/access/AccessRoleField";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 function MyUserProfile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -138,9 +138,8 @@ function MyUserProfile() {
           <AccessRoleField accessRole={accessRole} />
         </div>
         <Button variant="primary" size="sm" disabled={isSyncing} onClick={() => syncUserData()}>
-          {isSyncing ?
-            <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing</> :
-            <><FontAwesomeIcon icon={faSync} fixedWidth className="mr-2"/>Re-Sync Profile</>}
+          <IconBase isLoading={isSyncing} icon={faSync} className="mr-2"/>
+          {isSyncing ? "Syncing" : "Re-Sync Profile"}
         </Button>
       </div>
     );

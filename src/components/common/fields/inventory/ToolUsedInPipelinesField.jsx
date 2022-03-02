@@ -17,7 +17,12 @@ import ToolsUsedInPipelineTable from "components/reports/tools/pipelines/ToolsUs
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
 
-function ToolUsedInPipelinesField({ toolId, showTable }) {
+function ToolUsedInPipelinesField(
+  {
+    toolId,
+    showTable,
+    closePanelFunction,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
@@ -53,7 +58,6 @@ function ToolUsedInPipelinesField({ toolId, showTable }) {
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -83,6 +87,7 @@ function ToolUsedInPipelinesField({ toolId, showTable }) {
               <PipelineSummaryCard
                 pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
                 loadPipelineInNewWindow={false}
+                closePanelFunction={closePanelFunction}
               />
             </Col>
           );
@@ -142,7 +147,8 @@ function ToolUsedInPipelinesField({ toolId, showTable }) {
 
 ToolUsedInPipelinesField.propTypes = {
   toolId: PropTypes.string,
-  showTable: PropTypes.bool
+  showTable: PropTypes.bool,
+  closePanelFunction: PropTypes.func,
 };
 
 export default ToolUsedInPipelinesField;

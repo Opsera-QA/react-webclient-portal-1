@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,7 +68,7 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       return (
         <small className="text-muted">
           <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
-            <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
+            <span><IconBase icon={faTools} className="pr-1" />{`View Or Edit this Tool's Registry settings`}</span>
           </Link>
         </small>
       );
@@ -78,7 +78,7 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   if (!isLoading && (tools == null || tools.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No tools have been registered.
         Please go to
         <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to

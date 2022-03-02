@@ -8,7 +8,6 @@ import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata
 import {
   ldapOrganizationAccountMetaData
 } from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -19,6 +18,7 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import {AuthContext} from "contexts/AuthContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function LdapCustomerOnboardEditorPanel() {
   const { getAccessToken } = useContext(AuthContext);
@@ -437,7 +437,7 @@ function LdapCustomerOnboardEditorPanel() {
           }
         </div>
         {isSaving &&
-        <div className="text-center"><FontAwesomeIcon icon={faSpinner} spin className="ml-1" fixedWidth/>Saving is in
+        <div className="text-center"><IconBase icon={faSpinner} spin className="ml-1" fixedWidth/>Saving is in
           progress</div>}
         {hasSaved && <div className="text-center">Your account has been created</div>}
       </Row>

@@ -49,7 +49,7 @@ export class PipelineDataMappingModel extends ModelBase {
   };
 
   getDetailViewLink = () => {
-    return `/settings/data_mapping/projects/details/${this.getMongoDbId()}`;
+    return `/settings/data_mapping/pipeline/details/${this.getMongoDbId()}`;
   };
 
   getDetailViewTitle = () => {

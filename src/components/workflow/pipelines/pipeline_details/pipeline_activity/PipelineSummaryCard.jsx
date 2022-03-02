@@ -6,7 +6,7 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 
-function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow, closePanel }) {
+function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow, closePanelFunction }) {
   if (isLoading) {
     return <PipelineSummaryCardContainer isLoading={isLoading} />;
   }
@@ -22,7 +22,11 @@ function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow,
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>
         <DateFieldBase dataObject={pipelineData} fieldName={"updatedAt"}/>
-        <PipelineLinkButton pipelineId={pipelineData.getData("_id")} loadPipelineInNewWindow={loadPipelineInNewWindow} closePanel={closePanel}/>
+        <PipelineLinkButton
+          pipelineId={pipelineData.getData("_id")}
+          loadPipelineInNewWindow={loadPipelineInNewWindow}
+          closePanelFunction={closePanelFunction}
+        />
       </div>
     </PipelineSummaryCardContainer>
   );
@@ -32,7 +36,7 @@ PipelineSummaryCard.propTypes = {
   pipelineData: PropTypes.object,
   isLoading: PropTypes.bool,
   loadPipelineInNewWindow: PropTypes.bool,
-  closePanel: PropTypes.func
+  closePanelFunction: PropTypes.func
 };
 
 PipelineSummaryCard.defaultProps = {

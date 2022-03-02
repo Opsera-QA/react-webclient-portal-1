@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faMoon, faSun} from "@fortawesome/pro-light-svg-icons";
 import {CODE_THEME_TYPES} from "components/common/inputs/code/CodeInput";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 function ToggleThemeIcon({ theme, toggleTheme, className }) {
   if (toggleTheme == null || theme == null) {
@@ -18,7 +18,7 @@ function ToggleThemeIcon({ theme, toggleTheme, className }) {
     <TooltipWrapper innerText={"Toggle Theme"} >
       <div className={className}>
         <div className={"pointer"} onClick={() => {toggleTheme();}}>
-          <span><FontAwesomeIcon icon={getIcon()} fixedWidth/></span>
+          <span><IconBase icon={getIcon()}/></span>
         </div>
       </div>
     </TooltipWrapper>

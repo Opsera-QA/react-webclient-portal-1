@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ExportPipelineActivityLogDataModal from "components/common/modal/export_data/ExportPipelineActivityLogDataModal";
+import IconBase from "components/common/icons/IconBase";
 
 function ExportPipelineActivityLogButton({isLoading, activityLogData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
@@ -37,7 +36,7 @@ function ExportPipelineActivityLogButton({isLoading, activityLogData, className}
             size={"sm"}
             disabled={isLoading}
             onClick={() => setShowExportModal(true)}>
-            <span><FontAwesomeIcon fixedWidth icon={faFileDownload}/></span>
+            <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>

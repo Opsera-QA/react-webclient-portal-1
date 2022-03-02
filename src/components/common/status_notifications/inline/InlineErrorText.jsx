@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {parseError} from "components/common/helpers/error-helpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 
 function InlineErrorText({ error, prependMessage, className }) {
   const [messageBody, setMessageBody] = useState(undefined);

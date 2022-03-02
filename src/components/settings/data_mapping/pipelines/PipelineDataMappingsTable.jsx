@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import NewProjectDataMappingOverlay from "components/settings/data_mapping/projects/NewProjectDataMappingOverlay";
 import {
   getTableBooleanIconColumn,
-  getTableTextColumn
+  getTableTextColumn, getTagColumn
 } from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -36,20 +36,16 @@ function PipelineDataMappingsTable(
 
       setColumns(
         [
-          getTableTextColumn(getField(fields,"tool_identifier")),
-          getTableTextColumn(getField(fields,"key")),
-          getTableBooleanIconColumn(getField(fields,"active")),
+          getTableTextColumn(getField(fields,"name")),
+          getTableTextColumn(getField(fields,"description")),
+          getTableTextColumn(getField(fields,"externalId")),
         ]
       );
     }
   };
 
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
-  };
-
   const selectedRow = (rowData) => {
-    history.push(`/settings/data_mapping/pipelines/details/${rowData.original._id}`);
+    history.push(`/settings/data_mapping/pipeline/details/${rowData.original._id}`);
   };
 
   const noDataMessage = "No Pipeline Data Mappings have been configured";
@@ -69,7 +65,6 @@ function PipelineDataMappingsTable(
       <CustomTable
         columns={columns}
         data={pipelineDataMappings}
-        rowStyling={rowStyling}
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
         isLoading={isLoading}

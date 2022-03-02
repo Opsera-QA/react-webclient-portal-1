@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import {Form, Button, Row} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -189,7 +190,7 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
           <Form.Label>Select Tool*</Form.Label>
           {isCypressSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+              <LoadingIcon className={"text-muted mr-1"} />
               Loading Anchor accounts from registry
             </div>
           ) : (
@@ -214,7 +215,7 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
               ) : (
                 <>
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                    <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} fixedWidth />
                     No accounts have been registered for <span className="upper-case-first">{formData.service}</span>.
                     Please go to
                     <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
@@ -273,7 +274,7 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
                       setDataFunction={handleECRStepChange}
                     />
                   ) : (
-                    <FontAwesomeIcon icon={faSpinner} spin className="text-muted ml-2" fixedWidth />
+                    <LoadingIcon className={"text-muted ml-2"} />
                   )}
                   <Form.Text className="text-muted">
                     This step must know which ECR Push step is being used in order to retrieve the Docker Image URL
@@ -294,15 +295,15 @@ function AnchoreScanStepConfiguration({ stepTool, pipelineId, plan, stepId, pare
                 {/*TODO: Replace with SaveButton once converted to using data model*/}
                 <div className="text-right mt-3">
                   {isSaving &&
-                  <div className="text-center mr-3 mt-1"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving
+                  <div className="text-center mr-3 mt-1"><LoadingIcon className={"mr-1"}/>Saving
                     is in progress</div>}
-                  <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}><FontAwesomeIcon
-                    icon={faSave} fixedWidth className="mr-2"/>Save</Button>
+                  <Button size="sm" variant="primary" disabled={isSaving} onClick={() => callbackFunction()}>
+                    <IconBase icon={faSave} className={"mr-2"}/>Save</Button>
                 </div>
               </>
             ) : (
               <div className="form-text text-muted pt-2 pl-2">
-                <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+                <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
                 Incomplete account selected. This account is missing configuration details. Please go to
                 <Link to="/inventory/tools"> Tool Registry</Link> and add configuration details for this tool.
               </div>

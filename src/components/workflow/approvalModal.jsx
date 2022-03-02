@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, Modal, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck, faIdBadge, faSpinner, faTimes, faToolbox, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActions from "./pipeline-actions";
 import CommonModal from "components/common/modal/modal";
 import LoadingDialog from "../common/status_notifications/loading";
+import IconBase from "components/common/icons/IconBase";
 
 const INITIAL_FORM = {
   message: "",
@@ -243,8 +243,12 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
               </div>
               <div className="p-1 my-auto">
                 {priorToApprovalStep &&
-                <FontAwesomeIcon icon={faArrowRight} size="2x" fixedWidth
-                                 className="p-1"/>}
+                  <IconBase
+                    icon={faArrowRight}
+                    iconSize={"2x"}
+                    className={"p-1"}
+                  />
+                }
               </div>
               <div className="p-1">
                 {approvalStep &&
@@ -253,8 +257,12 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
               </div>
               <div className="p-1 my-auto">
                 {nextToApprovalStep &&
-                <FontAwesomeIcon icon={faArrowRight} size="2x" fixedWidth
-                                 className="p-1"/>}
+                  <IconBase
+                    icon={faArrowRight}
+                    iconSize={"2x"}
+                    className={"p-1"}
+                  />
+                }
               </div>
               <div className="p-1">
                 {nextToApprovalStep &&
@@ -300,9 +308,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
             overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
             <Button variant="success" onClick={() => handleConfirm("approve")}
                     disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
-              {isSaving ?
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-                <FontAwesomeIcon icon={faCheck} fixedWidth/>}
+                <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
               Approve
             </Button>
           </OverlayTrigger>
@@ -313,9 +319,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
             overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
             <Button variant="danger" onClick={() => handleConfirm("deny")}
                     disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
-              {isSavingDeny ?
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-                <FontAwesomeIcon icon={faTimes} fixedWidth/>}
+              <IconBase isLoading={isSavingDeny} icon={faTimes} className={"mr-1"} fixedWidth/>
               Deny
             </Button>
           </OverlayTrigger>
@@ -348,7 +352,7 @@ export function RenderWorkflowItem({ item, stateColorClass, isSelected }) {
              <Col sm={1}>
               <span className="flex-grow-1 text-right">
                 {isSelected &&
-                      <FontAwesomeIcon icon={faCheckCircle} className="mr-2 green"/>
+                      <IconBase icon={faCheckCircle} className={"mr-2 green"}/>
                 }
               </span>
             </Col>
@@ -356,12 +360,20 @@ export function RenderWorkflowItem({ item, stateColorClass, isSelected }) {
 
          
           <div className="p-1 text-muted small">
-            <FontAwesomeIcon icon={faToolbox} size="sm" fixedWidth
-                             className="mr-1"/> Tool: {item.tool?.tool_identifier || ""}
+            <IconBase
+              icon={faToolbox}
+              iconSize={"sm"}
+              className={"mr-1"}
+            />
+            Tool: {item.tool?.tool_identifier || ""}
           </div>
           <div className="p-1 text-muted small">
-            <FontAwesomeIcon icon={faIdBadge} size="sm" fixedWidth
-                             className="mr-1"/>ID: {item._id}</div>
+            <IconBase
+              icon={faIdBadge}
+              iconSize={"sm"}
+              className={"mr-1"}
+            />
+            ID: {item._id}</div>
         </div>
       </div>
     </>

@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import UserCard from "components/common/inputs/user/membership/manager/user_panel/UserCard";
 import {faArrowLeft, faMinusCircle, faUsers} from "@fortawesome/pro-light-svg-icons";
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 import {Button} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function MembersPanel({selectedMembers, setSelectedMembers, nonMembers, setNonMembers, members, setMembers, setShowUnsavedChangesMessage, filteredMembers, setSearchText}) {
   const [shownMembers, setShownMembers] = useState([]);
@@ -69,24 +69,24 @@ function MembersPanel({selectedMembers, setSelectedMembers, nonMembers, setNonMe
     <div>
       <div className="mb-2 d-flex justify-content-between">
         <Button size="sm" variant="danger" onClick={removeAllMembers}>
-          <span className="mr-2"><FontAwesomeIcon icon={faMinusCircle} className="mr-2" fixedWidth/>Remove All</span>
+          <span className="mr-2"><IconBase icon={faMinusCircle} className={"mr-2"}/>Remove All</span>
           <span className="badge badge-secondary">{filteredMembers.length}</span>
         </Button>
         <Button disabled={selectedMembers.length === 0} size="sm" variant="outline-primary" onClick={() => addSelectedToNonMembers()}>
           <div className="d-flex justify-content-between">
-            <div><FontAwesomeIcon icon={faArrowLeft} fixedWidth/></div>
+            <div><IconBase icon={faArrowLeft}/></div>
             <div className="mx-2">Remove Selected</div>
             <div><span className="badge badge-secondary">{selectedMembers.length}</span></div>
           </div>
         </Button>
         <Button size="sm" variant="outline-danger" onClick={removeAllShownMembers}>
-          <span className="mr-2"><FontAwesomeIcon icon={faMinusCircle} className="mr-2" fixedWidth/>Remove All Shown</span>
+          <span className="mr-2"><IconBase icon={faMinusCircle} className="mr-2"/>Remove All Shown</span>
           <span className="badge badge-secondary">{shownMembers.length}</span>
         </Button>
       </div>
       <div className="content-card-1 content-container">
         <div className="px-2 d-flex content-block-header members-title justify-content-between">
-          <div><FontAwesomeIcon icon={faUsers} fixedWidth className="mr-2"/>Members</div>
+          <div><IconBase icon={faUsers} className={"mr-2"}/>Members</div>
           <div>{members.length} {members.length !== 1 ? "users" : "user"}</div>
         </div>
         <ul className="list-group membership-list">

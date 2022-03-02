@@ -10,12 +10,10 @@ import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import axios from "axios";
-import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 

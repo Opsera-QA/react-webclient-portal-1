@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faIdCard,
   faTimes,
@@ -16,6 +15,7 @@ import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, disabled }) {
@@ -337,7 +337,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     if (disabled !== true) {
       return (
         <Button variant="link" onClick={() => deleteRole(index)}>
-          <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+          <span><IconBase className="danger-red" icon={faTimes}/></span>
         </Button>
       );
     }

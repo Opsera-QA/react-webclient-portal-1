@@ -8,10 +8,10 @@ Expecting data in this format:
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
 import DataBlock from "components/common/data_boxes/DataBlock";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
@@ -23,7 +23,7 @@ function SummaryCountBlocksView({ data, view }) {
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
         <Popover.Title as="h3">
           {item.name}
-          <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
+          <IconBase icon={faTimes} className={"fa-pull-right pointer"} onClickFunction={() => document.body.click()} />
         </Popover.Title>
         <Popover.Content>
           <div className="text-muted mb-2">{item.info}</div>
@@ -46,10 +46,10 @@ function SummaryCountBlocksView({ data, view }) {
                 statusColor={item.status}
                 ellipsesContent={item.info && (
                   <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                    <FontAwesomeIcon
+                    <IconBase
                       icon={faEllipsisH}
-                      className="fa-pull-right pointer pr-1"
-                      onClick={() => document.body.click()}
+                      className={"fa-pull-right pointer pr-1"}
+                      onClickFunction={() => document.body.click()}
                     />
                   </OverlayTrigger>
                 )}

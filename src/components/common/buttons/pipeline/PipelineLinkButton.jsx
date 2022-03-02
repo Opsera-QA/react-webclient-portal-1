@@ -5,8 +5,13 @@ import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 
-function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
-  let history = useHistory();
+function PipelineLinkButton(
+  {
+    pipelineId,
+    loadPipelineInNewWindow,
+    closePanelFunction,
+  }) {
+  const history = useHistory();
 
   const loadPipeline = () => {
     if (loadPipelineInNewWindow) {
@@ -15,8 +20,8 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
     else {
       history.push(`/workflow/details/${pipelineId}/summary`);
 
-      if (closePanel) {
-        closePanel();
+      if (closePanelFunction) {
+        closePanelFunction();
       }
     }
   };
@@ -31,7 +36,7 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
 PipelineLinkButton.propTypes = {
   pipelineId: PropTypes.string,
   loadPipelineInNewWindow: PropTypes.bool,
-  closePanel: PropTypes.func
+  closePanelFunction: PropTypes.func
 };
 
 export default PipelineLinkButton;

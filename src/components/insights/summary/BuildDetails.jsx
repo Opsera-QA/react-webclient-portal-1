@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
@@ -10,10 +9,7 @@ import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColum
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faDraftingCompass, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import {format} from "date-fns";
 import BuildDetailsMetadata from "./build-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 

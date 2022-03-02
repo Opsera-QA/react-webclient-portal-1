@@ -1,9 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -11,6 +9,7 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function RoleRestrictedToolByIdentifierMultiSelectInputBase(
   {
@@ -108,7 +107,7 @@ function RoleRestrictedToolByIdentifierMultiSelectInputBase(
     if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No {configurationRequired ? "configured " : ""}tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
           Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to

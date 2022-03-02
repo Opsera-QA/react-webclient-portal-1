@@ -1,16 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner, faPlug, faCodeCommit, faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
-import toolsActions from "components/inventory/tools/tools-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SourceRepositoryActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-actions";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, className, savePipelineFunction }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,18 +75,18 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, 
 
   const getLabel = () => {
     if (isRegisteringHook) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Registering Webhook</span>);
+      return (<span><LoadingIcon className={"mr-2"}/>Registering Webhook</span>);
     }
 
     if (failedConnection) {
-      return (<span><FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth/>Registering Webhook Failed!</span>);
+      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>Registering Webhook Failed!</span>);
     }
 
     if (successfulConnection) {
-      return (<span><FontAwesomeIcon icon={faCheckCircle} className="mr-2" fixedWidth/>Registering Webhook Succeeded!</span>);
+      return (<span><IconBase icon={faCheckCircle} className={"mr-2"}/>Registering Webhook Succeeded!</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faPlug} fixedWidth className="mr-2"/>Register Webhook</span>);
+    return (<span><IconBase icon={faPlug} fixedWidth className={"mr-2"}/>Register Webhook</span>);
   };
 
   if (branch == null || branch === "" || savePipelineFunction == null || model == null) {

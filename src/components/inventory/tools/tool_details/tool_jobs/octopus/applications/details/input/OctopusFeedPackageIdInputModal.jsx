@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { Button } from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusFeedPackageIdInputModal({ handleClose, callback, dataObject, setDataObject }) {  
   return (
@@ -12,7 +12,7 @@ function OctopusFeedPackageIdInputModal({ handleClose, callback, dataObject, set
         <div className="w100 data-block-title">
           <div style={{ minHeight: "30px" }}>          
             <div className="text-right float-right p-1">
-              <FontAwesomeIcon icon={faTimes} fixedWidth style={{ cursor: "pointer" }} onClick={handleClose} />
+              <IconBase icon={faTimes} className={"pointer"} onClickFunction={handleClose} />
             </div>
           </div>          
         </div>

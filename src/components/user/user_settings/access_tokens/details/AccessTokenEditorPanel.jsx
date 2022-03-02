@@ -12,9 +12,10 @@ import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaC
 import {faKey} from "@fortawesome/pro-light-svg-icons";
 import AccessTokenExpirationSelectInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import AccessTokenScopeRadioInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
+import IconBase from "components/common/icons/IconBase";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,16 +39,11 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
   }
 
   return (
-    <div className="object-properties-input mb-3">
-      <div className="content-container-border">
-        <div className="my-auto property-header d-flex justify-content-between">
-          <div className="mx-2">
-            <div className="pt-2">
-              <FontAwesomeIcon icon={faKey} fixedWidth className="mr-2"/>
-              Generate Personal Access Token
-            </div>
-          </div>
-        </div>
+    <InfoContainer
+      titleIcon={faKey}
+      titleText={"Generate Personal Access Token"}
+      className={"mb-2"}
+    >
         <Row className="mx-0">
           <Col xs={12} md={6}>
             <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
@@ -74,7 +70,7 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
           </Col>
           <Col md={12}>
             <TextAreaClipboardField
-              className={"m-2 small-label-text"}
+              className={"my-2 small-label-text"}
               allowResize={false}
               rows={3}
               textAreaValue={generatedToken}
@@ -82,8 +78,7 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
             />
           </Col>
         </Row>
-      </div>
-    </div>
+    </InfoContainer>
   );
 }
 

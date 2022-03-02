@@ -1,16 +1,17 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {Row} from "react-bootstrap";
 import CloseIcon from "components/common/icons/general/CloseIcon";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
+// TODO: Cleanup
 function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLink, linkTooltipText }) {
   const getTitleIcon = () => {
     if (titleIcon) {
       return (
-        <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>
+        <IconBase icon={titleIcon} className={"mr-1"}/>
       );
     }
   };
@@ -19,7 +20,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
     return (
       <div className="pl-2 pr-3 content-block-header title-text-header-1">
         <div className="d-flex justify-content-between">
-          <div><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-2"/>Loading Data</span></div>
+          <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
             <CloseIcon handleClose={handleClose} />

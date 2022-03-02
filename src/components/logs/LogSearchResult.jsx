@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import IconBase from "components/common/icons/IconBase";
 
 const Highlight = require("react-highlighter");
 
@@ -40,12 +40,12 @@ function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
         <div key={idx}>
           <Alert>
             <div className="row mb-3">
-              <FontAwesomeIcon
+              <IconBase
                 icon={faSearchPlus}
-                className="mt-1"
-                size="sm"
-                style={{ cursor: "pointer", alignItems: "flex-end" }}
-                onClick={() => {
+                iconClassName="mt-1"
+                iconSize="sm"
+                iconStyling={{ cursor: "pointer", alignItems: "flex-end" }}
+                onClickFunction={() => {
                   handleClick(item);
                 }}
               />

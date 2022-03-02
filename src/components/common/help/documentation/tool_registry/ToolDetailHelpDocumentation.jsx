@@ -5,7 +5,7 @@ import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayB
 import {
   doesToolSupportTab,
   TOOL_DETAIL_PANEL_TABS
-} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
+} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 
 function ToolDetailHelpDocumentation({toolIdentifier}) {
   const toastContext = useContext(DialogToastContext);

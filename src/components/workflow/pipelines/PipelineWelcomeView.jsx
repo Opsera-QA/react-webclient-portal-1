@@ -1,9 +1,9 @@
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineWelcomeView () {
   const history = useHistory();
@@ -36,7 +36,7 @@ function PipelineWelcomeView () {
           <div className="text-muted mb-3">
             At this time you do not have any pipelines configured for this section.  Please visit the Catalog in order to add a workflow template to your pipeline.</div>
             <Button variant="success" className="px-2" onClick={() => goToPipelineCatalog("catalog")}>
-              <FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Get Started!</Button>
+              <IconBase icon={faPlay} className={"mr-1"}/>Get Started!</Button>
         </div>
       </div>
     </div>

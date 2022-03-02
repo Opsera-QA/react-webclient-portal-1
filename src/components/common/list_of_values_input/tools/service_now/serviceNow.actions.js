@@ -12,13 +12,13 @@ serviceNowActions.getServiceNowGroups = async (getAccessToken, cancelTokenSource
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-serviceNowActions.getServiceNowGroupsByNameV2 = async (
-  getAccessToken,
-  cancelTokenSource,
+serviceNowActions.getServiceNowGroupsByName = async (
   toolId,
   serviceName,
+  getAccessToken,
+  cancelTokenSource
 ) => {
-  const apiUrl = `/connectors/service-now/v2/groups/${toolId}/service-name/${serviceName}`;
+  const apiUrl = `/connectors/servicenow/groupsByName/${toolId}/serviceName/${serviceName}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

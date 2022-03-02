@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faDraftingCompass, faMicrochip} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: This will eventually show all category types, but for now just show the first
 function PipelineTypesField({ fieldName, dataObject }) {
@@ -46,7 +46,7 @@ function PipelineTypesField({ fieldName, dataObject }) {
 
   return (
     <TooltipWrapper innerText={getTooltipText()}>
-      <FontAwesomeIcon icon={getTypeIcon()} className="ml-1 pipeline-text" size="lg"/>
+      <IconBase icon={getTypeIcon()} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
     </TooltipWrapper>
   );
 }

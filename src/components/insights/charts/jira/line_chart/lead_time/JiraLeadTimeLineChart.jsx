@@ -10,7 +10,6 @@ import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Col, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
@@ -18,6 +17,7 @@ import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedD
 import JiraMeanLeadTimeDataBlock from "../../data_blocks/JiraMeanLeadTimeDataBlock";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
+import IconBase from "components/common/icons/IconBase";
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -162,25 +162,25 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 className="px-3 font-inter-light-400 dark-gray-text-primary"
                 style={{ float: "right", fontSize: "10px" }}
               >
-                Rolling Mean Lead Time{" "}
-                <FontAwesomeIcon
+                {` Rolling Mean Lead Time `}
+                <IconBase
                   icon={faMinus}
-                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}
-                  size="lg"
+                  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}
+                  iconSize={"lg"}
                 />
-                <br></br>
-                Mean Lead Time{" "}
-                <FontAwesomeIcon
+                <br />
+                {`Mean Lead Time `}
+                <IconBase
                   icon={faMinus}
-                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_2}
-                  size="lg"
+                  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_2}
+                  iconSize={"lg"}
                 />
-                <br></br>
-                Issues{" "}
-                <FontAwesomeIcon
+                <br />
+                {`Issues `}
+                <IconBase
                   icon={faCircle}
-                  color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1}
-                  size="xs"
+                  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1}
+                  iconSize={"xs"}
                 />
               </div>
               <ResponsiveScatterPlot

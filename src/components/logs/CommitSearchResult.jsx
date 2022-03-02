@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import IconBase from "components/common/icons/IconBase";
 
 function CommitSearchResult({ searchResults }) {
   const [showModal, setShowModal] = useState(false);
@@ -32,11 +32,14 @@ function CommitSearchResult({ searchResults }) {
           {searchResults.gitlab.map((item, idx) => (
             <tr key={idx} >
               <td>{item["git_commit"]}
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="ml-1"
-                  size="xs"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleClick(item); }} /></td>              
+                <IconBase
+                  className={"pointer"}
+                  icon={faSearchPlus}
+                  iconClassName={"ml-1"}
+                  iconSize={"xs"}
+                  onClickFunction={() => { handleClick(item); }}
+                />
+              </td>
               <td className="force-text-wrap">{item["user"]}</td>
               <td className="force-text-wrap">{item["git_branch"]}</td>
               <td className="force-text-wrap">{item["project"]}</td>
@@ -59,11 +62,14 @@ function CommitSearchResult({ searchResults }) {
           {searchResults.jenkins.map((item, idx) => (
             <tr key={idx} >
               <td>{item["build_tag"]}
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="ml-1"
-                  size="xs"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleClick(item); }} /></td>              
+                <IconBase
+                  className={"pointer"}
+                  icon={faSearchPlus}
+                  iconClassName={"ml-1"}
+                  iconSize={"xs"}
+                  onClickFunction={() => { handleClick(item); }}
+                />
+              </td>
               <td className="force-text-wrap">{item["git_commit"]}</td>
               <td className="force-text-wrap">{item["git_branch"]}</td>
               <td>{format(new Date(item["time"]), "yyyy-MM-dd', 'hh:mm a")}</td>  
@@ -86,11 +92,14 @@ function CommitSearchResult({ searchResults }) {
           {searchResults.sonar.map((item, idx) => (
             <tr key={idx} >
               <td>{item["task"]}
-                <FontAwesomeIcon icon={faSearchPlus}
-                  className="ml-1"
-                  size="xs"
-                  style={{ cursor: "pointer" }}
-                  onClick= {() => { handleClick(item); }} /></td>              
+                <IconBase
+                  className={"pointer"}
+                  icon={faSearchPlus}
+                  iconClassName={"ml-1"}
+                  iconSize={"xs"}
+                  onClickFunction={() => { handleClick(item); }}
+                />
+              </td>
               <td className="force-text-wrap">{item["git_commit"]}</td>
               <td className="force-text-wrap">{item["branch"]}</td>
               <td className="force-text-wrap">{item["project"]}</td>

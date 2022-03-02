@@ -6,7 +6,6 @@ import {
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
   faTimes,
@@ -27,6 +26,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -584,10 +585,10 @@ function LegacyCypressStepConfiguration({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -622,10 +623,10 @@ function LegacyCypressStepConfiguration({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -655,21 +656,16 @@ function LegacyCypressStepConfiguration({
                   ],
               )}
             >
-              <FontAwesomeIcon
+              <IconBase
                 icon={faEllipsisH}
-                className="fa-pull-right pointer pr-1"
-                onClick={() => document.body.click()}
+                className={"fa-pull-right pointer pr-1"}
+                onClickFunction={() => document.body.click()}
               />
             </OverlayTrigger>
           </Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted mr-1"
-                fixedWidth
-              />
+              <LoadingIcon className={"text-muted mr-1"}/>
               Loading Jenkins accounts from registry
             </div>
           ) : (
@@ -694,10 +690,9 @@ function LegacyCypressStepConfiguration({
               ) : (
                 <>
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
+                    <IconBase
                       icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
+                      className={"text-muted mr-1"}
                     />
                     No accounts have been registered for{" "}
                     <span className="upper-case-first">{formData.service}</span>
@@ -712,7 +707,7 @@ function LegacyCypressStepConfiguration({
           {formData.toolConfigId.length > 0 && (
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
+                <IconBase icon={faTools} className={"pr-1"}/> View/edit
                 this tool&#39;s Registry settings
               </Link>
             </Form.Label>
@@ -769,19 +764,18 @@ function LegacyCypressStepConfiguration({
                         ],
                     )}
                   >
-                    <FontAwesomeIcon
+                    <IconBase
                       icon={faEllipsisH}
-                      className="fa-pull-right pointer pr-1"
-                      onClick={() => document.body.click()}
+                      className={"fa-pull-right pointer pr-1"}
+                      onClickFunction={() => document.body.click()}
                     />
                   </OverlayTrigger>
                 </Form.Label>
                 {jobsList.length < 1 && (
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
+                    <IconBase
                       icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
+                      className={"text-muted mr-1"}
                     />
                     No jobs have been created for{" "}
                     <span>{formData.jenkinsUrl}</span>. Please go to
@@ -847,19 +841,18 @@ function LegacyCypressStepConfiguration({
                     ],
                 )}
               >
-                <FontAwesomeIcon
+                <IconBase
                   icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
+                  className={"fa-pull-right pointer pr-1"}
+                  onClickFunction={() => document.body.click()}
                 />
               </OverlayTrigger>
             </Form.Label>
             {accountsList.length < 1 && (
               <div className="form-text text-muted p-2">
-                <FontAwesomeIcon
+                <IconBase
                   icon={faExclamationCircle}
-                  className="text-muted mr-1"
-                  fixedWidth
+                  className={"text-muted mr-1"}
                 />
                 No Credentials have been created for{" "}
                 <span>{formData.jenkinsUrl}</span>. Please go to
@@ -892,12 +885,7 @@ function LegacyCypressStepConfiguration({
             <Form.Label>Workspace*</Form.Label>
             {isWorkspacesSearching ? (
               <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Loading workspaces from registry
               </div>
             ) : (
@@ -917,12 +905,7 @@ function LegacyCypressStepConfiguration({
                     setDataFunction={handleWorkspacesChange}
                   />
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <LoadingIcon className={"text-muted mr-1"}/>
                 )}
               </>
             )}
@@ -939,12 +922,7 @@ function LegacyCypressStepConfiguration({
             <Form.Label>Repository*</Form.Label>
             {isRepoSearching ? (
               <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Loading repositories from registry
               </div>
             ) : (
@@ -964,12 +942,7 @@ function LegacyCypressStepConfiguration({
                     setDataFunction={handleRepoChange}
                   />
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <LoadingIcon className={"text-muted mr-1"}/>
                 )}
               </>
             )}
@@ -983,12 +956,7 @@ function LegacyCypressStepConfiguration({
             <Form.Label>Branch*</Form.Label>
             {isBranchSearching ? (
               <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Loading branches from selected repository
               </div>
             ) : (
@@ -1006,12 +974,7 @@ function LegacyCypressStepConfiguration({
                     setDataFunction={handleBranchChange}
                   />
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <LoadingIcon className={"text-muted mr-1"}/>
                 )}
               </>
             )}
@@ -1077,17 +1040,12 @@ function LegacyCypressStepConfiguration({
           >
             {loading ? (
               <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Working
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/>
+                <IconBase icon={faSave} className={"mr-1"}/>
                 Create Job and Save
               </>
             )}
@@ -1103,17 +1061,12 @@ function LegacyCypressStepConfiguration({
           >
             {loading ? (
               <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
+                <LoadingIcon className={"text-muted mr-1"}/>{" "}
                 Saving
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+                <IconBase icon={faSave} className="mr-1"/> Save
               </>
             )}
           </Button>

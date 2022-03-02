@@ -1,10 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {Button} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function HelpButton({ toggleHelp, helpText, className, size }) {
   const getHelpText = () => {
@@ -20,8 +19,8 @@ function HelpButton({ toggleHelp, helpText, className, size }) {
   return (
     <div className={className}>
       <ButtonTooltip innerText={"Launch Help"}>
-        <Button size={size} variant="secondary" onClick={() => toggleHelp()}>
-          <FontAwesomeIcon icon={faQuestionCircle} fixedWidth className={"pointer"} />
+        <Button size={size} variant={"secondary"} onClick={() => toggleHelp()}>
+          <IconBase icon={faQuestionCircle} />
           {getHelpText()}
         </Button>
       </ButtonTooltip>

@@ -1,10 +1,8 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
-
-import "../../freeTrial.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 function FreeTrialLandingPipeline() {
   const history = useHistory();
@@ -27,7 +25,7 @@ function FreeTrialLandingPipeline() {
                 </div>
                 <div className="mt-4 mb-2 text-center">
                   <Button size="lg" className="mr-2" variant="success" onClick= {() => {history.push("/workflow/catalog"); }} >
-                    <FontAwesomeIcon className="mr-2" icon={faCheckCircle} fixedWidth style={{ cursor: "pointer" }} />Get Started Now!
+                    <IconBase className={"mr-2 pointer"} icon={faCheckCircle} />Get Started Now!
                   </Button>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,6 +9,7 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import {AuthContext} from "contexts/AuthContext";
 import regexDefinitions from "utils/regexDefinitions";
 import StandaloneComboBoxInput from "components/common/inputs/combo_box/StandaloneComboBoxInput";
+import IconBase from "components/common/icons/IconBase";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -115,7 +115,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/>
+        <IconBase className={"danger-red"} icon={faTimes} />
       </Button>
     );
   };

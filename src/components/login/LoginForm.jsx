@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
@@ -12,6 +11,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisterAccountButton from "components/login/RegisterAccountButton";
 import PropTypes from "prop-types";
 import userActions from "../user/user-actions";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
 
@@ -334,7 +335,7 @@ const LoginForm = ({ authClient }) => {
                               onClick={() => {
                                 setViewType("domain");
                               }}>
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth />
+                        <IconBase icon={faArrowLeft} className={"mr-1"} iconSize={"sm"} />
                         Back
                       </Button>
 
@@ -343,7 +344,7 @@ const LoginForm = ({ authClient }) => {
                               style={{ width: "46%" }}
                               type="submit"
                               disabled={!username || !password}>
-                        {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
+                        {loading && <IconBase className={"mr-1"} iconSize={"sm"} />}
                         Sign in</Button>
                     </div>
                     <div className="text-center">
@@ -382,7 +383,7 @@ const LoginForm = ({ authClient }) => {
                         onClick={() => {
                           setViewType("domain");
                         }}>
-                  <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth />
+                  <IconBase icon={faArrowLeft} className={"mr-1"} iconSize={"sm"} />
                   Back
                 </Button>
               </div>
@@ -421,7 +422,7 @@ const LoginForm = ({ authClient }) => {
 
             <div className="buttons-w">
               <Button variant="success" className="w-100 mb-3" type="submit" disabled={!resetEmailAddress}>
-                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
+                {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
                 Reset Password</Button>
             </div>
             <div className="text-center">
@@ -467,7 +468,7 @@ const LoginForm = ({ authClient }) => {
                 <div className="buttons-w">
                   <Button variant="warning" className="w-100 mb-3" type="submit"
                           disabled={!lookupAccountEmail}>
-                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
+                    {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
                     Next</Button>
                 </div>
               </form>

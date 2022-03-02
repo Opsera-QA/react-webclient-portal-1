@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
@@ -16,6 +15,7 @@ import StepConfigurationToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationToolIdentifierSelectInput";
 import StepConfigurationTagsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
+import IconBase from "components/common/icons/IconBase";
 
 function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);
@@ -111,7 +111,7 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       isStrict={true}
     >
       <div className="text-muted mt-1 mb-3">
-        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name. After tool setup, navigate to Step Configuration by selecting the cog icon (<FontAwesomeIcon icon={faCog} fixedWidth className="text-muted" />) to define operations. If the tool requires configuration information, jobs or accounts, configure them
+        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name. After tool setup, navigate to Step Configuration by selecting the cog icon (<IconBase icon={faCog} className={"text-muted"} />) to define operations. If the tool requires configuration information, jobs or accounts, configure them
         in the Tool Registry before Step Setup.
       </div>
       <div className="step-settings-body">

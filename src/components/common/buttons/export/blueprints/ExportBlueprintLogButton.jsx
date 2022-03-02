@@ -4,8 +4,8 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ExportBlueprintDataModal from "components/common/modal/export_data/ExportBlueprintDataModal";
+import IconBase from "components/common/icons/IconBase";
 
 //check if item can be parsed to JSON
 function isJson(item) {
@@ -83,7 +83,7 @@ name: stepName};
             disabled={isLoading}
             className={"ml-2"}
             onClick={() => setShowExportModal(true)}>
-            <span><FontAwesomeIcon icon={faFileDownload} fixedWidth /></span>
+            <span><IconBase icon={faFileDownload} /></span>
           </Button>
         </div>
       </TooltipWrapper>
