@@ -51,7 +51,7 @@ function ServiceNowGroupSelectInput(
     try {
       setIsLoading(true);
       const response = await serviceNowActions.getServiceNowGroups(getAccessToken, cancelSource, serviceNowId);
-      const serviceNowGroups = response?.data?.message;
+      const serviceNowGroups = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(serviceNowGroups)) {
         setGroups(serviceNowGroups);
