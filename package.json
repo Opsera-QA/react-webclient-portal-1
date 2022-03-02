@@ -10,6 +10,7 @@
     "@fortawesome/pro-light-svg-icons": "^6.0.0",
     "@fortawesome/pro-regular-svg-icons": "^6.0.0",
     "@fortawesome/pro-solid-svg-icons": "^6.0.0",
+    "@fortawesome/pro-thin-svg-icons": "^6.0.0",
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@nivo/bar": "^0.70.1",
     "@nivo/calendar": "^0.70.1",
