@@ -117,7 +117,7 @@ function FlywayDatabaseStepConfiguration({ pipelineId, stepTool, plan, stepId, c
       />
       <TextInputBase fieldName={"baseSchema"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
       <TextInputBase fieldName={"scriptFilePath"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>
-      {flywayStepConfigurationDto.getData("dbType") !== "mysql" && <TextInputBase fieldName={"database"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>}
+      {(flywayStepConfigurationDto.getData("dbType") !== "mysql"|| flywayStepConfigurationDto.getData("dbType") !== "oracle") && <TextInputBase fieldName={"database"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>}
       {flywayStepConfigurationDto.getData("dbType") === "snowflake" && <TextInputBase fieldName={"warehouse"} dataObject={flywayStepConfigurationDto} setDataObject={setFlywayStepConfigurationDataDto}/>}
     </PipelineStepEditorPanelContainer>
   );
