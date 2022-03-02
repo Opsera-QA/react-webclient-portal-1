@@ -173,6 +173,8 @@ import sonarPipelineStepMetadata
 import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_forms/sentenial/SentinelStepConfigurationSummaryPanel";
 import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
+import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -532,6 +534,13 @@ function PipelineStepConfigurationSummary({
           <SentinelStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
+          />
+        );
+      case "buildkite":
+        return (
+          <BuildkiteStepSummary
+            pipelineData={pipelineData}
+            buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
           />
         );
       default:

@@ -33,6 +33,7 @@ import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayD
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
@@ -104,6 +105,8 @@ function ToolConnectionPanel({ toolData }) {
         return <InformaticaToolConfiguration toolData={toolData} />;
       case "terraform-cloud":
         return <TerraformCloudToolConfiguration toolData={toolData} />;
+      case "buildkite":
+        return <BuildkiteToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
