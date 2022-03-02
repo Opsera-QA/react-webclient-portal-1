@@ -47,6 +47,7 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
           <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"port"} />
           <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"userName"} />
           <VaultTextInput dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"password"}/>
+          {flywayConfigurationDto && flywayConfigurationDto.getData("buildType") === "oracle" && <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"service"} />}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
