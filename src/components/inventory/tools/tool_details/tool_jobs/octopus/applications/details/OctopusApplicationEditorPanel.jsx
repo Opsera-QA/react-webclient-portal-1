@@ -31,8 +31,8 @@ import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {getOctopusApplicationTypeLabel} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);

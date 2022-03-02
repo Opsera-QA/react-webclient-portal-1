@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStepBackward,
   faStepForward,
@@ -20,6 +19,7 @@ import axios from "axios";
 import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: This should really be altered to be a part of each of the workflow boxes rather than having it rely on selected object
 const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, setPipelineWizardScreen }) => {
@@ -208,7 +208,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               className="mr-2"
               onClick={() => { handleBackButtonClick(); }}
             >
-              <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
+              <IconBase icon={faStepBackward} className={"mr-1"}/>
               Back
             </Button>
 
@@ -219,7 +219,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
                 setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
               }}
             >
-              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+              <IconBase icon={faStepForward} className={"mr-1"}/>
               Next
             </Button>
 

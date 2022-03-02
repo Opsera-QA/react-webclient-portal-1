@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
@@ -69,7 +68,7 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
         <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
           {taskModel?.getData("status") === "running" ?
             (<span><IconBase isLoading={true} className={"mr-2"}/>Running Task</span>)
-            : (<span><FontAwesomeIcon icon={faPlay} className="mr-2" fixedWidth/>Run Task</span>)}
+            : (<span><IconBase icon={faPlay} className={"mr-2"} fixedWidth/>Run Task</span>)}
         </TooltipWrapper>
       </Button>
     );

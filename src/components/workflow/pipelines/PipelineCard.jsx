@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
@@ -14,7 +13,9 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
+import IconBase from "components/common/icons/IconBase";
 
+// TODO: Rewrite
 const PipelineCard = ({ pipeline, pipelineModel }) => {
   let history = useHistory();
 
@@ -29,7 +30,7 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
     if (pendingApproval) {
       return (
         <TooltipWrapper innerText={`Pending Approval`}>
-          <FontAwesomeIcon icon={faFlag} className="ml-2 danger-red"/>
+          <IconBase icon={faFlag} className={"ml-2 danger-red"}/>
         </TooltipWrapper>
       );
     }
@@ -62,7 +63,7 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
     if (!type) {
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDraftingCompass} className="ml-1 pipeline-text" size="lg"/>
+          <IconBase icon={faDraftingCompass} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
         </TooltipWrapper>
       );
     }
@@ -71,25 +72,25 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
     case "sfdc":
       return (
         <TooltipWrapper innerText={`SalesForce`}>
-          <FontAwesomeIcon icon={faSalesforce} className="ml-1 pipeline-text" size="lg"/>
+          <IconBase icon={faSalesforce} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
         </TooltipWrapper>
       );
     case "ai-ml":
       return (
         <TooltipWrapper innerText={"Machine Learning (AI)"}>
-          <FontAwesomeIcon icon={faMicrochip} className="ml-1 pipeline-text" size="lg"/>
+          <IconBase icon={faMicrochip} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
         </TooltipWrapper>
       );
     case "sdlc":
       return (
         <TooltipWrapper innerText={"Software Development"}>
-          <FontAwesomeIcon icon={faBracketsCurly} className="ml-1 pipeline-text" size="lg"/>
+          <IconBase icon={faBracketsCurly} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
         </TooltipWrapper>
       );
     default:
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDraftingCompass} className="ml-1 pipeline-text" size="lg"/>
+          <IconBase icon={faDraftingCompass} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
         </TooltipWrapper>
       );
     }
@@ -152,7 +153,7 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
             <Col className="text-right p-2">
               <Button variant="primary" size="sm" className="w-50"
                       onClick={handleDetailsClick(pipeline?._id)}>
-                <FontAwesomeIcon icon={faSearch} className="mr-1"/>View</Button>
+                <IconBase icon={faSearch} className={"mr-1"}/>View</Button>
             </Col>
           </Row>
         </Card.Body>
