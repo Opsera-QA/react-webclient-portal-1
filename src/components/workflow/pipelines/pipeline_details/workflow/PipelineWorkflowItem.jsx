@@ -30,10 +30,10 @@ import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import StepNotificationConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/StepNotificationConfiguration";
+import PipelineStepNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import PipelineStepNotificationConfigurationOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationOverlay";
+  from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
@@ -181,22 +181,31 @@ const PipelineWorkflowItem = (
 
     setIsLoading(true);
     if (hasStringValue(tool?.tool_identifier) === true) {
-      // if (type === "notification") {
-      //   toastContext.showOverlayPanel(
-      //     <PipelineStepNotificationConfigurationOverlay
-      //       pipelineId={pipeline?._id}
-      //       pipelineStep={tool}
-      //       loadPipeline={loadPipeline}
-      //     />
-      //   );
-      // }
-      // else {
-        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
-      // }
+      await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
     } else {
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
     setIsLoading(false);
+  };
+
+  const editStepNotificationConfiguration = async (pipelineStep) => {
+    if (!authorizedAction("edit_step_notification", pipeline.owner)) {
+      setInfoModal({
+        show: true,
+        header: "Permission Denied",
+        message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
+        button: "OK",
+      });
+      return;
+    }
+
+    toastContext.showOverlayPanel(
+      <PipelineStepNotificationConfigurationOverlay
+        pipelineId={pipeline?._id}
+        pipelineStep={pipelineStep}
+        loadPipeline={loadPipeline}
+      />
+    );
   };
 
   const handleDeleteStepClick = (index, pipeline, step) => {
@@ -443,6 +452,7 @@ const PipelineWorkflowItem = (
                                      className={"pointer text-muted mx-1"}
                               onClickFunction={() => {
                                        handleEditClick("notification", item.tool, item._id);
+                                       // editStepNotificationConfiguration(item);
                                      }} />
                   </OverlayTrigger>
 

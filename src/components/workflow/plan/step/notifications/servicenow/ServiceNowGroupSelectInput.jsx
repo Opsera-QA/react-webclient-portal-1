@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function ServiceNowUserSelectInput({visible, dataObject, setDataObject, disabled, serviceNowId}) {
+function ServiceNowGroupSelectInput({visible, dataObject, setDataObject, disabled, serviceNowId}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [users, setUsers] = useState([]);
+  const [groups, setGroups] = useState([]);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -23,9 +23,9 @@ function ServiceNowUserSelectInput({visible, dataObject, setDataObject, disabled
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    setUsers([]);
+    setGroups([]);
     if (serviceNowId) {
-      loadUsers(serviceNowId, source).catch((error) => {
+      loadGroups(serviceNowId, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -38,13 +38,13 @@ function ServiceNowUserSelectInput({visible, dataObject, setDataObject, disabled
     };
   }, [serviceNowId]);
 
-  const loadUsers = async (serviceNowId, cancelSource = cancelTokenSource) => {
+  const loadGroups = async (serviceNowId, cancelSource = cancelTokenSource) => {
     try{
       setIsLoading(true);
-      const response = await pipelineStepNotificationActions.getServiceNowUsers(serviceNowId, getAccessToken, cancelSource);
+      const response = await pipelineStepNotificationActions.getServiceNowGroups(serviceNowId, getAccessToken, cancelSource);
 
       if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-        setUsers(response.data.message);
+        setGroups(response.data.message);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -60,15 +60,15 @@ function ServiceNowUserSelectInput({visible, dataObject, setDataObject, disabled
 
   const getPlaceholderText = () => {
     if (isLoading) {
-      return "Loading Users";
+      return "Loading Groups";
     }
 
     if (serviceNowId === "") {
-      return "A ServiceNow Tool must be selected before selecting User";
+      return "A ServiceNow Tool must be selected before selecting a Group";
     }
 
-    if (!isLoading && serviceNowId !== "" && users.length === 0) {
-      return "No Users found for selected ServiceNow account.";
+    if (!isLoading && serviceNowId !== "" && groups.length === 0) {
+      return "No Groups found for selected ServiceNow account.";
     }
   };
 
@@ -78,20 +78,20 @@ function ServiceNowUserSelectInput({visible, dataObject, setDataObject, disabled
 
   return (
     <SelectInputBase
-      fieldName={"serviceNowUserId"}
+      fieldName={"serviceNowGroupId"}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={users}
+      selectOptions={groups}
       busy={isLoading}
       valueField="sys_id"
       textField="name"
       placeholderText={getPlaceholderText()}
-      disabled={disabled || isLoading || serviceNowId === "" || users.length === 0}
+      disabled={disabled || isLoading || serviceNowId === "" || groups.length === 0}
     />
   );
 }
 
-ServiceNowUserSelectInput.propTypes = {
+ServiceNowGroupSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   serviceNowId: PropTypes.string,
@@ -99,8 +99,8 @@ ServiceNowUserSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-ServiceNowUserSelectInput.defaultProps = {
+ServiceNowGroupSelectInput.defaultProps = {
   visible: true
 };
 
-export default ServiceNowUserSelectInput;
+export default ServiceNowGroupSelectInput;

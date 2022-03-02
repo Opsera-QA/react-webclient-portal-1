@@ -1,35 +1,36 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import jiraStepApprovalMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/jiraStepApprovalMetadata";
+  from "components/workflow/plan/step/notifications/jira/jiraStepApprovalMetadata";
 import jiraStepNotificationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/jiraStepNotificationMetadata";
+  from "components/workflow/plan/step/notifications/jira/jiraStepNotificationMetadata";
 import Model from "core/data_model/model";
 import emailStepNotificationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/email/emailStepNotificationMetadata";
+  from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import slackStepNotificationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/slackStepNotificationMetadata";
+  from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
 import teamsStepNotificationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/teams/teamsStepNotificationMetadata";
+  from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
 import serviceNowStepNotificationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/serviceNowStepNotificationMetadata";
+  from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepJiraNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/PipelineStepJiraNotificationSummaryPanel";
+  from "components/workflow/plan/step/notifications/jira/PipelineStepJiraNotificationSummaryPanel";
 import PipelineStepEmailNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/email/PipelineStepEmailNotificationSummaryPanel";
+  from "components/workflow/plan/step/notifications/email/PipelineStepEmailNotificationSummaryPanel";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import PipelineStepServiceNowNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/servicenow/PipelineStepServiceNowNotificationSummaryPanel";
+  from "components/workflow/plan/step/notifications/servicenow/PipelineStepServiceNowNotificationSummaryPanel";
 import PipelineStepSlackNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/PipelineStepSlackNotificationSummaryPanel";
+  from "components/workflow/plan/step/notifications/slack/PipelineStepSlackNotificationSummaryPanel";
 import PipelineStepMicrosoftTeamsNotificationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
+  from "components/workflow/plan/step/notifications/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
 import NoDataMessageField from "components/common/fields/text/standalone/NoDataMessageField";
+import modelHelpers from "components/common/model/modelHelpers";
 
-// TODO: Style
+// TODO: Style and utilize the left tab construct
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
   const [jiraModel, setJiraModel] = useState(undefined);
   const [teamsModel, setTeamsModel] = useState(undefined);
@@ -46,51 +47,27 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
   const loadData = (pipelineStepData) => {
     setIsLoading(true);
-
-    if (pipelineStepData?.tool?.tool_identifier === "approval") {
-      loadConfiguration(pipelineStepData, jiraStepApprovalMetadata);
-    } else {
-      loadConfiguration(pipelineStepData, jiraStepNotificationMetadata);
-    }
-
+    loadConfiguration(pipelineStepData, jiraStepApprovalMetadata);
     setIsLoading(false);
   };
 
-  // TODO: Tighten up
-  const loadConfiguration = (step, jiraStepMetadata) => {
-    setEmailModel(new Model({...emailStepNotificationMetadata.newObjectFields}, emailStepNotificationMetadata, true));
-    setSlackModel(new Model({...slackStepNotificationMetadata.newObjectFields}, slackStepNotificationMetadata, true));
-    setJiraModel(new Model({...jiraStepMetadata.newObjectFields}, jiraStepMetadata, true));
-    setTeamsModel(new Model({...teamsStepNotificationMetadata.newObjectFields}, teamsStepNotificationMetadata, true));
-    setServiceNowModel(new Model({...serviceNowStepNotificationMetadata.newObjectFields}, serviceNowStepNotificationMetadata, true));
+  const loadConfiguration = () => {
+    const jiraNotificationMetadata = pipelineStepData?.tool?.tool_identifier === "approval" ? jiraStepApprovalMetadata : jiraStepNotificationMetadata;
 
-    if (step.notification !== undefined) {
-      let emailArrayIndex = step.notification.findIndex(x => x.type === "email");
-      let slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
-      let jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
-      let teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
-      let serviceNowArrayIndex = step.notification.findIndex(x => x.type === "servicenow");
-      if (emailArrayIndex >= 0) {
-        let emailFormData = step.notification[emailArrayIndex];
-        setEmailModel(new Model(emailFormData, emailStepNotificationMetadata, false));
-      }
-      if (slackArrayIndex >= 0) {
-        let slackFormData = step.notification[slackArrayIndex];
-        setSlackModel(new Model(slackFormData, slackStepNotificationMetadata, false));
-      }
-      if (jiraArrayIndex >= 0) {
-        let jiraFormData = step.notification[jiraArrayIndex];
-        setJiraModel(new Model(jiraFormData, jiraStepMetadata, false));
-      }
-      if (teamsArrayIndex >= 0) {
-        let teamsFormData = step.notification[teamsArrayIndex];
-        setTeamsModel(new Model(teamsFormData, teamsStepNotificationMetadata, false));
-      }
-      if (serviceNowArrayIndex >= 0) {
-        let serviceNowFormData = step.notification[serviceNowArrayIndex];
-        setServiceNowModel(new Model(serviceNowFormData, serviceNowStepNotificationMetadata, false));
-      }
-    }
+    const emailNotification = pipelineStepData?.notification?.find((notification) => notification.type === "email");
+    setEmailModel(modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata));
+
+    const slackNotification = pipelineStepData?.notification?.find((notification) => notification.type === "slack");
+    setSlackModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
+
+    const jiraNotification = pipelineStepData?.notification?.find((notification) => notification.type === "jira");
+    setJiraModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraNotificationMetadata));
+
+    const teamsNotification = pipelineStepData?.notification?.find((notification) => notification.type === "teams");
+    setTeamsModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
+
+    const serviceNowNotification = pipelineStepData?.notification?.find((notification) => notification.type === "servicenow");
+    setServiceNowModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
   };
 
   const getEmailFields = () => {
