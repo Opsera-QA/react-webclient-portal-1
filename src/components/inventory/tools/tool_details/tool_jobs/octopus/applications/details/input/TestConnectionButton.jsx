@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faSpinner, faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,6 +10,7 @@ import ToolRegistryConnectionLogOverlay from "components/common/buttons/connecti
 import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";
+import IconBase from "components/common/icons/IconBase";
 
 function TestConnectionButton({ toolDataDto, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -114,18 +114,18 @@ function TestConnectionButton({ toolDataDto, disable }) {
 
   const getLabel = () => {
     if (isTesting) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>{`Checking ${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health`}</span>);
+      return (<span><IconBase className={"mr-2"}/>{`Checking ${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health`}</span>);
     }
 
     if (failedConnection) {
-      return (<span><FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth/>{`${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health Check Failed!`}</span>);
+      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>{`${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health Check Failed!`}</span>);
     }
 
     if (successfulConnection) {
-      return (<span><FontAwesomeIcon icon={faLaptopMedical} className="mr-2" fixedWidth/>Health Check Succeeded!</span>);
+      return (<span><IconBase icon={faLaptopMedical} className={"mr-2"}/>Health Check Succeeded!</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faLaptopMedical} fixedWidth className="mr-2"/>{`Check ${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health`}</span>);
+    return (<span><IconBase icon={faLaptopMedical} className={"mr-2"}/>{`Check ${toolDataDto.getData("type") ? toolDataDto.getData("type").charAt(0).toUpperCase() + toolDataDto.getData("type").slice(1) : ""} Health`}</span>);
   };
 
   const getConnectionModal = () => {    
