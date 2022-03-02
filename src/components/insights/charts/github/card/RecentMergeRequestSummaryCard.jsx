@@ -5,10 +5,10 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import InsightsCardContainerBase from "components/common/card_containers/InsightsCardContainerBase";
 import githubRecentMergeRequestsMetadata from "components/insights/charts/github/table/recent_merge_requests/github-recent-merge-requests-metadata.js";
+import IconBase from "components/common/icons/IconBase";
 
 function RecentMergeRequestSummaryCard({ mergeRequestData, loadData }) {
 
@@ -24,7 +24,7 @@ function RecentMergeRequestSummaryCard({ mergeRequestData, loadData }) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faFileCode} fixedWidth className="mr-1"/>{mergeRequestMetricScorecardDto.getData("ProjectName")}</div>
+        <div><IconBase icon={faFileCode} className={"mr-1"}/>{mergeRequestMetricScorecardDto.getData("ProjectName")}</div>
       </div>
     );
   };
