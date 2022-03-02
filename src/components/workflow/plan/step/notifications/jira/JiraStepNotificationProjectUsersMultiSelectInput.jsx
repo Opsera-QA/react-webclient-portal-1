@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
-function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, fieldName, visible, dataObject, setDataObject, disabled}) {
+function JiraStepNotificationProjectUsersMultiSelectInput({fieldName, jiraToolId, jiraProject, visible, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
@@ -58,7 +58,7 @@ function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, fieldNam
   }
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -72,19 +72,19 @@ function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, fieldNam
   );
 }
 
-JiraStepNotificationProjectUserInput.propTypes = {
+JiraStepNotificationProjectUsersMultiSelectInput.propTypes = {
+  fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   jiraToolId: PropTypes.string,
   jiraProject: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool,
-  fieldName: PropTypes.string
+  visible: PropTypes.bool
 };
 
-JiraStepNotificationProjectUserInput.defaultProps = {
-  visible: true,
-  fieldName: "jiraPrimaryAssignee"
+JiraStepNotificationProjectUsersMultiSelectInput.defaultProps = {
+  fieldName: "jiraSecondaryAssignees",
+  visible: true
 };
 
-export default JiraStepNotificationProjectUserInput;
+export default JiraStepNotificationProjectUsersMultiSelectInput;

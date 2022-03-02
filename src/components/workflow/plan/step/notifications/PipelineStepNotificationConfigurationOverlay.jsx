@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
+import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import StepNotificationConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/StepNotificationConfiguration";
+import PipelineStepNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
@@ -29,12 +29,12 @@ function PipelineStepNotificationConfigurationOverlay(
       closePanel={closePanel}
       showPanel={true}
       titleText={`Pipeline Step Notification Configuration`}
-      titleIcon={faTools}
+      titleIcon={faEnvelope}
       showToasts={true}
-      fullWidth={true}
+      showCloseButton={false}
     >
       <div className={"p-3"}>
-        <StepNotificationConfiguration
+        <PipelineStepNotificationEditorPanel
           pipelineId={pipelineId}
           pipelineStep={pipelineStep}
           handleCloseClick={closePanel}

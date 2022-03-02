@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {Link} from "react-router-dom";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import slackNotificationMetadata from "components/notifications/notification_details/notification_method_forms/slack/slackNotificationMetadata";
-import SlackStepNotificationToolInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/slack/SlackStepNotificationToolInput";
+import SlackStepNotificationToolInput from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import IconBase from "components/common/icons/IconBase";
 

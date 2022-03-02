@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {Link} from "react-router-dom";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import teamsNotificationMetadata from "components/notifications/notification_details/notification_method_forms/teams/teamsNotificationMetadata";
-import TeamsStepNotificationToolInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/teams/TeamsStepNotificationToolInput";
+import TeamsStepNotificationToolInput from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationToolInput";
 import IconBase from "components/common/icons/IconBase";
 
 function TeamsNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {

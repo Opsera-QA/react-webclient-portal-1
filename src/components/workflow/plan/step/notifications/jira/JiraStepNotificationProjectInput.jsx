@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";

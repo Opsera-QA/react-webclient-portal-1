@@ -1,4 +1,4 @@
-import baseActions from "../../../../../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
 
 // TODO Implement
 const pipelineStepNotificationActions = {};

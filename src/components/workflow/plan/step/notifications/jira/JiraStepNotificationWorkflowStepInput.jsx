@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function JiraStepNotificationWorkflowStepInput({jiraToolId, jiraProject, fieldName, visible, dataObject, setDataObject, disabled}) {

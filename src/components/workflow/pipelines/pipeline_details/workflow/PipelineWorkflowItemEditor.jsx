@@ -6,7 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
-import StepNotificationConfiguration from "./step_configuration/step_notification_configuration/StepNotificationConfiguration";
+import PipelineStepNotificationEditorPanel from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import SourceRepositoryConfiguration
@@ -119,7 +119,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       {getTitleBar("Step Notification")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
-        <StepNotificationConfiguration
+        <PipelineStepNotificationEditorPanel
           pipelineId={pipeline?._id}
           pipelineStep={pipelineStep}
           handleCloseClick={handleCloseClick}
