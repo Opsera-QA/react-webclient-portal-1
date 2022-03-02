@@ -25,6 +25,13 @@ const FlywayDatabaseConnectionMetadata = {
       label: "databaseType",
       id: "buildType",
       isRequired: true
+    },
+    {
+      label: "Service",
+      id: "service",
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "oracle";
+      },
     }
   ],
   newObjectFields:
@@ -33,6 +40,7 @@ const FlywayDatabaseConnectionMetadata = {
       password: "",
       dbURL: "",
       port: "",
+      service: "",
       buildType: "snowflake"
     }
 };

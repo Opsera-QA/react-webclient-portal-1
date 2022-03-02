@@ -10,7 +10,6 @@ import DeploymentStatisticsActionableInsightsTable from "./DeploymentStatisticsA
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
@@ -21,6 +20,7 @@ import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point
 import {
   OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
 } from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -78,10 +78,10 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Goal<b> ({goalsData} %)</b>{" "}
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
           Success Rate{" "}
-          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <ResponsiveLine
           data={successChartData}

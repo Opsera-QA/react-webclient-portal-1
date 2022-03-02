@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function DetailPanelLoadingDialog({ type }) {
   return (
     <div className="p-5 text-lg-center">
-      <span className="m-auto"><FontAwesomeIcon icon={faSpinner} spin className="mr-2"/>Loading {type}</span>
+      <span className="m-auto"><LoadingIcon className={"mr-2"}/>Loading {type}</span>
     </div>
   );
 }

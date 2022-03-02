@@ -1,8 +1,8 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import {Col} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function PageLink({link, linkText, icon, visible}) {
   if (visible !== true) {
@@ -11,7 +11,7 @@ function PageLink({link, linkText, icon, visible}) {
 
   return (
     <Col xs={12} md={6} lg={4} className="p-2">
-      <Link to={link}><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{linkText}</Link>
+      <Link to={link}><IconBase icon={icon} className={"mr-2"}/>{linkText}</Link>
     </Col>
   );
 }

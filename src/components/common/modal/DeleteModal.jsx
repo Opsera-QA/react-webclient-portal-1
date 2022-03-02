@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import IconBase from "components/common/icons/IconBase";
 
 function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
   const handleClose = () => {
@@ -21,7 +21,7 @@ function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
             <Row>
               <Col sm={1}>
                 <div className="mt-2">
-                  <FontAwesomeIcon icon={faTrash} size={"lg"} className="danger-red"/>
+                  <IconBase icon={faTrash} iconSize={"lg"} className={"danger-red"}/>
                 </div>
               </Col>
               <Col sm={11}>

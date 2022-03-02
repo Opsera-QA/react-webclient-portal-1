@@ -313,7 +313,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
           <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
                        component={ProjectDataMappingDetailView} />
-          <SecureRoute path="/settings/data_mapping/pipelines/details/:pipelineDataMappingId" exact
+          <SecureRoute path="/settings/data_mapping/pipeline/details/:pipelineDataMappingId" exact
                        component={PipelineDataMappingDetailView} />
           <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                        component={UserDataMappingDetailView} />

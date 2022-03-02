@@ -8,7 +8,6 @@ import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import SonarRatingsMaintainabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
@@ -16,6 +15,7 @@ import SonarRatingsMaintainabilityActionableInsightTable from "components/insigh
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -96,7 +96,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
           sonarMaintainability.map((maintainibility, index) => ({
             ...maintainibility,
             status: calculateTrend(maintainibility),
-            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+            _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
           }))
         );
         let newFilterDto = filterDto;

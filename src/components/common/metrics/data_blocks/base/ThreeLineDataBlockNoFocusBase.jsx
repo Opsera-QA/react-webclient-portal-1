@@ -60,7 +60,7 @@ function ThreeLineDataBlockNoFocusBase({
         <div className="w-100 text-center">
           <div className={"d-flex"} style={{justifyContent: "center"}}>
             {getTopText()}
-            {dataPoint && <div className={"data-block-icon"}>{getInfoOverlayIcon()}</div>}
+            {dataPoint && <div className={"data-blocDeploymentStatisticsDataBlockContainerk-icon"}>{getInfoOverlayIcon()}</div>}
           </div>
         </div>
         <div className="my-auto text-center">

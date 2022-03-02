@@ -1,18 +1,18 @@
 import React from "react";
 import { Popover } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: This code is duplicated all over and also should be a React component. Revisit soon.
+// TODO: Use the tool info overlay instead
 export const RegistryPopover = (data) => {
     if (data) {
       return (
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
+            <IconBase icon={faTimes} className={"fa-pull-right pointer"} onClickFunction={() => document.body.click()} />
           </Popover.Title>
 
           <Popover.Content>
@@ -44,7 +44,7 @@ export const RegistryPopover = (data) => {
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon icon={faTimes} className="fa-pull-right pointer" onClick={() => document.body.click()} />
+            <IconBase icon={faTimes} className={"fa-pull-right pointer"} onClickFunction={() => document.body.click()} />
           </Popover.Title>
 
           <Popover.Content>

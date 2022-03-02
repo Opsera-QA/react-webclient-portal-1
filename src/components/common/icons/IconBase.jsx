@@ -12,7 +12,12 @@ function IconBase(
     iconSize,
     iconStyling,
     onClickFunction,
+    iconTransformProperties,
     spinIcon,
+
+    // TODO: Remove?
+    iconTitle,
+    iconColor,
   }) {
   const getIcon = () => {
     if (isLoading) {
@@ -31,8 +36,11 @@ function IconBase(
         icon={icon}
         spin={spinIcon}
         size={iconSize}
+        transform={iconTransformProperties}
         fixedWidth
         className={iconClassName}
+        title={iconTitle}
+        color={iconColor}
       />
     );
   };
@@ -57,6 +65,9 @@ IconBase.propTypes = {
   iconClassName: PropTypes.string,
   iconStyling: PropTypes.object,
   spinIcon: PropTypes.bool,
+  iconTransformProperties: PropTypes.string,
+  iconTitle: PropTypes.string,
+  iconColor: PropTypes.string,
 };
 
 export default React.memo(IconBase);

@@ -4,9 +4,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import octopusActions from "../octopus-step-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject, disabled, plan, stepId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -131,7 +131,7 @@ function AzureAcrPushRepositoryTagsSelectInput({ dataObject, setDataObject, disa
     if (dataObject.getData("ecrPushStepId").length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to fetch Repository Tags
         </small>
       );

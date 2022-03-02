@@ -5,11 +5,11 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 // import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import IconBase from "components/common/icons/IconBase";
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -57,7 +57,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
         <InputLabel field={field} model={dataObject} />
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1" />
+            <IconBase icon={faTimes} className={"mr-1"} />
             Clear Value
           </span>
         </TooltipWrapper>

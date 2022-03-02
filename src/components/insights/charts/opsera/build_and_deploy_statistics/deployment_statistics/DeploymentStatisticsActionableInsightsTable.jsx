@@ -13,7 +13,6 @@ import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-ic
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TotalDeployments from "../data_blocks/TotalDeployments";
 import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
 import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
@@ -21,6 +20,7 @@ import AverageDuration from "../data_blocks/AverageDuration";
 import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import IconBase from "components/common/icons/IconBase";
 
 function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -102,7 +102,7 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
         await setDeploymentStatsData(
           deploymentData.map((dd, index) => ({
             ...dd,
-            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+            _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
           }))
         );
         let newFilterDto = filterDto;

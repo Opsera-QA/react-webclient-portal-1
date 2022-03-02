@@ -101,7 +101,7 @@ BuildkitePipelineSelectInput.propTypes = {
 };
 
 BuildkitePipelineSelectInput.defaultProps = {
-  valueField: "id",
+  valueField: "name",
   textField: "name",
   fieldName: "pipeline",
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import pipelineStepNotificationActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ServiceNowAssignmentGroupSelectInput({

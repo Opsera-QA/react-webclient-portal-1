@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import UnitTestClassCard from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/UnitTestClassCard";
 import {faArrowRight, faPlusCircle, faCode} from "@fortawesome/pro-light-svg-icons";
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 import {Button} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function UnitTestClassesPanel({selectedNonMembers, setSelectedNonMembers, nonMembers, setNonMembers, members, setMembers, setShowUnsavedChangesMessage, filteredNonmembers}) {
   const [shownNonMembers, setShownNonMembers] = useState([]);
@@ -66,24 +66,24 @@ function UnitTestClassesPanel({selectedNonMembers, setSelectedNonMembers, nonMem
     <div>
       <div className="mb-2 d-flex justify-content-between">
         <Button size="sm" variant="success" onClick={addAllNonmembers}>
-          <span className="mr-2"><FontAwesomeIcon className="mr-2" icon={faPlusCircle} fixedWidth/>Add All</span>
+          <span className="mr-2"><IconBase className={"mr-2"} icon={faPlusCircle}/>Add All</span>
           <span className="badge badge-secondary">{filteredNonmembers.length}</span>
         </Button>
         <Button disabled={selectedNonMembers.length === 0} size="sm" variant="outline-primary" onClick={() => addSelectedToMembers()}>
           <div className="d-flex justify-content-between">
-            <div><FontAwesomeIcon icon={faArrowRight} fixedWidth/></div>
+            <div><IconBase icon={faArrowRight}/></div>
             <div className="mx-2">Add Selected</div>
             <div><span className="badge badge-secondary">{selectedNonMembers.length}</span></div>
           </div>
         </Button>
         <Button size="sm" variant="outline-success" onClick={addAllShownNonMembers}>
-          <span className="mr-2"><FontAwesomeIcon className="mr-2" icon={faPlusCircle} fixedWidth/>Add All Shown</span>
+          <span className="mr-2"><IconBase className={"mr-2"} icon={faPlusCircle} />Add All Shown</span>
           <span className="badge badge-secondary">{shownNonMembers.length}</span>
         </Button>
       </div>
       <div className="content-card-1 content-container scroller">
         <div className="px-2 d-flex content-block-header justify-content-between">
-          <div><FontAwesomeIcon icon={faCode} fixedWidth className="mr-2"/>Unit Test Classes</div>
+          <div><IconBase icon={faCode} className={"mr-2"}/>Unit Test Classes</div>
           <div>{nonMembers.length} {nonMembers.length !== 1 ? "classes" : "class"}</div>
         </div>
         <ul className="list-group membership-list">

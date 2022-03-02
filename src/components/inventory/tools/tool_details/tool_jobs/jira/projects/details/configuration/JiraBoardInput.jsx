@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineStepNotificationActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
+  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import axios from "axios";
 
 // TODO: Make base

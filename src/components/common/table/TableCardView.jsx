@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function TableCardView(
   {
@@ -15,7 +14,7 @@ function TableCardView(
     if (!Array.isArray(data) || data.length === 0) {
       if (isLoading) {
         // TODO: Make good looking loading display
-        return (<div className="info-text text-center p-5"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
+        return (<div className="info-text text-center p-5"><LoadingIcon className={"mr-1"}/>Loading Data</div>);
       }
     }
 

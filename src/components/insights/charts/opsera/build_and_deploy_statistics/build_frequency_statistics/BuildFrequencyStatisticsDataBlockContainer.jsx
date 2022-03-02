@@ -8,17 +8,20 @@ import { defaultConfig } from 'components/insights/charts/charts-views';
 import "../build-and-deploy-kpi.css";
 import _ from "lodash";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+<<<<<<< HEAD
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {
   OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
 } from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
+=======
+import IconBase from "components/common/icons/IconBase";
+>>>>>>> fbe4d1f98324f6a569663aa7424ccd4c8cdb372b
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration }) {
@@ -62,10 +65,10 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Goal<b> ({goalsData})</b>{" "}
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
           Average Daily Builds{" "}
-          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <ResponsiveLine
           data={dailyBuildsChartData}

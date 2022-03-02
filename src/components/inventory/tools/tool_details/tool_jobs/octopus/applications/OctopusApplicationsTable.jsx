@@ -1,7 +1,6 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown } from "react-bootstrap";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -17,6 +16,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import NewOctopusApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/create_overlay/NewOctopusApplicationOverlay";
 import {octopusCustomTableColumnDefinitions} from "components/common/table/column_definitions/tools/octopus/octopus.customTable.columnDefinitions";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusApplicationsTable({ toolData, isMounted, applications, loadData, onRowSelect, isLoading }) {
   const toastContext = useContext(DialogToastContext);
@@ -67,7 +67,7 @@ function OctopusApplicationsTable({ toolData, isMounted, applications, loadData,
       <div className="mt-1 text-right">
         <Dropdown>
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create
+            <IconBase icon={faPlus} className={"mr-1"}/> Create
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => createOctopusApplication("environment")}>Environment</Dropdown.Item>

@@ -1,10 +1,10 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink, faLock} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
 function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, className, handleClose}) {
   let history = useHistory();
@@ -36,7 +36,7 @@ function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, cl
       return (
         <TooltipWrapper trigger={["hover", "focus"]} innerText={"You do not have access to this Tool"}>
           <span className="my-auto danger-red">
-            <FontAwesomeIcon icon={faLock} fixedWidth/>
+            <IconBase icon={faLock} fixedWidth/>
           </span>
         </TooltipWrapper>
       );
@@ -45,7 +45,7 @@ function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, cl
     return (
       <TooltipWrapper trigger={["hover", "focus"]} innerText={"Go To Tool's Detail View"}>
         <span onClick={() => loadTool()} className={"pointer my-auto"}>
-          <FontAwesomeIcon icon={faExternalLink} fixedWidth/>
+          <IconBase icon={faExternalLink} fixedWidth/>
         </span>
       </TooltipWrapper>
     );

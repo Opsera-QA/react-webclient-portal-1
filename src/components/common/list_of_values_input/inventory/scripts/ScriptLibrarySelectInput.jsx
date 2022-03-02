@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faFileCode} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
@@ -10,6 +9,7 @@ import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptOverlay from "components/common/list_of_values_input/inventory/scripts/ScriptOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getScriptLanguageDisplayText} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className, fields, setDataFunction, language}) {
   let toastContext = useContext(DialogToastContext);
@@ -83,7 +83,7 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     if (dataObject.getData(fieldName) !== "") {
       return (
         <div className="text-muted d-flex pointer" onClick={() => {toggleScriptOverlay();}}>
-          <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
+          <span><IconBase icon={faFileCode} className={"pr-1"} />View this Script</span>
         </div>
       );
     }
@@ -93,7 +93,7 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     const dynamicText = language ? `${getScriptLanguageDisplayText(language)} ` : "";
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No {dynamicText}scripts have been registered.
         Please go to
         <Link to="/inventory/scripts"> Scripts Library</Link> and add an entry in order to proceed.

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ModalLogs from "components/common/modal/modalLogs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import InfoDialog from "components/common/status_notifications/info";
+import IconBase from "components/common/icons/IconBase";
 
 function BlueprintSearchResult({ searchResults }) {
   const [showModal, setShowModal] = useState(false);
@@ -25,12 +25,12 @@ function BlueprintSearchResult({ searchResults }) {
 
         <div key={idx} className="console-text-invert bordered-content-block p-3">
           <div>
-            <FontAwesomeIcon
+            <IconBase
               icon={faSearchPlus}
-              className="ml-1"
-              size="lg"
-              style={{cursor: "pointer", float: "right"}}
-              onClick={() => {
+              className={"ml-1"}
+              iconSize={"lg"}
+              iconStyling={{cursor: "pointer", float: "right"}}
+              onClickFunction={() => {
                 handleClick(item);
               }}/>
           </div>

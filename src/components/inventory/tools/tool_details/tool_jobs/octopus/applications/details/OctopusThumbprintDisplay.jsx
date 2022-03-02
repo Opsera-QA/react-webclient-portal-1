@@ -6,8 +6,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import { Col } from "react-bootstrap";
 import OctopusActions from "../../octopus-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function OctopusThumbprintDisplay ({dataObject, setDataObject, toolData, className}) {
     
@@ -50,7 +49,7 @@ function OctopusThumbprintDisplay ({dataObject, setDataObject, toolData, classNa
 
     return (
       <>
-        {thumbprintLoading ? (<span className="ml-4"><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/></span>) : (
+        {thumbprintLoading ? (<span className="ml-4"><LoadingIcon className={"mr-1"}/></span>) : (
           <Col lg={12} className={className}>
               <TextFieldBase dataObject={dataObject} fieldName={"thumbprint"}/>
               <small className="form-text text-muted">
