@@ -5,8 +5,8 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import octopusActions from "../../../octopus-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function AzureAcrPushResourceGroupSelectInput({
   fieldName,
@@ -75,7 +75,7 @@ function AzureAcrPushResourceGroupSelectInput({
     if (dataObject.getData("resource").length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to fetch Azure Resource Groups
         </small>
       );

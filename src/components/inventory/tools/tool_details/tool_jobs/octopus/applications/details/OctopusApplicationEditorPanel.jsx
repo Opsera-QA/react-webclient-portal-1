@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";
-import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import CloudProviderSelectInput from "./input/CloudProviderSelectInput";
 import OctopusApplicationAzureAccountToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusApplicationAzureAccountToolSelectInput";
 import CommunicationStyleSelectInput from "./input/CommunicationStyleSelectInput";
@@ -25,7 +23,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
 import axios from "axios";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
 import OctopusStepAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusStepAzureToolSelectInput";
@@ -34,6 +31,8 @@ import AzureResourceGroupSelectInput from "./input/AzureResourceGroupSelectInput
 import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {getOctopusApplicationTypeLabel} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -487,7 +486,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     onClick={() => validateIisConfig(cancelTokenSource)}
                     disabled={octopusApplicationDataDto.getData("hostName") === "" || octopusApplicationDataDto.getData("port") === ""}
                   >
-                    {isValidatingConfig ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Validate IIS Configuration</span>) : 'Validate IIS Configuration'}
+                    {isValidatingConfig ? (<span><LoadingIcon className={"mr-1"}/>Validating IIS Configuration</span>) : 'Validate IIS Configuration'}
                   </Button>
                 </Col>
               </>
@@ -580,7 +579,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       return (
         <div className="mr-auto ml-2 mt-3 px-3">
           <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete{" "}
+            <IconBase icon={faTrash} className={"danger-red"}/> Delete{" "}
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </Button>
           <br/>

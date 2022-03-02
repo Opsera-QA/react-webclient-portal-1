@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraConfigurationMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
@@ -15,6 +14,7 @@ import JiraBoardInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraBoardInput";
 import JiraParentTicketInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraParentTicketInput";
+import IconBase from "components/common/icons/IconBase";
 
 function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigurationDto, setJiraConfigurationDto }) {
   useEffect(() => {loadData();}, []);
@@ -29,7 +29,7 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
     return (
       <small className="form-text text-muted px-2">
         Please Note: You must connect to Jira on the
-        <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+        <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
       </small>
     );
   };
