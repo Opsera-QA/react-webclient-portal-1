@@ -15,9 +15,13 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration }) {
 
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -33,14 +37,22 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       "id": "average daily builds",
       "data": chartData?.avgBuilds
     }  
-  ];  
+  ];
+
+  const buildFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
+    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.BUILD_FREQUENCY_STATISTICS_DATA_POINT);
 
   const getLeftDataBlock = () => {    
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Builds"}
-        middleText={<MetricScoreText score={metricData?.build?.perDayAverage} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricScoreText
+          score={metricData?.build?.perDayAverage}
+          qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
+          dataPoint={buildFrequencyStatisticsDataPoint}
+        />}
+        dataPoint={buildFrequencyStatisticsDataPoint}
       />
     );
   };
@@ -108,6 +120,7 @@ BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
+  kpiConfiguration: PropTypes.object
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;

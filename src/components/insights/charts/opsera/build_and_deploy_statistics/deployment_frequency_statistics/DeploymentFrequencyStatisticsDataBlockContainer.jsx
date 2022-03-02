@@ -14,9 +14,13 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {
+function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -34,12 +38,20 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
     }  
   ];
 
+  const deploymentFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
+    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_FREQUENCY_STATISTICS_DATA_POINT);
+
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Average Daily Deployments"}
-        middleText={<MetricScoreText score={metricData?.deploy?.perDayAverage} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricScoreText
+          score={metricData?.deploy?.perDayAverage}
+          qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
+          dataPoint={deploymentFrequencyStatisticsDataPoint}
+        />}
+        dataPoint={deploymentFrequencyStatisticsDataPoint}
       />
     );
   };
@@ -108,6 +120,7 @@ DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
+  kpiConfiguration: PropTypes.object,
 };
 
 export default DeploymentFrequencyStatisticsDataBlockContainer;

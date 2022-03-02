@@ -7,13 +7,14 @@ import {
   isEmptyCustom,
 } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import "components/insights/charts/sdlc/sdlc-duration-by-stage-kpi.css";
-function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsData }) {
+function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsData, dataPoint }) {
+
   return (
     <ThreeLineDataBlockNoFocusBase
       topText={topText}
       className="sdlc-duration-by-stage-kpi"
-      middleText={getMiddleText(meanData, countData, goalsData)}
-      bottomText={goalsData ? `Goal: < ${goalsData} min` : `No Goal`}
+      middleText={getMiddleText(meanData, countData, goalsData, dataPoint)}
+      dataPoint={dataPoint}
     />
   );
 }
@@ -23,6 +24,7 @@ SdlcDurationByStageDataBlockBase.propTypes = {
   meanData: PropTypes.number,
   countData: PropTypes.number,
   goalsData: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default SdlcDurationByStageDataBlockBase;

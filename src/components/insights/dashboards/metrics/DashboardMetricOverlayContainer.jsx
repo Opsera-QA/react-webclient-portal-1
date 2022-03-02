@@ -16,6 +16,8 @@ import DashboardMetricEditorPanelContainer
 import DashboardMetricTabPanel from "components/insights/dashboards/metrics/DashboardMetricTabPanel";
 import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
+import SalesforceDurationByStageMetricsEditorPanel
+  from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: combine with chart settings overlay?
@@ -88,17 +90,35 @@ function DashboardMetricOverlayContainer(
 
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
   const getMetricEditorPanel = () => {
-    // switch (kpiConfiguration?.kpi_identifier) {
-    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-    //     return (
-    //       <SdlcDurationByStageMetricsEditorPanel
-    //         metricModel={metricModel}
-    //         metricFilterModel={metricFilterModel}
-    //         setMetricFilterModel={setMetricFilterModel}
-    //         unpackedFilterData={unpackedFilterData}
-    //       />
-    //     );
-    // }
+    switch (kpiConfiguration?.kpi_identifier) {
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+        return (
+          <SdlcDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
+        return (
+          <SalesforceDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case 'build-deployment-statistics':
+        return (
+          <SalesforceDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+    }
   };
 
   const getHelpComponent = () => {

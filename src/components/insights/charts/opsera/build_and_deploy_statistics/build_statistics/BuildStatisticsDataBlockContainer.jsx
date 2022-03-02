@@ -17,6 +17,9 @@ import MetricPercentageText from "components/common/metrics/percentage/MetricPer
 import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
@@ -51,12 +54,20 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
     }  
   ];
 
+  const buildStatisticsDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
+    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.BUILD_STATISTICS_DATA_POINT);
+
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockNoFocusBase        
         topText={"Success Rate"}
-        middleText={<MetricPercentageText percentage={metricData?.build?.successPercent} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricPercentageText
+          percentage={metricData?.build?.successPercent}
+          qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
+          dataPoint={buildStatisticsDataPoint}
+        />}
+        dataPoint={buildStatisticsDataPoint}
       />
     );
   };

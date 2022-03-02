@@ -1,5 +1,6 @@
 import React from "react";
 import { statusColors } from "components/insights/charts/charts-views";
+import {dataPointHelpers} from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 export const getTimeDisplay = (mins) => {
   const seconds = Number(mins * 60);
@@ -35,8 +36,8 @@ export const isEmptyCustom = (val) => {
   return false;
 };
 
-export const getMiddleText = (meanData, countData, goalsData) => {
-  let style = getMiddleStyle(meanData, goalsData);
+export const getMiddleText = (meanData, countData, goalsData, dataPoint) => {
+  let style = getMiddleStyle(meanData, goalsData, dataPoint);
   if (!isEmptyCustom(meanData) && !isEmptyCustom(countData)) {
     return (
       <div style={style}>
@@ -50,10 +51,18 @@ export const getMiddleText = (meanData, countData, goalsData) => {
   return "No runs";
 };
 
-export const getMiddleStyle = (meanData, goalsData) => {
+export const getMiddleStyle = (meanData, goalsData, dataPoint) => {
+  if (dataPoint) {
+    const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, meanData);
+    if (typeof evaluatedDataPoint === "string") {
+      return { color: statusColors[evaluatedDataPoint]};
+    }
+  }
+
   if (isEmptyCustom(meanData) || isEmptyCustom(goalsData) || goalsData === 0) {
     return;
   }
+
   const goalsDataValue = !isEmptyCustom(goalsData) ? goalsData : 0;
   if (goalsDataValue > meanData) {
     return { color: statusColors.success };
