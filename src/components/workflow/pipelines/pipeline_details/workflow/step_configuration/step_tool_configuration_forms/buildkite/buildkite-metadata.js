@@ -59,7 +59,6 @@ const buildkiteMetadata = {
     {
       label: "Branch",
       id: "branch",
-      formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Commit",
