@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileCode} from "@fortawesome/free-solid-svg-icons";
 import ModalXML from "components/blueprint/modalXML";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: This needs to be refactored, I just isolated the code and will clean it up after I know I didn't break anything
 function ShowPackageXmlButton({logData}) {
@@ -27,7 +27,7 @@ function ShowPackageXmlButton({logData}) {
             handleClick(logData.xmlData);
           }}
         >
-          <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"} />
+          <IconBase icon={faFileCode} className={"mr-1"} />
           Package XML
         </Button>
       );
@@ -46,7 +46,7 @@ function ShowPackageXmlButton({logData}) {
               handleClick(logData.xmlData);
             }}
           >
-            <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"}/>
+            <IconBase icon={faFileCode} className={"mr-1"} />
             Package XML
           </Button>
         </OverlayTrigger>

@@ -7,7 +7,6 @@ import { Row, Col } from "react-bootstrap";
 import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import SonarRatingsReliabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/reliability/SonarRatingsReliabilityOverviewDataBlockContainer";
@@ -15,6 +14,7 @@ import SonarRatingsReliabilityActionableInsightTable from "components/insights/c
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -95,7 +95,7 @@ function SonarRatingsReliabilityActionableInsightOverlay({ kpiConfiguration, das
           sonarBugs.map((bug, index) => ({
             ...bug,
             status: calculateTrend(bug),
-            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+            _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
           }))
         );
         let newFilterDto = filterDto;
