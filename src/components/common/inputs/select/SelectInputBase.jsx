@@ -38,6 +38,7 @@ function SelectInputBase(
     error,
     singularTopic,
     pluralTopic,
+    visible,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -123,7 +124,7 @@ function SelectInputBase(
     return "Select One";
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -205,6 +206,7 @@ SelectInputBase.propTypes = {
   error: PropTypes.any,
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {

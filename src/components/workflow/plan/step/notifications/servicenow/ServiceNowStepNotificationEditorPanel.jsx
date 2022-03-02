@@ -8,7 +8,7 @@ import NotificationLevelInput from "components/workflow/plan/step/notifications/
 import ServiceNowStepNotificationToolSelectInput
   from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationToolSelectInput";
 import ServiceNowGroupSelectInput
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowGroupSelectInput";
+  from "components/common/list_of_values_input/tools/service_now/groups/ServiceNowGroupSelectInput";
 
 function ServiceNowStepNotificationEditorPanel(
   {
@@ -45,8 +45,18 @@ function ServiceNowStepNotificationEditorPanel(
         setModel={setServiceNowNotificationModel}
         model={serviceNowNotificationModel}
       />
-      {/* <ServiceNowUserSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} /> */}
-      <ServiceNowGroupSelectInput serviceNowId={serviceNowNotificationModel.getData("toolId")} setDataObject={setServiceNowNotificationModel} dataObject={serviceNowNotificationModel} />
+       {/*<ServiceNowUserSelectInput*/}
+       {/*  fieldName={"serviceNowUserId"}*/}
+       {/*  serviceNowId={serviceNowNotificationModel.getData("toolId")}*/}
+       {/*  setDataObject={setServiceNowNotificationModel}*/}
+       {/*  dataObject={serviceNowNotificationModel}*/}
+       {/*/>*/}
+      <ServiceNowGroupSelectInput
+        fieldName={"serviceNowGroupId"}
+        serviceNowId={serviceNowNotificationModel?.getData("toolId")}
+        model={serviceNowNotificationModel}
+        setModel={setServiceNowNotificationModel}
+      />
     </div>
   );
 }
