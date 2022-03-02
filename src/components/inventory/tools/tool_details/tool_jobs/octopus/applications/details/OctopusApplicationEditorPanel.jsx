@@ -23,7 +23,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
 import axios from "axios";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import pipelineActions from "components/workflow/pipeline-actions";
 import OctopusStepAzureToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusStepAzureToolSelectInput";
@@ -33,6 +32,7 @@ import OctopusFeedEditorForm from "./sub_forms/OctopusFeedEditorForm";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {getOctopusApplicationTypeLabel} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -579,7 +579,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       return (
         <div className="mr-auto ml-2 mt-3 px-3">
           <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete{" "}
+            <IconBase icon={faTrash} className={"danger-red"}/> Delete{" "}
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </Button>
           <br/>
