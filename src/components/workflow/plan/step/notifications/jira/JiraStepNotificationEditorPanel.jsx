@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NotificationsToggle from "components/workflow/plan/step/notifications/NotificationsToggle";
-import {Link} from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
-import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import JiraStepNotificationToolInput
   from "components/workflow/plan/step/notifications/jira/JiraStepNotificationToolInput";
 import JiraStepNotificationPriorityInput
@@ -22,6 +19,7 @@ import JiraStepNotificationParentTicketInput
   from "components/workflow/plan/step/notifications/jira/JiraStepNotificationParentTicketInput";
 import JiraStepNotificationWorkflowStepInput
   from "components/workflow/plan/step/notifications/jira/JiraStepNotificationWorkflowStepInput";
+import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 
 function JiraStepNotificationEditorPanel(
   {
@@ -73,10 +71,7 @@ function JiraStepNotificationEditorPanel(
   return (
     <div className="my-4">
       <NotificationsToggle dataObject={jiraNotificationModel} setDataObject={setJiraNotificationModel} />
-      <small className="form-text text-muted px-2">
-        Please Note: You must connect to Jira on the
-        <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
-      </small>
+      <ConnectToToolMessage toolFriendlyName={"Jira"} />
       {/*<NotificationLevelInput disabled={true} dataObject={jiraNotificationModel} setDataObject={setJiraNotificationModel} fieldName={"jiraNotificationLevel"} />*/}
       <JiraStepNotificationToolInput setDataObject={setJiraNotificationModel} dataObject={jiraNotificationModel} />
       <JiraStepNotificationPriorityInput jiraToolId={jiraNotificationModel.getData("jiraToolId")} setDataObject={setJiraNotificationModel} dataObject={jiraNotificationModel} />
