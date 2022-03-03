@@ -14,7 +14,7 @@ regexDefinitions.portField = {
 
 regexDefinitions.urlField = {
   regex:/^[A-Za-z0-9-_.:~]*$/,
-  errorFormText: "Only numbers allowed and should not be greater than 65,535"
+  errorFormText: "Letters, numbers, dashes, colons, underscores, tildes, and periods are allowed"
 };
 
 regexDefinitions.generalTextWithSpaces = {
