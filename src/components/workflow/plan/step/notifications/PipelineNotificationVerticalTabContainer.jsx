@@ -13,16 +13,9 @@ function PipelineNotificationVerticalTabContainer(
   return (
     <VanitySetVerticalTabContainer className={"h-100"}>
       <VanitySetVerticalTab
-        icon={faMicrosoft}
-        tabText={"Microsoft Teams"}
-        tabName={"teams"}
-        handleTabClick={handleTabClickFunction}
-        activeTab={activeTab}
-      />
-      <VanitySetVerticalTab
-        icon={faSlack}
-        tabText={"Slack"}
-        tabName={"slack"}
+        icon={faEnvelope}
+        tabText={"Email"}
+        tabName={"email"}
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}
       />
@@ -34,6 +27,13 @@ function PipelineNotificationVerticalTabContainer(
         activeTab={activeTab}
       />
       <VanitySetVerticalTab
+        icon={faMicrosoft}
+        tabText={"Microsoft Teams"}
+        tabName={"teams"}
+        handleTabClick={handleTabClickFunction}
+        activeTab={activeTab}
+      />
+      <VanitySetVerticalTab
         icon={faEnvelope}
         tabText={"Service Now"}
         tabName={"service-now"}
@@ -41,9 +41,9 @@ function PipelineNotificationVerticalTabContainer(
         activeTab={activeTab}
       />
       <VanitySetVerticalTab
-        icon={faEnvelope}
-        tabText={"Email"}
-        tabName={"email"}
+        icon={faSlack}
+        tabText={"Slack"}
+        tabName={"slack"}
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}
       />

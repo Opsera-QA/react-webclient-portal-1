@@ -1,42 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NotificationsToggle from "components/workflow/plan/step/notifications/NotificationsToggle";
-import NotificationLevelInput from "components/workflow/plan/step/notifications/NotificationLevelInput";
-import TeamsStepNotificationToolInput
-  from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationToolInput";
+import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
+import TeamsStepNotificationTeamsToolSelectInput
+  from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function MicrosoftTeamsStepNotificationEditorPanel(
   {
     teamsNotificationModel,
     setTeamsNotificationModel,
   }) {
-  
+
   if (teamsNotificationModel == null) {
     return null;
   }
 
-  // TODO: Remove after updating the panel to use side tabs
-  if (teamsNotificationModel?.getData("enabled") === false) {
-    return (
-      <div className="my-4">
-        <NotificationsToggle
-          dataObject={teamsNotificationModel}
-          setDataObject={setTeamsNotificationModel}
-          fieldName={"enabled"}
-        />
-      </div>
-    );
-  }
-
   return (
-    <div className="my-4">
-      <NotificationsToggle dataObject={teamsNotificationModel} setDataObject={setTeamsNotificationModel} fieldName={"enabled"} />
-      <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"} />
-      <NotificationLevelInput dataObject={teamsNotificationModel} setDataObject={setTeamsNotificationModel} fieldName={"event"} />
-      <TeamsStepNotificationToolInput setDataObject={setTeamsNotificationModel} dataObject={teamsNotificationModel} />
-    </div>
-  );
+    <Row>
+      <Col xs={12}>
+        <PipelineStepNotificationBooleanToggle
+          model={teamsNotificationModel}
+          setModel={setTeamsNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"}/>
+      </Col>
+      <Col xs={12}>
+        <PipelineStepNotificationLevelSelectInput
+          model={teamsNotificationModel}
+          setModel={setTeamsNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <TeamsStepNotificationTeamsToolSelectInput
+          model={teamsNotificationModel}
+          setModel={setTeamsNotificationModel}
+        />
+      </Col>
+    </Row>
+);
 }
 
 MicrosoftTeamsStepNotificationEditorPanel.propTypes = {

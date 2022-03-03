@@ -78,7 +78,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
-        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        {/*<CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
       </CustomTabContainer>
     );
   };

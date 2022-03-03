@@ -1,32 +1,24 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import jiraStepNotificationMetadata from "components/workflow/plan/step/notifications/jira/jiraStepNotificationMetadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import teamsStepNotificationMetadata from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
 import serviceNowStepNotificationMetadata from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
 import slackStepNotificationMetadata from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
 import emailStepNotificationMetadata from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
-import jiraStepApprovalMetadata from "components/workflow/plan/step/notifications/jira/jiraStepApprovalMetadata";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import Form from "react-bootstrap/Form";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import CloseButton from "components/common/buttons/CloseButton";
-import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import EmailStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
-import JiraStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationEditorPanel";
-import SlackStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/slack/SlackStepNotificationEditorPanel";
-import MicrosoftTeamsStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsStepNotificationEditorPanel";
-import ServiceNowStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationEditorPanel";
+import PipelineNotificationTabView from "components/workflow/plan/step/notifications/PipelineNotificationTabView";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notifications/jira/jiraStepApproval.metadata";
+import {
+  jiraStepNotificationMetadata
+} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 
 // TODO: Break out into sub panels when refactoring
 function PipelineStepNotificationEditorPanel(
@@ -158,33 +150,23 @@ function PipelineStepNotificationEditorPanel(
     return <LoadingDialog message={"Loading Notification Configuration"} size={"sm"} />;
   }
 
-  // TODO: Use general save button mechanisms
   return (
-    <Form>
+    <div>
       {getTitleBar()}
-      <SlackStepNotificationEditorPanel
+      <PipelineNotificationTabView
         slackNotificationModel={slackNotificationModel}
         setSlackNotificationModel={setSlackNotificationModel}
-      />
-      <MicrosoftTeamsStepNotificationEditorPanel
         teamsNotificationModel={teamsNotificationModel}
         setTeamsNotificationModel={setTeamsNotificationModel}
-      />
-      <JiraStepNotificationEditorPanel
         jiraNotificationModel={jiraNotificationModel}
         setJiraNotificationModel={setJiraNotificationModel}
-        isApprovalStep={pipelineStep?.tool?.tool_identifier === "approval"}
-      />
-      <ServiceNowStepNotificationEditorPanel
         serviceNowNotificationModel={serviceNowNotificationModel}
-        setServiceNowNotificationModel={setServiceNowNotificationModel}
-      />
-      <EmailStepNotificationEditorPanel
+        setServiceNowNotificationModel={setJiraNotificationModel}
         emailNotificationModel={emailNotificationModel}
         setEmailNotificationModel={setEmailNotificationModel}
+        pipelineStep={pipelineStep}
       />
-
-      <div className={"d-flex"}>
+      <SaveButtonContainer>
         <StandaloneSaveButton
           className={"mr-2"}
           type={"Pipeline Notification Step Configurations"}
@@ -195,9 +177,8 @@ function PipelineStepNotificationEditorPanel(
         <CloseButton
           closeEditorCallback={handleCloseClick}
         />
-      </div>
-      <RequiredFieldsMessage/>
-    </Form>
+      </SaveButtonContainer>
+    </div>
   );
 }
 

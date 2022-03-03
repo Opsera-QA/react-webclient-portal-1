@@ -1,4 +1,4 @@
-const jiraStepNotificationMetadata = {
+export const jiraStepApprovalMetadata = {
   idProperty: "name",
   type: "Jira Step Notification",
   fields: [
@@ -12,12 +12,12 @@ const jiraStepNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Project",
+      label: "Project",
       id: "jiraProject",
       isRequired: true
     },
     {
-      label: "Jira Sprint",
+      label: "Sprint",
       id: "jiraSprint",
       isRequired: true
     },
@@ -27,43 +27,25 @@ const jiraStepNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Notification Assignee",
+      label: "Primary Approval Assignee",
       id: "jiraPrimaryAssignee",
       isRequired: true,
     },
     {
-      label: "Jira Notification Secondary Assignees",
+      label: "Secondary Approval Assignees",
       id: "jiraSecondaryAssignees",
       maxItems: 10,
       formText: "You may select up to ten secondary assignees."
     },
     {
-      label: "Jira Board",
+      label: "Board",
       id: "jiraBoard",
       isRequired: true
     },
     {
-      label: "Jira Parent Ticket",
+      label: "Parent Ticket",
       id: "jiraParentTicket",
     },
-    {
-      label: "Jira Open Step",
-      id: "jiraOpenStep",
-      isRequired: true
-    },
-    {
-      label: "Jira Closure Step",
-      id: "jiraClosureStep",
-      isRequired: true
-    },
-    // {
-    //   label: "Jira Approval Step",
-    //   id: "jiraApprovalStep",
-    // },
-    // {
-    //   label: "Jira Rejection Step",
-    //   id: "jiraRejectionStep",
-    // },
     {
       label: "Jira Notifications",
       id: "enabled",
@@ -71,8 +53,8 @@ const jiraStepNotificationMetadata = {
   ],
   newObjectFields: {
     type: "jira",
-    event: "all",
     jiraBoard: "",
+    event: "all",
     jiraToolId: "",
     jiraProject: "",
     jiraPriority: "",
@@ -80,10 +62,6 @@ const jiraStepNotificationMetadata = {
     jiraParentTicket: "",
     jiraPrimaryAssignee: "",
     jiraSecondaryAssignees: [],
-    jiraOpenStep: "",
-    jiraClosureStep: "",
     enabled: false,
   }
 };
-
-export default jiraStepNotificationMetadata;

@@ -1,10 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import jiraStepApprovalMetadata
-  from "components/workflow/plan/step/notifications/jira/jiraStepApprovalMetadata";
-import jiraStepNotificationMetadata
-  from "components/workflow/plan/step/notifications/jira/jiraStepNotificationMetadata";
-import Model from "core/data_model/model";
 import emailStepNotificationMetadata
   from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import slackStepNotificationMetadata
@@ -29,6 +24,10 @@ import PipelineStepMicrosoftTeamsNotificationSummaryPanel
   from "components/workflow/plan/step/notifications/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
 import NoDataMessageField from "components/common/fields/text/standalone/NoDataMessageField";
 import modelHelpers from "components/common/model/modelHelpers";
+import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notifications/jira/jiraStepApproval.metadata";
+import {
+  jiraStepNotificationMetadata
+} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 
 // TODO: Style and utilize the left tab construct
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
@@ -47,7 +46,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
   const loadData = (pipelineStepData) => {
     setIsLoading(true);
-    loadConfiguration(pipelineStepData, jiraStepApprovalMetadata);
+    loadConfiguration();
     setIsLoading(false);
   };
 

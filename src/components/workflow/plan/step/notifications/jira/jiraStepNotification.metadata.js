@@ -1,4 +1,4 @@
-const jiraStepApprovalMetadata = {
+export const jiraStepNotificationMetadata = {
   idProperty: "name",
   type: "Jira Step Notification",
   fields: [
@@ -12,12 +12,12 @@ const jiraStepApprovalMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Project",
+      label: "Project",
       id: "jiraProject",
       isRequired: true
     },
     {
-      label: "Jira Sprint",
+      label: "Sprint",
       id: "jiraSprint",
       isRequired: true
     },
@@ -27,25 +27,43 @@ const jiraStepApprovalMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Primary Approval Assignee",
+      label: "Primary Assignee",
       id: "jiraPrimaryAssignee",
       isRequired: true,
     },
     {
-      label: "Jira Secondary  Approval Assignees",
+      label: "Secondary Assignees",
       id: "jiraSecondaryAssignees",
       maxItems: 10,
       formText: "You may select up to ten secondary assignees."
     },
     {
-      label: "Jira Board",
+      label: "Board",
       id: "jiraBoard",
       isRequired: true
     },
     {
-      label: "Jira Parent Ticket",
+      label: "Parent Ticket",
       id: "jiraParentTicket",
     },
+    {
+      label: "Open Step",
+      id: "jiraOpenStep",
+      isRequired: true
+    },
+    {
+      label: "Closure Step",
+      id: "jiraClosureStep",
+      isRequired: true
+    },
+    // {
+    //   label: "Jira Approval Step",
+    //   id: "jiraApprovalStep",
+    // },
+    // {
+    //   label: "Jira Rejection Step",
+    //   id: "jiraRejectionStep",
+    // },
     {
       label: "Jira Notifications",
       id: "enabled",
@@ -53,8 +71,8 @@ const jiraStepApprovalMetadata = {
   ],
   newObjectFields: {
     type: "jira",
-    jiraBoard: "",
     event: "all",
+    jiraBoard: "",
     jiraToolId: "",
     jiraProject: "",
     jiraPriority: "",
@@ -62,8 +80,8 @@ const jiraStepApprovalMetadata = {
     jiraParentTicket: "",
     jiraPrimaryAssignee: "",
     jiraSecondaryAssignees: [],
+    jiraOpenStep: "",
+    jiraClosureStep: "",
     enabled: false,
   }
 };
-
-export default jiraStepApprovalMetadata;
