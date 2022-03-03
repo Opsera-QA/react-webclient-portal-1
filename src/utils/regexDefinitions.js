@@ -12,6 +12,11 @@ regexDefinitions.portField = {
   errorFormText: "Only numbers allowed and should not be greater than 65,535"
 };
 
+regexDefinitions.urlField = {
+  regex:/^[A-Za-z0-9-_.:~]*$/,
+  errorFormText: "Only numbers allowed and should not be greater than 65,535"
+};
+
 regexDefinitions.generalTextWithSpaces = {
   regex: /^[A-Za-z0-9'\-_.: ]*$/,
   formText: "Spaces, letters, numbers dashes, colons, underscores, and periods are allowed",
