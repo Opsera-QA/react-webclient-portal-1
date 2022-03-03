@@ -152,7 +152,12 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 </Col>
                 <Col lg={12} className={"mb-3"}>
                   <JiraBugsCompletedDataBlock
-                    data={issueData.filter((item) => item.issueType.toLowerCase() === "bug").length}
+                    data={
+                      issueData.filter(
+                        (item) =>
+                          item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
+                      ).length
+                    }
                   />
                 </Col>
               </Row>
