@@ -724,6 +724,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "sonar-ratings-leadership":
+        return (
+          <Col md={12} className="p-2">
+            <SonarRatingMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // case "sonar-security-scorecard":
       //   return (
       //     <Col xl={6} md={12} className="p-2">
@@ -1469,6 +1481,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // case "servicenow-mean-time-between-failures":
       //   return (
       //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeBetweenFailuresBarChart
       //       <ServiceNowMeanTimeBetweenFailuresBarChart
       //         kpiConfiguration={kpiConfig}
       //         setKpiConfiguration={setKpiConfig}
