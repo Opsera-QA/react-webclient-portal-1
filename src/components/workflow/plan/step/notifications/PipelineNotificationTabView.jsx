@@ -16,6 +16,7 @@ import ServiceNowStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationEditorPanel";
 import EmailStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
+import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 
 function PipelineNotificationTabView(
   {
@@ -31,22 +32,15 @@ function PipelineNotificationTabView(
     setEmailNotificationModel,
     pipelineStep
   }) {
-  const [activeTab, setTabSelection] = useState("slack");
+  const [activeTab, setTabSelection] = useState("email");
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "slack":
+      case "email":
         return (
-          <SlackStepNotificationEditorPanel
-            slackNotificationModel={slackNotificationModel}
-            setSlackNotificationModel={setSlackNotificationModel}
-          />
-        );
-      case "teams":
-        return (
-          <MicrosoftTeamsStepNotificationEditorPanel
-            teamsNotificationModel={teamsNotificationModel}
-            setTeamsNotificationModel={setTeamsNotificationModel}
+          <EmailStepNotificationEditorPanel
+            emailNotificationModel={emailNotificationModel}
+            setEmailNotificationModel={setEmailNotificationModel}
           />
         );
       case "jira":
@@ -57,6 +51,13 @@ function PipelineNotificationTabView(
             isApprovalStep={pipelineStep?.tool?.tool_identifier === "approval"}
           />
         );
+      case "slack":
+        return (
+          <SlackStepNotificationEditorPanel
+            slackNotificationModel={slackNotificationModel}
+            setSlackNotificationModel={setSlackNotificationModel}
+          />
+        );
       case "service-now":
         return (
           <ServiceNowStepNotificationEditorPanel
@@ -64,29 +65,29 @@ function PipelineNotificationTabView(
             setServiceNowNotificationModel={setServiceNowNotificationModel}
           />
         );
-      case "email":
+      case "teams":
         return (
-          <EmailStepNotificationEditorPanel
-            emailNotificationModel={emailNotificationModel}
-            setEmailNotificationModel={setEmailNotificationModel}
+          <MicrosoftTeamsStepNotificationEditorPanel
+            teamsNotificationModel={teamsNotificationModel}
+            setTeamsNotificationModel={setTeamsNotificationModel}
           />
         );
-
     }
   };
 
-  const getTableCardView = () => {
+  const getPipelineStepNotificationContainer = () => {
     return (
-      <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0"}>
+      <Row className={"full-height-overlay-container-with-buttons-and-title mx-0"}>
+        <Col sm={2} className={"px-0 full-height-overlay-container-with-buttons-and-title-tabs"}>
           <PipelineNotificationVerticalTabContainer
             handleTabClickFunction={setTabSelection}
             activeTab={activeTab}
           />
         </Col>
-        <Col sm={10} className={"px-0"}>
-          <div className={"m-3"}>
+        <Col sm={10} className={"px-0 full-height-overlay-container-with-buttons-and-title-body"}>
+          <div className={"mx-2 mt-1"}>
             {getCurrentView()}
+            <RequiredFieldsMessage />
           </div>
         </Col>
       </Row>
@@ -95,10 +96,9 @@ function PipelineNotificationTabView(
 
   return (
     <FilterContainer
-      body={getTableCardView()}
+      body={getPipelineStepNotificationContainer()}
       titleIcon={faEnvelope}
-      title={"Pipeline Notifications"}
-      className={"px-2 pb-2"}
+      title={"Pipeline Step Notifications"}
     />
   );
 }

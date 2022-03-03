@@ -34,6 +34,7 @@ function MultiSelectInputBase(
     parseValueFunction,
     error,
     pluralTopic,
+    visible,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -170,7 +171,7 @@ function MultiSelectInputBase(
     return "Select One";
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -244,6 +245,7 @@ MultiSelectInputBase.propTypes = {
   onSearchFunction: PropTypes.func,
   error: PropTypes.any,
   pluralTopic: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default MultiSelectInputBase;
