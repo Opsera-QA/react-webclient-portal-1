@@ -76,6 +76,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
+import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -1106,6 +1107,20 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
             createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "packer":
+        return (
+          <PackerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
