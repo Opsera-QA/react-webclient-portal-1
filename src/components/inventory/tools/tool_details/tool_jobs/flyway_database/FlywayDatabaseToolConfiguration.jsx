@@ -47,11 +47,10 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
   };
 
   const saveFlywayToolConfiguration = async () => {
-    let newConfiguration = flywayConfigurationModel.getPersistData();
+    const newConfiguration = flywayConfigurationModel.getPersistData();
     newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource,toolData, flywayConfigurationModel, "password", newConfiguration?.password);
 
-    const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData,newConfiguration);
   };
 
   const getDynamicFields = () => {
