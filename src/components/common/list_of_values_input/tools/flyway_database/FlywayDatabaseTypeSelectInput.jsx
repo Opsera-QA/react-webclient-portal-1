@@ -18,6 +18,10 @@ const FLYWAY_DB_TYPES = [
   {
     name: "MySQL",
     value: "mysql"
+  },
+  {
+    name: "Oracle",
+    value: "oracle"
   }
 ];
 
