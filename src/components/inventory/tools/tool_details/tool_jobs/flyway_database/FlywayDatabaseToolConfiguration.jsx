@@ -1,53 +1,111 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
-import FlywayDatabaseConnectionMetadata from "./flyway-database-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FlywayDatabaseTypeSelectInput from "components/common/list_of_values_input/tools/flyway_database/FlywayDatabaseTypeSelectInput";
+import axios from "axios";
+import {
+  flywayDatabaseConnectionMetadata
+} from "components/inventory/tools/tool_details/tool_jobs/flyway_database/flywayDatabaseConnection.metadata";
 
 function FlywayDatabaseToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [flywayConfigurationDto, setFlywayConfigurationDto] = useState(undefined);
+  const [flywayConfigurationModel, setFlywayConfigurationModel] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
-    setFlywayConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), FlywayDatabaseConnectionMetadata));
+    setFlywayConfigurationModel(modelHelpers.parseObjectIntoModel(toolData?.getData("configuration"), flywayDatabaseConnectionMetadata));
   };
 
   const saveFlywayToolConfiguration = async () => {
-    let newConfiguration = flywayConfigurationDto.getPersistData();
-    newConfiguration.password = await toolsActions.savePasswordToVault(toolData, flywayConfigurationDto, "password", newConfiguration.password, getAccessToken);
+    let newConfiguration = flywayConfigurationModel.getPersistData();
+    newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource,toolData, flywayConfigurationModel, "password", newConfiguration?.password);
 
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
+  const getDynamicFields = () => {
+    if (flywayConfigurationModel?.getData("buildType") === "oracle") {
+      return (
+        <TextInputBase
+          dataObject={flywayConfigurationModel}
+          setDataObject={setFlywayConfigurationModel}
+          fieldName={"service"}
+        />
+      );
+    }
+  };
+
+  if (flywayConfigurationModel == null) {
+    return null;
+  }
+
   return (
     <ToolConfigurationEditorPanelContainer
-      model={flywayConfigurationDto}
-      setModel={setFlywayConfigurationDto}
+      model={flywayConfigurationModel}
+      setModel={setFlywayConfigurationModel}
       persistRecord={saveFlywayToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"flyway-database-migrator"}
     >
       <Row>
         <Col sm={12}>
-          <FlywayDatabaseTypeSelectInput dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"buildType"}/>
-          <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"url"} />
-          <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"port"} />
-          <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"userName"} />
-          <VaultTextInput dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"password"}/>
-          {flywayConfigurationDto && flywayConfigurationDto.getData("buildType") === "oracle" && <TextInputBase dataObject={flywayConfigurationDto} setDataObject={setFlywayConfigurationDto} fieldName={"service"} />}
+          <FlywayDatabaseTypeSelectInput
+            dataObject={flywayConfigurationModel}
+            setDataObject={setFlywayConfigurationModel}
+            fieldName={"buildType"}
+          />
+          <TextInputBase
+            dataObject={flywayConfigurationModel}
+            setDataObject={setFlywayConfigurationModel}
+            fieldName={"url"}
+          />
+          <TextInputBase
+            dataObject={flywayConfigurationModel}
+            setDataObject={setFlywayConfigurationModel}
+            fieldName={"port"}
+          />
+          <TextInputBase
+            dataObject={flywayConfigurationModel}
+            setDataObject={setFlywayConfigurationModel}
+            fieldName={"userName"}
+          />
+          <VaultTextInput
+            dataObject={flywayConfigurationModel}
+            setDataObject={setFlywayConfigurationModel}
+            fieldName={"password"
+          }/>
+          {getDynamicFields()}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

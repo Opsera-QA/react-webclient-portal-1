@@ -100,7 +100,7 @@ function ToolConnectionPanel({ toolData }) {
         return <AnsibleToolConfiguration toolData={toolData} />;
       case "mongodb_realm":        
         return <MongodbRealmToolConfiguration toolData={toolData} />;
-      case "flyway-database-migrator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
         return <FlywayDatabaseToolConfiguration toolData={toolData} />;
       case "informatica":
         return <InformaticaToolConfiguration toolData={toolData} />;
