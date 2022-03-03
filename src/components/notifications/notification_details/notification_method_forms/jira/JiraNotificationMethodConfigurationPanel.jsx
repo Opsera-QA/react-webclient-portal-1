@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import {Link} from "react-router-dom";
-import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraNotificationMetadata from "components/notifications/notification_details/notification_method_forms/jira/jiraNotificationMetadata";
 import JiraNotificationJiraToolSelectInput from "components/notifications/notification_details/notification_method_forms/jira/JiraNotificationJiraToolSelectInput";
-import IconBase from "components/common/icons/IconBase";
+import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 
 function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);
@@ -16,22 +14,13 @@ function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notific
     setNotificationMethodDataDto({...configurationData});
   };
 
-  const getJiraMessage = () => {
-    return (
-      <small className="form-text text-muted px-2">
-        Please Note: You must connect to Jira on the
-        <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
-      </small>
-    );
-  };
-
   if (notificationDataDto == null || notificationMethodDataDto == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <div className="mb-4">
-      {getJiraMessage()}
+      <ConnectToToolMessage toolFriendlyName={"Jira"} />
       <JiraNotificationJiraToolSelectInput
         model={notificationMethodDataDto}
         setModel={setNotificationMethodDataDto}
