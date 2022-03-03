@@ -31,6 +31,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   LOGS: "logs",
   MAPPING: "mapping",
   ORGANIZATIONS: "organizations",
+  WORKSPACES: "workspaces",
   PATHS: "paths",
   PROJECTS: "projects",
   REPOSITORIES: "repositories",
@@ -67,6 +68,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
       return ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
       return ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.WORKSPACES:
+      return WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS;
   }
 };
 
@@ -146,6 +149,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolOrganizationsTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolWorkspacesTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}

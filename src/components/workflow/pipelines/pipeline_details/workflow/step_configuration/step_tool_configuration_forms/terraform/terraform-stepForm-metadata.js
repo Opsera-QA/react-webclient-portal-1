@@ -130,6 +130,10 @@ const TerraformStepFormMetadata = {
       id: "organizationName",
     },
     {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
       label: "Backend State",
       id: "backendState",
     },
@@ -166,6 +170,14 @@ const TerraformStepFormMetadata = {
       label: "Environment Variables",
       id: "environmentVariables"
     },
+    {
+      label: "Use Variable File",
+      id: "isVariableFile"
+    },
+    {
+      label: "Packer Variables Files",
+      id: "inputFilePaths"
+    },    
   ],
   fieldsAlt:[
     {
@@ -302,6 +314,10 @@ const TerraformStepFormMetadata = {
       id: "organizationName",
     },
     {
+      label: "Workspace Name",
+      id: "workspaceName",
+    },
+    {
       label: "Azure Credential",
       id: "azureCredentialId",
     },
@@ -334,6 +350,14 @@ const TerraformStepFormMetadata = {
       label: "Environment Variables",
       id: "environmentVariables"
     },
+    {
+      label: "Use Variable File",
+      id: "isVariableFile"
+    },
+    {
+      label: "Packer Variables Files",
+      id: "inputFilePaths"
+    },    
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -368,6 +392,7 @@ const TerraformStepFormMetadata = {
     azureToolConfigId : "",
     terraformCloudId : "",
     organizationName : "",
+    workspaceName: "",    
     backendState: "LOCAL",
     azureCredentialId: "",
     inputParameters: "",
@@ -377,7 +402,9 @@ const TerraformStepFormMetadata = {
     customScript: false,
     terraformCommands: "",
     saveEnvironmentVariables: false,
-    environmentVariables: []
+    environmentVariables: [],
+    isVariableFile: false,
+    inputFilePaths: [],    
   }
 };
 
