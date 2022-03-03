@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setModel, setDataFunction, clearDataFunction, }) {
+function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [azureApplications, setAzureApplications] = useState([]);
@@ -75,6 +75,7 @@ function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setMod
       setDataFunction={setDataFunction}
       selectOptions={azureApplications}
       clearDataFunction={clearDataFunction}
+      disabled={disabled}
       busy={isLoading}
       valueField={"_id"}
       textField={'name'}
@@ -89,6 +90,11 @@ AzureToolApplicationSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   azureToolId: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+};
+
+AzureToolApplicationSelectInput.defaultProps = {
+  disabled: false,
 };
 
 export default AzureToolApplicationSelectInput;
