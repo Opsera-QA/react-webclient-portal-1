@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +12,7 @@ import taskActions from "components/tasks/task.actions";
 import gitTasksFilterMetadata from "components/tasks/git-tasks-filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function MultiTaskSelectInputBase({
   dataObject,
@@ -310,7 +310,7 @@ function MultiTaskSelectInputBase({
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <span>
-          <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth />
+          <IconBase className={"danger-red"} icon={faTimes} />
         </span>
       </Button>
     );
@@ -337,7 +337,7 @@ function MultiTaskSelectInputBase({
     return (
       <div className="pl-2 pt-2 d-flex justify-content-between">
         <div>
-          <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2" />
+          <IconBase icon={titleIcon} className={"mr-2"} />
           {titleText}
         </div>
         <span></span>

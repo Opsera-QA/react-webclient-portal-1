@@ -10,9 +10,9 @@ import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Row from "react-bootstrap/Row";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineSubscriptionsPanel({className}) {
   const [pipelines, setPipelines] = useState([]);
@@ -79,14 +79,14 @@ function PipelineSubscriptionsPanel({className}) {
   };
 
   if (isLoading) {
-    return <div className={"m-3"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
+    return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
   }
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           You are not currently subscribed to any Pipelines</span>
         </div>
       </div>

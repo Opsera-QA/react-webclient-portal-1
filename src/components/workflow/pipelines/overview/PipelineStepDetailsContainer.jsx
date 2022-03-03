@@ -1,18 +1,19 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faCode, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineStepDetailsContainer({ isLoading, children, title }) {
   const getTitleBar = () => {
     if (isLoading) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Pipeline Step</span>);
+      return (<span><LoadingIcon className={"mr-1"}/>Loading Pipeline Step</span>);
     }
 
     return (
       <div className="d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={faCode} fixedWidth className="mr-1"/>{title}</div>
+        <div><IconBase icon={faCode} className={"mr-1"}/>{title}</div>
       </div>
     );
   };

@@ -1,11 +1,21 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import DashboardMetricOverlayContainer from "components/insights/dashboards/metrics/DashboardMetricOverlayContainer";
 
-function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboardData, index, loadData, setKpis, isMounted, settingsHelpComponent }) {
+function ChartSettingsOverlay(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    loadData,
+    setKpis,
+    isMounted,
+    settingsHelpComponent,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -21,7 +31,7 @@ function ChartSettingsOverlay({ kpiConfiguration, setKpiConfiguration, dashboard
       titleText={`Editing ${kpiConfiguration?.kpi_name} Settings`}
       showCloseButton={false}
     >
-      <KpiSettingsForm
+      <DashboardMetricOverlayContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         settingsHelpComponent={settingsHelpComponent}

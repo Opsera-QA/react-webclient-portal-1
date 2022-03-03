@@ -22,6 +22,18 @@ const salesforceSummaryLogUnitTestResultMetadata = {
       id: "time"
     },
     {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Message",
+      id: "message"
+    },
+    {
+      label: "Stack Trace",
+      id: "stackTrace"
+    },
+    {
       label: "Test Timestamp",
       id: "testTimestamp"
     },
@@ -56,6 +68,9 @@ const salesforceSummaryLogUnitTestResultMetadata = {
     methodName: "",
     outcome: "",
     time: "",
+    type: "",
+    message: "",
+    stackTrace: "",
     testTimestamp: "",
     systemModstamp: "",
     apexClass: {

@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
+import IconBase from "components/common/icons/IconBase";
 
 function DownloadSalesforceCertificateButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -46,18 +46,10 @@ function DownloadSalesforceCertificateButton({recordDto, disable, size, showSucc
     }
   };
 
-  const getLabel = () => {
-    if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{saveButtonText}</span>);
-    }
-
-    return (<span><FontAwesomeIcon icon={faFileDownload} fixedWidth className="mr-1"/>{saveButtonText}</span>);
-  };
-
   return (
     <div className={className}>
       <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => downloadCertificate()}>
-        {getLabel()}
+        <span><IconBase icon={faFileDownload} isLoading={isSaving} className={"mr-1"}/>{saveButtonText}</span>
       </Button>
     </div>
   );

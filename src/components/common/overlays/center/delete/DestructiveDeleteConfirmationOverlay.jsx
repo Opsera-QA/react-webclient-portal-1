@@ -5,8 +5,7 @@ import {Button, Col, Row} from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "components/common/tooltip/popover-text";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function DestructiveDeleteConfirmationOverlay(
   {
@@ -22,7 +21,7 @@ function DestructiveDeleteConfirmationOverlay(
 
   const getDeleteButtonText = () => {
     if (isDeleting) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth />Deleting...</span>;
+      return <span><LoadingIcon className={"mr-2"} />Deleting...</span>;
     }
 
     return ("CONFIRM DELETE");

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "../tooltip/popover-text";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: Remove after updating all references to use DestructiveDeleteConfirmationOverlay
 function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShowModal, handleDelete, modalSize }) {
@@ -27,7 +27,7 @@ function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShow
 
   const getDeleteButtonText = () => {
     if (isDeleting) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth />Deleting...</span>;
+      return <span><LoadingIcon className={"mr-2"} />Deleting...</span>;
     }
 
     return ("CONFIRM DELETE");

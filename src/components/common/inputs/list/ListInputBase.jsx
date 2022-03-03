@@ -1,14 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {List} from "dhx-suite-package";
+import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -202,7 +202,7 @@ function ListInputBase(
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Selection
+            <IconBase icon={faTimes} fixedWidth className="mr-1"/>Clear Selection
           </span>
         </TooltipWrapper>
       );
@@ -236,7 +236,7 @@ function ListInputBase(
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
         <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
-          <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Select All
+          <IconBase icon={faPlus} fixedWidth className="mr-1"/>Select All
         </span>
       );
     }

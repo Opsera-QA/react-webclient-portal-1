@@ -79,7 +79,7 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
         return false;
       }
 
-      if (primaryValue >= secondaryValue) {
+      if (primaryValue <= secondaryValue) {
         return {
           lowerBound: primaryValue,
           upperBound: secondaryValue,
@@ -157,7 +157,7 @@ dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid = (dataPointEvaluation
 };
 
 dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule = (rule, value) => {
-  if (dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid(rule) !== true || numberHelpers.hasNumberValue(value) !== true) {
+  if (dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid(rule) !== true || numberHelpers.hasNumberValue(value) !== true || rule?.enabled === false) {
     return false;
   }
 

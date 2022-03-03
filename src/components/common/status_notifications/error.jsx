@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 /**
  * @param {*} { error, align, type }
@@ -92,9 +92,8 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     return (
       <div className="w-100 error-block top-dialog-block">
         {setError && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearError();
-          }}/></div>}
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
+        </div>}
         {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
@@ -108,9 +107,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     return (/*removed this class: top-dialog-detail-panel-block*/
       <div className="w-100 error-block top-error-block">
         {setError && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearError();
-          }}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
         </div>}
         {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
@@ -125,9 +122,8 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     return (
       <div className="w-100 error-block step-configuration-dialog-block mt-1">
         {setError && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearError();
-          }}/></div>}
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
+        </div>}
         {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();
@@ -140,9 +136,8 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
     return (
       <div className="w-100 error-block top-error-block">
         {setError && <div className="float-right ml-1">
-          <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-            clearError();
-          }}/></div>}
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
+        </div>}
         {prependMessage} {messageBody} {(statusCode === 401 || (messageBody && messageBody.includes("401"))) &&
       <span className="ml-1"><a style={{ color: "#fff", textDecoration: "underline" }} href="#" onClick={() => {
         reloadSession();

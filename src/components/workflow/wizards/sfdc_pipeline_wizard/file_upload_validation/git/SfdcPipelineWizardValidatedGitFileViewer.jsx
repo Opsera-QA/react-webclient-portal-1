@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStepBackward} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -20,6 +19,7 @@ import SfdcPipelineWizardInvalidGitFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardInvalidGitFilesTable";
 import SfdcPipelineWizardSubmitGitFilesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
+import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -112,7 +112,7 @@ const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipe
       {getBody()}
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);}}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitGitFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}

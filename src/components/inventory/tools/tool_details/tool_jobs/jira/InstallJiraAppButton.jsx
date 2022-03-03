@@ -1,10 +1,11 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle, faPlug, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function InstallJiraAppButton({ toolData, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -48,18 +49,18 @@ function InstallJiraAppButton({ toolData, disable }) {
 
   const getLabel = () => {
     if (isTesting) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Installing</span>);
+      return (<span><LoadingIcon className={"mr-2"}/>Installing</span>);
     }
 
     if (failedConnection) {
-      return (<span><FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth/>Installation Failed!</span>);
+      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>Installation Failed!</span>);
     }
 
     if (successfulConnection) {
-      return (<span><FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth/>Installation Succeeded!</span>);
+      return (<span><IconBase icon={faPlug} className={"mr-2"}/>Installation Succeeded!</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faPlug} fixedWidth className="mr-2"/>Install Jira App</span>);
+    return (<span><IconBase icon={faPlug} className={"mr-2"}/>Install Jira App</span>);
   };
 
   return (

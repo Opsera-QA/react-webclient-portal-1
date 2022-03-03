@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext, useRef, Fragment} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./opseraMeanTimeToRestoreConfigs.js";
-import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
@@ -21,8 +20,8 @@ import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import MeanTimeToDeployHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus , faSquare} from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
@@ -143,8 +142,8 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <div style={{float: "right", fontSize: "10px"}}>
           # - Total Number of Deployments <br></br>
-          <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg"/> Average MTTD <b>({mead} minutes)</b> <br></br>
-          <FontAwesomeIcon icon={faSquare} color={mainColor} size="lg"/> MTTD <br></br>
+          <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"}/> Average MTTD <b>({mead} minutes)</b> <br></br>
+          <IconBase icon={faSquare} iconColor={mainColor} iconSize={"lg"}/> MTTD <br></br>
         </div>
         <ResponsiveBar
           data={metrics}

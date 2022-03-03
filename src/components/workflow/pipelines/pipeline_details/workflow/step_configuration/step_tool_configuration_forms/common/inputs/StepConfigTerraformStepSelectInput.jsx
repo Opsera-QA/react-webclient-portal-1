@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import _ from "lodash";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faSync } from "@fortawesome/pro-light-svg-icons";
+
 function StepConfigTerraformStepSelectInput({
   fieldName,
   dataObject,

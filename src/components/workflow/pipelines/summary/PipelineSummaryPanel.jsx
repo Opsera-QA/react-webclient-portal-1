@@ -1,9 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
   faSave, faTag,
@@ -37,6 +35,7 @@ import {
 import axios from "axios";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
+import IconBase from "components/common/icons/IconBase";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -241,12 +240,11 @@ function PipelineSummaryPanel(
 
   const getSaveIcon = (field) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faSave}
-        className="text-muted"
-        size="sm"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"text-muted pointer"}
+        iconSize={"sm"}
+        onClickFunction={() => {
           handleSavePropertyClick(pipeline._id, formData, field);
         }} />
     );
@@ -254,12 +252,12 @@ function PipelineSummaryPanel(
 
   const getEditIcon = (field) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faPencilAlt}
-        className="ml-2 text-muted"
-        size="xs" transform="shrink-6"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"ml-2 text-muted pointer"}
+        iconSize={"xs"}
+        iconTransformProperties={"shrink-6"}
+        onClickFunction={() => {
           handleEditPropertyClick(field);
         }} />
     );
@@ -268,12 +266,11 @@ function PipelineSummaryPanel(
   const getScheduleIcon = () => {
     if (taskCount > 0){
       return (
-        <FontAwesomeIcon
+        <IconBase
           icon={faBinoculars}
-          className="ml-2 text-muted"
-          size="sm"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
+          className={"ml-2 text-muted pointer"}
+          iconSize={"sm"}
+          onClickFunction={() => {
             handleEditPropertyClick("schedule");
           }} />
       );
@@ -283,12 +280,11 @@ function PipelineSummaryPanel(
 
   const getCancelIcon = (cancelFunction) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faTimes}
-        className="text-muted ml-3"
-        size="sm"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"text-muted ml-3 pointer"}
+        iconSize={"sm"}
+        onClickFunction={() => {
           cancelFunction(false);
         }} />
     );
@@ -340,14 +336,14 @@ function PipelineSummaryPanel(
         if (user) {
           return (
             <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1" />{`${user}: ${item.role}`}
+              <IconBase icon={faUser} className={"mr-1"} />{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />{`${group}: ${item.role}`}
+            <IconBase icon={faUserFriends} className={"mr-1"} />{`${group}: ${item.role}`}
           </span>
         );
       })
@@ -539,12 +535,12 @@ function PipelineSummaryPanel(
           </Col>
           }
 
-          {/*<Col sm={12}>*/}
-          {/*  <PipelineDurationMetricsStandaloneField*/}
-          {/*    pipelineId={pipeline?._id}*/}
-          {/*    pipelineRunCount={pipeline?.workflow?.run_count}*/}
-          {/*  />*/}
-          {/*</Col>*/}
+          <Col sm={12}>
+            <PipelineDurationMetricsStandaloneField
+              pipelineId={pipeline?._id}
+              pipelineRunCount={pipeline?.workflow?.run_count}
+            />
+          </Col>
         </Row>
       </div>
     </>

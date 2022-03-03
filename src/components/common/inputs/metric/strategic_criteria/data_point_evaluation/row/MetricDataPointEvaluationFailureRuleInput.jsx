@@ -17,6 +17,7 @@ function MetricDataPointEvaluationFailureRuleInput(
       updateRuleFunction={updateRuleFunction}
       title={"Failure Criteria"}
       icon={faExclamationCircle}
+      headerClassName={"danger-red-header"}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
     />
   );

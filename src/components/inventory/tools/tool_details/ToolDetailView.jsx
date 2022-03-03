@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {useParams} from "react-router-dom";
-import ToolDetailPanel from "./ToolDetailPanel";
+import ToolDetailPanel from "components/inventory/tools/details/panel/ToolDetailPanel";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";

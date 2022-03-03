@@ -1,5 +1,6 @@
 import Model from "core/data_model/model";
 import ModelBase from "core/data_model/model.base";
+import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 const modelHelpers = {};
 
@@ -71,13 +72,14 @@ modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) =
   return kpiConfiguration;
 };
 
-modelHelpers.getDashboardSettingsModel= (kpiConfiguration, metaData) => {
-  let dashboardSettings = kpiConfiguration.settings;
+modelHelpers.getDashboardSettingsModel = (kpiConfiguration, metadata = kpiSettingsMetadata) => {
+  let dashboardSettings = kpiConfiguration?.settings;
+
   if (dashboardSettings) {
-    return new Model(dashboardSettings, metaData, true);
+    return new Model(dashboardSettings, metadata, true);
   }
 
-  return new Model({...metaData.newObjectFields}, metaData, true);
+  return new Model({...metadata?.newObjectFields}, metadata, true);
 };
 
 export default modelHelpers;

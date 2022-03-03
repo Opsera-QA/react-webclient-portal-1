@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -15,6 +14,7 @@ import SalesforceDurationByStageOverviewDataBlockContainer from "./SalesforceDur
 import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import IconBase from "components/common/icons/IconBase";
 
 function SalesforceDurationByStageActionableInsightsOverlay({
   title,
@@ -90,7 +90,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       let summary = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data?.summary : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
-        _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+        _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
       }));
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);

@@ -3,38 +3,75 @@ import PropTypes from "prop-types";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import TitleBar from "components/common/fields/TitleBar";
 import CancelButton from "components/common/buttons/CancelButton";
+import InfoContainer from "components/common/containers/InfoContainer";
 
-function DeleteConfirmationPanel({ dataObject, showDeleteConfirmationPanel, handleClose, handleDelete }) {
-  if (dataObject == null || showDeleteConfirmationPanel !== true) {
+function DeleteConfirmationPanel(
+  {
+    model,
+    closePanelFunction,
+    deleteDataFunction,
+    deleteButton,
+    subPanel,
+  }) {
+  const getDeleteButton = () => {
+    if (deleteButton) {
+      return deleteButton;
+    }
+
+    return (
+      <DeleteButton
+        dataObject={model}
+        deleteRecord={deleteDataFunction}
+        size={"md"}
+      />
+    );
+  };
+
+  const getSubPanel = () => {
+    if (subPanel) {
+      return (
+        <div className={"my=2"}>
+          {subPanel}
+        </div>
+      );
+    }
+  };
+
+  if (model == null || (deleteDataFunction == null && deleteButton == null)) {
     return null;
   }
 
   return (
-    <div className={"filter-container content-container"}>
-      <div className="px-2 py-1 filter-title-bar content-block-header title-text-header-1">
-        <TitleBar title={`Confirm ${dataObject.getType()} Delete`} titleIcon={faTrash}/>
-      </div>
+    <InfoContainer
+      titleText={`Confirm ${model?.getType()} Delete`}
+      titleIcon={faTrash}
+    >
       <div className="m-3">
         <div className="mb-2">
-          <div>Data cannot be recovered once this {dataObject.getType()} is deleted.</div>
+          <div>Data cannot be recovered once this {model?.getType()} is deleted.</div>
           <div>Do you still want to proceed?</div>
         </div>
+        {getSubPanel()}
         <SaveButtonContainer>
-          <CancelButton className={"mx-2"} cancelFunction={handleClose} />
-          <DeleteButton dataObject={dataObject} deleteRecord={handleDelete}/>
+          <CancelButton
+            size={"md"}
+            className={"mx-2"}
+            cancelFunction={closePanelFunction}
+          />
+          {getDeleteButton()}
         </SaveButtonContainer>
       </div>
-    </div>
+    </InfoContainer>
   );
 }
 
 DeleteConfirmationPanel.propTypes = {
-  dataObject: PropTypes.object,
-  showDeleteConfirmationPanel: PropTypes.bool,
-  handleClose: PropTypes.func,
-  handleDelete: PropTypes.func,
+  model: PropTypes.object,
+  deleteButton: PropTypes.object,
+  closePanelFunction: PropTypes.func,
+  subPanel: PropTypes.any,
+  deleteDataFunction: PropTypes.func,
 };
 
 export default DeleteConfirmationPanel;

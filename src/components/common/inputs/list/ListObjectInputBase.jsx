@@ -1,16 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {List} from "dhx-suite-package";
+import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
-import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 
 // TODO: Rewrite and combine with list input base
 function ListObjectInputBase(
@@ -291,7 +289,7 @@ function ListObjectInputBase(
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
         <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
-          <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Select All
+          <IconBase icon={faPlus} fixedWidth className="mr-1"/>Select All
         </span>
       );
     }

@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraConfigurationMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
 import JiraProjectSelectInput
@@ -15,6 +12,7 @@ import JiraBoardInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraBoardInput";
 import JiraParentTicketInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraParentTicketInput";
+import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 
 function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigurationDto, setJiraConfigurationDto }) {
   useEffect(() => {loadData();}, []);
@@ -25,22 +23,13 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
     setJiraConfigurationDto({...configurationData});
   };
 
-  const getJiraMessage = () => {
-    return (
-      <small className="form-text text-muted px-2">
-        Please Note: You must connect to Jira on the
-        <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
-      </small>
-    );
-  };
-
   if (toolData == null || jiraConfigurationDto == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <div>
-      {getJiraMessage()}
+      <ConnectToToolMessage toolFriendlyName={"Jira"} />
       <JiraProjectSelectInput
         jiraToolId={toolData.getData("_id")}
         setModel={setJiraConfigurationDto}

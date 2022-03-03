@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import JiraLeadTimeChartNoDataBlocks
-  from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -118,12 +116,7 @@ function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
             //   metrics[0]?.count[0]?.count
                 "-"
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+              <LoadingIcon className={"mr-1"} />
             )
           }
           subTitle="Change Fail Rate"

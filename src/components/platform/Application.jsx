@@ -12,12 +12,12 @@ import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import SuccessDialog from "components/common/status_notifications/SuccessDialog";
 import { handleError } from "utils/helpers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
 import LoadingDialog from "../common/status_notifications/loading";
 import regexDefinitions from "utils/regexDefinitions";
+import IconBase from "components/common/icons/IconBase";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
@@ -308,7 +308,7 @@ function Application(props) {
           {savingStatus === "success" && createAppStatus.message ? <>
             <SuccessDialog successMessage={createAppStatus.message} />
             <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Registry
+              <IconBase icon={faClipboardList} /> Registry
             </Button>
           </> : null}
 

@@ -8,13 +8,13 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DeactivateUserButton from "components/admin/registered_users/actions/deactivate_user/DeactivateUserButton";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ShowUserDetailsButton from "components/admin/registered_users/actions/show_details/ShowUserDetailsButton";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
 import {Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import DeployElkButton from "components/admin/registered_users/actions/deploy_elk/DeployElkButton";
 import UserToolsTable from "components/admin/registered_users/actions/users_tools/UserToolsTable";
+import IconBase from "components/common/icons/IconBase";
 
 function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
   let history = useHistory();
@@ -31,7 +31,7 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>Registered User Data [{registeredUserDto.getData("email")}]</div>
+        <div><IconBase icon={faUser} className="mr-1"/>Registered User Data [{registeredUserDto.getData("email")}]</div>
         <div><ShowUserDetailsButton registeredUserDto={registeredUserDto} /></div>
       </div>
     );

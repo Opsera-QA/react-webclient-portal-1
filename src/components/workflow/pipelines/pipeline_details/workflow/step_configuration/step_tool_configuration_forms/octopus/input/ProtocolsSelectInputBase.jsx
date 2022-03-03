@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Model from "core/data_model/model";
@@ -9,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import OctopusProtocolInput from "./OctopusProtocolInput";
 import OctopusCertificateInputSelect from "./OctopusCertificateInputSelect";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function ProtocolsSelectInputBase({
   dataObject, 
@@ -179,7 +179,7 @@ function ProtocolsSelectInputBase({
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
       </Button>
     );
   };
@@ -207,7 +207,7 @@ function ProtocolsSelectInputBase({
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>        
+        <div><IconBase icon={titleIcon} className={"mr-2"}/>{titleText}</div>
       </div>
     );
   };

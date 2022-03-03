@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,8 +9,8 @@ import Model from "core/data_model/model";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import LoadingDialog from "components/common/status_notifications/loading";
+import IconBase from "components/common/icons/IconBase";
 
 function SingleTagUsedInToolsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -99,7 +98,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
     return (
       <div className="text-muted m-2">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           This tag is not currently applied on any tool</span>
         </div>
       </div>

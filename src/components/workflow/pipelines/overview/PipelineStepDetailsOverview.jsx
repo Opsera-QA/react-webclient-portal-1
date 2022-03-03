@@ -11,7 +11,7 @@ import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import GeneralTabPanelContainer from "components/common/panels/general/GeneralTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import PipelineStepNotificationConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/PipelineStepNotificationConfigurationSummaryPanel";
+  from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationSummaryPanel";
 import {faEnvelope, faFileCode} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 

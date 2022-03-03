@@ -9,8 +9,8 @@ import { Alert } from "react-bootstrap";
 import { format } from "date-fns";
 import Modal from "../../common/modal/modal";
 import "./logs.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 const FILTER = "fail";
 
@@ -107,12 +107,11 @@ const MapActivityData = (props) => {
               {/* <div className="col">Version: {item["version"]}</div> */}
               <div className="col">
                 Build: {item["data_buildNum"]}
-                <FontAwesomeIcon
+                <IconBase
                   icon={faSearchPlus}
-                  size="xs"
-                  className="ml-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
+                  iconSize={"xs"}
+                  className={"ml-1 pointer"}
+                  onClickFunction={() => {
                     handleClick(item);
                   }}
                 />

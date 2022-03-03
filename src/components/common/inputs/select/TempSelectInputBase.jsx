@@ -1,12 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import {Combobox} from "dhx-suite-package";
+import {Combobox} from "@opsera/dhx-suite-package";
 
 // TODO: This will replace select input base after it is verified
 function TempSelectInputBase(

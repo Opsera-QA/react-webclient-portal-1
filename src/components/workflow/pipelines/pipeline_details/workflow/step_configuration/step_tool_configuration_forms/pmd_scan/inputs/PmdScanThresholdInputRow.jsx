@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
@@ -10,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import StandalonePositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 export const THRESHOLD_LEVELS = [
   {text: "Priority 1", value: "1"},
@@ -50,7 +50,7 @@ function PmdScanThresholdInputRow(
     if (disabled !== true) {
       return (
         <Button variant="link" onClick={() => deleteThresholdRow(index)}>
-          <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+          <span><IconBase className={"danger-red"} icon={faTimes} /></span>
         </Button>
       );
     }

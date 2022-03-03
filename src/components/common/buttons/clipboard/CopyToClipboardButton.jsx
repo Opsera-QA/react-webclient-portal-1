@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function CopyToClipboardButton({ copyString, size, className }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
@@ -19,10 +19,10 @@ function CopyToClipboardButton({ copyString, size, className }) {
 
   const getLabel = () => {
     if (copiedToClipboard) {
-      return (<span><FontAwesomeIcon icon={faClipboardCheck} className="mr-2" fixedWidth/>Copied To Clipboard</span>);
+      return (<span><IconBase icon={faClipboardCheck} className={"mr-2"}/>Copied To Clipboard</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faClipboardList} fixedWidth className="mr-2"/>Copy to Clipboard</span>);
+    return (<span><IconBase icon={faClipboardList} className={"mr-2"}/>Copy to Clipboard</span>);
   };
 
   return (

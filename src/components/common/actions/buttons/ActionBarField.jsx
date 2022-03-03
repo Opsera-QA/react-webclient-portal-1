@@ -1,7 +1,7 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function ActionBarField({iconClasses, popoverText, text, icon}) {
   // TODO: Move to helper
@@ -19,7 +19,7 @@ function ActionBarField({iconClasses, popoverText, text, icon}) {
       delay={{ show: 250, hide: 400 }}
       overlay={renderTooltip(popoverText)}>
       <span className="action-bar-icon">
-        <FontAwesomeIcon size={"lg"} icon={icon} className={iconClasses}/>
+        <IconBase iconSize={"lg"} icon={icon} iconClassName={iconClasses}/>
         <span>{text}</span></span>
     </OverlayTrigger>
   );

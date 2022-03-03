@@ -13,10 +13,10 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import MembersPanel from "components/common/inputs/user/membership/manager/user_panel/MembersPanel";
 import NonMembersPanel
   from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, setActiveTab, loadData}) {
   const toastContext = useContext(DialogToastContext);
@@ -172,7 +172,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
   const getSearchBar = () => {
     return (
       <div className="membership-search d-flex mx-auto">
-        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-2 opsera-primary h-100" />
+        <IconBase icon={faSearch} className={"mr-2 opsera-primary h-100"} />
         <input
           placeholder="Search"
           value={searchText}

@@ -7,7 +7,6 @@ import {
   Popover,
   Tooltip,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
   faExclamationTriangle,
@@ -24,6 +23,8 @@ import ErrorDialog from "../../../../../../../common/status_notifications/error"
 import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -249,10 +250,10 @@ function S3StepConfigurationV1({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -287,10 +288,10 @@ function S3StepConfigurationV1({
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
           <Popover.Title as="h3">
             Tool and Account Details{" "}
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="fa-pull-right pointer"
-              onClick={() => document.body.click()}
+              className={"fa-pull-right pointer"}
+              onClickFunction={() => document.body.click()}
             />
           </Popover.Title>
 
@@ -322,21 +323,16 @@ function S3StepConfigurationV1({
                   ]
                 )}
               >
-                <FontAwesomeIcon
+                <IconBase
                   icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
+                  className={"fa-pull-right pointer pr-1"}
+                  onClickFunction={() => document.body.click()}
                 />
               </OverlayTrigger>
             </Form.Label>
             {isAwsSearching ? (
               <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
+                <LoadingIcon className={"text-muted mr-1"}/>
                 Loading AWS accounts from Tool Registry
               </div>
             ) : (
@@ -361,10 +357,9 @@ function S3StepConfigurationV1({
                 ) : (
                   <>
                     <div className="form-text text-muted p-2">
-                      <FontAwesomeIcon
+                      <IconBase
                         icon={faExclamationCircle}
-                        className="text-muted mr-1"
-                        fixedWidth
+                        className={"text-muted mr-1"}
                       />
                       No accounts have been registered for AWS. Please go
                       to
@@ -402,12 +397,7 @@ function S3StepConfigurationV1({
                 setDataFunction={handleBucketAccessChange}
               />
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted ml-2"
-                fixedWidth
-              />
+              <LoadingIcon className={"text-muted ml-2"}/>
             )}
           </Form.Group>
 
@@ -439,12 +429,7 @@ function S3StepConfigurationV1({
                 setDataFunction={handleBuildStepChange}
               />
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted ml-2"
-                fixedWidth
-              />
+              <LoadingIcon className={"text-muted ml-2"}/>
             )}
           </Form.Group>
           
@@ -466,17 +451,12 @@ function S3StepConfigurationV1({
           >
             {loading ? (
               <>
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="mr-1"
-                  fixedWidth
-                />{" "}
+                <LoadingIcon className={"text-muted mr-1"}/>{" "}
                 Saving
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faSave} className="mr-1" /> Save
+                <IconBase icon={faSave} className={"mr-1"} /> Save
               </>
             )}
           </Button>

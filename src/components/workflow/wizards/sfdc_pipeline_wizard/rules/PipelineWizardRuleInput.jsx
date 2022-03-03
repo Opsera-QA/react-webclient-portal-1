@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -18,6 +17,7 @@ import GitRuleFieldSelectInput
 import SfdcPipelineWizardRuleFieldFilterSelectInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute, isGitTab}) {
   const [ruleModel, setRuleModel] = useState(undefined);
@@ -47,7 +47,7 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
   const getDeleteRuleButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteRule(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
       </Button>
     );
   };
@@ -56,7 +56,7 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
   const getAddRuleButton = (index) => {
     return (
       <Button variant="link" onClick={() => addRule(index)}>
-        <span><FontAwesomeIcon className="opsera-primary" icon={faPlus} fixedWidth/></span>
+        <span><IconBase className={"opsera-primary"} icon={faPlus}/></span>
       </Button>
     );
   };

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import React, {useContext, useEffect, useRef, useState} from "react";
@@ -11,6 +10,8 @@ import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetria
 import pipelineActions from "components/workflow/pipeline-actions";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates }) => {
   let history = useHistory();
@@ -94,15 +95,15 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
       <Col className="col-6 d-flex flex-nowrap">
        <TooltipWrapper innerText={"Create a new Pipeline from this template"}>
         <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
-            <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
-            <><FontAwesomeIcon icon={faPlus} className="d-xl-none mr-1" />  Create Pipeline </>
+            <><LoadingIcon className={"mr-1"}/>Working</> :
+            <><IconBase icon={faPlus} className={"d-xl-none mr-1"} />Create Pipeline </>
           }
         </Button>
       </TooltipWrapper>
 
       {accessRoleData.OpseraAdministrator &&
         <Button variant="outline-secondary" size="sm" className="mr-1 mt-2" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
-          <FontAwesomeIcon icon={faSearch} className="d-xl-none mr-1"/>
+          <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
              Details
         </Button>
       } 
@@ -157,7 +158,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
               {template.name}
             </div>
             <div className="ml-auto mr-1 text-muted small upper-case-first d-flex">
-              <FontAwesomeIcon icon={faHexagon} size="lg"/>
+              <IconBase icon={faHexagon} size={"lg"}/>
             </div>
           </div>
         </Card.Title>

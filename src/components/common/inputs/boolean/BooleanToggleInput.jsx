@@ -56,6 +56,17 @@ function BooleanToggleInput(
     return classNames;
   };
 
+  const getUniqueId = () => {
+    let id = field?.id;
+    const objectId = dataObject?.getMongoDbId();
+
+    if (objectId) {
+      id += `-${objectId}`;
+    }
+
+    return id;
+  };
+
   if (field == null) {
     return null;
   }
@@ -67,7 +78,7 @@ function BooleanToggleInput(
           <Form.Check
             type={"switch"}
             className={getClassNames()}
-            id={field.id}
+            id={getUniqueId()}
             checked={!!dataObject.getData(fieldName)}
             disabled={disabled}
             label={<div className={getLabelClassNames()}>{field?.label}</div>}

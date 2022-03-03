@@ -1,9 +1,8 @@
 import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
-
+import IconBase from "components/common/icons/IconBase";
 
 const WelcomeView = ({ pipelineId, handleClose, setView }) => {
   const [save, setSave] = useState(false);
@@ -36,11 +35,7 @@ const WelcomeView = ({ pipelineId, handleClose, setView }) => {
             }}
             disabled={save}
           >
-            {save ? (
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
-            ) : (
-              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" />
-            )}
+            <IconBase isLoading={save} icon={faPlay} className={"mr-1"} />
             Get Started!
           </Button>
         </div>

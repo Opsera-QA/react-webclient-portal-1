@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
 
 function ToggleHelpIcon({ toggleHelp, helpText, className, size }) {
   const getHelpText = () => {
@@ -19,7 +19,7 @@ function ToggleHelpIcon({ toggleHelp, helpText, className, size }) {
     <div className={className}>
       <TooltipWrapper innerText={"Toggle Help"}>
         <div onClick={() => toggleHelp()} className={"pointer"}>
-          <FontAwesomeIcon icon={faQuestionCircle} fixedWidth />
+          <IconBase icon={faQuestionCircle} iconSize={size} />
           {getHelpText()}
         </div>
       </TooltipWrapper>
@@ -32,11 +32,6 @@ ToggleHelpIcon.propTypes = {
   className: PropTypes.string,
   helpText: PropTypes.string,
   size: PropTypes.string
-};
-
-
-ToggleHelpIcon.defaultProps = {
-  size: "lg",
 };
 
 export default ToggleHelpIcon;

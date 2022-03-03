@@ -144,17 +144,8 @@ export function renderTooltip(props) {
   );
 }
 
-export function defineUserRole(userRole) {
-  switch (userRole) {
-  case "administrator":
-    return "Administrator";
-  case "free_trial":
-    return "Free Trial User";
-  case "power_user":
-    return "Power User";
-  case "user":
-    return "Standard User";
-  default:
-    return "Read Only User";
-  }
-}
+export const millisToMinutesAndSeconds = (millis) => {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds + " mins";
+};

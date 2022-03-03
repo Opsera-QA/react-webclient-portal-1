@@ -5,14 +5,16 @@ import Row from "react-bootstrap/Row";
 import argoActions from "../../argo-actions";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
-import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
+import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
+import ArgoProjectSelectInput from "components/common/list_of_values_input/tools/argo_cd/projects/ArgoProjectSelectInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import ArgoApplicationArgoProjectSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/inputs/ArgoApplicationArgoProjectSelectInput";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -97,10 +99,10 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
             />
           </Col>
           <Col lg={12}>
-            <ArgoProjectsSelectInput
-              argoToolId={toolData._id}
-              setDataObject={setArgoApplicationModel}
-              dataObject={argoApplicationModel}
+            <ArgoApplicationArgoProjectSelectInput
+              argoToolId={toolData?._id}
+              setModel={setArgoApplicationModel}
+              model={argoApplicationModel}
               fieldName={"projectName"}
               disabled={!argoApplicationData?.isNew()}
             />
@@ -108,7 +110,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           <Col lg={12}>
             <ArgoClusterSelectInput
               fieldName={"cluster"}
-              argoToolId={toolData._id}
+              argoToolId={toolData?._id}
               dataObject={argoApplicationModel}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}

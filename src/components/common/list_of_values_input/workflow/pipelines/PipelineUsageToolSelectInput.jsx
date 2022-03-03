@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
@@ -8,6 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
@@ -64,7 +64,7 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
   if (!isLoading && (pipelineUsageTools == null || pipelineUsageTools.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No tool identifiers are active and registered for Pipeline use.
       </div>
     );

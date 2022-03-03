@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineStepNotificationActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
+  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 
 // TODO: A base component should be made for jira projects and this should be built around it
 function UserMappingJiraUserSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_id, tool_user_prop}) {

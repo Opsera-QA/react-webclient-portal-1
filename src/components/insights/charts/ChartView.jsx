@@ -74,6 +74,9 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 
+//new
+import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
+
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
@@ -153,6 +156,7 @@ import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/S
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 import LoadingDialog from "components/common/status_notifications/loading";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1139,7 +1143,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
+      case "sonar-unit-testing":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <ProjectWiseUnitTestResults
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Bitbucket KPIs
       case "bitbucket-most-active-contributors":
         return (
@@ -1341,7 +1356,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "salesforce-duration-by-stage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
         return (
           <Col md={12} className="p-2">
             <SalesforceDurationByStageMetrics
@@ -1401,7 +1416,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sdlc-duration-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
         return (
           <Col xl={12} md={12} className="p-2">
             <SdlcDurationByStageMetrics

@@ -3,7 +3,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function IconBase({ isLoading, icon, className, iconClassName, iconSize, onClickFunction }) {
+function IconBase(
+  {
+    isLoading,
+    icon,
+    className,
+    iconClassName,
+    iconSize,
+    iconStyling,
+    onClickFunction,
+    iconTransformProperties,
+    spinIcon,
+
+    // TODO: Remove?
+    iconTitle,
+    iconColor,
+  }) {
   const getIcon = () => {
     if (isLoading) {
       return (
@@ -16,11 +31,16 @@ function IconBase({ isLoading, icon, className, iconClassName, iconSize, onClick
 
     return (
       <FontAwesomeIcon
+        style={iconStyling}
         onClick={onClickFunction}
         icon={icon}
+        spin={spinIcon}
         size={iconSize}
+        transform={iconTransformProperties}
         fixedWidth
         className={iconClassName}
+        title={iconTitle}
+        color={iconColor}
       />
     );
   };
@@ -43,6 +63,11 @@ IconBase.propTypes = {
   iconSize: PropTypes.string,
   onClickFunction: PropTypes.func,
   iconClassName: PropTypes.string,
+  iconStyling: PropTypes.object,
+  spinIcon: PropTypes.bool,
+  iconTransformProperties: PropTypes.string,
+  iconTitle: PropTypes.string,
+  iconColor: PropTypes.string,
 };
 
 export default React.memo(IconBase);

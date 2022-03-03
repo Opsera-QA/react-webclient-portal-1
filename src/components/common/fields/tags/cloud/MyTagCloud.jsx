@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -17,6 +16,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function MyTagCloud({className, showNoSubscriptionsMessage}) {
   const toastContext = useContext(DialogToastContext);
@@ -133,7 +133,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading subscriptions</div>);
+      return (<div><LoadingIcon className={"mr-2 my-auto"} />Loading subscriptions</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
@@ -147,7 +147,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     if (showNoSubscriptionsMessage) {
       return(
         <span>
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
           You are not currently subscribed to any tags
         </span>
       );
@@ -159,7 +159,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
       <div className="mb-1 item-field">
         {getBody()}
         {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager();}}>
-          <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/> Tag Subscriptions</Button> }
+          <IconBase icon={faTag} className={"mr-1"}/> Tag Subscriptions</Button> }
       </div>
     </div>
   );

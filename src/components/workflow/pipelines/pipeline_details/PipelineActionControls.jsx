@@ -7,7 +7,6 @@ import ApprovalModal from "../../approvalModal";
 import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
   faSync,
@@ -28,6 +27,7 @@ import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -502,7 +502,7 @@ function PipelineActionControls(
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: statusMessageBody })}>
-            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{ cursor: "help" }} />
+            <IconBase icon={faInfoCircle} className={"mr-1"} style={{ cursor: "help" }} />
           </OverlayTrigger>
           {statusMessage}
         </div>
@@ -515,7 +515,7 @@ function PipelineActionControls(
                     className="btn-default"
                     size="sm"
                     disabled>
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" /> Running</Button>
+              <IconBase isLoading={true} className={"mr-1"} />Running</Button>
             <Button variant="danger"
                     className="btn-default"
                     size="sm"
@@ -523,9 +523,7 @@ function PipelineActionControls(
                       handleStopWorkflowClick(pipeline._id);
                     }}
                     disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
-              {stopPipeline ?
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" /> :
-                <FontAwesomeIcon icon={faStopCircle} className="mr-1" />}
+                <IconBase isLoading={stopPipeline} icon={faStopCircle} className="mr-1" />
               Stop
             </Button>
           </>}
@@ -543,8 +541,7 @@ function PipelineActionControls(
                         handleApprovalClick();
                       }}
                       disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
-                {approval ? <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth /> :
-                  <FontAwesomeIcon icon={faFlag} className="mr-1" fixedWidth />}Approve</Button>
+                  <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />Approve</Button>
             </OverlayTrigger>
           </>}
 
@@ -561,8 +558,8 @@ function PipelineActionControls(
                         handleRunPipelineClick(pipeline._id);
                       }}
                       disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline || hasQueuedRequest}>
-                {startPipeline ? <><FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> Starting</> :
-                  <><FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" /> Start Pipeline</>}
+                {startPipeline ? <><IconBase isLoading={true} icon={faSpinner} className={"mr-1"} /> Starting</> :
+                  <><IconBase icon={faPlay} className={"mr-1"} /> Start Pipeline</>}
               </Button>
             </OverlayTrigger>
           }
@@ -578,7 +575,7 @@ function PipelineActionControls(
                         onClick={() => {
                           runPipelineLight(pipeline._id);
                         }}>
-                  <FontAwesomeIcon icon={faRepeat1} fixedWidth /> Repeat Once</Button>
+                  <IconBase icon={faRepeat1} /> Repeat Once</Button>
               </OverlayTrigger>
           }
 
@@ -598,8 +595,7 @@ function PipelineActionControls(
                       handleResumeWorkflowClick(pipeline._id);
                     }}
                     disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-              {startPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> :
-                <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1" />}
+                <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
 
@@ -616,8 +612,7 @@ function PipelineActionControls(
                         handleResetWorkflowClick(pipeline._id);
                       }}
                       disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
-                {resetPipeline ? <FontAwesomeIcon icon={faSpinner} fixedWidth spin className="mr-1" /> :
-                  <FontAwesomeIcon icon={faRedo} fixedWidth className="mr-1" />}
+                  <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
                 <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
@@ -634,7 +629,7 @@ function PipelineActionControls(
                       onClick={() => {
                         showCancelQueueOverlay();
                       }}>
-                <FontAwesomeIcon icon={faClock} fixedWidth /> Queued Request</Button>
+                <IconBase icon={faClock} /> Queued Request</Button>
             </OverlayTrigger>
           }
 
@@ -648,7 +643,7 @@ function PipelineActionControls(
                     onClick={() => {
                       handleRefreshClick();
                     }}>
-              <FontAwesomeIcon icon={faSync} fixedWidth /></Button>
+              <IconBase icon={faSync} /></Button>
           </OverlayTrigger>
 
         </div>

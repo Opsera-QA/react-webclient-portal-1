@@ -1,13 +1,13 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ExternalPageLink({link, linkText, className}) {
   return (
     <div className={className}>
       <div className={"pointer"} onClick={() => window.open(link)}>
-        <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2"/>
+        <IconBase icon={faExternalLink} className={"mr-2"}/>
         {linkText}
       </div>
     </div>

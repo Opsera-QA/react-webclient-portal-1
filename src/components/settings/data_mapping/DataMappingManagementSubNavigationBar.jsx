@@ -2,7 +2,12 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faBuilding, faProjectDiagram, faUserTag} from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowLeft,
+  faDraftingCompass,
+  faProjectDiagram,
+  faUserTag
+} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function DataMappingManagementSubNavigationBar({activeTab}) {
@@ -15,7 +20,7 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
       case "accountSettings":
         history.push(`/settings`);
         return;
-      case "dataMappings":
+      case "dataMappingManagement":
         history.push(`/settings/data_mapping`);
         return;
     }
@@ -30,7 +35,7 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
             tabName={"projectTagViewer"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tabText={"Project Mapping Viewer"}
+            tabText={"Project Data Mapping Viewer"}
           />
         );
       case "userTagViewer":
@@ -40,7 +45,17 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
             tabName={"userTagViewer"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tabText={"User Mapping Viewer"}
+            tabText={"User Data Mapping Viewer"}
+          />
+        );
+      case "pipelineTagViewer":
+        return (
+          <NavigationTab
+            icon={faDraftingCompass}
+            tabName={"pipelineTagViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Pipeline Data Mapping Viewer"}
           />
         );
       default:
@@ -59,10 +74,10 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
       />
       <NavigationTab
         icon={faProjectDiagram}
-        tabName={"dataMappings"}
+        tabName={"dataMappingManagement"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Data Mappings"}
+        tabText={"Data Mapping Management"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>

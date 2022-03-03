@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner, faCheckCircle, faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faCheckCircle, faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, className }) {
   const isMounted = useRef(false);
@@ -63,18 +63,18 @@ function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, class
 
   const getLabel = () => {
     if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Adding Dashboard</span>);
+      return (<span><IconBase isLoading={true} className={"mr-2"}/>Adding Dashboard</span>);
     }
 
     if (successfulAdd) {
-      return (<span><FontAwesomeIcon icon={faCheckCircle} className="mr-2" fixedWidth/>Added To Dashboards!</span>);
+      return (<span><IconBase icon={faCheckCircle} className={"mr-2"}/>Added To Dashboards!</span>);
     }
 
     if (failedToAdd) {
-      return (<span><FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth/>Failed To Add To Dashboards!</span>);
+      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>Failed To Add To Dashboards!</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-2"/>Add To My Dashboards</span>);
+    return (<span><IconBase icon={faPlus} className={"mr-2"}/>Add To My Dashboards</span>);
   };
 
   return (

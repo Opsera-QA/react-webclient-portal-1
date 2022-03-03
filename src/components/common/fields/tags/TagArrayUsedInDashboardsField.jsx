@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +12,7 @@ import axios from "axios";
 import dashboardMetadata from "../../../insights/dashboards/dashboard-metadata";
 import TagsUsedInDashboardTable from 'components/reports/tags/dashboards/TagsUsedInDashboardTable';
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function TagArrayUsedInDashboardsField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -109,7 +109,7 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
           This tag combination is not currently applied on any dashboard</span>
         </div>
       </div>

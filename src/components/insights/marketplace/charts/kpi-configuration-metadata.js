@@ -1,3 +1,4 @@
+// TODO: Once all Metrics are updated, this should just be the KPI configuration metadata and metrics should have their own editor panels
 const kpiConfigurationMetadata = {
   idProperty: "_id",
   type: "KPI",
