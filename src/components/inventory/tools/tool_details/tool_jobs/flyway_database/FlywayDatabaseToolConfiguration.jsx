@@ -81,8 +81,8 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
       <Row>
         <Col sm={12}>
           <FlywayDatabaseTypeSelectInput
-            dataObject={flywayConfigurationModel}
-            setDataObject={setFlywayConfigurationModel}
+            model={flywayConfigurationModel}
+            setModel={setFlywayConfigurationModel}
             fieldName={"buildType"}
           />
           <TextInputBase
