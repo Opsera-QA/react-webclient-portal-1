@@ -344,7 +344,7 @@ const LoginForm = ({ authClient }) => {
                               style={{ width: "46%" }}
                               type="submit"
                               disabled={!username || !password}>
-                        {loading && <IconBase className={"mr-1"} iconSize={"sm"} />}
+                        {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
                         Sign in</Button>
                     </div>
                     <div className="text-center">

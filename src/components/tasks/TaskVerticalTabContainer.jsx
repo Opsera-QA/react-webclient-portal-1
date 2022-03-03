@@ -6,7 +6,7 @@ import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-ico
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 
-function PipelineVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
+function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
   const handleTabClick = (tab) => {
     taskFilterModel?.setData("category", tab);
     taskFilterModel?.setData("type", "");
@@ -59,10 +59,10 @@ function PipelineVerticalTabContainer({ isLoading, taskFilterModel, loadData }) 
   );
 }
 
-PipelineVerticalTabContainer.propTypes = {
+TaskVerticalTabContainer.propTypes = {
   isLoading: PropTypes.bool,
   taskFilterModel: PropTypes.object,
   loadData: PropTypes.func,
 };
 
-export default PipelineVerticalTabContainer;
+export default TaskVerticalTabContainer;

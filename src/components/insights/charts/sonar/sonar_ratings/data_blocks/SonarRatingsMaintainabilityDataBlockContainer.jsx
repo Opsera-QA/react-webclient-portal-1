@@ -28,15 +28,15 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   const getSonarMaintainabilityGrade = (rating) => {
-    if (rating <= 1) {
+    if (rating <= 5) {
       return LETTER_GRADES.A;
-    } else if (rating <= 2) {
+    } else if (rating <= 10) {
       return LETTER_GRADES.B;
-    } else if (rating <= 3) {
+    } else if (rating <= 20) {
       return LETTER_GRADES.C;
-    } else if (rating <= 4) {
+    } else if (rating <= 50) {
       return LETTER_GRADES.D;
-    } else if (rating <= 5) {
+    } else if (rating <= 100) {
       return LETTER_GRADES.E;
     } else {
       return "ERROR";

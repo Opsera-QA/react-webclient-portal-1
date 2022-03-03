@@ -23,12 +23,6 @@ function JiraProjectSummaryPanel({ jiraProjectData, jiraConfigurationData, setAc
           />
         </Col>
         <Col lg={6}>
-          <TextFieldBase
-            dataObject={jiraProjectData}
-            fieldName={"description"}
-          />
-        </Col>
-        <Col lg={6}>
           <ToolNameField
             model={jiraConfigurationData}
             fieldName={ "jiraToolId"}
@@ -61,6 +55,12 @@ function JiraProjectSummaryPanel({ jiraProjectData, jiraConfigurationData, setAc
           <TextFieldBase
             dataObject={jiraConfigurationData}
             fieldName={"jiraParentTicket"}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextFieldBase
+            dataObject={jiraProjectData}
+            fieldName={"description"}
           />
         </Col>
       </Row>

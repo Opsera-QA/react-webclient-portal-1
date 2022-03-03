@@ -101,7 +101,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
-                maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+                maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
                 technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
               />
             </Col>
