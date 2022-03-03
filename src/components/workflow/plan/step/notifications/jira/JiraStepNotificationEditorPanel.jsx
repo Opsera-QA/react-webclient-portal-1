@@ -81,6 +81,7 @@ function JiraStepNotificationEditorPanel(
         <JiraStepNotificationJiraToolSelectInput
           model={jiraNotificationModel}
           setModel={setJiraNotificationModel}
+          disabled={jiraNotificationModel?.getData("enabled") !== true}
         />
       </Col>
       <Col xs={12}>
