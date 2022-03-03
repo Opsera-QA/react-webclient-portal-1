@@ -63,6 +63,7 @@ function JiraStepNotificationEditorPanel(
           dataObject={jiraNotificationModel}
           setDataObject={setJiraNotificationModel}
           fieldName={"enabled"}
+          type={"jira"}
         />
       </div>
     );
@@ -70,7 +71,7 @@ function JiraStepNotificationEditorPanel(
 
   return (
     <div className="my-4">
-      <NotificationsToggle dataObject={jiraNotificationModel} setDataObject={setJiraNotificationModel} />
+      <NotificationsToggle dataObject={jiraNotificationModel} setDataObject={setJiraNotificationModel} type={"jira"} />
       <ConnectToToolMessage toolFriendlyName={"Jira"} />
       {/*<NotificationLevelInput disabled={true} dataObject={jiraNotificationModel} setDataObject={setJiraNotificationModel} fieldName={"jiraNotificationLevel"} />*/}
       <JiraStepNotificationToolInput setDataObject={setJiraNotificationModel} dataObject={jiraNotificationModel} />

@@ -24,6 +24,7 @@ function MicrosoftTeamsStepNotificationEditorPanel(
           dataObject={teamsNotificationModel}
           setDataObject={setTeamsNotificationModel}
           fieldName={"enabled"}
+          type={"teams"}
         />
       </div>
     );
@@ -31,7 +32,7 @@ function MicrosoftTeamsStepNotificationEditorPanel(
 
   return (
     <div className="my-4">
-      <NotificationsToggle dataObject={teamsNotificationModel} setDataObject={setTeamsNotificationModel} fieldName={"enabled"} />
+      <NotificationsToggle dataObject={teamsNotificationModel} setDataObject={setTeamsNotificationModel} fieldName={"enabled"} type={"teams"}/>
       <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"} />
       <NotificationLevelInput dataObject={teamsNotificationModel} setDataObject={setTeamsNotificationModel} fieldName={"event"} />
       <TeamsStepNotificationToolInput setDataObject={setTeamsNotificationModel} dataObject={teamsNotificationModel} />

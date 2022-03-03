@@ -27,6 +27,7 @@ function SlackStepNotificationEditorPanel(
           dataObject={slackNotificationModel}
           setDataObject={setSlackNotificationModel}
           fieldName={"enabled"}
+          type={"slack"}
         />
       </div>
     );
@@ -34,7 +35,7 @@ function SlackStepNotificationEditorPanel(
 
   return (
     <div className="my-4">
-      <NotificationsToggle dataObject={slackNotificationModel} setDataObject={setSlackNotificationModel} fieldName={"enabled"} />
+      <NotificationsToggle dataObject={slackNotificationModel} setDataObject={setSlackNotificationModel} fieldName={"enabled"} type={"slack"} />
       <small className="form-text text-muted px-2">
         Please Note: You must use the Add to Slack button on the
         <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.

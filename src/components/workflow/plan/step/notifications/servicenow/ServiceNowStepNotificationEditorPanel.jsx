@@ -21,22 +21,24 @@ function ServiceNowStepNotificationEditorPanel(
   // TODO: Remove after updating the panel to use side tabs
   if (serviceNowNotificationModel?.getData("enabled") === false) {
     return (
-      <div className="m-3">
+      <div className="my-4">
         <NotificationsToggle
           dataObject={serviceNowNotificationModel}
           setDataObject={setServiceNowNotificationModel}
           fieldName={"enabled"}
+          type={"serviceNow"}
         />
       </div>
     );
   }
 
   return (
-    <div className="m-3">
+    <div className="my-4">
       <NotificationsToggle
         dataObject={serviceNowNotificationModel}
         setDataObject={setServiceNowNotificationModel}
         fieldName={"enabled"}
+        type={"serviceNow"}
       />
       <ConnectToToolMessage toolFriendlyName={"ServiceNow"} />
       <NotificationLevelInput dataObject={serviceNowNotificationModel} setDataObject={setServiceNowNotificationModel} fieldName={"event"} />
