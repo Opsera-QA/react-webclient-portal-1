@@ -40,7 +40,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, undefined, apiUrl, postBody);
 };
 
 chartsActions.getSonarUnitTestsMetrics = async (
