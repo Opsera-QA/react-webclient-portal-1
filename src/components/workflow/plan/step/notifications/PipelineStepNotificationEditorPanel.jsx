@@ -23,7 +23,6 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import SfdcWizardInitializationHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
 
-// TODO: Break out into sub panels when refactoring
 function PipelineStepNotificationEditorPanel(
   {
     pipelineId,
@@ -150,9 +149,12 @@ function PipelineStepNotificationEditorPanel(
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
-    return <SfdcWizardInitializationHelpDocumentation
-      closeHelpPanel={() => setHelpIsShown(false)}
-    />;
+    // TODO: Christina, put the help here
+    // return (
+    //   <SfdcWizardInitializationHelpDocumentation
+    //     closeHelpPanel={() => setHelpIsShown(false)}
+    //   />
+    // );
   };
 
   if (isLoading) {
