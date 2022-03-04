@@ -68,7 +68,7 @@ function JiraPrioritySelectInput(
 
   const loadPriorities = async (cancelSource = cancelTokenSource) => {
     const response = await jiraActions.getJiraPrioritiesV2(getAccessToken, cancelSource, jiraToolId);
-    const jiraPriorities = response?.data?.message;
+    const jiraPriorities = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraPriorities)) {
       setPriorities(jiraPriorities);
@@ -88,6 +88,8 @@ function JiraPrioritySelectInput(
       error={error}
       visible={visible}
       disabled={disabled}
+      singularTopic={"Jira Priority Level"}
+      pluralTopic={"Jira Priority Levels"}
     />
   );
 }

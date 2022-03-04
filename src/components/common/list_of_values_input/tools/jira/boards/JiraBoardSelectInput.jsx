@@ -68,13 +68,13 @@ function JiraBoardSelectInput(
   };
 
   const loadBoards = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraActions.getJiraBoardsV2(
+    const response = await jiraActions.getJiraBoardsWithProjectKeyV2(
       getAccessToken,
       cancelSource,
       jiraToolId,
       jiraProjectKey,
     );
-    const jiraBoards = response?.data?.message;
+    const jiraBoards = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraBoards)) {
       setBoards(jiraBoards);
@@ -94,6 +94,8 @@ function JiraBoardSelectInput(
       textField={"name"}
       error={error}
       disabled={disabled}
+      singularTopic={"Jira Board"}
+      pluralTopic={"Jira Boards"}
     />
   );
 }

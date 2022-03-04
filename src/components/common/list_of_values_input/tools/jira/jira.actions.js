@@ -3,20 +3,20 @@ import baseActions from "utils/actionsBase";
 export const jiraActions = {};
 
 jiraActions.getJiraPrioritiesV2 = async (getAccessToken, cancelTokenSource, toolId) => {
-  const apiUrl = `/connectors/jira/${toolId}/priorities`;
+  const apiUrl = `/tool/jira/${toolId}/priorities`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 jiraActions.getJiraProjectsV2 = async (getAccessToken, cancelTokenSource, toolId) => {
-  const apiUrl = `/connectors/jira/${toolId}/projects`;
+  const apiUrl = `/tool/jira/${toolId}/projects`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 jiraActions.getJiraProjectUsersV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
-  const apiUrl = `/connectors/jira/${toolId}/project/users`;
+  const apiUrl = `/tool/jira/${toolId}/project/users`;
   const queryParams = {
     params: {
-      project: projectKey,
+      projectKey: projectKey,
     }
   };
 
@@ -27,39 +27,59 @@ jiraActions.getJiraBoardsV2 = async (
   getAccessToken,
   cancelTokenSource,
   toolId,
-  projectKey
 ) => {
-  const apiUrl = `/connectors/jira/${toolId}/${projectKey}/boards/`;
+  const apiUrl = `/tool/jira/${toolId}/boards/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-jiraActions.getJiraSprintsV2 = async (getAccessToken, cancelTokenSource, toolId, jiraBoard) => {
-  const apiUrl = `connectors/jira/${toolId}/sprints`;
+jiraActions.getJiraBoardsWithProjectKeyV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  projectKey
+) => {
+  const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/boards/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+jiraActions.getJiraSprintsWithBoardIdV2 = async (getAccessToken, cancelTokenSource, toolId, boardId) => {
+  const apiUrl = `/tool/jira/${toolId}/board/sprints`;
   const queryParams = {
     params: {
-      board: jiraBoard,
+      boardId: boardId,
     }
   };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
-jiraActions.getJiraSprintTicketsV2 = async (getAccessToken, cancelTokenSource, toolId, jiraSprint) => {
-  const apiUrl = `/connectors/jira/${toolId}/sprint/issues`;
+jiraActions.getJiraTicketsWithSprintIdV2 = async (getAccessToken, cancelTokenSource, toolId, sprintId) => {
+  const apiUrl = `/tool/jira/${toolId}/sprint/tickets`;
   const queryParams = {
     params: {
-      sprint: jiraSprint,
+      sprintId: sprintId,
     }
   };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
-jiraActions.getJiraWorkflowStepsV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
-  const apiUrl = `/connectors/jira/${toolId}/project/workflows`;
+jiraActions.getJiraWorkflowStepsWithProjectKeyV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/tool/jira/${toolId}/project/workflow/steps`;
   const queryParams = {
     params: {
-      project: projectKey,
+      projectKey: projectKey,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};
+
+jiraActions.getJiraTicketDetailsV2 = async (getAccessToken, cancelTokenSource, toolId, ticketId) => {
+  const apiUrl = `/tool/jira/${toolId}/ticket/details`;
+  const queryParams = {
+    params: {
+      ticketId: ticketId,
     }
   };
 

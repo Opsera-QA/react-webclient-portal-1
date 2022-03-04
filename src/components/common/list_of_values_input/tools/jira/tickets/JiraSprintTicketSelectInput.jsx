@@ -68,13 +68,13 @@ function JiraSprintTicketSelectInput(
   };
 
   const loadTickets = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraActions.getJiraSprintTicketsV2(
+    const response = await jiraActions.getJiraTicketsWithSprintIdV2(
       getAccessToken,
       cancelSource,
       jiraToolId,
       jiraSprintId,
     );
-    const jiraTickets = response?.data?.message;
+    const jiraTickets = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraTickets)) {
       setTickets(jiraTickets);
@@ -94,6 +94,8 @@ function JiraSprintTicketSelectInput(
       disabled={disabled}
       visible={visible}
       error={error}
+      singularTopic={"Jira Ticket"}
+      pluralTopic={"Jira Tickets"}
     />
   );
 }

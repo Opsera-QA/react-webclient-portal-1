@@ -1,20 +1,27 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineStepNotificationActions
-  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function JiraBoardNameField({ dataObject, jiraToolId, fieldName, jiraProjectKey }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
-  const toastContext = useContext(DialogToastContext);
+function JiraBoardNameField(
+  {
+    model,
+    jiraToolId,
+    fieldName,
+    jiraProjectKey,
+    jiraBoardId,
+  }) {
+  const [field] = useState(model?.getFieldById(fieldName));
   const {getAccessToken} = useContext(AuthContext);
   const [boardName, setBoardName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -26,55 +33,73 @@ function JiraBoardNameField({ dataObject, jiraToolId, fieldName, jiraProjectKey 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setBoardName("");
+    setError(undefined);
 
-    if (jiraToolId != null && jiraToolId !== "" && jiraProjectKey != null && jiraProjectKey !== "") {
-      loadData(source);
+    if (isMongoDbId(jiraToolId) === true && hasStringValue(jiraProjectKey) === true && hasStringValue(jiraBoardId)) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          setError(error);
+        }
+      });
     }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [jiraToolId, jiraProjectKey]);
+  }, [jiraToolId, jiraProjectKey, jiraBoardId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadBoardName(cancelSource);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
+      await loadBoards(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    }
+    finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
   };
 
-  const loadBoardName = async (cancelSource = cancelTokenSource) => {
-    const jiraBoardId = dataObject.getData(fieldName);
-    if (jiraToolId !== "" && jiraBoardId !== "" && jiraProjectKey !== "") {
-      const response = await pipelineStepNotificationActions.getJiraBoardsWithIdV2(getAccessToken, cancelSource, jiraToolId, jiraProjectKey);
-      const jiraArray = response?.data?.message;
-      if (Array.isArray(jiraArray)) {
-        const jiraBoard = jiraArray.find((board) => board.id === jiraBoardId);
+  const loadBoards = async (cancelSource = cancelTokenSource) => {
+    const response = await jiraActions.getJiraBoardsWithProjectKeyV2(
+      getAccessToken,
+      cancelSource,
+      jiraToolId,
+      jiraProjectKey,
+    );
+    const jiraBoards = response?.data?.data;
 
-        if (isMounted?.current === true && jiraBoard != null) {
-          setBoardName(jiraBoard.name);
-        }
+    if (Array.isArray(jiraBoards)) {
+      const jiraBoard = jiraBoards.find((board) => board.id === jiraBoardId);
+      const boardName = jiraBoard?.name;
+
+      if (isMounted?.current === true && hasStringValue(boardName) === true) {
+        setBoardName(boardName);
       }
     }
   };
 
   const getBoardName = () => {
+    if (jiraBoardId == null) {
+      return "";
+    }
+
     if (isLoading) {
-      return <span><LoadingIcon className={"mr-1"}/>{dataObject.getData(fieldName)}</span>;
+      return <span><LoadingIcon className={"mr-1"}/>{model?.getData(fieldName)}</span>;
     }
 
     if (boardName) {
       return boardName;
     }
 
-    return `Board name could not be found with Key: [${dataObject.getData(fieldName)}]`;
+    return `Board name could not be found with Key: [${model?.getData(fieldName)}]`;
   };
 
   return (
@@ -86,10 +111,11 @@ function JiraBoardNameField({ dataObject, jiraToolId, fieldName, jiraProjectKey 
 }
 
 JiraBoardNameField.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   jiraToolId: PropTypes.string,
+  jiraProjectKey: PropTypes.string,
   fieldName: PropTypes.string,
-  jiraProjectKey: PropTypes.string
+  jiraBoardId: PropTypes.string,
 };
 
 export default JiraBoardNameField;

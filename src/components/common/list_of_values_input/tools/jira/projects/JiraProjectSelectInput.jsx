@@ -6,7 +6,6 @@ import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
 
-// TODO: Rewrite node route
 function JiraProjectSelectInput(
   {
     fieldName,
@@ -16,6 +15,8 @@ function JiraProjectSelectInput(
     setModel,
     setDataFunction,
     disabled,
+    valueField,
+    textField,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
@@ -68,7 +69,7 @@ function JiraProjectSelectInput(
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
     const response = await jiraActions.getJiraProjectsV2(getAccessToken, cancelSource, jiraToolId);
-    const jiraProjects = response?.data?.message;
+    const jiraProjects = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraProjects)) {
       setProjects(jiraProjects);
@@ -83,8 +84,8 @@ function JiraProjectSelectInput(
       setDataFunction={setDataFunction}
       selectOptions={projects}
       busy={isLoading}
-      valueField={"key"}
-      textField={"name"}
+      valueField={valueField}
+      textField={textField}
       error={error}
       visible={visible}
       disabled={disabled}
@@ -100,6 +101,13 @@ JiraProjectSelectInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   jiraToolId: PropTypes.string,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
+};
+
+JiraProjectSelectInput.defaultProps = {
+  valueField: "key",
+  textField: "name",
 };
 
 export default JiraProjectSelectInput;
