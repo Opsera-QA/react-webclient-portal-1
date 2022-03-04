@@ -6,6 +6,7 @@ import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function FilterBar(
   { 
@@ -24,6 +25,20 @@ function FilterBar(
     type,
     metadata,
   }) {
+  const getType = () => {
+    if (hasStringValue(type) === true) {
+      return type;
+    }
+
+    if (hasStringValue(metadata?.type) === true) {
+      return metadata?.type;
+    }
+
+    if (hasStringValue(filterModel?.getType()) === true) {
+      return filterModel?.getType();
+    }
+  };
+
   return (
     <div className="my-1 inline-filter-input">
       <div className="d-flex my-auto">
@@ -31,7 +46,7 @@ function FilterBar(
           <NewRecordButton
             className={"mr-2 my-auto text-nowrap"}
             addRecordFunction={addRecordFunction}
-            type={type || filterModel?.getType()}
+            type={getType()}
             isLoading={isLoading}
             variant={"success"}
           />
