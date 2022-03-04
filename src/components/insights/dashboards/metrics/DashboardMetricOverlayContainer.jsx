@@ -31,7 +31,6 @@ function DashboardMetricOverlayContainer(
     settingsHelpComponent,
   }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [helpIsShown, setHelpIsShown] = useState(false);
   const [metricModel, setMetricModel] = useState(undefined);
   const [metricFilterModel, setMetricFilterModel] = useState(undefined);
   const [unpackedFilterData, setUnpackedFilterData] = useState(undefined);
@@ -101,7 +100,7 @@ function DashboardMetricOverlayContainer(
     // }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setHelpIsShown) => {
     if (settingsHelpComponent) {
       settingsHelpComponent(() => setHelpIsShown(false));
     }
@@ -140,9 +139,7 @@ function DashboardMetricOverlayContainer(
 
   return (
     <OverlayPanelBodyContainer
-      helpComponent={getHelpComponent()}
-      helpIsShown={helpIsShown}
-      setHelpIsShown={setHelpIsShown}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
       <DashboardMetricEditorPanelContainer

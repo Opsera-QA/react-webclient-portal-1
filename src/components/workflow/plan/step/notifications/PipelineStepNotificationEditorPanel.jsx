@@ -19,6 +19,9 @@ import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notificati
 import {
   jiraStepNotificationMetadata
 } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+import SfdcWizardInitializationHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
 
 // TODO: Break out into sub panels when refactoring
 function PipelineStepNotificationEditorPanel(
@@ -146,12 +149,21 @@ function PipelineStepNotificationEditorPanel(
     );
   };
 
+  const getHelpComponentFunction = (setHelpIsShown) => {
+    return <SfdcWizardInitializationHelpDocumentation
+      closeHelpPanel={() => setHelpIsShown(false)}
+    />;
+  };
+
   if (isLoading) {
     return <LoadingDialog message={"Loading Notification Configuration"} size={"sm"} />;
   }
 
   return (
-    <div>
+    <OverlayPanelBodyContainer
+      getHelpComponentFunction={getHelpComponentFunction}
+      hideCloseButton={true}
+    >
       {getTitleBar()}
       <PipelineNotificationTabView
         slackNotificationModel={slackNotificationModel}
@@ -178,7 +190,7 @@ function PipelineStepNotificationEditorPanel(
           closeEditorCallback={handleCloseClick}
         />
       </SaveButtonContainer>
-    </div>
+    </OverlayPanelBodyContainer>
   );
 }
 
