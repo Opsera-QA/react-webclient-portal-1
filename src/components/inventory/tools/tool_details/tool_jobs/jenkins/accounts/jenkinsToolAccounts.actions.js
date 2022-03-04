@@ -7,6 +7,11 @@ jenkinsAccountActions.getJenkinsAccountsV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+jenkinsAccountActions.getAccountCredentialsFromJenkinsInstanceV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/tool/jenkins/${toolId}/credentials`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 jenkinsAccountActions.createJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, data) => {
   const apiUrl = `/tools/${toolId}/accounts/jenkins/create`;
   const postBody = {...data?.getPersistData()};
