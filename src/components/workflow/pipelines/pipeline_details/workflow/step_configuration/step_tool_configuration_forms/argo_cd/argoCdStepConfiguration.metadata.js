@@ -83,6 +83,16 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "sshUrl",
       // isRequired: true,
     },
+    {
+      label: "Rollback Enabled",
+      id: "rollbackEnabled",
+      // isRequired: true,
+    },
+    {
+      label: "Repository Tag",
+      id: "repositoryTag",
+      // isRequired: true,
+    },
   ],
   newObjectFields: {
     existingContent: "image",
@@ -102,5 +112,7 @@ export const ArgoCdStepConfigurationMetadata = {
     gitRepositoryID: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
+    rollbackEnabled: false,
+    repositoryTag: "",
   },
 };
