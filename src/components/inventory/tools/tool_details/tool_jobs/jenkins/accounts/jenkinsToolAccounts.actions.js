@@ -21,7 +21,6 @@ jenkinsAccountActions.createJenkinsAccountV2 = async (getAccessToken, cancelToke
 
 jenkinsAccountActions.deleteJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, accountCredential) => {
   const apiUrl = `/tools/${toolId}/accounts/jenkins/delete`;
-  // const apiUrl = `registry/action/jenkins/deleteCredentials`;
   const postBody = {
     ...accountCredential?.getPersistData(),
     id: toolId

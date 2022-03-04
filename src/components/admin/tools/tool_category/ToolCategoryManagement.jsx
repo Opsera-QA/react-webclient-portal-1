@@ -2,11 +2,11 @@ import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
 import ToolCategoryTable from "components/admin/tools/tool_category/ToolCategoryTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
+import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
 
 function ToolCategoryManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -24,8 +24,8 @@ function ToolCategoryManagement() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
+
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -64,15 +64,15 @@ function ToolCategoryManagement() {
 
   const getToolTypes = async (cancelSource) => {
     try {
-      const toolTypeResponse = await toolManagementActions.getToolTypesV2(getAccessToken, cancelSource);
+      const response = await toolCategoryActions.getToolTypesV2(getAccessToken, cancelSource, true);
+      const toolTypes = response?.data?.data;
 
-      if (isMounted?.current === true) {
-        setToolTypes(toolTypeResponse?.data);
+      if (isMounted?.current === true && Array.isArray(toolTypes)) {
+        setToolTypes(toolTypes);
       }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     }
   };
