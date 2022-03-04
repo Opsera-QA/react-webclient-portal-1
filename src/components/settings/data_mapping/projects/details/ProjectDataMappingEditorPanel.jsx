@@ -11,8 +11,6 @@ import ProjectRepositorySelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectRepositorySelectInput";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
-import ProjectMappingProjectSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingProjectSelectInput";
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
@@ -20,6 +18,7 @@ import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
+import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -102,10 +101,12 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
       return (
         <Col lg={12}>
-          <ProjectMappingProjectSelectInput
-            dataObject={projectDataMappingModel}
-            setDataObject={setProjectDataMappingModel}
-            tool_id={projectDataMappingModel.getData("tool_id")}
+          <JiraProjectSelectInput
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+            jiraToolId={projectDataMappingModel.getData("tool_id")}
+            valueField={"name"}
+            fieldName={"key"}
           />
         </Col>
       );

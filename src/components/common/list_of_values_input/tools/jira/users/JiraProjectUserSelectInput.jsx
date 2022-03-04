@@ -74,7 +74,7 @@ function JiraProjectUserSelectInput(
       jiraToolId,
       jiraProject,
     );
-    const jiraProjects = response?.data?.message;
+    const jiraProjects = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraProjects)) {
       setUsers(jiraProjects);

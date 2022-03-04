@@ -1,34 +1,7 @@
 import baseActions from "utils/actionsBase";
 
-// TODO Implement
+// TODO Move all tool-specific routes and implement new Node route to update just Pipeline Notifications
 const pipelineStepNotificationActions = {};
-
-// TODO: Use action in jira actions and remove this
-pipelineStepNotificationActions.getJiraBoardsWithIdV2 = async (
-  getAccessToken,
-  cancelTokenSource,
-  toolId,
-  projectKey
-) => {
-  const apiUrl = `/connectors/jira/${toolId}/${projectKey}/boards/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraSprints2 = async (toolId, board, getAccessToken) => {
-  const apiUrl = `connectors/jira/${toolId}/sprints?board=${board}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraProjects = async (jiraStepNotificationDto, getAccessToken) => {
-  let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  const apiUrl = `/connectors/jira/${toolId}/projects`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraProjectsFromIdV2 = async (getAccessToken, cancelTokenSource, toolId) => {
-  const apiUrl = `/connectors/jira/${toolId}/projects`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
 
 pipelineStepNotificationActions.getJiraProjects2 = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/projects`;

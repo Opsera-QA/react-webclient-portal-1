@@ -68,13 +68,13 @@ function JiraSprintSelectInput(
   };
 
   const loadSprints = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraActions.getJiraSprintsV2(
+    const response = await jiraActions.getJiraSprintsWithBoardIdV2(
       getAccessToken,
       cancelSource,
       jiraToolId,
       jiraBoard,
     );
-    const jiraSprints = response?.data?.message;
+    const jiraSprints = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraSprints)) {
       setSprints(jiraSprints);
@@ -93,6 +93,8 @@ function JiraSprintSelectInput(
       valueField={"id"}
       textField={"name"}
       disabled={disabled}
+      singularTopic={"Jira Sprint"}
+      pluralTopic={"Jira Sprints"}
       error={error}
     />
   );

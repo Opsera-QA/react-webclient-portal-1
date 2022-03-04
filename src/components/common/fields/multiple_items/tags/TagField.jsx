@@ -8,7 +8,7 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 import CustomBadge from "components/common/badges/CustomBadge";
 
 function TagField({dataObject, fieldName, className, showLabel}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   // TODO: After all pipelines are updated to new tags, remove this.
   // Legacy tags are just strings
@@ -37,6 +37,10 @@ function TagField({dataObject, fieldName, className, showLabel}) {
       })
     );
   };
+
+  if (dataObject == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>

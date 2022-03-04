@@ -4,16 +4,17 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import jiraConfigurationMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
-import JiraProjectSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectSelectInput";
-import JiraSprintInput
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraSprintInput";
-import JiraBoardInput
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraBoardInput";
-import JiraParentTicketInput
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraParentTicketInput";
+import JiraToolProjectProjectSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectProjectSelectInput";
+import JiraToolProjectSprintSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSprintSelectInput";
+import JiraToolProjectBoardSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectBoardSelectInput";
+import JiraToolProjectParentTicketSelectInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectParentTicketSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 
+// TODO: Just pass tool id if that's all that's used
 function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigurationDto, setJiraConfigurationDto }) {
   useEffect(() => {loadData();}, []);
 
@@ -30,14 +31,29 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
   return (
     <div>
       <ConnectToToolMessage toolFriendlyName={"Jira"} />
-      <JiraProjectSelectInput
-        jiraToolId={toolData.getData("_id")}
-        setModel={setJiraConfigurationDto}
+      <JiraToolProjectProjectSelectInput
         model={jiraConfigurationDto}
+        setModel={setJiraConfigurationDto}
+        jiraToolId={toolData?.getData("_id")}
       />
-      <JiraBoardInput jiraToolId={toolData.getData("_id")} jiraProjectKey={jiraConfigurationDto.getData("jiraProject")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
-      <JiraSprintInput jiraToolId={toolData.getData("_id")} jiraBoard={jiraConfigurationDto.getData("jiraBoard")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
-      <JiraParentTicketInput jiraToolId={toolData.getData("_id")} jiraSprintId={jiraConfigurationDto.getData("jiraSprint")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
+      <JiraToolProjectBoardSelectInput
+        jiraToolId={toolData?.getData("_id")}
+        jiraProjectKey={jiraConfigurationDto?.getData("jiraProject")}
+        model={jiraConfigurationDto}
+        setModel={setJiraConfigurationDto}
+      />
+      <JiraToolProjectSprintSelectInput
+        jiraToolId={toolData?.getData("_id")}
+        jiraBoard={jiraConfigurationDto?.getData("jiraBoard")}
+        model={jiraConfigurationDto}
+        setModel={setJiraConfigurationDto}
+      />
+      <JiraToolProjectParentTicketSelectInput
+        jiraToolId={toolData?.getData("_id")}
+        jiraSprintId={jiraConfigurationDto?.getData("jiraSprint")}
+        model={jiraConfigurationDto}
+        setModel={setJiraConfigurationDto}
+      />
     </div>
   );
 }

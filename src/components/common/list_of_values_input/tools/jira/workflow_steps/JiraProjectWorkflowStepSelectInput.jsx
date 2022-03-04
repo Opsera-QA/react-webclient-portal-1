@@ -68,13 +68,13 @@ function JiraProjectWorkflowStepSelectInput(
   };
 
   const loadWorkflowSteps = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraActions.getJiraWorkflowStepsV2(
+    const response = await jiraActions.getJiraWorkflowStepsWithProjectKeyV2(
       getAccessToken,
       cancelSource,
       jiraToolId,
       jiraProject,
     );
-    const jiraWorkflowSteps = response?.data?.message;
+    const jiraWorkflowSteps = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(jiraWorkflowSteps)) {
       setWorkflowSteps(jiraWorkflowSteps);
@@ -93,6 +93,8 @@ function JiraProjectWorkflowStepSelectInput(
       disabled={disabled}
       setDataFunction={setDataFunction}
       visible={visible}
+      singularTopic={"Jira Workflow Step"}
+      pluralTopic={"Jira Workflow Steps"}
       error={error}
     />
   );
