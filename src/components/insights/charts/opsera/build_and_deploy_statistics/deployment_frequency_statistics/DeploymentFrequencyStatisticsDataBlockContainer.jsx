@@ -10,7 +10,7 @@ import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
@@ -43,13 +43,15 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
 
   const getLeftDataBlock = () => {
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Deployments"}
         middleText={
         <MetricScoreText
           score={metricData?.deploy?.perDayAverage}
           qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={deploymentFrequencyStatisticsDataPoint}
+          className={"metric-block-content-text"}
         />}
         dataPoint={deploymentFrequencyStatisticsDataPoint}
       />

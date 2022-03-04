@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import {SalesforceDurationByStageFiltersMetadata} from "./SalesforceDurationByStageMetricFilter.metadata";
+import {salesforceDurationByStageFiltersMetadata} from "./salesforceDurationByStageMetricFilter.metadata";
 
 function SalesforceDurationByStageMetricsEditorPanel(
   {
@@ -16,7 +16,7 @@ function SalesforceDurationByStageMetricsEditorPanel(
     setMetricFilterModel(undefined);
 
     if (unpackedFilterData) {
-      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, SalesforceDurationByStageFiltersMetadata));
+      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, salesforceDurationByStageFiltersMetadata));
     }
 
   }, [unpackedFilterData]);

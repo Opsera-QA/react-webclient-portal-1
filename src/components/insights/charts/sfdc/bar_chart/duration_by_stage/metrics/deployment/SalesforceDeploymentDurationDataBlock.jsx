@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import "../../salesforce-duration-by-stage-kpi.css";
 import MetricTextBase, { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import {dataPointHelpers} from "../../../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
@@ -53,18 +53,18 @@ function SalesforceDeploymentDurationDataBlock({
       return (
         <>
           <div>
-            <MetricTextBase formattedText={`${deploymentDurationMeanInMinutes} min`} qualityLevel={qualityLevel} />
+            <MetricTextBase formattedText={`${deploymentDurationMeanInMinutes} min`} qualityLevel={qualityLevel} className={"metric-block-content-text"}/>
           </div>
           <div>
-            <MetricTextBase formattedText={`${deploymentTotalRunCount} runs`} qualityLevel={qualityLevel} />
+            <MetricTextBase formattedText={`${deploymentTotalRunCount} runs`} qualityLevel={qualityLevel} className={"metric-block-content-text"}/>
           </div>
         </>
       );
     }
-    return "Error!";
+    return <span className={"metric-block-content-text"}> Error! </span>;
   };
   return (
-    <ThreeLineDataBlockNoFocusBase
+    <ThreeLineDataBlockBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
       middleText={getDeploymentMeanBlock()}

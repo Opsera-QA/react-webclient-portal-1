@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
+import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 
 function SalesforcePackageValidationDurationDataBlock({
   packageValidationDurationMeanInMinutes,
@@ -18,22 +18,22 @@ function SalesforcePackageValidationDurationDataBlock({
       return (
         <>
           <div>
-            <MetricTextBase formattedText={`${packageValidationDurationMeanInMinutes} min`} />
+            <MetricTextBase formattedText={`${packageValidationDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>
           </div>
           <div>
-            <MetricTextBase formattedText={`${packageValidationTotalRunCount} runs`} />
+            <MetricTextBase formattedText={`${packageValidationTotalRunCount} runs`} className={"metric-block-content-text"}/>
           </div>
         </>
       );
     }
     if (hasNumberValue(packageValidationDurationMeanInMinutes)) {
-      return <MetricTextBase formattedText={`${packageValidationDurationMeanInMinutes} min`} />;
+      return <MetricTextBase formattedText={`${packageValidationDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>;
     }
-    return "No runs";
+    return <span className={"metric-block-content-text"}> No runs </span>;
   };
 
   return (
-    <ThreeLineDataBlockNoFocusBase
+    <ThreeLineDataBlockBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Package Validation"}
       middleText={getPackageValidationMeanData()}

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import "../../salesforce-duration-by-stage-kpi.css";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
 function SalesforceBackupDurationDataBlock({ backupDurationMeanInMinutes, backupTotalRunCount }) {
@@ -15,22 +15,22 @@ function SalesforceBackupDurationDataBlock({ backupDurationMeanInMinutes, backup
       return (
         <>
           <div>
-            <MetricTextBase formattedText={`${backupDurationMeanInMinutes} min`} />
+            <MetricTextBase formattedText={`${backupDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>
           </div>
           <div>
-            <MetricTextBase formattedText={`${backupTotalRunCount} runs`} />
+            <MetricTextBase formattedText={`${backupTotalRunCount} runs`} className={"metric-block-content-text"}/>
           </div>
         </>
       );
     }
     if (hasNumberValue(backupDurationMeanInMinutes)) {
-      return <MetricTextBase formattedText={`${backupDurationMeanInMinutes} min`} />;
+      return <MetricTextBase formattedText={`${backupDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>;
     }
-    return "No runs";
+    return <span className={"metric-block-content-text"}> No runs </span>;
   };
 
   return (
-    <ThreeLineDataBlockNoFocusBase
+    <ThreeLineDataBlockBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Backups"}
       middleText={getBackupMeanData()}

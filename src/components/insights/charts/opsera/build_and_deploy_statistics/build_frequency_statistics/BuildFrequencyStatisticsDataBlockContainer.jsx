@@ -11,17 +11,14 @@ import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-<<<<<<< HEAD
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {
   OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
 } from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
-=======
 import IconBase from "components/common/icons/IconBase";
->>>>>>> fbe4d1f98324f6a569663aa7424ccd4c8cdb372b
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration }) {
@@ -47,12 +44,12 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
 
   const getLeftDataBlock = () => {    
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Builds"}
         middleText={
         <MetricScoreText
           score={metricData?.build?.perDayAverage}
-          qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={buildFrequencyStatisticsDataPoint}
         />}
         dataPoint={buildFrequencyStatisticsDataPoint}

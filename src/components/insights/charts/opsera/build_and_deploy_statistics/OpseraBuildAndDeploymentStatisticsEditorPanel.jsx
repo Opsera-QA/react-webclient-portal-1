@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import {OpseraBuildAndDeploymentStatisticsMetadata} from "./OpseraBuildAndDeploymentStatistics.metadata";
+import {opseraBuildAndDeploymentStatisticsMetadata} from "./opseraBuildAndDeploymentStatistics.metadata";
 
 function OpseraBuildAndDeploymentStatisticsEditorPanel(
   {
@@ -16,7 +16,7 @@ function OpseraBuildAndDeploymentStatisticsEditorPanel(
     setMetricFilterModel(undefined);
 
     if (unpackedFilterData) {
-      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, OpseraBuildAndDeploymentStatisticsMetadata));
+      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, opseraBuildAndDeploymentStatisticsMetadata));
     }
 
   }, [unpackedFilterData]);

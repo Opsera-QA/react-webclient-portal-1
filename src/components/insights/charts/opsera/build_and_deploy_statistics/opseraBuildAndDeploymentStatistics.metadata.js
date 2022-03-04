@@ -1,4 +1,4 @@
-export const OpseraBuildAndDeploymentStatisticsMetadata = {
+export const opseraBuildAndDeploymentStatisticsMetadata = {
   type: "Build And Deployment Statistics",
   fields: [
     {

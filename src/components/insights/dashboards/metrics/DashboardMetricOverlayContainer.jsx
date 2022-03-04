@@ -109,7 +109,7 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
           />
         );
-      case 'build-deployment-statistics':
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <SalesforceDurationByStageMetricsEditorPanel
             metricModel={metricModel}

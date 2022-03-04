@@ -1,4 +1,4 @@
-export const SalesforceDurationByStageFiltersMetadata = {
+export const salesforceDurationByStageFiltersMetadata = {
   type: "Salesforce Duration By Stage Filters",
   fields: [
     {

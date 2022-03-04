@@ -13,7 +13,7 @@ import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
@@ -60,13 +60,15 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
 
   const getLeftDataBlock = () => {
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Success Rate"}
         middleText={
         <MetricPercentageText
           percentage={metricData?.build?.successPercent}
           qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={buildStatisticsDataPoint}
+          className={"metric-block-content-text"}
         />}
         dataPoint={buildStatisticsDataPoint}
       />
