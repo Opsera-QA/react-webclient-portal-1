@@ -72,31 +72,68 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <TextInputBase
+            fieldName={"name"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput fieldName={"active"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <ActivityToggleInput
+            fieldName={"active"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={12}>
-          <TextInputBase fieldName={"description"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <TextInputBase
+            fieldName={"description"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <TextInputBase fieldName={"identifier"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <TextInputBase
+            fieldName={"identifier"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <ToolTypeSelectInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fieldName={"tool_type_identifier"}/>
+          <ToolTypeSelectInput
+            model={toolIdentifierDataDto}
+            setModel={setToolIdentifierDataDto}
+            fieldName={"tool_type_identifier"}
+            includeInactive={true}
+          />
         </Col>
         <Col lg={6}>
-          <ToolUsageTypeSelectInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <ToolUsageTypeSelectInput
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <TagManager type={"tool"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <TagManager
+            type={"tool"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+          />
         </Col>
         <Col lg={6}>
-          <BooleanToggleInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fieldName={"enabledInRegistry"} />
+          <BooleanToggleInput
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+            fieldName={"enabledInRegistry"}
+          />
         </Col>
         <Col lg={6}>
-          <DtoPropertiesInput fieldName={"properties"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fields={["name", "value"]}/>
+          <DtoPropertiesInput
+            fieldName={"properties"}
+            dataObject={toolIdentifierDataDto}
+            setDataObject={setToolIdentifierDataDto}
+            fields={["name", "value"]}
+          />
         </Col>
       </Row>
     </EditorPanelContainer>
