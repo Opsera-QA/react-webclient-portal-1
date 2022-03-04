@@ -1,15 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 
-function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIsShown, helpComponent, isLoading, hideCloseButton, leftSideItems }) {
+function OverlayPanelBodyContainer(
+  {
+    children,
+    className,
+    isLoading,
+    hideCloseButton,
+    leftSideItems,
+    getHelpComponentFunction,
+  }) {
+  const [helpIsShown, setHelpIsShown] = useState(false);
+
   if (isLoading) {
     return (<LoadingDialog size="sm" message={"Loading Data"}/>);
   }
 
   const getHelpToggle = () => {
-    if (helpComponent) {
+    if (getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown)) {
       return (
         <ActionBarToggleHelpButton
           helpIsShown={helpIsShown}
@@ -37,10 +47,10 @@ function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIs
   };
 
   const getBody = () => {
-    if (helpIsShown && helpComponent) {
+    if (helpIsShown && getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown)) {
       return (
         <div className={"p-2"}>
-          {helpComponent}
+          {getHelpComponentFunction(setHelpIsShown)}
         </div>
       );
     }
@@ -62,12 +72,10 @@ function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIs
 OverlayPanelBodyContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isLoading: PropTypes.bool,
-  helpComponent: PropTypes.object,
   className: PropTypes.string,
   hideCloseButton: PropTypes.bool,
-  helpIsShown: PropTypes.bool,
-  setHelpIsShown: PropTypes.func,
   leftSideItems: PropTypes.any,
+  getHelpComponentFunction: PropTypes.func,
 };
 
 export default OverlayPanelBodyContainer;

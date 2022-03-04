@@ -90,7 +90,6 @@ function KpiSettingsForm({
   settingsHelpComponent,
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [helpIsShown, setHelpIsShown] = useState(false);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
 
   const [kpiConfigSettings, setKpiConfigSettings] = useState(
@@ -943,7 +942,7 @@ function KpiSettingsForm({
     }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setHelpIsShown) => {
     if (settingsHelpComponent) {
       settingsHelpComponent(() => setHelpIsShown(false));
     }
@@ -996,9 +995,7 @@ function KpiSettingsForm({
 
   return (
     <OverlayPanelBodyContainer
-      helpComponent={getHelpComponent()}
-      helpIsShown={helpIsShown}
-      setHelpIsShown={setHelpIsShown}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
       {getBody()}
