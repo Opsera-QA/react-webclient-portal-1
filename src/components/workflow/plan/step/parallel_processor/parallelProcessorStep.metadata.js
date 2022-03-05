@@ -1,4 +1,4 @@
-const parallelProcessorPipelineStepConfigurationMetadata = {
+export const parallelProcessorStepMetadata = {
   type: "Parallel Pipeline Configuration",
   fields: [
     {
@@ -13,5 +13,3 @@ const parallelProcessorPipelineStepConfigurationMetadata = {
     pipelines: [],
   }
 };
-
-export default parallelProcessorPipelineStepConfigurationMetadata;

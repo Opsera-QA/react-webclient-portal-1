@@ -42,9 +42,9 @@ import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
-import parallelProcessorPipelineStepConfigurationMetadata
-  from "./step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-step-configuration-metadata";
+  from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
+import {parallelProcessorStepMetadata}
+  from "components/workflow/plan/step/parallel_processor/parallelProcessorStep.metadata";
 import NpmPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/npm/NpmPipelineStepConfigurationSummaryPanel";
 import npmPipelineStepConfigurationMetadata from "./step_tool_configuration_forms/npm/npm-step-configuration-metadata";
@@ -312,7 +312,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ParallelProcessPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            parallelPipelineDataObject={getModelWrappedObject(parallelProcessorPipelineStepConfigurationMetadata)}
+            parallelPipelineDataObject={getModelWrappedObject(parallelProcessorStepMetadata)}
           />
         );
       case "spinnaker":

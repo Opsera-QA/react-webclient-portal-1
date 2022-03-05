@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ParallelPipelineTaskSummariesField from "./parallel_pipeline/ParallelPipelineTaskSummariesField";
+import ParallelPipelineTaskSummariesField from "components/workflow/plan/step/parallel_processor/parallel_pipeline/ParallelPipelineTaskSummariesField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import PipelineTaskSummaryMessageField
   from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
