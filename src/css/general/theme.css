@@ -1534,7 +1534,7 @@ div.data-blocks-ellipses {
     border-left: 8px solid green;
     padding: 2px;
     z-index: 3000;
-    width: 600px;
+    width: 775px;
 }
 
 .error-toast {
@@ -1544,7 +1544,7 @@ div.data-blocks-ellipses {
     border: 2px solid #dc3545;
     border-left: 8px solid #dc3545;
     font-size: 15px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
@@ -1555,7 +1555,7 @@ div.data-blocks-ellipses {
     border: 2px solid #1989F9;
     border-left: 8px solid #1989F9;
     padding: 1px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
@@ -1569,7 +1569,7 @@ div.data-blocks-ellipses {
     border: 2px solid #f9c116;
     border-left: 8px solid #f9c116;
     padding: 1px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
