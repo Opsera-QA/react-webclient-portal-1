@@ -37,11 +37,11 @@ function NpmStepConfiguration(
   const loadData = async () => {
     setIsLoading(true);
     setThreshold(pipelineStep?.threshold);
-    const s3Data = modelHelpers.getPipelineStepConfigurationModel(
+    const npmStepModel = modelHelpers.getPipelineStepConfigurationModel(
       pipelineStep,
       npmStepMetadata
     );
-    setNpmStepModel(s3Data);
+    setNpmStepModel(npmStepModel);
     setIsLoading(false);
   };
 
