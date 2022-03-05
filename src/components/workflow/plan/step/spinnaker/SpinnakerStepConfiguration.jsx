@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import spinnakerStepFormMetadata from "./spinnaker-stepForm-metadata";
+import spinnakerStepFormMetadata from "components/workflow/plan/step/spinnaker/spinnaker-stepForm-metadata";
 import SpinnakerStepSpinnakerToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/spinnaker/inputs/SpinnakerStepSpinnakerToolSelectInput";
+  from "components/workflow/plan/step/spinnaker/inputs/SpinnakerStepSpinnakerToolSelectInput";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SpinnakerApplicationNameSelectInput

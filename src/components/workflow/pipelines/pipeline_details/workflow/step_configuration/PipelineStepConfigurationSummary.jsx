@@ -23,8 +23,8 @@ import approvalGatePipelineStepConfigurationMetadata
 import ApprovalGatePipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/approval_gate/ApprovalGatePipelineStepConfigurationSummaryPanel";
 import SpinnakerPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
-import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
+  from "../../../../plan/step/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
+import spinnakerStepFormMetadata from "../../../../plan/step/spinnaker/spinnaker-stepForm-metadata";
 import ArgoCdPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
 import {ArgoCdStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
