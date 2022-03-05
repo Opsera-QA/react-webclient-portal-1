@@ -103,7 +103,7 @@ import TwistlockPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
 import twistlockPipelineStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import S3PipelineStepConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
+  from "components/workflow/plan/step/s3/S3PipelineStepConfigurationSummaryPanel";
 import SshUploadDeployPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployPipelineStepConfigurationSummaryPanel";
 import sshUploadDeployPipelineStepConfigurationMetadata
@@ -156,7 +156,7 @@ import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_dep
 
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
-import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
+import {s3PipelineStepConfigurationMetadata} from "components/workflow/plan/step/s3/s3PipelineStepConfiguration.metadata";
 import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
 import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
 import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
