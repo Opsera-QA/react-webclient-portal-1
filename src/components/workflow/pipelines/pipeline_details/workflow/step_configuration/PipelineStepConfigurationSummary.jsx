@@ -177,7 +177,7 @@ import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pip
 import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
 import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
 import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function PipelineStepConfigurationSummary({
   pipelineData,

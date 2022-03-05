@@ -77,7 +77,7 @@ import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function StepToolConfiguration({
   pipeline,

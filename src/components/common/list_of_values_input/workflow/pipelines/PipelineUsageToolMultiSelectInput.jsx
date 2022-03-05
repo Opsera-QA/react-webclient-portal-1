@@ -5,7 +5,7 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import IconBase from "components/common/icons/IconBase";
 
 function PipelineUsageToolMultiSelectInput(
@@ -22,7 +22,8 @@ function PipelineUsageToolMultiSelectInput(
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);  const isMounted = useRef(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function PipelineUsageToolMultiSelectInput(
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
+    const response = await toolIdentifierActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
     const toolIdentifiers  = response?.data;
 
     if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {

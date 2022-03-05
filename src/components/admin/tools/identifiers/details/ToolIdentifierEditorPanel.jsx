@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ToolTypeSelectInput from "components/common/list_of_values_input/admin/tools/ToolTypeSelectInput";
@@ -16,7 +16,7 @@ import axios from "axios";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
-  const [toolIdentifierDataDto, setToolIdentifierDataDto] = useState(undefined);
+  const [toolIdentifierModel, setToolIdentifierModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -45,93 +45,101 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
   const loadData = async () => {
     if (isMounted?.current === true){
       setIsLoading(true);
-      setToolIdentifierDataDto(toolIdentifierData);
+      setToolIdentifierModel(toolIdentifierData);
       setIsLoading(false);
     }
   };
 
   const createToolIdentifier = async () => {
-    return await toolManagementActions.createToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierDataDto);
+    return await toolIdentifierActions.createToolIdentifierV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolIdentifierModel,
+      );
   };
 
   const updateToolIdentifier = async () => {
-    return await toolManagementActions.updateToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierDataDto);
+    return await toolIdentifierActions.updateToolIdentifierV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolIdentifierModel,
+      );
   };
 
-  if (toolIdentifierDataDto == null) {
+  if (toolIdentifierModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <EditorPanelContainer
       updateRecord={updateToolIdentifier}
-      recordDto={toolIdentifierDataDto}
+      recordDto={toolIdentifierModel}
       createRecord={createToolIdentifier}
-      setRecordDto={setToolIdentifierDataDto}
+      setRecordDto={setToolIdentifierModel}
       handleClose={handleClose}
     >
       <Row>
         <Col lg={6}>
           <TextInputBase
             fieldName={"name"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={6}>
           <ActivityToggleInput
             fieldName={"active"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
             fieldName={"description"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={6}>
           <TextInputBase
             fieldName={"identifier"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={6}>
           <ToolTypeSelectInput
-            model={toolIdentifierDataDto}
-            setModel={setToolIdentifierDataDto}
+            model={toolIdentifierModel}
+            setModel={setToolIdentifierModel}
             fieldName={"tool_type_identifier"}
             includeInactive={true}
           />
         </Col>
         <Col lg={6}>
           <ToolUsageTypeSelectInput
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={6}>
           <TagManager
             type={"tool"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
           />
         </Col>
         <Col lg={6}>
           <BooleanToggleInput
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
             fieldName={"enabledInRegistry"}
           />
         </Col>
         <Col lg={6}>
           <DtoPropertiesInput
             fieldName={"properties"}
-            dataObject={toolIdentifierDataDto}
-            setDataObject={setToolIdentifierDataDto}
+            dataObject={toolIdentifierModel}
+            setDataObject={setToolIdentifierModel}
             fields={["name", "value"]}
           />
         </Col>

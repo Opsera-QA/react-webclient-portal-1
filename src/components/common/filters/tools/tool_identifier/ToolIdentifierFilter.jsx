@@ -4,7 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline, loadingData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -42,7 +42,6 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -54,8 +53,8 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
   };
 
   const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
-    const toolIdentifiers = toolResponse?.data;
+    const toolResponse = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
+    const toolIdentifiers = toolResponse?.data?.data;
 
     // TODO: Rewrite this to not construct objects
     if (isMounted?.current === true && Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0) {

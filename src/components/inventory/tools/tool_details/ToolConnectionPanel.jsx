@@ -34,7 +34,7 @@ import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToo
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
 import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {

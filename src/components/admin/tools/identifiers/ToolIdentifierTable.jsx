@@ -1,7 +1,8 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import toolIdentifierMetadata from "./tool-identifier-metadata";
+import {useHistory} from "react-router-dom";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import {
   getLimitedTableTextColumn,
   getTableBooleanIconColumn,
@@ -10,7 +11,8 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoading}) {
+function ToolIdentifierTable({toolIdentifiers, isLoading}) {
+  const history = useHistory();
   let fields = toolIdentifierMetadata.fields;
 
   const columns = useMemo(
@@ -32,7 +34,7 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
   };
 
   const onRowSelect = (rowData) => {
-    setDataFunction(rowData?.original);
+    history.push(`/admin/tools/identifiers/details/${rowData.original._id}`);
   };
 
   return (
@@ -48,10 +50,9 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
   );
 }
 
-ToolIdentifierSelectionTable.propTypes = {
+ToolIdentifierTable.propTypes = {
   isLoading: PropTypes.bool,
   toolIdentifiers: PropTypes.array,
-  setDataFunction: PropTypes.func,
 };
 
-export default ToolIdentifierSelectionTable;
+export default ToolIdentifierTable;
