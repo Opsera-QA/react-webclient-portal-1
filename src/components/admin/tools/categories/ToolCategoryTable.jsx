@@ -12,8 +12,8 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import {faToolbox} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import NewToolCategoryOverlay from "components/admin/tools/category/NewToolCategoryOverlay";
-import {toolCategoryMetadata} from "components/admin/tools/category/toolCategory.metadata";
+import NewToolCategoryOverlay from "components/admin/tools/categories/NewToolCategoryOverlay";
+import {toolCategoryMetadata} from "components/admin/tools/categories/toolCategory.metadata";
 
 function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);

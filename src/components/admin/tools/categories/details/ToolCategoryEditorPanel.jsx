@@ -8,7 +8,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
-import {toolCategoryActions} from "components/admin/tools/category/toolCategory.actions";
+import {toolCategoryActions} from "components/admin/tools/categories/toolCategory.actions";
 
 function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
