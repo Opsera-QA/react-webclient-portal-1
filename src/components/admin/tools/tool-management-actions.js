@@ -2,32 +2,6 @@ import baseActions from "utils/actionsBase";
 
 const toolManagementActions = {};
 
-toolManagementActions.createToolTypeV2 = async (getAccessToken, cancelTokenSource, toolTypeDataDto) => {
-  let postBody = {
-    ...toolTypeDataDto.getPersistData()
-  };
-  const apiUrl = "/registry/type/create";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-toolManagementActions.updateToolTypeV2 = async (getAccessToken, cancelTokenSource, toolTypeDataDto) => {
-  const postBody = {
-    ...toolTypeDataDto.getPersistData()
-  };
-  const apiUrl = `/registry/type/${toolTypeDataDto.getData("_id")}/update`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-toolManagementActions.deleteToolTypeV2 = async (getAccessToken, cancelTokenSource, toolTypeDataDto) => {
-  const apiUrl = `/registry/type/${toolTypeDataDto.getData("_id")}`;
-  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-toolManagementActions.getToolTypeByIdV2 = async (getAccessToken, cancelTokenSource, toolTypeId) => {
-  const apiUrl = `/registry/type/${toolTypeId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 toolManagementActions.getToolIdentifierByIdV2 = async (getAccessToken, cancelTokenSource, toolIdentifierId) => {
   const apiUrl = `/registry/tool/${toolIdentifierId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
