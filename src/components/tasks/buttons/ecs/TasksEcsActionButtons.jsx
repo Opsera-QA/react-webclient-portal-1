@@ -74,6 +74,7 @@ function TasksEcsActionButtons(
       return;
     }
     const taskAtHand = await getTaskStatus(cancelSource);
+    console.log("task at hand status: " + JSON.stringify(taskAtHand?.status));
 
     if (count > 15) {
       await handleCancelRunTask(true);
@@ -86,6 +87,9 @@ function TasksEcsActionButtons(
       }
       await new Promise((resolve) => timerIds.push(setTimeout(resolve, timeout)));
       return await startTaskPolling(cancelSource, count + 1);
+    }
+    else {
+      setIsTaskRunning(false);
     }
   };
 

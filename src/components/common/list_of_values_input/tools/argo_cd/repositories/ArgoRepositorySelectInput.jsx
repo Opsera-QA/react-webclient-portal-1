@@ -2,17 +2,28 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {argoCdActions} from "components/common/list_of_values_input/tools/argo_cd/argocd.actions";
 
-function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);  
+function ArgoRepositorySelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    argoToolId,
+    visible,
+    setDataFunction,
+    clearDataFunction,
+    disabled,
+    className,
+  }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -25,11 +36,13 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(argoToolId,source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isMongoDbId(argoToolId) === true) {
+      loadData(argoToolId, source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -40,12 +53,12 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
   const loadData = async (argoToolId, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
       await loadRepositories(argoToolId, cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showInlineErrorMessage(error);
+        setError(error);
       }
     }
     finally {
@@ -56,11 +69,11 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
   };
 
   const loadRepositories = async (argoToolId, cancelSource = cancelTokenSource) => {
-    const response = await argoActions.getArgoRepositories(getAccessToken, cancelSource, argoToolId);
-    const repos = response?.data?.data;
+    const response = await argoCdActions.getArgoRepositoriesV2(getAccessToken, cancelSource, argoToolId);
+    const repositories = response?.data?.data;
 
-    if (isMounted?.current === true && response?.status === 200 && Array.isArray(repos)) {
-      setRepositories(repos);
+    if (isMounted?.current === true && Array.isArray(repositories)) {
+      setRepositories(repositories);
     }
   };
 
@@ -69,7 +82,7 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
       return (
         <div className="form-text text-muted p-2">
           <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
-          No configured Argo repositories availalble for this tool.
+          No configured Argo repositories available for this tool.
         </div>
       );
     }
@@ -82,23 +95,21 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
     return (`${name}: ${serverUrl}`);
   };
 
-  if (visible === false) {
-    return null;
-  }
-
   return (
     <div className={className}>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
         selectOptions={repositories}
         busy={isLoading}
-        valueField="repo"
+        valueField={"repo"}
         textField={formatText}
         clearDataFunction={clearDataFunction}
-        disabled={disabled || isLoading || argoToolId === "" || repositories?.length === 0}
+        disabled={disabled}
+        error={error}
+        visible={visible}
       />
       {getNoRepositoriesMessage()}
     </div>
@@ -108,13 +119,13 @@ function ArgoRepositorySelectInput({ argoToolId, visible, fieldName, dataObject,
 ArgoRepositorySelectInput.propTypes = {
   argoToolId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   className: PropTypes.string,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
 };
 
 export default ArgoRepositorySelectInput;
