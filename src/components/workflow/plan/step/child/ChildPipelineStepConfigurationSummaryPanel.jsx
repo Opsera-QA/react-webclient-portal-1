@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import PipelineStepSummaryPanelContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import PipelineSummaryField from "components/common/fields/pipelines/PipelineSummaryField";
 
 function ChildPipelineStepConfigurationSummaryPanel({ childPipelineDataObject, pipelineData, setActiveTab }) {

@@ -7,9 +7,9 @@ import anchoreIntegratorStepConfigurationMetadata
 import Model from "../../../../../../core/data_model/model";
 import ReactJson from "react-json-view";
 import ChildPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/child/ChildPipelineStepConfigurationSummaryPanel";
-import childPipelineStepConfigurationMetadata
-  from "./step_tool_configuration_forms/child/child-pipeline-step-configuration-metadata";
+  from "../../../../plan/step/child/ChildPipelineStepConfigurationSummaryPanel";
+import {childPipelineStepMetadata}
+  from "components/workflow/plan/step/child/childPipelineStep.metadata";
 import AnchoreScanStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfigurationSummaryPanel";
 import anchoreScanStepConfigurationMetadata
@@ -235,7 +235,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ChildPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            childPipelineDataObject={getModelWrappedObject(childPipelineStepConfigurationMetadata)}
+            childPipelineDataObject={getModelWrappedObject(childPipelineStepMetadata)}
           />
         );
       case "conditional-operator":

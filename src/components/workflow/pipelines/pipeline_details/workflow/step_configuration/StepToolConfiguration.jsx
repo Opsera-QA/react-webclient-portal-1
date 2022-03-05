@@ -31,7 +31,7 @@ import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/Oc
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
-import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
+import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
   from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";

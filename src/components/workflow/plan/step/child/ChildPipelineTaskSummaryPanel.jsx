@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import ChildPipelineTaskSummariesField from "./child-pipelines/ChildPipelineTaskSummariesField";
+import ChildPipelineTaskSummariesField from "components/workflow/plan/step/child/child-pipelines/ChildPipelineTaskSummariesField";
 import PipelineTaskSummaryMessageField
   from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
