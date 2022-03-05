@@ -34,7 +34,7 @@ import AnchoreIntegratorStepConfiguration
 import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
-  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
+  from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";

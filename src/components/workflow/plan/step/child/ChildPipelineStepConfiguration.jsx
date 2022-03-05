@@ -40,7 +40,7 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
       const parsedModel = modelHelpers.parseObjectIntoModel(stepTool?.configuration, childPipelineStepMetadata);
       setChildStepModel(parsedModel);
       const thresholdModel = modelHelpers.parseObjectIntoModel(stepTool?.threshold, thresholdMetadata);
-      setThresholdModel(thresholdModel)
+      setThresholdModel(thresholdModel);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);

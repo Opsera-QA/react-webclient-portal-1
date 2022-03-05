@@ -36,8 +36,8 @@ function MultiSelectInputBase(
     pluralTopic,
     visible,
   }) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
 
@@ -222,7 +222,10 @@ MultiSelectInputBase.propTypes = {
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   placeholderText: PropTypes.string,
   maxNumber: PropTypes.number,
   setDataFunction: PropTypes.func,
