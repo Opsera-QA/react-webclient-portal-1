@@ -1,4 +1,4 @@
-const childPipelineStepConfigurationMetadata = {
+export const childPipelineStepMetadata = {
   type: "Child Pipeline Configuration",
   fields: [
     {
@@ -11,5 +11,3 @@ const childPipelineStepConfigurationMetadata = {
     pipelineId: "",
   }
 };
-
-export default childPipelineStepConfigurationMetadata;

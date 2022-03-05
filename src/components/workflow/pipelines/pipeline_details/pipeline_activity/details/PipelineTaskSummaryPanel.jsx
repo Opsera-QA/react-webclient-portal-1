@@ -11,9 +11,9 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ChildPipelineTaskSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
+  from "components/workflow/plan/step/child/ChildPipelineTaskSummaryPanel";
 import childPipelineTaskMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
+  from "components/workflow/plan/step/child/child-pipeline-task-metadata";
 import PipelineSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
 

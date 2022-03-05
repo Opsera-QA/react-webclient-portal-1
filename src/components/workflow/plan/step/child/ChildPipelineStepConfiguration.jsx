@@ -1,65 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import childPipelineStepConfigurationMetadata from "./child-pipeline-step-configuration-metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ChildPipelineSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineSelectInput";
+  from "components/workflow/plan/step/child/ChildPipelineSelectInput";
+import modelHelpers from "components/common/model/modelHelpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {
+  childPipelineStepMetadata
+} from "components/workflow/plan/step/child/childPipelineStep.metadata";
 
 function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [childPipelineStepConfigurationDto, setChildPipelineStepConfigurationDataDto] = useState(undefined);
-  const [thresholdDto, setThresholdDto] = useState(undefined);
+  const [childStepModel, setChildStepModel] = useState(undefined);
+  const [thresholdModel, setThresholdModel] = useState(undefined);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    loadData();
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    await loadFormData();
-    setIsLoading(false);
-  };
-
-  const loadFormData = async () => {
-    let { configuration, threshold } = stepTool;
-    if (typeof configuration !== "undefined") {
-      setChildPipelineStepConfigurationDataDto(new Model(configuration, childPipelineStepConfigurationMetadata, false));
-    } else {
-      setChildPipelineStepConfigurationDataDto(
-        new Model({ ...childPipelineStepConfigurationMetadata.newObjectFields }, childPipelineStepConfigurationMetadata, false)
-      );
+    try {
+      setIsLoading(true);
+      const parsedModel = modelHelpers.parseObjectIntoModel(stepTool?.configuration, childPipelineStepMetadata);
+      setChildStepModel(parsedModel);
+      const thresholdModel = modelHelpers.parseObjectIntoModel(stepTool?.threshold, thresholdMetadata);
+      setThresholdModel(thresholdModel)
     }
-    if (typeof threshold !== "undefined") {
-      setThresholdDto(new Model({...threshold}, thresholdMetadata, false));
-    } else {
-      setThresholdDto(new Model({...thresholdMetadata.newObjectFields}, thresholdMetadata, true)
-      );
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: {...childPipelineStepConfigurationDto.getPersistData()},
+      configuration: {...childStepModel.getPersistData()},
       threshold: {
-        ...thresholdDto.getPersistData()
+        ...thresholdModel.getPersistData()
       },
     };
     parentCallback(item);
   };
 
-  if (isLoading || childPipelineStepConfigurationDto == null || thresholdDto == null) {
+  if (isLoading || childStepModel == null || thresholdModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={childPipelineStepConfigurationDto}
+      recordDto={childStepModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
@@ -73,16 +81,26 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
 
       <div className="mt-4 title-text-7" style={{paddingBottom: "0"}}>Settings</div>
       <ChildPipelineSelectInput
-        model={childPipelineStepConfigurationDto}
-        setModel={setChildPipelineStepConfigurationDataDto}
+        model={childStepModel}
+        setModel={setChildStepModel}
         currentPipelineId={pipelineId}
         fieldName={"pipelineId"}
       />
       {/*TODO: Make threshold editor panel component*/}
       <div className="mt-5">
         <div className="ml-2 title-text-7">Threshold</div>
-        <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"ensureSuccess"}/>
-        <BooleanToggleInput disabled={true} dataObject={thresholdDto} setDataObject={setThresholdDto} fieldName={"completeFirst"}/>
+        <BooleanToggleInput
+          fieldName={"ensureSuccess"}
+          dataObject={thresholdModel}
+          setDataObject={setThresholdModel}
+          disabled={true}
+        />
+        <BooleanToggleInput
+          fieldName={"completeFirst"}
+          dataObject={thresholdModel}
+          setDataObject={setThresholdModel}
+          disabled={true}
+        />
       </div>
     </PipelineStepEditorPanelContainer>
   );
