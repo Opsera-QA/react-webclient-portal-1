@@ -1,76 +1,56 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { faLaptopMedical, faPlay, faSpinner, faStop } from "@fortawesome/pro-light-svg-icons";
+import { faLaptopMedical, faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import taskActions from "components/tasks/task.actions";
-import { useHistory } from "react-router-dom";
-import Model from "../../core/data_model/model";
-import gitTasksMetadata from "./git-tasks-metadata";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import {TASK_TYPES} from "components/tasks/task.types";
 
-function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
+// TODO: This needs to be completely rewritten. It was causing massive amounts of data pulls
+function TasksEcsActionButtons(
+  {
+    gitTasksData,
+    disable,
+    status,
+  }) {
   let toastContext = useContext(DialogToastContext);
-  const [gitTasksDataCopy, setDataCopy] = useState(gitTasksData);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskFinished, setTaskFinished] = useState(true);
+  const [isTaskRunning, setIsTaskRunning] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
   const [isCheckingStatus, setCheckStatus] = useState(false);
-  const history = useHistory();
   let timerIds = [];
 
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    getTaskStatus(source).catch((error) => {
+    setIsTaskRunning(status === "running");
+
+    if (status === "running" && gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
+      loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
-
-    if (gitTasksDataCopy?.getData("status") && gitTasksDataCopy?.getData("status") === "running") {
-      setTaskFinished(false);
-      gitTasksData.setData("running");
-      return;
     }
 
-    return () => {
-      setTaskFinished(true);
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
     return () => {
       source.cancel();
       isMounted.current = false;
       stopPolling();
     };
-  }, [JSON.stringify(gitTasksData.getData("status"))]);
+  }, [status]);
 
   const stopPolling = () => {
     if (Array.isArray(timerIds) && timerIds.length > 0) {
@@ -81,7 +61,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await tasksPolling(cancelSource);
+      await startTaskPolling(cancelSource);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     } finally {
@@ -89,7 +69,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     }
   };
 
-  const tasksPolling = async (cancelSource = cancelTokenSource, count = 1) => {
+  const startTaskPolling = async (cancelSource = cancelTokenSource, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
@@ -99,56 +79,43 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
       await handleCancelRunTask(true);
     }
 
-    if (!(await checkStatus(taskAtHand)) && taskFinished === false) {
+    if (taskAtHand?.status === "running") {
       let timeout = 15000;
       if (count > 4) {
         timeout = timeout * count;
       }
       await new Promise((resolve) => timerIds.push(setTimeout(resolve, timeout)));
-      return await tasksPolling(cancelSource, count + 1);
+      return await startTaskPolling(cancelSource, count + 1);
     }
-  };
-
-  const checkStatus = async (data) => {
-    return !!(
-      data?.status &&
-      (data?.status === "success" ||
-        data?.status === "failed" ||
-        data?.status === "failure" ||
-        data?.status === "stopped")
-    );
   };
 
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
+    console.info("tasks ecs check status");
     const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
-    const data = response?.data?.data[0];
-    if (isMounted?.current === true && data) {
-      if (data?.error) {
-        toastContext.showInlineErrorMessage("Error in fetching Task Status. Use the manual status check button.");
-      }
-      if (await checkStatus(data)) {
+    const taskData = response?.data?.data;
+
+    if (isMounted?.current === true && taskData) {
+      if (taskData?.status !== "running") {
         setIsLoading(false);
-        setTaskFinished(true);
+        setIsTaskRunning(false);
       }
+
+      return taskData;
     }
-    setDataCopy(new Model(data, gitTasksMetadata, false));
-    return data;
   };
 
   const handleRunTask = async () => {
     try {
       setIsLoading(true);
-      setTaskFinished(false);
-      let postBody = {
-        taskId: gitTasksData.getData("_id"),
-      };
-      let result = await taskActions.createECSCluster(postBody, getAccessToken);
-      gitTasksData.setData("status", "running");
+      await taskActions.createEcsClusterWithTaskIdV2(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
       toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
+      setIsTaskRunning(true);
+      await startTaskPolling();
     } catch (error) {
-      setTaskFinished(true);
+      setIsTaskRunning(false);
       isMounted.current = false;
       console.log(error);
+
       if (error?.error?.response?.data?.message) {
         toastContext.showCreateFailureResultDialog("ECS Cluster", error.error.response.data.message);
       } else {
@@ -157,6 +124,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
           "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
         );
       }
+
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -169,8 +137,9 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     gitTaskDataCopy.setData("status", "stopped");
     await taskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
     await taskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
-    setTaskFinished(true);
+    setIsTaskRunning(true);
     isMounted.current = false;
+
     if (automatic) {
       toastContext.showInformationToast(
         "Automatic status checks have been paused, please use the manual status check button in order to check the cluster status."
@@ -178,6 +147,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     } else {
       toastContext.showInformationToast("Task has been cancelled", 10);
     }
+
     gitTasksData.setData("status", "stopped");
     setIsCanceling(false);
     window.location.reload();
@@ -202,7 +172,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getRunningLabel = () => {
-    if (taskFinished) {
+    if (isTaskRunning === false) {
       return (
         <span>
           <IconBase icon={faPlay} className={"mr-1"} />
@@ -253,13 +223,9 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getStatusButton = () => {
-    if (gitTasksData.getData("type") !== "ecs_cluster_creation") {
-      return null;
-    }
-
     if (
-      !gitTasksData?.data?.configuration?.stackId ||
-      gitTasksData?.data?.configuration?.stackId?.length === 0 ||
+      !gitTasksData?.getData("configuration")?.stackId ||
+      gitTasksData?.getData("configuration")?.stackId?.length === 0 ||
       gitTasksData?.run_count === 0
     ) {
       return null;
@@ -268,7 +234,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     return (
       <Button
         variant={"warning"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
+        disabled={status === "running" || disable || isLoading}
         onClick={() => {
           handleCheckStatus(true);
         }}
@@ -281,14 +247,10 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getCancelButton = () => {
-    if (gitTasksData.getData("type") !== "ecs_cluster_creation") {
-      return null;
-    }
-
     return (
       <Button
         variant={"danger"}
-        disabled={!(gitTasksData?.getData("status") === "running") || disable || isLoading}
+        disabled={status !== "running" || disable || isLoading}
         onClick={() => {
           handleCancelRunTask(false);
         }}
@@ -301,14 +263,10 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getRunningButton = () => {
-    if (gitTasksData.getData("type") !== "ecs_cluster_creation") {
-      return null;
-    }
-
     return (
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
+        disabled={status === "running" || disable || isLoading}
         onClick={() => {
           handleRunTask(true);
         }}
@@ -320,27 +278,23 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     );
   };
 
-  if (gitTasksData.getData("type") !== "ecs_cluster_creation") {
+  if (gitTasksData?.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
     return null;
   }
 
   return (
-    <>
-      <div className="text-right btn-group btn-group-sized">
-        {getRunningButton()}
-        {getCancelButton()}
-        {getStatusButton()}
-      </div>
-    </>
+    <div className="text-right btn-group btn-group-sized">
+      {getRunningButton()}
+      {getCancelButton()}
+      {getStatusButton()}
+    </div>
   );
 }
 
-ECSActionButtons.propTypes = {
+TasksEcsActionButtons.propTypes = {
   gitTasksData: PropTypes.object,
-  loadData: PropTypes.func,
   disable: PropTypes.bool,
-  className: PropTypes.string,
-  handleClose: PropTypes.func,
+  status: PropTypes.string,
 };
 
-export default ECSActionButtons;
+export default TasksEcsActionButtons;
