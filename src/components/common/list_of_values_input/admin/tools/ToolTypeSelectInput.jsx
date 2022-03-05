@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
+import {toolCategoryActions} from "components/admin/tools/category/toolCategory.actions";
 
 function ToolTypeSelectInput(
   {
