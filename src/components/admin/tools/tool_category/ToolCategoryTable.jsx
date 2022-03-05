@@ -8,12 +8,12 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faToolbox} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
+import {toolCategoryMetadata} from "components/admin/tools/tool_category/toolCategory.metadata";
 
 function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -34,12 +34,17 @@ function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const onRowSelect = (rowData, type) => {
+  const onRowSelect = (rowData) => {
     history.push(`/admin/tools/types/details/${rowData.original._id}`);
   };
 
   const createToolType = () => {
-    toastContext.showOverlayPanel(<NewToolCategoryOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewToolCategoryOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+      />
+    );
   };
 
   const getToolCategoryTable = () => {

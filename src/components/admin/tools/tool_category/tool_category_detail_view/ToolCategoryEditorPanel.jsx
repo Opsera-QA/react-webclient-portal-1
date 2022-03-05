@@ -4,15 +4,15 @@ import { AuthContext } from "contexts/AuthContext";
 import {Col, Row} from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
 
 function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [toolCategoryDataDto, setToolCategoryDataDto] = useState({});
+  const [toolCategoryModel, setToolCategoryModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -41,20 +41,28 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
   const loadData = async () => {
     if (isMounted?.current === true) {
       setIsLoading(true);
-      setToolCategoryDataDto(toolCategoryData);
+      setToolCategoryModel(toolCategoryData);
       setIsLoading(false);
     }
   };
 
   const createToolType = async () => {
-    return await toolManagementActions.createToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryDataDto);
+    return await toolCategoryActions.createToolTypeV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolCategoryModel,
+      );
   };
 
   const updateToolType = async () => {
-    return await toolManagementActions.updateToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryDataDto);
+    return await toolCategoryActions.updateToolTypeV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolCategoryModel,
+      );
   };
 
-  if (isLoading) {
+  if (isLoading || toolCategoryModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -63,25 +71,45 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
       isLoading={isLoading}
       createRecord={createToolType}
       updateRecord={updateToolType}
-      setRecordDto={setToolCategoryDataDto}
-      recordDto={toolCategoryDataDto}
+      setRecordDto={setToolCategoryModel}
+      recordDto={toolCategoryModel}
       handleClose={handleClose}
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase fieldName={"name"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TextInputBase
+            fieldName={"name"}
+            dataObject={toolCategoryModel}
+            setDataObject={setToolCategoryModel}
+          />
         </Col>
         <Col lg={6}>
-          <TextInputBase fieldName={"identifier"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TextInputBase
+            fieldName={"identifier"}
+            dataObject={toolCategoryModel}
+            setDataObject={setToolCategoryModel}
+          />
         </Col>
         <Col lg={12}>
-          <TextInputBase fieldName={"description"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TextInputBase
+            fieldName={"description"}
+            dataObject={toolCategoryModel}
+            setDataObject={setToolCategoryModel}
+          />
         </Col>
         <Col lg={6}>
-          <TagManager type={"tool"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TagManager
+            type={"tool"}
+            dataObject={toolCategoryModel}
+            setDataObject={setToolCategoryModel}
+          />
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput fieldName={"active"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <ActivityToggleInput
+            fieldName={"active"}
+            dataObject={toolCategoryModel}
+            setDataObject={setToolCategoryModel}
+          />
         </Col>
       </Row>
     </EditorPanelContainer>

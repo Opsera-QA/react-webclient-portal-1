@@ -1,4 +1,4 @@
-const toolCategoryMetadata = {
+export const toolCategoryMetadata = {
   idProperty: "_id",
   type: "Tool Category",
   activeField: "active",
@@ -6,7 +6,7 @@ const toolCategoryMetadata = {
     return `/admin/tools/types/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Tool Category Details [${record?.getOriginalValue("name")}]`;
+    return `${record?.getOriginalValue("name")} Tool Category Details`;
   },
   fields: [
     {
@@ -46,12 +46,10 @@ const toolCategoryMetadata = {
     },
   ],
   newObjectFields: {
-    "name": "",
-    "description": "",
-    "identifier": "",
-    "tags": [],
-    "active": true,
+    name: "",
+    description: "",
+    identifier: "",
+    tags: [],
+    active: true,
   }
 };
-
-export default toolCategoryMetadata;

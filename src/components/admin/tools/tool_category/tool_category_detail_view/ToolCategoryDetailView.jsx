@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
-import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ToolCategoryDetailPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailPanel";
@@ -13,6 +11,8 @@ import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
+import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
+import {toolCategoryMetadata} from "components/admin/tools/tool_category/toolCategory.metadata";
 
 function ToolCategoryDetailView() {
   const {toolTypeId} = useParams();
@@ -52,7 +52,6 @@ function ToolCategoryDetailView() {
     }
     catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -76,30 +75,43 @@ function ToolCategoryDetailView() {
   };
 
   const getToolType = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getToolTypeByIdV2(getAccessToken, cancelSource, toolTypeId);
+    const response = await toolCategoryActions.getToolTypeByIdV2(getAccessToken, cancelSource, toolTypeId);
+    const toolType = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data?.length > 0) {
-      setToolCategoryData(new Model(response.data[0], toolCategoryMetadata, false));
+    if (isMounted?.current === true && toolType) {
+      setToolCategoryData(new Model(toolType, toolCategoryMetadata, false));
     }
   };
 
   const deleteToolCategory = async () => {
-    return await toolManagementActions.deleteToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryData);
+    return await toolCategoryActions.deleteToolTypeV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolTypeId,
+      );
   };
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/admin/tools"} />
+          <ActionBarBackButton path={"/admin/tools/categories"} />
         </div>
         <div>
-        {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools"} />}
+        {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools/categories"} />}
         </div>
       </ActionBarContainer>
     );
   };
 
+  const getDetailPanel = () => {
+    return (
+      <ToolCategoryDetailPanel
+        toolCategoryData={toolCategoryData}
+        setToolCategoryData={setToolCategoryData}
+      />
+    );
+  };
 
   return (
     <DetailScreenContainer
@@ -111,7 +123,7 @@ function ToolCategoryDetailView() {
       navigationTabContainer={<ToolManagementSubNavigationBar activeTab={"toolCategoryViewer"} />}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<ToolCategoryDetailPanel toolCategoryData={toolCategoryData} setToolCategoryData={setToolCategoryData}/>}
+      detailPanel={getDetailPanel()}
       />
   );
 }
