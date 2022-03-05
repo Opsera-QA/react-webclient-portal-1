@@ -98,6 +98,16 @@ taskActions.processSyncRequest = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: This should be a get route.
+taskActions.createEcsClusterWithTaskIdV2 = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tools/aws/v2/create/ecs`;
+  const postBody = {
+    taskId: taskId,
+  };
+
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 taskActions.generateCert = async (getAccessToken, id) => {
   const postBody= {"taskId" : id};
   const apiUrl = `/tasks/generatecert`;
@@ -145,9 +155,14 @@ taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, g
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.createAKSCluster = async (postBody, getAccessToken) => {
+// TODO: This should be a get route.
+taskActions.createAksClusterWithTaskIdV2 = async (getAccessToken, cancelTokenSource, taskId) => {
   const apiUrl = `/tools/azure/create/aks`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  const postBody = {
+    taskId: taskId,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 taskActions.logAksClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {

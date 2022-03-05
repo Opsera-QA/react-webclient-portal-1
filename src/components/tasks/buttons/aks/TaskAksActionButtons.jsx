@@ -1,27 +1,26 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { faLaptopMedical, faPlay, faSpinner, faStop } from "@fortawesome/pro-light-svg-icons";
+import { faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import Model from "../../core/data_model/model";
-import gitTasksMetadata from "./git-tasks-metadata";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
+import {TASK_TYPES} from "components/tasks/task.types";
 
-function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
+// TODO: This needs to be completely rewritten. It was causing massive amounts of data pulls
+function TaskAksActionButtons(
+  {
+    gitTasksData,
+    status,
+  }) {
   let toastContext = useContext(DialogToastContext);
-  const [gitTasksDataCopy, setDataCopy] = useState(gitTasksData);
   const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskFinished, setTaskFinished] = useState(true);
+  const [isTaskRunning, setIsTaskRunning] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
-  const [isCheckingStatus, setCheckStatus] = useState(false);
-  const history = useHistory();
   let timerIds = [];
 
   useEffect(() => {
@@ -32,44 +31,22 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setIsTaskRunning(status === "running");
 
-    getTaskStatus(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    if (gitTasksDataCopy?.getData("status") && gitTasksDataCopy?.getData("status") === "running") {
-      setTaskFinished(false);
-      gitTasksData.setData("running");
-      return;
+    if (status === "running" && gitTasksData.getData("type") === TASK_TYPES.AZURE_CLUSTER_CREATION) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
 
-    return () => {
-      setTaskFinished(true);
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
     return () => {
       source.cancel();
       isMounted.current = false;
       stopPolling();
     };
-  }, [JSON.stringify(gitTasksData.getData("status"))]);
+  }, [status]);
 
   const stopPolling = () => {
     if (Array.isArray(timerIds) && timerIds.length > 0) {
@@ -79,73 +56,55 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true);
-      await tasksPolling(cancelSource);
+      await startTaskPolling(cancelSource);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const tasksPolling = async (cancelSource = cancelTokenSource, count = 1) => {
+  const startTaskPolling = async (cancelSource = cancelTokenSource, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
+
     const taskAtHand = await getTaskStatus(cancelSource);
+    console.log("task at hand status: " + JSON.stringify(taskAtHand?.status));
 
     if (count > 15) {
       await handleCancelRunTask(true);
     }
 
-    if (!(await checkStatus(taskAtHand)) && taskFinished === false) {
+    if (taskAtHand?.status === "running") {
       let timeout = 15000;
       if (count > 4) {
         timeout = timeout * count;
       }
       await new Promise((resolve) => timerIds.push(setTimeout(resolve, timeout)));
-      return await tasksPolling(cancelSource, count + 1);
+      return await startTaskPolling(cancelSource, count + 1);
     }
-  };
-
-  const checkStatus = async (data) => {
-    return !!(
-      data?.status &&
-      (data?.status === "success" ||
-        data?.status === "failed" ||
-        data?.status === "failure" ||
-        data?.status === "stopped")
-    );
+    else {
+      setIsTaskRunning(false);
+    }
   };
 
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
+    console.info("tasks aks check status");
     const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
-    const data = response?.data?.data[0];
-    if (isMounted?.current === true && data) {
-      if (data?.error) {
-        toastContext.showInlineErrorMessage("Error in fetching Task Status.");
-      }
-      if (await checkStatus(data)) {
-        setIsLoading(false);
-        setTaskFinished(true);
-      }
+    const taskData = response?.data?.data;
+
+    if (isMounted?.current === true && taskData) {
+      return taskData;
     }
-    setDataCopy(new Model(data, gitTasksMetadata, false));
-    return data;
   };
 
   const handleRunTask = async () => {
     try {
-      setIsLoading(true);
-      setTaskFinished(false);
-      let postBody = {
-        taskId: gitTasksData.getData("_id"),
-      };
-      let result = await taskActions.createAKSCluster(postBody, getAccessToken);
-      gitTasksData.setData("status", "running");
+      await taskActions.createAksClusterWithTaskIdV2(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
       toastContext.showSuccessDialog("AKS Cluster Creation Triggered Successfully");
+      setIsTaskRunning(true);
+      await startTaskPolling();
     } catch (error) {
-      setTaskFinished(true);
+      setIsTaskRunning(false);
       isMounted.current = false;
       console.log(error);
       if (error?.error?.response?.data?.message) {
@@ -156,9 +115,6 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
           "A service level error has occurred in creation of the AKS Cluster - check the Activity Logs for a complete error log."
         );
       }
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -166,7 +122,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     setIsCanceling(true);
     await taskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
     await taskActions.logAksClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
-    setTaskFinished(true);
+    setIsTaskRunning(false);
     isMounted.current = false;
     if (automatic) {
       toastContext.showInformationToast(
@@ -181,7 +137,7 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getRunningLabel = () => {
-    if (taskFinished) {
+    if (isTaskRunning === false) {
       return (
         <span>
           <IconBase icon={faPlay} className={"mr-1"} />
@@ -215,14 +171,10 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
   };
 
   const getCancelButton = () => {
-    if (gitTasksData.getData("type") !== "azure_cluster_creation") {
-      return null;
-    }
-
     return (
       <Button
         variant={"danger"}
-        disabled={taskFinished}
+        disabled={isTaskRunning !== true}
         onClick={() => {
           handleCancelRunTask(false);
         }}
@@ -234,15 +186,11 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     );
   };
 
-  const getRunningButton = () => {
-    if (gitTasksData.getData("type") !== "azure_cluster_creation") {
-      return null;
-    }
-
+  const getRunButton = () => {
     return (
       <Button
         variant={"success"}
-        disabled={!taskFinished}
+        disabled={isTaskRunning !== false}
         onClick={() => {
           handleRunTask(true);
         }}
@@ -254,26 +202,21 @@ function AKSActionButtons({ gitTasksData, handleClose, disable, className }) {
     );
   };
 
-  if (gitTasksData.getData("type") !== "azure_cluster_creation") {
+  if (gitTasksData?.getData("type") !== TASK_TYPES.AZURE_CLUSTER_CREATION) {
     return null;
   }
 
   return (
-    <>
-      <div className="text-right btn-group btn-group-sized">
-        {getRunningButton()}
-        {getCancelButton()}
-      </div>
-    </>
+    <div className="text-right btn-group btn-group-sized">
+      {getRunButton()}
+      {getCancelButton()}
+    </div>
   );
 }
 
-AKSActionButtons.propTypes = {
+TaskAksActionButtons.propTypes = {
   gitTasksData: PropTypes.object,
-  loadData: PropTypes.func,
-  disable: PropTypes.bool,
-  className: PropTypes.string,
-  handleClose: PropTypes.func,
+  status: PropTypes.string,
 };
 
-export default AKSActionButtons;
+export default TaskAksActionButtons;
