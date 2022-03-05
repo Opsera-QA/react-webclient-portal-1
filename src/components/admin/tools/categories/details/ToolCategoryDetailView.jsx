@@ -5,14 +5,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ToolCategoryDetailPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailPanel";
+import ToolCategoryDetailPanel from "components/admin/tools/categories/details/ToolCategoryDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
-import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
-import {toolCategoryMetadata} from "components/admin/tools/tool_category/toolCategory.metadata";
+import {toolCategoryActions} from "components/admin/tools/categories/toolCategory.actions";
+import {toolCategoryMetadata} from "components/admin/tools/categories/toolCategory.metadata";
 
 function ToolCategoryDetailView() {
   const {toolTypeId} = useParams();
