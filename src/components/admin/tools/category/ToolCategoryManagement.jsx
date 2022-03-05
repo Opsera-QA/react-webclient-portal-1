@@ -2,11 +2,11 @@ import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
-import ToolCategoryTable from "components/admin/tools/tool_category/ToolCategoryTable";
+import ToolCategoryTable from "components/admin/tools/category/ToolCategoryTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
-import {toolCategoryActions} from "components/admin/tools/tool_category/toolCategory.actions";
+import {toolCategoryActions} from "components/admin/tools/category/toolCategory.actions";
 
 function ToolCategoryManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);

@@ -1,10 +1,10 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import ToolCategoryEditorPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryEditorPanel";
+import ToolCategoryEditorPanel from "components/admin/tools/category/details/ToolCategoryEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {toolCategoryMetadata} from "components/admin/tools/tool_category/toolCategory.metadata";
+import {toolCategoryMetadata} from "components/admin/tools/category/toolCategory.metadata";
 
 function NewToolCategoryOverlay({ loadData, isMounted } ) {
   const toastContext = useContext(DialogToastContext);

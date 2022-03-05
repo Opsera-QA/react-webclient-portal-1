@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ToolCategoryEditorPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryEditorPanel";
-import ToolCategorySummaryPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategorySummaryPanel";
+import ToolCategoryEditorPanel from "components/admin/tools/category/details/ToolCategoryEditorPanel";
+import ToolCategorySummaryPanel from "components/admin/tools/category/details/ToolCategorySummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
