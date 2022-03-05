@@ -1,9 +1,8 @@
 import baseActions from "utils/actionsBase";
 
-// TODO: This should be moved to where the inputs are. It's not ArgoCD step specific
-const ArgoCDStepActions = {};
+export const argoCdActions = {};
 
-ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId, toolIdentifier) => {
+argoCdActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, pipelineId, stepId, toolIdentifier) => {
   const apiUrl = "/tools/argo/artifactory-tags";
   const postBody = {
     pipelineId: pipelineId,
@@ -13,7 +12,7 @@ ArgoCDStepActions.getArtifactoryTagsFromArgoInstance = async (getAccessToken, ca
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-ArgoCDStepActions.getAzureArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, azureToolConfigId, acrLoginUrl, acrRepoName) => {
+argoCdActions.getAzureArtifactoryTagsFromArgoInstance = async (getAccessToken, cancelTokenSource, azureToolConfigId, acrLoginUrl, acrRepoName) => {
   const apiUrl = "/tools/argo/artifactory-tags/azure";
   const postBody = {
     azureToolConfigId: azureToolConfigId,
@@ -24,4 +23,7 @@ ArgoCDStepActions.getAzureArtifactoryTagsFromArgoInstance = async (getAccessToke
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-export default ArgoCDStepActions;
+argoCdActions.getArgoRepositoriesV2 = async (getAccessToken, cancelTokenSource, argoToolId) => {
+  const apiUrl = `/tools/${argoToolId}/argo/repositories`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};

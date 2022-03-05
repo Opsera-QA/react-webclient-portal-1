@@ -10,12 +10,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import ArgoRepositoryInput from "./inputs/ArgoRepositoryInput";
 import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import ArgoClusterNameSpaceInputBase
-  from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterNameSpaceInputBase";
+import ArgoRepositorySelectInput
+  from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositorySelectInput";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -106,10 +105,10 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
             />
           </Col>
           <Col lg={12}>
-            <ArgoRepositoryInput
-              setDataObject={setArgoProjectModel}
-              dataObject={argoProjectModel}
+            <ArgoRepositorySelectInput
               fieldName={"sourceRepos"}
+              model={argoProjectModel}
+              setModel={setArgoProjectModel}
               argoToolId={toolData?._id}
               disabled={!argoProjectData?.isNew()}
             />

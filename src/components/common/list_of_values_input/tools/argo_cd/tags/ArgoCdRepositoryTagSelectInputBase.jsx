@@ -4,8 +4,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import argoCdStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argocd-step-actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {argoCdActions} from "components/common/list_of_values_input/tools/argo_cd/argocd.actions";
 
 function ArgoCdRepositoryTagSelectInputBase(
   {
@@ -63,7 +63,7 @@ function ArgoCdRepositoryTagSelectInputBase(
   };
 
   const loadRepositoryTags = async (cancelSource = cancelTokenSource) => {
-    const response = await argoCdStepActions.getArtifactoryTagsFromArgoInstance(getAccessToken, cancelSource, pipelineId, stepId, toolIdentifier);
+    const response = await argoCdActions.getArtifactoryTagsFromArgoInstance(getAccessToken, cancelSource, pipelineId, stepId, toolIdentifier);
     const repositoryTags = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositoryTags)) {
