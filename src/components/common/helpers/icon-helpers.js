@@ -3,7 +3,7 @@ import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons"
 import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import {TASK_TYPES} from "components/tasks/task.types";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
 
 export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL) {

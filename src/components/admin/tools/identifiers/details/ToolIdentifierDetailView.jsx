@@ -3,17 +3,17 @@ import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ToolIdentifierDetailPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailPanel";
+  from "components/admin/tools/identifiers/details/ToolIdentifierDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarOpseraAdminDeleteButton from "components/common/actions/buttons/ActionBarOpseraAdminDeleteButton";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -77,15 +77,20 @@ function ToolIdentifierDetailView() {
   };
 
   const getToolIdentifier = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getToolIdentifierByIdV2(getAccessToken, cancelSource, toolIdentifierId);
+    const response = await toolIdentifierActions.getToolIdentifierByIdV2(getAccessToken, cancelSource, toolIdentifierId);
+    const toolIdentifier = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data?.length > 0) {
-      setToolIdentifierData(new Model(response?.data[0], toolIdentifierMetadata, false));
+    if (isMounted?.current === true && toolIdentifier) {
+      setToolIdentifierData(new Model(toolIdentifier, toolIdentifierMetadata, false));
     }
   };
 
   const deleteToolIdentifier = async () => {
-    return await toolManagementActions.deleteToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierData);
+    return await toolIdentifierActions.deleteToolIdentifierV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolIdentifierId,
+      );
   };
 
   const getActionBar = () => {
@@ -95,7 +100,11 @@ function ToolIdentifierDetailView() {
           <ActionBarBackButton path={"/admin/tools/identifiers"} />
         </div>
         <div>
-          <ActionBarOpseraAdminDeleteButton relocationPath={"/admin/tools/identifiers"} handleDelete={deleteToolIdentifier} dataObject={toolIdentifierData} />
+          <ActionBarOpseraAdminDeleteButton
+            relocationPath={"/admin/tools/identifiers"}
+            handleDelete={deleteToolIdentifier}
+            dataObject={toolIdentifierData}
+          />
         </div>
       </ActionBarContainer>
     );

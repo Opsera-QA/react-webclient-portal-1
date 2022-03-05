@@ -48,7 +48,7 @@ import DataMappingManagement from "components/settings/data_mapping/DataMappingM
 import ToolCategoryDetailView
   from "components/admin/tools/categories/details/ToolCategoryDetailView";
 import ToolIdentifierDetailView
-  from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
+  from "./components/admin/tools/identifiers/details/ToolIdentifierDetailView";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import LdapOrganizationAccountDetailView
@@ -116,7 +116,7 @@ import AwsAccountRegistration from "components/user/aws_registration/AwsAccountR
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 import Release360 from "components/insights/release_360/Release360";
 import ToolCategoryManagement from "components/admin/tools/categories/ToolCategoryManagement";
-import ToolIdentifierManagement from "components/admin/tools/tool_identifier/ToolIdentifierManagement";
+import ToolIdentifierManagement from "components/admin/tools/identifiers/ToolIdentifierManagement";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";

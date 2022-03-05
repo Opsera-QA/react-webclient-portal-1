@@ -32,9 +32,9 @@ import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbReal
 import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
-import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
+import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {

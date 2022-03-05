@@ -3,15 +3,15 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import ToolIdentifierSelectionCardView from "components/admin/tools/tool_identifier/ToolIdentifierSelectionCardView";
-import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
+import ToolIdentifierSelectionCardView from "components/admin/tools/identifiers/ToolIdentifierSelectionCardView";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import TableCardView from "components/common/table/TableCardView";
 import {hasStringValue, stringIncludesValue} from "components/common/helpers/string-helpers";
-import ToolIdentifierSelectionTable from "components/admin/tools/tool_identifier/ToolIdentifierSelectionTable";
+import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/ToolIdentifierSelectionTable";
 
 function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
@@ -61,22 +61,22 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
 
   const getToolIdentifiers = async (cancelSource) => {
     try {
-      const toolIdentifierResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
+      const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
+      const identifiers = response?.data?.data;
 
-      if (isMounted?.current === true) {
-        setToolIdentifiers(toolIdentifierResponse?.data);
+      if (isMounted?.current === true && Array.isArray(identifiers)) {
+        setToolIdentifiers(identifiers);
       }
     } catch (error) {
 
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     }
   };
 
   const setDataFunction = (toolIdentifier) => {
-    let newModel = {...toolModel};
+    const newModel = {...toolModel};
     newModel.setData("tool_identifier", toolIdentifier?.identifier);
     newModel.setData("tool_type_identifier", toolIdentifier?.tool_type_identifier);
     newModel.setData("configuration", {});

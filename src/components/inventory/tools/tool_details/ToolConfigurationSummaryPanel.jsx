@@ -108,7 +108,7 @@ import FlywayDatabaseToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/flyway_database/FlywayDatabaseToolConfigurationSummaryPanel";
 import InformaticaToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/tool_jobs/informatica/InformaticaToolConfigurationSummaryPanel";
 import InformaticaConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/informatica/informatica-connection-metadata";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {

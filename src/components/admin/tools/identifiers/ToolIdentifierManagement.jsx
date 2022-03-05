@@ -3,8 +3,8 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
-import ToolIdentifierTableCardView from "components/admin/tools/tool_identifier/ToolIdentifierTableCardView";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
+import ToolIdentifierTableCardView from "components/admin/tools/identifiers/ToolIdentifierTableCardView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
@@ -49,7 +49,6 @@ function ToolIdentifierManagement() {
       await getToolIdentifiers(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -60,18 +59,11 @@ function ToolIdentifierManagement() {
   };
 
   const getToolIdentifiers = async (cancelSource) => {
-    try {
-      const toolIdentifierResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+    const identifiers = response?.data?.data;
 
-      if (isMounted?.current === true) {
-        setToolIdentifiers(toolIdentifierResponse?.data);
-      }
-    } catch (error) {
-
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
+    if (isMounted?.current === true && Array.isArray(identifiers)) {
+      setToolIdentifiers(identifiers);
     }
   };
 

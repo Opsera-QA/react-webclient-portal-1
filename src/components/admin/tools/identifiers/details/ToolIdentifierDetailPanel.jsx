@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ToolIdentifierSummaryPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierSummaryPanel";
+  from "components/admin/tools/identifiers/details/ToolIdentifierSummaryPanel";
 import ToolIdentifierEditorPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
+  from "components/admin/tools/identifiers/details/ToolIdentifierEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";

@@ -1,16 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 
 function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, enabledInToolRegistry, status, clearDataFunction, clearDataDetails}) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -39,12 +38,12 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
       await loadTools(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setError(error);
       }
     }
     finally {
@@ -55,11 +54,11 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    let response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, status, enabledInToolRegistry);
-    const newToolIdentifiers = response?.data;
+    let response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource, status, enabledInToolRegistry);
+    const identifiers = response?.data?.data;
 
-    if (Array.isArray(newToolIdentifiers) && newToolIdentifiers.length > 0) {
-      setToolIdentifiers(newToolIdentifiers);
+    if (Array.isArray(identifiers)) {
+      setToolIdentifiers(identifiers);
     }
   };
 
@@ -75,11 +74,12 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
       valueField={valueField}
       requireClearDataConfirmation={true}
       lenientClearValueButton={true}
+      error={error}
       clearDataFunction={clearDataFunction}
       clearDataDetails={clearDataDetails}
       textField={textField}
       placeholderText={"Select a Tool Identifier"}
-      disabled={disabled || isLoading}
+      disabled={disabled}
     />
   );
 }

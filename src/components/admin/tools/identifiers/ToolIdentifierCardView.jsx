@@ -2,15 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
-import ToolIdentifierSelectionCard from "components/admin/tools/tool_identifier/ToolIdentifierSelectionCard";
+import ToolIdentifierCard from "components/admin/tools/identifiers/ToolIdentifierCard";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 
-function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading, toolIdentifierMetadata, setDataFunction }) {
-  const getToolIdentifierSelectionCard = (toolIdentifier) => {
+function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, loadData, isLoading, toolIdentifierMetadata }) {
+  const getToolIdentifierCard = (toolIdentifier) => {
     return (
-      <ToolIdentifierSelectionCard
+      <ToolIdentifierCard
         toolIdentifierModel={new Model({ ...toolIdentifier }, toolIdentifierMetadata, false)}
-        setDataFunction={setDataFunction}
       />
     );
   };
@@ -19,22 +18,24 @@ function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading,
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
+      paginationModel={toolIdentifierFilterModel}
+      className={"makeup-container-table m-2"}
       cards={
         <VerticalCardViewBase
           data={toolIdentifiers}
-          getCardFunction={getToolIdentifierSelectionCard}
+          getCardFunction={getToolIdentifierCard}
         />
       }
     />
   );
 }
 
-ToolIdentifierSelectionCardView.propTypes = {
+ToolIdentifierCardView.propTypes = {
   toolIdentifiers: PropTypes.array,
+  toolIdentifierFilterModel: PropTypes.object,
   toolIdentifierMetadata: PropTypes.object,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool,
-  setDataFunction: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
-export default ToolIdentifierSelectionCardView;
+export default ToolIdentifierCardView;

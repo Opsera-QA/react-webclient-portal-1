@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import NewToolIdentifierOverlay from "components/admin/tools/tool_identifier/NewToolIdentifierOverlay";
-import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
-import ToolIdentifierCardView from "components/admin/tools/tool_identifier/ToolIdentifierCardView";
-import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
+import NewToolIdentifierOverlay from "components/admin/tools/identifiers/NewToolIdentifierOverlay";
+import ToolIdentifierTable from "components/admin/tools/identifiers/ToolIdentifierTable";
+import ToolIdentifierCardView from "components/admin/tools/identifiers/ToolIdentifierCardView";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 
 function ToolIdentifierTableCardView(
   {

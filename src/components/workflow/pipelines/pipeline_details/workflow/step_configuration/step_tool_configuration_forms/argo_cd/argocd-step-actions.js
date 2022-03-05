@@ -1,6 +1,6 @@
 import baseActions from "utils/actionsBase";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
 import {axiosApiService} from "api/apiService";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 const ArgoCDStepActions = {};
 

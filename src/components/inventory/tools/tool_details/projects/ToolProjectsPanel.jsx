@@ -5,7 +5,7 @@ import MessageField from "components/common/fields/text/MessageField";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import JiraToolProjectsPanel from "components/inventory/tools/tool_details/tool_jobs/jira/projects/JiraToolProjectsPanel";
 import ArgoProject from "../tool_jobs/argo/projects/ArgoProject";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolProjectsPanel({ toolData, loadData, isLoading }) {
   const getToolProjectsPanel = () => {
