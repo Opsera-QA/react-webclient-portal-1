@@ -76,7 +76,6 @@ function DeleteToolsTable({ data, loadData, isLoading, className }) {
     return (
         <>
             <CustomTable
-            className={"no-table-border "+ className}
             isLoading={isLoading}
             data={data}
             columns={columns}

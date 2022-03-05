@@ -87,7 +87,6 @@ function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading })
       metadata={accessRoleDefinitionMetadata}
       titleIcon={faHandshake}
       title={"Assigned Role Access"}
-      showBorder={false}
     />
   );
 }

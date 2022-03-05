@@ -51,7 +51,6 @@ function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTempla
   const getTemplateTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         noDataMessage={noDataMessage}

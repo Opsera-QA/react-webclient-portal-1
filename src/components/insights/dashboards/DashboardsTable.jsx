@@ -61,7 +61,6 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   const getDashboardsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         data={data}
         columns={columns}
         onRowSelect={onRowSelect}

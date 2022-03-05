@@ -50,7 +50,6 @@ function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
   const getToolCategoryTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={data}

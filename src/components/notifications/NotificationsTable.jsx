@@ -82,7 +82,6 @@ function NotificationsTable(
   const getNotificationTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         columns={columns}
         data={data}
         isLoading={isLoading}

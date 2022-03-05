@@ -1360,6 +1360,12 @@ div.data-blocks-ellipses {
 
 /* Card Container Styling */
 .card-container {
+    border: 1px solid #DFDFDF;
+    border-collapse: collapse;
+    background-color: #FFF;
+}
+
+.vanity-card-container {
     background-color: #FFF;
 }
 
@@ -1442,7 +1448,7 @@ div.data-blocks-ellipses {
 .filter-container {
 }
 
-.filter-container-body, .table-border {
+.table-border, .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
 }

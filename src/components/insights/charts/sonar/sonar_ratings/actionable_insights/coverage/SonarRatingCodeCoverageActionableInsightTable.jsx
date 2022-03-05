@@ -102,7 +102,6 @@ function SonarRatingCodeCoverageActionableInsightTable(
   return (
     <FilterContainer
       isLoading={isLoading}
-      showBorder={false}
       title={`Code Coverage Metrics Report`}
       titleIcon={faDraftingCompass}
       body={getTable()}

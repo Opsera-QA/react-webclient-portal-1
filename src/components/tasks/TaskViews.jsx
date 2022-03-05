@@ -89,7 +89,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const getTableCardView = () => {
     return (
-      <Row className={"mx-0"}>
+      <Row className={"mx-0 container-border"}>
         <Col sm={2} className={"px-0"}>
           <TaskVerticalTabContainer
             isLoading={isLoading}

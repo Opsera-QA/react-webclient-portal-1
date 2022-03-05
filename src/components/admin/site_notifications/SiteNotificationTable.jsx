@@ -61,7 +61,6 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
   return (
     <FilterContainer
       className={"m-2"}
-      showBorder={false}
       body={getSiteNotificationTable()}
       metadata={siteNotificationMetadata}
       titleIcon={faFlag}

@@ -135,7 +135,6 @@ function SonarRatingsMaintainabilityActionableInsightTable(
   return (
     <FilterContainer
       isLoading={isLoading}
-      showBorder={false}
       title={`Technical Debt Ratio Report`}
       titleIcon={faDraftingCompass}
       body={getTable()}

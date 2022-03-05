@@ -14,7 +14,11 @@ function TableCardView(
     if (!Array.isArray(data) || data.length === 0) {
       if (isLoading) {
         // TODO: Make good looking loading display
-        return (<div className="info-text text-center p-5"><LoadingIcon className={"mr-1"}/>Loading Data</div>);
+        return (
+          <div className={"table-card-panel info-text text-center p-5 container-border"}>
+            <LoadingIcon className={"mr-1"}/>Loading Data
+          </div>
+        );
       }
     }
 

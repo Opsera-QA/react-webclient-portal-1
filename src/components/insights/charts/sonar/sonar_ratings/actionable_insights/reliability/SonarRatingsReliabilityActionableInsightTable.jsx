@@ -135,7 +135,6 @@ function SonarRatingsReliabilityActionableInsightTable(
   return (
     <FilterContainer
       isLoading={isLoading}
-      showBorder={false}
       title={`Bugs Report`}
       titleIcon={faDraftingCompass}
       body={getTable()}

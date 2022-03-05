@@ -139,7 +139,6 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
         {getBuildSummaryDetails()}
         <FilterContainer
           isLoading={isLoading}
-          showBorder={false}
           title={`Opsera Build Statistics Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}
