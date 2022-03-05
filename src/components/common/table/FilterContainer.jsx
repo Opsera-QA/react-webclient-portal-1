@@ -23,6 +23,7 @@ function FilterContainer(
     metadata,
     exportButton,
     supportClientSideSearching,
+    bodyClassName,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -65,7 +66,7 @@ function FilterContainer(
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <div>
+        <div className={bodyClassName}>
           {body}
         </div>
       </div>
@@ -92,6 +93,7 @@ FilterContainer.propTypes = {
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
   supportClientSideSearching: PropTypes.bool,
+  bodyClassName: PropTypes.bool,
 };
 
 export default FilterContainer;
