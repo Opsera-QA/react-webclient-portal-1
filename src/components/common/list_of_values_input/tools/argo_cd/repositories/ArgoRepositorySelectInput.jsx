@@ -120,7 +120,7 @@ ArgoRepositorySelectInput.propTypes = {
   argoToolId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
