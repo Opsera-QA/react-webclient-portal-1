@@ -46,8 +46,8 @@ import ParallelProcessPipelineStepConfigurationSummaryPanel
 import {parallelProcessorStepMetadata}
   from "components/workflow/plan/step/parallel_processor/parallelProcessorStep.metadata";
 import NpmPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/npm/NpmPipelineStepConfigurationSummaryPanel";
-import npmPipelineStepConfigurationMetadata from "./step_tool_configuration_forms/npm/npm-step-configuration-metadata";
+  from "../../../../plan/step/npm/NpmPipelineStepConfigurationSummaryPanel";
+import {npmStepMetadata} from "components/workflow/plan/step/npm/npmStep.metadata";
 import ConditionalOperationPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfigurationSummaryPanel";
 import conditionalOperationStepConfigurationMetadata
@@ -298,7 +298,7 @@ function PipelineStepConfigurationSummary({
         return (
           <NpmPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            npmPipelineDataObject={getModelWrappedObject(npmPipelineStepConfigurationMetadata)}
+            npmPipelineDataObject={getModelWrappedObject(npmStepMetadata)}
           />
         );
       case "octopus":

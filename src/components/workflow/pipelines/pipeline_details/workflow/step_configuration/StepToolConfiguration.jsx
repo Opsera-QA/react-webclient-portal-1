@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
-import NpmStepConfiguration from "./step_tool_configuration_forms/npm/NpmStepConfiguration";
+import NpmStepConfiguration from "../../../../plan/step/npm/NpmStepConfiguration";
 import CommandLineStepConfiguration from "./step_tool_configuration_forms/command_line/CommandLineStepConfiguration";
 import TeamCityStepConfiguration from "./step_tool_configuration_forms/team_city/TeamCityStepConfiguration";
 import GcpDeployStepConfiguration from "./step_tool_configuration_forms/gcp/GcpDeployStepConfiguration";
@@ -467,10 +467,9 @@ function StepToolConfiguration({
       case "npm":
         return(
           <NpmStepConfiguration
-            data={stepTool}
+            pipelineStep={stepTool}
             parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "teamcity":
