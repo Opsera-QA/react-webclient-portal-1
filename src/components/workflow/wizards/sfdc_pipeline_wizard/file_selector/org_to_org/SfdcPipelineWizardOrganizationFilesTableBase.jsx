@@ -25,7 +25,6 @@ const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loa
   const getFilesTable = () => {
     return (
       <VanityTable
-        className={"table-no-border" + (data?.length > 0 ? " opacity-half" : " ") }
         columns={columns}
         data={data}
         isLoading={isLoading}

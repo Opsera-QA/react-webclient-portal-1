@@ -22,7 +22,6 @@ function FilterContainer(
     className,
     metadata,
     exportButton,
-    showBorder,
     supportClientSideSearching,
 
     // TODO: Remove after filters are used everywhere
@@ -66,7 +65,7 @@ function FilterContainer(
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <div className={showBorder !== false ? "filter-container-body" : ""}>
+        <div>
           {body}
         </div>
       </div>
@@ -92,7 +91,6 @@ FilterContainer.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool,
   supportClientSideSearching: PropTypes.bool,
 };
 

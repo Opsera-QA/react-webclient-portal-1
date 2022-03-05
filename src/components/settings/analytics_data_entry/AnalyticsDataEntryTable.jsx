@@ -54,7 +54,6 @@ function AnalyticsDataEntryTable({
   const getAnalyticsDataEntryTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={analyticsDataEntries}

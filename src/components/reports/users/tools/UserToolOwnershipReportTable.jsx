@@ -64,7 +64,6 @@ function UserToolOwnershipReportTable({ toolList, isLoading, paginationModel, se
       filterDto={paginationModel}
       setFilterDto={setPaginationModel}
       supportSearch={true}
-      showBorder={false}
       isLoading={isLoading}
       metadata={toolMetadata}
       body={getToolTable()}

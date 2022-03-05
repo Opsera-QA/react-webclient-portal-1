@@ -85,7 +85,6 @@ function KpiDataPointsTable(
   const getDataPointsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
         data={dataPoints}

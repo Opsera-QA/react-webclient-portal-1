@@ -57,7 +57,6 @@ function PipelineStorageTable({ data, loadData, isLoading, pipelineStoragePagina
 
   return (
     <FilterContainer
-      showBorder={false}
       loadData={loadData}
       isLoading={isLoading}
       body={getPipelineStorageTable()}

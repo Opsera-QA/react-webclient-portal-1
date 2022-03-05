@@ -58,7 +58,6 @@ function NotificationActivityLogsTable(
   const getNotificationActivityLogsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         columns={columns}
         data={notificationActivityLogs}
         isLoading={isLoading}

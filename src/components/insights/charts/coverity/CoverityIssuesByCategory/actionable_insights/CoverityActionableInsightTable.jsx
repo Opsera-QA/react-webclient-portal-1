@@ -91,7 +91,6 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   return (
     <FilterContainer
       isLoading={isLoading}
-      showBorder={false}
       title={tableTitle}
       titleIcon={faDraftingCompass}
       body={getTable()}

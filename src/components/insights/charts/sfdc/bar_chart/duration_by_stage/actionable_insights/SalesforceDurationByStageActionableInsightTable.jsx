@@ -67,7 +67,6 @@ function SalesforceDurationByStageActionableInsightTable({
   return (
     <FilterContainer
       isLoading={isLoading}
-      showBorder={false}
       title={tableTitle}
       titleIcon={faDraftingCompass}
       body={getTable()}

@@ -131,7 +131,6 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
         {getDeploymentSummaryDetails()}
         <FilterContainer
           isLoading={isLoading}
-          showBorder={false}
           title={`Opsera Deployment Statistics Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}

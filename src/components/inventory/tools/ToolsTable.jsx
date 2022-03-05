@@ -57,7 +57,6 @@ function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilte
   return (
     <CustomTable
       nextGeneration={true}
-      className="table-no-border"
       columns={columns}
       data={data}
       isLoading={isLoading}

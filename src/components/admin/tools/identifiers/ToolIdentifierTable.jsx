@@ -39,7 +39,6 @@ function ToolIdentifierTable({toolIdentifiers, isLoading}) {
 
   return (
     <CustomTable
-      className={"no-table-border"}
       isLoading={isLoading}
       onRowSelect={onRowSelect}
       data={toolIdentifiers}

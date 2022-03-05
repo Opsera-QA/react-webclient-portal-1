@@ -273,7 +273,6 @@ function PipelineActivityLogTreeTable(
   return (
     <div className={"mr-2"}>
       <FilterContainer
-        showBorder={false}
         loadData={loadData}
         filterDto={pipelineActivityFilterModel}
         setFilterDto={setPipelineActivityFilterModel}

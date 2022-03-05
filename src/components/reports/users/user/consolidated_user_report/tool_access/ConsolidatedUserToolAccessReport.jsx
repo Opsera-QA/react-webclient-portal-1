@@ -94,7 +94,6 @@ function ConsolidatedUserToolAccessReport({ userEmailAddress }) {
       filterDto={toolFilterModel}
       setFilterDto={setToolFilterModel}
       supportSearch={true}
-      showBorder={false}
       isLoading={isLoading}
       metadata={toolMetadata}
       type={"Tools"}

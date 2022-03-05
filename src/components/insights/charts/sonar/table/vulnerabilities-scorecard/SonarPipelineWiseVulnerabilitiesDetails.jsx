@@ -120,7 +120,6 @@ function SonarPipelineWiseVulnerabilitiesDetails({ dataObject }) {
         {getPipelineDetails()}
         <FilterContainer
           isLoading={isLoading}
-          showBorder={false}
           title={`Vulnerabilities Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}          

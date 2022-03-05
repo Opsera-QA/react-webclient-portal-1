@@ -68,7 +68,6 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
     <FilterContainer
     loadData={loadData}
     isLoading={isLoading}
-    showBorder={false}
     body={getGroupMembershipTable()}
     metaData={ldapGroupMetaData}
     titleIcon={faUserFriends}
