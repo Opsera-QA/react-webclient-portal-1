@@ -1,8 +1,7 @@
-import React, {useContext, useMemo, useState, useRef} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {
@@ -12,7 +11,6 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
 import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -73,22 +71,21 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createNewDashboard}
-        isLoading={isLoading}
-        body={getDashboardsTable()}
-        titleIcon={faChartNetwork}
-        metadata={dashboardMetadata}
-        supportSearch={true}
-        title={"My Dashboards"}
-        filterDto={dashboardFilterDto}
-        setFilterDto={setDashboardFilterDto}
-        dropdownFilters={getDropdownFilters()}
-        inlineFilters={getInlineFilters()}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createNewDashboard}
+      isLoading={isLoading}
+      body={getDashboardsTable()}
+      titleIcon={faChartNetwork}
+      metadata={dashboardMetadata}
+      supportSearch={true}
+      title={"My Dashboards"}
+      filterDto={dashboardFilterDto}
+      setFilterDto={setDashboardFilterDto}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={getInlineFilters()}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

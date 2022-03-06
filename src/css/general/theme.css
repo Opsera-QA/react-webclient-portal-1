@@ -484,25 +484,12 @@ a.text-primary:hover, a.text-primary:focus {
     height: 2em;
 }
 
-.custom-table .table-title-bar {
-    color: #3D3B36;
-    line-height: 2.4em;
-    font-weight: bold;
-    background-color: #E6E5E3;
-    width: 100%;
-}
-
-.custom-table .table-row {
-    margin-bottom: 2em;
-    line-height: 2em;
-}
-
 .custom-table .table-row, .primary-background {
     color: #3D3B36;
     background-color: #fff;
 }
 
-.custom-table .cell-center {
+.cell-center {
     text-align: center;
     vertical-align: middle;
 }
@@ -529,22 +516,6 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-footer {
     background-color: #E6E5E3;
     min-height: 5px;
-}
-
-.custom-table .top-pagination {
-    background-color: #E6E5E3;
-    border: 1px solid #e4e4e4;
-    border-bottom: none;
-    border-top: none;
-}
-
-.custom-table .status-icon {
-    display: flex;
-    justify-content: center;
-    width: 1rem;
-
-    /*TODO: REMOVE AFTER FIXING CENTERING*/
-    margin-left: 15px;
 }
 
 .custom-table > thead > tr > th {
@@ -965,17 +936,6 @@ a.nav-link {
     /*background-color: rgba(203, 205, 205, 0.1);*/
 }
 
-.content-block-top {
-    border-top: 1px solid #E6E5E3;
-    padding-top: 5px;
-}
-
-.table-content-block {
-    border: 1px solid #E6E5E3;
-    border-collapse: collapse;
-    border-radius: 0.25rem;
-}
-
 .image-container {
     min-width: 150px;
     min-height: 150px;
@@ -1358,15 +1318,12 @@ div.data-blocks-ellipses {
     background-color: #F3F3F1;
     border-collapse: collapse;
     border-top: 1px solid #e4e4e4;
-    border-bottom: 1px solid #e4e4e4;
 }
 
 /* End Pagination Container Styling */
 
 /* Card Container Styling */
 .card-container {
-    border: 1px solid #DFDFDF;
-    border-collapse: collapse;
     background-color: #FFF;
 }
 
@@ -1453,7 +1410,7 @@ div.data-blocks-ellipses {
 .filter-container {
 }
 
-.table-border, .container-border {
+.container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
 }
