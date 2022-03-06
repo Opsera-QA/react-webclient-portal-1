@@ -61,7 +61,7 @@ function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClo
   };
 
   const loadRecord = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
+    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, id);
     const task = response?.data?.data[0];
     const certDownloadable = response?.data?.data[0]?.configuration?.downloadable;
     setTask(task);
