@@ -35,7 +35,7 @@ function MakeupTableBase(
 
   return (
     <div className={className}>
-      <table className={"custom-table"} responsive="true" hover="true" {...table?.getTableProps()}>
+      <table className={"custom-table"} {...table?.getTableProps()}>
         <MakeupTableHeader
           isLoading={isLoading}
           data={data}
