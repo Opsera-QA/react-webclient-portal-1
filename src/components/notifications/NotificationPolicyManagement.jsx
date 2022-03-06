@@ -14,7 +14,7 @@ function NotificationPolicyManagement() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [notificationsList, setNotificationsList] = useState([]);
-  const [notificationFilterDto, setNotificationFilterDto] = useState(new Model({...notificationsFilterMetadata.newObjectFields}, notificationsFilterMetadata, false));
+  const [notificationFilterModel, setNotificationFilterModel] = useState(new Model({...notificationsFilterMetadata.newObjectFields}, notificationsFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -27,7 +27,7 @@ function NotificationPolicyManagement() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
+    loadData(notificationFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -38,29 +38,29 @@ function NotificationPolicyManagement() {
     };
   }, []);
 
-  const loadData = async (newFilterDto = notificationFilterDto) => {
+  const loadData = async (newFilterModel = notificationFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getNotificationsList(newFilterDto);
+      await getNotificationsList(newFilterModel, cancelSource);
     } catch (error) {
-      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getNotificationsList = async (filterDto = notificationFilterDto) => {
-    // TODO: Update to use cancel token
-    const response = await notificationsActions.getNotificationsList(filterDto, getAccessToken);
+  const getNotificationsList = async (newFilterModel = notificationFilterModel, cancelSource = cancelTokenSource) => {
+    const response = await notificationsActions.getNotificationsListV2(getAccessToken, cancelSource, newFilterModel);
     const notificationsList = response?.data?.data;
 
-    if (Array.isArray(notificationsList)) {
+    if (isMounted?.current === true && Array.isArray(notificationsList)) {
       setNotificationsList(response?.data?.data);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setNotificationFilterDto({...newFilterDto});
+
+      if (newFilterModel) {
+        newFilterModel?.setData("totalCount", response?.data?.count);
+        newFilterModel?.setData("activeFilters", newFilterModel.getActiveFilters());
+        setNotificationFilterModel({...newFilterModel});
+      }
     }
   };
 
@@ -76,8 +76,8 @@ function NotificationPolicyManagement() {
         isLoading={isLoading}
         loadData={loadData}
         data={notificationsList}
-        notificationFilterDto={notificationFilterDto}
-        setNotificationFilterDto={setNotificationFilterDto}
+        notificationFilterDto={notificationFilterModel}
+        setNotificationFilterDto={setNotificationFilterModel}
         isMounted={isMounted}
       />
     </ScreenContainer>

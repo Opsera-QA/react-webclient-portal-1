@@ -96,7 +96,7 @@ function NotificationsTable(
 
   return (
     <FilterContainer
-      className="px-2 pb-2"
+      className={"px-2 pb-2"}
       loadData={loadData}
       filterDto={notificationFilterDto}
       setFilterDto={setNotificationFilterDto}
