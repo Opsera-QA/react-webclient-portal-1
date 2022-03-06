@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import MakeupTableRow from "components/common/table/makeup/MakeupTableRow";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function MakeupTableBody(
   {
@@ -19,15 +19,8 @@ function MakeupTableBody(
     if (isLoading && (!Array.isArray(rows) || rows.length === 0)) {
       return (
         <tr>
-          <td
-            colSpan="100%"
-            className="info-text text-center p-3"
-          >
-            <div className="row" style={{ height:"150px", width: "100%"}}>
-              <div className="col-sm-12 my-auto text-center">
-                <span><IconBase isLoading={true} className="mr-2 mt-1"/>Loading Data</span>
-              </div>
-            </div>
+          <td colSpan="100%">
+            <CenterLoadingIndicator />
           </td>
         </tr>
       );

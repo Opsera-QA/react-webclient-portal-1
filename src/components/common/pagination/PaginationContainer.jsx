@@ -42,12 +42,10 @@ function PaginationContainer(
   const getBody = () => {
     if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
-        <div className={"container-border"}>
-          <LoadingDialog
-            message={"Loading Data"}
-            size={"sm"}
-          />
-        </div>
+        <LoadingDialog
+          message={"Loading Data"}
+          size={"sm"}
+        />
       );
     }
 

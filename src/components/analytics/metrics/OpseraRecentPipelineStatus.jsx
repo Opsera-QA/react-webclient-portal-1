@@ -126,7 +126,7 @@ function OpseraRecentPipelineStatus({ date }) {
             <div className="mt-3 d-flex justify-content-between">
               <div className="h6 activity-label-text mb-2">Opsera: Recent Pipeline Status</div>
             </div>
-            <div className="table-content-block">
+            <div>
               <CustomTable columns={columns} data={data.data} noDataMessage={noDataMessage}
                           noFooter={true} />
             </div>

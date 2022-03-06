@@ -9,7 +9,7 @@ function VanityPaginationContainer({ isLoading, paginationModel, loadData, child
   }
 
   return (
-    <div className="pagination-container">
+    <div className={"pagination-container"}>
       <TopPaginator paginationModel={paginationModel} isLoading={isLoading} loadData={loadData} />
       {children}
       <BottomPaginator nextGeneration={true} loadData={loadData} isLoading={isLoading} paginationModel={paginationModel} />

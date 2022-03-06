@@ -51,7 +51,7 @@ function FilterContainer(
 
   return (
     <div className={className}>
-      <div className="filter-container">
+      <div className="filter-container container-border">
         <div className="filter-title-bar w-100">
           <div className="px-2 d-flex content-block-header">
             <FilterTitleBar

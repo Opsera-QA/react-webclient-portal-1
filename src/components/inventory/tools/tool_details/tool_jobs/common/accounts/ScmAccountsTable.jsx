@@ -30,18 +30,13 @@ function ScmAccountsTable({ data, selectedRow, isLoading }) {
   );
 
   return (
-    <>
-      <div className="table-content-block">
-        <CustomTable
-          columns={columns}
-          data={data}
-          initialState={initialState}
-          onRowSelect={selectedRow}
-          isLoading={isLoading}
-        >
-        </CustomTable>
-      </div>
-    </>
+    <CustomTable
+      columns={columns}
+      data={data}
+      initialState={initialState}
+      onRowSelect={selectedRow}
+      isLoading={isLoading}
+    />
   );
 }
 

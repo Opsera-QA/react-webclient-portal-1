@@ -105,7 +105,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
 
   const getCardView = () => {
     return (
-      <div className={"table-border scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
         <ToolIdentifierSelectionCardView
           toolIdentifiers={getFilteredData()}
           setDataFunction={setDataFunction}
@@ -119,7 +119,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
 
   const getTableView = () => {
     return (
-      <div className={"table-border scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
         <ToolIdentifierSelectionTable
           isMounted={isMounted}
           toolIdentifiers={getFilteredData()}
