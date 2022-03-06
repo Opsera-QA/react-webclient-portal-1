@@ -66,7 +66,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
   const createGitTask = async () => {
     const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
     taskModel.setData("configuration", configuration);
-    return await taskActions.createGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    return await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
   const updateGitTask = async () => {

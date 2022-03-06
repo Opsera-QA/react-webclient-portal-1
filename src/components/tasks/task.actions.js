@@ -2,27 +2,6 @@ import baseActions from "utils/actionsBase";
 
 const taskActions = {};
 
-taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
-  const apiUrl = `/tools/git/${dataObject.getData("_id")}`;
-  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const postBody = {
-    ...gitTasksDataDto.getPersistData()
-  };
-  const apiUrl = `/tools/git/${gitTasksDataDto.getData("_id")}/update`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-taskActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const postBody = {
-    ...gitTasksDataDto.getPersistData()
-  };
-  const apiUrl = "/tools/git/create";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilterModel, fields) => {
   const apiUrl = `/tasks`;
   const urlParams = {
@@ -45,6 +24,34 @@ taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilte
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+taskActions.getTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/tasks/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.createTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const apiUrl = "/tasks/create";
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const apiUrl = `/tasks/${taskModel.getData("_id")}/update`;
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
+  const apiUrl = `/tasks/${dataObject.getData("_id")}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, fields) => {
   const apiUrl = `/tasks`;
   const urlParams = {
@@ -61,11 +68,6 @@ taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, 
 taskActions.doesCertificateGenerationTaskExist = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/tasks/certificate-generation-task-exists`;
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-taskActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/tasks/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

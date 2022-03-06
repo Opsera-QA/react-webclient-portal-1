@@ -89,7 +89,7 @@ function TaskAksActionButtons(
 
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
     console.info("tasks aks check status");
-    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
+    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
     const taskData = response?.data?.data;
 
     if (isMounted?.current === true && taskData) {
