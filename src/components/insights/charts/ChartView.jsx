@@ -1503,7 +1503,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "build-deployment-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <Col md={12} className="p-2">
             <OpseraBuildAndDeploymentStatistics

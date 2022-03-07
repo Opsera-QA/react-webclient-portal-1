@@ -119,6 +119,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
             metricData={buildAndDeployMetricData}
             chartData={buildAndDeployChartData}
             goalsData={goalsData?.average_builds}
+            kpiConfiguration={kpiConfiguration}
           />
         </Col>
         <Col className={"px-0"} xl={6} lg={12}>
@@ -135,6 +136,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
             metricData={buildAndDeployMetricData}
             chartData={buildAndDeployChartData}
             goalsData={goalsData?.average_deployments}
+            kpiConfiguration={kpiConfiguration}
           />
         </Col>
       </Row>
