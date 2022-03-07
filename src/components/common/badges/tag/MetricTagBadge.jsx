@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import AppliedTagOverlay from "components/common/fields/multiple_items/tags/AppliedTagOverlay";
-import BadgeBase from "components/common/badges/BadgeBase";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 
 function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge}) {
   const getTagLabel = () => {
@@ -21,7 +21,7 @@ function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge}) {
     if (showNoTagsAppliedBadge === true) {
       return (
         <div className={className}>
-          <BadgeBase
+          <MetricBadgeBase
             icon={faTags}
             badgeText={`No ${type ? `${type} ` : ""}Tags Applied`}
           />
@@ -38,6 +38,7 @@ function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge}) {
       tags={tags}
     >
       <SpyglassBadge
+        className={"metric-subheader-text"}
         badgeText={getTagLabel()}
       />
     </AppliedTagOverlay>

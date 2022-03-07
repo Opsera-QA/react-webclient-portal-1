@@ -1,22 +1,11 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import BadgeBase from "components/common/badges/BadgeBase";
 
-function BadgeBase({icon, badgeText, className}) {
-  const getIcon = () => {
-    if (icon) {
-      return (
-        <IconBase
-          icon={icon}
-          className={"mr-1"}
-        />
-      );
-    }
-  };
-
+function MetricBadgeBase({icon, badgeText, className}) {
   const getClassNames = () => {
-    let classNames = "opsera-badge p-1";
+    let classNames = "metric-subheader-text";
 
     if (hasStringValue(className) === true) {
       classNames += ` ${className}`;
@@ -30,16 +19,18 @@ function BadgeBase({icon, badgeText, className}) {
   }
 
   return (
-    <span className={getClassNames()}>
-      <span>{getIcon()}{badgeText}</span>
-    </span>
+    <BadgeBase
+      icon={icon}
+      badgeText={badgeText}
+      className={getClassNames()}
+    />
   );
 }
 
-BadgeBase.propTypes = {
+MetricBadgeBase.propTypes = {
   icon: PropTypes.object,
   badgeText: PropTypes.any,
   className: PropTypes.string
 };
 
-export default React.memo(BadgeBase);
+export default React.memo(MetricBadgeBase);
