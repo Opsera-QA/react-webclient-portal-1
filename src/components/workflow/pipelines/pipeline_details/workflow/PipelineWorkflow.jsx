@@ -313,16 +313,18 @@ function PipelineWorkflow({
             }
 
             <div className="d-flex align-items-end flex-row m-2">
-              <div className="ml-auto text-right">
+              <div className="ml-auto d-flex">
                 {authorizedAction("view_step_configuration", pipeline.owner) && <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "View Settings" })}>
+                  <div>
                   <IconBase icon={faSearchPlus}
                                    className={"text-muted mr-2 pointer"}
                                    onClickFunction={() => {
                                      handleViewClick(pipeline.workflow.source, "Step Settings");
                                    }}/>
+                  </div>
                 </OverlayTrigger>
                 }
 
@@ -332,11 +334,13 @@ function PipelineWorkflow({
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
-                      <IconBase icon={faCog}
-                                       className={"text-muted pointer"}
-                                       onClickFunction={() => {
-                                         handleEditSourceSettingsClick();
-                                       }}/>
+                      <div>
+                        <IconBase icon={faCog}
+                                  className={"text-muted pointer"}
+                                  onClickFunction={() => {
+                                    handleEditSourceSettingsClick();
+                                  }}/>
+                      </div>
                     </OverlayTrigger>
                   </>
                   :
@@ -345,8 +349,10 @@ function PipelineWorkflow({
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                      <IconBase icon={faCog}
-                                       className={"text-muted mx-1"} />
+                      <div>
+                        <IconBase icon={faCog}
+                                  className={"text-muted mx-1"} />
+                      </div>
                     </OverlayTrigger>
                   </>
                 }

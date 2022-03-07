@@ -70,9 +70,6 @@ function PipelineSummaryPanel(
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-
-  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
-  //  After we have time to verify adding this doesn't break it, let's combine them.
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
