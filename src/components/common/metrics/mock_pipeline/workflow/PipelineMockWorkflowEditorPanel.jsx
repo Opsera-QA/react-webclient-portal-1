@@ -1,18 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  pipelineMockWorkflowMetadata
-} from "components/common/metrics/mock_pipeline/workflow/pipelineMockWorkflowMetadata";
+import { pipelineMockWorkflowMetadata } from "components/common/metrics/mock_pipeline/workflow/pipelineMockWorkflowMetadata";
 import PipelineMockPlanInput from "components/common/metrics/mock_pipeline/steps/PipelineMockPlanInput";
 
-function PipelineMockWorkflowEditorPanel(
-  { 
-    model,
-    setModel,
-  }) {
+function PipelineMockWorkflowEditorPanel({ model, setModel }) {
   const [workflowModel, setWorkflowModel] = useState(undefined);
 
   useEffect(() => {
@@ -22,13 +16,13 @@ function PipelineMockWorkflowEditorPanel(
     if (parsedModel) {
       setWorkflowModel(parsedModel);
     }
-  }, [model]);
+  }, []);
 
   const setDataFunction = (newModel) => {
-    setWorkflowModel({...newModel});
+    setWorkflowModel({ ...newModel });
     const newWorkflow = newModel?.getPersistData();
     model.setData("workflow", newWorkflow);
-    setModel({...model});
+    setModel({ ...model });
   };
 
   if (workflowModel == null) {
@@ -45,11 +39,7 @@ function PipelineMockWorkflowEditorPanel(
           */}
         </Col>
         <Col xs={12}>
-          <PipelineMockPlanInput
-            model={workflowModel}
-            setModel={setDataFunction}
-            fieldName={"plan"}
-          />
+          <PipelineMockPlanInput model={workflowModel} setModel={setDataFunction} fieldName={"plan"} />
         </Col>
       </Row>
     </div>
