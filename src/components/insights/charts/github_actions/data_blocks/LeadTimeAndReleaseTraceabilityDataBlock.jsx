@@ -7,8 +7,7 @@ import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
-import H4FieldSubHeader from "../../../../common/fields/subheader/H4FieldSubHeader";
-import H5FieldSubHeader from "../../../../common/fields/subheader/H5FieldSubHeader";
+import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -74,9 +73,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               </div>
             </Col>
           </Row>
-          <Row style={{marginTop:'2rem'}}>
-            <Col md={6}>
-              <H4FieldSubHeader subheaderText={'Top Applications'} />
+          <Row className={"mt-5"}>
+            <Col xs={12}>
+              <H4MetricSubHeader subheaderText={'Top Applications'} />
             </Col>
           </Row>
           <Row>
