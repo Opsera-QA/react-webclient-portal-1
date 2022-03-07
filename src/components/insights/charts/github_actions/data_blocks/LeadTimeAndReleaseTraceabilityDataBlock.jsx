@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
+import H4FieldSubHeader from "../../../../common/fields/subheader/H4FieldSubHeader";
+import H5FieldSubHeader from "../../../../common/fields/subheader/H5FieldSubHeader";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -37,8 +39,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       dataPoint={durationDataPoint}
                       numberData={5}
                       supportingText={"days"}
-                      middleText={"Duration"}
-                      bottomText={"Goal:4 days"}
+                      middleText={"Lead Time"}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -53,7 +54,6 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       numberData={2}
                       supportingText={"deployments/day"}
                       middleText={"Frequency"}
-                      bottomText={"Goal:2/Day"}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -67,19 +67,23 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       dataPoint={timeToFirstCommitDataPoint}
                       numberData={10}
                       supportingText={"days"}
-                      middleText={"Time to first commit"}
-                      bottomText={"Goal:5 Days"}
+                      middleText={"Average Time to First Commit"}
                     />
                   </div>
                 </DataBlockBoxContainer>
               </div>
             </Col>
           </Row>
-          <Row style={{marginTop:'1rem'}}>
+          <Row style={{marginTop:'2rem'}}>
+            <Col md={6}>
+              <H4FieldSubHeader subheaderText={'Top Applications'} />
+            </Col>
+          </Row>
+          <Row>
             <Col md={6}>
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
-                  title={"Applications with longest duration to complete"}
+                  title={"High Lead Time"}
                   content={"oswestry"}
                 />
               </DataBlockBoxContainer>
@@ -87,7 +91,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
             <Col md={6}>
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
-                  title={"Top applications with more deployment frequencies/day"}
+                  title={"High Deployment Frequency"}
                   content={"grosmont"}
                 />
               </DataBlockBoxContainer>
@@ -97,7 +101,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
             <Col md={6}>
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
-                  title={"Application with zero/less activity in past few weeks"}
+                  title={"Minimal/No activity in last few weeks"}
                   content={"oswestry"}
                 />
               </DataBlockBoxContainer>
@@ -105,7 +109,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
             <Col md={6}>
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
-                  title={"Applications with more number of commits"}
+                  title={"Highest Commits"}
                   content={""}
                 />
               </DataBlockBoxContainer>
