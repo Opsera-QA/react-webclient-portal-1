@@ -67,14 +67,14 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
   const getTableCardView = () => {
     if (Array.isArray(pipelines) && pipelines.count === 0 && pipelineFilterModel?.getData("type") === "owner" && (pipelineFilterModel?.getActiveFilters() == null || pipelineFilterModel?.getActiveFilters()?.length === 0) ) {
       return (
-        <div className={"p-3 container-border"}>
+        <div className={"p-3"}>
           <PipelineWelcomeView />
         </div>
       );
     }
 
     return (
-      <Row className={"mx-0 container-border"}>
+      <Row className={"mx-0"}>
         <Col sm={2} className={"px-0"}>
           <PipelineVerticalTabContainer
             pipelineFilterModel={pipelineFilterModel}

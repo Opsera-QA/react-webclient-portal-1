@@ -441,8 +441,6 @@ a.text-primary:hover, a.text-primary:focus {
 
 .table-tree {
     height: 500px;
-    border: 1px solid #dfdfdf;
-    border-right: 0;
     background: #fff;
 }
 
