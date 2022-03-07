@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
 // import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
@@ -16,7 +16,6 @@ import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActi
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-// import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
 import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
@@ -129,7 +128,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         return faArrowCircleUp;
       case "Green":
         return faArrowCircleDown;
-      case "-":
+      case "Neutral":
         return faMinusCircle;
       default:
         break;
@@ -143,6 +142,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return "green";
       case "Neutral":
+        return "light-gray-text-secondary";
       case "-":
         return "black";
       default:
@@ -210,7 +210,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Container>
-          <Row className="p-1">
+          <Row className="p-1 gray">
             <Col>
               <CoverityIssuesOverallLowTrendDataBlock
                 score={
@@ -221,6 +221,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
+                lastScore={metrics[0].previousTotalLow}
               />
             </Col>
             <Col>
@@ -233,6 +234,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
+                lastScore={metrics[0].previousTotalMedium}
               />
             </Col>
             <Col>
@@ -245,6 +247,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
+                lastScore={metrics[0].previousTotalHigh}
               />
             </Col>
           </Row>
