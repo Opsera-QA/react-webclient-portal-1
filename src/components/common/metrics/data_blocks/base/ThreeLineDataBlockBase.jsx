@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 function ThreeLineDataBlockBase(
   {
@@ -13,12 +13,18 @@ function ThreeLineDataBlockBase(
     className,
     icon,
     dataPoint,
+    iconOverlayTitle,
+    iconOverlayBody,
   }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
         <div>
-          <IconBase icon={icon}  />
+          <OverlayIconBase
+            icon={icon}
+            overlayTitle={iconOverlayTitle}
+            overlayInnerBody={iconOverlayBody}
+          />
         </div>
       );
     }
@@ -90,6 +96,8 @@ ThreeLineDataBlockBase.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
+  iconOverlayTitle: PropTypes.string,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default ThreeLineDataBlockBase;
