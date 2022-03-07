@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function MetricSubHeaderTextBase({ subheaderText }) {
   return (
-    <span className={"font-inter-light-400 metric-block-header-text"}>
+    <span className={"analytics-font metric-sub-header-text-spacing"}>
       {subheaderText}
     </span>
   );
