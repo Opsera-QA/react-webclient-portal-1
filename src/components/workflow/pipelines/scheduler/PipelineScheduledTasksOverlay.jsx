@@ -9,7 +9,8 @@ import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pi
 import PipelineScheduledTaskTable from "components/workflow/pipelines/scheduler/PipelineScheduledTaskTable";
 import {AuthContext} from "contexts/AuthContext";
 
-function PipelineScheduledTasksOverlay({ pipeline }) {
+// TODO: Only pass pipeline ID.
+function PipelineScheduledTasksOverlay({ pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -37,7 +38,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipeline]);
+  }, [pipelineId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -56,8 +57,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
   };
 
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
-
-    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
+    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipelineId);
     const newScheduledTasksList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList) && newScheduledTasksList.length > 0) {
@@ -83,7 +83,6 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
         <PipelineScheduledTaskEditorPanel
           handleClose={closeEditorPanel}
           scheduledTaskData={scheduledTaskData}
-          pipeline={pipeline}
           taskList={scheduledTasksList}
         />
       );
@@ -96,7 +95,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
         data={scheduledTasksList}
         loadData={loadData}
         isMounted={isMounted}
-        pipeline={pipeline}
+        pipelineId={pipelineId}
       />
     );
   };
@@ -115,7 +114,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
 }
 
 PipelineScheduledTasksOverlay.propTypes = {
-  pipeline: PropTypes.object
+  pipelineId: PropTypes.string,
 };
 
 export default PipelineScheduledTasksOverlay;
