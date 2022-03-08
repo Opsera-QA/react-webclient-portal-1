@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
-import MakeupTableBase from "components/common/table/makeup/MakupTableBase";
+import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
 
 // TODO: Rename ServerSidePaginationMakeupTable when design is complete
 function CustomTable(
