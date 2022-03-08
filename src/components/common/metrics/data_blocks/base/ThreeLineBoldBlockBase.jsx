@@ -57,7 +57,7 @@ function ThreeLineBoldBlockBase(
   const getSubtitle = () => {
     if (bottomText) {
       return (
-        <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+        <div className={"light-gray-text-secondary font-inter-light-200 metric-block-footer-text"}>
           {bottomText}
         </div>
       );

@@ -20,7 +20,7 @@ function CoverityIssuesOverallLowTrendDataBlock({ score, icon, className, onSele
         className={`${className} p-2`}
         score={score}
         topText={"Low"}
-        bottomText={"Last Scan :" + lastScore}
+        bottomText={"Last Scan: " + lastScore}
         icon={icon}
       />
     </DataBlockBoxContainer>

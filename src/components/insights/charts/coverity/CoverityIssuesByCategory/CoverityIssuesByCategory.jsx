@@ -18,6 +18,7 @@ import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_med
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
 import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
+import { faPauseCircle } from "@fortawesome/pro-solid-svg-icons";
 
 function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -129,7 +130,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return faArrowCircleDown;
       case "Neutral":
-        return faMinusCircle;
+        return faPauseCircle;
       default:
         break;
     }

@@ -17,7 +17,7 @@ function CoverityIssuesOverallHighTrendDataBlock({ score, icon, className, onSel
         className={`${className} p-2`}
         score={score}
         topText={"High"}
-        bottomText={"Last Scan :" + lastScore}
+        bottomText={"Last Scan: " + lastScore}
         icon={icon}
       />
     </DataBlockBoxContainer>

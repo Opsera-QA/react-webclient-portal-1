@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineBoldBlockBase from "../data_blocks/base/ThreeLineBoldBlockBase";
+import ThreeLineDataBlockBase from "../data_blocks/base/ThreeLineDataBlockBase";
 
 function ThreeLineScoreDataBlock(
   {

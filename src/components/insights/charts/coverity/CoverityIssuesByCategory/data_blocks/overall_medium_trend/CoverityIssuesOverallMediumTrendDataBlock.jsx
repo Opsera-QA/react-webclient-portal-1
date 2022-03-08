@@ -17,7 +17,7 @@ function CoverityIssuesOverallMediumTrendDataBlock({ score, icon, className, onS
         className={`${className} p-2`}
         score={score}
         topText={"Medium"}
-        bottomText={"Last Scan :" + lastScore}
+        bottomText={"Last Scan: " + lastScore}
         icon={icon}
       />
     </DataBlockBoxContainer>
