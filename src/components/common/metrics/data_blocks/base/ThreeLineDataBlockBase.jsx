@@ -16,6 +16,7 @@ function ThreeLineDataBlockBase(
     iconOverlayTitle,
     iconOverlayBody,
   }) {
+  console.log(iconOverlayBody, "inner");
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
@@ -23,7 +24,7 @@ function ThreeLineDataBlockBase(
           <OverlayIconBase
             icon={icon}
             overlayTitle={iconOverlayTitle}
-            overlayInnerBody={iconOverlayBody}
+            overlayBody={iconOverlayBody}
           />
         </div>
       );
