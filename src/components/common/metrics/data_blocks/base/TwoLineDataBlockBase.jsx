@@ -23,7 +23,7 @@ function TwoLineDataBlockBase(
           <OverlayIconBase
             icon={icon}
             overlayTitle={iconOverlayTitle}
-            overlayInnerBody={iconOverlayBody}
+            overlayBody={iconOverlayBody}
           />
         </div>
       );

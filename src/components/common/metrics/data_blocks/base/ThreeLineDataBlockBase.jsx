@@ -24,7 +24,7 @@ function ThreeLineDataBlockBase(
           <OverlayIconBase
             icon={icon}
             overlayTitle={iconOverlayTitle}
-            overlayInnerBody={iconOverlayBody}
+            overlayBody={iconOverlayBody}
           />
         </div>
       );
