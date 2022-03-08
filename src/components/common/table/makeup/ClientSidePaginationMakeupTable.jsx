@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
-import MakeupTableBase from "components/common/table/makeup/MakupTableBase";
+import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
 import GenericPaginationModel from "core/data_model/genericPaginationModel";
 import {paginateData} from "components/common/helpers/pagination.helpers";
 
