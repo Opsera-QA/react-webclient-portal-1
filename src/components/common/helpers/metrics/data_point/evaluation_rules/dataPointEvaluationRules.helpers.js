@@ -146,7 +146,7 @@ dataPointEvaluationRulesHelpers.isDataEvaluationRuleValid = (dataPointEvaluation
   }
 
   const triggerFilter = dataPointEvaluationRule?.trigger_filter;
-  const hasTriggerFilter = hasStringValue(triggerFilter);
+  const hasTriggerFilter = hasStringValue(dataPointEvaluationRule?.trigger_filter);
   const hasPrimaryValue = numberHelpers.hasNumberValue(dataPointEvaluationRule?.primary_trigger_value);
   const hasSecondaryValue = numberHelpers.hasNumberValue(dataPointEvaluationRule?.secondary_trigger_value);
   const requiresSecondaryValue = triggerFilter === DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE;
@@ -162,8 +162,8 @@ dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule = (rule, value) 
   }
 
   const triggerFilter = rule?.trigger_filter;
-  const primaryValue = rule?.primary_trigger_value;
-  const secondaryValue = rule?.secondary_trigger_value;
+  const primaryValue = numberHelpers.parseNumber(rule?.primary_trigger_value);
+  const secondaryValue = numberHelpers.parseNumber(rule?.secondary_trigger_value);
 
   switch (triggerFilter) {
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:

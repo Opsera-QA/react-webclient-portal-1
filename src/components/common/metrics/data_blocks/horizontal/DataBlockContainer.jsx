@@ -1,8 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
-function DataBlockContainer({children, onClick, tooltipText, title, className}) {
+function DataBlockContainer(
+  {
+    children,
+    onClick,
+    tooltipText,
+    title,
+    className,
+    dataPoint,
+  }) {
+
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
+
   return (
     <TooltipWrapper innerText={tooltipText}>
       <div className={className}>
@@ -25,6 +39,7 @@ DataBlockContainer.propTypes = {
   tooltipText: PropTypes.any,
   title: PropTypes.string,
   className: PropTypes.string,
+  dataPoint: PropTypes.object,
 };
 
 export default DataBlockContainer;

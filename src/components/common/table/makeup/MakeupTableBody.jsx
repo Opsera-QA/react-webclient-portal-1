@@ -20,7 +20,9 @@ function MakeupTableBody(
       return (
         <tr>
           <td colSpan="100%">
-            <CenterLoadingIndicator />
+            <div style={{height: "500px"}}>
+              <CenterLoadingIndicator />
+            </div>
           </td>
         </tr>
       );

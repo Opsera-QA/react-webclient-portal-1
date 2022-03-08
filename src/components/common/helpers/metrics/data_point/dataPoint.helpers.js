@@ -1,5 +1,4 @@
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
-import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import {
   DATA_POINT_EVALUATION_RULE_TYPES,
   SUPPORTED_DATA_POINT_EVALUATION_RULE_TYPES
@@ -9,38 +8,62 @@ import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 export const dataPointHelpers = {};
 
+dataPointHelpers.isDataPointVisible = (dataPoint) => {
+  return dataPoint?.visibility?.isVisible !== false;
+};
+
+dataPointHelpers.canUserToggleVisibility = (dataPoint) => {
+  return dataPoint?.visibility?.userVisibilityToggleSupport === true;
+};
+
+dataPointHelpers.canUserEditStrategicCriteria = (dataPoint) => {
+  return dataPoint?.strategic_criteria?.isUserEditable === true;
+};
+
 dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
-  if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || numberHelpers.hasNumberValue(value) !== true){
+  if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || value == null){
     return null;
   }
 
-  const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
-  const successRule = dataPointEvaluationRules.success_rule;
-  const warningRule = dataPointEvaluationRules.warning_rule;
-  const failureRule = dataPointEvaluationRules.failure_rule;
+  try {
+    const parsedValue = Number(value);
 
-  if (objectHelpers.isObject(failureRule) === true) {
-    const isFailure = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(failureRule, value);
-
-    if (isFailure === true) {
-      return METRIC_QUALITY_LEVELS.DANGER;
+    if (isNaN(parsedValue)) {
+      return null;
     }
+
+    const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
+    const successRule = dataPointEvaluationRules.success_rule;
+    const warningRule = dataPointEvaluationRules.warning_rule;
+    const failureRule = dataPointEvaluationRules.failure_rule;
+
+    if (objectHelpers.isObject(failureRule) === true) {
+      const isFailure = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(failureRule, parsedValue);
+
+      if (isFailure === true) {
+        return METRIC_QUALITY_LEVELS.DANGER;
+      }
+    }
+
+    if (objectHelpers.isObject(warningRule) === true) {
+      const isWarning = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(warningRule, parsedValue);
+
+      if (isWarning === true) {
+        return METRIC_QUALITY_LEVELS.WARNING;
+      }
+    }
+
+    if (objectHelpers.isObject(successRule) === true) {
+      const isSuccess = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(successRule, parsedValue);
+
+      if (isSuccess === true) {
+        return METRIC_QUALITY_LEVELS.SUCCESS;
+      }
+    }
+
   }
-
-  if (objectHelpers.isObject(warningRule) === true) {
-    const isWarning = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(warningRule, value);
-
-    if (isWarning === true) {
-      return METRIC_QUALITY_LEVELS.WARNING;
-    }
-  }
-
-  if (objectHelpers.isObject(successRule) === true) {
-    const isSuccess = dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule(successRule, value);
-
-    if (isSuccess === true) {
-      return METRIC_QUALITY_LEVELS.SUCCESS;
-    }
+  catch (error) {
+    console.error("Could not evaluate data point.", error);
   }
 
   return null;

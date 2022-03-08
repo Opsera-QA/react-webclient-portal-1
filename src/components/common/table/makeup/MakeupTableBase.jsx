@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import MakeupTableBody from "components/common/table/makeup/MakeupTableBody";
