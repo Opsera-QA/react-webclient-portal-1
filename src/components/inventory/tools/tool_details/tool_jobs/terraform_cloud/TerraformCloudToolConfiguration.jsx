@@ -62,7 +62,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
         <Col sm={12}>
           <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"url"}/>
           <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"token"}/>
-          <BooleanToggleInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformCloudFlag"} />
+          <BooleanToggleInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformEnterpriseFlag"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

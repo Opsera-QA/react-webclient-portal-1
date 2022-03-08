@@ -13,8 +13,8 @@ const TerraformCloudMetadata = {
         isRequired: true
       },
       {
-        label: "Is Terraform Cloud?",
-        id: "terraformCloudFlag",
+        label: "Is Terraform Enterprise?",
+        id: "terraformEnterpriseFlag",
         isRequired: true
       },
     ],
@@ -23,7 +23,7 @@ const TerraformCloudMetadata = {
        url: "",
        token: "",
        type: "terraform-cloud",
-       terraformCloudFlag: false
+       terraformEnterpriseFlag: false
       }
   };
   
