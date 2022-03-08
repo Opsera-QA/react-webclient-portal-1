@@ -3,7 +3,7 @@ const TerraformCloudMetadata = {
     idProperty: "_id",
     fields: [
       {
-        label: "Terraform Cloud URL",
+        label: "Terraform URL",
         id: "url",
         isRequired: true
       },
@@ -12,12 +12,18 @@ const TerraformCloudMetadata = {
         id: "token",
         isRequired: true
       },
+      {
+        label: "Is Terraform Cloud?",
+        id: "terraformCloudFlag",
+        isRequired: true
+      },
     ],
     newObjectFields:
       {
        url: "",
        token: "",
-       type: "terraform-cloud"
+       type: "terraform-cloud",
+       terraformCloudFlag: false
       }
   };
   
