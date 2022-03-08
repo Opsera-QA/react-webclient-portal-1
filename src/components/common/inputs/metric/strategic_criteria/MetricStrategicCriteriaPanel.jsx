@@ -10,6 +10,7 @@ function MetricStrategicCriteriaPanel({model, setModel, strategicCriteria}) {
         model={model}
         setModel={setModel}
         strategicCriteria={strategicCriteria}
+        fromDashboardMetric={false}
       />
     </div>
   );

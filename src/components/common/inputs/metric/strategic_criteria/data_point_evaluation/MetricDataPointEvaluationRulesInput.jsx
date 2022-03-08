@@ -8,12 +8,15 @@ import MetricDataPointEvaluationWarningRuleInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
 import MetricDataPointEvaluationFailureRuleInput
   from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
+import MetricUserEditabilityBooleanToggle
+  from "components/common/inputs/metric/strategic_criteria/MetricUserEditabilityBooleanToggle";
 
 function MetricDataPointEvaluationRulesInput(
   {
     model,
     setModel,
     strategicCriteria,
+    fromDashboardMetric,
   }) {
   const validateAndSetData = (newDataPointEvaluationRules) => {
     const newStrategicCriteria = typeof strategicCriteria === "object" ? strategicCriteria : {};
@@ -28,9 +31,21 @@ function MetricDataPointEvaluationRulesInput(
     validateAndSetData(newDataPointEvaluationRules);
   };
 
+  const getUserEditabiltyToggle = () => {
+    if (fromDashboardMetric === false) {
+      return (
+        <MetricUserEditabilityBooleanToggle
+          model={model}
+          setModel={setModel}
+        />
+      );
+    }
+  };
+
   return (
     <div>
       <H4FieldSubHeader subheaderText={"Strategic Criteria"}/>
+      {getUserEditabiltyToggle()}
       <Row>
         <Col xs={12} className={"my-1"}>
           <MetricDataPointEvaluationSuccessRuleInput
@@ -59,6 +74,7 @@ MetricDataPointEvaluationRulesInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   strategicCriteria: PropTypes.object,
+  fromDashboardMetric: PropTypes.bool,
 };
 
 export default MetricDataPointEvaluationRulesInput;

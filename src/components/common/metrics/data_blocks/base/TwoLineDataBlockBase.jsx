@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function TwoLineDataBlockBase(
   {
@@ -22,7 +23,7 @@ function TwoLineDataBlockBase(
           <OverlayIconBase
             icon={icon}
             overlayTitle={iconOverlayTitle}
-            overlayInnerBody={iconOverlayBody}
+            overlayBody={iconOverlayBody}
           />
         </div>
       );
@@ -56,6 +57,10 @@ function TwoLineDataBlockBase(
       );
     }
   };
+
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
 
   return (
     <div className={className}>

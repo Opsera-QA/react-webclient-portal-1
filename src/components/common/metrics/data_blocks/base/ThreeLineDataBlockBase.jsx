@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function ThreeLineDataBlockBase(
   {
@@ -69,6 +70,10 @@ function ThreeLineDataBlockBase(
       );
     }
   };
+
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
 
   return (
     <div className={className}>

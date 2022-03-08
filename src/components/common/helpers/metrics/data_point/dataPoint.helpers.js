@@ -8,6 +8,18 @@ import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
 export const dataPointHelpers = {};
 
+dataPointHelpers.isDataPointVisible = (dataPoint) => {
+  return dataPoint?.visibility?.isVisible !== false;
+};
+
+dataPointHelpers.canUserToggleVisibility = (dataPoint) => {
+  return dataPoint?.visibility?.userVisibilityToggleSupport === true;
+};
+
+dataPointHelpers.canUserEditStrategicCriteria = (dataPoint) => {
+  return dataPoint?.strategic_criteria?.isUserEditable === true;
+};
+
 dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {
   if (dataPointHelpers.hasDataPointEvaluationRules(dataPoint) !== true || value == null){
     return null;
