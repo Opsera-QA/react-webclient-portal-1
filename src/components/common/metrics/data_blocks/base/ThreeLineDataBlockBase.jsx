@@ -42,7 +42,7 @@ function ThreeLineDataBlockBase(
   const getTopText = () => {
     if (topText) {
       return (
-        <div className={"light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>
+        <div className={"dark-gray-text-primary font-inter-light-400 metric-block-header-text"}>
           {topText}
         </div>
       );
@@ -63,7 +63,7 @@ function ThreeLineDataBlockBase(
   const getSubtitle = () => {
     if (bottomText) {
       return (
-        <div className={"light-gray-text-secondary font-inter-light-400 metric-block-footer-text"}>
+        <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
           {bottomText}
         </div>
       );
