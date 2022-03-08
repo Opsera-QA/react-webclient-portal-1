@@ -11,6 +11,7 @@ import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function TerraformCloudToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -61,6 +62,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
         <Col sm={12}>
           <TextInputBase dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"url"}/>
           <VaultTextAreaInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"token"}/>
+          <BooleanToggleInput dataObject={terraformCloudConfigurationDto} setDataObject={setTerraformCloudConfigurationDto} fieldName={"terraformEnterpriseFlag"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

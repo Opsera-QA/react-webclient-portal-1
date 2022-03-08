@@ -4,7 +4,7 @@ import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics
 import DataPointEvaluationRuleInfoPanel
   from "components/common/metrics/panels/strategic_criteria/data_point/evaluation_rules/DataPointEvaluationRuleInfoPanel";
 import {DATA_POINT_EVALUATION_RULE_TYPES} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRule.types";
-import MetricSubHeader from "components/common/fields/subheader/MetricSubHeader";
+import H5MetricSubHeader from "components/common/fields/subheader/metric/H5MetricSubHeader";
 
 function DataPointEvaluationRulesInfoPanel({ dataPointEvaluationRules, className }) {
   const getBody = () => {
@@ -32,7 +32,7 @@ function DataPointEvaluationRulesInfoPanel({ dataPointEvaluationRules, className
 
   return (
     <div className={className}>
-      <MetricSubHeader
+      <H5MetricSubHeader
         subheaderText={"Data Point Evaluation Rules"}
         className={"mb-2"}
       />

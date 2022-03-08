@@ -18,7 +18,7 @@ function BadgeBase({icon, badgeText, className}) {
   const getClassNames = () => {
     let classNames = "opsera-badge p-1";
 
-    if (hasStringValue(className)) {
+    if (hasStringValue(className) === true) {
       classNames += ` ${className}`;
     }
 

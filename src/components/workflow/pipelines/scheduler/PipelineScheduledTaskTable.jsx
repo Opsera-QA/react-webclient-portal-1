@@ -8,7 +8,18 @@ import Model from "core/data_model/model";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 
-function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipeline, loadData, isMounted, setScheduledTaskData }) {
+// TODO: This is sloppy and needs to be reworked
+function PipelineScheduledTaskTable(
+  {
+    data,
+    isLoading,
+    paginationModel,
+    setPaginationModel,
+    pipelineId,
+    loadData,
+    isMounted,
+    setScheduledTaskData,
+  }) {
   const fields = [...pipelineSchedulerMetadata.fields, {label: "Next Run", id: "executionDate"}, {label: "Interval", id: "interval"} ];
 
   const frequencyLookup ={
@@ -67,7 +78,7 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const createScheduledTask = () => {
     if (isMounted?.current === true) {
       let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
-      newModel.setData("task", { taskType: "RUN", pipelineId: pipeline?._id});
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
       setScheduledTaskData({...newModel});
     }
   };
@@ -100,7 +111,7 @@ PipelineScheduledTaskTable.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
   setScheduledTaskData: PropTypes.func,
-  pipeline: PropTypes.object,
+  pipelineId: PropTypes.string,
 };
 
 export default PipelineScheduledTaskTable;

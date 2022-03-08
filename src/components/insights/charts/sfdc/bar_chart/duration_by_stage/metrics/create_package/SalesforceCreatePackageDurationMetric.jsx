@@ -17,6 +17,7 @@ function SalesforceCreatePackageDurationMetric({
         createPackageDurationMeanInMinutes={createPackageDurationMeanInMinutes}
         createPackageTotalRunCount={createPackageTotalRunCount}
         goalsData={goalsData}
+        kpiConfiguration={kpiConfiguration}
       />
     );
   };

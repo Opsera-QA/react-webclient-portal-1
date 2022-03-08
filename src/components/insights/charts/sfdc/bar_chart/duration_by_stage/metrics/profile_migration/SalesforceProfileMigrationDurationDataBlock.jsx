@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import "../../salesforce-duration-by-stage-kpi.css";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
 
@@ -19,22 +19,22 @@ function SalesforceProfileMigrationDurationDataBlock({
       return (
         <>
           <div>
-            <MetricTextBase formattedText={`${profileMigrationDurationMeanInMinutes} min`} />
+            <MetricTextBase formattedText={`${profileMigrationDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>
           </div>
           <div>
-            <MetricTextBase formattedText={`${profileMigrationTotalRunCount} runs`} />
+            <MetricTextBase formattedText={`${profileMigrationTotalRunCount} runs`} className={"metric-block-content-text"}/>
           </div>
         </>
       );
     }
     if (hasNumberValue(profileMigrationDurationMeanInMinutes)) {
-      return <MetricTextBase formattedText={`${profileMigrationDurationMeanInMinutes} min`} />;
+      return <MetricTextBase formattedText={`${profileMigrationDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>;
     }
-    return "No runs";
+    return <span className={"metric-block-content-text"}> No runs </span>;
   };
 
   return (
-    <ThreeLineDataBlockNoFocusBase
+    <ThreeLineDataBlockBase
       className="salesforce-duration-by-stage-kpi"
       topText={"Profile Migration"}
       middleText={getProfileMigrationMeanData()}

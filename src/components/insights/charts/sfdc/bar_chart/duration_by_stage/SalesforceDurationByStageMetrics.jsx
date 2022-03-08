@@ -138,15 +138,15 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               dashboardData={dashboardData}
             />
           </Col>
-          <Col xs={12} sm={6}>
-            <SalesforceUnitTestingDurationMetric
-              metric={metrics[4]}
-              unitTestingDurationMeanInMinutes={dataBlockValues[0]?.unit_testing_mean}
-              unitTestingTotalRunCount={dataBlockValues[0]?.unit_testing_count}
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-            />
-          </Col>
+          {/*<Col xs={12} sm={6}>*/}
+          {/*  <SalesforceUnitTestingDurationMetric*/}
+          {/*    metric={metrics[4]}*/}
+          {/*    unitTestingDurationMeanInMinutes={dataBlockValues[0]?.unit_testing_mean}*/}
+          {/*    unitTestingTotalRunCount={dataBlockValues[0]?.unit_testing_count}*/}
+          {/*    kpiConfiguration={kpiConfiguration}*/}
+          {/*    dashboardData={dashboardData}*/}
+          {/*  />*/}
+          {/*</Col>*/}
           <Col xs={12} sm={6}>
             <SalesforceDeploymentDurationMetric
               metric={metrics[5]}
