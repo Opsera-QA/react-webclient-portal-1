@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function TerraformCloudToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
+function TerraformEnterpriseToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = { ...model };
     newModel.setData("organizationName", "");
@@ -18,8 +18,8 @@ function TerraformCloudToolSelectInput({ fieldName, model, setModel, disabled, t
     setModel({ ...newModel });
   };
 
-  const filterDataFunction = (tools) => {
-    return tools.filter(tool => tool?.configuration && !tool?.configuration?.terraformEnterpriseFlag);
+  const filterDataFunction = (tools) => {    
+    return tools.filter(tool => tool?.configuration && tool?.configuration?.terraformEnterpriseFlag);
   };
 
   return (
@@ -40,7 +40,7 @@ function TerraformCloudToolSelectInput({ fieldName, model, setModel, disabled, t
   );
 }
 
-TerraformCloudToolSelectInput.propTypes = {
+TerraformEnterpriseToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -49,11 +49,11 @@ TerraformCloudToolSelectInput.propTypes = {
   valueField: PropTypes.string,
 };
 
-TerraformCloudToolSelectInput.defaultProps = {
+TerraformEnterpriseToolSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "terraformCloudId",
   disabled: false
 };
 
-export default TerraformCloudToolSelectInput;
+export default TerraformEnterpriseToolSelectInput;
