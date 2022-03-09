@@ -71,6 +71,19 @@ function UserEditableMetricDataPointTabPanel(
     );
   };
 
+  const updateDataPoint = (newDataPoint) => {
+    const currentDataPoints = model?.getData("dataPoints");
+    const index = currentDataPoints?.findIndex((dataPoint) => dataPoint._id === newDataPoint?._id);
+
+    if (newDataPoint && index !== -1) {
+      const newModel = {...model};
+      const newDataPoints = [...currentDataPoints];
+      newDataPoints[index] = newDataPoint;
+      newModel?.setData("dataPoints", newDataPoints);
+      setModel({...newModel});
+    }
+  };
+
   const getCurrentView = () => {
     if (activeTab !== "") {
       const dataPoint = dataPoints.find((dataPoint) => dataPoint._id === activeTab);
@@ -81,6 +94,7 @@ function UserEditableMetricDataPointTabPanel(
             model={model}
             setModel={setModel}
             dataPoint={dataPoint}
+            updateDataPoint={(newDataPoint) => updateDataPoint(newDataPoint)}
           />
         );
       }
