@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
-import UserEditableMetricDataPointTabPanel
-  from "components/common/inputs/metric/data_points/UserEditableMetricDataPointTabPanel";
+import DashboardMetricDataPointTabPanel
+  from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointTabPanel";
 
-function UserEditableMetricDataPointsInputPanel(
+function DashboardMetricDataPointsInputPanel(
   {
     model,
     setModel,
@@ -18,7 +18,7 @@ function UserEditableMetricDataPointsInputPanel(
       titleText={`${model?.getData("kpi_name")} Data Points`}
       titleClassName={"dashboard-container-header"}
     >
-      <UserEditableMetricDataPointTabPanel
+      <DashboardMetricDataPointTabPanel
         model={model}
         setModel={setModel}
         dataPoints={model?.getArrayData("dataPoints")}
@@ -27,10 +27,10 @@ function UserEditableMetricDataPointsInputPanel(
   );
 }
 
-UserEditableMetricDataPointsInputPanel.propTypes = {
+DashboardMetricDataPointsInputPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   dataPoint: PropTypes.object,
 };
 
-export default UserEditableMetricDataPointsInputPanel;
+export default DashboardMetricDataPointsInputPanel;

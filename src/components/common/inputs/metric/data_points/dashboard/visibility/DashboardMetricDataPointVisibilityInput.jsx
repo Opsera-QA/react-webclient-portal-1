@@ -6,7 +6,7 @@ import dataPointVisibilityMetadata
   from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function UserEditableMetricDataPointVisibilityInput(
+function DashboardMetricDataPointVisibilityInput(
   {
     fieldName,
     model,
@@ -55,7 +55,7 @@ function UserEditableMetricDataPointVisibilityInput(
   );
 }
 
-UserEditableMetricDataPointVisibilityInput.propTypes = {
+DashboardMetricDataPointVisibilityInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -64,8 +64,8 @@ UserEditableMetricDataPointVisibilityInput.propTypes = {
   dataPoint: PropTypes.object,
 };
 
-UserEditableMetricDataPointVisibilityInput.defaultProps = {
+DashboardMetricDataPointVisibilityInput.defaultProps = {
   fieldName: "visibility",
 };
 
-export default UserEditableMetricDataPointVisibilityInput;
+export default DashboardMetricDataPointVisibilityInput;

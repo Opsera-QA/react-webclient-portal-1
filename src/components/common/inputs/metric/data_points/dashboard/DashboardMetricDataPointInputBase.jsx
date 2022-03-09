@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import UserEditableMetricStrategicCriteriaPanel
-  from "components/common/inputs/metric/data_points/strategic_criteria/UserEditableMetricStrategicCriteriaPanel";
+import DashboardMetricStrategicCriteriaPanel
+  from "components/common/inputs/metric/data_points/dashboard/strategic_criteria/DashboardMetricStrategicCriteriaPanel";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import UserEditableMetricDataPointVisibilityInput
-  from "components/common/inputs/metric/data_points/visibility/UserEditableMetricDataPointVisibilityInput";
+import DashboardMetricDataPointVisibilityInput
+  from "components/common/inputs/metric/data_points/dashboard/visibility/DashboardMetricDataPointVisibilityInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 
-function UserEditableMetricDataPointInputBase(
+function DashboardMetricDataPointInputBase(
   {
     dataPoint,
     updateDataPoint,
@@ -30,7 +30,7 @@ function UserEditableMetricDataPointInputBase(
   const getDataPointVisibilityInput = () => {
     if (dataPointHelpers.canUserToggleVisibility(dataPoint) === true) {
       return (
-        <UserEditableMetricDataPointVisibilityInput
+        <DashboardMetricDataPointVisibilityInput
           model={dataPointModel}
           setModel={setDataFunction}
           dataPoint={dataPoint}
@@ -44,7 +44,7 @@ function UserEditableMetricDataPointInputBase(
   const getDataPointStrategicCriteriaInput = () => {
     if (dataPointHelpers.canUserEditStrategicCriteria(dataPoint) === true) {
       return (
-        <UserEditableMetricStrategicCriteriaPanel
+        <DashboardMetricStrategicCriteriaPanel
           model={dataPointModel}
           setModel={setDataFunction}
           strategicCriteria={dataPoint?.strategic_criteria}
@@ -74,9 +74,9 @@ function UserEditableMetricDataPointInputBase(
   );
 }
 
-UserEditableMetricDataPointInputBase.propTypes = {
+DashboardMetricDataPointInputBase.propTypes = {
   dataPoint: PropTypes.object,
   updateDataPoint: PropTypes.func,
 };
 
-export default UserEditableMetricDataPointInputBase;
+export default DashboardMetricDataPointInputBase;
