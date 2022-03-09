@@ -21,7 +21,7 @@ import ServiceNowTotalIncidentsDataBlock from "../../data_blocks/ServiceNowTotal
 import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/ServiceNowTotalResolvedIncidentsDatBlock";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import IconBase from "components/common/icons/IconBase";
-// import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -143,56 +143,48 @@ function ServiceNowMeanTimeToResolutionBarChart({
   };
 
   const getMetricBottomRow = () =>{
-    return(
-      <div className={"d-flex"}>
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Sev 1: ${priorityOne}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Sev 2: ${priorityTwo}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Sev 3: ${priorityThree}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Sev 4: ${priorityFour}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Sev 5: ${priorityFive}`}
-        />
-      </div>
+    return (
+      <Row>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Resolved Tickets by Severity:`} />
+        </Col>
+        <Col xl={2} lg={4} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-1: ${priorityOne}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-2: ${priorityTwo}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-3: ${priorityThree}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-4: ${priorityFour}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-5: ${priorityFive}`} />
+        </Col>
+      </Row>
     );
   };
   const getMetricTopRow = () =>{
-    return(
-      <div className={"d-flex"}>
-        <BadgeBase
-          className={"mr-3"}
-          // icon={faTally}
-          badgeText={`Ageing of unresolved tickets:`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Last Five Days: ${lastFiveDays}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`5-15 days: ${fiveToFifteenDays}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`15-30 days: ${fifteenToThirtyDays}`}
-        />
-        <BadgeBase
-          className={"mr-3"}
-          badgeText={`Before 30 days: ${beforeThirtyDays}`}
-        />
-      </div>
+    return (
+      <Row>
+        <Col xl={4} lg={4} md={4}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Ageing of unresolved tickets:`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Last Five Days: ${lastFiveDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`5-15 days: ${fiveToFifteenDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`15-30 days: ${fifteenToThirtyDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`> 30 Days: ${beforeThirtyDays}`} />
+        </Col>
+      </Row>
     );
   };
 
@@ -206,10 +198,10 @@ function ServiceNowMeanTimeToResolutionBarChart({
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <BadgeBase className={"mx-2"} badgeText={"*Chart depicts recent 15 results"} />
           </div>
-          <div className="chart-footer-text ml-2 p-0">
+          <div className="ml-2 p-0">
             {getMetricTopRow()}
           </div>
-          <div className="chart-footer-text ml-2 p-0">
+          <div className="ml-2 p-0">
             {getMetricBottomRow()}
           </div>
           <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
