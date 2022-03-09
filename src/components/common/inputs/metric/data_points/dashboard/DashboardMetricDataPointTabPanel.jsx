@@ -4,10 +4,10 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import UserEditableMetricDataPointInputBase
-  from "components/common/inputs/metric/data_points/UserEditableMetricDataPointInputBase";
+import DashboardMetricDataPointInputBase
+  from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointInputBase";
 
-function UserEditableMetricDataPointTabPanel(
+function DashboardMetricDataPointTabPanel(
   {
     model,
     setModel,
@@ -71,16 +71,30 @@ function UserEditableMetricDataPointTabPanel(
     );
   };
 
+  const updateDataPoint = (newDataPoint) => {
+    const currentDataPoints = model?.getData("dataPoints");
+    const index = currentDataPoints?.findIndex((dataPoint) => dataPoint._id === newDataPoint?._id);
+
+    if (newDataPoint && index !== -1) {
+      const newModel = {...model};
+      const newDataPoints = [...currentDataPoints];
+      newDataPoints[index] = newDataPoint;
+      newModel?.setData("dataPoints", newDataPoints);
+      setModel({...newModel});
+    }
+  };
+
   const getCurrentView = () => {
     if (activeTab !== "") {
       const dataPoint = dataPoints.find((dataPoint) => dataPoint._id === activeTab);
 
       if (dataPoint) {
         return (
-          <UserEditableMetricDataPointInputBase
+          <DashboardMetricDataPointInputBase
             model={model}
             setModel={setModel}
             dataPoint={dataPoint}
+            updateDataPoint={(newDataPoint) => updateDataPoint(newDataPoint)}
           />
         );
       }
@@ -94,10 +108,10 @@ function UserEditableMetricDataPointTabPanel(
   return (getTabView());
 }
 
-UserEditableMetricDataPointTabPanel.propTypes = {
+DashboardMetricDataPointTabPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   dataPoints: PropTypes.array,
 };
 
-export default UserEditableMetricDataPointTabPanel;
+export default DashboardMetricDataPointTabPanel;

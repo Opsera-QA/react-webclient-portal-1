@@ -60,6 +60,7 @@ function TerraformCloudWorkspaceSelectInput({ fieldName, dataObject, setDataObje
 
       if(Array.isArray(tempWorkspaces)) {
         setWorkspaces(tempWorkspaces);
+        setPlaceholderText("Select Workspaces");
         return;
       }
       setWorkspaces([]);

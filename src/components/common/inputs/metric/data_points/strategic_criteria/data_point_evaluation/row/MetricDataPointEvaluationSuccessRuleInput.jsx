@@ -1,31 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import MetricDataPointEvaluationRuleInputBase
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationRuleInputBase";
+  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationRuleInputBase";
 import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics/data_point/evaluation_rules/dataPointEvaluationRules.helpers";
 
-function MetricDataPointEvaluationFailureRuleInput(
+function MetricDataPointEvaluationSuccessRuleInput(
   {
     dataPointEvaluationRules,
     updateRuleFunction,
   }) {
   return (
     <MetricDataPointEvaluationRuleInputBase
-      ruleData={dataPointEvaluationRules?.failure_rule}
-      fieldName={"failure_rule"}
+      ruleData={dataPointEvaluationRules?.success_rule}
+      fieldName={"success_rule"}
       updateRuleFunction={updateRuleFunction}
-      title={"Failure Criteria"}
-      icon={faExclamationCircle}
-      headerClassName={"danger-red-header"}
+      title={"Success Criteria"}
+      icon={faCheckCircle}
+      headerClassName={"green-header"}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
     />
   );
 }
 
-MetricDataPointEvaluationFailureRuleInput.propTypes = {
+MetricDataPointEvaluationSuccessRuleInput.propTypes = {
   dataPointEvaluationRules: PropTypes.object,
   updateRuleFunction: PropTypes.func,
 };
 
-export default MetricDataPointEvaluationFailureRuleInput;
+export default MetricDataPointEvaluationSuccessRuleInput;

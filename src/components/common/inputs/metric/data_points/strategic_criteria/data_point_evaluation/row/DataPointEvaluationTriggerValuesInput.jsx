@@ -4,7 +4,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import {DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
+import {DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES} from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
 
 function DataPointEvaluationTriggerValuesInput(
   {

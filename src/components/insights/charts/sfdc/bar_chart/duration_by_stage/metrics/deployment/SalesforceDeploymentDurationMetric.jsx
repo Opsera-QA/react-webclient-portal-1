@@ -17,6 +17,7 @@ function SalesforceDeploymentDurationMetric({
         deploymentDurationMeanInMinutes={deploymentDurationMeanInMinutes}
         deploymentTotalRunCount={deploymentTotalRunCount}
         goalsData={goalsData}
+        kpiConfiguration={kpiConfiguration}
       />
     );
   };

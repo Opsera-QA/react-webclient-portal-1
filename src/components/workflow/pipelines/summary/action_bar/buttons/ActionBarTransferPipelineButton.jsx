@@ -8,11 +8,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
-import PopoverContainer from "components/common/tooltip/PopoverContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function ActionBarTransferPipelineButton(
   {
@@ -126,11 +126,14 @@ function ActionBarTransferPipelineButton(
   }
 
   return (
-    <PopoverContainer
+    <TooltipWrapper
       className={"owner-popover"}
       isLoading={isLoading}
       title={"Transfer Pipeline"}
-      content={popoverContent}>
+      innerText={popoverContent}
+      placement={"bottom"}
+      trigger={["click"]}
+    >
       <div>
         <ActionBarPopoverButton
           className={"ml-3"}
@@ -139,7 +142,7 @@ function ActionBarTransferPipelineButton(
           popoverText={`Transfer Pipeline to new Owner`}
         />
       </div>
-    </PopoverContainer>
+    </TooltipWrapper>
   );
 }
 

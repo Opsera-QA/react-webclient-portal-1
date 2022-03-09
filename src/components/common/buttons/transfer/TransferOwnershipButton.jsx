@@ -13,20 +13,20 @@ function TransferOwnershipButton({ isTransferringOwnership, className, transferO
     return "Transfer Ownership";
   };
 
+  console.log("isTransferring ownership: " + JSON.stringify(isTransferringOwnership));
 
   return (
     <div className={className}>
       <Button
-        type="primary"
-        size="sm"
+        type={"primary"}
+        size={"sm"}
         disabled={isTransferringOwnership || disabled}
         onClick={() => transferOwnershipFunction()}
-        className="w-100"
+        className={"w-100"}
       >
         <IconBase
           isLoading={isTransferringOwnership}
           icon={faShareAlt}
-          fixedWidth
           className="mr-2"
         />
         {getButtonText()}

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MetricDataPointEvaluationRulesInput
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/MetricDataPointEvaluationRulesInput";
+  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/MetricDataPointEvaluationRulesInput";
 
-function UserEditableMetricStrategicCriteriaPanel({model, setModel, strategicCriteria}) {
+function DashboardMetricStrategicCriteriaPanel({model, setModel, strategicCriteria}) {
   return (
     <MetricDataPointEvaluationRulesInput
       model={model}
@@ -13,10 +13,10 @@ function UserEditableMetricStrategicCriteriaPanel({model, setModel, strategicCri
   );
 }
 
-UserEditableMetricStrategicCriteriaPanel.propTypes = {
+DashboardMetricStrategicCriteriaPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   strategicCriteria: PropTypes.object,
 };
 
-export default UserEditableMetricStrategicCriteriaPanel;
+export default DashboardMetricStrategicCriteriaPanel;
