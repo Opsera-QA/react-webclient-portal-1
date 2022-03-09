@@ -29,7 +29,7 @@ import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfi
 import AzureV2ToolConfiguration from "./tool_jobs/azureV2/AzureV2ToolConfiguration";
 import AnsibleToolConfiguration from "./tool_jobs/ansible/AnsibleToolConfiguration";
 import MongodbRealmToolConfiguration from "./tool_jobs/mongodb_realm/MongodbRealmToolConfiguration";
-import FlywayDatabaseToolConfiguration from "./tool_jobs/flyway_database/FlywayDatabaseToolConfiguration";
+import FlywayDatabaseToolConfiguration from "../details/identifiers/flyway_database/FlywayDatabaseToolConfiguration";
 import InformaticaToolConfiguration from "./tool_jobs/informatica/InformaticaToolConfiguration";
 import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/TerraformCloudToolConfiguration";
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";

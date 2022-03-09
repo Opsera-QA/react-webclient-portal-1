@@ -13,7 +13,7 @@ import FlywayDatabaseTypeSelectInput from "components/common/list_of_values_inpu
 import axios from "axios";
 import {
   flywayDatabaseConnectionMetadata
-} from "components/inventory/tools/tool_details/tool_jobs/flyway_database/flywayDatabaseConnection.metadata";
+} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseConnection.metadata";
 
 function FlywayDatabaseToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
