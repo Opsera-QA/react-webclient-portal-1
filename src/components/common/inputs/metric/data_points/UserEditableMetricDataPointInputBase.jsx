@@ -1,24 +1,39 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import UserEditableMetricStrategicCriteriaPanel
   from "components/common/inputs/metric/data_points/strategic_criteria/UserEditableMetricStrategicCriteriaPanel";
-import MetricDataPointVisibilityInput
-  from "components/common/inputs/metric/data_points/visibility/MetricDataPointVisibilityInput";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import UserEditableMetricDataPointVisibilityInput
+  from "components/common/inputs/metric/data_points/visibility/UserEditableMetricDataPointVisibilityInput";
+import modelHelpers from "components/common/model/modelHelpers";
+import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 
 function UserEditableMetricDataPointInputBase(
   {
-    model,
-    setModel,
     dataPoint,
+    updateDataPoint,
   }) {
+  const [dataPointModel, setDataPointModel] = useState(undefined);
+
+  useEffect(() => {
+    const newModel = modelHelpers.parseObjectIntoModel(dataPoint, kpiDataPointMetadata);
+    setDataPointModel(newModel);
+  }, [dataPoint]);
+
+  const setDataFunction = (newDataPointModel) => {
+    const newDataPoint = newDataPointModel?.getPersistData();
+    setDataPointModel({...newDataPointModel});
+    updateDataPoint(newDataPoint);
+  };
 
   const getDataPointVisibilityInput = () => {
     if (dataPointHelpers.canUserToggleVisibility(dataPoint) === true) {
       return (
-        <MetricDataPointVisibilityInput
-          model={model}
-          setModel={setModel}
+        <UserEditableMetricDataPointVisibilityInput
+          model={dataPointModel}
+          setModel={setDataFunction}
+          dataPoint={dataPoint}
           fromDashboardMetric={true}
         />
       );
@@ -30,17 +45,27 @@ function UserEditableMetricDataPointInputBase(
     if (dataPointHelpers.canUserEditStrategicCriteria(dataPoint) === true) {
       return (
         <UserEditableMetricStrategicCriteriaPanel
-          model={model}
-          setModel={setModel}
+          model={dataPointModel}
+          setModel={setDataFunction}
           strategicCriteria={dataPoint?.strategic_criteria}
         />
       );
     }
   };
 
+  const getDescription = () => {
+    if (hasStringValue(dataPoint?.description) === true) {
+      return (
+        <span className={"mb-2 mx-2"}>
+          {dataPoint?.description}
+        </span>
+      );
+    }
+  };
+
   return (
     <div className={"m-1"}>
-      <span className={"mb-2 mx-2"}>{dataPoint?.description}</span>
+      {getDescription()}
       <div className={"m-3"}>
         {getDataPointVisibilityInput()}
         {getDataPointStrategicCriteriaInput()}
@@ -50,9 +75,8 @@ function UserEditableMetricDataPointInputBase(
 }
 
 UserEditableMetricDataPointInputBase.propTypes = {
-  model: PropTypes.object,
-  setModel: PropTypes.func,
   dataPoint: PropTypes.object,
+  updateDataPoint: PropTypes.func,
 };
 
 export default UserEditableMetricDataPointInputBase;
