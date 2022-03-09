@@ -473,8 +473,8 @@ const PipelineWorkflowItem = (
                       <IconBase icon={faEnvelope}
                                 className={"pointer text-muted mx-1"}
                                 onClickFunction={() => {
-                                  handleEditClick("notification", item.tool, item._id);
-                                  // editStepNotificationConfiguration(item);
+                                  // handleEditClick("notification", item.tool, item._id);
+                                  editStepNotificationConfiguration(item);
                                 }} />
                     </div>
                   </OverlayTrigger>
