@@ -169,10 +169,10 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const getMetricTopRow = () =>{
     return (
       <Row>
-        <Col xl={4} lg={4} md={4}>
-          <MetricBadgeBase className={"mr-3"} badgeText={`Ageing of unresolved tickets:`} />
-        </Col>
         <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Aging of unresolved tickets:`} />
+        </Col>
+        <Col xl={2} lg={4} md={2}>
           <MetricBadgeBase className={"mr-3"} badgeText={`Last Five Days: ${lastFiveDays}`} />
         </Col>
         <Col xl={2} lg={2} md={2}>
@@ -196,7 +196,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
     return (
         <>
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
-            <BadgeBase className={"mx-2"} badgeText={"*Chart depicts recent 15 results"} />
+            <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
           <div className="ml-2 p-0">
             {getMetricTopRow()}
