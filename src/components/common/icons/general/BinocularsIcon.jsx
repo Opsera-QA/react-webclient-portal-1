@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faSearch} from "@fortawesome/pro-light-svg-icons";
+import {faBinoculars} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
-function SpyglassIcon(
+function BinocularsIcon(
   {
     className,
     onClickFunction,
@@ -15,7 +15,7 @@ function SpyglassIcon(
       <OverlayIconBase
         overlayBody={tooltipText}
         onClickFunction={onClickFunction}
-        icon={faSearch}
+        icon={faBinoculars}
         iconSize={iconSize}
         className={onClickFunction}
       />
@@ -23,11 +23,11 @@ function SpyglassIcon(
   );
 }
 
-SpyglassIcon.propTypes = {
+BinocularsIcon.propTypes = {
   onClickFunction: PropTypes.func,
   className: PropTypes.string,
   tooltipText: PropTypes.string,
   iconSize: PropTypes.string,
 };
 
-export default SpyglassIcon;
+export default BinocularsIcon;
