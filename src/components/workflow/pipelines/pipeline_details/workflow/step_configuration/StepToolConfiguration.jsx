@@ -1029,7 +1029,7 @@ function StepToolConfiguration({
           closeEditorPanel={closeEditorPanel}
         />
       );  
-    case "flyway-database-migrator":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
       return (
         <FlywayDatabaseStepConfiguration
           pipelineId={pipeline._id}

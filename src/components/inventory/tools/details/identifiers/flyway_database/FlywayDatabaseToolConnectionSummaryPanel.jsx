@@ -6,7 +6,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 import VaultField from "components/common/fields/text/VaultField";
 
-function FlywayDatabaseToolConfigurationSummaryPanel({ flywayToolConfigurationModel }) {
+function FlywayDatabaseToolConnectionSummaryPanel({ flywayToolConfigurationModel }) {
   if (flywayToolConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -34,8 +34,8 @@ function FlywayDatabaseToolConfigurationSummaryPanel({ flywayToolConfigurationMo
   );
 }
 
-FlywayDatabaseToolConfigurationSummaryPanel.propTypes = {
+FlywayDatabaseToolConnectionSummaryPanel.propTypes = {
   flywayToolConfigurationModel: PropTypes.object,
 };
 
-export default FlywayDatabaseToolConfigurationSummaryPanel;
+export default FlywayDatabaseToolConnectionSummaryPanel;

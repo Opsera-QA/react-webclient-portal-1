@@ -102,13 +102,14 @@ import mongodbeRealmConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/mongodb-realm-connection-metadata";
 import MongodbRealmToolConfigurationSummaryPanel 
   from "components/inventory/tools/tool_details/tool_jobs/mongodb_realm/MongodbRealmToolConfigurationSummaryPanel";
-import FlywayDatabaseConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/flyway_database/flyway-database-connection-metadata";
-import FlywayDatabaseToolConfigurationSummaryPanel 
-  from "components/inventory/tools/tool_details/tool_jobs/flyway_database/FlywayDatabaseToolConfigurationSummaryPanel";
 import InformaticaToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/tool_jobs/informatica/InformaticaToolConfigurationSummaryPanel";
 import InformaticaConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/informatica/informatica-connection-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import FlywayDatabaseToolConnectionSummaryPanel
+  from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionSummaryPanel";
+import {
+  flywayDatabaseToolConnectionMetadata
+} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -272,10 +273,10 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             mongodbRealmToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, mongodbeRealmConnectionMetadata)}
           />
         );
-      case "flyway-database-migrator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
         return (
-          <FlywayDatabaseToolConfigurationSummaryPanel
-            flywayToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FlywayDatabaseConnectionMetadata)}
+          <FlywayDatabaseToolConnectionSummaryPanel
+            flywayToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, flywayDatabaseToolConnectionMetadata)}
           />
         );
       case "informatica":
