@@ -12,6 +12,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import RotateJenkinsKeyButton from "components/common/buttons/inventory/RotateJenkinsKeyButton";
 
 function JenkinsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -67,6 +68,7 @@ function JenkinsToolConfiguration({ toolData }) {
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Jenkins"}
+      
     >
       <Row>
         <Col sm={12}>
