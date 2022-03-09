@@ -5,16 +5,12 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
-import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
-import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
-import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
+import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
-import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockConatainer";
-import SonarRatingCodeCoverageActionableInsightTable
-  from "../sonar_ratings/actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightTable";
+import SonarRatingsCodeCoverageBlockContainer from "../sonar_leadership/data_blocks/SonarRatingsCodeCoverageBlockContainer";
+import SonarCoverageActionableTable from "./SonarCoverageActionableTable";
 
 function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -109,13 +105,10 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
                 duplicate={sonarRatingsMetric?.duplication_percentage}
               />
             </Col>
-            <Col className={"px-0 my-3"} xl={6} lg={12}>
-              <SonarRatingCodeCoverageActionableInsightTable
-                isLoading={isLoading}
-                coverageData={coverageData}
-                filterModel={filterModel}
-                setFilterModel={setFilterModel}
-                loadData={loadData}
+            <Col className={"px-0 my-3"} xl={12} lg={12}>
+              <SonarCoverageActionableTable
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
               />
             </Col>
           </Row>

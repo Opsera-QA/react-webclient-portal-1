@@ -1,13 +1,10 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import { LETTER_GRADES } from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
-import SonarRatingsMaintainabilityActionableInsightOverlay from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 
 function SonarRatingsMaintainabilityDataBlockContainer({
@@ -16,16 +13,6 @@ function SonarRatingsMaintainabilityDataBlockContainer({
                                                          kpiConfiguration,
                                                          dashboardData,
                                                        }) {
-  const toastContext = useContext(DialogToastContext);
-
-  const onRowSelect = () => {
-    toastContext.showOverlayPanel(
-      <SonarRatingsMaintainabilityActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-      />
-    );
-  };
 
   const getSonarMaintainabilityGrade = (rating) => {
     if (rating <= 1) {
@@ -61,7 +48,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} >
       <Col sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
       <Col sm={4}>{getRightDataBlock()}</Col>
