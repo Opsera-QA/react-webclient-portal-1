@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 
-function MetricUserEditabilityBooleanToggle({model, setModel}) {
+function MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle({model, setModel}) {
   const setDataFunction = (fieldName, newValue) => {
     const newModel = {...model};
     const strategicCriteria = model?.getData("strategic_criteria");
@@ -25,9 +25,9 @@ function MetricUserEditabilityBooleanToggle({model, setModel}) {
   );
 }
 
-MetricUserEditabilityBooleanToggle.propTypes = {
+MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
 };
 
-export default MetricUserEditabilityBooleanToggle;
+export default MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle;

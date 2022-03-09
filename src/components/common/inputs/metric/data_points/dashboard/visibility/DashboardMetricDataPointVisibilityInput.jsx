@@ -6,7 +6,7 @@ import dataPointVisibilityMetadata
   from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function MetricDataPointVisibilityInput(
+function DashboardMetricDataPointVisibilityInput(
   {
     fieldName,
     model,
@@ -34,19 +34,8 @@ function MetricDataPointVisibilityInput(
   const setDataFunction = (newModel) => {
     const visibility = newModel?.getPersistData();
     model?.setData(fieldName, visibility);
+    console.log("visibility: " + JSON.stringify(visibility));
     setModel({...model});
-    setDataPointVisibilityModel({...newModel});
-  };
-
-  const getUserVisibilityToggle = () => {
-    return (
-      <BooleanToggleInput
-        dataObject={dataPointVisibilityModel}
-        setDataObject={setDataFunction}
-        fieldName={"userVisibilityToggleSupport"}
-        disabled={disabled}
-      />
-    );
   };
 
   if (model == null || dataPointVisibilityModel == null) {
@@ -56,7 +45,6 @@ function MetricDataPointVisibilityInput(
   return (
     <div>
       <H4FieldSubHeader subheaderText={"Visibility"}/>
-      {getUserVisibilityToggle()}
       <BooleanToggleInput
         dataObject={dataPointVisibilityModel}
         setDataObject={setDataFunction}
@@ -67,16 +55,17 @@ function MetricDataPointVisibilityInput(
   );
 }
 
-MetricDataPointVisibilityInput.propTypes = {
+DashboardMetricDataPointVisibilityInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   fromDashboardMetric: PropTypes.bool,
+  dataPoint: PropTypes.object,
 };
 
-MetricDataPointVisibilityInput.defaultProps = {
+DashboardMetricDataPointVisibilityInput.defaultProps = {
   fieldName: "visibility",
 };
 
-export default MetricDataPointVisibilityInput;
+export default DashboardMetricDataPointVisibilityInput;

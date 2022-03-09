@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import {Col, Row} from "react-bootstrap";
 import MetricDataPointEvaluationSuccessRuleInput
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
+  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
 import MetricDataPointEvaluationWarningRuleInput
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
+  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
 import MetricDataPointEvaluationFailureRuleInput
-  from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
-import MetricUserEditabilityBooleanToggle
-  from "components/common/inputs/metric/strategic_criteria/MetricUserEditabilityBooleanToggle";
+  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
+import MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle
+  from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle";
 
 function MetricDataPointEvaluationRulesInput(
   {
@@ -34,7 +34,7 @@ function MetricDataPointEvaluationRulesInput(
   const getUserEditabiltyToggle = () => {
     if (fromDashboardMetric === false) {
       return (
-        <MetricUserEditabilityBooleanToggle
+        <MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle
           model={model}
           setModel={setModel}
         />

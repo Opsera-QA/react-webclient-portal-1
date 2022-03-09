@@ -238,13 +238,13 @@ const PipelineWorkflowItem = (
         <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex flex-row">
           <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
 
-          <div className={"ml-auto"}>
+          <div className={"ml-auto d-flex"}>
             <div className={"ml-auto d-flex"}>
 
               {isLoading && <LoadingIcon className={"mr-2 green"} />}
 
               {isToolSet && !editWorkflow && !isLoading &&
-              <div className={"ml-auto d-flex"}>
+              <>
                 {itemState === "failed" &&
                 <OverlayTrigger
                   placement="top"
@@ -360,12 +360,11 @@ const PipelineWorkflowItem = (
                 </OverlayTrigger>
                 }
 
-              </div>
+              </>
               }
 
               {(editWorkflow || !isToolSet) &&
               <>
-                <div className="no-wrap">
 
                   {editWorkflow &&
                   <OverlayTrigger
@@ -394,7 +393,6 @@ const PipelineWorkflowItem = (
                     </div>
                   </OverlayTrigger>
 
-                </div>
               </>}
               <StepToolHelpIcon iconClassName={"mb-1"} className={"mr-0"}
                                 tool={item?.tool?.tool_identifier?.toLowerCase()} />
@@ -475,8 +473,8 @@ const PipelineWorkflowItem = (
                       <IconBase icon={faEnvelope}
                                 className={"pointer text-muted mx-1"}
                                 onClickFunction={() => {
-                                  // handleEditClick("notification", item.tool, item._id);
-                                  editStepNotificationConfiguration(item);
+                                  handleEditClick("notification", item.tool, item._id);
+                                  // editStepNotificationConfiguration(item);
                                 }} />
                     </div>
                   </OverlayTrigger>

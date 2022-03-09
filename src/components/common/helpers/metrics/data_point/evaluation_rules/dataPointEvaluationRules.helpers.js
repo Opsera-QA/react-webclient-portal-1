@@ -1,7 +1,7 @@
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
-import {DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
+import {DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES} from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
 
 export const dataPointEvaluationRulesHelpers = {};
 
