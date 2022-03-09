@@ -16,18 +16,11 @@ import MetricPercentageText from "components/common/metrics/percentage/MetricPer
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
-} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
+function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
   const toastContext = useContext(DialogToastContext);
-
-  const deploymentStatisticsDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_STATISTICS_DATA_POINT);
 
   const onRowSelect = () => {    
     toastContext.showOverlayPanel(
@@ -67,10 +60,10 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
         <MetricPercentageText
           percentage={metricData?.deploy?.successPercent}
           qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
-          dataPoint={deploymentStatisticsDataPoint}
+          dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}
-        dataPoint={deploymentStatisticsDataPoint}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -126,11 +119,12 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
 }
 
 DeploymentStatisticsDataBlockContainer.propTypes = {
-    metricData: PropTypes.object,
-    chartData: PropTypes.object,
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    goalsData: PropTypes.number,
+  metricData: PropTypes.object,
+  chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  goalsData: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default DeploymentStatisticsDataBlockContainer;

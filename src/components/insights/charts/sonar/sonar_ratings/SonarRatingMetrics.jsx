@@ -8,11 +8,13 @@ import SonarRatingsChartHelpDocumentation from "components/common/help/documenta
 import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
 import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
 import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
+import {SONAR_RATING_METRIC_CONSTANTS as dataPointConstants} from "./SonarRatingMetrics_kpi_datapoint_identifiers";
 import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
 import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockConatainer";
+import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -22,6 +24,10 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [securityDataPoint, setSecurityDatapoint] = useState(undefined);
+  const [maintainabilityDataPoint, setMaintainabilityDatapoint] = useState(undefined);
+  const [reliabilityDataPoint, setReliabilityDatapoint] = useState(undefined);
+  const [codeCoverageDataPoint, setCodeCoverageDatapoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -48,6 +54,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -80,6 +87,18 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const sonarRatingSecurityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_SECURITY_DATA_POINT);
+    setSecurityDatapoint(sonarRatingSecurityDataPoint);
+    const sonarRatingMaintainabilityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_MAINTAINABILITY_DATA_POINT);
+    setMaintainabilityDatapoint(sonarRatingMaintainabilityDataPoint);
+    const sonarRatingReliabilityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_RELIABILITY_DATA_POINT);
+    setReliabilityDatapoint(sonarRatingReliabilityDataPoint);
+    const sonarRatingCodeCoverageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_CODE_COVERAGE_DATA_POINT);
+    setSonarRatingsMetric(sonarRatingCodeCoverageDataPoint);
+  };
+
   const getChartBody = () => {
     if (sonarRatingsMetric == null) {
       return null;
@@ -89,30 +108,37 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       <>
         <div className={"mx-2"}>
           <Row className={"mx-0 p-2 justify-content-between"}>
+            {dataPointHelpers.isDataPointVisible(securityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsVulnerabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
                 securityRating={sonarRatingsMetric?.security_rating}
                 vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
+                dataPoint={securityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(maintainabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
                 maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
                 technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+                dataPoint={maintainabilityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(reliabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsReliabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
                 reliabilityRating={sonarRatingsMetric?.reliability_rating}
                 bugCount={sonarRatingsMetric?.bugs}
+                dataPoint={reliabilityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(codeCoverageDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsCodeCoverageBlockContainer
                 dashboardData={dashboardData}
@@ -120,8 +146,9 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 tests={sonarRatingsMetric?.tests}
                 lineCoverage={sonarRatingsMetric?.line_percentage}
                 duplicate={sonarRatingsMetric?.duplication_percentage}
+                dataPoint={codeCoverageDataPoint}
               />
-            </Col>
+            </Col> }
           </Row>
         </div>
         <BadgeBase className={"mx-2"} badgeText={"Please note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />

@@ -14,14 +14,10 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
-} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration }) {
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
 
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -39,9 +35,6 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
     }  
   ];
 
-  const buildFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.BUILD_FREQUENCY_STATISTICS_DATA_POINT);
-
   const getLeftDataBlock = () => {    
     return (      
       <ThreeLineDataBlockBase
@@ -50,9 +43,9 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
         middleText={
         <MetricScoreText
           score={metricData?.build?.perDayAverage}
-          dataPoint={buildFrequencyStatisticsDataPoint}
+          dataPoint={dataPoint}
         />}
-        dataPoint={buildFrequencyStatisticsDataPoint}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -120,7 +113,8 @@ BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
-  kpiConfiguration: PropTypes.object
+  kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;

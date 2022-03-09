@@ -11,6 +11,10 @@ import DeploymentFrequencyStatisticsDataBlockContainer from "components/insights
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import BuildAndDeployChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/BuildAndDeployChartHelpDocumentation";
+import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "./OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 const DEFAULT_GOALS = {
   build_success_rate: 90,
@@ -28,6 +32,10 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [goalsData, setGoalsData] = useState(undefined);
+  const [buildFrequencyDataPoint, setBuildFrequencyDataPoint] = useState(undefined);
+  const [buildStatisticsDataPoint, setBuildStatisticsDataPoint] = useState(undefined);
+  const [deploymentFrequencyDataPoint, setDeploymentFrequencyDataPoint] = useState(undefined);
+  const [deploymentStatisticsDataPoint, setDeploymentStatisticsDataPoint] = useState(undefined);
 
   // TODO: Wire up data pull and pass relevant data down
   useEffect(() => {
@@ -55,6 +63,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -99,12 +108,25 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const buildFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(dataPoints, constants.SUPPORTED_DATA_POINT_IDENTIFIERS.BUILD_FREQUENCY_STATISTICS_DATA_POINT);
+    setBuildFrequencyDataPoint(buildFrequencyStatisticsDataPoint);
+    const buildStatisticsDataPoint1 = dataPointHelpers.getDataPoint(dataPoints, constants.SUPPORTED_DATA_POINT_IDENTIFIERS.BUILD_STATISTICS_DATA_POINT);
+    setBuildStatisticsDataPoint(buildStatisticsDataPoint1);
+    const deploymentFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(dataPoints, constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_FREQUENCY_STATISTICS_DATA_POINT);
+    setDeploymentFrequencyDataPoint(deploymentFrequencyStatisticsDataPoint);
+    const deploymentStatisticsDataPoint1 = dataPointHelpers.getDataPoint(dataPoints, constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_STATISTICS_DATA_POINT);
+    setDeploymentStatisticsDataPoint(deploymentStatisticsDataPoint1);
+  };
+
   const getChartBody = () => {
     if (!buildAndDeployMetricData || !buildAndDeployChartData) {
       return null;
     }
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>
+        {dataPointHelpers.isDataPointVisible(buildStatisticsDataPoint) &&
         <Col className={"px-0"} xl={6} lg={12}>
           <BuildStatisticsDataBlockContainer
             metricData={buildAndDeployMetricData}
@@ -112,16 +134,20 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             goalsData={goalsData?.build_success_rate}
+            dataPoint={buildStatisticsDataPoint}
           />
-        </Col>
+        </Col> }
+        {dataPointHelpers.isDataPointVisible(buildFrequencyDataPoint) &&
         <Col className={"px-0"} xl={6} lg={12}>
           <BuildFrequencyStatisticsDataBlockContainer
             metricData={buildAndDeployMetricData}
             chartData={buildAndDeployChartData}
             goalsData={goalsData?.average_builds}
             kpiConfiguration={kpiConfiguration}
+            dataPoint={buildFrequencyDataPoint}
           />
-        </Col>
+        </Col> }
+        {dataPointHelpers.isDataPointVisible(deploymentStatisticsDataPoint) &&
         <Col className={"px-0"} xl={6} lg={12}>
           <DeploymentStatisticsDataBlockContainer
             metricData={buildAndDeployMetricData}
@@ -129,16 +155,19 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             goalsData={goalsData?.deployment_success_rate}
+            dataPoint={deploymentStatisticsDataPoint}
           />
-        </Col>
+        </Col> }
+        {dataPointHelpers.isDataPointVisible(deploymentFrequencyDataPoint) &&
         <Col className={"px-0"} xl={6} md={12}>
           <DeploymentFrequencyStatisticsDataBlockContainer
             metricData={buildAndDeployMetricData}
             chartData={buildAndDeployChartData}
             goalsData={goalsData?.average_deployments}
             kpiConfiguration={kpiConfiguration}
+            dataPoint={deploymentFrequencyDataPoint}
           />
-        </Col>
+        </Col> }
       </Row>
     );
   };

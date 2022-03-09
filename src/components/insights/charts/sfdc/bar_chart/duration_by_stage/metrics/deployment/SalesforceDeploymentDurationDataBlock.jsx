@@ -4,15 +4,13 @@ import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blo
 import "../../salesforce-duration-by-stage-kpi.css";
 import MetricTextBase, { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import {dataPointHelpers} from "../../../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as constants
-} from "../../SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
 
 function SalesforceDeploymentDurationDataBlock({
   deploymentDurationMeanInMinutes,
   deploymentTotalRunCount,
   goalsData,
-  kpiConfiguration
+  kpiConfiguration,
+  dataPoint
 }) {
   const hasPositiveNumberValue = (potentialNumber) => {
     return potentialNumber == undefined ||
@@ -22,16 +20,14 @@ function SalesforceDeploymentDurationDataBlock({
       ? false
       : true;
   };
-  const durationDeploymentDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_DATA_POINT);
 
   const getMetricQualityLevel = () => {
     if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
       return;
     }
 
-    if (durationDeploymentDataPoint) {
-      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(durationDeploymentDataPoint, deploymentDurationMeanInMinutes);
+    if (dataPoint) {
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, deploymentDurationMeanInMinutes);
 
       if (typeof evaluatedDataPoint === "string") {
         return evaluatedDataPoint;
@@ -68,7 +64,7 @@ function SalesforceDeploymentDurationDataBlock({
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
       middleText={getDeploymentMeanBlock()}
-      dataPoint={durationDeploymentDataPoint}
+      dataPoint={dataPoint}
     />
   );
 }
@@ -78,6 +74,7 @@ SalesforceDeploymentDurationDataBlock.propTypes = {
   deploymentTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceDeploymentDurationDataBlock;
