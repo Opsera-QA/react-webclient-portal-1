@@ -4,13 +4,21 @@ import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 
-function SpyglassIcon({ className, onClickFunction, tooltipText }) {
+function SpyglassIcon(
+  {
+    className,
+    onClickFunction,
+    tooltipText,
+    iconSize,
+  }) {
   return (
     <div className={className}>
       <TooltipWrapper innerText={tooltipText} placement={"top"}>
         <IconBase
           onClickFunction={onClickFunction}
           icon={faSearch}
+          iconSize={iconSize}
+          className={onClickFunction ? "pointer" : undefined}
         />
       </TooltipWrapper>
     </div>
@@ -20,7 +28,8 @@ function SpyglassIcon({ className, onClickFunction, tooltipText }) {
 SpyglassIcon.propTypes = {
   onClickFunction: PropTypes.func,
   className: PropTypes.string,
-  tooltipText: PropTypes.string
+  tooltipText: PropTypes.string,
+  iconSize: PropTypes.string,
 };
 
 export default SpyglassIcon;
