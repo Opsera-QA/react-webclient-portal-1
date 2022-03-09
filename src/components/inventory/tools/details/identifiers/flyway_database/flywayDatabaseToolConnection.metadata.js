@@ -1,4 +1,4 @@
-export const flywayDatabaseConnectionMetadata = {
+export const flywayDatabaseToolConnectionMetadata = {
   type: "Flyway Database Tool Configuration",
   idProperty: "_id",
   fields: [

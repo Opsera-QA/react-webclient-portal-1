@@ -12,10 +12,11 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FlywayDatabaseTypeSelectInput from "components/common/list_of_values_input/tools/flyway_database/FlywayDatabaseTypeSelectInput";
 import axios from "axios";
 import {
-  flywayDatabaseConnectionMetadata
-} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseConnection.metadata";
+  flywayDatabaseToolConnectionMetadata
+} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-function FlywayDatabaseToolConfiguration({ toolData }) {
+function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [flywayConfigurationModel, setFlywayConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -43,7 +44,7 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    setFlywayConfigurationModel(modelHelpers.parseObjectIntoModel(toolData?.getData("configuration"), flywayDatabaseConnectionMetadata));
+    setFlywayConfigurationModel(modelHelpers.parseObjectIntoModel(toolData?.getData("configuration"), flywayDatabaseToolConnectionMetadata));
   };
 
   const saveFlywayToolConfiguration = async () => {
@@ -75,7 +76,7 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
       setModel={setFlywayConfigurationModel}
       persistRecord={saveFlywayToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"flyway-database-migrator"}
+      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR}
     >
       <Row>
         <Col sm={12}>
@@ -111,11 +112,8 @@ function FlywayDatabaseToolConfiguration({ toolData }) {
   );
 }
 
-FlywayDatabaseToolConfiguration.propTypes = {
+FlywayDatabaseToolConnectionEditorPanel.propTypes = {
   toolData: PropTypes.object,
-  toolId: PropTypes.string,
-  saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
 };
 
-export default FlywayDatabaseToolConfiguration;
+export default FlywayDatabaseToolConnectionEditorPanel;
