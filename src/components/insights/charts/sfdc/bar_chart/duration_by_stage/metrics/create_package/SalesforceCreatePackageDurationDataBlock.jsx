@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 import MetricTextBase, { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import "../../salesforce-duration-by-stage-kpi.css";
 import {dataPointHelpers} from "../../../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as constants
-} from "../../SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
 import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 function SalesforceCreatePackageDurationDataBlock({
   createPackageDurationMeanInMinutes,
   createPackageTotalRunCount,
   goalsData,
-  kpiConfiguration
+  kpiConfiguration,
+  dataPoint
 }) {
   const hasPositiveNumberValue = (potentialNumber) => {
     return potentialNumber == undefined ||
@@ -22,14 +20,11 @@ function SalesforceCreatePackageDurationDataBlock({
       : true;
   };
 
-  const packageCreationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.CREATE_PACKAGE_DATA_POINT);
-
   const getMetricQualityLevel = () => {
 
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
-    if (packageCreationDataPoint && hasPositiveNumberValue(createPackageDurationMeanInMinutes)) {
-      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(packageCreationDataPoint, createPackageDurationMeanInMinutes);
+    if (dataPoint && hasPositiveNumberValue(createPackageDurationMeanInMinutes)) {
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, createPackageDurationMeanInMinutes);
 
       if (typeof evaluatedDataPoint === "string") {
         return evaluatedDataPoint;
@@ -76,7 +71,7 @@ function SalesforceCreatePackageDurationDataBlock({
       className="salesforce-duration-by-stage-kpi"
       topText={"Package Creation"}
       middleText={getCreatePackageMeanData()}
-      dataPoint={packageCreationDataPoint}
+      dataPoint={dataPoint}
     />
   );
 }
@@ -86,6 +81,7 @@ SalesforceCreatePackageDurationDataBlock.propTypes = {
   createPackageTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceCreatePackageDurationDataBlock;

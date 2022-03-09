@@ -108,6 +108,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       <>
         <div className={"mx-2"}>
           <Row className={"mx-0 p-2 justify-content-between"}>
+            {dataPointHelpers.isDataPointVisible(securityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsVulnerabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
@@ -116,7 +117,8 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
                 dataPoint={securityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(maintainabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
@@ -125,7 +127,8 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
                 dataPoint={maintainabilityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(reliabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsReliabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
@@ -134,7 +137,8 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 bugCount={sonarRatingsMetric?.bugs}
                 dataPoint={reliabilityDataPoint}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(codeCoverageDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsCodeCoverageBlockContainer
                 dashboardData={dashboardData}
@@ -144,7 +148,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 duplicate={sonarRatingsMetric?.duplication_percentage}
                 dataPoint={codeCoverageDataPoint}
               />
-            </Col>
+            </Col> }
           </Row>
         </div>
         <BadgeBase className={"mx-2"} badgeText={"Please note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />

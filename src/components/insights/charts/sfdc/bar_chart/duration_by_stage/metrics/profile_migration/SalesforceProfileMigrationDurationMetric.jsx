@@ -10,6 +10,7 @@ function SalesforceProfileMigrationDurationMetrics({
   profileMigrationDurationMeanInMinutes,
   profileMigrationTotalRunCount,
   metric,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
@@ -17,6 +18,7 @@ function SalesforceProfileMigrationDurationMetrics({
         profileMigrationDurationMeanInMinutes={profileMigrationDurationMeanInMinutes}
         profileMigrationTotalRunCount={profileMigrationTotalRunCount}
         kpiConfiguration={kpiConfiguration}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -40,6 +42,7 @@ SalesforceProfileMigrationDurationMetrics.propTypes = {
   profileMigrationDurationMeanInMinutes: PropTypes.number,
   profileMigrationTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceProfileMigrationDurationMetrics;

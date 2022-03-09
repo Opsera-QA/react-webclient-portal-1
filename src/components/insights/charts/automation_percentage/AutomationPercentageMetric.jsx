@@ -156,24 +156,30 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
           <Row>
             <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
               <Row>
+                {dataPointHelpers.isDataPointVisible(totalAutomationCandidates) &&
                 <Col lg={6} className={"my-3"}>
                   <TotalAutomationCandidatesDataBlock defects={metric?.totalTests} dataPoint={totalAutomationCandidates}/>
-                </Col>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(totalFunctionalTest) &&
                 <Col lg={6} className={"my-3"}>
                   <TotalFunctionalTestsDataBlock defects={metric?.functionalTests} dataPoint={totalFunctionalTest}/>
-                </Col>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(totalRegressionTests) &&
                 <Col lg={6} className={"mb-3"}>
                   <TotalRegressionTestsDataBlock defects={metric?.regressionTests} dataPoint={totalRegressionTests}/>
-                </Col>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(regressionTestAutomation) &&
                 <Col lg={6} className={"mb-3"}>
                   <RegressionTestsAutomatedDataBlock defects={metric?.automatedTests} dataPoint={regressionTestAutomation}/>
-                </Col>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(regressionTestToBeAutomated) &&
                 <Col lg={6} className={"mb-3"}>
                   <RegressionTestsToBeAutomated defects={metric?.manualTests} dataPoint={regressionTestToBeAutomated}/>
-                </Col>
+                </Col>  }
+                {dataPointHelpers.isDataPointVisible(automationDataPoint) &&
                 <Col lg={6} className={"mb-3"}>
                   <AutomationPercentageDataBlock score={metric?.automationRate} dataPoint={automationDataPoint} />
-                </Col>
+                </Col> }
               </Row>
             </Col>
             <Col xl={6} lg={4} md={3} className={"my-2 p-2"}>

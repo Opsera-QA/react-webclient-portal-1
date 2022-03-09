@@ -117,33 +117,37 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
         <Row>
           <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row className="px-4 justify-content-between">
+              {dataPointHelpers.isDataPointVisible(totalTestCasesPlannedForFirstRun) &&
               <Col xl={6} lg={6} sm={6} className={"my-1"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.totalTests}
                   subtitle="Total Test Cases Planned for First Run"
                   dataPoint={totalTestCasesPlannedForFirstRun}
                 />
-              </Col>
+              </Col> }
+              {dataPointHelpers.isDataPointVisible(firstPassYieldDataPoint) &&
               <Col lg={6} className={"my-1"}>
                 <FirstPassYieldPercentageDataBlock
                   score={metrics[0]?.firstPassYield}
                   dataPoint={firstPassYieldDataPoint}
                 />
-              </Col>
+              </Col>}
+              {dataPointHelpers.isDataPointVisible(totalTestCasesPassedInFirstRun) &&
               <Col lg={6} className={"mb-1"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.passedTests}
                   subtitle="Total Test Cases Passed in First Run"
                   dataPoint={totalTestCasesPassedInFirstRun}
                 />
-              </Col>
+              </Col> }
+              {dataPointHelpers.isDataPointVisible(totalTestCasesFailedInFirstRun) &&
               <Col lg={6} className={"mb-1"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.failedTests}
                   subtitle="Total Test Cases Failed in First Run"
                   dataPoint={totalTestCasesFailedInFirstRun}
                 />
-              </Col>
+              </Col>}
             </Row>
           </Col>
           <Col xl={6} lg={6} md={4} className={"my-1"}>

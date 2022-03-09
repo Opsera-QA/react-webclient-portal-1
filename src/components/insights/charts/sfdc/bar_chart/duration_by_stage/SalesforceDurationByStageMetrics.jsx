@@ -15,6 +15,10 @@ import SalesforcePackageValidationDurationMetric from "components/insights/chart
 import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/bar_chart/duration_by_stage/metrics/deployment/SalesforceDeploymentDurationMetric";
 import { assignStandardLineColors } from "components/insights/charts/charts-views";
 import SalesforceDurationByStageHelpDocumentation from "../../../../../common/help/documentation/insights/charts/SalesforceDurationByStageHelpDocumentation";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {
+  SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as dataPointConstants
+} from "./SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();
@@ -27,6 +31,12 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [deploymentDataPoint, setDeploymentDataPoint] = useState(undefined);
+  const [backupDataPoint, setBackupDataPoint] = useState(undefined);
+  const [profileMigrationDataPoint, setProfileMigrationDataPoint] = useState(undefined);
+  const [packageValidationDataPoint, setPackageValidationDataPoint] = useState(undefined);
+  const [createPackageDataPoint, setCreatePackageDataPoint] = useState(undefined);
+  const [unitTestingDataPoint, setUnitTestingDataPoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,6 +62,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -88,6 +99,22 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const deployDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_DATA_POINT);
+    setDeploymentDataPoint(deployDurationDataPoint);
+    const createPackageDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.CREATE_PACKAGE_DATA_POINT);
+    setCreatePackageDataPoint(createPackageDurationDataPoint);
+    const packageValidationDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.PACKAGE_VALIDATION_DATA_POINT);
+    setPackageValidationDataPoint(packageValidationDurationDataPoint);
+    const profileMigrationDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.PROFILE_MIGRATION_DATA_POINT);
+    setProfileMigrationDataPoint(profileMigrationDurationDataPoint);
+    const unitTestingDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.UNIT_TESTING_DATA_POINT);
+    setUnitTestingDataPoint(unitTestingDurationDataPoint);
+    const backupDurationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BACKUP_DURATION_DATA_POINT);
+    setBackupDataPoint(backupDurationDataPoint);
+  };
+
   const getChartBody = () => {
     if (
       !Array.isArray(metrics) ||
@@ -101,6 +128,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
     return (
       <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
         <Row className="mr-1">
+          {dataPointHelpers.isDataPointVisible(createPackageDataPoint) &&
           <Col xs={12} sm={6}>
             <SalesforceCreatePackageDurationMetric
               metric={metrics[0]}
@@ -109,8 +137,10 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               goalsData={goalsData?.average_builds}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
+              dataPoint={createPackageDataPoint}
             />
-          </Col>
+          </Col> }
+          {dataPointHelpers.isDataPointVisible(packageValidationDataPoint) &&
           <Col xs={12} sm={6}>
             <SalesforcePackageValidationDurationMetric
               metric={metrics[1]}
@@ -118,8 +148,10 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               packageValidationTotalRunCount={dataBlockValues[0]?.validate_package_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
+              dataPoint={packageValidationDataPoint}
             />
-          </Col>
+          </Col> }
+          {dataPointHelpers.isDataPointVisible(profileMigrationDataPoint) &&
           <Col xs={12} sm={6}>
             <SalesforceProfileMigrationDurationMetrics
               metric={metrics[2]}
@@ -127,8 +159,10 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               profileMigrationTotalRunCount={dataBlockValues[0]?.profile_migration_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
+              dataPoint={profileMigrationDataPoint}
             />
-          </Col>
+          </Col> }
+          {dataPointHelpers.isDataPointVisible(backupDataPoint) &&
           <Col xs={12} sm={6}>
             <SalesforceBackupDurationMetric
               metric={metrics[3]}
@@ -136,17 +170,21 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               backupTotalRunCount={dataBlockValues[0]?.backup_count}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
+              dataPoint={backupDataPoint}
             />
-          </Col>
-          {/*<Col xs={12} sm={6}>*/}
-          {/*  <SalesforceUnitTestingDurationMetric*/}
-          {/*    metric={metrics[4]}*/}
-          {/*    unitTestingDurationMeanInMinutes={dataBlockValues[0]?.unit_testing_mean}*/}
-          {/*    unitTestingTotalRunCount={dataBlockValues[0]?.unit_testing_count}*/}
-          {/*    kpiConfiguration={kpiConfiguration}*/}
-          {/*    dashboardData={dashboardData}*/}
-          {/*  />*/}
-          {/*</Col>*/}
+          </Col> }
+          {dataPointHelpers.isDataPointVisible(unitTestingDataPoint) &&
+          <Col xs={12} sm={6}>
+            <SalesforceUnitTestingDurationMetric
+              metric={metrics[4]}
+              unitTestingDurationMeanInMinutes={dataBlockValues[0]?.unit_testing_mean}
+              unitTestingTotalRunCount={dataBlockValues[0]?.unit_testing_count}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              dataPoint={unitTestingDataPoint}
+            />
+          </Col> }
+          {dataPointHelpers.isDataPointVisible(deploymentDataPoint) &&
           <Col xs={12} sm={6}>
             <SalesforceDeploymentDurationMetric
               metric={metrics[5]}
@@ -155,8 +193,9 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
               goalsData={goalsData?.average_deployments}
               kpiConfiguration={kpiConfiguration}
               dashboardData={dashboardData}
+              dataPoint={deploymentDataPoint}
             />
-          </Col>
+          </Col> }
         </Row>
       </div>
     );
