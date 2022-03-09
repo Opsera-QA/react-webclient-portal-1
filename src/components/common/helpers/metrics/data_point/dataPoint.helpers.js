@@ -2,7 +2,7 @@ import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBa
 import {
   DATA_POINT_EVALUATION_RULE_TYPES,
   SUPPORTED_DATA_POINT_EVALUATION_RULE_TYPES
-} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/dataPointEvaluationRule.types";
+} from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/dataPointEvaluationRule.types";
 import {dataPointEvaluationRulesHelpers} from "components/common/helpers/metrics/data_point/evaluation_rules/dataPointEvaluationRules.helpers";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 

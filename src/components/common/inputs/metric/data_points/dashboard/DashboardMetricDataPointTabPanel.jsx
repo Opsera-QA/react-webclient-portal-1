@@ -4,10 +4,10 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import UserEditableMetricDataPointInputBase
-  from "components/common/inputs/metric/data_points/UserEditableMetricDataPointInputBase";
+import DashboardMetricDataPointInputBase
+  from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointInputBase";
 
-function UserEditableMetricDataPointTabPanel(
+function DashboardMetricDataPointTabPanel(
   {
     model,
     setModel,
@@ -90,7 +90,7 @@ function UserEditableMetricDataPointTabPanel(
 
       if (dataPoint) {
         return (
-          <UserEditableMetricDataPointInputBase
+          <DashboardMetricDataPointInputBase
             model={model}
             setModel={setModel}
             dataPoint={dataPoint}
@@ -108,10 +108,10 @@ function UserEditableMetricDataPointTabPanel(
   return (getTabView());
 }
 
-UserEditableMetricDataPointTabPanel.propTypes = {
+DashboardMetricDataPointTabPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   dataPoints: PropTypes.array,
 };
 
-export default UserEditableMetricDataPointTabPanel;
+export default DashboardMetricDataPointTabPanel;

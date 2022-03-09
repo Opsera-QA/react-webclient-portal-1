@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DATA_POINT_EVALUATION_TRIGGER_FILTER_SELECT_OPTIONS} from "components/common/inputs/metric/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
+import {DATA_POINT_EVALUATION_TRIGGER_FILTER_SELECT_OPTIONS} from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/dataPointEvaluationTrigger.types";
 
 // TODO: If this is reused anywhere, make generic version in /list_of_values_input
 function DataPointEvaluationTriggerFilterSelectInput(
