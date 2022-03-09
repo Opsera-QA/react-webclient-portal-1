@@ -174,10 +174,6 @@ const TerraformStepFormMetadata = {
       label: "Packer Variables Files",
       id: "inputFilePaths"
     },
-    {
-      label: "Input File Name",
-      id: "inputFileName"
-    },
   ],
   fieldsAlt: [
     {
@@ -359,10 +355,6 @@ const TerraformStepFormMetadata = {
       label: "Packer Variables Files",
       id: "inputFilePaths"
     },
-    {
-      label: "Input File Name",
-      id: "inputFileName"
-    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -410,7 +402,6 @@ const TerraformStepFormMetadata = {
     environmentVariables: [],
     isVariableFile: false,
     inputFilePaths: [],
-    inputFileName: "",
   }
 };
 

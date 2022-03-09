@@ -18,7 +18,6 @@ import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/JmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/JmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
@@ -28,6 +27,7 @@ import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationB
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 const INDICES = [
   "jenkins",
@@ -135,7 +135,7 @@ function Analytics() {
 
   const ValueInput = ({ item }) => (
     <span>
-      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+      <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
       {" " + DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end).label.toString()}
     </span>
   );

@@ -6,8 +6,8 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import ErrorDialog from "../../../../../common/status_notifications/error";
 import Select from "react-select";
 import { Form, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function StepToolConfigurationSelectionPanel({ data, editItem, parentCallback }) {
   const contextType = useContext(AuthContext);
@@ -92,7 +92,7 @@ function StepToolConfigurationSelectionPanel({ data, editItem, parentCallback })
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }} 
         disabled={!toolConfigSelect}>
-        <FontAwesomeIcon icon={faSave} className="mr-1"/> Save
+        <IconBase icon={faSave} className={"mr-1"}/> Save
       </Button>
     </Form>
   );

@@ -120,7 +120,7 @@ function ProjectDataMappingDetailView() {
       actionBar={getActionBar()}
       detailPanel={
         <ProjectDataMappingDetailPanel
-          projectMappingModel={projectDataMappingModel}
+          projectDataMappingModel={projectDataMappingModel}
           setProjectDataMappingModel={setProjectDataMappingModel}
         />
       }

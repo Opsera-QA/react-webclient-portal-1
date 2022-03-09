@@ -10,12 +10,14 @@ function SalesforceProfileMigrationDurationMetric({
   unitTestingDurationMeanInMinutes,
   unitTestingTotalRunCount,
   metric,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
       <SalesforceUnitTestingDurationDataBlock
         unitTestingDurationMeanInMinutes={unitTestingDurationMeanInMinutes}
         unitTestingTotalRunCount={unitTestingTotalRunCount}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -39,6 +41,7 @@ SalesforceProfileMigrationDurationMetric.propTypes = {
   unitTestingDurationMeanInMinutes: PropTypes.number,
   unitTestingTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceProfileMigrationDurationMetric;

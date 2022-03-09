@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PopoverContainer from "components/common/tooltip/PopoverContainer";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
@@ -12,6 +11,7 @@ import axios from "axios";
 import TransferOwnershipButton from "components/common/buttons/transfer/TransferOwnershipButton";
 import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
@@ -83,7 +83,8 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
     }
   };
 
-  const popoverContent = (
+  const getPopoverContent = () => {
+    return (
       <div>
         <div className="pb-2">
           <LdapUserSelectInput
@@ -106,23 +107,27 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
               size={"sm"}
               className={"w-100"}
               cancelFunction={() => document.body.click()}
-              isLoading={isTransferringOwnership}
+              isLoading={isTransferringOwnership || isLoading}
             />
           </Col>
         </Row>
       </div>
     );
+  };
 
   if (isSassUser() !== false || toolCopy == null || canTransferTool !== true) {
     return null;
   }
 
   return (
-    <PopoverContainer
+    <TooltipWrapper
       className={"owner-popover"}
       isLoading={isLoading}
       title={"Transfer Tool"}
-      content={popoverContent}>
+      innerText={getPopoverContent()}
+      placement={"top"}
+      trigger={"click"}
+    >
       <div className={className}>
         <ActionBarPopoverButton
           disabled={isLoading}
@@ -130,7 +135,7 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
           popoverText={`Transfer Tool to new Owner`}
         />
       </div>
-    </PopoverContainer>
+    </TooltipWrapper>
   );
 }
 

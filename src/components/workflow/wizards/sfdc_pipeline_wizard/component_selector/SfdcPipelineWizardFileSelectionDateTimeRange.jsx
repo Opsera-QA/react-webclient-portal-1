@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function SfdcPipelineWizardFileSelectionDateTimeRange({ pipelineWizardModel, setPipelineWizardModel, disabled, className }) {
   const [showLargeDataSetWarning, setShowLargeDataSetWarming] = useState(false);
@@ -24,7 +24,7 @@ function SfdcPipelineWizardFileSelectionDateTimeRange({ pipelineWizardModel, set
     if (showLargeDataSetWarning) {
       return (
         <div className="warning-text p-0">
-          <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
+          <IconBase icon={faInfoCircle} className={"mr-1"}iconStyling={{cursor: "help"}}/>
           You have selected a large date range and as such this may take some time to complete.
         </div>
       );

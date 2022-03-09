@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
 export const getFormattedDate = (date, dateFormat) => {
-  return date && date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
+  return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
 };
 
 export const getFormattedTimestamp = (date) => {
@@ -13,12 +13,16 @@ export const getFormattedTimestamp = (date) => {
 };
 
 function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
+
+  if (dataObject == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>
       <FieldLabel field={field} fieldName={fieldName} /><span>
-      {getFormattedDate(dataObject.getData(field.id), dateFormat)}
+      {getFormattedDate(dataObject?.getData(field.id), dateFormat)}
     </span>
     </FieldContainer>
   );

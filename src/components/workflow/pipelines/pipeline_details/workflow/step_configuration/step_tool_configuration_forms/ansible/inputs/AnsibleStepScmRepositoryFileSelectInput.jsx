@@ -5,8 +5,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import AnsibleStepActions from "../ansible.step.actions";
 import axios from "axios";
-import { isEmpty } from "lodash";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { isEmpty } from "lodash";
 import {  faSync } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function AnsibleStepScmRepositoryFileSelectInput({
   fieldName,
@@ -109,7 +110,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
     if (model.getData("playbookFilePath").length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to fetch file list
         </small>
       );

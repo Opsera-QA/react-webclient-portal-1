@@ -2,9 +2,15 @@ import React  from "react";
 import PropTypes from "prop-types";
 import {formatDate, hasDateValue} from "components/common/helpers/date/date.helpers";
 import {addDays, isSameDay} from "date-fns";
-import DateBadge from "components/common/badges/date/DateBadge";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
+import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 
-function MetricDateRangeBadge({startDate, endDate}) {
+function MetricDateRangeBadge(
+  {
+    startDate,
+    endDate,
+    className,
+  }) {
   const getDateBadgeText = () => {
     if (hasDateValue(startDate) !== true || hasDateValue(endDate) !== true) {
       const formattedStartDate = formatDate(addDays(new Date(), -90));
@@ -23,8 +29,10 @@ function MetricDateRangeBadge({startDate, endDate}) {
   };
 
   return (
-    <DateBadge
+    <MetricBadgeBase
       badgeText={getDateBadgeText()}
+      icon={faCalendar}
+      className={className}
     />
   );
 }
@@ -32,6 +40,7 @@ function MetricDateRangeBadge({startDate, endDate}) {
 MetricDateRangeBadge.propTypes = {
   startDate: PropTypes.object,
   endDate: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default React.memo(MetricDateRangeBadge);

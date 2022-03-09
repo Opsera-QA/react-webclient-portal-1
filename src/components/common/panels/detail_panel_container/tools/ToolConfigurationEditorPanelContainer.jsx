@@ -7,7 +7,17 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 
-function ToolConfigurationEditorPanelContainer({children, isLoading, persistRecord, model, setModel, toolConnectionCheckName, toolData}) {
+function ToolConfigurationEditorPanelContainer(
+  {
+    children,
+    isLoading,
+    persistRecord,
+    model,
+    setModel,
+    toolConnectionCheckName,
+    toolData,
+    leftSideButtons,
+  }) {
   const getToolConnectionCheckButton = () => {
     if (toolConnectionCheckName != null && toolData != null) {
      return (
@@ -33,7 +43,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
         </div>
         <div>{children}</div>
         <div className="mr-3">
-          <SaveButtonContainer>
+          <SaveButtonContainer extraButtons={leftSideButtons}>
             <StrictSaveButton updateRecord={persistRecord} recordDto={model} setModel={setModel} />
           </SaveButtonContainer>
           <RequiredFieldsMessage />
@@ -53,6 +63,7 @@ ToolConfigurationEditorPanelContainer.propTypes = {
   toolData: PropTypes.object,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  leftSideButtons: PropTypes.any,
 };
 
 ToolConfigurationEditorPanelContainer.defaultProps = {

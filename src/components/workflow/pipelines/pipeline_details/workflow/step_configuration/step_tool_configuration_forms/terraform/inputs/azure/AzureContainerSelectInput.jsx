@@ -4,8 +4,6 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSync} from "@fortawesome/pro-light-svg-icons";
 import terraformStepActions from "../../terraform-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";

@@ -32,7 +32,7 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
           <JiraProjectSummaryPanel
             jiraProjectData={jiraProjectData}
             jiraConfigurationData={getJiraConfigurationData()}
-            setActiveTab={handleTabClick}
+            setActiveTab={setTabSelection}
           />
         );
       case "settings":

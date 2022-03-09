@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import IconBase from "components/common/icons/IconBase";
 
 function PropertyInputContainer(
   {
@@ -27,7 +27,7 @@ function PropertyInputContainer(
       return (
         <div className="ml-auto m-2 d-flex">
           <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
-            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
+            <span className="text-white"><IconBase className={"text-white mr-2"} icon={faPlus} />Add {type}</span>
           </Button>
         </div>
       );
@@ -38,7 +38,7 @@ function PropertyInputContainer(
     if (incompleteRowMessage != null) {
       return (
         <div className="w-100 m-2 text-muted small">
-          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth/>
+          <IconBase className={"text-warning mr-1"} icon={faExclamationTriangle}/>
           <span className="mt-1">{incompleteRowMessage}</span>
         </div>
       );

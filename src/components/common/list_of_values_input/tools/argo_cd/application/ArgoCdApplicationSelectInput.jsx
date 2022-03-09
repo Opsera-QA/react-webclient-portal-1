@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import ArgoCdApplicationInfoOverlay from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationInfoOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, disabled, argoToolId, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -69,7 +69,7 @@ function ArgoCdApplicationSelectInput({className, fieldName, model, setModel, di
     if (!isLoading && argoApplications?.length === 0 && isMongoDbId(argoToolId) === true) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No Argo Applications have been found in the Argo instance.
           Please go to this Tool&apos;s
           <Link to={`/inventory/tools/${argoToolId}/details/applications`}>Applications Area</Link> and add an Argo Application in order to

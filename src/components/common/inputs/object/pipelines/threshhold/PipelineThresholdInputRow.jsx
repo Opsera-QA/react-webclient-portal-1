@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
@@ -11,6 +10,7 @@ import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines
 import StandalonePositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineThresholdInputRow(
   {
@@ -42,7 +42,7 @@ function PipelineThresholdInputRow(
     if (disabled !== true) {
       return (
         <Button variant="link" onClick={() => deleteThresholdRow(index)}>
-          <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+          <span><IconBase className="danger-red" icon={faTimes} fixedWidth/></span>
         </Button>
       );
     }

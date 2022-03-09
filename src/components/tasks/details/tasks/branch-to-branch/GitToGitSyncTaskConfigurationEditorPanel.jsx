@@ -19,7 +19,6 @@ import GitToGitSyncTaskRepositorySelectInput
   from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
 import GitToGitSyncTaskBitbucketWorkspaceSelectInput
   from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);

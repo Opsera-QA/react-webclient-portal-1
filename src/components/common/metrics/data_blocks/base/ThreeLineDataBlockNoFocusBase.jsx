@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import DataPointInfoOverlayIcon from "../../../icons/metric/info/DataPointInfoOverlayIcon";
 
 // TODO: This needs to be reworked. Don't pass styles in. Have them be a part of the text passed in. That's why it's "any" and not string
 //  Instead of using this, the standard ThreeLineDataBlockBase should be used and this should be removed
@@ -11,7 +12,17 @@ function ThreeLineDataBlockNoFocusBase({
   topStyle,
   middleStyle,
   bottomStyle,
+  dataPoint
+
 }) {
+  const getInfoOverlayIcon = () => {
+    return (
+      <DataPointInfoOverlayIcon
+        dataPoint={dataPoint}
+      />
+    );
+  };
+
   const getTopText = () => {
     if (topText) {
       return (
@@ -47,7 +58,10 @@ function ThreeLineDataBlockNoFocusBase({
     <div className={className}>
       <div className={"text-center h-100"}>
         <div className="w-100 text-center">
-          {getTopText()}
+          <div className={"d-flex"} style={{justifyContent: "center"}}>
+            {getTopText()}
+            {dataPoint && <div className={"data-blocDeploymentStatisticsDataBlockContainerk-icon"}>{getInfoOverlayIcon()}</div>}
+          </div>
         </div>
         <div className="my-auto text-center">
           {getMiddleText()}
@@ -68,6 +82,7 @@ ThreeLineDataBlockNoFocusBase.propTypes = {
   topStyle: PropTypes.string,
   middleStyle: PropTypes.string,
   bottomStyle: PropTypes.string,
+  dataPoint: PropTypes.object,
 };
 
 export default ThreeLineDataBlockNoFocusBase;

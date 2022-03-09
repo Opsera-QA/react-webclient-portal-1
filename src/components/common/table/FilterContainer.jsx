@@ -22,8 +22,8 @@ function FilterContainer(
     className,
     metadata,
     exportButton,
-    showBorder,
     supportClientSideSearching,
+    bodyClassName,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -51,7 +51,7 @@ function FilterContainer(
 
   return (
     <div className={className}>
-      <div className="filter-container">
+      <div className="filter-container container-border">
         <div className="filter-title-bar w-100">
           <div className="px-2 d-flex content-block-header">
             <FilterTitleBar
@@ -66,7 +66,7 @@ function FilterContainer(
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <div className={showBorder !== false ? "filter-container-body" : ""}>
+        <div className={bodyClassName}>
           {body}
         </div>
       </div>
@@ -92,8 +92,8 @@ FilterContainer.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool,
   supportClientSideSearching: PropTypes.bool,
+  bodyClassName: PropTypes.bool,
 };
 
 export default FilterContainer;

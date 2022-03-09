@@ -65,7 +65,6 @@ function UserTaskOwnershipReportTable({ paginationModel, setPaginationModel, loa
       filterDto={paginationModel}
       setFilterDto={setPaginationModel}
       supportSearch={true}
-      showBorder={false}
       isLoading={isLoading}
       metadata={taskMetadata}
       body={getTasksTable()}

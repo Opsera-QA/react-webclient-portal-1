@@ -82,7 +82,6 @@ function NotificationsTable(
   const getNotificationTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         columns={columns}
         data={data}
         isLoading={isLoading}
@@ -97,7 +96,7 @@ function NotificationsTable(
 
   return (
     <FilterContainer
-      className="px-2 pb-2"
+      className={"px-2 pb-2"}
       loadData={loadData}
       filterDto={notificationFilterDto}
       setFilterDto={setNotificationFilterDto}

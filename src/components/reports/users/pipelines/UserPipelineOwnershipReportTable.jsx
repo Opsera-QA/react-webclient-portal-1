@@ -71,7 +71,6 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
       filterDto={paginationModel}
       setFilterDto={setPaginationModel}
       supportSearch={true}
-      showBorder={false}
       isLoading={isLoading}
       metadata={pipelineMetadata}
       type={"Pipeline"}

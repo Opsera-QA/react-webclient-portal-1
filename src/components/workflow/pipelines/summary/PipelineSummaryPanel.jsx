@@ -1,16 +1,13 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
   faSave, faTag,
   faTimes,
   faUser,
   faUserFriends,
-  faBinoculars
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import EditRolesModal from "components/workflow/EditRolesModal";
@@ -27,8 +24,6 @@ import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
-import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {
   getPipelineTypeLabel,
@@ -37,6 +32,8 @@ import {
 import axios from "axios";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
+import IconBase from "components/common/icons/IconBase";
+import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -57,7 +54,6 @@ function PipelineSummaryPanel(
     setPipeline,
   }) {
   const contextType = useContext(AuthContext);
-  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { featureFlagHideItemInProd, getUserRecord } = contextType;
   const [editTitle, setEditTitle] = useState(false);
@@ -67,13 +63,9 @@ function PipelineSummaryPanel(
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
-  const [taskCount, setTaskCount] = useState(0);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-
-  // TODO: This should be combined with the workflowStatus use effect but don't want to break anything.
-  //  After we have time to verify adding this doesn't break it, let's combine them.
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -103,7 +95,6 @@ function PipelineSummaryPanel(
   const loadData = async () => {
     try {
       await loadFormData(pipeline);
-      await getScheduledTasksCount();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -160,13 +151,6 @@ function PipelineSummaryPanel(
           };
           setEditDescription(false);
           break;
-        case "schedule":
-          pipeline.workflow.schedule = value;
-          postBody = {
-            "workflow": pipeline.workflow,
-          };
-          setEditTitle(false);
-          break;
         case "tags":
           pipeline.tags = value;
           postBody = {
@@ -222,9 +206,6 @@ function PipelineSummaryPanel(
         setEditDescription(true);
         setFormData({ ...formData, description: pipeline.description });
         break;
-      case "schedule":
-        showSchedulerOverlay();
-        break;
       case "tags":
         setEditTags(true);
         break;
@@ -241,12 +222,11 @@ function PipelineSummaryPanel(
 
   const getSaveIcon = (field) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faSave}
-        className="text-muted"
-        size="sm"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"text-muted pointer"}
+        iconSize={"sm"}
+        onClickFunction={() => {
           handleSavePropertyClick(pipeline._id, formData, field);
         }} />
     );
@@ -254,41 +234,24 @@ function PipelineSummaryPanel(
 
   const getEditIcon = (field) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faPencilAlt}
-        className="ml-2 text-muted"
-        size="xs" transform="shrink-6"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"ml-2 text-muted pointer"}
+        iconSize={"xs"}
+        iconTransformProperties={"shrink-6"}
+        onClickFunction={() => {
           handleEditPropertyClick(field);
         }} />
     );
   };
 
-  const getScheduleIcon = () => {
-    if (taskCount > 0){
-      return (
-        <FontAwesomeIcon
-          icon={faBinoculars}
-          className="ml-2 text-muted"
-          size="sm"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            handleEditPropertyClick("schedule");
-          }} />
-      );
-    }
-    return getEditIcon("schedule");
-  };
-
   const getCancelIcon = (cancelFunction) => {
     return (
-      <FontAwesomeIcon
+      <IconBase
         icon={faTimes}
-        className="text-muted ml-3"
-        size="sm"
-        style={{ cursor: "pointer" }}
-        onClick={() => {
+        className={"text-muted ml-3 pointer"}
+        iconSize={"sm"}
+        onClickFunction={() => {
           cancelFunction(false);
         }} />
     );
@@ -340,14 +303,14 @@ function PipelineSummaryPanel(
         if (user) {
           return (
             <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1" />{`${user}: ${item.role}`}
+              <IconBase icon={faUser} className={"mr-1"} />{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />{`${group}: ${item.role}`}
+            <IconBase icon={faUserFriends} className={"mr-1"} />{`${group}: ${item.role}`}
           </span>
         );
       })
@@ -374,27 +337,27 @@ function PipelineSummaryPanel(
     );
   };
 
-  const showSchedulerOverlay = () => {
-    toastContext.showOverlayPanel(<PipelineScheduledTasksOverlay pipeline={pipeline} />);
-  };
-
-  const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-      const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
-      const taskCount = response?.data?.data?.length;
-      if (taskCount) {
-        setTaskCount(taskCount);
+  const getSchedulerField = () => {
+    const pipelineTypes = pipeline?.type;
+    // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
+    if (!Array.isArray(pipelineTypes) || (!pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc"))) {
+      return (
+        <Col xs={12} sm={6}>
+          <PipelineSchedulerField
+            pipelineModel={pipelineModel}
+            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running"}
+          />
+        </Col>
+      );
     }
   };
 
-  const getTaskCountText = () => {
-    if (taskCount === 0) return "No scheduled tasks";
-
-    return taskCount === 1 ? "1 task scheduled" : `${taskCount} tasks scheduled`;
-  };
-
-  if (!pipeline || Object.keys(pipeline).length <= 0) {
-    return (<InformationDialog
-      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." />);
+  if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
+    return (
+      <InformationDialog
+        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
+      />
+    );
   }
 
   return (
@@ -489,12 +452,7 @@ function PipelineSummaryPanel(
             }
           </Col>
 
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
-            {getTaskCountText()}
-            {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
-              getScheduleIcon() : null}
-          </Col>
-
+          {getSchedulerField()}
           {getTagField()}
 
           {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}

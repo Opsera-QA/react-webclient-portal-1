@@ -4,7 +4,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
 import LogsDashboard from "components/dashboard/LogsDashboard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PipelineDashboard_v2 from "../../components/dashboard/v2/Pipeline";
 import SecOpsDashboard_v2 from "../../components/dashboard/v2/SecOps";
 import QualityDashboard from "../../components/dashboard/v2/Quality";
@@ -18,6 +17,7 @@ import LoadingView from "../common/status_notifications/loading";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 const INDICES = [
   "jenkins",
@@ -191,7 +191,7 @@ function DashboardHome() {
 
   const ValueInput = ({ item }) => (
     <span>
-      <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+      <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
       {" " + DATELABELS.find((o) => o.value.start === date.start && o.value.end === date.end).label.toString()}
     </span>
   );

@@ -13,11 +13,11 @@ import dashboardMetadata from "components/insights/dashboards/dashboard-metadata
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import { format, addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import IconBase from "components/common/icons/IconBase";
 
 function InsightsSynopsis() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -237,7 +237,7 @@ function InsightsSynopsis() {
             />
             {/* <p>this is a test</p> */}
             <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-              <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth/>
+              <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
               {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
             </Button>
             {getDateRangeButton()}

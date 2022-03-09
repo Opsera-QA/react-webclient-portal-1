@@ -49,7 +49,7 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
 
   return (
     <CustomTable
-      className={"no-table-border makeup-container-table"}
+      className={"makeup-container-table"}
       nextGeneration={true}
       columns={columns}
       data={taskData}

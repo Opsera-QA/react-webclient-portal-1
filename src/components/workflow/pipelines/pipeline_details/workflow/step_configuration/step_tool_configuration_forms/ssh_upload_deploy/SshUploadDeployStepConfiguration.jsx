@@ -4,7 +4,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSave,
   faSpinner,
@@ -16,6 +15,8 @@ import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
 import {getErrorDialog, getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 
 const INITIAL_DATA = {
@@ -328,12 +329,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
           <Form.Label>Select Jenkins Tool Configuration*</Form.Label>
           {isJenkinsSearching ? (
             <div className="form-text text-muted mt-2 p-2">
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="text-muted mr-1"
-                fixedWidth
-              />
+              <LoadingIcon className={"text-muted mr-1"} />
               Loading Jenkins accounts from registry
             </div>
           ) : (
@@ -366,10 +362,9 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
               ) : (
                 <>
                   <div className="form-text text-muted p-2">
-                    <FontAwesomeIcon
+                    <IconBase
                       icon={faExclamationCircle}
-                      className="text-muted mr-1"
-                      fixedWidth
+                      className={"text-muted mr-1"}
                     />
                     No accounts have been registered for{" "}
                     <span className="upper-case-first">{formData.service}</span>
@@ -394,8 +389,8 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
       <Button variant="primary" type="button" 
         onClick={() => { callbackFunction(); }}> 
         {loading ? 
-          <><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Saving</> :
-          <><FontAwesomeIcon icon={faSave} className="mr-1"/> Save</> }
+          <span><LoadingIcon className={"mr-1"} /> Saving</span> :
+          <span><IconBase icon={faSave} className={"mr-1"}/> Save</span> }
       </Button>
       
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>

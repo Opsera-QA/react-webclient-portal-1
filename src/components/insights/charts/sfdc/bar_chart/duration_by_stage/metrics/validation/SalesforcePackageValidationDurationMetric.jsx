@@ -10,12 +10,15 @@ function SalesforcePackageValidationDurationMetric({
   packageValidationDurationMeanInMinutes,
   packageValidationTotalRunCount,
   metric,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
       <SalesforcePackageValidationDurationDataBlock
         packageValidationDurationMeanInMinutes={packageValidationDurationMeanInMinutes}
         packageValidationTotalRunCount={packageValidationTotalRunCount}
+        kpiConfiguration={kpiConfiguration}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -39,6 +42,7 @@ SalesforcePackageValidationDurationMetric.propTypes = {
   packageValidationDurationMeanInMinutes: PropTypes.number,
   packageValidationTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforcePackageValidationDurationMetric;

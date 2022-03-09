@@ -52,7 +52,6 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -170,7 +169,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
     }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setHelpIsShown) => {
     switch (pipelineWizardScreen) {
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
@@ -250,9 +249,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   return (
     <OverlayPanelBodyContainer
-      helpComponent={getHelpComponent()}
-      helpIsShown={helpIsShown}
-      setHelpIsShown={setHelpIsShown}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
       leftSideItems={getWarningMessage()}
       isLoading={pipelineWizardModel?.getData("recordId")?.length === ""}

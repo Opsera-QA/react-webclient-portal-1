@@ -32,7 +32,7 @@ import ToolRepositoriesPanel from "components/inventory/tools/tool_details/ToolR
 import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import ToolVaultSummaryPanel from "components/inventory/tools/tool_details/vault/ToolVaultSummaryPanel";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 // TODO: This is in progress and needs to be cleaned up
@@ -78,7 +78,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
         />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
-        <CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        {/*<CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
       </CustomTabContainer>
     );
   };

@@ -10,16 +10,16 @@ import BuildStatisticsActionableInsightsTable from "./BuildStatisticsActionableI
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
+function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {    
@@ -53,10 +53,17 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
 
   const getLeftDataBlock = () => {
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Success Rate"}
-        middleText={<MetricPercentageText percentage={metricData?.build?.successPercent} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricPercentageText
+          percentage={metricData?.build?.successPercent}
+          qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
+          dataPoint={dataPoint}
+          className={"metric-block-content-text"}
+        />}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -66,10 +73,10 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
       <div className="new-chart p-0" >
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Goal<b> ({goalsData} %)</b>{" "}
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"}/>
           <br></br>
           Success Rate{" "}
-          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <div style={{height: "150px"}}>
           <ResponsiveLine
@@ -123,6 +130,7 @@ BuildStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   goalsData: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default BuildStatisticsDataBlockContainer;

@@ -2,15 +2,26 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from "axios";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 
-function ToolIdentifierMultiSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, toolRegistryFilter}) {
+function ToolIdentifierMultiSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    textField,
+    valueField,
+    toolRegistryFilter,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -38,6 +49,7 @@ function ToolIdentifierMultiSelectInput({ fieldName, dataObject, setDataFunction
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
       await loadToolIdentifiers(cancelSource);
     }
     catch (error) {
@@ -49,34 +61,41 @@ function ToolIdentifierMultiSelectInput({ fieldName, dataObject, setDataFunction
   };
 
   const loadToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    let response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, undefined, toolRegistryFilter);
+    const response = await toolIdentifierActions.getToolIdentifiersV2(
+      getAccessToken,
+      cancelSource,
+      undefined,
+      toolRegistryFilter,
+      );
 
-    if (response?.data != null) {
-      setToolIdentifiers(response?.data);
+    const identifiers = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(identifiers)) {
+      setToolIdentifiers(identifiers);
     }
   };
 
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={toolIdentifiers}
       groupBy={"tool_type_identifier"}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
-      // placeholderText={placeholderText}
-      disabled={disabled || isLoading}
+      error={error}
+      disabled={disabled}
     />
   );
 }
 
 ToolIdentifierMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   toolRegistryFilter: PropTypes.bool,

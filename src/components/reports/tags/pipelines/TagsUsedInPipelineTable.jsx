@@ -40,7 +40,6 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
   const getTagsTable = () => {
     return (
       <CustomTable
-        className="table-no-border"
         onRowSelect={onRowSelect}
         data={data}
         rowStyling={rowStyling}

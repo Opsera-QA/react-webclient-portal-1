@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ArgoCdRepositoryTagSelectInputBase
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInputBase";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ArgoCdRepositoryAzureTagSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryAzureTagSelectInput";
 

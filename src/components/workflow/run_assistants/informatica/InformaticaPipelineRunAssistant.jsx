@@ -26,7 +26,6 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
   const [informaticaRunParametersModel, setInformaticaRunParametersModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -88,7 +87,7 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
     }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setHelpIsShown) => {
     switch (runAssistantScreen) {
       case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
       case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
@@ -125,9 +124,7 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
 
   return (
     <OverlayPanelBodyContainer
-      helpComponent={getHelpComponent()}
-      helpIsShown={helpIsShown}
-      setHelpIsShown={setHelpIsShown}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
       leftSideItems={getWarningMessage()}
       isLoading={informaticaRunParametersModel?.getData("recordId")?.length === ""}

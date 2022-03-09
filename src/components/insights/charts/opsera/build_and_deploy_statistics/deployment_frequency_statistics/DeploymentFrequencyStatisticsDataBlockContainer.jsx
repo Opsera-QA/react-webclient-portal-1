@@ -7,16 +7,16 @@ import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig } from 'components/insights/charts/charts-views';
 import _ from "lodash";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {
+function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -36,10 +36,17 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
 
   const getLeftDataBlock = () => {
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Deployments"}
-        middleText={<MetricScoreText score={metricData?.deploy?.perDayAverage} qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricScoreText
+          score={metricData?.deploy?.perDayAverage}
+          qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
+          dataPoint={dataPoint}
+          className={"metric-block-content-text"}
+        />}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -49,10 +56,10 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           Goal<b> ({goalsData})</b>{" "}
-          <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
           Average Daily Builds{" "}
-          <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <ResponsiveLine
           data={dailyDeploymentsChartData}
@@ -108,6 +115,8 @@ DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
+  kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default DeploymentFrequencyStatisticsDataBlockContainer;

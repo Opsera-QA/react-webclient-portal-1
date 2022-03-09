@@ -89,7 +89,6 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
   const getAccessTokensTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         data={accessTokenData}
         noDataMessage={noDataMessage}

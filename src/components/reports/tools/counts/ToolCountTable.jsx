@@ -25,7 +25,6 @@ function ToolCountTable({ data, isLoading, loadData }) {
   const getToolCountsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         columns={columns}
         data={data}
         rowStyling={rowStyling}

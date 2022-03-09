@@ -2,17 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import OctopusStepActions from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import axios from "axios";
 import KafkaConnectActions from "../kafkaConnect-step-actions";
-import { Button, Col, InputGroup, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRepeat, faSync, faTools } from "@fortawesome/pro-light-svg-icons";
-import InputContainer from "../../../../../../../../common/inputs/InputContainer";
-import RefreshButton from "../../../../../../../../common/buttons/data/RefreshButton";
-import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faSync } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function KafkaConnectSCMRepoFilesSelectInput({
   fieldName,
@@ -75,7 +68,7 @@ function KafkaConnectSCMRepoFilesSelectInput({
     if (dataObject.getData("connectorFilePath").length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className="pr-1" />
           Click here to fetch file list
         </small>
       );

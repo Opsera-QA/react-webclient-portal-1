@@ -2,17 +2,16 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 import axios from "axios";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 
 function PipelineWorkflowItemList(
@@ -78,8 +77,8 @@ function PipelineWorkflowItemList(
   };
 
   const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource);
-    const identifiers = response?.data;
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+    const identifiers = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(identifiers)) {
       setToolIdentifiers(identifiers);
@@ -256,10 +255,9 @@ function PipelineWorkflowItemList(
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Move lower step up one position" })}>
-                  <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
-                                   fixedWidth
+                  <IconBase icon={faCaretSquareUp} iconSize={"lg"}
                                    className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-                                   onClick={() => {
+                                   onClickFunction={() => {
                                      handleMoveStep(item._id, index, "up");
                                    }} />
                 </OverlayTrigger>
@@ -268,11 +266,10 @@ function PipelineWorkflowItemList(
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Add new step here" })}>
-                  <FontAwesomeIcon icon={faPlusSquare}
-                                   size="lg"
-                                   fixedWidth
-                                   className="green pointer ml-2 mr-1"
-                                   onClick={() => {
+                  <IconBase icon={faPlusSquare}
+                                   iconSize={"lg"}
+                                   className={"green pointer ml-2 mr-1"}
+                                   onClickFunction={() => {
                                      handleAddStep(item._id, index);
                                    }} />
                 </OverlayTrigger>
@@ -281,11 +278,10 @@ function PipelineWorkflowItemList(
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Copy previous step" })}>
-                  <FontAwesomeIcon icon={faCopy}
-                                   size="lg"
-                                   fixedWidth
-                                   className="yellow pointer ml-1 mr-2"
-                                   onClick={() => {
+                  <IconBase icon={faCopy}
+                                   iconSize={"lg"}
+                                   className={"yellow pointer ml-1 mr-2"}
+                            onClickFunction={() => {
                                      handleCopyStep(item, index);
                                    }} />
                 </OverlayTrigger>
@@ -294,10 +290,9 @@ function PipelineWorkflowItemList(
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Move upper step down one position" })}>
-                  <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
-                                   fixedWidth
+                  <IconBase icon={faCaretSquareDown} iconSize={"lg"}
                                    className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-                                   onClick={() => {
+                                   onClickFunction={() => {
                                      handleMoveStep(item._id, index, "down");
                                    }} />
                 </OverlayTrigger>

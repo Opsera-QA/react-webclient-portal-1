@@ -40,7 +40,6 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   const getUsersTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={userData}

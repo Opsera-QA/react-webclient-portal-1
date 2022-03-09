@@ -8,8 +8,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import ScoreCardDataBlockWrapper from "components/common/data_boxes/ScoreCardDataBlockWrapper";
 import ScoreCardDataBlock from "components/common/data_boxes/ScoreCardDataBlock";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -109,20 +109,20 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
             <Row className="mt-2">
               <Col>
                 <div className="p-3">
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> A Minor with low impact
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> A Minor with low impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> B Minor with high impact
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> B Minor with high impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> C Major with significant impact
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> C Major with significant impact
                 </div>
               </Col>
               <Col>
                 <div className="p-3">
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> D Major with very high impact
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> D Major with very high impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> E Critical
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> E Critical
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> F Blocker
+                  <IconBase icon={faMinus} iconColor={"#494173"} iconSize={"xs"} /> F Blocker
                 </div>
               </Col>
             </Row>

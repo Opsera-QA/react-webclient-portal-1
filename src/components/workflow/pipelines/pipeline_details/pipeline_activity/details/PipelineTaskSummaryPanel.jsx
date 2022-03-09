@@ -4,16 +4,16 @@ import PipelineTaskSummaryPanelBase from "components/workflow/pipelines/pipeline
 import Model from "core/data_model/model";
 import pipelineTaskMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 import parallelProcessorPipelineTaskMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-task-metadata";
+  from "components/workflow/plan/step/parallel_processor/parallel-processor-pipeline-task-metadata";
 import ParallelProcessorPipelineTaskSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
+  from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ChildPipelineTaskSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
+  from "components/workflow/plan/step/child/ChildPipelineTaskSummaryPanel";
 import childPipelineTaskMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
+  from "components/workflow/plan/step/child/child-pipeline-task-metadata";
 import PipelineSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
 

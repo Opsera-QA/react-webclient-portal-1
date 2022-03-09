@@ -5,10 +5,6 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineDataMappingModel from "components/settings/data_mapping/pipelines/pipelineDataMapping.model";
-import ProjectDataMappingEditorPanel
-  from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
-import PipelineMappingEditorPanel
-  from "components/common/metrics/pipeline_mapper/detail_view/PipelineMappingEditorPanel";
 import PipelineDataMappingEditorPanel
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
 

@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import { faExclamationTriangle } from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import { AuthContext } from "contexts/AuthContext";
 import OctopusStepActions from "../octopus-step-actions";
 import InputContainer from "../../../../../../../../common/inputs/InputContainer";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function ValidateProjectButton({ toolDataDto, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,7 +60,7 @@ function ValidateProjectButton({ toolDataDto, disable }) {
     if (isTesting) {
       return (
         <span>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth />
+          <LoadingIcon className={"mr-2"} />
           {`Validating Project Name`}
         </span>
       );
@@ -68,7 +69,7 @@ function ValidateProjectButton({ toolDataDto, disable }) {
     if (failedConnection) {
       return (
         <span>
-          <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2" fixedWidth />
+          <IconBase icon={faExclamationTriangle} className={"mr-2"} />
           {`Name Already in Use`}
         </span>
       );
@@ -77,7 +78,7 @@ function ValidateProjectButton({ toolDataDto, disable }) {
     if (successfulValidation) {
       return (
         <span>
-          <FontAwesomeIcon icon={faLaptopMedical} className="mr-2" fixedWidth />
+          <IconBase icon={faLaptopMedical} className={"mr-2"} />
           Project Name Validated
         </span>
       );
@@ -85,7 +86,7 @@ function ValidateProjectButton({ toolDataDto, disable }) {
 
     return (
       <span>
-        <FontAwesomeIcon icon={faLaptopMedical} fixedWidth className="mr-2" />
+        <IconBase icon={faLaptopMedical} className={"mr-2"} />
         {`Validate Project Name`}
       </span>
     );
@@ -93,7 +94,7 @@ function ValidateProjectButton({ toolDataDto, disable }) {
 
   return (
     <InputContainer>
-      <label></label>
+      <label />
       <div className="mt-6">
         <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
           {getLabel()}
