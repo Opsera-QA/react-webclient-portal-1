@@ -16,6 +16,7 @@ function SalesforcePackageValidationDurationMetric({
       <SalesforcePackageValidationDurationDataBlock
         packageValidationDurationMeanInMinutes={packageValidationDurationMeanInMinutes}
         packageValidationTotalRunCount={packageValidationTotalRunCount}
+        kpiConfiguration={kpiConfiguration}
       />
     );
   };

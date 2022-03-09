@@ -12,6 +12,7 @@ import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLeg
 import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
+import { FIRST_PASS_YIELD_METRIC_CONSTANTS as dataPointConstants} from "./FirstPassYieldMetrics_kpi_datapoint_identifiers";
 import {
   METRIC_THEME_CHART_PALETTE_COLORS,
   METRIC_CHART_STANDARD_HEIGHT,
@@ -28,6 +29,9 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [firstPassYieldDataPoint, setFirstPassYieldDataPoint] = useState(undefined);
+  const [totalTestCasesPlannedForFirstRun, setTotalTestCasesPlannedForFirstRun] = useState(undefined);
+  const [totalTestCasesPassedInFirstRun, setTotalTestCasesPassedInFirstRun] = useState(undefined);
+  const [totalTestCasesFailedInFirstRun, setTotalTestCasesFailedInFirstRun] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -94,8 +98,14 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
-    const firstPassYieldPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, FIRST_PASS_YIELD);
+    const firstPassYieldPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.FIRST_PASS_YIELD_PERCENTAGE_DATA_POINT);
     setFirstPassYieldDataPoint(firstPassYieldPercentageDataPoint);
+    const totalTestCasesPlannedForFirstRun = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_TEST_CASES_PLANNED_FOR_FIRST_RUN_DATA_POINT);
+    setTotalTestCasesPlannedForFirstRun(totalTestCasesPlannedForFirstRun);
+    const totalTestCasesPassedInFirstRun = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_TEST_CASES_PASSED_IN_FIRST_RUN_DATA_POINT);
+    setTotalTestCasesPassedInFirstRun(totalTestCasesPassedInFirstRun);
+    const totalTestCasesFailedInFirstRun = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_TEST_CASES_FAILED_IN_FIRST_RUN_DATA_POINT);
+    setTotalTestCasesFailedInFirstRun(totalTestCasesFailedInFirstRun);
   };
 
   const getChartBody = () => {
@@ -111,6 +121,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.totalTests}
                   subtitle="Total Test Cases Planned for First Run"
+                  dataPoint={totalTestCasesPlannedForFirstRun}
                 />
               </Col>
               <Col lg={6} className={"my-1"}>
@@ -123,12 +134,14 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.passedTests}
                   subtitle="Total Test Cases Passed in First Run"
+                  dataPoint={totalTestCasesPassedInFirstRun}
                 />
               </Col>
               <Col lg={6} className={"mb-1"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.failedTests}
                   subtitle="Total Test Cases Failed in First Run"
+                  dataPoint={totalTestCasesFailedInFirstRun}
                 />
               </Col>
             </Row>

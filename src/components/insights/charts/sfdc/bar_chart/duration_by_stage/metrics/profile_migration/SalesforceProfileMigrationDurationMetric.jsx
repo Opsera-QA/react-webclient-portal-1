@@ -16,6 +16,7 @@ function SalesforceProfileMigrationDurationMetrics({
       <SalesforceProfileMigrationDurationDataBlock
         profileMigrationDurationMeanInMinutes={profileMigrationDurationMeanInMinutes}
         profileMigrationTotalRunCount={profileMigrationTotalRunCount}
+        kpiConfiguration={kpiConfiguration}
       />
     );
   };

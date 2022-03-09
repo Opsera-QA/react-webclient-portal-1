@@ -16,6 +16,7 @@ function SalesforceBackupDurationMetric({
       <SalesforceBackupDurationDataBlock
         backupDurationMeanInMinutes={backupDurationMeanInMinutes}
         backupTotalRunCount={backupTotalRunCount}
+        kpiConfiguration={kpiConfiguration}
       />
     );
   };

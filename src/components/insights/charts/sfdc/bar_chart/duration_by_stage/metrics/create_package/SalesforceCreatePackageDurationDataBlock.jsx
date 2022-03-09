@@ -28,7 +28,7 @@ function SalesforceCreatePackageDurationDataBlock({
   const getMetricQualityLevel = () => {
 
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
-    if (packageCreationDataPoint) {
+    if (packageCreationDataPoint && hasPositiveNumberValue(createPackageDurationMeanInMinutes)) {
       const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(packageCreationDataPoint, createPackageDurationMeanInMinutes);
 
       if (typeof evaluatedDataPoint === "string") {
@@ -49,11 +49,11 @@ function SalesforceCreatePackageDurationDataBlock({
   };
 
   const getCreatePackageMeanData = () => {
+    const qualityLevel = getMetricQualityLevel();
     if (
       hasPositiveNumberValue(createPackageDurationMeanInMinutes) &&
       hasPositiveNumberValue(createPackageTotalRunCount)
     ) {
-      const qualityLevel = getMetricQualityLevel();
       return (
         <>
           <div>
@@ -66,7 +66,7 @@ function SalesforceCreatePackageDurationDataBlock({
       );
     }
     if (hasPositiveNumberValue(createPackageDurationMeanInMinutes)) {
-      return <MetricTextBase formattedText={`${createPackageDurationMeanInMinutes} min`} className={"metric-block-content-text"}/>;
+      return <MetricTextBase formattedText={`${createPackageDurationMeanInMinutes} min`} className={"metric-block-content-text"} qualityLevel={qualityLevel}/>;
     }
     return <span className={"metric-block-content-text"}> No runs </span>;
   };
