@@ -90,6 +90,7 @@ import GithubPendingMergeRequests from "./github/table/pending_merge_requests/Gi
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
+import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1444,6 +1445,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
+          <>
           <Col md={12} className="p-2">
             <ServiceNowMeanTimeToResolutionBarChart
               kpiConfiguration={kpiConfig}
@@ -1453,6 +1455,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
+          <Col md={12} className="p-2">
+            <GithubCommitsStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        </>
         );
       case "servicenow-mean-time-to-acknowledge":
         return (
