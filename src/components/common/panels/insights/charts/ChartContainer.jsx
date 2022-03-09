@@ -15,6 +15,7 @@ import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilt
 import DateBadge from "components/common/badges/date/DateBadge";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 
 function ChartContainer(
   {
@@ -30,6 +31,7 @@ function ChartContainer(
     chartHelpComponent,
     settingsHelpComponent,
     showSettingsToggle,
+    launchActionableInsightsFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
@@ -65,6 +67,19 @@ function ChartContainer(
       );
     }
   };
+
+  const getActionableInsightOverlayToggle = () => {
+    if (launchActionableInsightsFunction != null) {
+      return (
+        <SpyglassIcon
+          onClickFunction={launchActionableInsightsFunction}
+          className={"ml-3"}
+          tooltipText={"Launch Actionable Insight"}
+        />
+      );
+    }
+  };
+
 
   const showSettingsPanel = () => {
     toastContext.showOverlayPanel(
@@ -128,6 +143,7 @@ function ChartContainer(
         </div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
+          {getActionableInsightOverlayToggle()}
           {getSettingsToggle()}
         </div>
       </div>
@@ -251,6 +267,7 @@ ChartContainer.propTypes = {
   chartHelpComponent: PropTypes.func,
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
+  launchActionableInsightsFunction: PropTypes.func,
 };
 
 export default ChartContainer;
