@@ -105,9 +105,6 @@ import MongodbRealmToolConfigurationSummaryPanel
 import InformaticaToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/tool_jobs/informatica/InformaticaToolConfigurationSummaryPanel";
 import InformaticaConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/informatica/informatica-connection-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import {
-  flywayDatabaseConnectionMetadata
-} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseConnection.metadata";
 import FlywayDatabaseToolConnectionSummaryPanel
   from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionSummaryPanel";
 import {
