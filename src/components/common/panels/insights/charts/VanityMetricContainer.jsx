@@ -11,6 +11,7 @@ import {parseError} from "components/common/helpers/error-helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 
 // TODO: Clean up and combine with ChartContainer for a v2 container
 function VanityMetricContainer(
@@ -27,6 +28,7 @@ function VanityMetricContainer(
     chartHelpComponent,
     settingsHelpComponent,
     showSettingsToggle,
+    launchActionableInsightsFunction,
     className,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -59,6 +61,18 @@ function VanityMetricContainer(
           visible={!helpIsShown}
           size={"1x"}
           className={"ml-3"}
+        />
+      );
+    }
+  };
+
+  const getActionableInsightOverlayToggle = () => {
+    if (launchActionableInsightsFunction != null) {
+      return (
+        <SpyglassIcon
+          onClickFunction={launchActionableInsightsFunction}
+          className={"ml-3"}
+          tooltipText={"Launch Actionable Insight"}
         />
       );
     }
@@ -126,6 +140,7 @@ function VanityMetricContainer(
         </div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
+          {getActionableInsightOverlayToggle()}
           {getSettingsToggle()}
         </div>
       </div>
@@ -249,6 +264,7 @@ VanityMetricContainer.propTypes = {
   chartHelpComponent: PropTypes.func,
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
+  launchActionableInsightsFunction: PropTypes.func,
   className: PropTypes.string,
 };
 

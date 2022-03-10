@@ -7,12 +7,9 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
-import { addDays, isSameDay } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
-import {formatDate} from "components/common/helpers/date/date.helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
-import DateBadge from "components/common/badges/date/DateBadge";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
@@ -79,7 +76,6 @@ function ChartContainer(
       );
     }
   };
-
 
   const showSettingsPanel = () => {
     toastContext.showOverlayPanel(

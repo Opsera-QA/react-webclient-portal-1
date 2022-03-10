@@ -9,6 +9,7 @@ function SpyglassIcon(
     onClickFunction,
     tooltipText,
     iconSize,
+    iconClassName,
   }) {
   return (
     <div className={className}>
@@ -17,6 +18,7 @@ function SpyglassIcon(
         onClickFunction={onClickFunction}
         icon={faSearch}
         iconSize={iconSize}
+        iconClassName={iconClassName}
         className={onClickFunction}
       />
     </div>
@@ -28,6 +30,7 @@ SpyglassIcon.propTypes = {
   className: PropTypes.string,
   tooltipText: PropTypes.string,
   iconSize: PropTypes.string,
+  iconClassName: PropTypes.string,
 };
 
 export default SpyglassIcon;
