@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import IconBase from "components/common/icons/IconBase";
+import BannerBase from "components/common/status_notifications/banners/BannerBase";
 
 function InformationBanner ({ informationMessage, removeBanner, id }) {
   const [messageBody, setMessageBody] = useState(undefined);
@@ -14,22 +13,13 @@ function InformationBanner ({ informationMessage, removeBanner, id }) {
     removeBanner(id);
   };
 
-  const getCloseButton = () => {
-    if (removeBanner) {
-      return (
-        <div className="float-right ml-1">
-          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearInformationMessage();}}/>
-        </div>
-      );
-    }
-  };
-
-    return (
-      <div className="w-100 info-block top-dialog-block">
-        {getCloseButton()}
-        <span>{messageBody}</span>
-      </div>
-    );
+  return (
+    <BannerBase
+      bannerClassName={"w-100 py-3  info-block top-dialog-block"}
+      bannerMessage={messageBody}
+      removeBannerFunction={clearInformationMessage}
+    />
+  );
 }
 
 InformationBanner.propTypes = {

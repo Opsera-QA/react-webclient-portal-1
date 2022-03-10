@@ -1,34 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import IconBase from "components/common/icons/IconBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
-function CloseIcon({ handleClose, className, size, tooltipText }) {
+function CloseIcon(
+  {
+    handleCloseFunction,
+    className,
+    iconClassName,
+    size,
+    overlayBody,
+  }) {
 
-  if (handleClose == null) {
+  if (handleCloseFunction == null) {
     return null;
   }
 
   return (
-    <div className={className}>
-      <TooltipWrapper placement={"bottom"} innerText={tooltipText}>
-        <IconBase
-          onClickFunction={() => {handleClose();}}
-          icon={faTimes}
-          iconSize={size}
-          className={"pointer"}
-        />
-      </TooltipWrapper>
-    </div>
+    <OverlayIconBase
+      className={className}
+      iconClassName={iconClassName}
+      overlayBody={overlayBody}
+      onClickFunction={handleCloseFunction}
+      icon={faTimes}
+      iconSize={size}
+      overlayPlacement={"bottom"}
+    />
   );
 }
 
 CloseIcon.propTypes = {
-  handleClose: PropTypes.func,
+  handleCloseFunction: PropTypes.func,
   className: PropTypes.string,
+  iconClassName: PropTypes.string,
   size: PropTypes.string,
-  tooltipText: PropTypes.string
+  overlayBody: PropTypes.any,
 };
 
 export default CloseIcon;
