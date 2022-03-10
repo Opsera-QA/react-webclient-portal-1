@@ -126,7 +126,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
     }
 
     return (
-      <div className="new-chart mb-3" style={{ minHeight: "450px", display: "flex" }}>
+      <div className="new-chart mb-3" style={{ minHeight: "450px" }}>
         <Row className="mr-1">
           {dataPointHelpers.isDataPointVisible(createPackageDataPoint) &&
           <Col xs={12} sm={6}>
