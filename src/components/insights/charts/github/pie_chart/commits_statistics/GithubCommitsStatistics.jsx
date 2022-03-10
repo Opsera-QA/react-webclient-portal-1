@@ -66,6 +66,15 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
           ?.value;
       const response = await chartsActions.getGithubTotalCommitsMetrics(kpiConfiguration, getAccessToken, cancelSource, dashboardTags, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
+      dataObject.sort((a, b) => {
+        if (a.commitCount < b.commitCount) {
+          return -1;
+        }
+        if (a.commitCount > b.commitCount) {
+          return 1;
+        }
+        return 0;
+      });
       const total_pull_request = response?.data ? response?.data?.data?.total_pull_request : 0;
       const total_commits = response?.data ? response?.data?.data?.total_commits : 0;
       const total_merges = response?.data ? response?.data?.data?.total_merges : 0;
