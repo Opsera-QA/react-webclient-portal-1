@@ -27,6 +27,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   DOT_NET: "dotnet",
   DOT_NET_CLI: "dotnet-cli",
   ELASTIC_BEANSTALK: "elastic-beanstalk",
+  EXTERNAL_API_INTEGRATOR: "external_api_integrator",
   FLYWAY_DATABASE_MIGRATOR: "flyway-database-migrator",
   GCP_ACCOUNT: "gcp_account",
   GCP_DEPLOY: "gcp-deploy",
