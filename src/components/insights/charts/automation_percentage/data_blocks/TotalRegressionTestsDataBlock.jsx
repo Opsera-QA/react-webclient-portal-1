@@ -7,7 +7,8 @@ function TotalRegressionTestsDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
-          className="m-3"
+          className="p-2"
+          style={{minHeight: '100px'}}
           score={defects}
           dataPoint={dataPoint}
           subtitle={"Total Number of Regression Test Cases"}

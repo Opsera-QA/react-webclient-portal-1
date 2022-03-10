@@ -115,7 +115,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
     return (
       <div className="new-chart mb-1" style={{ minHeight: "300px" }}>
         <Row>
-          <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
+          <Col xl={6} lg={6} md={8} className={"align-content-around"}>
             <Row className="px-4 justify-content-between">
               {dataPointHelpers.isDataPointVisible(totalTestCasesPlannedForFirstRun) &&
               <Col xl={6} lg={6} sm={6} className={"my-3"}>

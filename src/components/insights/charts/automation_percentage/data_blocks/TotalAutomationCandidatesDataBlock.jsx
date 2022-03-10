@@ -7,7 +7,8 @@ function TotalAutomationCandidatesDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
         <TwoLineScoreDataBlock
-          className={"p-3"}
+          className="p-2"
+          style={{minHeight: '100px'}}
           score={defects}
           dataPoint={dataPoint}
           subtitle={"Total Number of Automation Candidates"} />
