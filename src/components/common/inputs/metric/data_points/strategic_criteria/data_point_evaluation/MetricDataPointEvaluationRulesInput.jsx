@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import {Col, Row} from "react-bootstrap";
 import MetricDataPointEvaluationSuccessRuleInput
   from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
@@ -10,6 +9,7 @@ import MetricDataPointEvaluationFailureRuleInput
   from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
 import MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle
   from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle";
+import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 
 function MetricDataPointEvaluationRulesInput(
   {
@@ -44,7 +44,7 @@ function MetricDataPointEvaluationRulesInput(
 
   return (
     <div>
-      <H4FieldSubHeader subheaderText={"Strategic Criteria"}/>
+      <H4MetricSubHeader subheaderText={"Strategic Criteria"}/>
       {getUserEditabiltyToggle()}
       <Row>
         <Col xs={12} className={"my-1"}>
