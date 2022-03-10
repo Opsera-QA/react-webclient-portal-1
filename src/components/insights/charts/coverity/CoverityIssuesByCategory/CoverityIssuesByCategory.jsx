@@ -9,14 +9,12 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
-// import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActionableInsightOverlay";
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-// import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
 import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
