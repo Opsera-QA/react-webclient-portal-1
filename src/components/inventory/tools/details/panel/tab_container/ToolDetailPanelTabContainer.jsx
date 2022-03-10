@@ -18,6 +18,7 @@ import ToolPathsTab, {PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS} from "components/inv
 import ToolOrganizationsTab, {ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolOrganizationsTab";
 import ToolClustersTab, {ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolClustersTab";
 import ToolWorkspacesTab, {WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolWorkspacesTab";
+import ToolProvidersTab, {PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import ToolEndpointsTab, {
   ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS
@@ -36,6 +37,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   MAPPING: "mapping",
   ORGANIZATIONS: "organizations",
   WORKSPACES: "workspaces",
+  PROVIDERS: "providers",
   PATHS: "paths",
   PROJECTS: "projects",
   REPOSITORIES: "repositories",
@@ -76,6 +78,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
       return ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.WORKSPACES:
       return WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.PROVIDERS:
+      return PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS;
   }
 };
 
@@ -165,6 +169,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolWorkspacesTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolProvidersTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
