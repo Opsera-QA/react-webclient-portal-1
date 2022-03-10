@@ -9,14 +9,12 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
-// import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import CoverityActionableInsightOverlay from "./actionable_insights/CoverityActionableInsightOverlay";
 import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-// import { faMehBlank, faTag } from "@fortawesome/pro-light-svg-icons";
 import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
@@ -129,7 +127,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         return faArrowCircleUp;
       case "Green":
         return faArrowCircleDown;
-      case "-":
+      case "Neutral":
         return faMinusCircle;
       default:
         break;
@@ -143,6 +141,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return "green";
       case "Neutral":
+        return "light-gray-text-secondary";
       case "-":
         return "black";
       default:
@@ -172,14 +171,14 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return "This project's issues are trending downward";
       case "Neutral":
-        return "This project's issues are trending downward";
+        return "Neutral: This project's issues have experienced no change";
     }
   };
 
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
-      <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
+      <HorizontalDataBlocksContainer title={"Highest Issue Projects"}>
         {topThreeDocs.map((doc, index) => (
           <>
             <span style={{ paddingLeft: "11px" }}></span>
@@ -221,6 +220,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
+                lastScore={metrics[0].previousTotalLow}
+                iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
               />
             </Col>
             <Col>
@@ -233,6 +234,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
+                lastScore={metrics[0].previousTotalMedium}
+                iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
               />
             </Col>
             <Col>
@@ -245,6 +248,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
+                lastScore={metrics[0].previousTotalHigh}
+                iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
               />
             </Col>
           </Row>
