@@ -7,7 +7,8 @@ function FirstPassYieldMetricDataBlockBase({ score, subtitle, onClickFunction, d
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
       <TwoLineScoreDataBlock
-        className="m-3"
+        className="p-2"
+        style={{minHeight: '100px'}}
         score={score} 
         subtitle={subtitle}
         dataPoint={dataPoint}
