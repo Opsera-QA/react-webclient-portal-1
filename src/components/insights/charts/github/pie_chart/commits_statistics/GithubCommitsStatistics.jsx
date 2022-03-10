@@ -10,10 +10,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
   defaultConfig,
-  getColorByData,
   assignStandardColors,
   adjustBarWidth,
-  spaceOutMergeRequestTimeTakenLegend,
 } from "../../../charts-views";
 import {
   METRIC_THEME_CHART_PALETTE_COLORS,
@@ -66,80 +64,22 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      const response = {
-        data: {
-          total_pull_request: 12,
-          total_commits: 53,
-          most_active_users: [
-            {
-              _id: "Noah Champoux",
-              count: 331,
-            },
-            {
-              _id: "Syed Faseehuddin",
-              count: 159,
-            },
-            {
-              _id: "Vasanthavishnu Vasudevan",
-              count: 150,
-            },
-            {
-              _id: "Christina",
-              count: 134,
-            },
-            {
-              _id: "Harsha Pullabhatlapogada",
-              count: 115,
-            },
-          ],
-          project_with_highest_merges: [
-            {
-              id: "java",
-              label: "java",
-              value: 152,
-            },
-            {
-              id: "lisp",
-              label: "lisp",
-              value: 139,
-            },
-            {
-              id: "make",
-              label: "make",
-              value: 147,
-            },
-            {
-              id: "sass",
-              label: "sass",
-              value: 198,
-            },
-          ],
-          total_declined_merges: [
-            {
-              id: "java",
-              label: "java",
-              value: 152,
-            },
-            {
-              id: "lisp",
-              label: "lisp",
-              value: 139,
-            },
-          ],
-          total_merges: 34,
-        },
-      };
-      let dataObject = response.data.most_active_users;
+      const response = await chartsActions.getGithubTotalCommitsMetrics(kpiConfiguration, getAccessToken, cancelSource, dashboardTags, dashboardOrgs);
+      let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
+      const total_pull_request = response?.data ? response?.data?.data?.total_pull_request : 0;
+      const total_commits = response?.data ? response?.data?.data?.total_commits : 0;
+      const total_merges = response?.data ? response?.data?.data?.total_merges : 0;
+      const project_with_highest_merges = response?.data ? response?.data?.data?.project_with_highest_merges : [];
+      const total_declined_merges = response?.data ? response?.data?.data?.total_declined_merges : [];
       assignStandardColors(dataObject, true);
-      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMostActiveUsersMetrics(dataObject);
-        setTotalPullRequest(response.data.total_pull_request);
-        setTotalCommits(response.data.total_commits);
-        setTotalMerges(response.data.total_merges);
-        setHighestMergesMetric(response.data.project_with_highest_merges);
-        setTotalDeclinedMerges(response.data.total_declined_merges);
+        setTotalPullRequest(total_pull_request);
+        setTotalCommits(total_commits);
+        setTotalMerges(total_merges);
+        setHighestMergesMetric(project_with_highest_merges);
+        setTotalDeclinedMerges(total_declined_merges);
       }
     } catch (error) {
       if (isMounted?.current === true) {

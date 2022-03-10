@@ -1145,7 +1145,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "github-commits":
+      case "github-commit-statistics":
         return (
           <Col md={12} className="p-2">
             <GithubCommitsStatistics

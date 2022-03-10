@@ -1,5 +1,5 @@
 export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
-  keys: ["count"],
+  keys: ["commitCount"],
   indexBy: "_id",
   colorBy: "id",
   layout: "horizontal",
