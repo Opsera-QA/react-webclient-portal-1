@@ -67,8 +67,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     }
   };
 
-  console.log("help");
-
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);

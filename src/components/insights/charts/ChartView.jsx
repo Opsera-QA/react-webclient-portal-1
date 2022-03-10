@@ -1483,7 +1483,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       //   return (
       //     <Col xl={6} md={12} className="p-2">
       //       <ServiceNowMeanTimeBetweenFailuresBarChart
-      //       <ServiceNowMeanTimeBetweenFailuresBarChart
       //         kpiConfiguration={kpiConfig}
       //         setKpiConfiguration={setKpiConfig}
       //         dashboardData={dashboardData}
