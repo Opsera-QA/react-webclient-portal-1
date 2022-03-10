@@ -129,7 +129,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
         return faArrowCircleUp;
       case "Green":
         return faArrowCircleDown;
-      case "-":
+      case "Neutral":
         return faMinusCircle;
       default:
         break;
@@ -143,6 +143,7 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return "green";
       case "Neutral":
+        return "light-gray-text-secondary";
       case "-":
         return "black";
       default:
@@ -172,14 +173,14 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
       case "Green":
         return "This project's issues are trending downward";
       case "Neutral":
-        return "This project's issues are trending downward";
+        return "Neutral: This project's issues have experienced no change";
     }
   };
 
   const getFooterLine = () => {
     const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
     return (
-      <HorizontalDataBlocksContainer title={"Highest Issue Projects:"}>
+      <HorizontalDataBlocksContainer title={"Highest Issue Projects"}>
         {topThreeDocs.map((doc, index) => (
           <>
             <span style={{ paddingLeft: "11px" }}></span>
@@ -221,6 +222,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
+                lastScore={metrics[0].previousTotalLow}
+                iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
               />
             </Col>
             <Col>
@@ -233,6 +236,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
+                lastScore={metrics[0].previousTotalMedium}
+                iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
               />
             </Col>
             <Col>
@@ -245,6 +250,8 @@ function CoverityIssuesByCategory({ kpiConfiguration, setKpiConfiguration, dashb
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
+                lastScore={metrics[0].previousTotalHigh}
+                iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
               />
             </Col>
           </Row>
