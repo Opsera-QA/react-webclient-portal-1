@@ -3,22 +3,12 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
-import SonarRatingsMaintainabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
-import SonarRatingsMaintainabilityActionableInsightTable from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
-import SonarRatingCodeCoverageActionableInsightTable from "./SonarRatingCodeCoverageActionableInsightTable";
+import SonarRatingCodeCoverageActionableInsightTable from "../sonar_ratings/actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightTable";
 
-function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
+function SonarCoverageActionableTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model(
@@ -55,17 +45,6 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     };
   }, []);
 
-  const calculateTrend = (maintainibility) => {
-    if (maintainibility.currentScanIssuesCount || !maintainibility.previousScanIssuesCount) {
-      return "";
-    } else if (maintainibility.currentScanIssuesCount > maintainibility.previousScanIssuesCount) {
-      return "Green";
-    } else if (maintainibility.currentScanIssuesCount < maintainibility.previousScanIssuesCount) {
-      return "Red";
-    } else {
-      return "Neutral";
-    }
-  };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
@@ -110,30 +89,9 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
       }
     }
   };
-  
-
-  const getDateBadge = () => {
-    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
-    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
-  };
-
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-  };
 
   return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={`Sonar Ratings: Code Coverage`}
-      showToasts={true}
-      titleIcon={faTable}
-      isLoading={false}
-      linkTooltipText={"View Full Blueprint"}
-    >
       <div className={"p-3"}>
-        <div className={"mb-4"} >{getDateBadge()}</div>
         <SonarRatingCodeCoverageActionableInsightTable
           isLoading={isLoading}
           coverageData={coverageData}
@@ -142,13 +100,12 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
           loadData={loadData}
         />
       </div>
-    </FullScreenCenterOverlayContainer>
   );
 }
 
-SonarRatingsMaintainabilityActionableInsightOverlay.propTypes = {
+SonarCoverageActionableTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default SonarRatingsMaintainabilityActionableInsightOverlay;
+export default SonarCoverageActionableTable;
