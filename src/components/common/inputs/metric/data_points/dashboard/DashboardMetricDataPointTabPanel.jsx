@@ -22,21 +22,16 @@ function DashboardMetricDataPointTabPanel(
       setActiveTab("");
     }
 
-    const initialState = dataPoints[0]?._id;
+    const initialState = isMongoDbId(dataPoints[0]?._id) === true ? dataPoints[0]?._id : "";
 
-    if (isMongoDbId(initialState) === true) {
-      if (hasStringValue(activeTab) === true) {
-        const dataPoint = dataPoints?.find((dataPoint) => dataPoint?._id === activeTab);
+    if (hasStringValue(activeTab) === true) {
+      const dataPoint = dataPoints?.find((dataPoint) => dataPoint?._id === activeTab);
 
-        if (dataPoint == null) {
-          setActiveTab(initialState);
-        }
-      } else {
+      if (dataPoint == null) {
         setActiveTab(initialState);
       }
-    }
-    else {
-      setActiveTab("");
+    } else {
+      setActiveTab(initialState);
     }
   }, [dataPoints]);
 
