@@ -13,7 +13,7 @@ function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate
     return  <ThreeLinePercentageBlockBase
       className={`${className} p-2`}
       percentage={lineCoverage}
-      topText={" Line Coverage%"}
+      topText={"Line Coverage%"}
       bottomText={"Last Scan: " +lastScore +"%" }
       icon={icon}
       iconOverlayBody = {iconOverlayBody}
