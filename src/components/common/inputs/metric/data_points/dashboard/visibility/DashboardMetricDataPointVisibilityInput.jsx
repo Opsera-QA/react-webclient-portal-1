@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import dataPointVisibilityMetadata
   from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 
 function DashboardMetricDataPointVisibilityInput(
   {
@@ -44,7 +44,7 @@ function DashboardMetricDataPointVisibilityInput(
 
   return (
     <div className={className}>
-      <H4FieldSubHeader subheaderText={"Visibility"}/>
+      <H4MetricSubHeader subheaderText={"Visibility"}/>
       <BooleanToggleInput
         dataObject={dataPointVisibilityModel}
         setDataObject={setDataFunction}
