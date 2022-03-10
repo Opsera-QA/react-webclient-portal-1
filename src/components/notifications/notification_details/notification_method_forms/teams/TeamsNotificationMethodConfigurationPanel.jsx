@@ -21,7 +21,10 @@ function TeamsNotificationMethodConfigurationPanel({ notificationDataDto, notifi
   return (
     <div className="mb-4">
       <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"} />
-      <TeamsStepNotificationTeamsToolSelectInput setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
+      <TeamsStepNotificationTeamsToolSelectInput
+        setModel={setNotificationMethodDataDto}
+        model={notificationMethodDataDto}
+      />
     </div>
   );
 }
