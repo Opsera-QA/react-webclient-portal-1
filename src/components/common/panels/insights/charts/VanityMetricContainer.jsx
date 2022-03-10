@@ -11,23 +11,26 @@ import { parseError } from "components/common/helpers/error-helpers";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 
 // TODO: Clean up and combine with ChartContainer for a v2 container
-function VanityMetricContainer({
-  kpiConfiguration,
-  setKpiConfiguration,
-  dashboardData,
-  index,
-  chart,
-  isLoading,
-  error,
-  loadChart,
-  setKpis,
-  chartHelpComponent,
-  settingsHelpComponent,
-  showSettingsToggle,
-  className,
-}) {
+function VanityMetricContainer(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    chart,
+    isLoading,
+    error,
+    loadChart,
+    setKpis,
+    chartHelpComponent,
+    settingsHelpComponent,
+    showSettingsToggle,
+    launchActionableInsightsFunction,
+    className,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -58,6 +61,18 @@ function VanityMetricContainer({
           visible={!helpIsShown}
           size={"1x"}
           className={"ml-3"}
+        />
+      );
+    }
+  };
+
+  const getActionableInsightOverlayToggle = () => {
+    if (launchActionableInsightsFunction != null) {
+      return (
+        <SpyglassIcon
+          onClickFunction={launchActionableInsightsFunction}
+          className={"ml-3"}
+          tooltipText={"Launch Actionable Insight"}
         />
       );
     }
@@ -121,6 +136,7 @@ function VanityMetricContainer({
         <div className={"my-auto"}>{kpiConfiguration?.kpi_name}</div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
+          {getActionableInsightOverlayToggle()}
           {getSettingsToggle()}
         </div>
       </div>
@@ -221,6 +237,7 @@ VanityMetricContainer.propTypes = {
   chartHelpComponent: PropTypes.func,
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
+  launchActionableInsightsFunction: PropTypes.func,
   className: PropTypes.string,
 };
 
