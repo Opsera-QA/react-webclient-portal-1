@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import IconBase from "components/common/icons/IconBase";
 
 function SecretsInputBase({
   dataObject, 
@@ -191,7 +191,7 @@ function SecretsInputBase({
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes} fixedWidth/></span>
       </Button>
     );
   };
@@ -216,7 +216,7 @@ function SecretsInputBase({
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>        
+        <div><IconBase icon={titleIcon} className={"mr-2"}/>{titleText}</div>
       </div>
     );
   };

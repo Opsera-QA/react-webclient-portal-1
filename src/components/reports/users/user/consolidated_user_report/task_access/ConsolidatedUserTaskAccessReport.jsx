@@ -93,7 +93,6 @@ function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {
         filterDto={taskFilterDto}
         setFilterDto={setTaskFilterDto}
         supportSearch={true}
-        showBorder={false}
         isLoading={isLoading}
         metadata={taskMetadata}
         type={"tasks"}

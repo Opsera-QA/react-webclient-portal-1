@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function TwoLineDataBlockBase(
   {
@@ -12,12 +13,18 @@ function TwoLineDataBlockBase(
     className,
     icon,
     dataPoint,
+    iconOverlayTitle,
+    iconOverlayBody,
   }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
         <div>
-          <IconBase icon={icon}  />
+          <OverlayIconBase
+            icon={icon}
+            overlayTitle={iconOverlayTitle}
+            overlayBody={iconOverlayBody}
+          />
         </div>
       );
     }
@@ -51,6 +58,10 @@ function TwoLineDataBlockBase(
     }
   };
 
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <Row className={"w-100 h-100 text-center mx-auto"}>
@@ -73,6 +84,8 @@ TwoLineDataBlockBase.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
+  iconOverlayTitle: PropTypes.string,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default TwoLineDataBlockBase;

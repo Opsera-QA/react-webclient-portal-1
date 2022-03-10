@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button, Col, Row} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
 import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemovalIcon";
 import Popover from "react-bootstrap/Popover";
 import Model from "core/data_model/model";
+import IconBase from "components/common/icons/IconBase";
 
 function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoading }) {
   const loadFilters = async () => {
@@ -57,10 +57,10 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
         <Row>
           <Col sm={10} className="my-auto">Filters</Col>
           <Col sm={2} className="text-right">
-            <FontAwesomeIcon
+            <IconBase
               icon={faTimes}
-              className="pointer"
-              onClick={() => {
+              className={"pointer"}
+              onClickFunction={() => {
                 document.body.click();
               }}
             />
@@ -72,7 +72,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">
             <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
-              <span className="pr-3"><FontAwesomeIcon icon={faFilter} fixedWidth className="mr-2"/>Filter</span>
+              <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
             </Button>
           </div>
           <div className="w-50 ml-1">
@@ -96,7 +96,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
-            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><IconBase icon={faFilter}/></span></Button>
           </div>
         </OverlayTrigger>
         <div>

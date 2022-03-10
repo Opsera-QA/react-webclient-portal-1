@@ -1,14 +1,14 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popover-text";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, accessRestricted, toolTipText, closeTab}) {
   const getIcon = () => {
     if (icon) {
-      return (<FontAwesomeIcon icon={icon} fixedWidth className={"mr-2"} />);
+      return (<IconBase icon={icon} fixedWidth className={"mr-2"} />);
     }
   };
 
@@ -19,7 +19,7 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
           <span onClick={handleTabClick(tabName)} className={"pointer mr-2"}>
             {getIcon()}<span className="d-none d-lg-inline">{tabText}</span>
           </span>
-          <FontAwesomeIcon icon={faTimes} className="mt-1 pointer" onClick={() => { closeTab(tabName);}} />
+          <IconBase icon={faTimes} className={"mt-1 pointer"} onClickFunction={() => { closeTab(tabName);}} />
         </div>
       </li>
     );

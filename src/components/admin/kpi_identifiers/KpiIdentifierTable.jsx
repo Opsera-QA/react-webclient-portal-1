@@ -66,7 +66,6 @@ function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFil
   const getKpiTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
         data={data}

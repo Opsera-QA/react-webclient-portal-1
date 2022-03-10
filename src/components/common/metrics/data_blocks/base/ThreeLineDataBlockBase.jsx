@@ -1,16 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
-function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, icon, dataPoint, onClickFunction }) {
+function ThreeLineDataBlockBase({
+  middleText,
+  bottomText,
+  topText,
+  className,
+  icon,
+  dataPoint,
+  iconOverlayTitle,
+  iconOverlayBody,
+}) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
       return (
         <div>
-          <IconBase icon={icon} />
+          <OverlayIconBase icon={icon} overlayTitle={iconOverlayTitle} overlayBody={iconOverlayBody} />
         </div>
       );
     }
@@ -22,7 +32,7 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
 
   const getTopText = () => {
     if (topText) {
-      return <div className={"light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>{topText}</div>;
+      return <div className={"dark-gray-text-primary font-inter-light-400 metric-block-header-text"}>{topText}</div>;
     }
   };
 
@@ -35,10 +45,14 @@ function ThreeLineDataBlockBase({ middleText, bottomText, topText, className, ic
   const getSubtitle = () => {
     if (bottomText) {
       return (
-        <div className={"light-gray-text-secondary font-inter-light-400 metric-block-footer-text"}>{bottomText}</div>
+        <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>{bottomText}</div>
       );
     }
   };
+
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
 
   return (
     <div className={className} onClick={onClickFunction}>
@@ -66,7 +80,8 @@ ThreeLineDataBlockBase.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
-  onClickFunction: PropTypes.object,
+  iconOverlayTitle: PropTypes.string,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default ThreeLineDataBlockBase;

@@ -5,7 +5,6 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import {AuthContext} from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -16,6 +15,7 @@ import SfdcPipelineWizardProfileComponentTable
 import SfdcPipelineWizardSubmitProfileComponentsButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardSubmitProfileComponentsButton";
 import ErrorDialog from "components/common/status_notifications/error";
+import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardProfileComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -110,7 +110,7 @@ const SfdcPipelineWizardProfileComponentSelector = ({ pipelineWizardModel, setPi
       {getBody()}
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => handleBackButtonClick()}>
-          <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitProfileComponentsButton
           filteredFileCount={filteredFileCount}

@@ -4,11 +4,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import aksStepActions from "../aks-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function AksResourceGroupSelectInput(
   {
@@ -108,7 +108,7 @@ function AksResourceGroupSelectInput(
     if (dataObject?.getData("resource")?.length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to refresh Resource Groups
         </small>
       );

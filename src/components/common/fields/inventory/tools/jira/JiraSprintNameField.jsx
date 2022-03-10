@@ -1,61 +1,105 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineStepNotificationActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 import FieldContainer from "components/common/fields/FieldContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import FieldLabel from "components/common/fields/FieldLabel";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import axios from "axios";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
 
-function JiraSprintNameField({ dataObject, jiraToolId, jiraBoard, fieldName }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
-  const toastContext = useContext(DialogToastContext);
+function JiraSprintNameField(
+  {
+    model,
+    jiraToolId,
+    jiraBoard,
+    jiraSprintId,
+    fieldName,
+  }) {
+  const [field] = useState(model?.getFieldById(fieldName));
   const {getAccessToken} = useContext(AuthContext);
   const [sprintName, setSprintName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [jiraToolId]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    setSprintName("");
+    setError(undefined);
+
+    if (isMongoDbId(jiraToolId) === true && hasStringValue(jiraBoard) === true && hasStringValue(jiraSprintId) === true) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          setError(error);
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [jiraToolId, jiraBoard, jiraSprintId]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadSprintName();
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
+      await loadSprintName(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadSprintName = async () => {
-    const jiraSprintId = dataObject.getData(fieldName);
-    if (jiraToolId !== "" && jiraBoard !== "" && jiraSprintId !== "") {
-      const response = await pipelineStepNotificationActions.getJiraSprints2(jiraToolId, jiraBoard, getAccessToken);
-      const jiraArray = response?.data?.message;
-      if (Array.isArray(jiraArray)) {
-        const jiraSprint = jiraArray.find((project) => project.id === jiraSprintId);
+  const loadSprintName = async (cancelSource = cancelTokenSource) => {
+    const response = await jiraActions.getJiraSprintsWithBoardIdV2(
+      getAccessToken,
+      cancelSource,
+      jiraToolId,
+      jiraBoard,
+    );
+    const jiraSprints = response?.data?.data;
 
-        if (jiraSprint != null) {
-          setSprintName(jiraSprint.name);
-        }
+    if (Array.isArray(jiraSprints)) {
+      const jiraSprint = jiraSprints.find((project) => project.id === jiraSprintId);
+      const sprintName = jiraSprint?.name;
+
+      if (isMounted?.current === true && hasStringValue(sprintName) === true) {
+        setSprintName(jiraSprint.name);
       }
     }
   };
 
   const getProjectName = () => {
+    if (jiraSprintId == null) {
+      return "";
+    }
+
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{dataObject.getData(fieldName)}</span>;
+      return <span><LoadingIcon className={"mr-1"}/>{model?.getData(fieldName)}</span>;
     }
 
     if (sprintName) {
       return sprintName;
     }
 
-    return `Sprint name could not be found with Key: [${dataObject.getData(fieldName)}]`;
+    return `Sprint name could not be found with Key: [${model?.getData(fieldName)}]`;
   };
 
   return (
@@ -67,10 +111,11 @@ function JiraSprintNameField({ dataObject, jiraToolId, jiraBoard, fieldName }) {
 }
 
 JiraSprintNameField.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   jiraToolId: PropTypes.string,
   jiraBoard: PropTypes.string,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  jiraSprintId: PropTypes.string,
 };
 
 export default JiraSprintNameField;

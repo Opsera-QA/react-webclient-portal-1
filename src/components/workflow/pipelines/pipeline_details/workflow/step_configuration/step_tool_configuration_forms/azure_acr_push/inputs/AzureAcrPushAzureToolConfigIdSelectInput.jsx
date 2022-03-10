@@ -1,46 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedAzureAccountToolSelectInput
-  from "components/common/list_of_values_input/tools/azure_account/RoleRestrictedAzureAccountToolSelectInput";
+import RoleRestrictedAzureAccountToolSelectInput from "components/common/list_of_values_input/tools/azure_account/RoleRestrictedAzureAccountToolSelectInput";
 
-function AzureAcrPushAzureToolConfigIdSelectInput(
-  { 
-    fieldName, 
-    model, 
-    setModel, 
-    disabled, 
-    textField, 
-    valueField, 
-  }) {
-  
+function AzureAcrPushAzureToolConfigIdSelectInput({
+  fieldName,
+  model,
+  setModel,
+  disabled,
+  textField,
+  valueField,
+  service,
+}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
+    let newModel = { ...model };
     newModel.setData(fieldName, selectedOption._id);
-    newModel.setData('azureRegistryName', "");
-    newModel.setData('azureRepoName', "");
-    newModel.setData('acrLoginUrl', "");
-    newModel.setData('newRepo', false);
-    setModel({...newModel});
+    newModel.setData("azureRegistryName", "");
+    newModel.setData("azureRepoName", "");
+    newModel.setData("acrLoginUrl", "");
+    newModel.setData("azureCredentialId", "");
+    newModel.setData("newRepo", false);
+    setModel({ ...newModel });
   };
 
   const clearDataFunction = () => {
-    let newModel = {...model};
+    let newModel = { ...model };
     newModel.setData(fieldName, "");
-    newModel.setData('azureRegistryName', "");
-    newModel.setData('azureRepoName', "");
-    newModel.setData('acrLoginUrl', "");
-    newModel.setData('newRepo', false);
-    setModel({...newModel});
+    newModel.setData("azureRegistryName", "");
+    newModel.setData("azureRepoName", "");
+    newModel.setData("acrLoginUrl", "");
+    newModel.setData("azureCredentialId", "");
+    newModel.setData("newRepo", false);
+    setModel({ ...newModel });
   };
 
   return (
     <RoleRestrictedAzureAccountToolSelectInput
       fieldName={fieldName}
+      service={service}
       model={model}
       setModel={setModel}
       disabled={disabled}
       textField={textField}
-      valueField={valueField} 
+      valueField={valueField}
       clearDataFunction={clearDataFunction}
       setDataFunction={setDataFunction}
     />
@@ -54,13 +55,13 @@ AzureAcrPushAzureToolConfigIdSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
+  service: PropTypes.string,
 };
 
 AzureAcrPushAzureToolConfigIdSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "azureToolConfigId",
-  
 };
 
 export default AzureAcrPushAzureToolConfigIdSelectInput;

@@ -5,7 +5,7 @@ import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayB
 import {
   doesToolSupportTab,
   TOOL_DETAIL_PANEL_TABS
-} from "components/inventory/tools/tool_details/tab_container/ToolDetailPanelTabContainer";
+} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 import {NOTIFICATION_TYPES} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 import {NOTIFICATION_METHODS} from "components/common/list_of_values_input/notifications/method/notificationMethod.constants";
 

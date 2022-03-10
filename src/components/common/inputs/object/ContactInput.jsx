@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import regexDefinitions from "utils/regexDefinitions";
+import IconBase from "components/common/icons/IconBase";
 
 function ContactInput({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, emailMaxLength, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -204,7 +204,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
-        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
       </Button>
     );
   };

@@ -429,6 +429,11 @@ export class ModelBase {
     return field?.id;
   };
 
+  getMongoDbId = () => {
+    return this.getData("_id");
+  };
+
+
   getFields = () => {
     return this.metaData?.fields;
   };

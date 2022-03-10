@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ConfigurationField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -20,7 +20,7 @@ function ConfigurationField({dataObject, fieldName, className}) {
       configurationKeys.map((key, i) => {
         return (
           <div key={i} className="mx-1 mb-1 badge badge-light generic-badge">
-            <span><FontAwesomeIcon icon={faBracketsCurly} className="mr-2" fixedWidth />{key}: {configuration[key]}</span>
+            <span><IconBase icon={faBracketsCurly} className={"mr-2"} />{key}: {configuration[key]}</span>
           </div>
         );
       })

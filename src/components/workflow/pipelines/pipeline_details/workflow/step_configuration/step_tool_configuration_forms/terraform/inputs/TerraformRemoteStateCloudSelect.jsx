@@ -18,6 +18,10 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
       value: "TERRAFORM_CLOUD",
     },
     {
+      name: "Terraform Enterprise",
+      value: "TERRAFORM_ENTERPRISE",
+    },
+    {
       name: "Local Filesystem",
       value: "LOCAL",
     }

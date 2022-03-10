@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Card} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function InsightsCardContainerBase({ children, isLoading, titleBar, footerBar }) {
   const getCardTitle = () => {
     if (isLoading) {
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
+      return (<div className="ml-1"><IconBase isLoading={true} className={"mr-1"}/>Loading Data</div>);
     }
 
     return titleBar;

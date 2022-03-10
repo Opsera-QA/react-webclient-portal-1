@@ -17,7 +17,7 @@ function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessag
 
   if (!Array.isArray(data) || data.length === 0) {
     return (
-      <Row className={"mx-0 w-100 table-border"} style={{height: tableHeight}}>
+      <Row className={"mx-0 w-100"} style={{height: tableHeight}}>
         <Col xs={12} className={"my-auto text-center px-0"}>
           <span className={"info-text"}>
             <IconBase icon={faExclamationCircle} isLoading={isLoading} className={"mr-2 mt-1"}/>

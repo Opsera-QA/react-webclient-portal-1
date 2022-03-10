@@ -15,6 +15,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   technicalDebtRatio,
   kpiConfiguration,
   dashboardData,
+  dataPoint
 }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -28,15 +29,15 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   const getSonarMaintainabilityGrade = (rating) => {
-    if (rating <= 1) {
+    if (rating <= 5) {
       return LETTER_GRADES.A;
-    } else if (rating <= 2) {
+    } else if (rating <= 10) {
       return LETTER_GRADES.B;
-    } else if (rating <= 3) {
+    } else if (rating <= 20) {
       return LETTER_GRADES.C;
-    } else if (rating <= 4) {
+    } else if (rating <= 50) {
       return LETTER_GRADES.D;
-    } else if (rating <= 5) {
+    } else if (rating <= 100) {
       return LETTER_GRADES.E;
     } else {
       return "ERROR";
@@ -61,7 +62,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
       <Col sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
       <Col sm={4}>{getRightDataBlock()}</Col>
@@ -74,6 +75,7 @@ SonarRatingsMaintainabilityDataBlockContainer.propTypes = {
   technicalDebtRatio: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default SonarRatingsMaintainabilityDataBlockContainer;

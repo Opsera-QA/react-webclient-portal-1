@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 
-import "../../freeTrial.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 function FreeTrialLandingAnalytics() {
   const [demoRequested, setDemoRequested] = useState(false);
@@ -79,7 +78,7 @@ function FreeTrialLandingAnalytics() {
                 </div>
                 <div className="mt-4 text-center">
                   <Button disabled={demoRequested === true} size="lg" className="pull-right mr-2" variant="success" onClick= {() => {setDemoRequested(true); }} >
-                    <FontAwesomeIcon className="mr-2" icon={faCheckCircle} fixedWidth style={{ cursor: "pointer" }} />Request a demo today!
+                    <IconBase className={"mr-2 pointer"} icon={faCheckCircle} />Request a demo today!
                   </Button>
                 </div>
                 {demoRequested && <div className="text-center mt-1">

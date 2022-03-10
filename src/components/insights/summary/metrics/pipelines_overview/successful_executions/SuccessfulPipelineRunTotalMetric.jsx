@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import InsightsPipelineDetailsTable from "components/insights/summary/metrics/InsightsPipelineDetailsTable";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function SuccessfulPipelineRunTotalMetric({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
@@ -128,12 +128,7 @@ function SuccessfulPipelineRunTotalMetric({ dashboardData, toggleDynamicPanel, s
             !isLoading && metrics[0]?.count[0] ? (
               metrics[0]?.count[0]?.count
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+              <LoadingIcon className={"mr-1"}/>
             )
           }
           subTitle="Successful Pipeline Executions"

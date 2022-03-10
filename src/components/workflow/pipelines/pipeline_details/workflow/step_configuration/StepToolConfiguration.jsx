@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
-import NpmStepConfiguration from "./step_tool_configuration_forms/npm/NpmStepConfiguration";
+import NpmStepConfiguration from "../../../../plan/step/npm/NpmStepConfiguration";
 import CommandLineStepConfiguration from "./step_tool_configuration_forms/command_line/CommandLineStepConfiguration";
 import TeamCityStepConfiguration from "./step_tool_configuration_forms/team_city/TeamCityStepConfiguration";
 import GcpDeployStepConfiguration from "./step_tool_configuration_forms/gcp/GcpDeployStepConfiguration";
@@ -14,11 +14,11 @@ import AwsDeployStepConfiguration from "./step_tool_configuration_forms/aws_depl
 import JmeterStepConfiguration from "./step_tool_configuration_forms/jmeter/JmeterStepConfiguration";
 import SeleniumStepConfiguration from "./step_tool_configuration_forms/selenium/SeleniumStepConfiguration";
 import TwistlockStepConfiguration from "./step_tool_configuration_forms/twistlock/TwistlockStepConfiguration";
-import S3StepConfiguration from "./step_tool_configuration_forms/s3/S3StepConfiguration";
+import S3StepConfiguration from "../../../../plan/step/s3/S3StepConfiguration";
 import DatabricksNotebookStepConfiguration from "./step_tool_configuration_forms/databricks_notebook/DatabricksNotebookStepConfiguration";
 import SshUploadDeployStepConfiguration from "./step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployStepConfiguration";
 import ElasticBeanstalkDeployStepConfiguration from "./step_tool_configuration_forms/elastic_beanstalk_deploy/ElasticBeanstalkDeployStepConfiguration";
-import SpinnakerStepConfiguration from "./step_tool_configuration_forms/spinnaker/SpinnakerStepConfiguration";
+import SpinnakerStepConfiguration from "../../../../plan/step/spinnaker/SpinnakerStepConfiguration";
 import ApprovalGateStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/ApprovalGateStepConfiguration";
 import LegacyCypressStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/LegacyCypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_push/DockerPushStepConfiguration";
@@ -31,10 +31,10 @@ import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/Oc
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
-import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
+import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
-  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
+  from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
@@ -77,7 +77,7 @@ import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function StepToolConfiguration({
   pipeline,
@@ -467,10 +467,9 @@ function StepToolConfiguration({
       case "npm":
         return(
           <NpmStepConfiguration
-            data={stepTool}
+            pipelineStep={stepTool}
             parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "teamcity":
@@ -1030,7 +1029,7 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-        case "flyway-database-migrator":
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
           return (
             <FlywayDatabaseStepConfiguration
               pipelineId={pipeline._id}

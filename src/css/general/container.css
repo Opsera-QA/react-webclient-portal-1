@@ -114,6 +114,24 @@
 }
 /* End Makeup Container Styling */
 
+/* Full Height Container Styling with Title and Description */
+
+.full-height-overlay-container-with-buttons-and-title {
+    min-height: calc(100vh - 292px);
+    /*height: calc(100vh - 292px);*/
+    /*max-height: calc(100vh - 292px);*/
+    overflow: visible;
+}
+
+.full-height-overlay-container-with-buttons-and-title-tabs, .full-height-overlay-container-with-buttons-and-title-body {
+    min-height: calc(100vh - 292px);
+    /*height: calc(100vh - 292px);*/
+    /*max-height: calc(100vh - 292px);*/
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+/* Full Height Container Styling with Title and Description */
 
 /* Console Log Container Styling */
 .console-log-container {
@@ -166,6 +184,21 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
+
+.metric-input-container-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 28px;
+    max-height: 28px;
+}
+
+.metric-tab-tree .nav-link.active,
+.metric-tab-tree .show > .nav-link {
+    background-color: #00a8e8 !important;
+    color: white;
+    text-decoration: none;
+}
+
 /* End Metric Container Styling */
 
 .dashboard-screen-container-body {

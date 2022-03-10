@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/pro-light-svg-icons";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function LoadingDialog({ size, message }) {
   const [type, setType] = useState({});
@@ -20,7 +19,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "larger"}}>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-2"/>
+          <LoadingIcon className={"mr-2"}/>
           {getMessage()}
         </div>
       </div>     
@@ -32,7 +31,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "1.3em"}}>
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-2 mb-1 vertical-align-item" />
+          <LoadingIcon className={"mr-2 mb-1 vertical-align-item"} />
           {getMessage()}
         </div>
       </div>
@@ -42,7 +41,7 @@ function LoadingDialog({ size, message }) {
   return (
       <div className="loading">
         <div className="loader">
-          <FontAwesomeIcon icon={faSpinner} size="2x" spin/>
+          <LoadingIcon iconSize="2x" />
         </div>
       </div>
     );

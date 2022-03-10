@@ -4,13 +4,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import JiraUserInputs
   from "components/notifications/notification_details/notification_method_forms/jira/JiraUserInputs";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import JiraToolProjectField from "components/common/fields/inventory/tools/jira/JiraToolProjectField";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Make base component and then wrap this around it.
 function JiraPipelineNotificationJiraToolProjectSelectInput({jiraToolId, fieldName, model, setModel, disabled}) {
@@ -103,7 +103,7 @@ function JiraPipelineNotificationJiraToolProjectSelectInput({jiraToolId, fieldNa
       return (
         <div className="d-flex mx-2 justify-content-between">
           <Link to={`/inventory/tools/details/${jiraToolId}/projects/${model?.getData(fieldName)}`}>
-            <small><FontAwesomeIcon icon={faProjectDiagram} className="pr-1"/>View Or Edit this Tool Project&lsquo;s settings</small>
+            <small><IconBase icon={faProjectDiagram} className={"pr-1"}/>View Or Edit this Tool Project&lsquo;s settings</small>
           </Link>
           <small className="form-text text-muted">
             <div>This will pull Jira Project, Board, Sprint, and Parent Ticket for one easy to update location</div>

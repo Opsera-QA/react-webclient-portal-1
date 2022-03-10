@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -75,7 +75,7 @@ import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/Gitl
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 
 //new
-import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
+import ProjectWiseUnitTestResults from "./unit_tests/project_wise_results/ProjectWiseUnitTestResults";
 
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
@@ -87,7 +87,8 @@ import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
-import AllGithubActionsDataBlock from "./github_actions/AllGithubActionsDataBlock";
+import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
+import LeadTimeAndReleaseTraceabilityDataBlock from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -150,22 +151,20 @@ import { getDateObjectFromKpiConfiguration } from "components/insights/charts/ch
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
-import AutomatedTestAdoptionRateMetric
-  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import AutomatedTestAdoptionRateMetric from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const isMounted = useRef(false);
 
-
   useEffect(() => {
     isMounted.current = true;
 
-    setKpiConfig({...kpiConfiguration});
+    setKpiConfig({ ...kpiConfiguration });
 
     return () => {
       isMounted.current = false;
@@ -710,7 +709,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings-v2":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
           <Col md={12} className="p-2">
             <SonarRatingMetrics
@@ -1131,9 +1130,21 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "all-github-actions-data-block":
-        return(
+        return (
           <Col md={12} className="p-2">
             <AllGithubActionsDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "lead-time-and-release-traceability-data-block":
+        return (
+          <Col md={12} className="p-2">
+            <LeadTimeAndReleaseTraceabilityDataBlock
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1288,7 +1299,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "first-pass-yield":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
         return (
           <Col md={12} className="p-2">
             <FirstPassYieldMetrics
@@ -1312,8 +1323,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "automation-percentage":
-        console.log(kpiConfig,' ** index',dashboardData);
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
         return (
           <Col md={12} className="p-2">
             <AutomationPercentageMetric
@@ -1490,7 +1500,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "build-deployment-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <Col md={12} className="p-2">
             <OpseraBuildAndDeploymentStatistics
@@ -1508,7 +1518,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
   };
 
   if (kpiConfig == null) {
-    return (<LoadingDialog size={"sm"} message={"Loading Insights"} />);
+    return <LoadingDialog size={"sm"} message={"Loading Insights"} />;
   }
 
   // TODO: Chart container should be inside each chart component

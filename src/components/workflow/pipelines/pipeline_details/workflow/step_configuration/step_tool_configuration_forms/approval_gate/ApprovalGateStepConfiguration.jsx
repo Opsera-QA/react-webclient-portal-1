@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -10,9 +9,9 @@ import approvalGatePipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-configuration-metadata";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import MessageField from "components/common/fields/text/MessageField";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
   const contextType = useContext(AuthContext);
@@ -68,7 +67,7 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
       <div>An Approval Gate in an Opsera Pipeline will halt the running pipeline and notify the configured
         users in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification.
         But <b>only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action</b>.
-        <div className="my-3">Use the notification icon (<FontAwesomeIcon icon={faEnvelope}/>) to enable the various channels to use.</div>
+        <div className="my-3">Use the notification icon (<IconBase icon={faEnvelope}/>) to enable the various channels to use.</div>
       </div>
       <TextAreaInput fieldName={"message"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />
       <TextInputBase fieldName={"contact"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />

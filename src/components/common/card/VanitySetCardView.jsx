@@ -8,7 +8,7 @@ function VanitySetCardView({ cards, isLoading, paginationModel, loadData, noData
   }
 
   return (
-    <div className="card-container">
+    <div className={"vanity-card-container"}>
       <VanityPaginationContainer
         loadData={loadData}
         paginationModel={paginationModel}

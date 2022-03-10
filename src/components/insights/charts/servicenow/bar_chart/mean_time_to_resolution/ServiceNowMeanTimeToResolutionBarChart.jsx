@@ -12,7 +12,6 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import {
   METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
@@ -21,6 +20,9 @@ import {
 import ServiceNowTotalIncidentsDataBlock from "../../data_blocks/ServiceNowTotalIncidentsDataBlock";
 import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/ServiceNowTotalResolvedIncidentsDatBlock";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import IconBase from "components/common/icons/IconBase";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
+
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
 // import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
@@ -46,6 +48,15 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const [goalsData, setGoalsData] = useState(undefined);
   const [totalIncidents, setTotalIncidents] = useState(0);
   const [totalResolvedIncidents, setTotalResolvedIncidents] = useState(0);
+  const [lastFiveDays, setLastFiveDays] = useState(0);
+  const [fiveToFifteenDays, setFiveToFifteenDays] = useState(0);
+  const [fifteenToThirtyDays, setFifteenToThirtyDays] = useState(0);
+  const [beforeThirtyDays, setBeforeThirtyDays] = useState(0);
+  const [priorityOne, setPriorityOne] = useState(0);
+  const [priorityTwo, setPriorityTwo] = useState(0);
+  const [priorityThree, setPriorityThree] = useState(0);
+  const [priorityFour, setPriorityFour] = useState(0);
+  const [priorityFive, setPriorityFive] = useState(0);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -107,6 +118,18 @@ function ServiceNowMeanTimeToResolutionBarChart({
       const responseData = response?.data?.data[0]?.serviceNowMTTR?.data[0];
       setTotalIncidents(responseData?.totalIncidents ? responseData?.totalIncidents : 0);
       setTotalResolvedIncidents(responseData?.totalResolvedIncidents ? responseData?.totalResolvedIncidents : 0);
+      setLastFiveDays(responseData?.lastFiveDays ? responseData?.lastFiveDays : 0);
+      setFiveToFifteenDays(responseData?.fiveToFifteenDays ? responseData?.fiveToFifteenDays : 0);
+      setFifteenToThirtyDays(responseData?.fifteenToThirtyDays ? responseData?.fifteenToThirtyDays : 0);
+      setBeforeThirtyDays(responseData?.beforeThirtyDays ? responseData?.beforeThirtyDays : 0);
+      if(responseData){
+        setPriorityOne(responseData['Priority-1'] || 0);
+        setPriorityTwo(responseData['Priority-2'] || 0);
+        setPriorityThree(responseData['Priority-3'] || 0);
+        setPriorityFour(responseData['Priority-4'] || 0);
+        setPriorityFive(responseData['Priority-5'] || 0);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -119,15 +142,67 @@ function ServiceNowMeanTimeToResolutionBarChart({
     }
   };
 
+  const getMetricBottomRow = () =>{
+    return (
+      <Row>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Resolved Tickets by Severity:`} />
+        </Col>
+        <Col xl={2} lg={4} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-1: ${priorityOne}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-2: ${priorityTwo}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-3: ${priorityThree}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-4: ${priorityFour}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Sev-5: ${priorityFive}`} />
+        </Col>
+      </Row>
+    );
+  };
+  const getMetricTopRow = () =>{
+    return (
+      <Row>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Aging of unresolved tickets:`} />
+        </Col>
+        <Col xl={2} lg={4} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`Last Five Days: ${lastFiveDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`5-15 days: ${fiveToFifteenDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`15-30 days: ${fifteenToThirtyDays}`} />
+        </Col>
+        <Col xl={2} lg={2} md={2}>
+          <MetricBadgeBase className={"mr-3"} badgeText={`> 30 Days: ${beforeThirtyDays}`} />
+        </Col>
+      </Row>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-
+    
     return (
         <>
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
-            <BadgeBase className={"mx-2"} badgeText={"*Chart depicts recent 15 results"} />
+            <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
+          </div>
+          <div className="ml-2 p-0">
+            {getMetricTopRow()}
+          </div>
+          <div className="ml-2 p-0">
+            {getMetricBottomRow()}
           </div>
           <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
             <Row>
@@ -144,13 +219,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
               <Col xl={9} lg={9} md={8} className={"my-2 p-0 d-flex flex-column align-items-end"}>
                 <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
-                  Average MTTR <b>({overallMean} Hours)</b> <FontAwesomeIcon icon={faMinus} color={neutralColor} size="lg" />
+                  Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
                   <br></br>
                   Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
-                  <FontAwesomeIcon icon={faMinus} color={goalSuccessColor} size="lg" />
+                  <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
                   <br></br>
                   MTTR{" "}
-                  <FontAwesomeIcon icon={faSquare} color={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} size="lg" />
+                  <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
                 <ResponsiveBar
                   data={metrics}

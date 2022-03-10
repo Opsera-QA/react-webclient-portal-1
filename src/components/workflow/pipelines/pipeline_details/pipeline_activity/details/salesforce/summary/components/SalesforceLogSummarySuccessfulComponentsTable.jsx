@@ -52,7 +52,6 @@ function SalesforceLogSummarySuccessfulComponentsTable({ hasFailureComponents, s
 
   return (
     <FilterContainer
-      showBorder={false}
       body={getComponentResultsTable()}
       titleIcon={faCheckCircle}
       title={`${successfulComponents?.length} Successful Components`}

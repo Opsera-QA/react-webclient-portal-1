@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {faSave} from "@fortawesome/free-solid-svg-icons";
 import {persistNewRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import IconBase from "components/common/icons/IconBase";
 
 function RegisterButton({recordDto, createAccount, disable, lenient}) {
   let toastContext = useContext(DialogToastContext);
@@ -19,10 +19,10 @@ function RegisterButton({recordDto, createAccount, disable, lenient}) {
 
   const getLabel = () => {
     if (isSaving) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Creating Account...</span>);
+      return (<span><IconBase isLoading={true} className={"mr-2"}/>Creating Account...</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>Register Account</span>);
+    return (<span><IconBase icon={faSave} className={"mr-2"}/>Register Account</span>);
   };
 
   return (

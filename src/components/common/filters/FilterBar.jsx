@@ -1,69 +1,114 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import ViewToggle from "components/common/view/ViewToggle";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
+import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function FilterBar({ filterDto, setFilterDto, children, loadData, isLoading, saveCookies, addRecordFunction, customButtons, supportSearch, supportViewToggle}) {
-  const getCustomButtons = () => {
-    if (children === undefined) {
-      return null;
+function FilterBar(
+  {
+    filterModel,
+    setFilterModel,
+    loadData,
+    isLoading,
+    saveCookies,
+    addRecordFunction,
+    inlineFilters,
+    supportSearch,
+    supportViewToggle,
+    dropdownFilters,
+    supportClientSideSearching,
+    exportButton,
+    type,
+    metadata,
+  }) {
+  const getType = () => {
+    if (hasStringValue(type) === true) {
+      return type;
     }
 
-    return (<div className="mr-2">{customButtons}</div>);
+    if (hasStringValue(metadata?.type) === true) {
+      return metadata?.type;
+    }
+
+    if (hasStringValue(filterModel?.getType()) === true) {
+      return filterModel?.getType();
+    }
   };
 
   return (
-    <>
-      <div className="filter-bar p-2">
-        <div className="justify-content-between d-flex">
-          <div>
-            <NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType()} isLoading={isLoading} variant="warning" className={"text-no-wrap mx-2"} />
-          </div>
-          <div className="d-flex">
-            {getCustomButtons()}
-            <InlineSearchFilter
-              isLoading={isLoading}
-              supportSearch={supportSearch}
-              filterDto={filterDto}
-              setFilterDto={setFilterDto}
-              loadData={loadData}
-              className={children != null || loadData != null || supportViewToggle ? "mr-3" : null}
-            />
-            <ViewToggle
-              supportViewToggle={supportViewToggle}
-              filterDto={filterDto}
-              setFilterDto={setFilterDto}
-              saveCookies={saveCookies}
-              isLoading={isLoading}
-              className={children != null || loadData != null ? "mr-2" : null}
-            />
-            <RefreshButton isLoading={isLoading} loadData={loadData} className={children != null ? "mr-2" : null} />
-            <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={children} filterDto={filterDto} />
-          </div>
+    <div className="my-1 inline-filter-input">
+      <div className="d-flex my-auto">
+        <div className="d-flex my-auto">
+          <NewRecordButton
+            className={"mr-2 my-auto text-nowrap"}
+            addRecordFunction={addRecordFunction}
+            type={getType()}
+            isLoading={isLoading}
+            variant={"success"}
+          />
+          <span className="d-none d-xl-inline">{inlineFilters}</span>
+          <InlineSearchFilter
+            isLoading={isLoading}
+            supportSearch={supportSearch}
+            filterDto={filterModel}
+            setFilterDto={setFilterModel}
+            loadData={loadData}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+            metadata={metadata}
+          />
+          <InlineClientSideSearchFilter
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            isLoading={isLoading}
+            supportClientSideSearching={supportClientSideSearching}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          />
+          <ViewToggle
+            supportViewToggle={supportViewToggle}
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            saveCookies={saveCookies}
+            isLoading={isLoading}
+            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
+          />
+          <RefreshButton
+            isLoading={isLoading}
+            loadData={loadData}
+            className={dropdownFilters != null ? "mr-2" : null}
+          />
+          <FilterButtons
+            isLoading={isLoading}
+            loadData={loadData}
+            dropdownFilters={dropdownFilters}
+            filterDto={filterModel}
+          />
+          {exportButton}
         </div>
       </div>
-      <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
-    </>
+    </div>
   );
 }
 
 
 FilterBar.propTypes = {
-  filterDto: PropTypes.object,
-  activeFilterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   supportSearch: PropTypes.bool,
   supportViewToggle: PropTypes.bool,
   saveCookies: PropTypes.func,
-  customButtons: PropTypes.any,
-  children: PropTypes.any,
+  inlineFilters: PropTypes.any,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
-  isLoading: PropTypes.bool
+  dropdownFilters: PropTypes.any,
+  isLoading: PropTypes.bool,
+  supportClientSideSearching: PropTypes.bool,
+  type: PropTypes.string,
+  metadata: PropTypes.object,
+  exportButton: PropTypes.any,
 };
 
 export default FilterBar;

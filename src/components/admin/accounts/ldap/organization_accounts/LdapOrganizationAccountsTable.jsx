@@ -38,7 +38,6 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
   const getOrganizationAccountsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         columns={columns}
         isLoading={isLoading}
         data={ldapOrganizationAccounts}

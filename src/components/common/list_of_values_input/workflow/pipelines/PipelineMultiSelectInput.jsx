@@ -1,22 +1,30 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import pipelineActions from "../../../../workflow/pipeline-actions";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import PipelineSummaryCard from "../../../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import pipelineMetadata from "../../../../workflow/pipelines/pipeline_details/pipeline-metadata";
-import Model from "../../../../../core/data_model/model";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from 'axios';
+import IconBase from "components/common/icons/IconBase";
+import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import Model from "core/data_model/model";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataObject, setDataObject, disabled}) {
-  const toastContext = useContext(DialogToastContext);
+function PipelineMultiSelectInput(
+  {
+    fieldName,
+    currentPipelineId,
+    model,
+    setModel,
+    disabled,
+    visible,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -48,8 +56,7 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
     }
     catch (error) {
       if(isMounted?.current === true){
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setError(error);
       }
     }
     finally {
@@ -60,47 +67,40 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
   };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getAllPipelinesV2(getAccessToken, cancelSource);
-    if (response?.data?.response) {
-      let pipelines = formatPipelines(response?.data?.response);
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource);
+    const pipelines = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(pipelines)) {
       setPipelines(pipelines);
     }
   };
 
-  const formatPipelines = (pipelineResponse) => {
-    let pipelines = [];
-    pipelineResponse.map((pipeline, index) => {
-      if (pipeline._id !== currentPipelineId) {
-        pipelines.push({
-          id: pipeline._id,
-          name: `${pipeline.name} (${pipeline._id})`,
-          pipeline: pipeline
-        });
-      }
-    });
-    return pipelines;
-  };
-
   // TODO: Make pipeline list component with link to pipeline (open in new window)
   const getSelectedPipelineSummary = (selectedPipelineId) => {
-    let foundPipeline = pipelines.find(pipeline => pipeline.id === selectedPipelineId);
+    let foundPipeline = pipelines.find(pipeline => pipeline._id === selectedPipelineId);
 
     if (foundPipeline != null) {
-      let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
-      let run = foundPipeline.workflow?.lastRun?.run;
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> );
+      const pipelineDataObject = new Model({...foundPipeline}, pipelineMetadata, false);
+      const run = foundPipeline.workflow?.lastRun?.run;
+
+      return (
+        <PipelineSummaryCard
+          pipelineData={pipelineDataObject}
+          run={run != null ? `${run}` : `0`}
+        />
+      );
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');
   };
 
   const getPipelineSummaries = () => {
-    if (dataObject.getData(fieldName) != null && dataObject.getData(fieldName).length > 0 && !isLoading) {
+    if (model?.getArrayData(fieldName).length > 0 && !isLoading) {
       return (
-        dataObject.getData(fieldName).map((selectedPipelineId) => {
+        model.getData(fieldName).map((selectedPipelineId) => {
           return(
             <div key={selectedPipelineId}>
-            {getSelectedPipelineSummary(selectedPipelineId)}
+              {getSelectedPipelineSummary(selectedPipelineId)}
             </div>
           );
         })
@@ -110,32 +110,40 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
     return <span>Select a pipeline to get started.</span>;
   };
 
-  if (visible === false) {
-    return <></>;
-  }
+  const getTextField = (pipeline) => {
+    return `${pipeline.name} (${pipeline._id})`;
+  };
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  const getDisabledPipeline = () => {
+    if (isMongoDbId(currentPipelineId) && Array.isArray(pipelines) && pipelines?.length > 0) {
+      return pipelines.find((pipeline) => pipeline._id === currentPipelineId);
+    }
+  };
+
+  if (!isLoading && (!Array.isArray(pipelines) || pipelines.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
+        No other Pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
         configure a child pipeline step.
       </div>
     );
   }
 
   return (
-    <div className="m-2">
+    <div>
       <MultiSelectInputBase
         fieldName={fieldName}
         selectOptions={pipelines}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        valueField={"id"}
-        textField={"name"}
+        dataObject={model}
+        setDataObject={setModel}
+        valueField={"_id"}
+        textField={isLoading && (!Array.isArray(pipelines) || pipelines.length === 0) ? "_id" : getTextField}
         busy={isLoading}
-        placeholderText={"Select A Pipeline"}
-        disabled={disabled}
+        disabled={disabled || [getDisabledPipeline()]}
+        visible={visible}
+        error={error}
+        pluralTopic={"Pipelines"}
       />
       {getPipelineSummaries()}
     </div>
@@ -145,8 +153,8 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
 PipelineMultiSelectInput.propTypes = {
   currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
 };

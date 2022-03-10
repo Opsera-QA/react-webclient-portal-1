@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFile} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function FileSelectButton({ isLoading, customButtonText, type, disabled, handleClick, size, className }) {
   const getButtonText = () => {
@@ -24,7 +24,7 @@ function FileSelectButton({ isLoading, customButtonText, type, disabled, handleC
   return (
     <div className={className}>
       <Button size={size} variant="secondary" disabled={isLoading || disabled} onClick={() => handleClick()}>
-        <span><FontAwesomeIcon icon={faFile} className="mr-1" fixedWidth/>{getButtonText()}</span>
+        <span><IconBase icon={faFile} className={"mr-1"}/>{getButtonText()}</span>
       </Button>
     </div>
   );

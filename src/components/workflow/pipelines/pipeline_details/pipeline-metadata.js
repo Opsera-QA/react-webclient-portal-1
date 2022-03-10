@@ -1,8 +1,5 @@
 const pipelineMetadata = {
   idProperty: "_id",
-  // detailView: function(record) {
-  //   return `/inventory/tools/details/${record.getData("_id")}`;
-  // },
   fields: [
     {
       label: "ID",
@@ -127,7 +124,7 @@ const pipelineMetadata = {
       label: "Schedule",
       id: "schedule"
     }
-  ]
+  ],
 };
 
 export default pipelineMetadata;

@@ -13,7 +13,6 @@ import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-ic
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TotalBuilds from "../data_blocks/TotalBuilds";
 import SuccessfulBuildsDeployments from "../data_blocks/SuccessfulBuildsDeployments";
 import FailedBuildsDeployments from "../data_blocks/FailedBuildsDeployments";
@@ -23,6 +22,7 @@ import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
+import IconBase from "components/common/icons/IconBase";
 
 function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -104,7 +104,7 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
         await setBuildStatsData(
           buildData.map((bd, index) => ({
             ...bd,
-            _blueprint: <FontAwesomeIcon icon={faExternalLink} fixedWidth className="mr-2" />,
+            _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
           }))
         );
         let newFilterDto = filterDto;
@@ -139,7 +139,6 @@ function BuildStatisticsActionableInsightsTable({ kpiConfiguration, dashboardDat
         {getBuildSummaryDetails()}
         <FilterContainer
           isLoading={isLoading}
-          showBorder={false}
           title={`Opsera Build Statistics Report`}
           titleIcon={faDraftingCompass}
           body={getTable()}

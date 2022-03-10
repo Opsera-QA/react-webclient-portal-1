@@ -1,12 +1,12 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function StackedFilterRemovalIcon() {
   return (
     <span className="fa-layers fa-fw">
-      <FontAwesomeIcon icon={faFilter}/>
-      <FontAwesomeIcon icon={faTimes} transform="right-9 down-5 shrink-4" />
+      <IconBase icon={faFilter}/>
+      <IconBase icon={faTimes} iconTransformProperties={"right-9 down-5 shrink-4"} />
     </span>
   );
 }

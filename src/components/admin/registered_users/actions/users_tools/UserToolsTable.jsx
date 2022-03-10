@@ -43,7 +43,6 @@ function UserToolsTable({ data }) {
   return (
     <FilterContainer
       className={"my-2"}
-      showBorder={false}
       body={getUserToolsTable()}
       metadata={usersToolMetadata}
       titleIcon={faTools}

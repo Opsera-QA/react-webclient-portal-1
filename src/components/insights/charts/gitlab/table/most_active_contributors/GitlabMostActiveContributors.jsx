@@ -9,9 +9,9 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import gitlabMostActiveContributorsMetadata from "components/insights/charts/gitlab/table/most_active_contributors/gitlab-most-active-contributors-metadata.js";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import IconBase from "components/common/icons/IconBase";
 
 function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
@@ -37,7 +37,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
           return (
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
-                <FontAwesomeIcon icon={faStar} className="cell-icon green" />
+                <IconBase icon={faStar} className={"cell-icon green"} />
               </div>
               <div className="ml-1">{row.value}</div>
             </div>

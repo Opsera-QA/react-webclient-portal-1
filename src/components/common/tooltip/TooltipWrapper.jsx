@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Popover} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
-// TODO: Combine with PopoverContainer but make base component used by both
 function TooltipWrapper(
   {
     innerText,
@@ -15,15 +14,16 @@ function TooltipWrapper(
     className,
     overlayHeight,
     overlayWidth,
+    trigger,
   }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
       return (
         <div>
-          <FontAwesomeIcon
+          <IconBase
             icon={faTimes}
-            className="pointer"
-            onClick={() => {
+            className={"pointer"}
+            onClickFunction={() => {
               document.body.click();
             }}
           />
@@ -69,8 +69,9 @@ function TooltipWrapper(
 
   return (
     <OverlayTrigger
-      trigger={["hover", "focus"]}
+      trigger={trigger}
       placement={placement}
+      rootClose
       overlay={getPopover(innerText)}
     >
       {children}
@@ -93,11 +94,16 @@ TooltipWrapper.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  trigger: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+  ]),
 };
 
 TooltipWrapper.defaultProps = {
   placement: "top",
-  className: "popover-container"
+  className: "popover-container",
+  trigger: ["hover", "focus"],
 };
 
 export default TooltipWrapper;

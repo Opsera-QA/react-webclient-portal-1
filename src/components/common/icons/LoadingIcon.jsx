@@ -1,22 +1,20 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function LoadingIcon({ isLoading, className, iconSize }) {
-  if (!isLoading) {
-    return null;
-  }
-
+function LoadingIcon({ className, iconSize }) {
   return (
-    <span className={className}>
-      <FontAwesomeIcon size={iconSize} icon={faSpinner} spin fixedWidth />
-    </span>
+    <IconBase
+      iconSize={iconSize}
+      className={className}
+      spinIcon={true}
+      icon={faSpinner}
+    />
   );
 }
 
 LoadingIcon.propTypes = {
-  isLoading: PropTypes.bool,
   className: PropTypes.string,
   iconSize: PropTypes.string
 };

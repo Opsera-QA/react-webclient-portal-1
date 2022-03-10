@@ -4,9 +4,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/pro-light-svg-icons";
 import azureTaskActions from "../azure-cluster-actions";
+import IconBase from "components/common/icons/IconBase";
 
 function AzureRegionSelectInput({
                                                fieldName,
@@ -90,7 +90,7 @@ function AzureRegionSelectInput({
     if (dataObject?.getData("resource")?.length > 0) {
       return (
         <small>
-          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          <IconBase icon={faSync} className={"pr-1"} />
           Click here to refresh Azure Regions
         </small>
       );

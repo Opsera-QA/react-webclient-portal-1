@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 
 function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilterDto, loadData, isLoading, rowClickFunction, }) {
-  let history = useHistory();
+  const history = useHistory();
   const [columns, setColumns] = useState([]);
 
   const rowStyling = (row) => {
@@ -57,7 +57,6 @@ function ToolsTable({ data, toolMetadata, isMounted, toolFilterDto, setToolFilte
   return (
     <CustomTable
       nextGeneration={true}
-      className="table-no-border"
       columns={columns}
       data={data}
       isLoading={isLoading}

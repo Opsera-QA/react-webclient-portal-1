@@ -4,8 +4,8 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ExportDetailedToolReportDataModal from "components/common/modal/export_data/ExportDetailedToolReportDataModal";
+import IconBase from "components/common/icons/IconBase";
 
 function ExportDetailedToolReportButton({isLoading, toolData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
@@ -36,7 +36,7 @@ function ExportDetailedToolReportButton({isLoading, toolData, className}) {
             size={"sm"}
             disabled={isLoading}
             onClick={() => setShowExportModal(true)}>
-            <span><FontAwesomeIcon fixedWidth icon={faFileDownload}/></span>
+            <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>

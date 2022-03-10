@@ -175,7 +175,6 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
 
     return (
       <VanityTable
-        className={"no-table-border"}
         data={arr}
         columns={columns}
         onRowSelect={onRowSelect}

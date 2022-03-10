@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
@@ -9,7 +8,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function RoleRestrictedToolByIdentifierInputBase(
   {
@@ -35,6 +35,7 @@ function RoleRestrictedToolByIdentifierInputBase(
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [toolMetadata, setToolMetadata] = useState(undefined);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -46,13 +47,13 @@ function RoleRestrictedToolByIdentifierInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
-
     setTools([]);
-    if (toolIdentifier !== "") {
+    setError(undefined);
+
+    if (hasStringValue(toolIdentifier) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
-          throw error;
+          setError(error);
         }
       });
     }
@@ -69,10 +70,14 @@ function RoleRestrictedToolByIdentifierInputBase(
       await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -80,7 +85,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolIdentifier, fields);
     const tools = response?.data?.data;
 
-    if (Array.isArray(tools)) {
+    if (isMounted?.current === true && Array.isArray(tools)) {
       setToolMetadata(response?.data?.metadata);
       if (filterDataFunction) {
         const filteredTools = filterDataFunction(tools);
@@ -107,7 +112,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier) {
       return (
         <div className="form-text text-muted p-2">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No {configurationRequired ? "configured " : ""}tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
           Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
@@ -144,10 +149,6 @@ function RoleRestrictedToolByIdentifierInputBase(
     }
   };
 
-  if (visible === false) {
-    return null;
-  }
-
   return (
     <>
       <SelectInputBase
@@ -160,6 +161,8 @@ function RoleRestrictedToolByIdentifierInputBase(
         busy={isLoading}
         valueField={valueField}
         textField={textField}
+        visible={visible}
+        error={error}
         placeholderText={placeholderText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}

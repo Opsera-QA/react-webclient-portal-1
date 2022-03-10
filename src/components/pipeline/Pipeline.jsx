@@ -8,9 +8,8 @@ import SuccessDialog from "../common/status_notifications/SuccessDialog";
 import InfoDialog from "../common/status_notifications/info";
 import { isAlphaNumeric, handleError } from "utils/helpers";
 import { ApiService } from "../../api/apiService";
-import "./styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 class Pipeline extends React.PureComponent {
   static contextType = RMContext
@@ -301,7 +300,7 @@ class Pipeline extends React.PureComponent {
           {savingStatus === "success" && messages ? <>
             <SuccessDialog successMessage={messages} />
             <Button variant="outline-primary" className="ml-2" onClick={gotoInventory}>
-              <FontAwesomeIcon icon={faClipboardList} fixedWidth /> Registry
+              <IconBase icon={faClipboardList} /> Registry
             </Button>
           </> : null}
           {status === "success" && savingStatus === null && (

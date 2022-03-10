@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBracketsCurly, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,6 +13,7 @@ import StandaloneBooleanToggleInput from "components/common/inputs/boolean/Stand
 import OctopusStandaloneVariablesTypeSelectInput from "./OctopusStandaloneVariablesTypeSelectInput";
 import OctopusStandaloneParametersSelectInput from "./OctopusStandaloneParametersSelectInput";
 import OctopusStandaloneEnvironmentsMultiSelectInput from "./OctopusStandaloneEnvironmentsMultiSelectInput";
+import IconBase from "components/common/icons/IconBase";
 
 function OctopusCustomParametersInput({
   dataObject,
@@ -253,6 +253,10 @@ function OctopusCustomParametersInput({
     );
   };
 
+  const setSlotSettingDataFunction = (fieldName, newValue) => {
+    setSlotSetting(newValue);
+  };
+
   const getAdditionalFields = () => {
     if (variableType == "") {
       return null;
@@ -272,7 +276,7 @@ function OctopusCustomParametersInput({
           fieldId="slotSetting"
           checkedValue={slotSetting}
           fieldLabel="Slot Setting"
-          setDataFunction={setSlotSetting}
+          setDataFunction={setSlotSettingDataFunction}
           disabled={disabled}
         />        
       );
@@ -304,7 +308,7 @@ function OctopusCustomParametersInput({
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <span>
-          <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth />
+          <IconBase className={"danger-red"} icon={faTimes} />
         </span>
       </Button>
     );
@@ -347,10 +351,10 @@ function OctopusCustomParametersInput({
           </Popover>
         }
       >
-        <FontAwesomeIcon
+        <IconBase
           icon={faInfoCircle}
-          className="fa-pull-right pointer pr-2 mt-1 pl-0"
-          onClick={() => document.body.click()}
+          className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
+          onClickFunction={() => document.body.click()}
         />
       </OverlayTrigger>
     );
@@ -360,7 +364,7 @@ function OctopusCustomParametersInput({
     return (
       <div className="pl-2 pt-2 d-flex justify-content-between">
         <div>
-          <FontAwesomeIcon icon={faHandshake} fixedWidth className="mr-2" />
+          <IconBase icon={faHandshake} className={"mr-2"} />
           Custom Parameter Mapping
         </div>
         {getHelpText()}

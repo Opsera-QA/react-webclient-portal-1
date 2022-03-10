@@ -1,18 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import IconBase from "components/common/icons/IconBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
-function SpyglassIcon({ className, onClickFunction, tooltipText }) {
+function SpyglassIcon(
+  {
+    className,
+    onClickFunction,
+    tooltipText,
+    iconSize,
+  }) {
   return (
     <div className={className}>
-      <TooltipWrapper innerText={tooltipText} placement={"top"}>
-        <IconBase
-          onClickFunction={onClickFunction}
-          icon={faSearch}
-        />
-      </TooltipWrapper>
+      <OverlayIconBase
+        overlayBody={tooltipText}
+        onClickFunction={onClickFunction}
+        icon={faSearch}
+        iconSize={iconSize}
+        className={onClickFunction}
+      />
     </div>
   );
 }
@@ -20,7 +26,8 @@ function SpyglassIcon({ className, onClickFunction, tooltipText }) {
 SpyglassIcon.propTypes = {
   onClickFunction: PropTypes.func,
   className: PropTypes.string,
-  tooltipText: PropTypes.string
+  tooltipText: PropTypes.string,
+  iconSize: PropTypes.string,
 };
 
 export default SpyglassIcon;

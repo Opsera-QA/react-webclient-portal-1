@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
 function DataNotFoundDialog ({ type, managementViewTitle, managementViewLink, managementViewIcon }) {
@@ -10,7 +10,7 @@ function DataNotFoundDialog ({ type, managementViewTitle, managementViewLink, ma
     return (
       <span>
         <Link to={managementViewLink}>
-          <FontAwesomeIcon icon={managementViewIcon} fixedWidth className="mr-2"/>
+          <IconBase icon={managementViewIcon} className={"mr-2"}/>
           {managementViewTitle}.
         </Link>
       </span>

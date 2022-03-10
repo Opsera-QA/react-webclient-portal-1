@@ -40,7 +40,7 @@ function MakeupTableRow(
           <td
             key={j}
             {...cell.getCellProps()}
-            className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}
+            className={"table-cell px-2 py-1 " + setColumnClass(cell.column.id, columns)}
           >
             {cell.render("Cell")}
           </td>

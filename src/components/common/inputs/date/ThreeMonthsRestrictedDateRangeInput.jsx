@@ -4,13 +4,11 @@ import { DateRangePicker } from "react-date-range";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
-
+import IconBase from "components/common/icons/IconBase";
 
 function ThreeMonthsRestrictedDateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -59,7 +57,7 @@ function ThreeMonthsRestrictedDateRangeInput({ fieldName, dataObject, setDataObj
         <InputLabel field={field} model={dataObject} />
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1" />
+            <IconBase icon={faTimes} className={"mr-1"} />
             Clear Value
           </span>
         </TooltipWrapper>

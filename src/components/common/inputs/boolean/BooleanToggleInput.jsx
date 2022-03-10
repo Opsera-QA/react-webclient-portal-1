@@ -12,6 +12,7 @@ function BooleanToggleInput(
     setDataFunction,
     disabled,
     className,
+    id,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -56,6 +57,21 @@ function BooleanToggleInput(
     return classNames;
   };
 
+  const getUniqueId = () => {
+    let constructedId = field?.id;
+    const objectId = dataObject?.getMongoDbId();
+
+    if (objectId) {
+      constructedId += `-${objectId}`;
+    }
+
+    if (id) {
+      constructedId += `-${id}`;
+    }
+
+    return constructedId;
+  };
+
   if (field == null) {
     return null;
   }
@@ -67,7 +83,7 @@ function BooleanToggleInput(
           <Form.Check
             type={"switch"}
             className={getClassNames()}
-            id={field.id}
+            id={getUniqueId()}
             checked={!!dataObject.getData(fieldName)}
             disabled={disabled}
             label={<div className={getLabelClassNames()}>{field?.label}</div>}
@@ -93,6 +109,7 @@ BooleanToggleInput.propTypes = {
   dataObject: PropTypes.object,
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default BooleanToggleInput;

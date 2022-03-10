@@ -5,7 +5,6 @@ import { AuthContext } from "contexts/AuthContext";
 import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearchPlus,
   faFileAlt,
@@ -24,6 +23,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -215,7 +216,7 @@ function PipelineWorkflow({
             <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
               handleViewPipelineClick(pipeline);
             }}>
-              <FontAwesomeIcon icon={faFileAlt} fixedWidth/> View Configuration</Button>
+              <IconBase icon={faFileAlt} className={"mr-1"}/>View Configuration</Button>
           </OverlayTrigger>
           }
 
@@ -226,7 +227,7 @@ function PipelineWorkflow({
             onClick={() => {
               handleDoneWorkflowEditsClick();
             }}>
-            <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>Done Editing</Button>
+            <IconBase icon={faCheck} className={"mr-1"}/>Done Editing</Button>
           }
 
           {!editWorkflow &&
@@ -242,7 +243,7 @@ function PipelineWorkflow({
                           handleEditWorkflowClick();
                         }}
                         disabled={(workflowStatus && workflowStatus !== "stopped")}>
-                  <FontAwesomeIcon icon={faPen} fixedWidth/> Edit Workflow</Button>
+                  <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
               </OverlayTrigger>
               }
             </>}
@@ -256,16 +257,17 @@ function PipelineWorkflow({
           <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
             {!softLoading ?
               <div className="pt-2 text-center mx-auto">Start of Workflow</div> :
-              <div className="pt-2 text-center mx-auto green"><FontAwesomeIcon icon={faSpinner} className="mr-1"
-                                                                               spin/> Processing Workflow...</div>
+              <div className="pt-2 text-center mx-auto green">
+                <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
             }
 
             {pipeline.workflow.source.trigger_active &&
             <div className="d-flex">
               <div className="upper-case-first pl-2">
             <span className="text-muted small">
-            <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
-                             className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
+            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>
+              Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
+            </span>
               </div>
             </div>}
 
@@ -273,8 +275,8 @@ function PipelineWorkflow({
             <div className="d-flex">
               <div className="upper-case-first pl-2">
             <span className="text-muted small">
-            <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
-                             className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
+            <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
+              Source Repository: {pipeline.workflow.source.service}</span>
               </div>
             </div>}
 
@@ -282,7 +284,7 @@ function PipelineWorkflow({
               <div className="d-flex">
                 <div className={"pl-2"}>
                   <span className="text-muted small">
-                    <FontAwesomeIcon icon={faCode} size="sm" fixedWidth className="mr-1"/>
+                    <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
                     Repository: {pipeline.workflow.source.repository}
                   </span>
                 </div>
@@ -293,7 +295,7 @@ function PipelineWorkflow({
               <div className="d-flex">
                 <div className={"pl-2"}>
                   <span className="text-muted small my-auto">
-                    <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>
+                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
                     Primary Branch: {pipeline.workflow.source.branch}
                   </span>
                 </div>
@@ -304,7 +306,7 @@ function PipelineWorkflow({
               <div className="d-flex">
                 <div className={"pl-2"}>
                   <span className="text-muted small my-auto">
-                    <FontAwesomeIcon icon={faCodeBranch} size="sm" fixedWidth className="mr-1"/>
+                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
                     Secondary Branches: {pipeline.workflow.source.secondary_branches?.join(", ")}
                   </span>
                 </div>
@@ -312,17 +314,18 @@ function PipelineWorkflow({
             }
 
             <div className="d-flex align-items-end flex-row m-2">
-              <div className="ml-auto text-right">
+              <div className="ml-auto d-flex">
                 {authorizedAction("view_step_configuration", pipeline.owner) && <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "View Settings" })}>
-                  <FontAwesomeIcon icon={faSearchPlus}
-                                   className="text-muted mr-2" fixedWidth
-                                   style={{ cursor: "pointer" }}
-                                   onClick={() => {
+                  <div>
+                  <IconBase icon={faSearchPlus}
+                                   className={"text-muted mr-2 pointer"}
+                                   onClickFunction={() => {
                                      handleViewClick(pipeline.workflow.source, "Step Settings");
                                    }}/>
+                  </div>
                 </OverlayTrigger>
                 }
 
@@ -332,12 +335,13 @@ function PipelineWorkflow({
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
-                      <FontAwesomeIcon icon={faCog}
-                                       style={{ cursor: "pointer" }}
-                                       className="text-muted" fixedWidth
-                                       onClick={() => {
-                                         handleEditSourceSettingsClick();
-                                       }}/>
+                      <div>
+                        <IconBase icon={faCog}
+                                  className={"text-muted pointer"}
+                                  onClickFunction={() => {
+                                    handleEditSourceSettingsClick();
+                                  }}/>
+                      </div>
                     </OverlayTrigger>
                   </>
                   :
@@ -346,8 +350,10 @@ function PipelineWorkflow({
                       placement="top"
                       delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                      <FontAwesomeIcon icon={faCog}
-                                       className="text-muted mx-1" fixedWidth/>
+                      <div>
+                        <IconBase icon={faCog}
+                                  className={"text-muted mx-1"} />
+                      </div>
                     </OverlayTrigger>
                   </>
                 }
@@ -392,7 +398,7 @@ function PipelineWorkflow({
                   onClick={() => {
                     handleZoomClick(zoomValue, "in");
                   }}>
-            <FontAwesomeIcon icon={faSearchPlus} fixedWidth/></Button>
+            <IconBase icon={faSearchPlus}/></Button>
 
           <Button variant="secondary"
                   className="mr-1"
@@ -401,7 +407,7 @@ function PipelineWorkflow({
                   onClick={() => {
                     handleZoomClick(zoomValue, "out");
                   }}>
-            <FontAwesomeIcon icon={faSearchMinus} fixedWidth/></Button>
+            <IconBase icon={faSearchMinus} /></Button>
         </div>
       </div>
 

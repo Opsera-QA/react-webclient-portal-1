@@ -41,7 +41,6 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted, org
   const getOrganizationsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={organizations}

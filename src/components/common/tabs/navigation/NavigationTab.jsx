@@ -1,9 +1,8 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted} from "components/common/tooltip/popover-text";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, toolTipText}) {
   const getTab = () => {
@@ -19,7 +18,7 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
   const getIcon = () => {
     if (icon) {
       return (
-        <FontAwesomeIcon icon={icon} fixedWidth/>
+        <IconBase icon={icon}/>
       );
     }
   };
@@ -33,7 +32,7 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
       <li className="mr-1">
         <TooltipWrapper innerText={tabAccessRestricted} placement={"bottom"}>
           <div className={"nav-link disabled-tab"}>
-            {/*<FontAwesomeIcon icon={faExclamationCircle} fixedWidth/>*/}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
+           <span className="ml-2 d-none d-lg-inline">{tabText}</span>
           </div>
         </TooltipWrapper>
       </li>

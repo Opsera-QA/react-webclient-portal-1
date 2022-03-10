@@ -25,9 +25,17 @@ primary analytics font*/
     font-weight: 400;
 }
 
+.analytics-font {
+    font-family: 'Inter', sans-serif;
+}
+
 .font-inter-light-500 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+}
+
+.metric-sub-header-text-spacing {
+    letter-spacing: 2px;
 }
 
 .metric-block-header-text {
@@ -58,7 +66,7 @@ primary analytics font*/
     color: white;
 }
 
-.chart-footer-text, .chart-subheader-text {
+.chart-footer-text, .metric-subheader-text {
     font-family: 'Inter', sans-serif;
     font-weight: 100;
     font-size: small;
@@ -95,12 +103,27 @@ primary analytics font*/
     color: #dc3545;
 }
 
+.danger-red-header {
+    background-color: #dc3545;
+    color: #fff;
+}
+
 .yellow {
     color: #CF940C;
 }
 
+.yellow-header {
+    background-color: #CF940C;
+    color: #fff;
+}
+
 .green {
     color: #00897b;
+}
+
+.green-header {
+    background-color: #00897b;
+    color: #fff;
 }
 
 /*Official Opsera Color Pallette*/
@@ -149,21 +172,47 @@ primary analytics font*/
     color: #00a8e8;
 }
 
+.chart-palette-1-header {
+    background-color: #00a8e8;
+    color: #fff;
+}
+
 .chart-palette-2 {
     color: #e76500;
+}
+
+.chart-palette-2-header {
+    background-color: #e76500;
+    color: #fff;
 }
 
 .chart-palette-3 {
     color: #a24600;
 }
 
+.chart-palette-3-header {
+    background-color: #a24600;
+    color: #fff;
+}
+
 .chart-palette-4 {
     color: #2e17e7;
+}
+
+.chart-palette-4-header {
+    background-color: #2e17e7;
+    color: #fff;
 }
 
 .chart-palette-5 {
     color: #2010a2;
 }
+
+.chart-palette-5-header {
+    background-color: #2010a2;
+    color: #fff;
+}
+
 /*end analytics color scheme*/
 /*END Official Colors*/
 

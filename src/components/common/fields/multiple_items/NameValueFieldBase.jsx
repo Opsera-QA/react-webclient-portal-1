@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
 
 function NameValueFieldBase({dataObject, fieldName, icon, badgeStyleName, noDataMessage, className }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -19,7 +19,7 @@ function NameValueFieldBase({dataObject, fieldName, icon, badgeStyleName, noData
       items.map((item, i) => {
         return (
           <span key={i} className={`mx-1 mb-1 badge badge-light ${badgeStyleName}`}>
-            <FontAwesomeIcon icon={icon} fixedWidth className="mr-1"/>{`${item.name}: ${item.value}`}
+            <IconBase icon={icon} className={"mr-1"}/>{`${item.name}: ${item.value}`}
           </span>
         );
       })

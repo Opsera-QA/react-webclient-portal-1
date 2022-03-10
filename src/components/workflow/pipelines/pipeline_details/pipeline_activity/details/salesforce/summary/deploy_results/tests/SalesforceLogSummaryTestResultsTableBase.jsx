@@ -6,7 +6,7 @@ import salesforceSummaryLogUnitTestResultMetadata
 import {
   getColumnHeader, getColumnId,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
@@ -34,6 +34,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "methodName")),
+      // getTimeColumnDefinition(getField(fields, "time")),
       getTableTextColumn(getField(fields, "outcome")),
       getTableDateTimeColumn(getField(fields, "testTimestamp")),
       // getTableTextColumn(getField(fields, "apexClass.attributes.type")),
@@ -52,7 +53,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
       <VanityTable
         data={testResults}
         columns={columns}
-        tableHeight={hasSuccessAndFailureTests === true ? halfTableSize : tableSize}
+        tableHeight={hasSuccessAndFailureTests === true ? `${halfTableSize}px` : `${tableSize}px`}
       />
     );
   };

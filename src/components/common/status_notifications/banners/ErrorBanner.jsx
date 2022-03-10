@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-solid-svg-icons";
 import {parseError} from "../../helpers/error-helpers";
+import IconBase from "components/common/icons/IconBase";
 
 function ErrorBanner({ error, id, removeBanner, prependMessage }) {
   const [messageBody, setMessageBody] = useState(undefined);
@@ -37,7 +37,7 @@ function ErrorBanner({ error, id, removeBanner, prependMessage }) {
     if (removeBanner) {
       return (
         <div className="float-right mr-1">
-          <FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => {clearError();}}/>
+          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
         </div>
       );
     }

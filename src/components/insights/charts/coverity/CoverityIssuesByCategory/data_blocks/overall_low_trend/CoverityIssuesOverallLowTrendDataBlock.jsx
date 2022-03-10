@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import ThreeLineScoreDataBlock from "../../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
-function CoverityIssuesOverallLowTrendDataBlock({ score, icon, className, onSelect }) {
+function CoverityIssuesOverallLowTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
-      <TwoLineScoreDataBlock
+      <ThreeLineScoreDataBlock
         className={`${className} p-2`}
-        icon={icon}
         score={score}
-        subtitle={"Low"}
+        topText={"Low"}
+        bottomText={"Last Scan: " + lastScore}
+        icon={icon}
+        iconOverlayBody={iconOverlayBody}
       />
     </DataBlockBoxContainer>
   );
@@ -21,6 +23,8 @@ CoverityIssuesOverallLowTrendDataBlock.propTypes = {
   icon: PropTypes.object,
   className: PropTypes.string,
   onSelect: PropTypes.func,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default CoverityIssuesOverallLowTrendDataBlock;

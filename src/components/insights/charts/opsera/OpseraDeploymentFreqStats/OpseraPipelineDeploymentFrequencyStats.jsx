@@ -6,7 +6,6 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import DeploymentFrequencyInsightsTableMetadata
@@ -16,6 +15,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import OpseraDeploymentFrequencyHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
 import genericChartFilterMetadata from "../../generic_filters/genericChartFilterMetadata";
+import IconBase from "components/common/icons/IconBase";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -138,10 +138,10 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
                 <div>{metrics[0].max.count}</div>
               </div>
               <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(metrics[0].max)}>
-                <FontAwesomeIcon
+                <IconBase
                   icon={faEllipsisH}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
+                  className={"fa-pull-right pointer pr-1"}
+                  onClickFunction={() => document.body.click()}
                 />
               </OverlayTrigger>
               <div className="w-100 text-muted mb-1">Max Deployments</div>
@@ -151,10 +151,10 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
                 <div>{metrics[0].min.count}</div>
               </div>
               <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(metrics[0].min)}>
-                <FontAwesomeIcon
+                <IconBase
                   icon={faEllipsisH}
                   className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
+                  onClickFunction={() => document.body.click()}
                   />
                 </OverlayTrigger>
               <div className="w-100 text-muted mb-1">Min Deployments</div>

@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import IconBase from "components/common/icons/IconBase";
 
 function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, showLabel}) {
   const toastContext = useContext(DialogToastContext);
@@ -113,7 +113,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   if (!isLoading && (pipelines == null)) {
     return (
       <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
         No pipeline runs have been recorded, or there was a problem pulling data.
       </div>
     );

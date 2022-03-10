@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/pro-light-svg-icons/faUser";
+import IconBase from "components/common/icons/IconBase";
 
 function ContactField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -19,7 +19,7 @@ function ContactField({dataObject, fieldName, className}) {
       contacts.map((contact, i) => {
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light item-badge">
-            <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${contact.name} (${contact.email})${contact.user_id ? ` [${contact.user_id}]` : ""}`}
+            <IconBase icon={faUser} className={"mr-1"}/>{`${contact.name} (${contact.email})${contact.user_id ? ` [${contact.user_id}]` : ""}`}
           </span>
         );
       })

@@ -63,8 +63,13 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
   };
 
   return (
-    <div className="error-toast d-flex" role="alert" aria-live="assertive" aria-atomic="true">
-      <div className="error-toast-text p-2">
+    <div
+      className={"error-toast d-flex"}
+      role={"alert"}
+      aria-live={"assertive"}
+      aria-atomic={"true"}
+    >
+      <div className={"error-toast-text p-2"}>
         <span>{prependMessage} {messageBody} {getCustomMessage()}</span>
       </div>
       {getCloseButton()}

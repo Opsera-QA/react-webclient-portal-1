@@ -1,13 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
-import FilterButtons from "components/common/filters/buttons/FilterButtons";
-import ViewToggle from "components/common/view/ViewToggle";
-import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
-import NewRecordButton from "components/common/buttons/data/NewRecordButton";
-import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
+import FilterBar from "components/common/filters/FilterBar";
 
 function FilterContainer(
   {
@@ -27,59 +22,36 @@ function FilterContainer(
     className,
     metadata,
     exportButton,
-    showBorder,
     supportClientSideSearching,
+    bodyClassName,
 
     // TODO: Remove after filters are used everywhere
     type
   }) {
-  const getInlineFilters = () => {
+  const getFilterBar = () => {
     return (
-      <div className="my-1 inline-filter-input">
-        <div className="d-flex my-auto">
-          <NewRecordButton
-            className={"mr-2 my-auto text-nowrap"}
-            addRecordFunction={addRecordFunction}
-            type={filterDto?.getType() || type || metadata?.type}
-            isLoading={isLoading}
-            variant={"success"}
-          />
-          <span className="d-none d-xl-inline">{inlineFilters}</span>
-          <InlineSearchFilter
-            isLoading={isLoading}
-            supportSearch={supportSearch}
-            filterDto={filterDto}
-            setFilterDto={setFilterDto}
-            loadData={loadData}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-            metadata={metadata}
-          />
-          <InlineClientSideSearchFilter
-            filterModel={filterDto}
-            setFilterModel={setFilterDto}
-            isLoading={isLoading}
-            supportClientSideSearching={supportClientSideSearching}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-          />
-          <ViewToggle
-            supportViewToggle={supportViewToggle}
-            filterDto={filterDto}
-            setFilterDto={setFilterDto}
-            saveCookies={saveCookies}
-            isLoading={isLoading}
-            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
-          />
-          <RefreshButton isLoading={isLoading} loadData={loadData} className={dropdownFilters != null ? "mr-2" : null} />
-          <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
-          {exportButton}
-        </div>
-      </div>
+      <FilterBar
+        filterModel={filterDto}
+        setFilterModel={setFilterDto}
+        loadData={loadData}
+        isLoading={isLoading}
+        addRecordFunction={addRecordFunction}
+        type={type}
+        metadata={metadata}
+        saveCookies={saveCookies}
+        supportSearch={supportSearch}
+        supportViewToggle={supportViewToggle}
+        dropdownFilters={dropdownFilters}
+        inlineFilters={inlineFilters}
+        exportButton={exportButton}
+        supportClientSideSearching={supportClientSideSearching}
+      />
     );
   };
 
   return (
     <div className={className}>
-      <div className="filter-container">
+      <div className="filter-container container-border">
         <div className="filter-title-bar w-100">
           <div className="px-2 d-flex content-block-header">
             <FilterTitleBar
@@ -88,13 +60,13 @@ function FilterContainer(
               type={type}
               filterDto={filterDto}
               titleIcon={titleIcon}
-              inlineFilters={getInlineFilters()}
+              inlineFilters={getFilterBar()}
               addRecordFunction={addRecordFunction}
             />
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <div className={showBorder !== false ? "filter-container-body" : ""}>
+        <div className={bodyClassName}>
           {body}
         </div>
       </div>
@@ -120,8 +92,8 @@ FilterContainer.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool,
   supportClientSideSearching: PropTypes.bool,
+  bodyClassName: PropTypes.bool,
 };
 
 export default FilterContainer;

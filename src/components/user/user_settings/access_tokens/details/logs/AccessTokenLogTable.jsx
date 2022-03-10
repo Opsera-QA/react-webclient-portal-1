@@ -28,7 +28,6 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, se
   const getActivityLogsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         noDataMessage={noDataMessage}
         loadData={loadData}

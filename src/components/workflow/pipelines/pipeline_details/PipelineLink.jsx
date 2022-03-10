@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import NavLink from "react-bootstrap/NavLink";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineLink({pipelineId}) {
   return (
     <div>
       <NavLink href={`/workflow/details/${pipelineId}`} className="p-0">
-        <span><FontAwesomeIcon icon={faDraftingCompass} className="pr-1"/>View Pipeline</span>
+        <span><IconBase icon={faDraftingCompass} className={"pr-1"}/>View Pipeline</span>
       </NavLink>
     </div>
   );

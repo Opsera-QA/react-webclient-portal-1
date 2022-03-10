@@ -1,17 +1,11 @@
-import {hasStringValue} from "components/common/helpers/string-helpers";
-
 export const numberHelpers = {};
 
 numberHelpers.hasNumberValue = (potentialNumber) => {
-  return typeof potentialNumber === "number";
+  return !isNaN(potentialNumber);
 };
 
 numberHelpers.parseNumber = (potentialNumber) => {
-  if (numberHelpers.hasNumberValue(potentialNumber)) {
-    return potentialNumber;
-  }
-
-  if (hasStringValue(potentialNumber)) {
+  if (numberHelpers.hasNumberValue(potentialNumber) === true) {
     return Number(potentialNumber);
   }
 };

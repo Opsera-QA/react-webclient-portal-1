@@ -16,7 +16,6 @@ argoActions.createArgoApplicationV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-
 argoActions.updateArgoApplicationV2 = async (getAccessToken, cancelTokenSource, toolId, applicationId, argoApplicationModel) => {
   const apiUrl = `/tools/${toolId}/argo/v2/${applicationId}/update`;
   const postBody = {
@@ -67,11 +66,6 @@ argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, too
 argoActions.deleteArgoRepository = async (getAccessToken, cancelTokenSource, toolId, repoId) => {
   const apiUrl = `/tools/${toolId}/argo/repo/${repoId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-argoActions.getArgoRepositories = async (getAccessToken, cancelTokenSource, argoToolId) => {
-  const apiUrl = `/tools/${argoToolId}/argo/repositories`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 argoActions.createArgoProject = async (getAccessToken, cancelTokenSource, toolId, argoRepositoryModel) => {

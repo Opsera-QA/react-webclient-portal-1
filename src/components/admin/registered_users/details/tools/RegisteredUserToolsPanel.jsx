@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import registeredUserToolsMetadata from "./registered-user-tools-form-fields";
 import Button from "react-bootstrap/Button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Model from "core/data_model/model";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -14,6 +13,7 @@ import JsonField from "components/common/fields/json/JsonField";
 import ErrorDialog from "components/common/status_notifications/error";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import IconBase from "components/common/icons/IconBase";
 
 function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,7 +85,7 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
             deployElkStack();
           }}>Deploy ELK Stack Now</Button>
           {isDeployingElk &&
-          <span className="ml-2"><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Currently deploying ELK stack. Check back later for tools.</span>}
+          <span className="ml-2"><IconBase isLoading={true} className={"mr-2 mt-1"}/>Currently deploying ELK stack. Check back later for tools.</span>}
         </div>
       );
     }

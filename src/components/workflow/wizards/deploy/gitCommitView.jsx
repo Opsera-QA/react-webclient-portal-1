@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faSpinner,
@@ -15,6 +14,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineActions from "../../pipeline-actions";
+import IconBase from "components/common/icons/IconBase";
 
 const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -126,7 +126,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
               setView(1);
             }}
           >
-            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1" />
+            <IconBase icon={faStepBackward} className={"mr-1"} />
             Back
           </Button>
 
@@ -138,11 +138,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
             }}
             disabled={save || message.length === 0 }
           >
-            {save ? (
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
-            ) : (
-              <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1" />
-            )}
+            <IconBase icon={faPlay} className={"mr-1"} />
             Start Pipeline
           </Button>
         </div>

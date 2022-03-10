@@ -336,12 +336,16 @@ export class Model {
     return field?.maxItems;
   };
 
-  getId = (field) => {
-    return this.metaData[field].id;
+  getIdForFieldName = (fieldName) => {
+    return this.getFieldById(fieldName)?.id;
+  };
+
+  getMongoDbId = () => {
+    return this.getData("_id");
   };
 
   getFields = () => {
-    return this.metaData.fields;
+    return this.metaData?.fields;
   };
 
   getType = () => {
@@ -368,7 +372,7 @@ export class Model {
 
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
-    return this.metaData.newObjectFields != null ? this.metaData.newObjectFields : {};
+    return this.metaData?.newObjectFields != null ? this.metaData?.newObjectFields : {};
   };
 
   clone = () => {

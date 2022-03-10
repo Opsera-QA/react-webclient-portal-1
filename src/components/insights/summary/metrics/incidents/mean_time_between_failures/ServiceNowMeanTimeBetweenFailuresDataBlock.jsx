@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import ServiceNowMeanTimeBetweenFailuresBarChart
   from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -105,7 +104,7 @@ function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynam
             ) : !isLoading ? (
               0
             ) : (
-              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
+              <LoadingIcon className={"mr-1"} />
             )
           }
           subTitle="Mean Time Between Failures (Hours)"

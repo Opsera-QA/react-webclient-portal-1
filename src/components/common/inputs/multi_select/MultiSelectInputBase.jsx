@@ -34,9 +34,10 @@ function MultiSelectInputBase(
     parseValueFunction,
     error,
     pluralTopic,
+    visible,
   }) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
 
@@ -170,7 +171,7 @@ function MultiSelectInputBase(
     return "Select One";
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -221,7 +222,10 @@ MultiSelectInputBase.propTypes = {
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   placeholderText: PropTypes.string,
   maxNumber: PropTypes.number,
   setDataFunction: PropTypes.func,
@@ -244,6 +248,7 @@ MultiSelectInputBase.propTypes = {
   onSearchFunction: PropTypes.func,
   error: PropTypes.any,
   pluralTopic: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default MultiSelectInputBase;

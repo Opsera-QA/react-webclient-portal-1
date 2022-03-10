@@ -63,7 +63,6 @@ function LdapDepartmentsTable(
   const getDepartmentsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={departments}

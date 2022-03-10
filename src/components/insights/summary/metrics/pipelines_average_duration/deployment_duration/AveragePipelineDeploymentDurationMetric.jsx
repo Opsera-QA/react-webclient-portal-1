@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import InsightsPipelineDetailsDurationTable
   from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function AveragePipelineDeploymentDurationMetric({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -120,12 +120,7 @@ function AveragePipelineDeploymentDurationMetric({ dashboardData, toggleDynamicP
             !isLoading && metrics[0] ? (
               getAverage()
             ) : !isLoading ? 0 : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+              <LoadingIcon className={"mr-1"}/>
             )
           }
           subTitle="Average Deployment Duration (Mins)"

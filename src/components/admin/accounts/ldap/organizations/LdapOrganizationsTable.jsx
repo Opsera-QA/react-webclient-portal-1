@@ -28,7 +28,6 @@ function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted})
   const getOrganizationsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={organizations}

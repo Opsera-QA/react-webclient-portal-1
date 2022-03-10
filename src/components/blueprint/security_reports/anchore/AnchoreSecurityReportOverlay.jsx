@@ -2,13 +2,13 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CardGroup from "react-bootstrap/CardGroup";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AnchoreSecurityReportTable from "components/blueprint/security_reports/anchore/AnchoreSecurityReportTable";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: Refactor and move to helper function. Make client-based paginator
 function chunkData(jsonData, array, size) {
@@ -63,9 +63,9 @@ function AnchoreSecurityReportOverlay({ anchoreSecurityVulnerabilities, stats })
                 <Card.Text className="w-100 text-muted mb-1">
                   Change: {Math.abs(item.delta)}
                   {item.delta > 0 ? (
-                    <FontAwesomeIcon icon={faCaretDown} className="cell-icon green" fixedWidth />
+                    <IconBase icon={faCaretDown} className={"cell-icon green"} />
                   ) : item.delta < 0 ? (
-                    <FontAwesomeIcon icon={faCaretUp} className="cell-icon red" fixedWidth />
+                    <IconBase icon={faCaretUp} className={"cell-icon red"} />
                   ) : ""}
                 </Card.Text>
               </Card>

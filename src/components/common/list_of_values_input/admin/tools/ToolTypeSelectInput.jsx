@@ -1,68 +1,111 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import toolManagementActions from "../../../../admin/tools/tool-management-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import {toolCategoryActions} from "components/admin/tools/categories/toolCategory.actions";
 
-function ToolTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function ToolTypeSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    textField,
+    valueField,
+    includeInactive,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolTypes, setToolTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    setError(undefined);
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadToolTypes(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTools = async () => {
-    let response = await toolManagementActions.getToolTypes(getAccessToken, false);
+  const loadToolTypes = async (cancelSource = cancelTokenSource) => {
+    const response = await toolCategoryActions.getToolTypesV2(
+      getAccessToken,
+      cancelSource,
+      includeInactive,
+      );
 
-    if (response?.data != null) {
-      setToolTypes(response.data);
+    const toolTypes = response?.data?.data;
+
+    if (isMounted.current === true && Array.isArray(toolTypes)) {
+      setToolTypes(toolTypes);
     }
   };
 
   return (
     <SelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
       selectOptions={toolTypes}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
-      // placeholderText={placeholderText}
-      disabled={disabled || isLoading}
+      disabled={disabled}
+      error={error}
     />
   );
 }
 
 ToolTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
-  valueField: PropTypes.string
+  valueField: PropTypes.string,
+  includeInactive: PropTypes.bool,
 };
 
 ToolTypeSelectInput.defaultProps = {
   valueField: "identifier",
-  textField: "name"
+  textField: "name",
 };
 
 export default ToolTypeSelectInput;

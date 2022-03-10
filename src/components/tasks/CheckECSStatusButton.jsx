@@ -1,11 +1,12 @@
 import React, {useState, useContext} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faLaptopMedical, faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import taskActions from "components/tasks/task.actions";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import IconBase from "components/common/icons/IconBase";
 
 function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
@@ -32,9 +33,9 @@ function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData
 
   const getLabel = () => {
     if (isLoading) {
-      return ( <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Checking Status</span>);
+      return ( <span><LoadingIcon className={"mr-1"}/>Checking Status</span>);
     }
-    return ( <span><FontAwesomeIcon icon={faLaptopMedical} className="mr-1" fixedWidth/>Check Status</span>);
+    return ( <span><IconBase icon={faLaptopMedical} className={"mr-1"} fixedWidth/>Check Status</span>);
   };
 
   if (gitTasksData.getData("type") !== "ecs_cluster_creation") {

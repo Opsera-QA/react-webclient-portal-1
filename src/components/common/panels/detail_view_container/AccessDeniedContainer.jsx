@@ -1,8 +1,7 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import PropTypes from "prop-types";
+import IconBase from "components/common/icons/IconBase";
 
 function AccessDeniedContainer(
   {
@@ -29,7 +28,7 @@ function AccessDeniedContainer(
       {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>Access Denied!
+          <IconBase className={"mr-1"}/>Access Denied!
         </div>
         <div className="p-2 mt-2 shaded-container detail-container-body">
           <div className="p-3 shaded-panel">

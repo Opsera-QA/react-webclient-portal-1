@@ -122,7 +122,7 @@ function ToolTableCardView(
         inlineFilters={getInlineFilters()}
         titleIcon={faTools}
         title={"Tools"}
-        className="px-2 pb-2"
+        className={"px-2 pb-2"}
       />
   );
 }

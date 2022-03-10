@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function TableCardView(
   {
@@ -10,13 +9,15 @@ function TableCardView(
     cardView,
     data,
     isLoading,
+    tableHeight,
   }) {
   const getView = () => {
-    if (!Array.isArray(data) || data.length === 0) {
-      if (isLoading) {
-        // TODO: Make good looking loading display
-        return (<div className="info-text text-center p-5"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
-      }
+    if (isLoading === true && !Array.isArray(data) || data.length === 0) {
+      return (
+        <div style={{height: tableHeight}}>
+          <CenterLoadingIndicator/>
+        </div>
+      );
     }
 
     if (filterModel?.getData("viewType") === "card") {
@@ -27,7 +28,7 @@ function TableCardView(
   };
 
   return (
-    <div className="table-card-panel">
+    <div className={"table-card-panel h-100"}>
       {getView()}
     </div>
   );
@@ -39,6 +40,11 @@ TableCardView.propTypes = {
   cardView: PropTypes.object,
   data: PropTypes.array,
   isLoading: PropTypes.bool,
+  tableHeight: PropTypes.string,
+};
+
+TableCardView.defaultProps = {
+  tableHeight: "500px",
 };
 
 export default TableCardView;

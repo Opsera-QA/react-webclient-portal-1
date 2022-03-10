@@ -58,7 +58,7 @@ function PipelineConsoleLogField({dataObject, apiResponse}) {
 
   const parseData = (data, key) => {
     if (key === "consoleLog") {
-      if (typeof data === "object") {
+      if (data && typeof data === "object") {
         const parsedArray = parseInnerObject(data);
 
         if (Array.isArray(parsedArray)) {

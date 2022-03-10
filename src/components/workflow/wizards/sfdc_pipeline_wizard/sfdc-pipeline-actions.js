@@ -253,19 +253,6 @@ sfdcPipelineActions.setTestClassesListV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.getListFromPipelineStorage = async (postBody, toolFilterDto, getAccessToken) => {
-  postBody.page = toolFilterDto ? toolFilterDto.getData("currentPage") : 0;
-  postBody.size = toolFilterDto ? toolFilterDto.getData("pageSize") : 50;
-  postBody.search = toolFilterDto ? toolFilterDto.getData("search") : "";
-  postBody.classFilter = toolFilterDto ? toolFilterDto.getData("classFilter") : "";
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/storage/get`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
-};
-
 sfdcPipelineActions.getSfdcComponentListValues = async (getAccessToken, cancelTokenSource, pipelineWizardModel, innerAttribute, fetchAttribute, componentTypes) => {
   const postBody = {
     fetchAttribute: fetchAttribute,

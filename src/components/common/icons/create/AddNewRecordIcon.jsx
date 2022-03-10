@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function AddNewRecordIcon({ addRecordFunction, className, type }) {
   if (addRecordFunction == null) {
@@ -11,7 +11,7 @@ function AddNewRecordIcon({ addRecordFunction, className, type }) {
   return (
     <div className={className}>
       <div className={"pointer"}>
-        <FontAwesomeIcon onClick={() => {addRecordFunction();}} icon={faPlus} fixedWidth className={"mr-2"} />
+        <IconBase onClickFunction={() => {addRecordFunction();}} icon={faPlus} className={"mr-2"} />
         <span>Add New {type}</span>
       </div>
     </div>
