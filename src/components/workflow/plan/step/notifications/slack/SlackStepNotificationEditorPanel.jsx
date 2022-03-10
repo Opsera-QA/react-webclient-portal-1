@@ -1,49 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NotificationsToggle from "components/workflow/plan/step/notifications/NotificationsToggle";
-import {Link} from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
-import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
-import NotificationLevelInput from "components/workflow/plan/step/notifications/NotificationLevelInput";
+import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
 import SlackStepNotificationToolInput
   from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function SlackStepNotificationEditorPanel(
   {
     slackNotificationModel,
     setSlackNotificationModel,
   }) {
-  
+
   if (slackNotificationModel == null) {
     return null;
   }
 
-  // TODO: Remove after updating the panel to use side tabs
-  if (slackNotificationModel?.getData("enabled") === false) {
-    return (
-      <div className="my-4">
-        <NotificationsToggle
+  return (
+    <Row>
+      <Col xs={12}>
+        <PipelineStepNotificationBooleanToggle
+          model={slackNotificationModel}
+          setModel={setSlackNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <ConnectToToolMessage toolFriendlyName={"Slack"}/>
+      </Col>
+      <Col xs={12}>
+        <PipelineStepNotificationLevelSelectInput
+          model={slackNotificationModel}
+          setModel={setSlackNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <SlackStepNotificationToolInput
+          setDataObject={setSlackNotificationModel}
+          dataObject={slackNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <TextInputBase
+          fieldName={"channel"}
           dataObject={slackNotificationModel}
           setDataObject={setSlackNotificationModel}
-          fieldName={"enabled"}
-          type={"slack"}
+          disabled={slackNotificationModel?.getData("enabled") === false}
         />
-      </div>
-    );
-  }
-
-  return (
-    <div className="my-4">
-      <NotificationsToggle dataObject={slackNotificationModel} setDataObject={setSlackNotificationModel} fieldName={"enabled"} type={"slack"} />
-      <small className="form-text text-muted px-2">
-        Please Note: You must use the Add to Slack button on the
-        <Link to="/inventory/tools"><IconBase icon={faClipboardList} className={"mx-1"}/>Tool Registry</Link> page in order to use this feature.
-      </small>
-      <NotificationLevelInput dataObject={slackNotificationModel} setDataObject={setSlackNotificationModel} fieldName={"event"} />
-      <SlackStepNotificationToolInput setDataObject={setSlackNotificationModel} dataObject={slackNotificationModel} />
-      <TextInputBase dataObject={slackNotificationModel} setDataObject={setSlackNotificationModel} fieldName={"channel"} />
-    </div>
+      </Col>
+    </Row>
   );
 }
 

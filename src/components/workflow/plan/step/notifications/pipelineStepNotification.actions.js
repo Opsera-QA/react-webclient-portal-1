@@ -8,6 +8,7 @@ pipelineStepNotificationActions.getJiraProjects2 = async (toolId, getAccessToken
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Update references to the new file and move elsewhere
 pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   let projectKey = jiraStepNotificationDto.getData("jiraProject");
@@ -38,20 +39,6 @@ pipelineStepNotificationActions.getJiraPrioritiesWithId = async (jiraToolId, get
 
 pipelineStepNotificationActions.getJiraTicketDetails = async (toolId, ticketId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/ticket/${ticketId}/details`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraWorkflowSteps = async (jiraStepNotificationDto, getAccessToken) => {
-  let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  let projectKey = jiraStepNotificationDto.getData("jiraProject");
-  const apiUrl = `/connectors/jira/${toolId}/project/workflows?project=${projectKey}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraParentTickets = async (jiraStepNotificationDto, getAccessToken) => {
-  let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  let sprintId = jiraStepNotificationDto.getData("jiraSprint");
-  const apiUrl = `/connectors/jira/${toolId}/sprint/issues?sprint=${sprintId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
