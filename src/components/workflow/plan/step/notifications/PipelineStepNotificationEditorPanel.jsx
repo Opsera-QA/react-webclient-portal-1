@@ -114,27 +114,27 @@ function PipelineStepNotificationEditorPanel(
 
   const validateRequiredFields = () => {
     if (emailNotificationModel.getData("enabled") === true && !emailNotificationModel.isModelValid()) {
-      toastContext.showErrorDialog("Error: Cannot enable Email notification without all required fields filled out.");
+      toastContext.showInlineErrorMessage("Error: Cannot enable Email notification without all required fields filled out.");
       return false;
     }
 
     if (jiraNotificationModel.getData("enabled") === true && !jiraNotificationModel.isModelValid()) {
-      toastContext.showErrorDialog("Error: Cannot enable Jira notification without all required fields filled out.");
+      toastContext.showInlineErrorMessage("Error: Cannot enable Jira notification without all required fields filled out.");
       return false;
     }
 
     if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
-      toastContext.showErrorDialog("Error: Cannot enable Teams notification without tool selected.");
+      toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
       return false;
     }
 
     if (slackNotificationModel.getData("enabled") === true && !slackNotificationModel.isModelValid()) {
-      toastContext.showErrorDialog("Error: Cannot enable Slack notifications without all required fields filled out.");
+      toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
       return false;
     }
     
     if (serviceNowNotificationModel.getData("enabled") === true && !serviceNowNotificationModel.isModelValid()) {
-      toastContext.showErrorDialog("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
+      toastContext.showInlineErrorMessage("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
       return false;
     }
 

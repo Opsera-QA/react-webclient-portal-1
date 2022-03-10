@@ -23,7 +23,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
-            <CloseIcon handleClose={handleClose} />
+            <CloseIcon handleCloseFunction={handleClose} />
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
       <Row className="title-text-header-1 w-100 p-1 mx-0 bg-white">
         <div className={"ml-auto dark-grey d-flex"}>
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
-          <CloseIcon handleClose={handleClose} />
+          <CloseIcon handleCloseFunction={handleClose} />
         </div>
       </Row>
     );
@@ -47,7 +47,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
-          <CloseIcon handleClose={handleClose} />
+          <CloseIcon handleCloseFunction={handleClose} />
         </div>
       </div>
     </div>

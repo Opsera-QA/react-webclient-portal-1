@@ -66,6 +66,7 @@ function ToolInventory() {
   const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
+      toastContext.showFormInformationBanner("test");
       await getToolRegistryList(newFilterModel, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {

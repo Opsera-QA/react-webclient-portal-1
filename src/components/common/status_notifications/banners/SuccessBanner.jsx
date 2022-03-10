@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import IconBase from "components/common/icons/IconBase";
+import BannerBase from "components/common/status_notifications/banners/BannerBase";
 
 function SuccessBanner({successMessage, removeBanner, id}) {
   const [messageBody, setMessageBody] = useState("");
-
-  const clearSuccess = () => {
-    removeBanner(id);
-  };
 
   useEffect(() => {
     setMessageBody(successMessage);
   }, [successMessage]);
 
-  const getCloseButton = () => {
-    if (removeBanner) {
-      return (
-        <div className="float-right ml-1">
-          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearSuccess();}}/>
-        </div>
-      );
-    }
+  const clearSuccess = () => {
+    removeBanner(id);
   };
 
   return (
-    <div className="w-100 success-block top-dialog-block">
-      {getCloseButton()}
-      <span>{messageBody}</span>
-    </div>
+    <BannerBase
+      bannerClassName={"py-3 w-100 top-dialog-block success-block"}
+      bannerMessage={messageBody}
+      removeBannerFunction={clearSuccess}
+    />
   );
 }
 

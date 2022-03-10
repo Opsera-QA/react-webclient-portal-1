@@ -19,7 +19,11 @@ function HelpDocumentationContainer({ children, isLoading, helpTopic, confluence
             className={"pr-2"}
             linkTooltipText={externalLinkText}
           />
-          <CloseIcon tooltipText={"Close Help"} handleClose={closeHelpPanel} size={"lg"} />
+          <CloseIcon
+            overlayBody={"Close Help"}
+            handleCloseFunction={closeHelpPanel}
+            size={"lg"}
+          />
         </div>
       </div>
     );
