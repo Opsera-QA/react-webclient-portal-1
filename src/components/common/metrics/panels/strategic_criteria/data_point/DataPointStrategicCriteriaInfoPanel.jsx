@@ -5,14 +5,18 @@ import DataPointEvaluationRulesInfoPanel
 import {strategicCriteriaHelpers} from "components/common/helpers/metrics/strategic_criteria/strategicCriteria.helpers";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
-function DataPointStrategicCriteriaInfoPanel({ strategicCriteria }) {
+function DataPointStrategicCriteriaInfoPanel(
+  {
+    strategicCriteria,
+    className,
+  }) {
   const getBody = () => {
     if (objectHelpers.isObject(strategicCriteria) !== true) {
       return "There is no strategic criteria assigned to this data point.";
     }
 
     return (
-      <div className={"p-2"}>
+      <div>
         <DataPointEvaluationRulesInfoPanel
           dataPointEvaluationRules={strategicCriteriaHelpers.getStrategicCriteriaDataPointEvaluationRules(strategicCriteria)}
         />
@@ -21,7 +25,7 @@ function DataPointStrategicCriteriaInfoPanel({ strategicCriteria }) {
   };
 
   return (
-    <div>
+    <div className={className}>
       {getBody()}
     </div>
   );
@@ -29,6 +33,7 @@ function DataPointStrategicCriteriaInfoPanel({ strategicCriteria }) {
 
 DataPointStrategicCriteriaInfoPanel.propTypes = {
   strategicCriteria: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default DataPointStrategicCriteriaInfoPanel;

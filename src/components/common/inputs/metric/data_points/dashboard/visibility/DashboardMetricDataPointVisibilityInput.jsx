@@ -12,6 +12,7 @@ function DashboardMetricDataPointVisibilityInput(
     model,
     setModel,
     disabled,
+    className,
   }) {
   const [dataPointVisibilityModel, setDataPointVisibilityModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -42,7 +43,7 @@ function DashboardMetricDataPointVisibilityInput(
   }
 
   return (
-    <div>
+    <div className={className}>
       <H4FieldSubHeader subheaderText={"Visibility"}/>
       <BooleanToggleInput
         dataObject={dataPointVisibilityModel}
@@ -61,6 +62,7 @@ DashboardMetricDataPointVisibilityInput.propTypes = {
   disabled: PropTypes.bool,
   fromDashboardMetric: PropTypes.bool,
   dataPoint: PropTypes.object,
+  className: PropTypes.string,
 };
 
 DashboardMetricDataPointVisibilityInput.defaultProps = {
