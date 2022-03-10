@@ -17,7 +17,6 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
-  const [coverageData, setCoverageData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
