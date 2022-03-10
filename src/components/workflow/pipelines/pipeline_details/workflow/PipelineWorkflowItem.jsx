@@ -30,8 +30,6 @@ import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelineStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import PipelineStepNotificationConfigurationOverlay
   from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
@@ -155,28 +153,14 @@ const PipelineWorkflowItem = (
   };
 
   const handleEditClick = async (type, tool, itemId) => {
-    if (type === "notification") {
-      if (!authorizedAction("edit_step_notification", pipeline.owner)) {
-        setInfoModal({
-          show: true,
-          header: "Permission Denied",
-          message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
-          button: "OK",
-        });
-        return;
-      }
-    }
-
-    if (type !== "notification") {
-      if (!authorizedAction("edit_step_details", pipeline.owner)) {
-        setInfoModal({
-          show: true,
-          header: "Permission Denied",
-          message: "Editing step settings is not allowed.  This action requires elevated privileges.",
-          button: "OK",
-        });
-        return;
-      }
+    if (!authorizedAction("edit_step_details", pipeline.owner)) {
+      setInfoModal({
+        show: true,
+        header: "Permission Denied",
+        message: "Editing step settings is not allowed.  This action requires elevated privileges.",
+        button: "OK",
+      });
+      return;
     }
 
     setIsLoading(true);
@@ -473,7 +457,6 @@ const PipelineWorkflowItem = (
                       <IconBase icon={faEnvelope}
                                 className={"pointer text-muted mx-1"}
                                 onClickFunction={() => {
-                                  // handleEditClick("notification", item.tool, item._id);
                                   editStepNotificationConfiguration(item);
                                 }} />
                     </div>
