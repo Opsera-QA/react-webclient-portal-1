@@ -34,7 +34,6 @@ function DashboardMetricDataPointVisibilityInput(
   const setDataFunction = (newModel) => {
     const visibility = newModel?.getPersistData();
     model?.setData(fieldName, visibility);
-    console.log("visibility: " + JSON.stringify(visibility));
     setModel({...model});
   };
 
