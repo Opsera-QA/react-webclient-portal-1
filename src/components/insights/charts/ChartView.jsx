@@ -1145,6 +1145,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "github-commits":
+        return (
+          <Col md={12} className="p-2">
+            <GithubCommitsStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
         case "lead-time-and-release-traceability-data-block":
           return(
             <Col md={12} className="p-2">
@@ -1445,7 +1457,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
-          <>
           <Col md={12} className="p-2">
             <ServiceNowMeanTimeToResolutionBarChart
               kpiConfiguration={kpiConfig}
@@ -1455,16 +1466,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-          <Col md={12} className="p-2">
-            <GithubCommitsStatistics
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        </>
         );
       case "servicenow-mean-time-to-acknowledge":
         return (

@@ -15,7 +15,10 @@ import {
   adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend,
 } from "../../../charts-views";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
 import { Col, Row } from "react-bootstrap";
 import GitHubCommitsTotalCommitsDataBlock from "./data_blocks/GitHubCommitsTotalCommitsDataBlock";
 import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalMergesDataBlock";
@@ -33,7 +36,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   const [totalCommits, setTotalCommits] = useState(0);
   const [totalMerges, setTotalMerges] = useState(0);
   const [highestMergesMetric, setHighestMergesMetric] = useState([]);
-  const [totalDeclinedMerges, setTotalDeclinedMerges]= useState([]);
+  const [totalDeclinedMerges, setTotalDeclinedMerges] = useState([]);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -89,54 +92,40 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
               count: 115,
             },
           ],
-          project_with_highest_merges: [{
-            "id": "java",
-            "label": "java",
-            "value": 152,
-            
-          },
-          {
-            "id": "lisp",
-            "label": "lisp",
-            "value": 139,
-           
-          },
-          {
-            "id": "make",
-            "label": "make",
-            "value": 147,
-            
-          },
-          {
-            "id": "sass",
-            "label": "sass",
-            "value": 198,
-           
-          }],
-          total_declined_merges: [{
-            "id": "java",
-            "label": "java",
-            "value": 152,
-            
-          },
-          {
-            "id": "lisp",
-            "label": "lisp",
-            "value": 139,
-           
-          },
-          {
-            "id": "make",
-            "label": "make",
-            "value": 147,
-            
-          },
-          {
-            "id": "sass",
-            "label": "sass",
-            "value": 198,
-           
-          }],
+          project_with_highest_merges: [
+            {
+              id: "java",
+              label: "java",
+              value: 152,
+            },
+            {
+              id: "lisp",
+              label: "lisp",
+              value: 139,
+            },
+            {
+              id: "make",
+              label: "make",
+              value: 147,
+            },
+            {
+              id: "sass",
+              label: "sass",
+              value: 198,
+            },
+          ],
+          total_declined_merges: [
+            {
+              id: "java",
+              label: "java",
+              value: 152,
+            },
+            {
+              id: "lisp",
+              label: "lisp",
+              value: 139,
+            },
+          ],
           total_merges: 34,
         },
       };
@@ -180,62 +169,57 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
-  const getPieChartBocks = () => {
-    console.log(mostActiveUsersMetrics);
-    return (
-      <Row className="px-4 justify-content-between">
-        <Col md={12} className={"my-1"}>
-          <div className="new-chart mb-3" style={{ height: "200px" }}>
-            <ResponsivePie
-              data={highestMergesMetric}
-              {...defaultConfig()}
-              {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-              onClick={() => setShowModal(true)}
-            />
-          </div>
-        </Col>
-        <Col md={12} className={"my-1"}>
-          <div className="new-chart mb-3" style={{ height: "200px" }}>
-            <ResponsivePie
-              data={totalDeclinedMerges}
-              {...defaultConfig()}
-              {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-              onClick={() => setShowModal(true)}
-            />
-          </div>
-        </Col>
-      </Row>
-    );
-  };
-
   const getChartBody = () => {
     if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
       return null;
     }
-    console.log(mostActiveUsersMetrics);
-    // const onRowSelect = (rowData) => {
-    //   setModalData(rowData.original);
-    //   setShowModal(true);
-    // };
 
     return (
-      <div>
+      <div className="new-chart mb-3">
         <Row>
-          <Col>{getDataBlocks()}</Col>
-          <Col>{getPieChartBocks()}</Col>
-          <Col>
-            <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <Col md={3}>{getDataBlocks()}</Col>
+          <Col md={3}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Highest Merges
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={highestMergesMetric}
+                {...defaultConfig("","",false, false, "","", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
+          </Col>
+          <Col md={3}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Total Declined Merges
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={totalDeclinedMerges}
+                {...defaultConfig("","",false, false, "","", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
+          </Col>
+          <Col md={3}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Total Merges
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsiveBar
                 data={mostActiveUsersMetrics}
                 {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
                 {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
                 {...adjustBarWidth(mostActiveUsersMetrics, false)}
-                //  onClick={(data) => onRowSelect(data)}
-                // tooltip={({ indexValue, value, color }) => <ChartTooltip
-                //                               titles = {["User", "Number of Builds"]}
-                //                               values = {[indexValue, `${value} builds`]}
-                //                               style = {false}
-                //                               color = {color} />}
               />
             </div>
           </Col>

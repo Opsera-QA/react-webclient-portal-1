@@ -13,7 +13,6 @@ export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
 });
 
 export const pieChartConfig = (METRIC_THEME_CHART_PALETTE_COLORS) => ({
-  keys: ["commits"],
   sortByValue: true,
   innerRadius: .5,
   sliceLabelsSkipAngle: 10,
