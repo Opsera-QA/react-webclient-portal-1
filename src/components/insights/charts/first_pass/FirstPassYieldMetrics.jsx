@@ -113,12 +113,12 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
       return null;
     }
     return (
-      <div className="new-chart mb-1" style={{ minHeight: "300px", display: "flex" }}>
+      <div className="new-chart mb-1" style={{ minHeight: "300px" }}>
         <Row>
           <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
             <Row className="px-4 justify-content-between">
               {dataPointHelpers.isDataPointVisible(totalTestCasesPlannedForFirstRun) &&
-              <Col xl={6} lg={6} sm={6} className={"my-1"}>
+              <Col xl={6} lg={6} sm={6} className={"my-3"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.totalTests}
                   subtitle="Total Test Cases Planned for First Run"
@@ -126,14 +126,14 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
                 />
               </Col> }
               {dataPointHelpers.isDataPointVisible(firstPassYieldDataPoint) &&
-              <Col lg={6} className={"my-1"}>
+              <Col lg={6} className={"my-3"}>
                 <FirstPassYieldPercentageDataBlock
                   score={metrics[0]?.firstPassYield}
                   dataPoint={firstPassYieldDataPoint}
                 />
               </Col>}
               {dataPointHelpers.isDataPointVisible(totalTestCasesPassedInFirstRun) &&
-              <Col lg={6} className={"mb-1"}>
+              <Col lg={6} className={"my-3"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.passedTests}
                   subtitle="Total Test Cases Passed in First Run"
@@ -141,7 +141,7 @@ function FirstPassYieldMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
                 />
               </Col> }
               {dataPointHelpers.isDataPointVisible(totalTestCasesFailedInFirstRun) &&
-              <Col lg={6} className={"mb-1"}>
+              <Col lg={6} className={"my-3"}>
                 <FirstPassYieldMetricDataBlockBase
                   score={metrics[0]?.failedTests}
                   subtitle="Total Test Cases Failed in First Run"

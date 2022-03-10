@@ -152,9 +152,9 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
     return (
       <div>
-        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
+        <div className="new-chart m-3 p-0" style={{ minheight: "300px" }}>
           <Row>
-            <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
+            <Col xl={6} lg={6} md={8} className={"align-content-around"}>
               <Row>
                 {dataPointHelpers.isDataPointVisible(totalAutomationCandidates) &&
                 <Col lg={6} className={"my-3"}>
@@ -165,19 +165,19 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
                   <TotalFunctionalTestsDataBlock defects={metric?.functionalTests} dataPoint={totalFunctionalTest}/>
                 </Col> }
                 {dataPointHelpers.isDataPointVisible(totalRegressionTests) &&
-                <Col lg={6} className={"mb-3"}>
+                <Col lg={6} className={"my-3"}>
                   <TotalRegressionTestsDataBlock defects={metric?.regressionTests} dataPoint={totalRegressionTests}/>
                 </Col> }
                 {dataPointHelpers.isDataPointVisible(regressionTestAutomation) &&
-                <Col lg={6} className={"mb-3"}>
+                <Col lg={6} className={"my-3"}>
                   <RegressionTestsAutomatedDataBlock defects={metric?.automatedTests} dataPoint={regressionTestAutomation}/>
                 </Col> }
                 {dataPointHelpers.isDataPointVisible(regressionTestToBeAutomated) &&
-                <Col lg={6} className={"mb-3"}>
+                <Col lg={6} className={"my-3"}>
                   <RegressionTestsToBeAutomated defects={metric?.manualTests} dataPoint={regressionTestToBeAutomated}/>
                 </Col>  }
                 {dataPointHelpers.isDataPointVisible(automationDataPoint) &&
-                <Col lg={6} className={"mb-3"}>
+                <Col lg={6} className={"my-3"}>
                   <AutomationPercentageDataBlock score={metric?.automationRate} dataPoint={automationDataPoint} />
                 </Col> }
               </Row>

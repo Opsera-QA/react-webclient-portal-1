@@ -96,7 +96,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     const sonarRatingReliabilityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_RELIABILITY_DATA_POINT);
     setReliabilityDatapoint(sonarRatingReliabilityDataPoint);
     const sonarRatingCodeCoverageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_CODE_COVERAGE_DATA_POINT);
-    setSonarRatingsMetric(sonarRatingCodeCoverageDataPoint);
+    setCodeCoverageDatapoint(sonarRatingCodeCoverageDataPoint);
   };
 
   const getChartBody = () => {
