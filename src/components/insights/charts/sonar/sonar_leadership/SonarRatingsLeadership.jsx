@@ -97,6 +97,19 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
       }
     };
 
+    const getReverseIcon = (severity) => {
+      switch (severity) {
+        case "Red":
+          return faArrowCircleDown;
+        case "Green":
+          return faArrowCircleUp;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
     const getIconColor = (severity) => {
       switch (severity) {
         case "Red":
@@ -149,9 +162,7 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
                 maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
                 technicalDebtRatio={sonarRatingsMetric?.technical_debt_ratio}
                 icon={getIcon(sonarRatingsMetric?.debt_trend)}
-                //icon={faArrowCircleDown}
                 className={getIconColor(sonarRatingsMetric?.debt_trend)}
-                //className={"green"}
                 lastScore={sonarRatingsMetric?.prev_technical_debt_ratio}
                 iconOverlayBody={getDescription(sonarRatingsMetric?.debt_trend)}
               />
@@ -163,8 +174,7 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
                 tests={sonarRatingsMetric?.tests}
                 lineCoverage={sonarRatingsMetric?.line_percentage}
                 duplicate={sonarRatingsMetric?.duplication_percentage}
-                icon={getIcon(sonarRatingsMetric?.coverage_trend)}
-                //icon={faMinusCircle}
+                icon={getReverseIcon(sonarRatingsMetric?.coverage_trend)}
                 className={getIconColor(sonarRatingsMetric?.coverage_trend)}
                 lastScore={sonarRatingsMetric?.prev_line_percentage}
                 iconOverlayBody={getDescription(sonarRatingsMetric?.coverage_trend)}
