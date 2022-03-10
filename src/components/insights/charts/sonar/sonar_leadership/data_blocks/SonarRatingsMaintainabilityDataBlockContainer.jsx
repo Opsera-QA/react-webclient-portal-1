@@ -44,7 +44,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({ className, lastScore, i
       className={`${className} p-2`}
       percentage={technicalDebtRatio}
       topText={"Technical Debt Ratio"}
-      bottomText={"Last Scan: " +lastScore }
+      bottomText={"Last Scan: " +lastScore +"%" }
       icon={icon}
       iconOverlayBody = {iconOverlayBody}
     />;
