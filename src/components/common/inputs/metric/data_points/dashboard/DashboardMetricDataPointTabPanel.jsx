@@ -35,6 +35,9 @@ function DashboardMetricDataPointTabPanel(
         setActiveTab(initialState);
       }
     }
+    else {
+      setActiveTab("");
+    }
   }, [dataPoints]);
 
   const handleTabClick = (newTab) => {
