@@ -11,6 +11,7 @@ import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
 import SonarRatingsCodeCoverageBlockContainer from "../sonar_leadership/data_blocks/SonarRatingsCodeCoverageBlockContainer";
 import SonarCoverageActionableTable from "./SonarCoverageActionableTable";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -55,14 +56,14 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "sonarRatingsV2",
+        "sonarRatingsLeadership",
         kpiConfiguration,
         dashboardTags,
         null,
         null,
         dashboardOrgs
       );
-      const metrics = response?.data?.data[0]?.sonarRatings?.data;
+      const metrics = response?.data?.data[0]?.sonarRatingsLeadership?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setSonarRatingsMetric(metrics[0]);
@@ -84,6 +85,60 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
       return null;
     }
 
+    const getIcon = (severity) => {
+      switch (severity) {
+        case "Red":
+          return faArrowCircleUp;
+        case "Green":
+          return faArrowCircleDown;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
+    const getIconColor = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "red";
+        case "Green":
+          return "green";
+        case "Neutral":
+          return "light-gray-text-secondary";
+        case "-":
+          return "black";
+        default:
+          break;
+      }
+    };
+
+    const getIconTitle = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "Risk";
+        case "Green":
+          return "Success";
+        case "Neutral":
+          return "Same as Earlier";
+        case "-":
+          return "No Trend";
+        default:
+          break;
+      }
+    };
+
+    const getDescription = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "This project's issues are trending upward";
+        case "Green":
+          return "This project's issues are trending downward";
+        case "Neutral":
+          return "Neutral: This project's issues have experienced no change";
+      }
+    };
+
     return (
       <>
         <div className={"mx-2"}>
@@ -92,8 +147,14 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
-                maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
-                technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+                maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
+                technicalDebtRatio={sonarRatingsMetric?.technical_debt_ratio}
+                icon={getIcon(sonarRatingsMetric?.debt_trend)}
+                //icon={faArrowCircleDown}
+                className={getIconColor(sonarRatingsMetric?.debt_trend)}
+                //className={"green"}
+                lastScore={sonarRatingsMetric?.prev_technical_debt_ratio}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.debt_trend)}
               />
             </Col>
             <Col className={"px-0 my-3"} xl={6} lg={12}>
@@ -103,6 +164,11 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
                 tests={sonarRatingsMetric?.tests}
                 lineCoverage={sonarRatingsMetric?.line_percentage}
                 duplicate={sonarRatingsMetric?.duplication_percentage}
+                icon={getIcon(sonarRatingsMetric?.coverage_trend)}
+                //icon={faMinusCircle}
+                className={getIconColor(sonarRatingsMetric?.coverage_trend)}
+                lastScore={sonarRatingsMetric?.prev_line_percentage}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.coverage_trend)}
               />
             </Col>
             <Col className={"px-0 my-3"} xl={12} lg={12}>

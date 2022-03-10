@@ -6,24 +6,24 @@ import TwoLinePercentageDataBlock from "components/common/metrics/percentage/Two
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import Col from "react-bootstrap/Col";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
+import ThreeLineScoreDataBlock from "../../../../../common/metrics/score/ThreeLineScoreDataBlock";
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 
-function SonarRatingsMaintainabilityDataBlockContainer({
+function SonarRatingsMaintainabilityDataBlockContainer({ className, lastScore, icon, iconOverlayBody,
                                                          maintainabilityRating,
                                                          technicalDebtRatio,
-                                                         kpiConfiguration,
-                                                         dashboardData,
                                                        }) {
 
   const getSonarMaintainabilityGrade = (rating) => {
-    if (rating <= 1) {
+    if (rating <= 5) {
       return LETTER_GRADES.A;
-    } else if (rating <= 2) {
+    } else if (rating <= 10) {
       return LETTER_GRADES.B;
-    } else if (rating <= 3) {
+    } else if (rating <= 20) {
       return LETTER_GRADES.C;
-    } else if (rating <= 4) {
+    } else if (rating <= 50) {
       return LETTER_GRADES.D;
-    } else if (rating <= 5) {
+    } else if (rating <= 100) {
       return LETTER_GRADES.E;
     } else {
       return "ERROR";
@@ -40,7 +40,14 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   const getMiddleDataBlock = () => {
-    return <TwoLinePercentageDataBlock percentage={technicalDebtRatio} subtitle={"Technical Debt Ratio"} />;
+    return <ThreeLinePercentageBlockBase
+      className={`${className} p-2`}
+      percentage={technicalDebtRatio}
+      topText={"Technical Debt Ratio"}
+      bottomText={"Last Scan: " +lastScore }
+      icon={icon}
+      iconOverlayBody = {iconOverlayBody}
+    />;
   };
 
   const getRightDataBlock = () => {
@@ -49,9 +56,9 @@ function SonarRatingsMaintainabilityDataBlockContainer({
 
   return (
     <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} >
-      <Col sm={4}>{getLeftDataBlock()}</Col>
+      <Col className={"my-4"} sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
-      <Col sm={4}>{getRightDataBlock()}</Col>
+      <Col className={"mb-3"} sm={3}>{getRightDataBlock()}</Col>
     </HorizontalDataBlocksContainer>
   );
 }
@@ -61,6 +68,10 @@ SonarRatingsMaintainabilityDataBlockContainer.propTypes = {
   technicalDebtRatio: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default SonarRatingsMaintainabilityDataBlockContainer;
