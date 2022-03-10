@@ -15,6 +15,7 @@ function ThreeLineDataBlockBase({
   dataPoint,
   iconOverlayTitle,
   iconOverlayBody,
+  onClickFunction,
 }) {
   const getLeftDataBlockIcon = () => {
     if (icon) {
@@ -82,6 +83,7 @@ ThreeLineDataBlockBase.propTypes = {
   dataPoint: PropTypes.object,
   iconOverlayTitle: PropTypes.string,
   iconOverlayBody: PropTypes.any,
+  onClickFunction: PropTypes.func,
 };
 
 export default ThreeLineDataBlockBase;
