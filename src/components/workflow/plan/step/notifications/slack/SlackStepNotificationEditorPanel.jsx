@@ -47,6 +47,7 @@ function SlackStepNotificationEditorPanel(
           fieldName={"channel"}
           dataObject={slackNotificationModel}
           setDataObject={setSlackNotificationModel}
+          disabled={slackNotificationModel?.getData("enabled") === false}
         />
       </Col>
     </Row>
