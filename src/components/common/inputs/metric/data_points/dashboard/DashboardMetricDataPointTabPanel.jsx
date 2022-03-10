@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import DashboardMetricDataPointInputBase
   from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointInputBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function DashboardMetricDataPointTabPanel(
   {
@@ -23,14 +24,16 @@ function DashboardMetricDataPointTabPanel(
 
     const initialState = dataPoints[0]?._id;
 
-    if (hasStringValue(activeTab) === true) {
-      const dataPoint = dataPoints?.find((dataPoint) => dataPoint?._id === activeTab);
+    if (isMongoDbId(initialState) === true) {
+      if (hasStringValue(activeTab) === true) {
+        const dataPoint = dataPoints?.find((dataPoint) => dataPoint?._id === activeTab);
 
-      if (dataPoint == null) {
+        if (dataPoint == null) {
+          setActiveTab(initialState);
+        }
+      } else {
         setActiveTab(initialState);
       }
-    } else {
-      setActiveTab(initialState);
     }
   }, [dataPoints]);
 
