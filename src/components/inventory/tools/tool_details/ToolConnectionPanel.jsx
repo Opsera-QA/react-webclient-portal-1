@@ -112,7 +112,7 @@ function ToolConnectionPanel({ toolData }) {
       case "buildkite":
         return <BuildkiteToolConfiguration toolData={toolData} />;
       default:
-        return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
+        return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
   };
   
