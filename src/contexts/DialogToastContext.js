@@ -612,8 +612,8 @@ function ToastContextProvider({children, navBar}) {
         showModal: showModal,
         clearModal: clearModal
       }}>
-      <OverlayPanelContainer overlayPanel={infoOverlayPanel}/>
       <OverlayPanelContainer overlayPanel={overlayPanel}/>
+      <OverlayPanelContainer overlayPanel={infoOverlayPanel}/>
       {navBar}
       <SiteNotificationDisplayer/>
       <BannerMessageContainer bannerMessages={bannerMessages}/>
