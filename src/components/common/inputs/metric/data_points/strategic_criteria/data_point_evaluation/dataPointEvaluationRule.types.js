@@ -55,25 +55,31 @@ export const getFormattedDataPointEvaluationText = (dataPointEvaluationRule, dat
     return `The ${getDataPointEvaluationRuleTypeLabel(dataPointEvaluationRuleType)} rule assigned to this data point is incomplete and will not take effect.`;
   }
 
+  const enabled = dataPointEvaluationRule?.enabled;
   const ruleType = dataPointEvaluationRule?.type;
   const triggerFilter = dataPointEvaluationRule?.trigger_filter;
   const primaryValue = dataPointEvaluationRule?.primary_trigger_value;
   const secondaryValue = dataPointEvaluationRule?.secondary_trigger_value;
+  const ruleLabel = getDataPointEvaluationRuleTypeLabel(ruleType);
+
+  if (enabled === false) {
+    return `The ${ruleLabel} rule is not enabled and will not take effect.`;
+  }
 
   switch (triggerFilter) {
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is between ${primaryValue} and ${secondaryValue} (inclusive).`;
+      return `The ${ruleLabel} rule will trigger when the value is between ${primaryValue} and ${secondaryValue} (inclusive).`;
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is equal to ${primaryValue}.`;
+      return `The ${ruleLabel} rule will trigger when the value is equal to ${primaryValue}.`;
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is greater than ${primaryValue}.`;
+      return `The ${ruleLabel} rule will trigger when the value is greater than ${primaryValue}.`;
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is greater than or equal to ${primaryValue}.`;
+      return `The ${ruleLabel} rule will trigger when the value is greater than or equal to ${primaryValue}.`;
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is less than ${primaryValue}.`;
+      return `The ${ruleLabel} rule will trigger when the value is less than ${primaryValue}.`;
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
-      return `The ${getDataPointEvaluationRuleTypeLabel(ruleType)} rule will trigger when the value is less than or equal to ${primaryValue}.`;
+      return `The ${ruleLabel} rule will trigger when the value is less than or equal to ${primaryValue}.`;
     default:
-      return `The ${getDataPointEvaluationRuleTypeLabel(dataPointEvaluationRuleType)} rule assigned to this data point is invalid and will not take effect.`;
+      return `The ${ruleLabel} rule assigned to this data point is invalid and will not take effect.`;
   }
 };

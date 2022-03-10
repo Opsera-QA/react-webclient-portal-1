@@ -17,7 +17,7 @@ dataPointHelpers.canUserToggleVisibility = (dataPoint) => {
 };
 
 dataPointHelpers.canUserEditStrategicCriteria = (dataPoint) => {
-  return dataPoint?.strategic_criteria?.isUserEditable === true;
+  return dataPoint?.strategic_criteria?.isUserEditable === false;
 };
 
 dataPointHelpers.evaluateDataPointQualityLevel = (dataPoint, value) => {

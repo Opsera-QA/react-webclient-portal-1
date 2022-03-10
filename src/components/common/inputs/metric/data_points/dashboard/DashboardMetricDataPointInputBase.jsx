@@ -8,6 +8,8 @@ import DashboardMetricDataPointVisibilityInput
   from "components/common/inputs/metric/data_points/dashboard/visibility/DashboardMetricDataPointVisibilityInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
+import DataPointStrategicCriteriaInfoPanel
+  from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 
 function DashboardMetricDataPointInputBase(
   {
@@ -35,6 +37,7 @@ function DashboardMetricDataPointInputBase(
           setModel={setDataFunction}
           dataPoint={dataPoint}
           fromDashboardMetric={true}
+          className={"mb-3"}
         />
       );
     }
@@ -51,6 +54,12 @@ function DashboardMetricDataPointInputBase(
         />
       );
     }
+
+    return (
+      <DataPointStrategicCriteriaInfoPanel
+        strategicCriteria={dataPointModel?.getData("strategic_criteria")}
+      />
+    );
   };
 
   const getDescription = () => {
