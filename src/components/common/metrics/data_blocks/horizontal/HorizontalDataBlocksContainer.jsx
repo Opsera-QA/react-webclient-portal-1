@@ -29,8 +29,8 @@ function HorizontalDataBlocksContainer(
         <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>
           {title}
         </div>
-        <div className={`${onClick ? "pointer " : ""}data-block-container m-1`} onClick={onClick}>
-          <Row className={"m-1 py-2"}>
+        <div className={`${onClick ? "pointer " : ""}data-block-container m-1 h-100`} onClick={onClick}>
+          <Row className={"m-1 py-2 h-100"}>
             {children}
           </Row>
         </div>
