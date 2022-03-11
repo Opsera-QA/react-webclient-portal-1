@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: Styling is temporary based on SonarRatings until we figure out which direction to go
 function HorizontalDataBlocksContainer(
@@ -15,17 +14,13 @@ function HorizontalDataBlocksContainer(
     className,
     dataPoint,
   }) {
-  const getClassNames = () => {
-    return hasStringValue(className) === true ? `h-100 ${className}` : `h-100`;
-  };
-
   if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
     return null;
   }
 
   return (
     <TooltipWrapper innerText={tooltipText}>
-      <div className={getClassNames()}>
+      <div className={className}>
         <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>
           {title}
         </div>
