@@ -27,15 +27,15 @@ dataPointEvaluationRulesHelpers.getConflictingRuleError = (dataPointEvaluationRu
   const failureRule = dataPointEvaluationRules?.failure_rule;
 
   if (dataPointEvaluationRulesHelpers.doDataPointEvaluationRulesConflict(successRule, warningRule) === true) {
-    return "Success Rule and Warning Rule overlap. Warning Rule will take precedence in this scenario.";
+    return "Success Rule and Warning Rule are enabled and overlap. Warning Rule will take precedence in this scenario.";
   }
 
   if (dataPointEvaluationRulesHelpers.doDataPointEvaluationRulesConflict(successRule, failureRule) === true) {
-    return "Success Rule and Failure Rule overlap. Failure Rule will take precedence in this scenario.";
+    return "Success Rule and Failure Rule are enabled and overlap. Failure Rule will take precedence in this scenario.";
   }
 
   if (dataPointEvaluationRulesHelpers.doDataPointEvaluationRulesConflict(warningRule, failureRule) === true) {
-    return "Warning Rule and Failure Rule overlap. Failure Rule will take precedence in this scenario.";
+    return "Warning Rule and Failure Rule are enabled and overlap. Failure Rule will take precedence in this scenario.";
   }
 };
 
