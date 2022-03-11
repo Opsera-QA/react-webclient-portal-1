@@ -207,6 +207,7 @@ function DashboardMetricOverlayContainer(
         <DashboardMetricTabPanel
           metricModel={metricModel}
           setMetricModel={setMetricModel}
+          setKpiConfiguration={setKpiConfiguration}
           metricEditorPanel={getMetricEditorPanel()}
         />
       </DashboardMetricEditorPanelContainer>
