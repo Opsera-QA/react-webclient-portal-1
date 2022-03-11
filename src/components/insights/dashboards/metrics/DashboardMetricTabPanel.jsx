@@ -14,7 +14,6 @@ function DashboardMetricTabPanel(
   {
     metricModel,
     setMetricModel,
-    setKpiConfiguration,
     metricEditorPanel,
   }) {
   const [activeTab, setActiveTab] = useState("settings");
@@ -96,11 +95,6 @@ DashboardMetricTabPanel.propTypes = {
   metricModel: PropTypes.object,
   setMetricModel: PropTypes.func,
   metricEditorPanel: PropTypes.object,
-  closePanel: PropTypes.func,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
-  loadData: PropTypes.func,
-  settingsHelpComponent: PropTypes.object,
 };
 
 export default DashboardMetricTabPanel;
