@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TerraformCloudToolSelectInput from "../inputs/terraform_cloud/TerraformCloudToolSelectInput";
 import TerraformCloudOrganizationsSelectInput from "../inputs/terraform_cloud/TerraformCloudOrganizationsSelectInput";
 import TerraformCloudWorkspaceSelectInput from "../inputs/terraform_cloud/TerraformCloudWorkspaceSelectInput";
+import TerraformEnterpriseToolSelectInput from "../inputs/terraform_cloud/TerraformEnterpriseToolSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
 
