@@ -44,6 +44,10 @@ dataPointEvaluationRulesHelpers.doDataPointEvaluationRulesConflict = (rule1, rul
     return false;
   }
 
+  if (rule1.enabled === false || rule2.enabled === false) {
+    return false;
+  }
+
   const rule1RangeObject = dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule(rule1);
 
   if (rule1RangeObject === false) {
