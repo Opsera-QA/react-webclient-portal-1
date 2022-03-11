@@ -5,15 +5,15 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
-import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
+import SonarRatingsLeadershipMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipMaintainabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
-import SonarRatingsCodeCoverageBlockContainer from "../sonar_leadership/data_blocks/SonarRatingsCodeCoverageBlockContainer";
+import SonarRatingsLeadershipCodeCoverageDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipCodeCoverageDataBlockContainer";
 import SonarCoverageActionableTable from "./SonarCoverageActionableTable";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
-function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function SonarRatingLeadershipMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [sonarRatingsMetric, setSonarRatingsMetric] = useState(undefined);
@@ -156,7 +156,7 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
         <div className={"mx-2"}>
           <Row className={"mx-0 p-2 justify-content-between"}>
             <Col className={"px-0 my-3"} xl={6} lg={12}>
-              <SonarRatingsMaintainabilityDataBlockContainer
+              <SonarRatingsLeadershipMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
                 maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
@@ -168,7 +168,7 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
               />
             </Col>
             <Col className={"px-0 my-3"} xl={6} lg={12}>
-              <SonarRatingsCodeCoverageBlockContainer
+              <SonarRatingsLeadershipCodeCoverageDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
                 tests={sonarRatingsMetric?.tests}
@@ -220,7 +220,7 @@ function SonarRatingLeadership({ kpiConfiguration, setKpiConfiguration, dashboar
   );
 }
 
-SonarRatingLeadership.propTypes = {
+SonarRatingLeadershipMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -228,4 +228,4 @@ SonarRatingLeadership.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default SonarRatingLeadership;
+export default SonarRatingLeadershipMetrics;
