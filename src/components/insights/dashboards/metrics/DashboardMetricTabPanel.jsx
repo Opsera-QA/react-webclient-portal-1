@@ -62,7 +62,6 @@ function DashboardMetricTabPanel(
             <MetricSettingsInputPanel
               metricModel={metricModel}
               setMetricModel={setMetricModel}
-              setKpiConfiguration={setKpiConfiguration}
               metricSettings={metricModel?.getData("settings")}
             />
             {metricEditorPanel}

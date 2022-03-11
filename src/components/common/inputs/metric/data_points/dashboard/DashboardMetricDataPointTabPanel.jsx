@@ -94,7 +94,6 @@ function DashboardMetricDataPointTabPanel(
       const newDataPoints = [...currentDataPoints];
       newDataPoints[index] = newDataPoint;
       newModel?.setData("dataPoints", newDataPoints);
-      setKpiConfiguration(model?.data);
       setModel({...newModel});
     }
   };
