@@ -59,7 +59,6 @@ function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConf
         middleText={
         <MetricPercentageText
           percentage={metricData?.deploy?.successPercent}
-          qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}

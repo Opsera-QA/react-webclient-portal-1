@@ -42,7 +42,6 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
         middleText={
         <MetricScoreText
           score={metricData?.deploy?.perDayAverage}
-          qualityLevel={metricData?.deploy?.count && metricData?.deploy?.count > 0 ? metricData?.deploy?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}
