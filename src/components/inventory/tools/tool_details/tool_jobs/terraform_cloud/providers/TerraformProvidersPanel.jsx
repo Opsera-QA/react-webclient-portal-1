@@ -22,12 +22,6 @@ function TerraformProvidersPanel({ toolId }) {
     setTerraformProvidersModel({...terraformProvidersModel});
   };
 
-  const handleRowSelect = (rowData) => {    
-    let newDataObject = {...terraformProvidersModel};
-    newDataObject.setData("vcsProviderName", rowData?.vcsProviderName);
-    setTerraformProvidersModel({...newDataObject});
-  };
-
   if (terraformProvidersModel.getData("vcsProviderName")) {
     return (
       <TerraformProvidersEditorPanel
@@ -49,7 +43,7 @@ function TerraformProvidersPanel({ toolId }) {
           organizationName={terraformProvidersModel.getData("organizationName")}
           terraformProvidersList={terraformProvidersList}
           setTerraformProvidersList={setTerraformProvidersList}
-          handleRowSelect={handleRowSelect}
+          setTerraformProvidersModel={setTerraformProvidersModel}
         />
       );
     } 

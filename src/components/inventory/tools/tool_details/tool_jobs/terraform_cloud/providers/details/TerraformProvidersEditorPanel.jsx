@@ -8,9 +8,8 @@ import axios from "axios";
 import terraformProvidersActions from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/providers/terraformProviders.actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import TerraformCloudOrganizationsSelectInput from "./inputs/TerraformCloudOrganizationsSelectInput";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
-import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import TerraformProviderServiceSelectInput from "./inputs/TerraformProviderServiceSelectInput";
+import TerraformScmToolSelectInput from "./inputs/TerraformScmToolSelectInput";
 
 function TerraformProvidersEditorPanel({ 
   terraformProvidersModel, 
@@ -22,17 +21,30 @@ function TerraformProvidersEditorPanel({
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [ isLoading, setIsLoading ] = useState(false);
-  const toastContext = useContext(DialogToastContext);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const createTerraformVcsProvider = async () => {
-    const {organizationName, vcsProviderName} = terraformProvidersModel.getPersistData();
-    return await terraformProvidersActions.createTerraformVcsProvider(getAccessToken, cancelTokenSource, toolId, organizationName, vcsProviderName);
+    const {organizationName} = terraformProvidersModel.getPersistData();
+    return await terraformProvidersActions.createTerraformVcsProvider(getAccessToken, cancelTokenSource, toolId, organizationName, terraformProvidersModel.getPersistData());
   };
 
   const deleteTerraformVcsProvider = async () => {
-    const {organizationName, vcsProviderName} = terraformProvidersModel.getPersistData();
-    const response = await terraformProvidersActions.deleteTerraformVcsProvider(getAccessToken, cancelTokenSource, toolId, organizationName, vcsProviderName);
+    const {organizationName, id} = terraformProvidersModel.getPersistData();
+    const response = await terraformProvidersActions.deleteTerraformVcsProvider(getAccessToken, cancelTokenSource, toolId, organizationName, id);
     handleClose();
   };
 
@@ -46,10 +58,6 @@ function TerraformProvidersEditorPanel({
       );
     }
   };
-
-  if (isLoading) {
-    return (<InlineLoadingDialog />);
-  }
 
   return (
     <EditorPanelContainer
@@ -75,12 +83,30 @@ function TerraformProvidersEditorPanel({
         <Col lg={12}>
           <TextInputBase
             dataObject={terraformProvidersModel}
-            setDataObject={setTerraformProvidersModel}            
+            setDataObject={setTerraformProvidersModel}
             fieldName={"vcsProviderName"}
             disabled={editMode}
           />
         </Col>
-      </Row>            
+      </Row>
+      <Row>
+        <Col lg={12}>
+          <TerraformProviderServiceSelectInput 
+            model={terraformProvidersModel}
+            setModel={setTerraformProvidersModel}
+            disabled={editMode}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col lg={12}>
+          <TerraformScmToolSelectInput 
+            model={terraformProvidersModel}
+            setModel={setTerraformProvidersModel}
+            disabled={editMode}
+          />
+        </Col>
+      </Row>
     </EditorPanelContainer>
   );
 }
