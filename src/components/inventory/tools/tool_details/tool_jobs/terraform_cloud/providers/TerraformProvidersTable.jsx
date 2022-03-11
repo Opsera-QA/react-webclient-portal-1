@@ -80,6 +80,10 @@ function TerraformProvidersTable({
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "vcsProviderName")),
+      getTableTextColumn(getField(fields, "id")),
+      getTableTextColumn(getField(fields, "serviceProviderDisplayName")),
+      getTableTextColumn(getField(fields, "callbackUrl")),
+      getTableTextColumn(getField(fields, "createdAt")),
     ],
     []
   );

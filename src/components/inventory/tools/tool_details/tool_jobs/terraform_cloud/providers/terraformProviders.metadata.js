@@ -2,7 +2,7 @@ export const terraformProvidersMetadata = {
     type: "Terraform VCS Providers",
     fields: [
       {
-        label: "Name",
+        label: "Provider Name",
         id: "vcsProviderName",
         isRequired: true,
         maxLength: 100
@@ -12,10 +12,42 @@ export const terraformProvidersMetadata = {
         id: "organizationName",
         isRequired: true
       },
+      {
+        label: "Service",
+        id: "service",
+        isRequired: true
+      },
+      {
+        label: "Git Tool Id",
+        id: "gitToolId",
+        isRequired: true
+      },
+      {
+        label: "oAuth Client Id",
+        id: "id",
+      },
+      {
+        label: "Service Provider",
+        id: "serviceProviderDisplayName",
+      },
+      {
+        label: "Created At",
+        id: "createdAt",
+      },
+      {
+        label: "Callback URL",
+        id: "callbackUrl",
+      },
     ],
     newObjectFields: {
       vcsProviderName: "",
       organizationName: "",
+      service: "",
+      gitToolId: "",
+      id: "",
+      serviceProviderDisplayName: "",
+      createdAt: "",
+      callbackUrl: "",
       type: "providers",
     }
   };
