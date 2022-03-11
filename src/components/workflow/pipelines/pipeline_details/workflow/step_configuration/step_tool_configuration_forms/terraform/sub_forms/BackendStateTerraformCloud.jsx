@@ -5,13 +5,21 @@ import TerraformCloudOrganizationsSelectInput from "../inputs/terraform_cloud/Te
 import TerraformCloudWorkspaceSelectInput from "../inputs/terraform_cloud/TerraformCloudWorkspaceSelectInput";
 
 function BackendStateAzure({ model, setModel }) {
-  if (!model?.getData("backendState") || model?.getData("backendState") !== "TERRAFORM_CLOUD") {
+
+  const getTerraformSelectInput = () => {
+    if (model?.getData("backendState") === "TERRAFORM_ENTERPRISE") {
+      return (<TerraformEnterpriseToolSelectInput model={model} setModel={setModel} />);
+    }
+    return (<TerraformCloudToolSelectInput model={model} setModel={setModel} />);    
+  };
+
+  if (!model?.getData("backendState") || (model?.getData("backendState") !== "TERRAFORM_CLOUD" && model?.getData("backendState") !== "TERRAFORM_ENTERPRISE" )) {
     return null;
   }
 
   return (
     <>
-      <TerraformCloudToolSelectInput model={model} setModel={setModel} />
+      {getTerraformSelectInput()}
       <TerraformCloudOrganizationsSelectInput dataObject={model} setDataObject={setModel} disabled={model?.getData("terraformCloudId")?.length === 0} toolId={model?.getData("terraformCloudId")} />
       <TerraformCloudWorkspaceSelectInput dataObject={model} setDataObject={setModel} disabled={model?.getData("organizationName")?.length === 0} toolId={model?.getData("terraformCloudId")} />
     </>
