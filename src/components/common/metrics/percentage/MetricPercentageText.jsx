@@ -9,6 +9,7 @@ function MetricPercentageText(
     percentage,
     dataPoint,
     qualityLevel, // TODO: Remove. Left in for legacy code
+    className
   }) {
   const getQualityLevel = () => {
     let evaluation = qualityLevel;
@@ -37,6 +38,7 @@ function MetricPercentageText(
     <MetricTextBase
       formattedText={getPercentageText()}
       qualityLevel={getQualityLevel()}
+      className={className}
     />
   );
 }
@@ -45,6 +47,7 @@ MetricPercentageText.propTypes = {
   percentage: PropTypes.any,
   dataPoint: PropTypes.object,
   qualityLevel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default MetricPercentageText;
