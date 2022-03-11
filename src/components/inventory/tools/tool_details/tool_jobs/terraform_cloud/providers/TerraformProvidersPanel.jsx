@@ -18,8 +18,9 @@ function TerraformProvidersPanel({ toolId }) {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
     setTerraformProvidersList([]);
-    terraformProvidersModel?.resetData();
-    setTerraformProvidersModel({...terraformProvidersModel});
+    const newterraformProvidersModel = {...terraformProvidersModel};
+    newterraformProvidersModel.setDefaultValue("vcsProviderName");    
+    setTerraformProvidersModel({...newterraformProvidersModel});
   };
 
   if (terraformProvidersModel.getData("vcsProviderName")) {
