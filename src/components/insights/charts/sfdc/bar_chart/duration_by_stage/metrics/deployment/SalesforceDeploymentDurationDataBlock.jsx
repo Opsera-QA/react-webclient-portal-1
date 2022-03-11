@@ -22,16 +22,16 @@ function SalesforceDeploymentDurationDataBlock({
   };
 
   const getMetricQualityLevel = () => {
-    if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
-      return;
-    }
-
-    if (dataPoint) {
+    if (dataPoint && hasPositiveNumberValue(deploymentDurationMeanInMinutes)) {
       const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, deploymentDurationMeanInMinutes);
 
       if (typeof evaluatedDataPoint === "string") {
         return evaluatedDataPoint;
       }
+    }
+
+    if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
+      return;
     }
 
     if (goalsData > deploymentDurationMeanInMinutes) {
@@ -44,8 +44,8 @@ function SalesforceDeploymentDurationDataBlock({
   };
 
   const getDeploymentMeanBlock = () => {
+    const qualityLevel = getMetricQualityLevel();
     if (hasPositiveNumberValue(deploymentDurationMeanInMinutes) && hasPositiveNumberValue(deploymentTotalRunCount)) {
-      const qualityLevel = getMetricQualityLevel();
       return (
         <>
           <div>
@@ -56,6 +56,9 @@ function SalesforceDeploymentDurationDataBlock({
           </div>
         </>
       );
+    }
+    if (hasPositiveNumberValue(deploymentDurationMeanInMinutes)) {
+      return <MetricTextBase formattedText={`${deploymentDurationMeanInMinutes} min`} className={"metric-block-content-text"} qualityLevel={qualityLevel}/>;
     }
     return <span className={"metric-block-content-text"}> Error! </span>;
   };

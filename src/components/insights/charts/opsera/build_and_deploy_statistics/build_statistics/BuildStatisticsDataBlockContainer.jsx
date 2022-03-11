@@ -59,7 +59,6 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
         middleText={
         <MetricPercentageText
           percentage={metricData?.build?.successPercent}
-          qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null }
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}
