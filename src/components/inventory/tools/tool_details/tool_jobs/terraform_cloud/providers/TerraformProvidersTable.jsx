@@ -11,13 +11,14 @@ import CreateTerraformProviderOverlay from "./CreateTerraformProviderOverlay";
 import axios from "axios";
 import terraformProvidersActions from "./terraformProviders.actions";
 import {AuthContext} from "contexts/AuthContext";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function TerraformProvidersTable({
     toolId,
     organizationName,
     terraformProvidersList,
     setTerraformProvidersList,
-    handleRowSelect
+    setTerraformProvidersModel
   }) {
 
   const fields = terraformProvidersMetadata.fields;
@@ -89,7 +90,8 @@ function TerraformProvidersTable({
   );
 
   const onRowSelect = async (rowData) => {    
-    handleRowSelect(rowData?.original);
+    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, terraformProvidersMetadata);
+    setTerraformProvidersModel({...parsedModel});
   };
 
   const getTable = () => {
@@ -124,7 +126,7 @@ TerraformProvidersTable.propTypes = {
   organizationName: PropTypes.string,
   terraformProvidersList: PropTypes.array,
   setTerraformProvidersList: PropTypes.func,
-  handleRowSelect: PropTypes.func,
+  setTerraformProvidersModel: PropTypes.func,
 };
 
 export default TerraformProvidersTable;

@@ -1,5 +1,5 @@
 export const terraformProvidersMetadata = {
-    type: "Terraform VCS Providers",
+    type: "Terraform VCS Provider",
     fields: [
       {
         label: "Provider Name",
