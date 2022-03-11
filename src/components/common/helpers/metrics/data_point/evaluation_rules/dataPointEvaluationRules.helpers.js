@@ -56,12 +56,28 @@ dataPointEvaluationRulesHelpers.doDataPointEvaluationRulesConflict = (rule1, rul
     return false;
   }
 
-  return numberHelpers.doNumberRangesOverlap(
-    rule1RangeObject?.lowerBound,
-    rule1RangeObject?.upperBound,
-    rule2RangeObject?.lowerBound,
-    rule2RangeObject?.upperBound
-  );
+  const parsedLowerBound1 = numberHelpers.parseNumber(rule1RangeObject.lowerBound);
+  const parsedUpperBound1 = numberHelpers.parseNumber(rule1RangeObject.upperBound);
+  const parsedLowerBound2 = numberHelpers.parseNumber(rule2RangeObject.lowerBound);
+  const parsedUpperBound2 = numberHelpers.parseNumber(rule2RangeObject.upperBound);
+
+  if (rule1RangeObject.isOverlappingFunction(parsedLowerBound2)) {
+    return true;
+  }
+
+  if (rule1RangeObject.isOverlappingFunction(parsedUpperBound2)) {
+    return true;
+  }
+
+  if (rule2RangeObject.isOverlappingFunction(parsedLowerBound1)) {
+    return true;
+  }
+
+  if (rule2RangeObject.isOverlappingFunction(parsedUpperBound1)) {
+    return true;
+  }
+
+  return false;
 };
 
 dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (dataPointEvaluationRule) => {
@@ -83,11 +99,17 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
         return {
           lowerBound: primaryValue,
           upperBound: secondaryValue,
+          isOverlappingFunction: (number) => {
+            return numberHelpers.isNumberBetweenInclusive(primaryValue, secondaryValue, number);
+          },
         };
       } else {
         return {
           lowerBound: secondaryValue,
           upperBound: primaryValue,
+          isOverlappingFunction: (number) => {
+            return numberHelpers.isNumberBetweenInclusive(secondaryValue, primaryValue, number);
+          },
         };
       }
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
@@ -98,6 +120,9 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
       return {
         lowerBound: primaryValue,
         upperBound: primaryValue,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberEqual(primaryValue, number);
+        },
       };
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
       if (numberHelpers.hasNumberValue(primaryValue) !== true) {
@@ -105,8 +130,11 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
       }
 
       return {
-        lowerBound: primaryValue + 1,
+        lowerBound: primaryValue,
         upperBound: Infinity,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberGreaterThan(primaryValue, number);
+        },
       };
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
       if (numberHelpers.hasNumberValue(primaryValue) !== true) {
@@ -116,6 +144,9 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
       return {
         lowerBound: primaryValue,
         upperBound: Infinity,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberGreaterThanOrEqualTo(primaryValue, number);
+        },
       };
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
       if (numberHelpers.hasNumberValue(primaryValue) !== true) {
@@ -124,7 +155,10 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
 
       return {
         lowerBound: -Infinity,
-        upperBound: primaryValue - 1,
+        upperBound: primaryValue,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberLessThan(primaryValue, number);
+        },
       };
     case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
       if (numberHelpers.hasNumberValue(primaryValue) !== true) {
@@ -134,6 +168,9 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
       return {
         lowerBound: -Infinity,
         upperBound: primaryValue,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberLessThanOrEqualTo(primaryValue, number);
+        },
       };
     default:
       return false;
