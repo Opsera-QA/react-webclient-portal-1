@@ -13,7 +13,6 @@ import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 
 function MetricDataPointEvaluationRuleInputBase(
