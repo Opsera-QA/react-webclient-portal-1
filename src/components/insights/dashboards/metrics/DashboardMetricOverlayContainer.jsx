@@ -90,6 +90,10 @@ function DashboardMetricOverlayContainer(
       dashboardData?.getData("_id"),
       metricModel,
     );
+
+    // TODO: This is not very ideal, we need to resolve the refresh issues
+    setKpiConfiguration({ ...metricModel?.getPersistData() });
+    dashboardData.getData("configuration")[index] = metricModel?.getPersistData();
   };
 
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
