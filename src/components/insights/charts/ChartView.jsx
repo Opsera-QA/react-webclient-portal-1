@@ -334,7 +334,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "build-deployment-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <Col md={12} className="p-2">
             <OpseraBuildAndDeploymentStatistics
@@ -724,7 +724,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings-v2":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
           <Col md={12} className="p-2">
             <SonarRatingMetrics
@@ -1302,7 +1302,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "first-pass-yield":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
         return (
           <Col md={12} className="p-2">
             <FirstPassYieldMetrics
@@ -1326,7 +1326,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "automation-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
         return (
           <Col md={12} className="p-2">
             <AutomationPercentageMetric

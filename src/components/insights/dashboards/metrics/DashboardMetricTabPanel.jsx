@@ -14,6 +14,7 @@ function DashboardMetricTabPanel(
   {
     metricModel,
     setMetricModel,
+    setKpiConfiguration,
     metricEditorPanel,
   }) {
   const [activeTab, setActiveTab] = useState("settings");
@@ -62,6 +63,7 @@ function DashboardMetricTabPanel(
             <MetricSettingsInputPanel
               metricModel={metricModel}
               setMetricModel={setMetricModel}
+              setKpiConfiguration={setKpiConfiguration}
               metricSettings={metricModel?.getData("settings")}
             />
             {metricEditorPanel}

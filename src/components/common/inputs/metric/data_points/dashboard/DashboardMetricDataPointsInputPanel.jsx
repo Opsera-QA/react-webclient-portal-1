@@ -8,6 +8,7 @@ function DashboardMetricDataPointsInputPanel(
   {
     model,
     setModel,
+    setKpiConfiguration
   }) {
   if (model == null || model?.getArrayData("dataPoints")?.length === 0) {
     return null;
@@ -22,6 +23,7 @@ function DashboardMetricDataPointsInputPanel(
         model={model}
         setModel={setModel}
         dataPoints={model?.getArrayData("dataPoints")}
+        setKpiConfiguration={setKpiConfiguration}
       />
     </InfoContainer>
   );
@@ -31,6 +33,8 @@ DashboardMetricDataPointsInputPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   dataPoint: PropTypes.object,
+  setKpiConfiguration: PropTypes.func,
+  
 };
 
 export default DashboardMetricDataPointsInputPanel;
