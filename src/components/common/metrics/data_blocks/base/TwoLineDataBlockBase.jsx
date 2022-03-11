@@ -51,7 +51,7 @@ function TwoLineDataBlockBase(
   const getSubtitle = () => {
     if (subtitle) {
       return (
-        <div className={"font-inter-light-400 light-gray-text-secondary metric-block-footer-text"}>
+        <div className={"font-inter-light-300 light-gray-text-secondary metric-block-footer-text"}>
           {subtitle}
         </div>
       );
