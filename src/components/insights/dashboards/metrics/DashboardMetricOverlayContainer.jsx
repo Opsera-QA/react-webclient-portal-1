@@ -16,6 +16,12 @@ import DashboardMetricEditorPanelContainer
 import DashboardMetricTabPanel from "components/insights/dashboards/metrics/DashboardMetricTabPanel";
 import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
+import SalesforceDurationByStageMetricsEditorPanel
+  from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
+import FirstPassYieldMetricsEditorPanel from "../../charts/first_pass/FirstPassYieldMetricsEditorPanel";
+import AutomationPercentageMetricEditorPanel
+  from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
+import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: combine with chart settings overlay?
@@ -87,17 +93,62 @@ function DashboardMetricOverlayContainer(
 
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
   const getMetricEditorPanel = () => {
-    // switch (kpiConfiguration?.kpi_identifier) {
-    //   case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-    //     return (
-    //       <SdlcDurationByStageMetricsEditorPanel
-    //         metricModel={metricModel}
-    //         metricFilterModel={metricFilterModel}
-    //         setMetricFilterModel={setMetricFilterModel}
-    //         unpackedFilterData={unpackedFilterData}
-    //       />
-    //     );
-    // }
+    switch (kpiConfiguration?.kpi_identifier) {
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+        return (
+          <SdlcDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
+        return (
+          <SalesforceDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
+        return (
+          <SalesforceDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
+        return (
+          <AutomationPercentageMetricEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
+        return (
+          <FirstPassYieldMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
+        return (
+          <SonarRatingMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+    }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
@@ -155,6 +206,7 @@ function DashboardMetricOverlayContainer(
         <DashboardMetricTabPanel
           metricModel={metricModel}
           setMetricModel={setMetricModel}
+          setKpiConfiguration={setKpiConfiguration}
           metricEditorPanel={getMetricEditorPanel()}
         />
       </DashboardMetricEditorPanelContainer>

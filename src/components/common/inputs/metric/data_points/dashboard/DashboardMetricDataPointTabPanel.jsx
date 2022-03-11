@@ -14,6 +14,7 @@ function DashboardMetricDataPointTabPanel(
     model,
     setModel,
     dataPoints,
+    setKpiConfiguration
   }) {
   const [activeTab, setActiveTab] = useState("");
 
@@ -94,6 +95,7 @@ function DashboardMetricDataPointTabPanel(
       const newDataPoints = [...currentDataPoints];
       newDataPoints[index] = newDataPoint;
       newModel?.setData("dataPoints", newDataPoints);
+      setKpiConfiguration(model?.data);
       setModel({...newModel});
     }
   };
@@ -126,6 +128,7 @@ DashboardMetricDataPointTabPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   dataPoints: PropTypes.array,
+  setKpiConfiguration: PropTypes.func,
 };
 
 export default DashboardMetricDataPointTabPanel;

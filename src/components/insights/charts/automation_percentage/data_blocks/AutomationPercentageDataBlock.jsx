@@ -6,13 +6,13 @@ import TwoLinePercentageDataBlock from "components/common/metrics/percentage/Two
 function AutomationPercentageDataBlock({ score, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-3"}>
-        <TwoLinePercentageDataBlock
-          dataPoint={dataPoint}
-          percentage={score}
-          subtitle={"Automation Percentage"}
-        />
-      </div>
+      <TwoLinePercentageDataBlock
+        className="p-2"
+        style={{minHeight: '100px'}}
+        dataPoint={dataPoint}
+        percentage={score}
+        subtitle={"Automation Percentage"}
+      />
     </DataBlockBoxContainer>
   );
 }

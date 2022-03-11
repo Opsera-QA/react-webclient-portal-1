@@ -10,6 +10,7 @@ function SalesforceDeploymentDurationMetric({
   deploymentTotalRunCount,
   goalsData,
   metric,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
@@ -17,6 +18,8 @@ function SalesforceDeploymentDurationMetric({
         deploymentDurationMeanInMinutes={deploymentDurationMeanInMinutes}
         deploymentTotalRunCount={deploymentTotalRunCount}
         goalsData={goalsData}
+        kpiConfiguration={kpiConfiguration}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -41,6 +44,7 @@ SalesforceDeploymentDurationMetric.propTypes = {
   deploymentTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceDeploymentDurationMetric;

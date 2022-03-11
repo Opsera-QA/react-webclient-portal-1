@@ -4,13 +4,16 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 
-function FirstPassYieldMetricDataBlockBase({ score, subtitle, onClickFunction }) {
+function FirstPassYieldMetricDataBlockBase({ score, subtitle, onClickFunction, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
-        <TwoLineScoreDataBlock
-          className={"p-2 first-pass-yield"}
-          score={score}
-          subtitle={subtitle} />
+      <TwoLineScoreDataBlock
+        className="p-2"
+        style={{minHeight: '100px'}}
+        score={score} 
+        subtitle={subtitle}
+        dataPoint={dataPoint}
+      />
     </DataBlockBoxContainer>
   );
 }
@@ -18,6 +21,7 @@ FirstPassYieldMetricDataBlockBase.propTypes = {
   score: PropTypes.string,
   subtitle: PropTypes.string,
   onClickFunction: PropTypes.func,
+  dataPoint: PropTypes.object
 };
 
 export default FirstPassYieldMetricDataBlockBase;

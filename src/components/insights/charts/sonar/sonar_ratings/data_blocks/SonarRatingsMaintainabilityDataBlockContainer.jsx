@@ -15,6 +15,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   technicalDebtRatio,
   kpiConfiguration,
   dashboardData,
+  dataPoint
 }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -61,7 +62,7 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
       <Col sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
       <Col sm={4}>{getRightDataBlock()}</Col>
@@ -74,6 +75,7 @@ SonarRatingsMaintainabilityDataBlockContainer.propTypes = {
   technicalDebtRatio: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default SonarRatingsMaintainabilityDataBlockContainer;
