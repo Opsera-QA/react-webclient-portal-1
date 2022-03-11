@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "../data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "./MetricPercentageText";
 
