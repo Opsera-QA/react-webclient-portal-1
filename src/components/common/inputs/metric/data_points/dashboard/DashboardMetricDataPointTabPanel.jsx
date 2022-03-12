@@ -95,7 +95,6 @@ function DashboardMetricDataPointTabPanel(
       newDataPoints[index] = newDataPoint;
       newModel?.setData("dataPoints", newDataPoints);
       setModel({...newModel});
-      setKpiConfiguration(model?.data);
     }
   };
 
