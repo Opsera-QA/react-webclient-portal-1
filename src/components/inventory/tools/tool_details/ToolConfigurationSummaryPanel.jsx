@@ -63,13 +63,6 @@ import SlackToolConfigurationSummaryPanel
 import AzureToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/azure/AzureToolConfigurationSummaryPanel";
 import AzureConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azure/azure-connection-metadata";
-// import AzureV2ConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-connection-metadata";
-import AzureDevopsStepToolConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
-import azureDevopsStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
-import AzureV2ToolConfigurationSummaryPanel
-  from "components/inventory/tools/tool_details/tool_jobs/azureV2/AzureV2ToolConfigurationSummaryPanel";
 import AzureDevopsToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfigurationSummaryPanel";
 import AzureDevopsConnectionMetadata
@@ -110,6 +103,11 @@ import FlywayDatabaseToolConnectionSummaryPanel
 import {
   flywayDatabaseToolConnectionMetadata
 } from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
+import ExternalApiIntegratorToolConnectionSummaryPanel
+  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionSummaryPanel";
+import {
+  externalApiIntegratorToolConnectionMetadata
+} from "components/inventory/tools/details/identifiers/external_api_integrator/connection/externalApiIntegratorToolConnection.metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -118,6 +116,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
     
     switch (toolIdentifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+        return (
+          <ExternalApiIntegratorToolConnectionSummaryPanel
+            externalApiIntegratorModel={modelHelpers.parseObjectIntoModel(toolConfiguration, externalApiIntegratorToolConnectionMetadata)}
+          />
+        );
       case "jenkins":
         return (
           <JenkinsToolConfigurationSummaryPanel
