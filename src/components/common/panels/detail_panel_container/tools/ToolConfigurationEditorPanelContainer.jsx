@@ -42,7 +42,7 @@ function ToolConfigurationEditorPanelContainer(
           <div>{getToolConnectionCheckButton()}</div>
         </div>
         <div>{children}</div>
-        <div className="mr-3">
+        <div>
           <SaveButtonContainer extraButtons={leftSideButtons}>
             <StrictSaveButton updateRecord={persistRecord} recordDto={model} setModel={setModel} />
           </SaveButtonContainer>

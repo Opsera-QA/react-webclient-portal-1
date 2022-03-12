@@ -36,6 +36,8 @@ import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfi
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import FlywayDatabaseToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionEditorPanel";
+import ExternalApiIntegratorToolConnectionEditorPanel
+  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionEditorPanel";
 
 function ToolConnectionPanel({ toolData }) {
   const getConnectionPanel = () => {
@@ -43,7 +45,14 @@ function ToolConnectionPanel({ toolData }) {
       return <></>;
     }
 
-    switch (toolData.getData("tool_identifier")) {
+    console.log("toolIdentifier: " + JSON.stringify(toolData?.getData("tool_identifier")));
+    switch (toolData?.getData("tool_identifier")) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+        return (
+          <ExternalApiIntegratorToolConnectionEditorPanel
+            toolData={toolData}
+          />
+        );
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
       case "jira":
