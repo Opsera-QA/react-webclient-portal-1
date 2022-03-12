@@ -1,0 +1,111 @@
+import React, {useContext, useEffect, useRef, useState} from "react";
+import ExternalApiIntegratorEndpointsTable from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointsTable";
+import PropTypes from "prop-types";
+import modelHelpers from "components/common/model/modelHelpers";
+import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
+import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import ExternalApiIntegratorEndpointEditorPanel
+  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
+import externalApiIntegratorEndpointsActions
+  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
+
+function ExternalApiIntegratorEndpointsPanel({ toolId }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [endpoints, setEndpoints] = useState([]);
+  const [externalApiIntegratorModel, setExternalApiIntegratorModel] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    setEndpoints([]);
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [toolId]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+
+      if (isMongoDbId(toolId) === true) {
+        await getEndpoints(cancelSource);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getEndpoints = async (cancelSource = cancelTokenSource) => {
+    const response = await externalApiIntegratorEndpointsActions.getExternalApiIntegratorEndpointsV2(getAccessToken, cancelSource, toolId);
+    const endpointList = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(endpointList)) {
+      setEndpoints(endpointList);
+    }
+  };
+
+  const selectedJobRow = (rowData) => {
+    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, JenkinsJobMetadata);
+    setExternalApiIntegratorModel({...parsedModel});
+  };
+
+  const togglePanel = async () => {
+    setExternalApiIntegratorModel(null);
+    await loadData();
+  };
+
+  if (externalApiIntegratorModel != null) {
+    return (
+      <ExternalApiIntegratorEndpointEditorPanel
+        handleClose={togglePanel}
+        jenkinsJobModel={externalApiIntegratorModel}
+        setJenkinsJobModel={setExternalApiIntegratorModel}
+        loadData={loadData}
+      />
+    );
+  }
+
+  return (
+    <ExternalApiIntegratorEndpointsTable
+      isLoading={isLoading}
+      endpoints={endpoints}
+      loadData={loadData}
+      onRowSelect={selectedJobRow}
+    />
+  );
+}
+
+ExternalApiIntegratorEndpointsPanel.propTypes = {
+  toolData: PropTypes.object,
+  toolId: PropTypes.string,
+};
+
+export default ExternalApiIntegratorEndpointsPanel;
