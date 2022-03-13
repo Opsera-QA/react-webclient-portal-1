@@ -16,7 +16,7 @@ function ExternalApiIntegratorEndpointsTable(
   {
     toolId,
     loadData,
-    onRowSelect,
+    handleRowSelectFunction,
     isLoading,
     endpoints,
   }) {
@@ -56,7 +56,7 @@ function ExternalApiIntegratorEndpointsTable(
       <CustomTable
         columns={columns}
         data={endpoints}
-        onRowSelect={onRowSelect}
+        onRowSelect={handleRowSelectFunction}
         loadData={loadData}
         isLoading={isLoading}
       />
@@ -80,7 +80,7 @@ function ExternalApiIntegratorEndpointsTable(
 ExternalApiIntegratorEndpointsTable.propTypes = {
   toolId: PropTypes.string,
   loadData: PropTypes.func,
-  onRowSelect: PropTypes.func,
+  handleRowSelectFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   endpoints: PropTypes.array,
 };

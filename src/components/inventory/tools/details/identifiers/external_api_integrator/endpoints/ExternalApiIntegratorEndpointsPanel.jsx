@@ -11,6 +11,7 @@ import ExternalApiIntegratorEndpointEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
+import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
 
 function ExternalApiIntegratorEndpointsPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,8 +73,8 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
     }
   };
 
-  const selectedJobRow = (rowData) => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, JenkinsJobMetadata);
+  const handleRowSelectFunction = (rowData) => {
+    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, toolEndpointsMetadata);
     setExternalApiIntegratorModel({...parsedModel});
   };
 
@@ -88,6 +89,7 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
         closePanelFunction={closePanelFunction}
         externalApiIntegratorModel={externalApiIntegratorModel}
         setExternalApiIntegratorModel={setExternalApiIntegratorModel}
+        toolId={toolId}
         loadData={loadData}
       />
     );
@@ -99,7 +101,7 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
       endpoints={endpoints}
       toolId={toolId}
       loadData={loadData}
-      onRowSelect={selectedJobRow}
+      handleRowSelectFunction={handleRowSelectFunction}
     />
   );
 }

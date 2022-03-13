@@ -44,7 +44,6 @@ function StandaloneDeleteButtonWithConfirmationModal(
     }
     catch (error) {
       toastContext.showDeleteFailureResultDialog(model?.getType(), error);
-      console.error(error);
     }
     finally {
       if (isMounted?.current === true) {
@@ -54,7 +53,7 @@ function StandaloneDeleteButtonWithConfirmationModal(
     }
   };
 
-  if (model == null || model?.isNew()) {
+  if (model == null || model?.isNew() !== false) {
     return null;
   }
 
