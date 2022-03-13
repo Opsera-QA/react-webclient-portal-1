@@ -77,7 +77,7 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
     setExternalApiIntegratorModel({...parsedModel});
   };
 
-  const togglePanel = async () => {
+  const closePanelFunction = async () => {
     setExternalApiIntegratorModel(null);
     await loadData();
   };
@@ -85,9 +85,9 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
   if (externalApiIntegratorModel != null) {
     return (
       <ExternalApiIntegratorEndpointEditorPanel
-        handleClose={togglePanel}
-        jenkinsJobModel={externalApiIntegratorModel}
-        setJenkinsJobModel={setExternalApiIntegratorModel}
+        closePanelFunction={closePanelFunction}
+        externalApiIntegratorModel={externalApiIntegratorModel}
+        setExternalApiIntegratorModel={setExternalApiIntegratorModel}
         loadData={loadData}
       />
     );
@@ -97,6 +97,7 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
     <ExternalApiIntegratorEndpointsTable
       isLoading={isLoading}
       endpoints={endpoints}
+      toolId={toolId}
       loadData={loadData}
       onRowSelect={selectedJobRow}
     />
@@ -104,7 +105,6 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
 }
 
 ExternalApiIntegratorEndpointsPanel.propTypes = {
-  toolData: PropTypes.object,
   toolId: PropTypes.string,
 };
 

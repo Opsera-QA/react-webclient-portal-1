@@ -1,7 +1,6 @@
 import React, {useMemo, useContext, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import NewJenkinsJobOverlay from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/NewJenkinsJobOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
   getTableTextColumn
@@ -10,8 +9,17 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
+import NewExternalApiIntegratorEndpointOverlay
+  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 
-function ExternalApiIntegratorEndpointsTable({ toolData, loadData, onRowSelect, isLoading, endpoints }) {
+function ExternalApiIntegratorEndpointsTable(
+  {
+    toolId,
+    loadData,
+    onRowSelect,
+    isLoading,
+    endpoints,
+  }) {
   const fields = toolEndpointsMetadata.fields;
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -23,9 +31,10 @@ function ExternalApiIntegratorEndpointsTable({ toolData, loadData, onRowSelect, 
     };
   },[]);
 
-  const createJenkinsJob = () => {
+  const createEndpoint = () => {
     toastContext.showOverlayPanel(
-      <NewJenkinsJobOverlay
+      <NewExternalApiIntegratorEndpointOverlay
+        toolId={toolId}
         loadData={loadData}
         isMounted={isMounted}
       />
@@ -42,7 +51,7 @@ function ExternalApiIntegratorEndpointsTable({ toolData, loadData, onRowSelect, 
     []
   );
 
-  const getJenkinsJobsTable = () => {
+  const getEndpointsTable = () => {
     return (
       <CustomTable
         columns={columns}
@@ -58,8 +67,8 @@ function ExternalApiIntegratorEndpointsTable({ toolData, loadData, onRowSelect, 
     <FilterContainer
       showBorder={false}
       loadData={loadData}
-      addRecordFunction={createJenkinsJob}
-      body={getJenkinsJobsTable()}
+      addRecordFunction={createEndpoint}
+      body={getEndpointsTable()}
       isLoading={isLoading}
       metadata={toolEndpointsMetadata}
       titleIcon={faLink}
@@ -69,7 +78,7 @@ function ExternalApiIntegratorEndpointsTable({ toolData, loadData, onRowSelect, 
 }
 
 ExternalApiIntegratorEndpointsTable.propTypes = {
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,

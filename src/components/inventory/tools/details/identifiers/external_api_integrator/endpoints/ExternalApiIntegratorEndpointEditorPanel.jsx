@@ -8,8 +8,16 @@ import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import externalApiIntegratorEndpointsActions
+  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 
-function ExternalApiIntegratorEndpointEditorPanel({ toolModel, toolPathModel, setToolPathModel }) {
+function ExternalApiIntegratorEndpointEditorPanel(
+  {
+    toolId,
+    externalApiIntegratorModel,
+    setExternalApiIntegratorModel,
+    closePanelFunction,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -29,43 +37,66 @@ function ExternalApiIntegratorEndpointEditorPanel({ toolModel, toolPathModel, se
     };
   }, []);
 
-  const updatePath = async () => {
-    const paths = [toolPathModel?.getPersistData()];
-    toolModel?.setData("paths", paths);
+  const createEndpoint = async () => {
+    const response = await externalApiIntegratorEndpointsActions.createExternalApiIntegratorEndpointV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      externalApiIntegratorModel,
+    );
 
-    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolModel);
+    if (closePanelFunction) {
+      closePanelFunction();
+    }
+
+    return response;
   };
 
-  if (!toolPathModel) {
+  const updateEndpoint = async () => {
+    const response = await toolsActions.updateToolV2(
+      getAccessToken,
+      cancelTokenSource,
+      externalApiIntegratorModel,
+      );
+
+    if (closePanelFunction) {
+      closePanelFunction();
+    }
+
+    return response;
+  };
+
+  if (externalApiIntegratorModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
     <EditorPanelContainer
-      recordDto={toolPathModel}
-      createRecord={updatePath}
-      updateRecord={updatePath}
+      recordDto={externalApiIntegratorModel}
+      createRecord={createEndpoint}
+      // updateRecord={updateEndpoint}
+      handleClose={closePanelFunction}
     >
       <Row>
         <Col lg={12}>
           <TextInputBase
             fieldName={"name"}
-            dataObject={toolPathModel}
-            setDataObject={setToolPathModel}
+            dataObject={externalApiIntegratorModel}
+            setDataObject={setExternalApiIntegratorModel}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
             fieldName={"description"}
-            dataObject={toolPathModel}
-            setDataObject={setToolPathModel}
+            dataObject={externalApiIntegratorModel}
+            setDataObject={setExternalApiIntegratorModel}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
-            fieldName={"path"}
-            dataObject={toolPathModel}
-            setDataObject={setToolPathModel}
+            fieldName={"url"}
+            dataObject={externalApiIntegratorModel}
+            setDataObject={setExternalApiIntegratorModel}
           />
         </Col>
       </Row>
@@ -74,9 +105,10 @@ function ExternalApiIntegratorEndpointEditorPanel({ toolModel, toolPathModel, se
 }
 
 ExternalApiIntegratorEndpointEditorPanel.propTypes = {
-  toolModel: PropTypes.object,
-  toolPathModel: PropTypes.object,
-  setToolPathModel: PropTypes.func,
+  toolId: PropTypes.string,
+  externalApiIntegratorModel: PropTypes.object,
+  setExternalApiIntegratorModel: PropTypes.func,
+  closePanelFunction: PropTypes.func,
 };
 
 export default ExternalApiIntegratorEndpointEditorPanel;
