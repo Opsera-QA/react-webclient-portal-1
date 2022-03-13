@@ -75,7 +75,6 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
 
   const handleRowSelectFunction = (rowData) => {
     const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, toolEndpointsMetadata);
-    // console.log("parsedModel: " + JSON.stringify(parsedModel?.getPersistData()));
     setExternalApiIntegratorModel({...parsedModel});
   };
 
