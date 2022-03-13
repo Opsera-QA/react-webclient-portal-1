@@ -11,6 +11,8 @@ import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import EndpointRequestTypeSelectInput
+  from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/EndpointRequestTypeSelectInput";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {
@@ -111,6 +113,13 @@ function ExternalApiIntegratorEndpointEditorPanel(
             dataObject={externalApiIntegratorModel}
             setDataObject={setExternalApiIntegratorModel}
             disabled={externalApiIntegratorModel?.isNew() !== true}
+          />
+        </Col>
+        <Col lg={12}>
+          <EndpointRequestTypeSelectInput
+            fieldName={"requestType"}
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
           />
         </Col>
         <Col lg={12}>

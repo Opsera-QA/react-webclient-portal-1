@@ -122,7 +122,12 @@ export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunct
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function formatValue(row) {
-      return formatFunction(row?.value);
+      if (formatFunction) {
+        return formatFunction(row?.value);
+      }
+
+      console.error("No valid format function passed into the column definition!");
+      return row?.value;
     },
     class: className ? className : "no-wrap-inline"
   };
