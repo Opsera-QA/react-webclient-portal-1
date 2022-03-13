@@ -5,11 +5,12 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
-import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
+import StandaloneDeleteButtonWithConfirmationModal
+  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {
@@ -53,17 +54,42 @@ function ExternalApiIntegratorEndpointEditorPanel(
   };
 
   const updateEndpoint = async () => {
-    const response = await toolsActions.updateToolV2(
+    const response = await externalApiIntegratorEndpointsActions.updateExternalApiIntegratorEndpointV2(
       getAccessToken,
       cancelTokenSource,
+      toolId,
       externalApiIntegratorModel,
-      );
+    );
 
     if (closePanelFunction) {
       closePanelFunction();
     }
 
     return response;
+  };
+
+  const deleteEndpoint = async () => {
+    const response = await externalApiIntegratorEndpointsActions.deleteExternalApiIntegratorEndpointV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      externalApiIntegratorModel?.getMongoDbId(),
+    );
+
+    if (closePanelFunction) {
+      closePanelFunction();
+    }
+
+    return response;
+  };
+
+  const getDeleteButton = () => {
+    return (
+      <StandaloneDeleteButtonWithConfirmationModal
+        model={externalApiIntegratorModel}
+        deleteDataFunction={deleteEndpoint}
+      />
+    );
   };
 
   if (externalApiIntegratorModel == null) {
@@ -74,8 +100,9 @@ function ExternalApiIntegratorEndpointEditorPanel(
     <EditorPanelContainer
       recordDto={externalApiIntegratorModel}
       createRecord={createEndpoint}
-      // updateRecord={updateEndpoint}
+      updateRecord={updateEndpoint}
       handleClose={closePanelFunction}
+      extraButtons={getDeleteButton()}
     >
       <Row>
         <Col lg={12}>
@@ -83,6 +110,7 @@ function ExternalApiIntegratorEndpointEditorPanel(
             fieldName={"name"}
             dataObject={externalApiIntegratorModel}
             setDataObject={setExternalApiIntegratorModel}
+            disabled={externalApiIntegratorModel?.isNew() !== true}
           />
         </Col>
         <Col lg={12}>
