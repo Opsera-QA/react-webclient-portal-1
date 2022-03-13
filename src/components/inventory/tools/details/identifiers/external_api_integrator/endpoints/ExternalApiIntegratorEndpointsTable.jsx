@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -11,6 +12,9 @@ import {faLink} from "@fortawesome/pro-light-svg-icons";
 import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
 import NewExternalApiIntegratorEndpointOverlay
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
+import {
+  getEndpointRequestTypeLabel
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {
@@ -44,7 +48,7 @@ function ExternalApiIntegratorEndpointsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "requestType")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "requestType"), getEndpointRequestTypeLabel),
       getTableTextColumn(getField(fields, "url")),
       getTableTextColumn(getField(fields, "description")),
     ],

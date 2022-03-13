@@ -18,7 +18,6 @@ const toolEndpointsMetadata = {
       label: "Request Type",
       id: "requestType",
       isRequired: true,
-      regexDefinitionName: "pathField",
     },
     {
       label: "URL",
@@ -29,7 +28,7 @@ const toolEndpointsMetadata = {
   newObjectFields: {
     name: "",
     description: "",
-    requestType: "src",
+    requestType: "",
     url: "",
   }
 };
