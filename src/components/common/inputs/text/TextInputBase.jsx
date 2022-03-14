@@ -4,6 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
+import {InputGroup} from "react-bootstrap";
 
 function TextInputBase(
   {
@@ -22,6 +23,7 @@ function TextInputBase(
     style,
     className,
     error,
+    rightSideInputButton,
     inputButtons,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
@@ -85,6 +87,41 @@ function TextInputBase(
     }
   };
 
+  const getInputBody = () => {
+    return (
+      <input
+        type={type}
+        style={style}
+        disabled={disabled}
+        name={name}
+        value={dataObject.getData(fieldName)}
+        onChange={(event) => updateValue(event.target.value)}
+        className={getInputClasses()}
+        autoComplete={"off"}
+      />
+    );
+  };
+
+  const getInput = () => {
+    if (rightSideInputButton != null) {
+      return (
+        <InputGroup className={"flex-nowrap text-input-with-button"}>
+          {getInputBody()}
+          <InputGroup.Append>
+            {rightSideInputButton}
+          </InputGroup.Append>
+        </InputGroup>
+      );
+    }
+
+    return (
+      <div className={"d-flex"}>
+        {getInputBody()}
+        {getInputButtons()}
+      </div>
+    );
+  };
+
   if (field == null) {
     return null;
   }
@@ -99,19 +136,7 @@ function TextInputBase(
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
       />
-      <div className={"d-flex"}>
-        <input
-          type={type}
-          style={style}
-          disabled={disabled}
-          name={name}
-          value={dataObject.getData(fieldName)}
-          onChange={(event) => updateValue(event.target.value)}
-          className={getInputClasses()}
-          autoComplete="off"
-        />
-        {getInputButtons()}
-      </div>
+      {getInput()}
       <InfoText
         model={dataObject}
         fieldName={fieldName}
@@ -142,6 +167,7 @@ TextInputBase.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  rightSideInputButton: PropTypes.object,
   inputButtons: PropTypes.any,
 };
 

@@ -1,5 +1,5 @@
 export const externalRestApiIntegrationStepMetadata = {
-  type: "Child Pipeline Configuration",
+  type: "External Rest API Integration Step",
   fields: [
     {
       label: "External API Integrator Tool",

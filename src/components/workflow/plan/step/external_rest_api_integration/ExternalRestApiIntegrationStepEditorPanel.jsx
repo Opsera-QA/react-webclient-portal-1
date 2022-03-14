@@ -68,7 +68,11 @@ function ExternalRestApiIntegrationStepEditorPanel(
   };
 
   if (isLoading || externalRestApiIntegrationModel == null || thresholdModel == null) {
-    return <LoadingDialog size="sm" />;
+    return (
+      <LoadingDialog
+        size={"sm"}
+      />
+    );
   }
 
   return (
