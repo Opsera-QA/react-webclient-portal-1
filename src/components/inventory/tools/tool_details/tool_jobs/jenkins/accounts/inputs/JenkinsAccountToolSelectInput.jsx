@@ -38,6 +38,7 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
       toolFriendlyName={"Tool"}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
+      configurationRequired={true}
       fieldName={fieldName}
       model={model}
       setModel={setModel}
