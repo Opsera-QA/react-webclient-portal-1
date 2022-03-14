@@ -8,7 +8,7 @@ import axios from "axios";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import IconBase from "components/common/icons/IconBase";
 
-function PipelineUsageToolMultiSelectInput(
+function PipelineUsageToolIdentifierMultiSelectInput(
   {
     placeholderText,
     valueField,
@@ -50,7 +50,7 @@ function PipelineUsageToolMultiSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools(cancelSource);
+      await loadToolIdentifiers(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -60,9 +60,9 @@ function PipelineUsageToolMultiSelectInput(
     }
   };
 
-  const loadTools = async (cancelSource = cancelTokenSource) => {
+  const loadToolIdentifiers = async (cancelSource = cancelTokenSource) => {
     const response = await toolIdentifierActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
-    const toolIdentifiers  = response?.data;
+    const toolIdentifiers  = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {
       setToolIdentifiers(toolIdentifiers);
@@ -94,7 +94,7 @@ function PipelineUsageToolMultiSelectInput(
   );
 }
 
-PipelineUsageToolMultiSelectInput.propTypes = {
+PipelineUsageToolIdentifierMultiSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -106,9 +106,9 @@ PipelineUsageToolMultiSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-PipelineUsageToolMultiSelectInput.defaultProps = {
+PipelineUsageToolIdentifierMultiSelectInput.defaultProps = {
   textField: "name",
   valueField: "identifier"
 };
 
-export default PipelineUsageToolMultiSelectInput;
+export default PipelineUsageToolIdentifierMultiSelectInput;
