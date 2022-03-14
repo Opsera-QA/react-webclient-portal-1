@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
@@ -10,7 +9,6 @@ import IconBase from "components/common/icons/IconBase";
 
 function PipelineUsageToolIdentifierMultiSelectInput(
   {
-    placeholderText,
     valueField,
     textField,
     fieldName,
@@ -19,9 +17,9 @@ function PipelineUsageToolIdentifierMultiSelectInput(
     setDataFunction,
     disabled,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
+  const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -50,13 +48,18 @@ function PipelineUsageToolIdentifierMultiSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
       await loadToolIdentifiers(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -88,8 +91,8 @@ function PipelineUsageToolIdentifierMultiSelectInput(
       busy={isLoading}
       valueField={valueField}
       textField={textField}
-      placeholderText={placeholderText}
-      disabled={disabled || isLoading}
+      error={error}
+      disabled={disabled}
     />
   );
 }
