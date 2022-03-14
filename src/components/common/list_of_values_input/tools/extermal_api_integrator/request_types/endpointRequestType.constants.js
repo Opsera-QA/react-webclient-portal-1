@@ -1,4 +1,5 @@
 export const ENDPOINT_REQUEST_TYPES = {
+  DELETE: "delete",
   GET: "get",
   PATCH: "patch",
   POST: "post",
@@ -6,6 +7,7 @@ export const ENDPOINT_REQUEST_TYPES = {
 };
 
 export const ENDPOINT_REQUEST_TYPE_LABELS = {
+  DELETE: "Delete",
   GET: "Get",
   PATCH: "Patch",
   POST: "Post",
@@ -14,6 +16,8 @@ export const ENDPOINT_REQUEST_TYPE_LABELS = {
 
 export const getEndpointRequestTypeLabel = (packageType) => {
   switch (packageType) {
+    case ENDPOINT_REQUEST_TYPES.DELETE:
+      return ENDPOINT_REQUEST_TYPE_LABELS.DELETE;
     case ENDPOINT_REQUEST_TYPES.GET:
       return ENDPOINT_REQUEST_TYPE_LABELS.GET;
     case ENDPOINT_REQUEST_TYPES.PATCH:
