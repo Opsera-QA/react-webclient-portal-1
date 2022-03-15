@@ -52,7 +52,7 @@ function TestExternalEndpointUrlConnectionButton(
       const response = await externalApiIntegratorEndpointsActions.testEndpointConnection(getAccessToken, cancelTokenSource, endpointUrl);
 
       if (response?.status === 200) {
-        const message = JSON.stringify(response?.data?.message);
+        const message = JSON.stringify(response?.data);
         const status = response?.status;
 
       setLogs([
@@ -65,7 +65,7 @@ function TestExternalEndpointUrlConnectionButton(
         setSuccessfulConnection(true);
       }
       else {
-        const message = JSON.stringify(response?.data?.message);
+        const message = JSON.stringify(response?.data);
         let status = response?.status;
 
         setLogs([
