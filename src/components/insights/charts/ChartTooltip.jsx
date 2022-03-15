@@ -11,10 +11,10 @@ function ChartTooltip({titles, values, color, style=true}) {
       }}
     >
       {titles.map((title, i) => (
-        <>
+        <div key={`title-${i}`}>
           {i !== 0 && <br></br>}
           <strong style={{ color }}> {title}: </strong> {values[i]}
-        </>
+        </div>
       ))}
     </div>
   );

@@ -8,6 +8,7 @@ import ModalLogs from "../../../../common/modal/modalLogs";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
+import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -15,10 +16,24 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   dashboardData,
   index,
   setKpis,
-  showSettingsToggle}) {
+  showSettingsToggle,
+  showViewDetailsToggle}) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [metrics, setMetrics] = useState([]);
+
+  const viewDetailsComponent = () => {
+    console.log('dashboardData', dashboardData);
+    return (
+      <LeadTimeAndReleaseDurationActionableInsightOverlay
+        title={"Lead time and Release Duration"}
+        actionableInsightsQueryData={null}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
+  };
+
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
         "lead-time-and-release-traceability-duration-data-point");
@@ -130,6 +145,8 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        showViewDetailsToggle={showViewDetailsToggle}
+        viewDetailsComponent={viewDetailsComponent()}
       />
       <ModalLogs
         header="Github Actions Statistics"
@@ -150,6 +167,7 @@ LeadTimeAndReleaseTraceabilityDataBlock.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
+  showViewDetailsToggle: PropTypes.bool
 };
 
 export default LeadTimeAndReleaseTraceabilityDataBlock;

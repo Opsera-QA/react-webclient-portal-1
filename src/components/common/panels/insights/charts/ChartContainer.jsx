@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
 import InfoDialog from "components/common/status_notifications/info";
-import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
+import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
+import ToggleViewDetailsIcon  from "components/common/icons/details/ToggleViewDetailsIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
@@ -30,6 +31,8 @@ function ChartContainer(
     chartHelpComponent,
     settingsHelpComponent,
     showSettingsToggle,
+    showViewDetailsToggle,
+    viewDetailsComponent
   }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
@@ -81,6 +84,14 @@ function ChartContainer(
     );
   };
 
+  const showViewDetailsPanel = () => {
+    toastContext.showOverlayPanel(
+      <>
+        {viewDetailsComponent}
+      </>
+    );
+  };
+
   // TODO: This is a workaround, but I want to come up with a better solution
   const getSettingsToggle = () => {
     if (showSettingsToggle !== false) {
@@ -90,6 +101,19 @@ function ChartContainer(
           visible={!helpIsShown}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
+        />
+      );
+    }
+  };
+
+  const getViewDetailsToggle = () => {
+    if (showViewDetailsToggle && viewDetailsComponent) {
+      return (
+        <ToggleViewDetailsIcon
+          className={"ml-3 my-auto"}
+          visible={!helpIsShown}
+          activeTab={view}
+          setActiveTab={() => showViewDetailsPanel()}
         />
       );
     }
@@ -115,6 +139,7 @@ function ChartContainer(
             Error Loading Chart!
           </div>
           <div className={"d-flex my-auto"}>
+            {/* {getViewDetailsToggle()} */}
             {getSettingsToggle()}
           </div>
         </div>
@@ -128,6 +153,7 @@ function ChartContainer(
         </div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
+          {getViewDetailsToggle()}
           {getSettingsToggle()}
         </div>
       </div>
@@ -251,6 +277,8 @@ ChartContainer.propTypes = {
   chartHelpComponent: PropTypes.func,
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
+  showViewDetailsToggle: PropTypes.bool,
+  viewDetailsComponent: PropTypes.object
 };
 
 export default ChartContainer;
