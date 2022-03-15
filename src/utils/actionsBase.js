@@ -1,12 +1,6 @@
 import {axiosApiService} from "api/apiService";
-import {
-  axiosApiDeleteCall,
-  axiosApiGetCall,
-  axiosApiPatchCall,
-  axiosApiPostCall,
-  axiosApiPutCall, axiosCustomTokenApiPostCall, axiosTokenlessApiGetCall
-} from "api/apiServiceV2";
 import {nodeAnalyticsApiService} from "api/nodeAnalyticsApi.service";
+import {apiServiceV2} from "api/apiServiceV2";
 
 const baseActions = {};
 
@@ -18,11 +12,11 @@ baseActions.apiGetCall = async (getAccessToken, apiUrl, urlParams) => {
 };
 
 baseActions.apiGetCallV2 = async (getAccessToken, sourceToken, apiUrl, urlParams) => {
-  return await axiosApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
+  return await apiServiceV2.axiosApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
 };
 
 baseActions.apiTokenlessGetCallV2 = async (sourceToken, apiUrl, urlParams) => {
-  return await axiosTokenlessApiGetCall(sourceToken, apiUrl, urlParams);
+  return await apiServiceV2.axiosTokenlessApiGetCall(sourceToken, apiUrl, urlParams);
 };
 
 baseActions.customTokenApiGetCall = async (customToken, apiUrl, urlParams) => {
@@ -38,7 +32,7 @@ baseActions.customTokenApiPostCall = async (customToken, apiUrl, postBody) => {
 };
 
 baseActions.customTokenApiPostCallV2 = async (cancelTokenSource, customToken, apiUrl, postBody) => {
-  return await axiosCustomTokenApiPostCall(customToken, cancelTokenSource, apiUrl, postBody);
+  return await apiServiceV2.axiosCustomTokenApiPostCall(customToken, cancelTokenSource, apiUrl, postBody);
 };
 
 baseActions.apiPostCall = async (getAccessToken, apiUrl, postBody = {}) => {
@@ -49,7 +43,7 @@ baseActions.apiPostCall = async (getAccessToken, apiUrl, postBody = {}) => {
 };
 
 baseActions.apiPostCallV2 = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
-  return await axiosApiPostCall(getAccessToken, sourceToken, apiUrl, postBody);
+  return await apiServiceV2.axiosApiPostCall(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
 baseActions.apiPutCall = async (getAccessToken, apiUrl, postBody = {}) => {
@@ -59,14 +53,12 @@ baseActions.apiPutCall = async (getAccessToken, apiUrl, postBody = {}) => {
     .catch(error => {throw { error };});
 };
 
-// TODO: Wire up and test
 baseActions.apiPutCallV2 = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
-  return await axiosApiPutCall(getAccessToken, sourceToken, apiUrl, postBody);
+  return await apiServiceV2.axiosApiPutCall(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
-// TODO: Wire up and test
 baseActions.apiPatchCallV2 = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
-  return await axiosApiPatchCall(getAccessToken, sourceToken, apiUrl, postBody);
+  return await apiServiceV2.axiosApiPatchCall(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
 baseActions.apiDeleteCall = async (getAccessToken, apiUrl) => {
@@ -78,7 +70,7 @@ baseActions.apiDeleteCall = async (getAccessToken, apiUrl) => {
 
 // TODO: Wire up and test
 baseActions.apiDeleteCallV2 = async (getAccessToken, sourceToken, apiUrl) => {
-  return await axiosApiDeleteCall(getAccessToken, sourceToken, apiUrl);
+  return await apiServiceV2.axiosApiDeleteCall(getAccessToken, sourceToken, apiUrl);
 };
 
 baseActions.handleNodeAnalyticsApiPostRequest = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
