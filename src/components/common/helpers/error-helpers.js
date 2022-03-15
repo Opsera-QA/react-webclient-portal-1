@@ -14,6 +14,12 @@ export function parseError(error) {
   }
 
   if (typeof error === "object") {
+    const responseData = error?.response?.data;
+
+    if (hasStringValue(responseData)) {
+      return responseData;
+    }
+
     if (error?.error) {
       if (hasStringValue(error?.error) === true) {
         return error.error;
