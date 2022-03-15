@@ -79,7 +79,9 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
           placement="auto"
           delay={{ hide: 400 }}
           overlay={renderTooltip({ message: permissionsMessage })}>
-          <IconBase icon={faUserCircle} iconStyling={{ fontSize: "larger" }}/>
+          <div>
+            <IconBase icon={faUserCircle} iconStyling={{ fontSize: "larger" }}/>
+          </div>
         </OverlayTrigger>
       </div>
     );
