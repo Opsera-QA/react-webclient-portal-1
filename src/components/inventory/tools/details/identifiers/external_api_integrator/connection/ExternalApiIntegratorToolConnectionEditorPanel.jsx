@@ -12,6 +12,8 @@ import axios from "axios";
 import {
   externalApiIntegratorToolConnectionMetadata
 } from "components/inventory/tools/details/identifiers/external_api_integrator/connection/externalApiIntegratorToolConnection.metadata";
+import ExternalApiIntegratorConnectionCheckUrlTextInput
+  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/inputs/connection_check/ExternalApiIntegratorConnectionCheckUrlTextInput";
 
 function ExternalApiIntegratorToolConnectionEditorPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -64,9 +66,9 @@ function ExternalApiIntegratorToolConnectionEditorPanel({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase
-            dataObject={externalApiConnectionModel}
-            setDataObject={setExternalApiConnectionModel}
+          <ExternalApiIntegratorConnectionCheckUrlTextInput
+            model={externalApiConnectionModel}
+            setModel={setExternalApiConnectionModel}
             fieldName={"connection_check_url"}
           />
         </Col>
