@@ -103,7 +103,7 @@ AwsCloudProviderRegionSelectInput.propTypes = {
 
 AwsCloudProviderRegionSelectInput.defaultProps = {
   valueField: "value",
-  textField: "text"
+  textField: "text",
 };
 
 export default AwsCloudProviderRegionSelectInput;
