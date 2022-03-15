@@ -1,14 +1,21 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 
-function AwsCloudProviderRegionSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function AwsCloudProviderRegionSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    textField,
+    valueField,
+  }) {
   const [cloudProviderRegions, setCloudProviderRegions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -36,59 +43,42 @@ function AwsCloudProviderRegionSelectInput({ fieldName, model, setModel, disable
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
       await loadAwsRegions(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
   const loadAwsRegions = async (cancelSource = cancelTokenSource) => {
-    try {
-      const response = await userActions.getAwsRegionsV2(cancelSource);
-      const regions = response?.data?.data;
-      if (Array.isArray(regions)) {
-        setCloudProviderRegions(regions);
-      }
-    } catch (error) {
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+    const response = await userActions.getAwsRegionsV2(cancelSource);
+    const regions = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(regions)) {
+      setCloudProviderRegions(regions);
     }
   };
-
-  const getPlaceholderText = () => {
-    if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
-      return ("AWS Region information is missing or unavailable!");
-    }
-
-    return ("Select AWS Region");
-  };
-
-  if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
-    return (
-      <div className="form-text text-muted p-2">
-        AWS Regions information is missing or unavailable!
-      </div>
-    );
-  }
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        selectOptions={cloudProviderRegions}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={getPlaceholderText()}
-        disabled={disabled || isLoading}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={cloudProviderRegions}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      error={error}
+      disabled={disabled}
+    />
   );
 }
 
