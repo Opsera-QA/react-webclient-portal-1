@@ -5,4 +5,4 @@ RewriteRule ^ index.html [QSA,L]
 RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|js|png|swf|txt|svg|woff|ttf|eot)
 
 Header set X-Frame-Options DENY
-Header set Content-Security-Policy "default-src 'self' *.opsera.io localhost:* *.fontawesome.com https://fonts.googleapis.com *.okta.com *.oktapreview.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: *.opsera.io; font-src 'self' data: *.opsera.io data: localhost:* *.fontawesome.com https://fonts.gstatic.com;"
+Header set Content-Security-Policy "default-src 'self' *.opsera.io *.opsera-uat.opsera.io localhost:* *.fontawesome.com https://fonts.googleapis.com *.okta.com *.oktapreview.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: *.opsera.io; font-src 'self' data: *.opsera.io data: localhost:* *.fontawesome.com https://fonts.gstatic.com;"

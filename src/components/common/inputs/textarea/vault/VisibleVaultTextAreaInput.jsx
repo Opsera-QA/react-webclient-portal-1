@@ -116,7 +116,7 @@ function VisibleVaultTextAreaInput(
 
 
   return (
-    <InputContainer>
+    <InputContainer >
       <InputLabel
         field={field}
         model={model}
@@ -127,7 +127,7 @@ function VisibleVaultTextAreaInput(
           disabled={disabled || pullingValueFromVault}
           value={pullingValueFromVault || isLoading ? "Loading Value From Vault" : model?.getData(fieldName)}
           onChange={(event) => updateValue(event.target.value)}
-          className={"form-control"}
+          className={"form-control" + " input-for-" + fieldName}
           rows={5}
         />
         <div className={"ml-2"}>

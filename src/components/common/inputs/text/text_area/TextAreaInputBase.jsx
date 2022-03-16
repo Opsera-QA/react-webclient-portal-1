@@ -56,7 +56,7 @@ function TextAreaInputBase(
   }
 
   return (
-    <InputContainer>
+    <InputContainer className={"input-for-" + fieldName}>
       <InputLabel
         model={model}
         field={field}

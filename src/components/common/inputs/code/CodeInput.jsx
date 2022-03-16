@@ -102,7 +102,7 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className + " input-for-" + fieldName}>
       <div className="object-properties-input">
         <div className="content-container">
           <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} actionButtons={getTitleBarActionButtons()} />

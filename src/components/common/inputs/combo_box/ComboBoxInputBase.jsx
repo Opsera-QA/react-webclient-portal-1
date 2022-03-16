@@ -28,7 +28,7 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
   }
 
   return (
-    <InputContainer className="custom-select-input my-2">
+    <InputContainer className={"custom-select-input my-2" + " input-for-" + fieldName}>
       <InputLabel field={field} model={dataObject} />
       <StandaloneComboBoxInput
         selectOptions={selectOptions}

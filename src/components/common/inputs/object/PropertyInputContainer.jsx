@@ -26,7 +26,7 @@ function PropertyInputContainer(
     if (addProperty) {
       return (
         <div className="ml-auto m-2 d-flex">
-          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
+          <Button variant="secondary" className="addPropertyButton" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
             <span className="text-white"><IconBase className={"text-white mr-2"} icon={faPlus} />Add {type}</span>
           </Button>
         </div>
@@ -37,7 +37,7 @@ function PropertyInputContainer(
   const getIncompleteRowBlock = () => {
     if (incompleteRowMessage != null) {
       return (
-        <div className="w-100 m-2 text-muted small">
+        <div className="w-100 m-2 text-muted small getIncompleteRowBlock">
           <IconBase className={"text-warning mr-1"} icon={faExclamationTriangle}/>
           <span className="mt-1">{incompleteRowMessage}</span>
         </div>

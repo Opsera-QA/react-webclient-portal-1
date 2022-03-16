@@ -15,7 +15,7 @@ function DockerPushNewRepoToggleInput({dataObject, setDataObject, fieldName, dis
   };
 
   return (
-    <InputContainer>
+    <InputContainer className={"input-for-" + fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

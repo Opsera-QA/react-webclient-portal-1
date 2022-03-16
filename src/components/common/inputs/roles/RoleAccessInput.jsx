@@ -250,7 +250,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 
   const getTypeInput = (role, index) => {
     return (
-      <div className="mt-2 d-inline-flex">
+      <div className="mt-2 d-inline-flex role-access-input">
         <div className="m-auto mr-2">
           <input
             className="mr-2"
@@ -320,7 +320,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     }
 
     return (
-      <StandaloneSelectInput
+      <StandaloneSelectInput className="input-for-group"
         selectOptions={groupList}
         valueField={"name"}
         textField={"name"}

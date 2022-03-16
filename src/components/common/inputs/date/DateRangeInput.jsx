@@ -52,7 +52,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
     });
   };
   return (
-    <InputContainer>
+    <InputContainer className={"input-for-" + fieldName}>
       <div className={"d-flex justify-content-between date-range-header"}>
         <InputLabel field={field} model={dataObject} />
         <TooltipWrapper innerText={"Clear this Value"}>

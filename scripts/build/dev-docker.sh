@@ -1,12 +1,7 @@
 #!/bin/bash
 set -xe
-docker build -t opsera-reactapp:kube-dev --build-arg build_env=kube-dev  ../../
-docker run --rm \
-        440953937617.dkr.ecr.us-east-2.amazonaws.com/kubectl \
-        aws ecr get-login-password \
-        --region us-east-2 \
-        | docker login --username AWS \
-        --password-stdin 440953937617.dkr.ecr.us-east-2.amazonaws.com
+aws --profile opsera-sys ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 440953937617.dkr.ecr.us-east-2.amazonaws.com
+docker build -t opsera-reactapp:kube-generic --build-arg build_env=kube-generic  ../../
 
 date_tag=`date +%-d-%m-%Y-%T | sed 's/:/-/g'`
 docker tag opsera-reactapp:kube-dev 440953937617.dkr.ecr.us-east-2.amazonaws.com/opsera-reactapp:kube-dev
