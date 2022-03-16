@@ -17,47 +17,49 @@ export function parseError(error) {
   if (typeof error === "object") {
     const responseData = error?.response?.data;
 
-    if (hasStringValue(responseData)) {
+    if (hasStringValue(responseData) === true) {
       return responseData;
     }
 
     const responseDataMessage = error?.response?.data?.message;
 
-    if (hasStringValue(responseDataMessage)) {
+    if (hasStringValue(responseDataMessage) === true) {
       return responseDataMessage;
     }
 
-    if (error?.error) {
-      if (hasStringValue(error?.error) === true) {
-        return error.error;
+    const innerError = error?.error;
+
+    if (innerError) {
+      if (hasStringValue(innerError) === true) {
+        return innerError;
       }
 
-      const requestResponseText = error?.error?.response?.data?.message;
-      if (hasStringValue(requestResponseText) === true) {
-        return requestResponseText;
-      }
+      if (typeof innerError === "object") {
+        const innerResponseData = innerError?.response?.data;
 
-      if (hasStringValue(error?.error?.message) === true) {
-        return error.error.message;
+        if (hasStringValue(innerResponseData) === true) {
+          return innerResponseData;
+        }
+
+        if (typeof innerResponseData === "object") {
+          const innerResponseDataMessage = innerResponseData?.message;
+
+          if (hasStringValue(innerResponseDataMessage) === true) {
+            return innerResponseDataMessage;
+          }
+        }
+
+        const innerErrorMessage = innerError?.message;
+        if (hasStringValue(innerErrorMessage) === true) {
+          return innerErrorMessage;
+        }
       }
     }
 
-    if (error.response) {
-      const responseData = error?.response?.data;
+    const errorMessage = error?.message;
 
-      if (responseData) {
-        if (hasStringValue(responseData) === true) {
-          return error?.response.data;
-        }
-
-        if (hasStringValue(responseData?.message) === true) {
-          return responseData?.message;
-        }
-      }
-    }
-
-    if (hasStringValue(error.message) === true) {
-      return error.message;
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
     }
 
     return "Unknown error reported. Please check your browser's console logs for more details";
