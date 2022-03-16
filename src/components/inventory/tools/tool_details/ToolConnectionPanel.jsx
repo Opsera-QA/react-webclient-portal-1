@@ -45,7 +45,6 @@ function ToolConnectionPanel({ toolData }) {
       return <></>;
     }
 
-    console.log("toolIdentifier: " + JSON.stringify(toolData?.getData("tool_identifier")));
     switch (toolData?.getData("tool_identifier")) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
