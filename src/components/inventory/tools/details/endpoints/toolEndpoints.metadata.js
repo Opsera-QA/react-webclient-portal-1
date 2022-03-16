@@ -24,12 +24,22 @@ const toolEndpointsMetadata = {
       id: "url",
       isRequired: true,
     },
+    {
+      label: "Request Body",
+      id: "requestBody",
+    },
+    {
+      label: "Response Body",
+      id: "responseBody",
+    },
   ],
   newObjectFields: {
     name: "",
     description: "",
     requestType: "",
     url: "",
+    requestBody: {},
+    responseBody: {},
   }
 };
 
