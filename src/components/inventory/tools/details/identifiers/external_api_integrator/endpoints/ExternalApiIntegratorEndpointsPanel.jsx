@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import ExternalApiIntegratorEndpointsTable from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointsTable";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
