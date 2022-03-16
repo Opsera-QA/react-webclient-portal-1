@@ -3,6 +3,7 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 export const errorHelpers = {};
 
 // TODO: Handle better when error handling standards are in place
+//  Technically errors should be stored in error?.response?.data coming from Node (new standards) or error?.response?.data?.message
 export function parseError(error) {
   if (!error || error.length === 0) {
     return "Unknown error reported.";
@@ -18,6 +19,12 @@ export function parseError(error) {
 
     if (hasStringValue(responseData)) {
       return responseData;
+    }
+
+    const responseDataMessage = error?.response?.data?.message;
+
+    if (hasStringValue(responseDataMessage)) {
+      return responseDataMessage;
     }
 
     if (error?.error) {
