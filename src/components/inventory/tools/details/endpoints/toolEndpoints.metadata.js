@@ -25,12 +25,12 @@ const toolEndpointsMetadata = {
       isRequired: true,
     },
     {
-      label: "Request Body",
-      id: "requestBody",
+      label: "Request Body Fields",
+      id: "requestBodyFields",
     },
     {
-      label: "Response Body",
-      id: "responseBody",
+      label: "Response Body Fields",
+      id: "responseBodyFields",
     },
   ],
   newObjectFields: {
@@ -38,8 +38,8 @@ const toolEndpointsMetadata = {
     description: "",
     requestType: "",
     url: "",
-    requestBody: {},
-    responseBody: {},
+    requestBodyFields: [],
+    responseBodyFields: [],
   }
 };
 

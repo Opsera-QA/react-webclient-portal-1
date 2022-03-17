@@ -13,6 +13,7 @@ import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EndpointRequestTypeSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/EndpointRequestTypeSelectInput";
+import EndpointBodyInputBase from "components/common/inputs/endpoints/endpoint/EndpointBodyInputBase";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {
@@ -134,6 +135,20 @@ function ExternalApiIntegratorEndpointEditorPanel(
             fieldName={"url"}
             dataObject={externalApiIntegratorModel}
             setDataObject={setExternalApiIntegratorModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <EndpointBodyInputBase
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
+            fieldName={"requestBodyFields"}
+          />
+        </Col>
+        <Col lg={12}>
+          <EndpointBodyInputBase
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
+            fieldName={"responseBodyFields"}
           />
         </Col>
       </Row>

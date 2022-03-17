@@ -78,7 +78,7 @@ function ExternalApiIntegratorToolEndpointSelectInput(
       const selectedEndpointId = model?.getData(fieldName);
 
       if (hasStringValue(selectedEndpointId) === true) {
-        const foundEndpoint = endpoints.find((repository) => repository[valueField] === selectedEndpointId);
+        const foundEndpoint = endpointList.find((endpoint) => endpoint[valueField] === selectedEndpointId);
 
         if (foundEndpoint == null) {
           setError(
