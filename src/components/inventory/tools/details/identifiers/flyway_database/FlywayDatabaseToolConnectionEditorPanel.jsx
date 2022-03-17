@@ -53,7 +53,7 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
       getAccessToken,
       cancelTokenSource,
       toolData?.getMongoDbId(),
-      toolData.getData("identifier"),
+      toolData.getData("tool_identifier"),
       "password",
       newConfiguration?.password
     );
