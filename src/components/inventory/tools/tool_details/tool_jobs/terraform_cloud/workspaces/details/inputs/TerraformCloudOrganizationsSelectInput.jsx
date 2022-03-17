@@ -75,12 +75,46 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
     }
   };
 
+  const setDataFunction = ( fieldName, selectedOption ) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData(fieldName, selectedOption.organizationName);
+    newDataObject.setData("workspaceName", "");
+    newDataObject.setData("description", "");
+    newDataObject.setData("workingDirectory", "");
+    newDataObject.setData("version", "");
+    newDataObject.setData("service", "");
+    newDataObject.setData("branch", "");
+    newDataObject.setData("provider", "");
+    newDataObject.setData("providerId", "");
+    newDataObject.setData("oauthToken", "");
+    newDataObject.setData("repository", "");
+    setDataObject({...newDataObject});
+  };
+
+  const clearDataFunction = ( fieldName ) => {    
+    let newDataObject = {...dataObject};
+    newDataObject.setData("organizationName", "");
+    newDataObject.setData("workspaceName", "");
+    newDataObject.setData("description", "");
+    newDataObject.setData("workingDirectory", "");
+    newDataObject.setData("version", "");
+    newDataObject.setData("service", "");
+    newDataObject.setData("branch", "");
+    newDataObject.setData("provider", "");
+    newDataObject.setData("providerId", "");
+    newDataObject.setData("oauthToken", "");
+    newDataObject.setData("repository", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={organizations}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
         busy={isLoading}
         valueField={valueField}
         textField={textField}
