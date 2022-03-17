@@ -41,7 +41,7 @@ function StandaloneTextInputBase(
         value={value}
         onChange={(event) => setDataFunction(event.target.value)}
         className={getInputClasses()}
-        autoComplete="off"
+        autoComplete={"off"}
       />
       <InfoText errorMessage={errorMessage} />
     </>
