@@ -518,7 +518,7 @@ function PipelineStepConfigurationSummary({
             mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
             />
         );
-      case "flyway-database-migrator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
         return (
           <FlywayDatabasePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}

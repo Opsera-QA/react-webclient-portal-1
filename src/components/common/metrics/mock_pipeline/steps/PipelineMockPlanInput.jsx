@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
-import PipelineMockStepInputRow
-  from "components/common/metrics/mock_pipeline/steps/PipelineMockStepEditorPanel";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { pipelineMockStepMetadata } from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
+import PipelineMockStepInputRow from "components/common/metrics/mock_pipeline/steps/PipelineMockStepEditorPanel";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 
-function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
+function PipelineMockPlanInput({ fieldName, model, setModel, disabled }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [steps, setSteps] = useState([]);
@@ -18,7 +17,7 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
     if (Array.isArray(newJobs)) {
       setSteps(newJobs);
     }
-  }, [model]);
+  }, []);
 
   const validateAndSetData = (newSteps) => {
     if (!Array.isArray(newSteps)) {
@@ -26,10 +25,12 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
     }
 
     setSteps([...newSteps]);
-    const newModel = {...model};
+    const newModel = { ...model };
 
     if (newSteps.length > field.maxItems) {
-      setErrorMessage("You have reached the maximum allowed number of configuration items. Please remove one to add another.");
+      setErrorMessage(
+        "You have reached the maximum allowed number of configuration items. Please remove one to add another."
+      );
       return;
     }
 
@@ -38,13 +39,13 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
     if (newSteps.length > 0) {
       newSteps.map((step) => {
         if (isStepComplete(step) === true) {
-         validatedJobs.push(step);
+          validatedJobs.push(step);
         }
       });
     }
 
     newModel.setData(fieldName, validatedJobs);
-    setModel({...newModel});
+    setModel({ ...newModel });
   };
 
   const addNewStep = () => {
@@ -54,7 +55,7 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
       return;
     }
 
-    newEnvironmentList.push({...pipelineMockStepMetadata.newObjectFields});
+    newEnvironmentList.push({ ...pipelineMockStepMetadata.newObjectFields });
     validateAndSetData(newEnvironmentList);
   };
 
@@ -101,9 +102,7 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
   // TODO: Check for required fields
   // TODO: Do we want to allow incomplete savings?
   const isStepComplete = (step) => {
-    return (
-      hasStringValue(step?.name) === true
-    );
+    return hasStringValue(step?.name) === true;
   };
 
   const lastStepComplete = () => {
@@ -118,7 +117,7 @@ function PipelineMockPlanInput({ fieldName, model, setModel, disabled}) {
 
   const getIncompletePropertyMessage = () => {
     if (!lastStepComplete()) {
-      return (`Incomplete Steps Will Be Removed Before Saving`);
+      return `Incomplete Steps Will Be Removed Before Saving`;
     }
   };
 
@@ -148,7 +147,7 @@ PipelineMockPlanInput.propTypes = {
   model: PropTypes.object,
   fields: PropTypes.array,
   fieldName: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default PipelineMockPlanInput;

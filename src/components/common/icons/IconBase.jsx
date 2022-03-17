@@ -2,6 +2,7 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function IconBase(
   {
@@ -19,6 +20,20 @@ function IconBase(
     iconTitle,
     iconColor,
   }) {
+  const getIconClassNames = () => {
+    let iconClassNames = "";
+
+    if (hasStringValue(iconClassName) === true) {
+      iconClassNames = iconClassName;
+    }
+
+    if (onClickFunction != null) {
+      iconClassNames = `${iconClassNames} pointer`;
+    }
+
+    return iconClassNames;
+  };
+
   const getIcon = () => {
     if (isLoading) {
       return (
@@ -38,7 +53,7 @@ function IconBase(
         size={iconSize}
         transform={iconTransformProperties}
         fixedWidth
-        className={iconClassName}
+        className={getIconClassNames()}
         title={iconTitle}
         color={iconColor}
       />

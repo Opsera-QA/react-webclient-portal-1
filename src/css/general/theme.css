@@ -34,6 +34,11 @@
     height: calc(1.5em + .75rem + 2px);
 }
 
+.text-input-with-button .btn {
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
 .btn {
     border-radius: .1rem;
 }
@@ -441,8 +446,6 @@ a.text-primary:hover, a.text-primary:focus {
 
 .table-tree {
     height: 500px;
-    border: 1px solid #dfdfdf;
-    border-right: 0;
     background: #fff;
 }
 

@@ -8,9 +8,14 @@ function GenericChartSettingsHelpDocumentation({closeHelpPanel}) {
       helpTopic={"KPI Settings"}
       closeHelpPanel={closeHelpPanel}
     >
-      <div>Set any filters, tags, names or dates provided for the given KPI and <b>Save</b> to view the KPI with
-        reflected filters. To remove the KPI from your dashboard, select the trash icon. To remove any settings,
-        select <b>Clear Value</b> in given field.
+      <div>
+      <div className={"mb-1 ml-2"}>Change KPI display name and set filters and date range for the selected KPI. To apply the settings and view the KPI with the reflected data, click the <b>Save</b> button. To remove any selected settings, select <b>Clear Value</b> in respective field.</div>
+        <ul style={{listStyleType: "none"}}>
+          <li><b>Delete KPI</b> - To remove the KPI from this dashboard, click the <b>Delete KPI</b> button. Data cannot be recovered once this KPI is deleted.</li>
+          <li><b>Reset KPI</b> - Reset the KPI name and/or internal properties. When new features are added, sometimes the internal data needs to be reset to enable those features. Data cannot be recovered once this KPI is reset. </li>
+          <li><b>KPI Tags</b> - Enable toggle to apply tags to selected KPI.</li>
+          <li><b>Dashboard Tags</b> - Enable toggle to apply dashboard tags to this KPI. Dashboard tags are applied in Dashboard Settings.</li>
+        </ul>
       </div>
     </HelpDocumentationContainer>
   );

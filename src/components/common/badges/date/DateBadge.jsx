@@ -4,23 +4,23 @@ import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import BadgeBase from "components/common/badges/BadgeBase";
 
-function DateBadge({badgeText, className}) {
+function DateBadgeBase({badgeText, className}) {
   if (hasStringValue(badgeText) !== true) {
     return null;
   }
 
   return (
     <BadgeBase
-      className={`${className} date-badge`}
+      className={className}
       icon={faCalendar}
       badgeText={badgeText}
     />
   );
 }
 
-DateBadge.propTypes = {
+DateBadgeBase.propTypes = {
   badgeText: PropTypes.any,
   className: PropTypes.string
 };
 
-export default React.memo(DateBadge);
+export default React.memo(DateBadgeBase);

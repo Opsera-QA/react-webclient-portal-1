@@ -11,13 +11,13 @@ import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData }) {    
+function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
 
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -33,14 +33,19 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
       "id": "average daily builds",
       "data": chartData?.avgBuilds
     }  
-  ];  
+  ];
 
   const getLeftDataBlock = () => {    
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Builds"}
-        middleText={<MetricScoreText score={metricData?.build?.perDayAverage} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.perDayAverage < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricScoreText
+          score={metricData?.build?.perDayAverage}
+          dataPoint={dataPoint}
+        />}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -108,6 +113,8 @@ BuildFrequencyStatisticsDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
+  kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default BuildFrequencyStatisticsDataBlockContainer;

@@ -4,7 +4,7 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import SdlcDurationByStageBarChartBase from "../../SdlcDurationByStageBarChartBase";
 import SdlcDurationByStageDataBlockBase from "../../SdlcDurationByStageDataBlockBase";
 
-function SdlcQualityScanDurationMetric({ kpiConfiguration, dashboardData, meanData, countData, goalsData, metric }) {
+function SdlcQualityScanDurationMetric({ kpiConfiguration, dashboardData, meanData, countData, goalsData, metric, dataPoint }) {
   const getDataBlock = () => {
     return (
       <SdlcDurationByStageDataBlockBase
@@ -12,6 +12,7 @@ function SdlcQualityScanDurationMetric({ kpiConfiguration, dashboardData, meanDa
         meanData={meanData}
         countData={countData}
         goalsData={goalsData}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -36,6 +37,7 @@ SdlcQualityScanDurationMetric.propTypes = {
   countData: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SdlcQualityScanDurationMetric;

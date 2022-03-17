@@ -21,12 +21,14 @@ toolIdentifierActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenS
 
 toolIdentifierActions.getPipelineUsageToolIdentifiersV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/tools`;
-  const params = {
-    status: "active",
-    usage: "pipeline",
+  const urlParams = {
+    params: {
+      status: "active",
+      usage: "pipeline",
+    },
   };
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, params);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 toolIdentifierActions.createToolIdentifierV2 = async (getAccessToken, cancelTokenSource, toolIdentifierModel) => {

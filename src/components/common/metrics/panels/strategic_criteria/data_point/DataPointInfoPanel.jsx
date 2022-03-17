@@ -6,12 +6,13 @@ import DataPointStrategicCriteriaInfoPanel
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 import MetricInfoContainer from "components/common/containers/MetricInfoContainer";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function DataPointInfoPanel({ dataPoint, className }) {
   const getDescription = () => {
-    if (dataPoint?.description) {
+    if (hasStringValue(dataPoint?.description) === true) {
       return (
-        <div className={"m-2"}>
+        <div className={"mb-2 mx-2"}>
           {dataPoint?.description}
         </div>
       );
@@ -31,6 +32,7 @@ function DataPointInfoPanel({ dataPoint, className }) {
     >
       {getDescription()}
       <DataPointStrategicCriteriaInfoPanel
+        className={"p-2"}
         strategicCriteria={dataPointHelpers.getDataPointStrategicCriteria(dataPoint)}
       />
     </MetricInfoContainer>

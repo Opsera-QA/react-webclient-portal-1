@@ -23,6 +23,7 @@ import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details
 import ToolClustersPanel from "components/inventory/tools/tool_details/clusters/ToolClustersPanel";
 import ToolOrganizationsPanel from "components/inventory/tools/tool_details/ToolOrganizationsPanel";
 import ToolWorkspacesPanel from "components/inventory/tools/tool_details/ToolWorkspacesPanel";
+import ToolEndpointsPanel from "components/inventory/tools/details/endpoints/ToolEndpointsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -104,6 +105,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <ToolConnectionPanel
             toolData={toolData}
             loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
+        return (
+          <ToolEndpointsPanel
+            toolModel={toolData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.JOBS:

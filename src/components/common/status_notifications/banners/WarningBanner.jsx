@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import IconBase from "components/common/icons/IconBase";
+import BannerBase from "components/common/status_notifications/banners/BannerBase";
 
 function WarningBanner({warningMessage, removeBanner, id}) {
   const [messageBody, setMessageBody] = useState("");
-
-  const clearWarning = () => {
-    removeBanner(id);
-  };
 
   useEffect(() => {
     setMessageBody(warningMessage);
   }, [warningMessage]);
 
-  const getCloseButton = () => {
-    if (removeBanner) {
-      return (
-        <div className="float-right ml-1">
-          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearWarning();}}/>
-        </div>
-      );
-    }
+  const clearWarning = () => {
+    removeBanner(id);
   };
 
   return (
-    <div className="w-100 warning-block top-dialog-block">
-      {getCloseButton()}
-      <span>{messageBody}</span>
-    </div>
+    <BannerBase
+      bannerClassName={"w-100 top-dialog-block warning-block"}
+      bannerMessage={messageBody}
+      removeBannerFunction={clearWarning}
+    />
   );
 }
 

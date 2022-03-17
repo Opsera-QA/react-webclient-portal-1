@@ -19,6 +19,9 @@ import ToolOrganizationsTab, {ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS} from "co
 import ToolClustersTab, {ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolClustersTab";
 import ToolWorkspacesTab, {WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolWorkspacesTab";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import ToolEndpointsTab, {
+  ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS
+} from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -27,6 +30,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   ATTRIBUTE_SETTINGS: "attribute_settings",
   CLUSTERS: "clusters",
   CONNECTION: "connection",
+  ENDPOINTS: "endpoints",
   JOBS: "jobs",
   LOGS: "logs",
   MAPPING: "mapping",
@@ -50,6 +54,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
       return REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.JOBS:
       return JOBS_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
+      return ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.ACCOUNTS:
       return ACCOUNT_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.LOGS:
@@ -99,6 +105,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolConnectionTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolEndpointsTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}

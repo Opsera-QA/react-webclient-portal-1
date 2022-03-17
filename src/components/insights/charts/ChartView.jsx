@@ -158,6 +158,7 @@ import AutomatedTestAdoptionRateMetric
 import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -713,10 +714,22 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings-v2":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
           <Col md={12} className="p-2">
             <SonarRatingMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-ratings-leadership":
+        return (
+          <Col md={12} className="p-2">
+            <SonarRatingsLeadershipMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1315,7 +1328,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "first-pass-yield":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
         return (
           <Col md={12} className="p-2">
             <FirstPassYieldMetrics
@@ -1339,7 +1352,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "automation-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
         return (
           <Col md={12} className="p-2">
             <AutomationPercentageMetric
@@ -1516,7 +1529,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "build-deployment-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <Col md={12} className="p-2">
             <OpseraBuildAndDeploymentStatistics

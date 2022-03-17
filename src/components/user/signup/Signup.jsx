@@ -12,7 +12,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/general/AwsCloudProviderRegionSelectInput";
+  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 
 function Signup() {

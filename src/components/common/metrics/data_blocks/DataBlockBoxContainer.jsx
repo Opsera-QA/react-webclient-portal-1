@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
-function DataBlockBoxContainer({ children, className, onClickFunction, showBorder}) {
+function DataBlockBoxContainer(
+  {
+    children,
+    className,
+    onClickFunction,
+    showBorder,
+    dataPoint,
+  }) {
   const getDataBlockClassNames = () => {
     let className = "";
 
@@ -15,6 +23,10 @@ function DataBlockBoxContainer({ children, className, onClickFunction, showBorde
 
     return className;
   };
+
+  if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
+    return null;
+  }
 
   return (
     <div className={className}>
@@ -33,6 +45,7 @@ DataBlockBoxContainer.propTypes = {
   className: PropTypes.string,
   onClickFunction: PropTypes.func,
   showBorder: PropTypes.bool,
+  dataPoint: PropTypes.object,
 };
 
 export default DataBlockBoxContainer;

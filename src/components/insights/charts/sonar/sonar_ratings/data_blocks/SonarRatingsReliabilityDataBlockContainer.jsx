@@ -11,7 +11,7 @@ import OneLineGoalDataBlockBase from "components/common/metrics/goals/single/One
 import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 
-function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData }) {
+function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData, dataPoint }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -40,7 +40,7 @@ function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount
   };
 
   const getLeftDataBlock = () => {
-    return <TwoLineGradeDataBlock letterGrade={getSonarReliabilityGrade(reliabilityRating)} subtitle={"Reliability"} />;
+    return <TwoLineGradeDataBlock letterGrade={getSonarReliabilityGrade(reliabilityRating)} subtitle={"Reliability"}/>;
   };
 
   const getMiddleDataBlock = () => {
@@ -52,7 +52,7 @@ function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Reliability"} onClick={() => onRowSelect()}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Reliability"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
       <Col sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
       <Col sm={4}>{getRightDataBlock()}</Col>
@@ -65,6 +65,7 @@ SonarRatingsReliabilityDataBlockContainer.propTypes = {
   bugCount: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dataPoint: PropTypes.object,
 };
 
 export default SonarRatingsReliabilityDataBlockContainer;

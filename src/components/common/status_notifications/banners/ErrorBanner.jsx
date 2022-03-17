@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faTimes } from "@fortawesome/pro-solid-svg-icons";
 import {parseError} from "../../helpers/error-helpers";
-import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import BannerBase from "components/common/status_notifications/banners/BannerBase";
 
 function ErrorBanner({ error, id, removeBanner, prependMessage }) {
   const [messageBody, setMessageBody] = useState(undefined);
@@ -26,30 +26,37 @@ function ErrorBanner({ error, id, removeBanner, prependMessage }) {
   const getCustomMessage = () => {
     if (statusCode === 401 || (messageBody && messageBody.includes("401"))) {
       return (
-        <span className="ml-1">
+        <span className={"ml-1"}>
           <a style={{textDecoration: "underline"}} href="#" onClick={() => { reloadSession(); }}>Click here to renew session.</a>
         </span>
       );
     }
   };
 
-  const getCloseButton = () => {
-    if (removeBanner) {
+  const getPrependMessage = () => {
+    if (hasStringValue(prependMessage) === true) {
       return (
-        <div className="float-right mr-1">
-          <IconBase icon={faTimes} className={"pointer"} onClickFunction={() => {clearError();}}/>
-        </div>
+        <span>{`${prependMessage} `}</span>
       );
     }
+  };
 
-    return null;
+  const getBannerMessage = () => {
+    return (
+      <div>
+        {getPrependMessage()}
+        {messageBody}
+        {getCustomMessage()}
+      </div>
+    );
   };
 
   return (
-    <div className="w-100 error-block top-dialog-block">
-      {getCloseButton()}
-      {prependMessage} {messageBody} {getCustomMessage()}
-    </div>
+    <BannerBase
+      removeBannerFunction={clearError}
+      bannerMessage={getBannerMessage()}
+      bannerClassName={"w-100 py-3 error-block top-dialog-block"}
+    />
   );
 }
 

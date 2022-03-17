@@ -1,8 +1,8 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {hasStringValue, truncateString} from "components/common/helpers/string-helpers";
+import {truncateString} from "components/common/helpers/string-helpers";
 import {faClock, faDraftingCompass, faTally} from "@fortawesome/pro-light-svg-icons";
-import BadgeBase from "components/common/badges/BadgeBase";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 
 function MetricPipelineInfoSubheader(
   {
@@ -11,21 +11,11 @@ function MetricPipelineInfoSubheader(
     pipelineRunCount,
     pipelineDuration,
   }) {
-  const getClassNames = () => {
-    let classNames = "d-flex chart-subheader-text";
-
-    if (hasStringValue(className)) {
-      classNames += ` ${className}`;
-    }
-
-    return classNames;
-  };
-
   const getPipelineBadge = () => {
     const parsedPipelineName = truncateString(pipelineName, 47);
 
     return (
-      <BadgeBase
+      <MetricBadgeBase
         className={"mr-3"}
         icon={faDraftingCompass}
         badgeText={parsedPipelineName}
@@ -34,18 +24,20 @@ function MetricPipelineInfoSubheader(
   };
 
   return (
-    <div className={getClassNames()}>
-      {getPipelineBadge()}
-      <BadgeBase
-        className={"mr-3"}
-        icon={faTally}
-        badgeText={`Run Count: ${pipelineRunCount}`}
-      />
-      <BadgeBase
-        className={"mr-3"}
-        icon={faClock}
-        badgeText={`Duration: ${pipelineDuration}`}
-      />
+    <div className={className}>
+      <div className={"d-flex"}>
+        {getPipelineBadge()}
+        <MetricBadgeBase
+          className={"mr-3"}
+          icon={faTally}
+          badgeText={`Run Count: ${pipelineRunCount}`}
+        />
+        <MetricBadgeBase
+          className={"mr-3"}
+          icon={faClock}
+          badgeText={`Duration: ${pipelineDuration}`}
+        />
+      </div>
     </div>
   );
 }

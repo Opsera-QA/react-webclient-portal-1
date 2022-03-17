@@ -78,6 +78,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationStepEditorPanel
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 
 function StepToolConfiguration({
   pipeline,
@@ -107,6 +109,7 @@ function StepToolConfiguration({
     setStepId(plan[stepIndex]._id);
   };
 
+  // TODO: Use existing helper to construct this instead
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
     return stepArrayIndex;
@@ -131,6 +134,7 @@ function StepToolConfiguration({
     return response;
   };
 
+  // TODO: Put into actions file, wire up cancel token
   const createJob = async (
     toolId,
     toolConfiguration,
@@ -197,6 +201,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO Put into coverity actions file, wire up cancel token
   const createCoverityJob = async (
     toolId,
     toolConfiguration,
@@ -263,7 +268,7 @@ function StepToolConfiguration({
     }
   };
 
-  // TODO: Move into twistlock helper
+  // TODO: Move into twistlock actions file, wire up cancel token
   const createTwistlockJob = async (
     toolId,
     toolConfiguration,
@@ -403,6 +408,15 @@ function StepToolConfiguration({
   //  instead of passing in get tools list, use pipeline tool input etc..
   const getConfigurationTool = (toolName) => {
     switch (toolName) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
       case "jenkins":
         return (
           <JenkinsStepConfiguration
@@ -1029,7 +1043,7 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-        case "flyway-database-migrator":
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
           return (
             <FlywayDatabaseStepConfiguration
               pipelineId={pipeline._id}

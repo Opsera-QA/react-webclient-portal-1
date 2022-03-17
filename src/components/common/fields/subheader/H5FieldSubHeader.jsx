@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function H5FieldSubHeader({ subheaderText }) {
   return (
-    <h5 className="mb-2">
+    <h5 className={"mb-2"}>
       {subheaderText}
     </h5>
   );

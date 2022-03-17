@@ -1,23 +1,21 @@
-import {hasStringValue} from "components/common/helpers/string-helpers";
-
 export const numberHelpers = {};
 
 numberHelpers.hasNumberValue = (potentialNumber) => {
-  return typeof potentialNumber === "number";
+  return !isNaN(potentialNumber);
 };
 
 numberHelpers.parseNumber = (potentialNumber) => {
-  if (numberHelpers.hasNumberValue(potentialNumber)) {
-    return potentialNumber;
-  }
-
-  if (hasStringValue(potentialNumber)) {
+  if (numberHelpers.hasNumberValue(potentialNumber) === true) {
     return Number(potentialNumber);
   }
 };
 
 numberHelpers.isNumberBetweenInclusive = (lowerEnd, upperEnd, number) => {
-  if (typeof lowerEnd !== "number" || typeof upperEnd !== "number" || typeof number !== "number") {
+  const parsedLowerEnd = numberHelpers.parseNumber(lowerEnd);
+  const parsedUpperEnd = numberHelpers.parseNumber(upperEnd);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedLowerEnd == null || parsedUpperEnd == null || parsedNumber == null) {
     return false;
   }
 
@@ -28,58 +26,78 @@ numberHelpers.isNumberBetweenInclusive = (lowerEnd, upperEnd, number) => {
   //   upperEnd = temp;
   // }
 
-  return (lowerEnd <= number && upperEnd >= number);
+  return (parsedLowerEnd <= parsedNumber && parsedUpperEnd >= parsedNumber);
 };
 
 numberHelpers.isNumberEqual = (comparisonValue, number) => {
-  if (typeof comparisonValue !== "number" || typeof number !== "number") {
+  const parsedComparisonValue = numberHelpers.parseNumber(comparisonValue);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedComparisonValue == null || parsedNumber == null) {
     return false;
   }
 
-  return (comparisonValue === number);
+  return (parsedComparisonValue === parsedNumber);
 };
 
 numberHelpers.isNumberGreaterThan = (comparisonValue, number) => {
-  if (typeof comparisonValue !== "number" || typeof number !== "number") {
+  const parsedComparisonValue = numberHelpers.parseNumber(comparisonValue);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedComparisonValue == null || parsedNumber == null) {
     return false;
   }
 
-  return (number > comparisonValue);
+  return (parsedNumber > comparisonValue);
 };
 
 numberHelpers.isNumberGreaterThanOrEqualTo = (comparisonValue, number) => {
-  if (typeof comparisonValue !== "number" || typeof number !== "number") {
+  const parsedComparisonValue = numberHelpers.parseNumber(comparisonValue);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedComparisonValue == null || parsedNumber == null) {
     return false;
   }
 
-  return (number >= comparisonValue);
+  return (parsedNumber >= parsedComparisonValue);
 };
 
 numberHelpers.isNumberLessThan = (comparisonValue, number) => {
-  if (typeof comparisonValue !== "number" || typeof number !== "number") {
+  const parsedComparisonValue = numberHelpers.parseNumber(comparisonValue);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedComparisonValue == null || parsedNumber == null) {
     return false;
   }
 
-  return (number < comparisonValue);
+  return (parsedNumber < parsedComparisonValue);
 };
 
 numberHelpers.isNumberLessThanOrEqualTo = (comparisonValue, number) => {
-  if (typeof comparisonValue !== "number" || typeof number !== "number") {
+  const parsedComparisonValue = numberHelpers.parseNumber(comparisonValue);
+  const parsedNumber = numberHelpers.parseNumber(number);
+
+  if (parsedComparisonValue == null || parsedNumber == null) {
     return false;
   }
 
-  return (number <= comparisonValue);
+  return (parsedNumber <= parsedComparisonValue);
 };
 
 numberHelpers.doNumberRangesOverlap = (start1, end1, start2, end2) => {
+  const parsedStart1 = numberHelpers.parseNumber(start1);
+  const parsedEnd1 = numberHelpers.parseNumber(end1);
+  const parsedStart2 = numberHelpers.parseNumber(start2);
+  const parsedEnd2 = numberHelpers.parseNumber(end2);
+
   if (
-    numberHelpers.hasNumberValue(start1) !== true
-    || numberHelpers.hasNumberValue(end1) !== true
-    || numberHelpers.hasNumberValue(start2) !== true
-    || numberHelpers.hasNumberValue(end2) !== true
+    numberHelpers.hasNumberValue(parsedStart2) !== true
+    || numberHelpers.hasNumberValue(parsedEnd1) !== true
+    || numberHelpers.hasNumberValue(parsedStart1) !== true
+    || numberHelpers.hasNumberValue(parsedEnd2) !== true
   ) {
     return false;
   }
 
-  return (end1 >= start2 && end2 >= start1);
+  return (parsedEnd1 >= parsedStart2 && parsedEnd2 >= parsedStart1);
 };
