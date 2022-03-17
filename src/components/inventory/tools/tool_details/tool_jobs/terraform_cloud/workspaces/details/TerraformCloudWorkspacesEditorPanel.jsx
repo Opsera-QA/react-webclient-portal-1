@@ -95,33 +95,58 @@ function TerraformCloudWorkspacesEditorPanel({
     }
   };
 
-  const getWorkspaceConfigurationFields = () => {
-    if (editMode) {
-      return (
-        <Row>
-          <Col lg={12}>
-            <TextAreaClipboardField            
-              allowResize={false}
-              rows={10}
-              textAreaValue={workspaceConfiguration}
-              description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
-            />
-          </Col>
-        </Row>
-      );
-    }
+  const getWorkspaceConfigurationFields = () => {    
+    return (
+      <TextAreaClipboardField
+        allowResize={false}
+        rows={10}
+        textAreaValue={workspaceConfiguration}
+        description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
+      />
+    );
+  };
+
+  const getOrganizationNameField = () => {
+    return (      
+      <TerraformCloudOrganizationsSelectInput 
+        dataObject={terraformCloudWorkspacesModel} 
+        setDataObject={setTerraformCloudWorkspacesModel} 
+        toolId={toolId}
+        disabled={editMode}
+      />        
+    );
+  };
+
+  const getWorkflowField = () => {
+    return (
+      <TerraformWorkflowSelectInput 
+        dataObject={terraformCloudWorkspacesModel}
+        setDataObject={setTerraformCloudWorkspacesModel}
+      />
+    );
+  };
+
+  const getWorkspaceNameField = () => {
+    return (      
+      <TextInputBase
+        dataObject={terraformCloudWorkspacesModel}
+        setDataObject={setTerraformCloudWorkspacesModel}            
+        fieldName={"workspaceName"}
+        disabled={editMode}
+      />        
+    );
   };
 
   const getAdditionalFields = () => {
-    if (!editMode) {
+    if (terraformCloudWorkspacesModel.getData("organizationName") !== null && 
+          terraformCloudWorkspacesModel.getData("organizationName") !== "" && 
+          terraformCloudWorkspacesModel.getData("workflowType") !== null && 
+          terraformCloudWorkspacesModel.getData("workflowType") !== "" ) {
       return (
         <>
+          { getWorkspaceNameField() }
           <TextAreaInput
             fieldName={"description"}
-            dataObject={terraformCloudWorkspacesModel}
-            setDataObject={setTerraformCloudWorkspacesModel}
-          />
-          <TerraformWorkflowSelectInput 
             dataObject={terraformCloudWorkspacesModel}
             setDataObject={setTerraformCloudWorkspacesModel}
           />
@@ -143,6 +168,26 @@ function TerraformCloudWorkspacesEditorPanel({
     }
   };
 
+  const getFormFields = () => {
+    if (editMode) {
+      return (
+        <>
+          { getOrganizationNameField() }
+          { getWorkspaceNameField() }
+          { getWorkspaceConfigurationFields() }
+        </>
+      );
+    }
+
+    return (
+      <>
+        { getOrganizationNameField() }
+        { getWorkflowField() }
+        { getAdditionalFields() }
+      </>
+    );
+  };
+
   if (isLoading) {
     return (<InlineLoadingDialog />);
   }
@@ -157,28 +202,7 @@ function TerraformCloudWorkspacesEditorPanel({
       lenient={false}
       disable={terraformCloudWorkspacesModel?.checkCurrentValidity() !== true || editMode}
     >
-      <Row>      
-        <Col lg={12}>
-          <TerraformCloudOrganizationsSelectInput 
-            dataObject={terraformCloudWorkspacesModel} 
-            setDataObject={setTerraformCloudWorkspacesModel} 
-            toolId={toolId}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={12}>
-          <TextInputBase
-            dataObject={terraformCloudWorkspacesModel}
-            setDataObject={setTerraformCloudWorkspacesModel}            
-            fieldName={"workspaceName"}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
-      { getWorkspaceConfigurationFields() }
-      { getAdditionalFields() }
+      { getFormFields() }      
     </EditorPanelContainer>
   );
 }
