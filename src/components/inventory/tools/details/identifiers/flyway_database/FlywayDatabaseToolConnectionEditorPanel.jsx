@@ -49,7 +49,14 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
 
   const saveFlywayToolConfiguration = async () => {
     const newConfiguration = flywayConfigurationModel.getPersistData();
-    newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource,toolData, flywayConfigurationModel, "password", newConfiguration?.password);
+    newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(
+      getAccessToken,
+      cancelTokenSource,
+      toolData?.getMongoDbId(),
+      toolData.getData("tool_identifier"),
+      "password",
+      newConfiguration?.password
+    );
 
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData,newConfiguration);
   };
@@ -103,8 +110,8 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
           <VaultTextInput
             dataObject={flywayConfigurationModel}
             setDataObject={setFlywayConfigurationModel}
-            fieldName={"password"
-          }/>
+            fieldName={"password"}
+          />
           {getDynamicFields()}
         </Col>
       </Row>
