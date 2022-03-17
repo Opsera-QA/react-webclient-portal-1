@@ -25,4 +25,14 @@ terraformCloudWorkspacesActions.getTerraformCloudWorkspaceConfiguration = async 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+terraformCloudWorkspacesActions.getVcsProviders = async (getAccessToken, cancelTokenSource, toolId, organizationName) => {  
+  const apiUrl = `/tools/${toolId}/terraform-provider-service/${organizationName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+terraformCloudWorkspacesActions.getVcsProviderRepositories = async (getAccessToken, cancelTokenSource, toolId, authToken) => {
+  const apiUrl = `/tools/${toolId}/terraform-provider-repos/${authToken}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default terraformCloudWorkspacesActions;
