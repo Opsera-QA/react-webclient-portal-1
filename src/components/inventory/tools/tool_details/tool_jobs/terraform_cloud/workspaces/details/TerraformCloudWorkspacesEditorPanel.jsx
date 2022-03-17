@@ -11,6 +11,9 @@ import TerraformCloudOrganizationsSelectInput from "./inputs/TerraformCloudOrgan
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
 import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import TerraformWorkflowSelectInput from "./inputs/TerraformWorkflowSelectInput";
+import TerraformVcsWorkspaceSubform from "./subforms/TerraformVcsWorkspaceSubform";
 
 function TerraformCloudWorkspacesEditorPanel({ 
   terraformCloudWorkspacesModel, 
@@ -19,6 +22,7 @@ function TerraformCloudWorkspacesEditorPanel({
   handleClose, 
   editMode 
 }) {
+
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -108,6 +112,37 @@ function TerraformCloudWorkspacesEditorPanel({
     }
   };
 
+  const getAdditionalFields = () => {
+    if (!editMode) {
+      return (
+        <>
+          <TextAreaInput
+            fieldName={"description"}
+            dataObject={terraformCloudWorkspacesModel}
+            setDataObject={setTerraformCloudWorkspacesModel}
+          />
+          <TerraformWorkflowSelectInput 
+            dataObject={terraformCloudWorkspacesModel}
+            setDataObject={setTerraformCloudWorkspacesModel}
+          />
+          { getVcsFields() }
+        </>
+      );
+    }
+  };
+
+  const getVcsFields = () => {    
+    if (terraformCloudWorkspacesModel.getData("workflowType") === "VCS") {
+      return (        
+        <TerraformVcsWorkspaceSubform            
+          terraformCloudWorkspacesModel={terraformCloudWorkspacesModel} 
+          setTerraformCloudWorkspacesModel={setTerraformCloudWorkspacesModel}
+          toolId={toolId}
+        />
+      );
+    }
+  };
+
   if (isLoading) {
     return (<InlineLoadingDialog />);
   }
@@ -142,7 +177,8 @@ function TerraformCloudWorkspacesEditorPanel({
           />
         </Col>
       </Row>
-      { getWorkspaceConfigurationFields() }      
+      { getWorkspaceConfigurationFields() }
+      { getAdditionalFields() }
     </EditorPanelContainer>
   );
 }
