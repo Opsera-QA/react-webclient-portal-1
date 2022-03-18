@@ -18,10 +18,13 @@ import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import SalesforceDurationByStageMetricsEditorPanel
   from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
+import OpseraBuildAndDeploymentStatisticsEditorPanel
+  from "../../charts/opsera/build_and_deploy_statistics/OpseraBuildAndDeploymentStatisticsEditorPanel";
 import FirstPassYieldMetricsEditorPanel from "../../charts/first_pass/FirstPassYieldMetricsEditorPanel";
 import AutomationPercentageMetricEditorPanel
   from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
 import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
+import AllGithubActionsDataBlockEditorPanel from "../../charts/github_actions/data_blocks/AllGithubActionsDataBlockEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: combine with chart settings overlay?
@@ -119,7 +122,7 @@ function DashboardMetricOverlayContainer(
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
-          <SalesforceDurationByStageMetricsEditorPanel
+          <OpseraBuildAndDeploymentStatisticsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
@@ -147,6 +150,15 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
           <SonarRatingMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ALL_GITHUB_ACTIONS_DATA_BLOCK:
+        return (
+          <AllGithubActionsDataBlockEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
