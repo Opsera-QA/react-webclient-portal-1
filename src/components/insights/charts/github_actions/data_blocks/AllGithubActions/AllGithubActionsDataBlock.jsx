@@ -1,16 +1,21 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
-import MetricContentDataBlockBase from "../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
+import MetricContentDataBlockBase from "../../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
-import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
+import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import ChartContainer from "../../../../../common/panels/insights/charts/ChartContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
-import ModalLogs from "../../../../common/modal/modalLogs";
-import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import ModalLogs from "../../../../../common/modal/modalLogs";
+import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import SuccessPercentActionableInsights from "./SuccessPercent/SuccessPercentActionableInsights";
+import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExecutionsActionableInsights";
+import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -127,6 +132,61 @@ function AllGithubActionsDataBlock({
     }
   };
 
+  const toastContext = useContext(DialogToastContext);
+
+  const onSuccessPercentRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Release Traceability: Success %`}
+        showToasts={true}
+        isLoading={false}
+      >
+        <div className={"p-3"}>
+          <SuccessPercentActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+        </div>
+      </FullScreenCenterOverlayContainer>
+    );
+  };
+
+  const onSuccessExecutionsRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Release Traceability: Success`}
+        showToasts={true}
+        isLoading={false}
+      >
+        <div className={"p-3"}>
+          <SuccessExecutionsActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+        </div>
+      </FullScreenCenterOverlayContainer>
+    );
+  };
+
+  const onFailedExecutionsRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Release Traceability: Failed`}
+        showToasts={true}
+        isLoading={false}
+      >
+        <div className={"p-3"}>
+          <FailedExecutionsActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+        </div>
+      </FullScreenCenterOverlayContainer>
+    );
+  };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
   const getChartBody = () => {
     return (
       <>
@@ -134,7 +194,7 @@ function AllGithubActionsDataBlock({
           <Row>
             <Col md={4}>
               <div className={"github-actions-success-rate-contained-data-block"}>
-                <DataBlockBoxContainer showBorder={true}>
+                <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessPercentRowSelect()}>
                   <div className={"p-3"}>
                     <TwoLinePercentageDataBlock dataPoint={dataPointHelpers.getDataPoint(
                         kpiConfiguration?.dataPoints,
@@ -145,7 +205,7 @@ function AllGithubActionsDataBlock({
               </div>
             </Col>
             <Col md={4}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3"
                   score={metrics.successCount}
@@ -154,7 +214,7 @@ function AllGithubActionsDataBlock({
               </DataBlockBoxContainer>
             </Col>
             <Col md={4}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3"
                   score={metrics.failureCount}

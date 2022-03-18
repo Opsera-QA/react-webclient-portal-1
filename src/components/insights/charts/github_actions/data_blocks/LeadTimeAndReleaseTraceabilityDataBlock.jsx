@@ -27,6 +27,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [metrics, setMetrics] = useState([]);
+  const [deploymentMetrics, setDeploymentMetrics] = useState([]);
+  const [applicationDeploymentMetrics, setApplicationDeploymentMetrics] = useState([]);
+  const [applicationLeadTimeMetrics, setApplicationLeadTimeMetrics] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
 
@@ -63,17 +66,59 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "githubActionsTraceability",
+        "githubActionsLeadTime",
         kpiConfiguration,
         dashboardTags,
         null,
         null,
         dashboardOrgs
       );
-      const metrics = response?.data?.data[0]?.traceability?.data;
+      const metrics = response?.data?.data[0]?.leadTime?.data;
+
+      const deploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsDeploymentFrequency",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+
+      const deploymentMetrics = deploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
+
+      const applicationDeploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsApplicationDeploymentFrequency",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+
+      const applicationDeploymentMetrics = applicationDeploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
+
+      const applicationLeadTimeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsApplicationLeadTime",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+
+      const applicationLeadTimeMetrics = applicationLeadTimeResponse?.data?.data[0]?.leadTime?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
+        setDeploymentMetrics(deploymentMetrics[0]);
+        setApplicationDeploymentMetrics(applicationDeploymentMetrics);
+        setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -115,8 +160,8 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={durationDataPoint}
-                      numberData={5}
-                      supportingText={"days"}
+                      numberData={metrics.avgLeadTime}
+                      supportingText={"minutes"}
                       middleText={"Lead Time"}
                     />
                   </div>
@@ -129,7 +174,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
-                      numberData={2}
+                      numberData={deploymentMetrics.deploymentFrequency}
                       supportingText={"deployments/day"}
                       middleText={"Frequency"}
                     />
@@ -143,8 +188,8 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
-                      numberData={10}
-                      supportingText={"days"}
+                      numberData={metrics.avgLeadTime}
+                      supportingText={"minutes"}
                       middleText={"Average Time to First Commit"}
                     />
                   </div>
@@ -162,7 +207,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
                   title={"High Lead Time"}
-                  content={"oswestry"}
+                  content={applicationLeadTimeMetrics.slice(0, 5).map(obj => {
+                    return <div key={obj._id}>{obj.applicationName}</div>;
+                  })}
                 />
               </DataBlockBoxContainer>
             </Col>
@@ -170,7 +217,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
                   title={"High Deployment Frequency"}
-                  content={"grosmont"}
+                  content={applicationDeploymentMetrics.slice(0, 5).map(obj => {
+                    return <div key={obj._id}>{obj.applicationName}</div>;
+                  })}
                 />
               </DataBlockBoxContainer>
             </Col>
@@ -180,7 +229,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
                   title={"Minimal/No activity in last few weeks"}
-                  content={"oswestry"}
+                  content={""}
                 />
               </DataBlockBoxContainer>
             </Col>
@@ -188,7 +237,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <DataBlockBoxContainer showBorder={true}>
                 <MetricContentDataBlockBase
                   title={"Highest Commits"}
-                  content={""}
+                  content={applicationLeadTimeMetrics.slice(0, 5).map(obj => {
+                    return <div key={obj._id}>{obj.applicationName}</div>;
+                  })}
                 />
               </DataBlockBoxContainer>
             </Col>
