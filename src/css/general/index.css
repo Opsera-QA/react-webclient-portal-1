@@ -369,6 +369,11 @@ a:hover, .active, .link-text:hover {
     min-height: 11rem;
 }
 
+.github-actions-border-left {
+    border-left: 5px solid rgba(0, 0, 0, 0.125);
+    border-radius: 6px;
+}
+
 .max-content-width {
     max-width: 1685px; /* 1250px*/
 }
