@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/endpointRequestField.metadata";
-import EndpointBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/EndpointBodyFieldInputRow";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {
+  endpointResponseFieldMetadata
+} from "components/common/inputs/endpoints/endpoint/response/endpointResponseField.metadata";
+import EndpointResponseBodyFieldInputRow
+  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseBodyFieldInputRow";
 
-function EndpointBodyInputBase(
+function EndpointResponseBodyInputBase(
   {
     fieldName,
     model,
@@ -16,7 +19,6 @@ function EndpointBodyInputBase(
     disabled,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
-  const [errorMessage, setErrorMessage] = useState("");
   const [fields, setFields] = useState([]);
   const isMounted = useRef(false);
 
@@ -35,7 +37,7 @@ function EndpointBodyInputBase(
     const items = Array.isArray(currentData) ? currentData : [];
 
     if (items.length === 0) {
-      items.push({...endpointRequestFieldMetadata.newObjectFields});
+      items.push({...endpointResponseFieldMetadata.newObjectFields});
     }
 
     setFields([...items]);
@@ -45,7 +47,7 @@ function EndpointBodyInputBase(
     const newArray = Array.isArray(newFields) ? newFields : [];
 
     if (newArray.length === 0) {
-      newFields.push({...endpointRequestFieldMetadata.newObjectFields});
+      newFields.push({...endpointResponseFieldMetadata.newObjectFields});
     }
 
     setFields([...newFields]);
@@ -62,7 +64,7 @@ function EndpointBodyInputBase(
 
   const addField = () => {
     const newFields = fields;
-    newFields.push({...endpointRequestFieldMetadata.newObjectFields});
+    newFields.push({...endpointResponseFieldMetadata.newObjectFields});
     validateAndSetData(newFields);
   };
 
@@ -86,7 +88,7 @@ function EndpointBodyInputBase(
         {fields.map((fieldData, index) => {
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              <EndpointBodyFieldInputRow
+              <EndpointResponseBodyFieldInputRow
                 index={index}
                 deleteFieldFunction={() => deleteFieldFunction(index)}
                 endpointBodyField={fieldData}
@@ -102,22 +104,19 @@ function EndpointBodyInputBase(
 
   const getHeaderBar = () => {
     return (
-      <Row className="d-flex mx-1 py-1 justify-content-between">
-        <Col xs={2} className={"pr-1 pl-0 my-auto"}>
-          Field Name
+      <Row className={"d-flex py-1 justify-content-between"}>
+        <Col xs={11}>
+          <Row>
+            <Col xs={5} className={"my-auto"}>
+              <span className={'ml-3'}>Field Name</span>
+            </Col>
+            <Col xs={5} className={"my-auto"}>
+              <span>Type</span>
+            </Col>
+            <Col xs={2}/>
+          </Row>
         </Col>
-        <Col xs={2} className={"pr-1 pl-0 my-auto"}>
-          Type
-        </Col>
-        <Col xs={2} className={"px-0 my-auto"}>
-          Default Value
-        </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
-          Static
-        </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
-          Required
-        </Col>
+        <Col xs={1}/>
       </Row>
     );
   };
@@ -159,7 +158,6 @@ function EndpointBodyInputBase(
       <PropertyInputContainer
         titleIcon={faFilter}
         titleText={field?.label}
-        errorMessage={errorMessage}
         addProperty={addField}
         type={"Field"}
         addAllowed={lastFieldComplete() === true}
@@ -170,11 +168,11 @@ function EndpointBodyInputBase(
   );
 }
 
-EndpointBodyInputBase.propTypes = {
+EndpointResponseBodyInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default EndpointBodyInputBase;
+export default EndpointResponseBodyInputBase;
