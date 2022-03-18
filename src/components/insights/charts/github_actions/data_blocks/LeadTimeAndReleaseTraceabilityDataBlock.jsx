@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import MetricContentDataBlockBase from "../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
 import { Row,Col } from "react-bootstrap";
+import axios from "axios";
+import { AuthContext } from "contexts/AuthContext";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
+import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
@@ -18,12 +21,73 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   setKpis,
   showSettingsToggle,
   showViewDetailsToggle}) {
+  const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
+  const isMounted = useRef(false);
   const [metrics, setMetrics] = useState([]);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(dashboardData)]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      // await loadDataPoints(cancelSource);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsTraceability",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+      const metrics = response?.data?.data[0]?.traceability?.data;
+
+      if (isMounted?.current === true && Array.isArray(metrics)) {
+        setMetrics(metrics[0]);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const viewDetailsComponent = () => {
-    console.log('dashboardData', dashboardData);
     return (
       <LeadTimeAndReleaseDurationActionableInsightOverlay
         title={"Lead time and Release Duration"}

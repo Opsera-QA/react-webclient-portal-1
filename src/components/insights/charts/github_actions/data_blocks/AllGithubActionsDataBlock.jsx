@@ -126,10 +126,7 @@ function AllGithubActionsDataBlock({
       }
     }
   };
-  console.log(durationMetrics);
-  console.log(applicationMetrics);
-  console.log(metrics);
-  console.log(reasonsMetrics);
+
   const getChartBody = () => {
     return (
       <>
