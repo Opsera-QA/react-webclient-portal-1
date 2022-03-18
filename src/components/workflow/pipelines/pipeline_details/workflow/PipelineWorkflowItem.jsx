@@ -34,6 +34,8 @@ import PipelineStepNotificationConfigurationOverlay
   from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -152,7 +154,7 @@ const PipelineWorkflowItem = (
     setIsLoading(false);
   };
 
-  const handleEditClick = async (type, tool, itemId) => {
+  const handleEditClick = async (type, tool, itemId, pipelineStep) => {
     if (!authorizedAction("edit_step_details", pipeline.owner)) {
       setInfoModal({
         show: true,
@@ -164,8 +166,20 @@ const PipelineWorkflowItem = (
     }
 
     setIsLoading(true);
-    if (hasStringValue(tool?.tool_identifier) === true) {
-      await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+    const toolIdentifier = tool?.tool_identifier;
+    if (hasStringValue(toolIdentifier) === true) {
+      if (toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+        toastContext.showOverlayPanel(
+          <PipelineStepEditorOverlay
+            pipeline={pipeline}
+            pipelineStep={pipelineStep}
+            loadPipeline={loadPipeline}
+          />
+        );
+      }
+      else {
+        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+      }
     } else {
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
@@ -470,7 +484,7 @@ const PipelineWorkflowItem = (
                       <IconBase icon={faCog}
                                 className={"text-muted mx-1 pointer"}
                                 onClickFunction={() => {
-                                  handleEditClick("tool", item.tool, item._id);
+                                  handleEditClick("tool", item.tool, item._id, item);
                                 }}
                       />
                     </div>

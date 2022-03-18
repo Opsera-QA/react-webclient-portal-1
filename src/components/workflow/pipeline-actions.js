@@ -192,6 +192,26 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.updatePipelineStepByIdV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  stepId,
+  pipelineStep,
+  ) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/notifications/update/`;
+  const postBody = {
+    ...pipelineStep,
+  };
+
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody
+  );
+};
+
 pipelineActions.updatePipelineStepNotificationConfiguration = async (getAccessToken, cancelTokenSource, pipelineId, stepId, notificationConfiguration) => {
   const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/notifications/update/`;
   const postBody = {

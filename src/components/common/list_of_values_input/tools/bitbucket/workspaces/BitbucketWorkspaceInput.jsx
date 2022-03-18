@@ -26,7 +26,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     setWorkspaces([]);
 
     if (isMongoDbId(gitToolId) === true) {
-      loadData(source).then().catch((error) => {
+      loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
