@@ -80,10 +80,12 @@ import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkit
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
+// TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
   pipeline,
-  editItem,
+  pipelineStepId,
   parentCallback,
   reloadParentPipeline,
   closeEditorPanel,
@@ -92,6 +94,7 @@ function StepToolConfiguration({
 }) {
   const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
+  const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
@@ -99,14 +102,17 @@ function StepToolConfiguration({
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    loadData();
-  }, [editItem, pipeline]);
+    if (isMongoDbId(pipelineStepId) === true) {
+      loadData();
+    }
+  }, [pipelineStepId, pipeline]);
 
   const loadData = async () => {
-    let stepIndex = getStepIndex(editItem.step_id);
-    setStepTool(plan[stepIndex].tool);
-    setStepName(plan[stepIndex].name);
-    setStepId(plan[stepIndex]._id);
+    let stepIndex = getStepIndex(pipelineStepId);
+    setPipelineStep(plan[stepIndex]);
+    setStepTool(plan[stepIndex]?.tool);
+    setStepName(plan[stepIndex]?.name);
+    setStepId(plan[stepIndex]?._id);
   };
 
   // TODO: Use existing helper to construct this instead
@@ -116,7 +122,7 @@ function StepToolConfiguration({
   };
 
   const callbackFunction = async (tool) => {
-    let stepArrayIndex = getStepIndex(editItem.step_id);
+    let stepArrayIndex = getStepIndex(pipelineStepId);
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
@@ -412,8 +418,7 @@ function StepToolConfiguration({
         return (
           <ExternalRestApiIntegrationStepEditorPanel
             pipelineId={pipeline._id}
-            pipelineStep={stepTool}
-            parentCallback={callbackFunction}
+            pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -1157,7 +1162,7 @@ function StepToolConfiguration({
       </div>
 
       {typeof stepTool !== "undefined" ? (
-        getConfigurationTool(editItem.tool_name.toLowerCase())
+        getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
       ) : null}
 
       <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
@@ -1167,7 +1172,7 @@ function StepToolConfiguration({
 
 StepToolConfiguration.propTypes = {
   pipeline: PropTypes.object,
-  editItem: PropTypes.object,
+  pipelineStepId: PropTypes.string,
   parentCallback: PropTypes.func,
   reloadParentPipeline: PropTypes.func,
   closeEditorPanel: PropTypes.func,

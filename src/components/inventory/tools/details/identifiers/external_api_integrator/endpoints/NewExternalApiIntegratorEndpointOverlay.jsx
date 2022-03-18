@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
+import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
 import ExternalApiIntegratorEndpointEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -14,7 +14,7 @@ function NewExternalApiIntegratorEndpointOverlay(
     isMounted,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const [externalApiIntegratorModel, setExternalApiIntegratorModel] = useState(modelHelpers.parseObjectIntoModel(undefined, toolEndpointsMetadata));
+  const [externalApiIntegratorModel, setExternalApiIntegratorModel] = useState(modelHelpers.parseObjectIntoModel(undefined, externalApiIntegratorEndpointMetadata));
 
   const closePanelFunction = () => {
     if (isMounted?.current === true) {
@@ -31,7 +31,7 @@ function NewExternalApiIntegratorEndpointOverlay(
 
   return (
     <CreateCenterPanel
-      objectType={toolEndpointsMetadata?.type}
+      objectType={externalApiIntegratorEndpointMetadata?.type}
       loadData={loadData}
       closePanel={closePanelFunction}
     >
