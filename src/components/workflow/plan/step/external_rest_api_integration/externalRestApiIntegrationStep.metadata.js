@@ -7,13 +7,38 @@ export const externalRestApiIntegrationStepMetadata = {
       isRequired: true,
     },
     {
-      label: "External API Endpoint",
-      id: "endpointId",
+      label: "External API Run Endpoint",
+      id: "runEndpointId",
+      isRequired: true,
+    },
+    {
+      label: "External API Run Endpoint Request Parameters",
+      id: "runEndpointRequestParameters",
+      isRequired: true,
+    },
+    {
+      label: "External API Run Endpoint Response Success Parameters",
+      id: "runEndpointResponseSuccessParameters",
+      isRequired: true,
+    },
+    {
+      label: "External API Status Endpoint",
+      id: "statusEndpointId",
+      isRequired: true,
+    },
+    {
+      label: "External API Status Endpoint Response Evaluation Parameters",
+      id: "statusEndpointResponseEvaluationParameters",
       isRequired: true,
     },
   ],
   newObjectFields: {
     toolId: "",
-    endpointId: "",
+    runEndpointId: "",
+    runEndpointRequestParameters: {},
+    runEndpointResponseSuccessParameters: {},
+    statusEndpointId: "",
+    statusEndpointRequestParameters: {},
+    statusEndpointResponseEvaluationParameters: {},
   }
 };

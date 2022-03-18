@@ -11,16 +11,18 @@ import {
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput";
-import ExternalApiIntegratorToolEndpointSelectInput
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/ExternalApiIntegratorToolEndpointSelectInput";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
+import ExternalApiIntegrationStepRunEndpointSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
+import ExternalApiIntegrationStepStatusEndpointSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
     pipelineStep, 
-    pipelineId, 
+    pipelineId,
     closeEditorPanel,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -69,12 +71,9 @@ function ExternalRestApiIntegrationStepEditorPanel(
   };
 
   const callbackFunction = async () => {
-    const newPipelineStep = {
-      configuration: {...externalRestApiIntegrationModel.getPersistData()},
-      threshold: {
-        ...thresholdModel.getPersistData()
-      },
-    };
+    const newPipelineStep = pipelineStep;
+    newPipelineStep.configuration = {...externalRestApiIntegrationModel.getPersistData()};
+    newPipelineStep.threshold = {...thresholdModel.getPersistData()};
 
     return await pipelineActions.updatePipelineStepByIdV2(
       getAccessToken,
@@ -104,11 +103,15 @@ function ExternalRestApiIntegrationStepEditorPanel(
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiIntegratorToolEndpointSelectInput
-        fieldName={"endpointId"}
+      <ExternalApiIntegrationStepRunEndpointSelectInput
+        fieldName={"runEndpointId"}
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
+      />
+      <ExternalApiIntegrationStepStatusEndpointSelectInput
+        fieldName={"statusEndpointId"}
+        model={externalRestApiIntegrationModel}
+        setModel={setExternalRestApiIntegrationModel}
       />
     </PipelineStepEditorPanelContainer>
   );

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import StepToolConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolConfiguration";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function PipelineStepEditorOverlay(
   {
@@ -28,7 +28,7 @@ function PipelineStepEditorOverlay(
   }
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`Pipeline Step Configuration`}
@@ -44,7 +44,7 @@ function PipelineStepEditorOverlay(
           closeEditorPanel={closePanel}
         />
       </div>
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
