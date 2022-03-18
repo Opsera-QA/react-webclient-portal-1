@@ -199,7 +199,7 @@ pipelineActions.updatePipelineStepByIdV2 = async (
   stepId,
   pipelineStep,
   ) => {
-  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/notifications/update/`;
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/update/`;
   const postBody = {
     ...pipelineStep,
   };

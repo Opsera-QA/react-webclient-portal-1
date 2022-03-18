@@ -94,6 +94,7 @@ function StepToolConfiguration({
 }) {
   const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
+  const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
@@ -108,9 +109,10 @@ function StepToolConfiguration({
 
   const loadData = async () => {
     let stepIndex = getStepIndex(pipelineStepId);
-    setStepTool(plan[stepIndex].tool);
-    setStepName(plan[stepIndex].name);
-    setStepId(plan[stepIndex]._id);
+    setPipelineStep(plan[stepIndex]);
+    setStepTool(plan[stepIndex]?.tool);
+    setStepName(plan[stepIndex]?.name);
+    setStepId(plan[stepIndex]?._id);
   };
 
   // TODO: Use existing helper to construct this instead
@@ -416,7 +418,7 @@ function StepToolConfiguration({
         return (
           <ExternalRestApiIntegrationStepEditorPanel
             pipelineId={pipeline._id}
-            pipelineStep={stepTool}
+            pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
           />
         );
