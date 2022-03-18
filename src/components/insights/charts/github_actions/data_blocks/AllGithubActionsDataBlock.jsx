@@ -11,8 +11,6 @@ import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {getAmexApplicationFromKpiConfiguration} from "components/insights/charts/charts-helpers";
-import SalesforceProfileMigrationDurationMetrics from "../../sfdc/bar_chart/duration_by_stage/metrics/profile_migration/SalesforceProfileMigrationDurationMetric";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
