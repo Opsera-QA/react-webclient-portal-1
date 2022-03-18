@@ -12,7 +12,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestFieldTypeStandaloneSelectInput
   from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldTypeStandaloneSelectInput";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
-import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 import EndpointRequestFieldIsRequiredToggleInput
   from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldIsRequiredToggleInput";
 import EndpointRequestFieldIsSensitiveDataToggleInput
@@ -25,6 +24,7 @@ function EndpointRequestBodyFieldInputRow(
     deleteFieldFunction,
     endpointBodyField,
     index,
+    parentFieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -76,6 +76,7 @@ function EndpointRequestBodyFieldInputRow(
               updateMainModelFunction={updateMainModelFunction}
               index={index}
               disabled={disabled}
+              parentFieldName={parentFieldName}
             />
           </Col>
           <Col sm={2} className={"pl-1 pr-0 my-auto"}>
@@ -101,6 +102,7 @@ EndpointRequestBodyFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   index: PropTypes.number,
+  parentFieldName: PropTypes.string,
 };
 
 export default EndpointRequestBodyFieldInputRow;

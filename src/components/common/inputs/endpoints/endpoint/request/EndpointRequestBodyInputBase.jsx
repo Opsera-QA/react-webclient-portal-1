@@ -91,6 +91,7 @@ function EndpointRequestBodyInputBase(
                 endpointBodyField={fieldData}
                 updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
                 disabled={disabled}
+                parentFieldName={fieldName}
               />
             </div>
           );

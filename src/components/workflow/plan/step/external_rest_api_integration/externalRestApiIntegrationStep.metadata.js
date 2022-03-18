@@ -5,6 +5,7 @@ export const externalRestApiIntegrationStepMetadata = {
       label: "External API Integrator Tool",
       id: "toolId",
       isRequired: true,
+      formText: "A Run and Status Endpoint must be configured in the selected Tool"
     },
     {
       label: "External API Run Endpoint",
