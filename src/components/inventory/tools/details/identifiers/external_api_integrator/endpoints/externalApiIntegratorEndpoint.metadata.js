@@ -1,5 +1,5 @@
-const toolEndpointsMetadata = {
-  type: "Tool Endpoint",
+const externalApiIntegratorEndpointMetadata = {
+  type: "External API Integrator Endpoint",
   fields: [
     {
       label: "Name",
@@ -25,6 +25,10 @@ const toolEndpointsMetadata = {
       isRequired: true,
     },
     {
+      label: "Query Parameter Fields",
+      id: "queryParameterFields",
+    },
+    {
       label: "Request Body Fields",
       id: "requestBodyFields",
     },
@@ -38,9 +42,10 @@ const toolEndpointsMetadata = {
     description: "",
     requestType: "",
     url: "",
+    queryParameterFields: [],
     requestBodyFields: [],
     responseBodyFields: [],
   }
 };
 
-export default toolEndpointsMetadata;
+export default externalApiIntegratorEndpointMetadata;
