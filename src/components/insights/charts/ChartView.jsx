@@ -90,6 +90,7 @@ import GithubPendingMergeRequests from "./github/table/pending_merge_requests/Gi
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
+import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1149,6 +1150,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return(
           <Col md={12} className="p-2">
             <AllGithubActionsDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "github-commit-statistics":
+        return (
+          <Col md={12} className="p-2">
+            <GithubCommitsStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
