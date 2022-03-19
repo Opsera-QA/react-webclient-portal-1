@@ -18,6 +18,8 @@ import ExternalApiIntegrationStepRunEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
 import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
+import ExternalApiIntegrationStepRunEndpointRequestInputBase
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointRequestInputBase";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
@@ -108,10 +110,24 @@ function ExternalRestApiIntegrationStepEditorPanel(
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
       />
+      <ExternalApiIntegrationStepRunEndpointRequestInputBase
+        fieldName={"runEndpointRequestParameters"}
+        model={externalRestApiIntegrationModel}
+        setModel={setExternalRestApiIntegrationModel}
+        toolId={externalRestApiIntegrationModel?.getData("toolId")}
+        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+      />
       <ExternalApiIntegrationStepStatusEndpointSelectInput
         fieldName={"statusEndpointId"}
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
+      />
+      <ExternalApiIntegrationStepRunEndpointRequestInputBase
+        fieldName={"statusEndpointRequestParameters"}
+        model={externalRestApiIntegrationModel}
+        setModel={setExternalRestApiIntegrationModel}
+        toolId={externalRestApiIntegrationModel?.getData("toolId")}
+        endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
       />
     </PipelineStepEditorPanelContainer>
   );
