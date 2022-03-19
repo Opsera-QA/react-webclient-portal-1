@@ -2,12 +2,13 @@ import baseActions from "utils/actionsBase";
 
 const parametersActions = {};
 
-parametersActions.getParameters = async (getAccessToken, cancelTokenSource, paginationModel) => {
+parametersActions.getParameters = async (getAccessToken, cancelTokenSource, paginationModel, onlyVaultEnabled) => {
   const urlParams = {
     params: {
       // size: paginationModel?.getData("size"),
       // page: paginationModel?.getData("currentPage"),
       search: paginationModel?.getData("search"),
+      encrypted: onlyVaultEnabled,
     },
   };
 
@@ -16,10 +17,11 @@ parametersActions.getParameters = async (getAccessToken, cancelTokenSource, pagi
 };
 
 parametersActions.createParameterV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
+  const apiUrl = "/registry/parameter/create";
   const postBody = {
     ...parameterModel.getPersistData()
   };
-  const apiUrl = "/registry/parameter/create";
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

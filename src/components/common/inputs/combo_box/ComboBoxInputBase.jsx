@@ -5,7 +5,22 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneComboBoxInput from "components/common/inputs/combo_box/StandaloneComboBoxInput";
 
-function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled}) {
+function ComboBoxInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    disabled,
+    className,
+    showLabel,
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -28,14 +43,18 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
   }
 
   return (
-    <InputContainer className="custom-select-input my-2">
-      <InputLabel field={field} model={dataObject} />
+    <InputContainer className={className}>
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        model={dataObject}
+      />
       <StandaloneComboBoxInput
         selectOptions={selectOptions}
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
-        value={dataObject?.getData(field.id)}
+        value={dataObject?.getData(fieldName)}
         busy={busy}
         placeholderText={placeholderText}
         setDataFunction={updateValue}
@@ -61,7 +80,9 @@ ComboBoxInputBase.propTypes = {
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   busy: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  showLabel: PropTypes.book,
 };
 
 export default ComboBoxInputBase;
