@@ -14,7 +14,7 @@ import NewExternalApiIntegratorEndpointOverlay
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 import {
   getEndpointRequestTypeLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/endpointRequestType.constants";
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {
-  ENDPOINT_RESPONSE_EVALUATION_OPTION_SELECT_OPTIONS
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/response/endpointResponseEvaluationOption.constants";
+  ENDPOINT_REQUEST_TYPE_SELECT_OPTIONS
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 
-function EndpointResponseEvaluationOptionSelectInput(
+function EndpointRequestTypeSelectInput(
   {
     model,
     setModel,
@@ -22,14 +22,14 @@ function EndpointResponseEvaluationOptionSelectInput(
       valueField={"value"}
       dataObject={model}
       clearDataFunction={clearDataFunction}
-      selectOptions={ENDPOINT_RESPONSE_EVALUATION_OPTION_SELECT_OPTIONS}
+      selectOptions={ENDPOINT_REQUEST_TYPE_SELECT_OPTIONS}
       fieldName={fieldName}
       disabled={disabled}
     />
   );
 }
 
-EndpointResponseEvaluationOptionSelectInput.propTypes = {
+EndpointRequestTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -38,4 +38,4 @@ EndpointResponseEvaluationOptionSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-export default EndpointResponseEvaluationOptionSelectInput;
+export default EndpointRequestTypeSelectInput;
