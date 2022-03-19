@@ -4,9 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import {
-  endpointRequestParameterMetadata
-} from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 
@@ -48,7 +45,6 @@ function EndpointRequestParametersInputBase(
       });
     });
 
-    console.log("unpackedParameters: " + JSON.stringify(unpackedParameters));
     setParameters([...unpackedParameters]);
   };
 
@@ -60,20 +56,29 @@ function EndpointRequestParametersInputBase(
       case "array":
         return Array.isArray(value) ? value : [];
     }
-
   };
 
-  const validateAndSetData = (newFields) => {
-    setParameters([...newFields]);
+  const validateAndSetData = (newParameters) => {
+    setParameters([...newParameters]);
     const newModel = {...model};
-    newModel.setData(fieldName, [...newFields]);
+    const constructedParameterObject = {};
+
+    parameters.forEach((parameter) => {
+      const fieldName = parameter?.fieldName;
+      const value = parameter?.value;
+
+      constructedParameterObject[fieldName] = parseObjectValue(parameter?.type, value);
+    });
+
+    console.log("constructedParameterObject: " + JSON.stringify(constructedParameterObject));
+    newModel.setData(fieldName, constructedParameterObject);
     setModel({...newModel});
   };
 
-  const updateFieldFunction = (index, field) => {
-    const newFields = [...parameters];
-    newFields[index] = field;
-    validateAndSetData(newFields);
+  const updateParameterFunction = (index, updatedParameter) => {
+    const newParameters = [...parameters];
+    newParameters[index] = {...updatedParameter};
+    validateAndSetData(newParameters);
   };
 
   const getFieldBody = () => {
@@ -85,7 +90,7 @@ function EndpointRequestParametersInputBase(
               <EndpointRequestParameterInputRow
                 index={index}
                 endpointBodyField={fieldData}
-                updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
+                updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
                 disabled={disabled}
               />
             </div>
@@ -112,7 +117,7 @@ function EndpointRequestParametersInputBase(
     if (!parameters || parameters?.length === 0) {
       return (
         <div className="text-center">
-          <div className="text-muted my-3">There are no Parameters to configure</div>
+          <div className="text-muted my-5">There are no Parameters to configure</div>
         </div>
       );
     }

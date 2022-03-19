@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -17,7 +16,6 @@ function CustomParameterComboBoxInput(
     valueField,
     allowCreate,
     showLabel,
-    requireVaultSavedParameters,
     setDataFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,10 +66,10 @@ function CustomParameterComboBoxInput(
 
   const loadParameters = async (cancelSource = cancelTokenSource) => {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource);
-    const regions = response?.data?.data;
+    const parameters = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(regions)) {
-      setCustomParameters(regions);
+    if (isMounted?.current === true && Array.isArray(parameters)) {
+      setCustomParameters(parameters);
     }
   };
 
@@ -79,8 +77,8 @@ function CustomParameterComboBoxInput(
     <ComboBoxInputBase
       className={className}
       fieldName={fieldName}
-      dataObject={model}
-      setDataObject={setModel}
+      model={model}
+      setModel={setModel}
       selectOptions={customParameters}
       busy={isLoading}
       valueField={valueField}
@@ -104,7 +102,6 @@ CustomParameterComboBoxInput.propTypes = {
   valueField: PropTypes.string,
   allowCreate: PropTypes.bool,
   showLabel: PropTypes.bool,
-  requireVaultSavedParameters: PropTypes.bool,
   setDataFunction: PropTypes.func,
 };
 

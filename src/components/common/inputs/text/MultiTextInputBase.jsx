@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function MultiTextInputBase(
   {
@@ -66,24 +67,38 @@ function MultiTextInputBase(
     }
   };
 
+  const getPlaceholderText = () => {
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    // TODO: Pick better text
+    // return "Type Options and Select Create Option";
+  };
+
   if (field == null) {
     return <></>;
   }
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel model={dataObject} field={field} clearDataFunction={getClearDataFunction()} showLabel={showLabel} />
+      <InputLabel
+        model={dataObject}
+        field={field}
+        clearDataFunction={getClearDataFunction()}
+        showLabel={showLabel}
+      />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           selectOptions={selectOptions}
           busy={busy}
           allowCreate={"onFilter"}
           createOptionFunction={(value) => handleCreate(value)}
-          filter="contains"
+          filter={"contains"}
           groupBy={groupBy}
           manualEntry={true}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
-          placeholderText={placeholderText}
+          placeholderText={getPlaceholderText()}
           disabled={disabled}
           setDataFunction={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
         />
