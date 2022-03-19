@@ -63,7 +63,7 @@ function EndpointRequestParametersInputBase(
     const newModel = {...model};
     const constructedParameterObject = {};
 
-    parameters.forEach((parameter) => {
+    newParameters.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
