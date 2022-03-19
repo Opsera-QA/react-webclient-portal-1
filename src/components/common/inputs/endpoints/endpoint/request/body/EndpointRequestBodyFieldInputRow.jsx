@@ -7,16 +7,16 @@ import {
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/endpointRequestField.metadata";
+import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestFieldTypeStandaloneSelectInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldTypeStandaloneSelectInput";
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeStandaloneSelectInput";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 import EndpointRequestFieldIsRequiredToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldIsRequiredToggleInput";
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
 import EndpointRequestFieldIsSensitiveDataToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldIsSensitiveDataToggleInput";
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
 
 function EndpointRequestBodyFieldInputRow(
   {

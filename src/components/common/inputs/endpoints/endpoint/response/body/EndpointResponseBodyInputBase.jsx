@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/endpointRequestField.metadata";
-import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/EndpointRequestBodyFieldInputRow";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import {
+  endpointResponseFieldMetadata
+} from "components/common/inputs/endpoints/endpoint/response/body/endpointResponseField.metadata";
+import EndpointResponseBodyFieldInputRow
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
 
-function EndpointRequestBodyInputBase(
+function EndpointResponseBodyInputBase(
   {
     fieldName,
     model,
@@ -34,7 +37,7 @@ function EndpointRequestBodyInputBase(
     const items = Array.isArray(currentData) ? currentData : [];
 
     if (items.length === 0) {
-      items.push({...endpointRequestFieldMetadata.newObjectFields});
+      items.push({...endpointResponseFieldMetadata.newObjectFields});
     }
 
     setFields([...items]);
@@ -44,7 +47,7 @@ function EndpointRequestBodyInputBase(
     const newArray = Array.isArray(newFields) ? newFields : [];
 
     if (newArray.length === 0) {
-      newFields.push({...endpointRequestFieldMetadata.newObjectFields});
+      newFields.push({...endpointResponseFieldMetadata.newObjectFields});
     }
 
     setFields([...newFields]);
@@ -61,7 +64,7 @@ function EndpointRequestBodyInputBase(
 
   const addField = () => {
     const newFields = fields;
-    newFields.push({...endpointRequestFieldMetadata.newObjectFields});
+    newFields.push({...endpointResponseFieldMetadata.newObjectFields});
     validateAndSetData(newFields);
   };
 
@@ -85,7 +88,7 @@ function EndpointRequestBodyInputBase(
         {fields.map((fieldData, index) => {
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              <EndpointRequestBodyFieldInputRow
+              <EndpointResponseBodyFieldInputRow
                 index={index}
                 deleteFieldFunction={() => deleteFieldFunction(index)}
                 endpointBodyField={fieldData}
@@ -104,13 +107,13 @@ function EndpointRequestBodyInputBase(
       <Row className={"d-flex py-1 justify-content-between"}>
         <Col xs={11}>
           <Row>
-            <Col xs={4} className={"my-auto"}>
+            <Col xs={5} className={"my-auto"}>
               <span className={'ml-3'}>Field Name</span>
             </Col>
-            <Col xs={4} className={"my-auto"}>
+            <Col xs={5} className={"my-auto"}>
               <span>Type</span>
             </Col>
-            <Col xs={4}/>
+            <Col xs={2}/>
           </Row>
         </Col>
         <Col xs={1}/>
@@ -165,11 +168,11 @@ function EndpointRequestBodyInputBase(
   );
 }
 
-EndpointRequestBodyInputBase.propTypes = {
+EndpointResponseBodyInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default EndpointRequestBodyInputBase;
+export default EndpointResponseBodyInputBase;

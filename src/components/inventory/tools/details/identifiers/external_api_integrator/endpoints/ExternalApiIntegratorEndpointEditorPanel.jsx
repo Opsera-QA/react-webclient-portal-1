@@ -13,9 +13,9 @@ import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EndpointRequestTypeSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/EndpointRequestTypeSelectInput";
-import EndpointRequestBodyInputBase from "components/common/inputs/endpoints/endpoint/request/EndpointRequestBodyInputBase";
+import EndpointRequestBodyInputBase from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputBase";
 import EndpointResponseBodyInputBase
-  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseBodyInputBase";
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
 import {
   ENDPOINT_REQUEST_TYPES
 } from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/endpointRequestType.constants";

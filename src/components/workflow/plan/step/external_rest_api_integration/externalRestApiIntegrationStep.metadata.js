@@ -17,8 +17,8 @@ export const externalRestApiIntegrationStepMetadata = {
       isRequired: true,
     },
     {
-      label: "External API Run Endpoint Response Success Parameters",
-      id: "runEndpointResponseSuccessParameters",
+      label: "External API Run Endpoint Response Evaluation Parameters",
+      id: "runEndpointResponseEvaluationParameters",
       isRequired: true,
     },
     {
@@ -36,7 +36,7 @@ export const externalRestApiIntegrationStepMetadata = {
     toolId: "",
     runEndpointId: "",
     runEndpointRequestParameters: {},
-    runEndpointResponseSuccessParameters: {},
+    runEndpointResponseEvaluationParameters: {},
     statusEndpointId: "",
     statusEndpointRequestParameters: {},
     statusEndpointResponseEvaluationParameters: {},

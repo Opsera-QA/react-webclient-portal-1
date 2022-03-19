@@ -7,13 +7,13 @@ import {
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/endpointRequestField.metadata";
+import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import EndpointResponseFieldTypeStandaloneSelectInput
-  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseFieldTypeStandaloneSelectInput";
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldTypeStandaloneSelectInput";
 import EndpointResponseFieldIsSensitiveDataToggleInput
-  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseFieldIsSensitiveDataToggleInput";
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldIsSensitiveDataToggleInput";
 
 function EndpointResponseBodyFieldInputRow(
   {
