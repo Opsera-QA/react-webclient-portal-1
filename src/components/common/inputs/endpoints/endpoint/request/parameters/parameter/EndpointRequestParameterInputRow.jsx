@@ -28,8 +28,10 @@ function EndpointRequestParameterInputRow(
   }, [endpointBodyField]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
-    endpointFieldModel.setData(fieldName, newValue);
-    updateParameterFunction({...endpointFieldModel?.getPersistData()});
+    const newModel = {...endpointFieldModel};
+    newModel.setData(fieldName, newValue);
+    updateParameterFunction({...newModel?.getPersistData()});
+    setEndpointFieldModel({...newModel});
   };
 
   const getInfoText = () => {
