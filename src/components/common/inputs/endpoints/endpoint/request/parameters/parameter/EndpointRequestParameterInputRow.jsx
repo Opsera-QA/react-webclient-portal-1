@@ -2,21 +2,13 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
-import EndpointRequestFieldTypeStandaloneSelectInput
-  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeStandaloneSelectInput";
-import EndpointRequestFieldIsRequiredToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
-import EndpointRequestFieldIsSensitiveDataToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
@@ -26,9 +18,8 @@ import CustomParameterComboBoxInput
 function EndpointRequestParameterInputRow(
   {
     disabled,
-    updateFieldFunction,
+    updateParameterFunction,
     endpointBodyField,
-    index,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -38,7 +29,7 @@ function EndpointRequestParameterInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    updateParameterFunction({...endpointFieldModel?.getPersistData()});
   };
 
   const getInfoText = () => {
@@ -49,7 +40,7 @@ function EndpointRequestParameterInputRow(
     }
 
     if (endpointFieldModel?.getData("isSensitiveData") === true) {
-      infoText += `${endpointFieldModel?.getData("fieldName")} is listed as sensitive data.`;
+      infoText += `${endpointFieldModel?.getData("fieldName")} is listed as sensitive data. You must use an encrypted custom parameter saved in the Tool Registry`;
     }
 
     return infoText;
@@ -75,7 +66,7 @@ function EndpointRequestParameterInputRow(
 
     switch (type) {
       case "string":
-        if (isSensitiveData === false) {
+        if (isSensitiveData === true) {
           return (
             <CustomParameterSelectInput
               model={endpointFieldModel}
@@ -84,6 +75,7 @@ function EndpointRequestParameterInputRow(
               className={"value-parameter"}
               requireVaultSavedParameters={true}
               setDataFunction={updateMainModelFunction}
+              disabled={disabled}
             />
           );
         }
@@ -94,9 +86,9 @@ function EndpointRequestParameterInputRow(
             fieldName={"value"}
             showLabel={false}
             className={"value-parameter"}
-            allowCreate={isSensitiveData !== true}
             requireVaultSavedParameters={isSensitiveData}
             setDataFunction={updateMainModelFunction}
+            disabled={disabled}
           />
         );
       case "array":
@@ -106,12 +98,14 @@ function EndpointRequestParameterInputRow(
             fieldName={"value"}
             showLabel={false}
             setDataFunction={updateMainModelFunction}
+            disabled={disabled}
           />
         );
       case "date":
         return (
           <DateTimeInputBase
 
+            disabled={disabled}
           />
         );
     }
@@ -142,11 +136,9 @@ function EndpointRequestParameterInputRow(
 }
 
 EndpointRequestParameterInputRow.propTypes = {
-  updateFieldFunction: PropTypes.func,
-  deleteFieldFunction: PropTypes.func,
+  updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
-  index: PropTypes.number,
 };
 
 export default EndpointRequestParameterInputRow;
