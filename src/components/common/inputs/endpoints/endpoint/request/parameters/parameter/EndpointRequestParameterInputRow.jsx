@@ -91,6 +91,7 @@ function EndpointRequestParameterInputRow(
             requireVaultSavedParameters={isSensitiveData}
             setDataFunction={updateMainModelFunction}
             disabled={disabled}
+            valueField={"value"}
           />
         );
       case "array":
