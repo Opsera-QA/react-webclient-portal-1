@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   getEndpointRequestTypeLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/endpointRequestType.constants";
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
 
 function EndpointRequestTypeField(

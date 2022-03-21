@@ -111,7 +111,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
         {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration
           pipeline={pipeline}
-          editItem={editItem}
+          pipelineStepId={editItem?.step_id}
           parentCallback={callbackFunctionTools}
           reloadParentPipeline={fetchPlan}
           closeEditorPanel={closeEditorPanel}

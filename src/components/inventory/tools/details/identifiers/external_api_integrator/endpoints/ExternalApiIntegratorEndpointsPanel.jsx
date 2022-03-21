@@ -10,7 +10,7 @@ import ExternalApiIntegratorEndpointEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
+import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
 
 function ExternalApiIntegratorEndpointsPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -73,7 +73,7 @@ function ExternalApiIntegratorEndpointsPanel({ toolId }) {
   };
 
   const handleRowSelectFunction = (rowData) => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, toolEndpointsMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(rowData?.original, externalApiIntegratorEndpointMetadata);
     setExternalApiIntegratorModel({...parsedModel});
   };
 

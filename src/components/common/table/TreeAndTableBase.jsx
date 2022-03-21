@@ -62,7 +62,7 @@ function TreeAndTableBase(
 
   return (
     <Row className={"mx-0"}>
-      <Col sm={getTabColumnSize()} className={"px-0"}>
+      <Col sm={getTabColumnSize()} className={"px-0 makeup-tree-container"}>
         <div className={"w-100"}>
           {getTreeComponent()}
         </div>

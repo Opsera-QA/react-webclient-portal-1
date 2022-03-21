@@ -12,8 +12,13 @@ import externalApiIntegratorEndpointsActions
 import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EndpointRequestTypeSelectInput
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/EndpointRequestTypeSelectInput";
-import EndpointBodyInputBase from "components/common/inputs/endpoints/endpoint/EndpointBodyInputBase";
+  from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
+import EndpointRequestBodyInputBase from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputBase";
+import EndpointResponseBodyInputBase
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
+import {
+  ENDPOINT_REQUEST_TYPES
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {
@@ -95,6 +100,50 @@ function ExternalApiIntegratorEndpointEditorPanel(
     );
   };
 
+  const getInputsForRequestType = () => {
+    switch (externalApiIntegratorModel?.getData("requestType")) {
+      case ENDPOINT_REQUEST_TYPES.GET:
+        return (
+          <>
+            <Col lg={12}>
+              <EndpointRequestBodyInputBase
+                model={externalApiIntegratorModel}
+                setModel={setExternalApiIntegratorModel}
+                fieldName={"queryParameterFields"}
+              />
+            </Col>
+            <Col lg={12}>
+              <EndpointRequestBodyInputBase
+                model={externalApiIntegratorModel}
+                setModel={setExternalApiIntegratorModel}
+                fieldName={"requestBodyFields"}
+              />
+            </Col>
+          </>
+        );
+      case ENDPOINT_REQUEST_TYPES.PUT:
+        return (
+          <Col lg={12}>
+            <EndpointRequestBodyInputBase
+              model={externalApiIntegratorModel}
+              setModel={setExternalApiIntegratorModel}
+              fieldName={"requestBodyFields"}
+            />
+          </Col>
+        );
+      case ENDPOINT_REQUEST_TYPES.POST:
+        return (
+          <Col lg={12}>
+            <EndpointRequestBodyInputBase
+              model={externalApiIntegratorModel}
+              setModel={setExternalApiIntegratorModel}
+              fieldName={"requestBodyFields"}
+            />
+          </Col>
+        );
+    }
+  };
+
   if (externalApiIntegratorModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -137,15 +186,9 @@ function ExternalApiIntegratorEndpointEditorPanel(
             setDataObject={setExternalApiIntegratorModel}
           />
         </Col>
+        {getInputsForRequestType()}
         <Col lg={12}>
-          <EndpointBodyInputBase
-            model={externalApiIntegratorModel}
-            setModel={setExternalApiIntegratorModel}
-            fieldName={"requestBodyFields"}
-          />
-        </Col>
-        <Col lg={12}>
-          <EndpointBodyInputBase
+          <EndpointResponseBodyInputBase
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"responseBodyFields"}

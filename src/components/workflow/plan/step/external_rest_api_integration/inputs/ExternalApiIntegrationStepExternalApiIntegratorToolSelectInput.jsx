@@ -12,6 +12,12 @@ function ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     const newModel = {...model};
     newModel?.setData(fieldName, selectedOption?._id);
+    newModel?.setDefaultValue("runEndpointId");
+    newModel?.setDefaultValue("runEndpointRequestParameters");
+    newModel?.setDefaultValue("runEndpointResponseEvaluationParameters");
+    newModel?.setDefaultValue("statusEndpointId");
+    newModel?.setDefaultValue("statusEndpointRequestParameters");
+    newModel?.setDefaultValue("statusEndpointResponseEvaluationParameters");
     setModel({...newModel});
   };
 

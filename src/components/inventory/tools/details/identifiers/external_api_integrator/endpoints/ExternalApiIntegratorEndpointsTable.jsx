@@ -9,12 +9,12 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
-import toolEndpointsMetadata from "components/inventory/tools/details/endpoints/toolEndpoints.metadata";
+import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
 import NewExternalApiIntegratorEndpointOverlay
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 import {
   getEndpointRequestTypeLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request_types/endpointRequestType.constants";
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {
@@ -24,7 +24,7 @@ function ExternalApiIntegratorEndpointsTable(
     isLoading,
     endpoints,
   }) {
-  const fields = toolEndpointsMetadata.fields;
+  const fields = externalApiIntegratorEndpointMetadata.fields;
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
 
@@ -74,7 +74,7 @@ function ExternalApiIntegratorEndpointsTable(
       addRecordFunction={createEndpoint}
       body={getEndpointsTable()}
       isLoading={isLoading}
-      metadata={toolEndpointsMetadata}
+      metadata={externalApiIntegratorEndpointMetadata}
       titleIcon={faLink}
       title={"Endpoints"}
     />
