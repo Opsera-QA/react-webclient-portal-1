@@ -9,13 +9,18 @@ import SonarRatingsMaintainabilityActionableInsightOverlay from "components/insi
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 
 function SonarRatingsMaintainabilityDataBlockContainer({
   maintainabilityRating,
   technicalDebtRatio,
   kpiConfiguration,
   dashboardData,
-  dataPoint
+  dataPoint,
+   className,
+   lastScore,
+   icon,
+   iconOverlayBody,
 }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -54,7 +59,16 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   };
 
   const getMiddleDataBlock = () => {
-    return <TwoLinePercentageDataBlock percentage={technicalDebtRatio} subtitle={"Technical Debt Ratio"} />;
+    return (
+      <ThreeLinePercentageBlockBase
+        className={`${className} p-2`}
+        percentage={technicalDebtRatio}
+        topText={"Technical Debt Ratio"}
+        bottomText={`Last Scan: ${lastScore}%`}
+        icon={icon}
+        iconOverlayBody={iconOverlayBody}
+      />
+    );
   };
 
   const getRightDataBlock = () => {
@@ -63,9 +77,9 @@ function SonarRatingsMaintainabilityDataBlockContainer({
 
   return (
     <HorizontalDataBlocksContainer title={"Sonar Ratings: Maintainability"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
-      <Col sm={4}>{getLeftDataBlock()}</Col>
+      <Col className={"my-4"} sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
-      <Col sm={4}>{getRightDataBlock()}</Col>
+      <Col className={"mb-3"} sm={3}>{getRightDataBlock()}</Col>
     </HorizontalDataBlocksContainer>
   );
 }
@@ -75,7 +89,11 @@ SonarRatingsMaintainabilityDataBlockContainer.propTypes = {
   technicalDebtRatio: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  dataPoint: PropTypes.object
+  dataPoint: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default SonarRatingsMaintainabilityDataBlockContainer;
