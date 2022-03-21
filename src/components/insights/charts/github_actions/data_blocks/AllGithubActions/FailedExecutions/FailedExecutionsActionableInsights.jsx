@@ -136,14 +136,26 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     if(!topFailedApplications || topFailedApplications.length === 0) {
       return null;
     }
+    let noFailure = true;
+    topFailedApplications.forEach((element) => {
+      if(element.value > 0) {
+        noFailure = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topFailedApplications}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noFailure ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No failed applications found.
+          </div>
+          :
+          <ResponsivePie
+            data={topFailedApplications}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noFailure ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Applications
         </div>
       </div>
@@ -154,14 +166,25 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     if(!topFailedActions || topFailedActions.length === 0) {
       return null;
     }
+    let noFailure = true;
+    topFailedActions.forEach((element) => {
+      if(element.value > 0) {
+        noFailure = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topFailedActions}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noFailure ?
+            <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+              No failed actions found.
+            </div>
+          :
+          <ResponsivePie
+            data={noFailure ? [] : topFailedActions}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)} />
+         }
+        <div style={noFailure ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Actions
         </div>
       </div>
@@ -172,15 +195,27 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     if(!topFailedJobs || topFailedJobs.length === 0) {
       return null;
     }
+    let noFailure = true;
+    topFailedJobs.forEach((element) => {
+      if(element.value > 0) {
+        noFailure = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topFailedJobs}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Jobs
+        {noFailure ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No failed jobs found.
+          </div>
+          :
+          <ResponsivePie
+            data={topFailedJobs}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noFailure ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
+          Top Five Applications
         </div>
       </div>
     );

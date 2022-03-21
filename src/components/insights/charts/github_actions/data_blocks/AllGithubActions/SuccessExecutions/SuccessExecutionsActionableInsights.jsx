@@ -135,14 +135,25 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     if(!topSuccessfulApplications || topSuccessfulApplications.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulApplications.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulApplications}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful applications found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulApplications}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Applications
         </div>
       </div>
@@ -153,14 +164,25 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulActions.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulActions}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful actions found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulActions}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Actions
         </div>
       </div>
@@ -171,14 +193,25 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     if(!topSuccessfulJobs || topSuccessfulJobs.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulJobs.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulJobs}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful jobs found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulJobs}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Jobs
         </div>
       </div>

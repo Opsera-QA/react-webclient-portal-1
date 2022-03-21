@@ -4,7 +4,7 @@ import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import {adjustBarWidth, defaultConfig, getColorByData} from "../../../../charts-views";
+import {adjustBarWidth, defaultConfig} from "../../../../charts-views";
 import barConfig from "./SuccessPercentActionableInsightsBarConfig";
 import chartConfig from "./SuccessPercentActionableInsightsChartConfig";
 import {
@@ -48,29 +48,6 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
       isMounted.current = false;
     };
   }, []);
-
-  const barData = [
-    {
-      AuthorName: "abc",
-      success: 30,
-      _id: "Success"
-    },
-    {
-      AuthorName: "cde",
-      cancelled: 50,
-      _id: "Cancelled"
-    },
-    {
-      AuthorName: "efg",
-      failed: 45,
-      _id: "Failed"
-    },
-    {
-      AuthorName: "mno",
-      skipped: 25,
-      _id: "Skipped"
-    }
-  ];
 
   const getDateRange = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
@@ -153,14 +130,25 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     if(!topSuccessfulApplications || topSuccessfulApplications.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulApplications.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulApplications}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful applications found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulApplications}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Applications
         </div>
       </div>
@@ -171,14 +159,25 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulActions.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulActions}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful actions found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulActions}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Actions
         </div>
       </div>
@@ -189,14 +188,25 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     if(!topSuccessfulJobs || topSuccessfulJobs.length === 0) {
       return null;
     }
+    let noSuccess = true;
+    topSuccessfulJobs.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
       <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        <ResponsivePie
-          data={topSuccessfulJobs}
-          {...defaultConfig()}
-          {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{textAlign: 'center', marginLeft: '3rem'}}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful jobs found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulJobs}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
           Top Five Jobs
         </div>
       </div>
@@ -220,10 +230,10 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
                   <Row className="pb-3 px-2 my-5">
                     <Col xl={12} lg={12} md={12} className={"my-1"} style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
                       <ResponsiveBar
-                        data={barData}
+                        data={topSuccessfulActions[i].docs}
                         {...defaultConfig("Percentage", "", false, false, "", "")}
                         {...barConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                        {...adjustBarWidth(barData)}
+                        {...adjustBarWidth(topSuccessfulActions[i].docs)}
                       />
                     </Col>
                   </Row>
