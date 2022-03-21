@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/endpointRequestField.metadata";
-import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/EndpointRequestBodyFieldInputRow";
+import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
+import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 

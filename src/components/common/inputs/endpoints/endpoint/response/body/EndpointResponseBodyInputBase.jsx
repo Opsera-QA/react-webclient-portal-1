@@ -7,9 +7,9 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {
   endpointResponseFieldMetadata
-} from "components/common/inputs/endpoints/endpoint/response/endpointResponseField.metadata";
+} from "components/common/inputs/endpoints/endpoint/response/body/endpointResponseField.metadata";
 import EndpointResponseBodyFieldInputRow
-  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseBodyFieldInputRow";
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
 
 function EndpointResponseBodyInputBase(
   {

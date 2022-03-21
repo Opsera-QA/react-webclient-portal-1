@@ -77,6 +77,28 @@ export class Model {
     return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
   };
 
+  getObjectData = (fieldName, defaultValue = {}) => {
+    if (fieldName == null) {
+      console.error("No field name was given, so returning default value.");
+      return defaultValue;
+    }
+
+    try {
+      const potentialObject = this.data[fieldName];
+
+      if (typeof potentialObject !== "object") {
+        console.error("The stored field was not an object. Returning default value.");
+        return defaultValue;
+      }
+
+      return potentialObject;
+    }
+    catch (error) {
+      console.error("Could not parse object property. Returning default value.");
+      return defaultValue;
+    }
+  };
+
   setData = (fieldName, newValue) => {
       this.propertyChange(fieldName, newValue, this.getData(fieldName));
       this.data[fieldName] = newValue;
