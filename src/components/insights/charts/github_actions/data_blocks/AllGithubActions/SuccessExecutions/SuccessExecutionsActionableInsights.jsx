@@ -1,35 +1,36 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef, useContext} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import {adjustBarWidth, defaultConfig, getColorByData} from "../../../../charts-views";
+import { defaultConfig } from "../../../../charts-views";
 import chartConfig from "./SuccessExecutionsActionableInsightsChartConfig";
 import {
   METRIC_CHART_STANDARD_HEIGHT,
   METRIC_THEME_CHART_PALETTE_COLORS
 } from "../../../../../../common/helpers/metrics/metricTheme.helpers";
 import {ResponsivePie} from "@nivo/pie";
-import DataBlockBoxContainer from "../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import MetricContentDataBlockBase from "../../../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
-import {ResponsiveBar} from "@nivo/bar";
-import config from "../../../../first_pass/firstPassYieldMetricConfig";
-import MetricPipelineInfoSubheader from "../../../../../../common/metrics/subheaders/MetricPipelineInfoSubheader";
-import InsightHighlightFieldWithTrendIcon
-  from "../../../../../../common/fields/text/InsightHighlightFieldWithTrendIcon";
+import SuccessExecutionsActionableInsightsMetaData from "./SuccessExecutionsActionableInsightsMetaData";
 import InsightsCardContainerBase from "../../../../../../common/card_containers/InsightsCardContainerBase";
-import IconBase from "../../../../../../common/icons/IconBase";
-import {faClock, faFileCode, faTally} from "@fortawesome/pro-light-svg-icons";
 import MetricBadgeBase from "../../../../../../common/badges/metric/MetricBadgeBase";
-import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
-import DateTimeField from "../../../../../../common/fields/date/DateTimeField";
 import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import AddNewCirclesGroup from "../../../../../../common/icons/create/AddNewCirclesGroup";
+import chartsActions from "../../../../charts-actions";
+import {AuthContext} from "../../../../../../../contexts/AuthContext";
+import Model from "../../../../../../../core/data_model/model";
+import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
 
 function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const [topSuccessfulActions, setTopSuccessfulActions] = useState([]);
+  const [topSuccessfulApplications, setTopSuccessfulApplications] = useState([]);
+  const [topSuccessfulJobs, setTopSuccessfulJobs] = useState([]);
+  const [actionInsightsTraceabilityTable, setActionInsightsTraceabilityTable] = useState([]);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -39,6 +40,11 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     setCancelTokenSource(source);
 
     isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
     return () => {
       source.cancel();
@@ -46,200 +52,249 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     };
   }, []);
 
-  const getDateRange = () => {
-    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
-    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
-  };
-
-  const data = [
-    {
-      color: "#5B5851",
-      id: "Test1",
-      value: 60,
-    },
-    {
-      color: "#7A756C",
-      id: "Test2",
-      value: 30,
-    },
-    {
-      color: "#7A756C",
-      id: "Test3",
-      value: 10,
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const dashboardTags =
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "releaseTraceabilitySuccess",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
+      );
+      const topActions = response?.data?.data[0]?.topSuccessfulActions;
+      const topApplications = response?.data?.data[0]?.topSuccessfulApplications;
+      const topJobs = response?.data?.data[0]?.topSuccessfulJobs;
+      const actionableInsightsTableData = response?.data?.data[0]?.actionInsightsTraceabilityTable;
+      //To remove following for loops once api is chnaged to send value param as expected.
+      for(let i =0; i<=topActions.length - 1; i++){
+        topActions[i].value = topActions[i].success_percentage;
+      }
+      for(let j =0; j<=topApplications.length - 1; j++){
+        topApplications[j].value = topApplications[j].success_percentage;
+      }
+      for(let k =0; k<=topJobs.length - 1; k++){
+        topJobs[k].value = topJobs[k].success_percentage;
+      }
+      setTopSuccessfulActions(topActions);
+      setTopSuccessfulApplications(topApplications);
+      setTopSuccessfulJobs(topJobs);
+      setActionInsightsTraceabilityTable(actionableInsightsTableData);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-  ];
-
-  const getTitleBar = () => {
-    return (
-      <div className="d-flex justify-content-between w-100">
-        <div>Action Name</div>
-      </div>
-    );
   };
 
   const getBody = () => {
     return (
       <>
         {getDateRange()}
-        {getSuccessPercentSummaryCharts()}
-        {getSuccessPercentSummaryTextBoxes()}
+        {getSuccessExecutionsSummaryCharts()}
+        {getSuccessExecutionsInsightTable()}
       </>
     );
   };
 
-  const getSuccessPercentSummaryCharts = () => {
+  const getDateRange = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
+  };
+
+  const getSuccessExecutionsSummaryCharts = () => {
     return (
       <Row className="pb-3 px-2 my-5">
         <Col xl={4} lg={4} md={4} className={"my-1"}>
-          <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-            <ResponsivePie
-              data={data}
-              {...defaultConfig()}
-              {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-            />
-            <div style={{textAlign: 'center', marginLeft: '3rem'}}>
-              Applications
-            </div>
-            <div style={{textAlign: 'center', marginLeft: '3rem'}} className={'font-inter-light-300 light-gray-text-secondary metric-block-footer-text'}>
-              *Top 5
-            </div>
-          </div>
+          {getTopSuccessfulApplicationsPieChart()}
         </Col>
         <Col xl={4} lg={4} md={4} className={"my-1"}>
-          <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-            <ResponsivePie
-              data={data}
-              {...defaultConfig()}
-              {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-            />
-            <div style={{textAlign: 'center', marginLeft: '3rem'}}>
-              Actions
-            </div>
-            <div style={{textAlign: 'center', marginLeft: '3rem'}} className={'font-inter-light-300 light-gray-text-secondary metric-block-footer-text'}>
-              *Top 5
-            </div>
-          </div>
+          {getTopSuccessfulActionsPieChart()}
         </Col>
         <Col xl={4} lg={4} md={4} className={"my-1"}>
-          <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-            <ResponsivePie
-              data={data}
-              {...defaultConfig()}
-              {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-            />
-            <div style={{textAlign: 'center', marginLeft: '3rem'}}>
-              Jobs
-            </div>
-            <div style={{textAlign: 'center', marginLeft: '3rem'}} className={'font-inter-light-300 light-gray-text-secondary metric-block-footer-text'}>
-              *Top 5
-            </div>
-          </div>
+          {getTopSuccessfulJobsPieChart()}
         </Col>
       </Row>
     );
   };
 
-  const getSuccessPercentSummaryTextBoxes = () => {
+  const getTopSuccessfulApplicationsPieChart = () => {
+    if(!topSuccessfulApplications || topSuccessfulApplications.length === 0) {
+      return null;
+    }
+    let noSuccess = true;
+    topSuccessfulApplications.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
     return (
-      <Row className="pb-3 px-4 my-5">
-        <Col md={12} style={{ padding: '0' }}>
-          <DataBlockBoxContainer showBorder={true} className={'github-actions-border-left'}>
-            <MetricContentDataBlockBase
-              title={"Action Name"}
-              content={
-              <Row>
-                <Col md={4}>
-                  <div style={{display: "grid"}}>
-                    <span>Application Name:</span>
-                    <span className={'my-3'}>300</span>
-                    <span className={'my-3'}>Total Commits</span>
-                  </div>
-                </Col>
-                <Col md={4}>
-                  <div style={{display: "grid"}}>
-                    <span>Repository Name:</span>
-                    <span className={'my-3'}>Contributors - multiple</span>
-                    <span className={'my-3'}>Average Duration to complete</span>
-                  </div>
-                </Col>
-                <Col md={4}>
-                  <div style={{display: "grid"}}>
-                    <span>Run Number/Run Count</span>
-                    <span className={'my-3'}>Trend: <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i> <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i></span>
-                    <span className={'my-3'}>Run Attempts</span>
-                  </div>
-                </Col>
-              </Row>
-              }
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col md={12} style={{ padding: '0' }}>
-          <DataBlockBoxContainer showBorder={true} className={'github-actions-border-left'}>
-            <MetricContentDataBlockBase
-              title={"Action Name"}
-              content={
-                <Row>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Application Name:</span>
-                      <span className={'my-3'}>300</span>
-                      <span className={'my-3'}>Total Commits</span>
-                    </div>
-                  </Col>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Repository Name:</span>
-                      <span className={'my-3'}>Contributors - multiple</span>
-                      <span className={'my-3'}>Average Duration to complete</span>
-                    </div>
-                  </Col>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Run Number/Run Count</span>
-                      <span className={'my-3'}>Trend: <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i> <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i></span>
-                      <span className={'my-3'}>Run Attempts</span>
-                    </div>
-                  </Col>
-                </Row>
-              }
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col md={12} style={{ padding: '0' }}>
-          <DataBlockBoxContainer showBorder={true} className={'github-actions-border-left'}>
-            <MetricContentDataBlockBase
-              title={"Action Name"}
-              content={
-                <Row>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Application Name:</span>
-                      <span className={'my-3'}>300</span>
-                      <span className={'my-3'}>Total Commits</span>
-                    </div>
-                  </Col>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Repository Name:</span>
-                      <span className={'my-3'}>Contributors - multiple</span>
-                      <span className={'my-3'}>Average Duration to complete</span>
-                    </div>
-                  </Col>
-                  <Col md={4}>
-                    <div style={{display: "grid"}}>
-                      <span>Run Number/Run Count</span>
-                      <span className={'my-3'}>Trend: <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i> <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'green', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i>  <i style={{color:'red', fontSize: '1.5em'}} className="fa-solid fa-circle p-1"></i></span>
-                      <span className={'my-3'}>Run Attempts</span>
-                    </div>
-                  </Col>
-                </Row>
-              }
-            />
-          </DataBlockBoxContainer>
-        </Col>
-      </Row>
+      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful applications found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulApplications}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
+          Top Five Applications
+        </div>
+      </div>
+    );
+  };
 
+  const getTopSuccessfulActionsPieChart = () => {
+    if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
+      return null;
+    }
+    let noSuccess = true;
+    topSuccessfulActions.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
+    return (
+      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful actions found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulActions}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
+          Top Five Actions
+        </div>
+      </div>
+    );
+  };
+
+  const getTopSuccessfulJobsPieChart = () => {
+    if(!topSuccessfulJobs || topSuccessfulJobs.length === 0) {
+      return null;
+    }
+    let noSuccess = true;
+    topSuccessfulJobs.forEach((element) => {
+      if(element.value > 0) {
+        noSuccess = false;
+      }
+    });
+    return (
+      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+        {noSuccess ?
+          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
+            No successful jobs found.
+          </div>  :
+          <ResponsivePie
+            data={topSuccessfulJobs}
+            {...defaultConfig()}
+            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+          />
+        }
+        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
+          Top Five Jobs
+        </div>
+      </div>
+    );
+  };
+
+  const getSuccessExecutionsInsightTable = () => {
+    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
+      return null;
+    }
+    const actionableInsightsTable = [];
+    for (var i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
+      const actionInsightsTraceabilityTableDto = new Model({...actionInsightsTraceabilityTable[i]}, SuccessExecutionsActionableInsightsMetaData, false);
+      const runTrendData = actionInsightsTraceabilityTable[i]?.runTrend;
+      const trendData = [];
+      for(let i = 0;i<=runTrendData.length - 1; i++) {
+        if(runTrendData[i] === "success") {
+          trendData.push({color: 'green'});
+        } else if(runTrendData[i] === "failure") {
+          trendData.push({color: 'red'});
+        }
+      }
+      actionableInsightsTable.push(
+        <InsightsCardContainerBase titleBar={getTitleBar(i)}>
+          <div className="m-2">
+            <div className={"d-flex"}>
+              <MetricBadgeBase
+                className={"mr-3"}
+                badgeText={`Application Name: ${actionInsightsTraceabilityTable?.[i]?.applicationName}`}
+              />
+              <MetricBadgeBase
+                className={"mr-3"}
+                badgeText={`Repository Name: ${actionInsightsTraceabilityTable?.[i]?.repositoryName}`}
+              />
+            </div>
+            <Row className="d-flex align-items-center">
+              <Col lg={12} className={"px-0"}>
+                <Row className={'d-flex align-items-center'}>
+                  <Col sm={12} md={5} lg={3}>
+                    <TwoLineScoreDataBlock
+                      className="p-3"
+                      score={actionInsightsTraceabilityTable?.[i]?.numberOfCommits}
+                      subtitle={"Total Commits"}
+                    />
+                  </Col>
+                  <Col sm={12} md={7} lg={9}>
+                    <Row>
+                      <Col sm={12} md={6} lg={6}>
+                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionDurationInMins"} className="insight-detail-label my-2" />
+                      </Col>
+                      <Col sm={12} md={6} lg={6}>
+                        <div className={"my-2"}>
+                          <label className="mb-0 mr-2 text-muted">
+                            <span>
+                              Trend: <AddNewCirclesGroup data={trendData}/>
+                            </span>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={12} md={6} lg={6}>
+                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionRunNumber"} className="insight-detail-label my-2" />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </InsightsCardContainerBase>
+      );
+    }
+    return (
+      <div>
+        {actionableInsightsTable}
+      </div>
+    );
+  };
+
+  const getTitleBar = (currentElementIndex) => {
+    return (
+      <div className="d-flex justify-content-between w-100">
+        <div>{actionInsightsTraceabilityTable?.[currentElementIndex]?.actionName}</div>
+      </div>
     );
   };
 
