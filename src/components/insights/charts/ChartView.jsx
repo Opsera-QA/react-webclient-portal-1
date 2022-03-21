@@ -1179,6 +1179,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                 dashboardData={dashboardData}
                 setKpis={setKpis}
                 index={index}
+                showViewDetailsToggle={true}
               />
             </Col>
           );

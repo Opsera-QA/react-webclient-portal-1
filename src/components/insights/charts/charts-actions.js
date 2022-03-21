@@ -24,6 +24,8 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
+  getAmexApplicationFromKpiConfiguration,
+  getAmexDirectorFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
@@ -43,7 +45,13 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, tags, getAccessToken, cancelTokenSource, tableFilterDto)=>{
+chartsActions.getSonarUnitTestsMetrics = async (
+  kpiConfiguration,
+  tags,
+  getAccessToken,
+  cancelTokenSource,
+  tableFilterDto
+) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
   const postBody = {
@@ -124,7 +132,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration),
     serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
-    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
+    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
+    amexApplication = getAmexApplicationFromKpiConfiguration(kpiConfiguration),
+    amexDirector = getAmexDirectorFromKpiConfiguration(kpiConfiguration);
+
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -174,8 +185,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings: serviceNowServiceOfferings,
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
+    amexApplication: amexApplication,
+    amexDirector: amexDirector,
     actionableInsightsQueryData: actionableInsightsQueryData,
-    coveritySeverity: coveritySeverity
+    coveritySeverity: coveritySeverity,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

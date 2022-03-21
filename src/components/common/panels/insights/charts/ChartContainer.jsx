@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import "components/analytics/charts/charts.css";
 
 function ChartContainer(
   {

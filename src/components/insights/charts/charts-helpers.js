@@ -316,6 +316,28 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
   return null;
 }
 
+export function getAmexApplicationFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-application")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-application")]?.value
+      .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-application")].value;
+  }
+  return null;
+}
+
+export function getAmexDirectorFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-director")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-director")]?.value.length >
+      0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amex-director")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
