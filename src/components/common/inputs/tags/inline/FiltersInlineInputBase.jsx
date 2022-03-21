@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
 import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
-import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
+import AppliedFiltersBadge from "components/common/badges/tag/AppliedFiltersBadge";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function FiltersInlineInputBase(
@@ -38,7 +38,7 @@ function FiltersInlineInputBase(
     <div className="role-access">
       <div className="d-flex">
         <div>
-          <AppliedTagBadge
+          <AppliedFiltersBadge
             tags={model?.getData(fieldName)}
             tagLocation={tagLocation}
             showNoTagsAppliedBadge={true}
@@ -50,7 +50,7 @@ function FiltersInlineInputBase(
             className={"ml-2 text-muted"}
             handleEditFunction={showEditor}
             disabled={disabled || saveDataFunction == null}
-            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Tags`}
+            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Filters`}
           />
         </div>
       </div>

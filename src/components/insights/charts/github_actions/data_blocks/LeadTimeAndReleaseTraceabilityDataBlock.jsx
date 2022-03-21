@@ -177,7 +177,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
                       numberData={deploymentMetrics.deploymentFrequency}
-                      supportingText={"deployments/day"}
+                      supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
                       middleText={"Frequency"}
                     />
                   </div>
