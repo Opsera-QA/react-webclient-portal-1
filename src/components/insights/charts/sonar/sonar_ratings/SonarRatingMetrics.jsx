@@ -64,14 +64,14 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "sonarRatingsLeadership",
+        "sonarRatingsV2",
         kpiConfiguration,
         dashboardTags,
         null,
         null,
         dashboardOrgs
       );
-      const metrics = response?.data?.data[0]?.sonarRatingsLeadership?.data;
+      const metrics = response?.data?.data[0]?.sonarRatings?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setSonarRatingsMetric(metrics[0]);
