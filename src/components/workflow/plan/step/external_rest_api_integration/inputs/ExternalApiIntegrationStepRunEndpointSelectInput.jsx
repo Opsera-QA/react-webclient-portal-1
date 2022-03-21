@@ -13,7 +13,7 @@ function ExternalApiIntegrationStepRunEndpointSelectInput(
     const newModel = {...model};
     newModel?.setData(fieldName, selectedOption?._id);
     newModel?.setDefaultValue("runEndpointRequestParameters");
-    newModel?.setDefaultValue("runEndpointResponseEvaluationParameters");
+    newModel?.setDefaultValue("runEndpointResponseEvaluationRules");
     setModel({...newModel});
   };
 
