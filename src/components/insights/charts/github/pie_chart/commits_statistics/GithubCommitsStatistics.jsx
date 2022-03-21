@@ -21,6 +21,8 @@ import { Col, Row } from "react-bootstrap";
 import GitHubCommitsTotalCommitsDataBlock from "./data_blocks/GitHubCommitsTotalCommitsDataBlock";
 import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalMergesDataBlock";
 import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommitsTotalPullRequestsDataBlock";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -35,6 +37,8 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   const [totalMerges, setTotalMerges] = useState(0);
   const [highestMergesMetric, setHighestMergesMetric] = useState([]);
   const [totalDeclinedMerges, setTotalDeclinedMerges] = useState([]);
+  const toastContext = useContext(DialogToastContext);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -101,12 +105,20 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       }
     }
   };
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <GithubCommitsActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
+  };
 
   const getDataBlocks = () => {
     return (
       <Row className="px-4 justify-content-between">
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits}  onSelect={() => onRowSelect()} />
         </Col>
         <Col md={12} className={"my-1"}>
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
