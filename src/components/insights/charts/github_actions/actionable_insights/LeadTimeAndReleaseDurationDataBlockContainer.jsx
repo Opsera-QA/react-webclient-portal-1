@@ -10,10 +10,8 @@ import DeploymentFrequencyStatisticsDataBlockContainer
 import LeadTimeAndReleaseDurationDeployMetric from "../bar_chart/metrics/deploy/LeadTimeAndReleaseDurationDeployMetric";
 
 function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, dashboardData, meanData, countData, metric, statisticsData, chartData }) {
-  console.log('LeadTimeAndReleaseDurationDataBlockContainer data', data);
-  console.log('LeadTimeAndReleaseDurationDataBlockContainer rest', meanData, countData, metric, statisticsData, chartData);
   let className = `p-2 dark-gray-text-primary`;
-
+  console.log(data);
   return (
     <>
       <HorizontalDataBlocksContainer title={"Metrics Total"} className="mt-4">
@@ -62,8 +60,8 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
           <Col lg={3} md={6} className={"my-3"}>
             <DataBlockBoxContainer showBorder={true}>
               <TwoLineScoreDataBlock
-                score={getTimeDisplay(data.mean_time_to_build)}
-                subtitle={"Average Time to Build"}
+                score={getTimeDisplay(data.mean_time_to_commit)}
+                subtitle={"Average Time to Commit"}
                 className={className}
               />
             </DataBlockBoxContainer>
@@ -71,8 +69,8 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
           <Col lg={3} md={6} className={"my-3"}>
             <DataBlockBoxContainer showBorder={true}>
               <TwoLineScoreDataBlock
-                score={getTimeDisplay(data.mean_time_to_commit)}
-                subtitle={"Average Time to Commit"}
+                score={getTimeDisplay(data.mean_time_to_build)}
+                subtitle={"Average Time to Build"}
                 className={className}
               />
             </DataBlockBoxContainer>
@@ -111,7 +109,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
             </Col>
           </Row>
         </div>
-      </HorizontalDataBlocksContainer> */}
+      </HorizontalDataBlocksContainer>
       <Row className="mr-1 mt-4">
         <Col xs={12}>
           <DeploymentFrequencyStatisticsDataBlockContainer
@@ -138,7 +136,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
             </Col>
           </Row>
       </Container>
-      </HorizontalDataBlocksContainer>
+      </HorizontalDataBlocksContainer> */}
     </>
   );
 }

@@ -8,6 +8,7 @@ import ChartContainer from "../../../../common/panels/insights/charts/ChartConta
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
@@ -21,6 +22,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   setKpis,
   showSettingsToggle,
   showViewDetailsToggle}) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -133,7 +135,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   };
 
   const viewDetailsComponent = () => {
-    return (
+    toastContext.showOverlayPanel(
       <LeadTimeAndReleaseDurationActionableInsightOverlay
         title={"Lead time and Release Duration"}
         actionableInsightsQueryData={null}
@@ -261,7 +263,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
         showViewDetailsToggle={showViewDetailsToggle}
-        viewDetailsComponent={viewDetailsComponent()}
+        launchActionableInsightsFunction={viewDetailsComponent}
       />
       <ModalLogs
         header="Github Actions Statistics"

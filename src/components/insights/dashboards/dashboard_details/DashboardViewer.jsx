@@ -7,6 +7,7 @@ import ChartView from "components/insights/charts/ChartView";
 import axios from "axios";
 import BadgeBase from "components/common/badges/BadgeBase";
 import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
+import DashboardFiltersInlineInput from "components/insights/dashboards/DashboardFiltersInlineInput";
 import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
 
 function DashboardViewer({ dashboardModel, loadData }) {
@@ -84,6 +85,9 @@ function DashboardViewer({ dashboardModel, loadData }) {
         </div>
         <div className={"d-flex"}>
           {/*TODO: Make version for dashboards, wire that up instead*/}
+          <div className={"mr-2"}>
+            <DashboardFiltersInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
+          </div>
           <div className={"mr-2"}>
             <DashboardTagsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
           </div>
