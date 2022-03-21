@@ -1,8 +1,8 @@
 export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
-  keys: ["Cancelled", "Success", "Failed", "Skipped"],
+  keys: ["value"],
   indexBy: "_id",
   layers: ["grid", "axes", "bars", "markers", "mesh"],
-  colorBy: "id",
+  colorBy: "_id",
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
