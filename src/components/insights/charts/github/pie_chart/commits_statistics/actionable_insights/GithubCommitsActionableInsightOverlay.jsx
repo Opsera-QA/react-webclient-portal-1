@@ -23,10 +23,20 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+
+  const [closedMetrics, setClosedMetrics] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
+  );
+  const [closedFilterModel, setClosedFilterModel] = useState(
     new Model(
       { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
       actionableInsightsGenericChartFilterMetadata,
@@ -55,8 +65,24 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadData = async () => {
     try {
+      setIsLoading(true);
+      await loadOpenData();
+      await loadClosedData();
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -72,24 +98,39 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
         filterDto,
         "opened"
       );
-      let dataObject = response?.data?.data ? response?.data?.data?.pull_requests?.data[0]?.data : [];
-      let dataCount = response?.data ? response?.data?.data?.pull_requests?.data[0]?.count[0]?.count : 0;
+      let dataObject = response?.data ? response?.data?.pull_requests?.data[0]?.data : [];
+      let dataCount = response?.data ? response?.data?.pull_requests?.data[0]?.count[0]?.count : 0;
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
+  };
+
+  const loadClosedData = async (cancelSource = cancelTokenSource, filterDto = closedFilterModel) => {
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.getGithubPullRequestsMetrics(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs,
+        filterDto,
+        "closed"
+      );
+      let dataObject = response?.data ? response?.data?.pull_requests?.data[0]?.data : [];
+      let dataCount = response?.data ? response?.data?.pull_requests?.data[0]?.count[0]?.count : 0;
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataCount);
+      setClosedFilterModel({ ...newFilterDto });
+      if (isMounted?.current === true && dataObject) {
+        setClosedMetrics(dataObject);
       }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
   };
 
   const closePanel = () => {
@@ -126,11 +167,20 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
         </div>
       );
     }
-    return (
-      <div className="p-2">
-        -
-      </div>
-    );
+    else {
+      return (
+        <div className="p-2">
+          <GithubCommitsActionableInsightTable
+              data={closedMetrics}
+              isLoading={isLoading}
+              loadData={loadData}
+              filterModel={closedFilterModel}
+              setFilterModel={setClosedFilterModel}
+              title={"Closed Commits"}
+            />
+        </div>
+      );
+    }
   };
 
   return (

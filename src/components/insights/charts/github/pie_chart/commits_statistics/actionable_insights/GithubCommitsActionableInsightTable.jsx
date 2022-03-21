@@ -12,7 +12,6 @@ import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
-  const toastContext = useContext(DialogToastContext);
   const fields = GithubCommitsActionableMetadata.fields;
   const tableTitle = "Github " + title + " Report";
   const noDataMessage = "Github " + title + " report is currently unavailable at this time";
@@ -22,9 +21,9 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
-      getTableTextColumn(getField(fields, "mrUserName"), "mrUserName"),
+      getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
-      getTableTextColumn(getField(fields, "commitMessage"), "commitMessage"),
+      getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
       getChartTrendStatusColumn(getField(fields, "status"), "status"),
       getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt")
     ],

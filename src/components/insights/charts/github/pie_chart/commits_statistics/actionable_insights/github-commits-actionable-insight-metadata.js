@@ -8,7 +8,7 @@ const GithubCommitsActionableMetadata = {
     },
     {
       label: "Collaborator Name",
-      id: "mrUserName",
+      id: "collaboratorName",
     },
     {
       label: "Request created at",
@@ -16,7 +16,7 @@ const GithubCommitsActionableMetadata = {
     },
     {
       label: "Commit Message",
-      id: "commitMessage",
+      id: "mergeRequestTitle",
     },
     {
       label: "Status",
