@@ -72,6 +72,7 @@ function SonarRatingCodeCoverageActionableInsightTable(
       getKpiSonarPipelineTableTextColumn(getField(fields, "duplicate_lines")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "duplicated_lines_density")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "coverage")),
+      getKpiSonarPipelineTableTextColumn(getField(fields, "tests")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "lines_to_cover")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "uncovered_lines")),
       getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),

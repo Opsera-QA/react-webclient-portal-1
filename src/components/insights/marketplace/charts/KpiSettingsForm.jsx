@@ -330,6 +330,7 @@ function KpiSettingsForm({
     "sonar-ratings-v2",
     "sonar-unit-testing",
     "sonar-ratings-leadership",
+    "github-commit-statistics",
   ];
 
   const getKpiFilters = (filter) => {
