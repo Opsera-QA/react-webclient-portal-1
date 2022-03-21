@@ -427,6 +427,10 @@ a.text-primary:hover, a.text-primary:focus {
     width: 0;
 }
 
+.dhx_grid-content {
+    border: none !important;
+}
+
 .custom-table .dhx_grid-filter__label {
     margin-top: auto;
     margin-bottom: auto;

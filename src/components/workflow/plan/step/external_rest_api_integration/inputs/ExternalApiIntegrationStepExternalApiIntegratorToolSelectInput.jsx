@@ -14,7 +14,7 @@ function ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput(
     newModel?.setData(fieldName, selectedOption?._id);
     newModel?.setDefaultValue("runEndpointId");
     newModel?.setDefaultValue("runEndpointRequestParameters");
-    newModel?.setDefaultValue("runEndpointResponseSuccessParameters");
+    newModel?.setDefaultValue("runEndpointResponseEvaluationParameters");
     newModel?.setDefaultValue("statusEndpointId");
     newModel?.setDefaultValue("statusEndpointRequestParameters");
     newModel?.setDefaultValue("statusEndpointResponseEvaluationParameters");

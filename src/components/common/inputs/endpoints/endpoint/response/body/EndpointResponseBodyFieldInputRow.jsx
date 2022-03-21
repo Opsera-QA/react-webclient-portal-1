@@ -7,24 +7,21 @@ import {
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/endpointRequestField.metadata";
+import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import EndpointRequestFieldTypeStandaloneSelectInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldTypeStandaloneSelectInput";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
-import EndpointRequestFieldIsRequiredToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldIsRequiredToggleInput";
-import EndpointRequestFieldIsSensitiveDataToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/EndpointRequestFieldIsSensitiveDataToggleInput";
+import EndpointResponseFieldTypeStandaloneSelectInput
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldTypeStandaloneSelectInput";
+import EndpointResponseFieldIsSensitiveDataToggleInput
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldIsSensitiveDataToggleInput";
 
-function EndpointRequestBodyFieldInputRow(
+function EndpointResponseBodyFieldInputRow(
   {
     disabled,
     updateFieldFunction,
     deleteFieldFunction,
     endpointBodyField,
     index,
-    parentFieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -55,7 +52,7 @@ function EndpointRequestBodyFieldInputRow(
     <div className={"d-flex py-2"}>
       <Col sm={11}>
         <Row className={"pl-2"}>
-          <Col sm={4} className={"pl-0 pr-1"}>
+          <Col sm={5} className={"pl-0 pr-1"}>
             <StandaloneTextInputBase
               model={endpointFieldModel}
               setDataFunction={(newValue) => updateMainModelFunction("fieldName", newValue)}
@@ -63,24 +60,15 @@ function EndpointRequestBodyFieldInputRow(
               disabled={disabled}
             />
           </Col>
-          <Col sm={4} className={"pl-0 pr-1"}>
-            <EndpointRequestFieldTypeStandaloneSelectInput
+          <Col sm={5} className={"pl-0 pr-1"}>
+            <EndpointResponseFieldTypeStandaloneSelectInput
               model={endpointFieldModel}
               updateMainModelFunction={updateMainModelFunction}
               disabled={disabled}
-            />
-          </Col>
-          <Col sm={2} className={"pl-1 pr-0"}>
-            <EndpointRequestFieldIsRequiredToggleInput
-              model={endpointFieldModel}
-              updateMainModelFunction={updateMainModelFunction}
-              index={index}
-              disabled={disabled}
-              parentFieldName={parentFieldName}
             />
           </Col>
           <Col sm={2} className={"pl-1 pr-0 my-auto"}>
-            <EndpointRequestFieldIsSensitiveDataToggleInput
+            <EndpointResponseFieldIsSensitiveDataToggleInput
               model={endpointFieldModel}
               updateMainModelFunction={updateMainModelFunction}
               index={index}
@@ -96,13 +84,12 @@ function EndpointRequestBodyFieldInputRow(
   );
 }
 
-EndpointRequestBodyFieldInputRow.propTypes = {
+EndpointResponseBodyFieldInputRow.propTypes = {
   updateFieldFunction: PropTypes.func,
   deleteFieldFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   index: PropTypes.number,
-  parentFieldName: PropTypes.string,
 };
 
-export default EndpointRequestBodyFieldInputRow;
+export default EndpointResponseBodyFieldInputRow;
