@@ -1,5 +1,6 @@
 export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
   keys: ["failure_percentage"],
+  colorBy: "id",
   sortByValue: true,
   innerRadius: .5,
   sliceLabelsSkipAngle: 10,
