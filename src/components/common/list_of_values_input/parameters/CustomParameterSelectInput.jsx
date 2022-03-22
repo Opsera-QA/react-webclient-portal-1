@@ -16,6 +16,7 @@ function CustomParameterSelectInput(
     valueField,
     showLabel,
     requireVaultSavedParameters,
+    requireInsensitiveParameters,
     setDataFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -70,6 +71,7 @@ function CustomParameterSelectInput(
       cancelSource,
       undefined,
       requireVaultSavedParameters,
+      requireInsensitiveParameters,
     );
     const regions = response?.data?.data;
 
@@ -108,6 +110,7 @@ CustomParameterSelectInput.propTypes = {
   showLabel: PropTypes.bool,
   requireVaultSavedParameters: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  requireInsensitiveParameters: PropTypes.bool,
 };
 
 CustomParameterSelectInput.defaultProps = {

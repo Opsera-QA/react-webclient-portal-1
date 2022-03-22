@@ -70,7 +70,6 @@ function EndpointRequestParametersInputBase(
       constructedParameterObject[fieldName] = parseObjectValue(parameter?.type, value);
     });
 
-    console.log("constructedParameterObject: " + JSON.stringify(constructedParameterObject));
     newModel.setData(fieldName, constructedParameterObject);
     setModel({...newModel});
   };
