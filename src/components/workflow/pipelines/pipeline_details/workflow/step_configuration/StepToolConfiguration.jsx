@@ -27,6 +27,7 @@ import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStep
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCdStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
+import TerraformVcsStepConfiguration from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
@@ -408,6 +409,50 @@ function StepToolConfiguration({
     }
   };
 
+  const createTerraformPipeline = async (
+    toolConfiguration,
+    stepId,
+    createPipelinePostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );      
+
+      const response = await PipelineActions.createTerraformPipeline(        
+        createPipelinePostBody,
+        getAccessToken,
+      );
+
+      if (response && response.data.status === 200) {
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the terraform pipeline.  Please see browser logs for details.`;
+        console.error(response.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving terraform pipeline.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
   // TODO: Alphabetize, simplify props when refactoring each panel.
   //  just pass pipeline and pull id and plan inside instead of passing them individually,
   //  remove deprecated toasts and use toast contexts, wire up latest buttons,
@@ -759,6 +804,21 @@ function StepToolConfiguration({
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
+        return (
+          <TerraformVcsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createTerraformPipeline}
           />
         );
       case "elastic-beanstalk":
