@@ -10,8 +10,8 @@ import DeploymentFrequencyStatisticsDataBlockContainer
 import LeadTimeAndReleaseDurationDeployMetric from "../bar_chart/metrics/deploy/LeadTimeAndReleaseDurationDeployMetric";
 
 function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, dashboardData, meanData, countData, metric, statisticsData, chartData }) {
-  console.log('LeadTimeAndReleaseDurationDataBlockContainer data', data);
-  console.log('LeadTimeAndReleaseDurationDataBlockContainer rest', meanData, countData, metric, statisticsData, chartData);
+  // console.log('LeadTimeAndReleaseDurationDataBlockContainer data', data);
+  console.log('LeadTimeAndReleaseDurationDataBlockContainer', data, meanData, countData, metric, statisticsData, chartData);
   let className = `p-2 dark-gray-text-primary`;
 
   return (
@@ -98,35 +98,19 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
         </Row>
       </HorizontalDataBlocksContainer>
 
-      {/* <HorizontalDataBlocksContainer title={"Deployment Frequency"} className="mt-4">
-        <div className="new-chart mb-3 pointer" style={{ minHeight: "200px", display: "flex" }}>
-          <Row className="mr-1">
-            <Col xs={12} className={"px-0"}>
-              <DeploymentFrequencyStatisticsDataBlockContainer
-                metricData={statisticsData}
-                chartData={chartData}
-                goalsData={1}
-                kpiConfiguration={kpiConfiguration}
-              />
-            </Col>
-          </Row>
-        </div>
-      </HorizontalDataBlocksContainer> */}
-      <Row className="mr-1 mt-4">
-        <Col xs={12}>
-          <DeploymentFrequencyStatisticsDataBlockContainer
-            metricData={statisticsData}
-            chartData={chartData}
-            goalsData={1}
-            kpiConfiguration={kpiConfiguration}
-          />
-        </Col>
-      </Row>
+      <div className="mt-4">
+        <DeploymentFrequencyStatisticsDataBlockContainer
+          metricData={statisticsData}
+          chartData={chartData}
+          goalsData={1}
+          kpiConfiguration={kpiConfiguration}
+        />
+      </div>
 
       <HorizontalDataBlocksContainer title={"Deployment Duration"} className="mt-3">
-        <Container>
-          <Row className="align-items-center">
-            <Col xs={12} className={"pt-2"}>
+        <div className="container-fluid">
+          {/* <Row className="d-flex align-items-center">
+            <Col xs={12} className={"p-2 mr-2"}>
               <LeadTimeAndReleaseDurationDeployMetric
                 metric={metric}
                 kpiConfiguration={kpiConfiguration}
@@ -134,10 +118,20 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
                 countData={countData}
                 goalsData={123}
                 dashboardData={dashboardData}
+                className={"lead-time-deployment-duration-chart-container"}
               />
             </Col>
-          </Row>
-      </Container>
+          </Row> */}
+              <LeadTimeAndReleaseDurationDeployMetric
+                metric={metric}
+                kpiConfiguration={kpiConfiguration}
+                meanData={meanData}
+                countData={countData}
+                goalsData={123}
+                dashboardData={dashboardData}
+                className={"lead-time-deployment-duration-chart-container mr-4"}
+              />
+        </div>
       </HorizontalDataBlocksContainer>
     </>
   );
@@ -151,8 +145,8 @@ LeadTimeAndReleaseDurationDataBlockContainer.propTypes = {
   countData: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
-  statisticsData: PropTypes.array,
-  chartData: PropTypes.array,
+  statisticsData: PropTypes.any,
+  chartData: PropTypes.any,
 };
 
 export default LeadTimeAndReleaseDurationDataBlockContainer;

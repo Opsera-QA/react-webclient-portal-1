@@ -105,23 +105,23 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
       title={"Deployment Frequency Statistics"}
       // onClick={() => onRowSelect()}
     >
-      <Container>
-        <Row className="align-items-center">
-          <Col sm={3} className={"px-2 pt-2 pb-4"}>
+      <div className="container-fluid">
+        <Row className="align-items-center w-100">
+          <Col sm={3} className={"p-2"}>
             {getLeftDataBlock()}
           </Col>
-          <Col sm={9} className={"px-2 pt-2 pb-4"}>
+          <Col sm={9} className={"p-2 pb-4"}>
             {getTrendChart()}
           </Col>
         </Row>
-      </Container>
+      </div>
     </HorizontalDataBlocksContainer>
   );
 }
 
 DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
-  metricData: PropTypes.object,
-  chartData: PropTypes.object,
+  metricData: PropTypes.array,
+  chartData: PropTypes.array,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
 };
