@@ -10,7 +10,7 @@ import SonarRatingsLeadershipMaintainabilityDataBlockContainer from "components/
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
-import SonarRatingsLeadershipCodeCoverageDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipCodeCoverageDataBlockContainer";
+import SonarRatingsLeadershipCodeCoverageBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipCodeCoverageBlockContainer";
 import SonarCoverageActionableTable from "./SonarCoverageActionableTable";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -169,7 +169,7 @@ function SonarRatingLeadershipMetrics({ kpiConfiguration, setKpiConfiguration, d
               />
             </Col>
             <Col className={"px-0 my-3"} xl={6} lg={12}>
-              <SonarRatingsLeadershipCodeCoverageDataBlockContainer
+              <SonarRatingsLeadershipCodeCoverageBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
                 tests={sonarRatingsMetric?.tests}
