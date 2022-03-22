@@ -41,7 +41,8 @@ DataPointInfoOverlayIcon.propTypes = {
 
 DataPointInfoOverlayIcon.defaultProps = {
   title: "Metric Details",
-  overlayPlacement: "right",
+  // overlayPlacement: "right",
+  overlayPlacement: "bottom-start",
 };
 
 export default DataPointInfoOverlayIcon;
