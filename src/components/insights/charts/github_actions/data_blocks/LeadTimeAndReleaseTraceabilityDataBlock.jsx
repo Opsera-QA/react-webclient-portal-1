@@ -11,6 +11,7 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -143,6 +144,45 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
     );
   };
 
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "Up":
+        return faArrowCircleUp;
+      case "Down":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "red";
+      case "Up":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "This project is trending upward.";
+      case "Down":
+        return "This project is trending downward.";
+      case "Neutral":
+        return "Neutral: This project has experienced no change.";
+    }
+  };
+
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
         "lead-time-and-release-traceability-duration-data-point");
@@ -163,7 +203,11 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       dataPoint={durationDataPoint}
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
-                      middleText={"Lead Time"}
+                      className={`${getIconColor(metrics.trend)}`}
+                      topText={"Lead Time"}
+                      bottomText={"Previous result: " + applicationLeadTimeMetrics.previousResult}
+                      icon={getIcon(metrics.trend)}
+                      iconOverlayBody={getDescription(metrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -176,9 +220,13 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
+                      className={`${getIconColor(metrics.trend)}`}
                       numberData={deploymentMetrics.deploymentFrequency}
                       supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
-                      middleText={"Frequency"}
+                      topText={"Frequency"}
+                      bottomText={"Previous result: " + deploymentMetrics.previousResult}
+                      icon={getIcon(deploymentMetrics.trend)}
+                      iconOverlayBody={getDescription(deploymentMetrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -191,9 +239,13 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
+                      className={`${getIconColor(metrics.trend)}`}
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
-                      middleText={"Average Time to First Commit"}
+                      topText={"Average Time to First Commit"}
+                      bottomText={"Previous result: " + metrics.previousResult}
+                      icon={getIcon(metrics.trend)}
+                      iconOverlayBody={getDescription(metrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>

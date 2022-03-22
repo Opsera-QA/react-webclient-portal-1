@@ -20,6 +20,7 @@ import chartsActions from "../../../../charts-actions";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import Model from "../../../../../../../core/data_model/model";
 import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
+import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
 
 function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -101,6 +102,9 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
   };
 
   const getBody = () => {
+    if(isLoading) {
+      return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
+    }
     return (
       <>
         {getDateRange()}
@@ -224,7 +228,10 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     }
     const actionableInsightsTable = [];
     for (var i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      const actionInsightsTraceabilityTableDto = new Model({...actionInsightsTraceabilityTable[i]}, SuccessExecutionsActionableInsightsMetaData, false);
+      const actionInsightsData = actionInsightsTraceabilityTable[i];
+      const actionDurationInMins = actionInsightsData.actionDurationInMins;
+      actionInsightsData.actionDurationInMins = actionDurationInMins + ' Mins';
+      const actionInsightsTraceabilityTableDto = new Model({...actionInsightsData}, SuccessExecutionsActionableInsightsMetaData, false);
       const runTrendData = actionInsightsTraceabilityTable[i]?.runTrend;
       const trendData = [];
       for(let i = 0;i<=runTrendData.length - 1; i++) {
@@ -273,6 +280,9 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
                       </Col>
                       <Col sm={12} md={6} lg={6}>
                         <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionRunNumber"} className="insight-detail-label my-2" />
+                      </Col>
+                      <Col sm={12} md={6} lg={6}>
+                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"success_percentage"} className="insight-detail-label my-2" />
                       </Col>
                     </Row>
                   </Col>

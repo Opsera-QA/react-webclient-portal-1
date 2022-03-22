@@ -6,23 +6,28 @@ import MetricNumberFormattedText from "./MetricNumberFormattedText";
 function ThreeLineNumberDataBlock({
   numberData,
   supportingText,
+  icon,
+  topText,
+  iconOverlayBody,
   dataPoint,
-  middleText,
   bottomText,
   className }) {
     return (
       <ThreeLineDataBlockFormattedBase
         className={className}
         dataPoint={dataPoint}
-        topText={
+        topText={topText}
+        middleText={
           <MetricNumberFormattedText
-            dataPoint={dataPoint}
-            numberData={numberData}
-            supportingText={supportingText}
+          dataPoint={dataPoint}
+          numberData={numberData}
+          supportingText={supportingText}
+          className={"metric-block-content-text"}
           />
         }
-        middleText={middleText}
         bottomText={bottomText}
+        icon={icon}
+        iconOverlayBody={iconOverlayBody}
       />
     );
   }
@@ -33,8 +38,10 @@ ThreeLineNumberDataBlock.propTypes = {
   dataPoint: PropTypes.object,
   subtitle: PropTypes.any,
   className: PropTypes.string,
-  middleText: PropTypes.string,
-  bottomText: PropTypes.string
+  bottomText: PropTypes.string,
+  topText: PropTypes.any,
+  icon: PropTypes.object,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default ThreeLineNumberDataBlock;

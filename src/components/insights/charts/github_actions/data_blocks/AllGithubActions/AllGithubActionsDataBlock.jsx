@@ -8,13 +8,14 @@ import ChartContainer from "../../../../../common/panels/insights/charts/ChartCo
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../../common/modal/modalLogs";
-import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import SuccessPercentActionableInsights from "./SuccessPercent/SuccessPercentActionableInsights";
 import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExecutionsActionableInsights";
 import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -165,6 +166,45 @@ function AllGithubActionsDataBlock({
     );
   };
 
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "Up":
+        return faArrowCircleUp;
+      case "Down":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "red";
+      case "Up":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "This project is trending upward.";
+      case "Down":
+        return "This project is trending downward.";
+      case "Neutral":
+        return "Neutral: This project has experienced no change";
+    }
+  };
+
   const onFailedExecutionsRowSelect = () => {
     toastContext.showOverlayPanel(
       <FullScreenCenterOverlayContainer
@@ -196,16 +236,22 @@ function AllGithubActionsDataBlock({
             <Col md={4}>
               <div className={"github-actions-success-rate-contained-data-block"}>
                 <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessPercentRowSelect()}>
-                  <div className={"p-3"}>
-                    <TwoLinePercentageDataBlock dataPoint={successPercent} percentage={metrics.successPercentage} subtitle={"Success %"} />
-                  </div>
+                  <ThreeLinePercentageBlockBase
+                    className={`${getIconColor(metrics.trend)} p-2`}
+                    dataPoint={successPercent}
+                    percentage={metrics.successPercentage}
+                    topText={"Success %"}
+                    bottomText={"Previous result: " + metrics.previousResult}
+                    icon={getIcon(metrics.trend)}
+                    iconOverlayBody={getDescription(metrics.trend)}
+                  />
                 </DataBlockBoxContainer>
               </div>
             </Col> }
             <Col md={4}>
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
-                  className="p-3"
+                  className="p-3 m-1"
                   score={metrics.successCount}
                   subtitle={"Total Successful Executions"}
                 />
@@ -214,7 +260,7 @@ function AllGithubActionsDataBlock({
             <Col md={4}>
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
-                  className="p-3"
+                  className="p-3 m-1"
                   score={metrics.failureCount}
                   subtitle={"Total Failed Executions"}
                 />

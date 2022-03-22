@@ -9,6 +9,7 @@ function MetricNumberFormattedText(
     numberData,
     supportingText,
     dataPoint,
+    className,
     qualityLevel, // TODO: Remove. Left in for legacy code
   }) {
   const getQualityLevel = () => {
@@ -38,6 +39,7 @@ function MetricNumberFormattedText(
     <MetricTextBase
       formattedText={getNumberFormattedText()}
       qualityLevel={getQualityLevel()}
+      className={className}
     />
   );
 }
@@ -47,6 +49,7 @@ MetricNumberFormattedText.propTypes = {
   supportingText: PropTypes.any,
   dataPoint: PropTypes.object,
   qualityLevel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default MetricNumberFormattedText;
