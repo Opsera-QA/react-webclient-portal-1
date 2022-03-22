@@ -65,6 +65,9 @@ function AllGithubActionsDataBlock({
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+            ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -72,7 +75,7 @@ function AllGithubActionsDataBlock({
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.traceability?.data;

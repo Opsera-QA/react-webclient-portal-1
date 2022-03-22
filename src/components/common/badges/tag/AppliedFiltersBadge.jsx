@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FiltersBadgeBase from "components/common/badges/tag/FiltersBadgeBase";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import AppliedOrganizationsOverlay from "components/common/fields/multiple_items/tags/AppliedOrganizationsOverlay";
+import AppliedFiltersOverlay from "components/common/fields/multiple_items/tags/AppliedFiltersOverlay";
 
 function AppliedFiltersBadge({ tags, tagLocation, className, showNoTagsAppliedBadge }) {
   const getTagLabel = () => {
@@ -32,9 +32,9 @@ function AppliedFiltersBadge({ tags, tagLocation, className, showNoTagsAppliedBa
   }
 
   return (
-    <AppliedOrganizationsOverlay className={className} tags={tags}>
+    <AppliedFiltersOverlay className={className} tags={tags}>
       <SpyglassBadge className={"metric-badge"} badgeText={getTagLabel()} />
-    </AppliedOrganizationsOverlay>
+    </AppliedFiltersOverlay>
   );
 }
 

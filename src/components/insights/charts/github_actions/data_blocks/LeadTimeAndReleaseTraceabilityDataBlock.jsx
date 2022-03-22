@@ -64,6 +64,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+            ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -71,7 +74,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.leadTime?.data;
@@ -205,7 +208,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       supportingText={"minutes"}
                       className={`${getIconColor(metrics.trend)}`}
                       topText={"Lead Time"}
-                      bottomText={"Previous result: " + applicationLeadTimeMetrics.previousResult}
+                      bottomText={"Previous result: " + applicationLeadTimeMetrics.previousResult ? applicationLeadTimeMetrics.previousResult : "No previous result"}
                       icon={getIcon(metrics.trend)}
                       iconOverlayBody={getDescription(metrics.trend)}
                     />
@@ -224,7 +227,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       numberData={deploymentMetrics.deploymentFrequency}
                       supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
                       topText={"Frequency"}
-                      bottomText={"Previous result: " + deploymentMetrics.previousResult}
+                      bottomText={"Previous result: " + deploymentMetrics.previousResult ? deploymentMetrics.previousResult : "No previous result"}
                       icon={getIcon(deploymentMetrics.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics.trend)}
                     />
@@ -243,7 +246,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
-                      bottomText={"Previous result: " + metrics.previousResult}
+                      bottomText={"Previous result: " + metrics.previousResult ? metrics.previousResult : "No previous result"}
                       icon={getIcon(metrics.trend)}
                       iconOverlayBody={getDescription(metrics.trend)}
                     />

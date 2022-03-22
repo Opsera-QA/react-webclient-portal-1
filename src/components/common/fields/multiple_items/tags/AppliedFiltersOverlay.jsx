@@ -2,18 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import OrganizationBadge from "components/common/badges/tag/OrganizationBadge";
+import FiltersBadge from "components/common/badges/tag/FiltersBadge";
 
 function AppliedFiltersOverlay({ tags, className, children }) {
   const getTagPopover = () => {
+    console.log(tags);
     if (Array.isArray(tags) && tags.length > 0) {
       return (
         <CustomBadgeContainer>
           {tags.map((tag, index) => {
-            if (typeof tag !== "string") {
+            if (typeof tag == "string") {
               return (
                 // <div>
-                <OrganizationBadge className={"mr-2"} tag={tag} key={index} />
+                <FiltersBadge className={"mr-2"} tag={tag} key={index} />
                 // </div>
               );
             }
