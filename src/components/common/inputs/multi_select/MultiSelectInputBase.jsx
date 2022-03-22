@@ -174,7 +174,6 @@ function MultiSelectInputBase(
   if (field == null || visible === false) {
     return null;
   }
-
   return (
     <InputContainer className={className ? className : undefined}>
       <InputLabel

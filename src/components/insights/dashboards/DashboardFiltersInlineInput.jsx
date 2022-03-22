@@ -8,7 +8,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import Model from "core/data_model/model";
 
-function DashboardTagsInlineInput(
+function DashboardFiltersInlineInput(
   {
     model,
     loadData,
@@ -28,10 +28,9 @@ function DashboardTagsInlineInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     if (model) {
       const newModel = {...new Model({...model.getPersistData()}, model?.getMetaData(), false)};
-      newModel.setData("amexFilters", getMetricFilterValue(model?.getData("filters"), "amexFilters"));
+      newModel.setData("amexFilters", getMetricFilterValue(model?.getData("filters"), "amexFilters") ? getMetricFilterValue(model?.getData("filters"), "amexFilters") : []);
       setTemporaryModel({...newModel});
     }
 
@@ -41,7 +40,7 @@ function DashboardTagsInlineInput(
     };
   }, [model]);
 
-  const updateDashboardTags = async (newDataModel) => {
+  const updateDashboardFilters = async (newDataModel) => {
     const newModel = modelHelpers.setDashboardFilterModelField(model, "amexFilters", newDataModel?.getData("amexFilters"));
     const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
     loadData();
@@ -60,16 +59,16 @@ function DashboardTagsInlineInput(
       model={temporaryModel}
       fieldName={"amexFilters"}
       badgeClassName={"metric-badge"}
-      saveDataFunction={updateDashboardTags}
+      saveDataFunction={updateDashboardFilters}
     />
   );
 }
 
-DashboardTagsInlineInput.propTypes = {
+DashboardFiltersInlineInput.propTypes = {
   model: PropTypes.object,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   loadData: PropTypes.func,
 };
 
-export default DashboardTagsInlineInput;
+export default DashboardFiltersInlineInput;

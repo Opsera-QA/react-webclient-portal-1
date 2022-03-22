@@ -1,7 +1,8 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
-import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import FiltersMultiSelectOverlay from "components/common/inputs/tags/inline/modal/FiltersMultiSelectOverlay";
 import AppliedFiltersBadge from "components/common/badges/tag/AppliedFiltersBadge";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
@@ -20,7 +21,7 @@ function FiltersInlineInputBase(
 
   const showEditor = () => {
     toastContext.showOverlayPanel(
-      <TagMultiSelectOverlay
+      <FiltersMultiSelectOverlay
         type={type}
         dataObject={model}
         fieldName={fieldName}
