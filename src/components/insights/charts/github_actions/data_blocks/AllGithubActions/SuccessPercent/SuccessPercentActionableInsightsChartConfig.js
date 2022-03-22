@@ -1,10 +1,12 @@
 export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
   keys: ["success_percentage"],
+  colorBy: "id",
   sortByValue: true,
   innerRadius: .5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
   enableArcLinkLabels: false,
+  legends:[],
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,

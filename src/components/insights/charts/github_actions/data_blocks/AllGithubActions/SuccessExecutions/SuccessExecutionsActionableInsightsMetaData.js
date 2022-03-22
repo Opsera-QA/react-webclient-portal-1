@@ -3,12 +3,16 @@ const SuccessExecutionsActionableInsightsMetaData = {
   type: "Success Executions Actionable Insights",
   fields: [
     {
-      label: "Average duration to complete",
+      label: "Duration to complete",
       id: "actionDurationInMins",
     },
     {
       label: "Run Number/Run Count",
       id: "actionRunNumber",
+    },
+    {
+      label: "Success",
+      id: "success_percentage",
     },
     {
       label: "Trend",

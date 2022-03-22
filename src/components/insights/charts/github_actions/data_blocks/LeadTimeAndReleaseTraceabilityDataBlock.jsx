@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
-import MetricContentDataBlockBase from "../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
@@ -11,8 +10,8 @@ import ModalLogs from "../../../../common/modal/modalLogs";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
-import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -145,6 +144,45 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
     );
   };
 
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "Up":
+        return faArrowCircleUp;
+      case "Down":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "red";
+      case "Up":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "This project is trending upward.";
+      case "Down":
+        return "This project is trending downward.";
+      case "Neutral":
+        return "Neutral: This project has experienced no change.";
+    }
+  };
+
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
         "lead-time-and-release-traceability-duration-data-point");
@@ -154,8 +192,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         "lead-time-and-release-traceability-time-to-first-commit-data-point");
     return (
       <>
-        <div className="new-chart m-3 p-0 all-github-actions-data-block" style={{ minHeight: "300px"}}>
+        <div className="new-chart m-3 p-0 all-github-actions-data-block">
           <Row>
+            {dataPointHelpers.isDataPointVisible(durationDataPoint) &&
             <Col md={4}>
               <div>
                 <DataBlockBoxContainer showBorder={true}>
@@ -164,88 +203,96 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       dataPoint={durationDataPoint}
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
-                      middleText={"Lead Time"}
+                      className={`${getIconColor(metrics.trend)}`}
+                      topText={"Lead Time"}
+                      bottomText={"Previous result: " + applicationLeadTimeMetrics.previousResult}
+                      icon={getIcon(metrics.trend)}
+                      iconOverlayBody={getDescription(metrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
               </div>
-            </Col>
+            </Col>}
+            {dataPointHelpers.isDataPointVisible(frequencyDataPoint) &&
             <Col md={4}>
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
+                      className={`${getIconColor(metrics.trend)}`}
                       numberData={deploymentMetrics.deploymentFrequency}
                       supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
-                      middleText={"Frequency"}
+                      topText={"Frequency"}
+                      bottomText={"Previous result: " + deploymentMetrics.previousResult}
+                      icon={getIcon(deploymentMetrics.trend)}
+                      iconOverlayBody={getDescription(deploymentMetrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
               </div>
-            </Col>
+            </Col>}
+            {dataPointHelpers.isDataPointVisible(timeToFirstCommitDataPoint) &&
             <Col md={4}>
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
+                      className={`${getIconColor(metrics.trend)}`}
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
-                      middleText={"Average Time to First Commit"}
+                      topText={"Average Time to First Commit"}
+                      bottomText={"Previous result: " + metrics.previousResult}
+                      icon={getIcon(metrics.trend)}
+                      iconOverlayBody={getDescription(metrics.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
               </div>
-            </Col>
+            </Col>}
           </Row>
-          <Row className={"mt-5"}>
-            <Col xs={12}>
-              <H4MetricSubHeader subheaderText={'Top Applications'} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"High Lead Time"}
-                  content={applicationLeadTimeMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj._id}>{obj.applicationName}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"High Deployment Frequency"}
-                  content={applicationDeploymentMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj._id}>{obj.applicationName}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
-          <Row style={{marginTop:'1rem'}}>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Minimal/No activity in last few weeks"}
-                  content={""}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Highest Commits"}
-                  content={applicationLeadTimeMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj._id}>{obj.applicationName}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
+          {/*<Row className={"mt-5"}>*/}
+          {/*  <Col xs={12}>*/}
+          {/*    <H4MetricSubHeader subheaderText={'Top Applications'} />*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"High Lead Time"}*/}
+          {/*        content={"oswestry"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"High Deployment Frequency"}*/}
+          {/*        content={"grosmont"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row style={{marginTop:'1rem'}}>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Minimal/No activity in last few weeks"}*/}
+          {/*        content={"oswestry"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Highest Commits"}*/}
+          {/*        content={""}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
         </div>
       </>
     );
@@ -266,7 +313,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         launchActionableInsightsFunction={viewDetailsComponent}
       />
       <ModalLogs
-        header="Github Actions Statistics"
+        header="Lead Time And Release Traceability"
         size="lg"
         jsonMessage={metrics}
         dataType="bar"

@@ -17,6 +17,7 @@ import MetricContentDataBlockBase from "../../../../../../common/metrics/data_bl
 import {ResponsiveBar} from "@nivo/bar";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import chartsActions from "../../../../charts-actions";
+import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
 
 function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -101,6 +102,9 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
   };
 
   const getBody = () => {
+    if(isLoading) {
+      return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
+    }
     return (
       <>
         {getDateRange()}

@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
-import MetricContentDataBlockBase from "../../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
@@ -9,13 +8,14 @@ import ChartContainer from "../../../../../common/panels/insights/charts/ChartCo
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../../common/modal/modalLogs";
-import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import SuccessPercentActionableInsights from "./SuccessPercent/SuccessPercentActionableInsights";
 import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExecutionsActionableInsights";
 import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -166,6 +166,45 @@ function AllGithubActionsDataBlock({
     );
   };
 
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "Up":
+        return faArrowCircleUp;
+      case "Down":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "red";
+      case "Up":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "This project is trending upward.";
+      case "Down":
+        return "This project is trending downward.";
+      case "Neutral":
+        return "Neutral: This project has experienced no change";
+    }
+  };
+
   const onFailedExecutionsRowSelect = () => {
     toastContext.showOverlayPanel(
       <FullScreenCenterOverlayContainer
@@ -188,26 +227,31 @@ function AllGithubActionsDataBlock({
   };
 
   const getChartBody = () => {
+    const successPercent = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "all-github-actions-success-data-point");
     return (
       <>
-        <div className="new-chart m-3 p-0 all-github-actions-data-block" style={{ minHeight: "300px"}}>
+        <div className="new-chart m-3 p-0 all-github-actions-data-block">
           <Row>
+            {dataPointHelpers.isDataPointVisible(successPercent) &&
             <Col md={4}>
               <div className={"github-actions-success-rate-contained-data-block"}>
                 <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessPercentRowSelect()}>
-                  <div className={"p-3"}>
-                    <TwoLinePercentageDataBlock dataPoint={dataPointHelpers.getDataPoint(
-                        kpiConfiguration?.dataPoints,
-                        "all-github-actions-success-data-point"
-                    )} percentage={metrics.successPercentage} subtitle={"Goal: 95%"} />
-                  </div>
+                  <ThreeLinePercentageBlockBase
+                    className={`${getIconColor(metrics.trend)} p-2`}
+                    dataPoint={successPercent}
+                    percentage={metrics.successPercentage}
+                    topText={"Success %"}
+                    bottomText={"Previous result: " + metrics.previousResult}
+                    icon={getIcon(metrics.trend)}
+                    iconOverlayBody={getDescription(metrics.trend)}
+                  />
                 </DataBlockBoxContainer>
               </div>
-            </Col>
+            </Col> }
             <Col md={4}>
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
-                  className="p-3"
+                  className="p-3 m-1"
                   score={metrics.successCount}
                   subtitle={"Total Successful Executions"}
                 />
@@ -216,57 +260,54 @@ function AllGithubActionsDataBlock({
             <Col md={4}>
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
-                  className="p-3"
+                  className="p-3 m-1"
                   score={metrics.failureCount}
                   subtitle={"Total Failed Executions"}
                 />
               </DataBlockBoxContainer>
             </Col>
           </Row>
-          <Row style={{marginTop:'1rem'}}>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Top applications with higher success rate"}
-                  content={applicationMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj._id}>{obj.applicationName}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Top applications with higher failure rate"}
-                  content={applicationMetrics.slice(-5).reverse().map(obj => {
-                    return <div key={obj._id}>{obj.applicationName}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
-          <Row style={{marginTop:'1rem'}}>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Top applications with longer duration"}
-                  content={durationMetrics ? durationMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj}>{obj.applicationName}</div>;
-                  }) : []}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={6}>
-              <DataBlockBoxContainer showBorder={true}>
-                <MetricContentDataBlockBase
-                  title={"Most common reasons of failure"}
-                  content={reasonsMetrics.slice(0, 5).map(obj => {
-                    return <div key={obj._id}>{obj._id}</div>;
-                  })}
-                />
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
+          {/*<Row style={{marginTop:'1rem'}}>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Top applications with higher success rate"}*/}
+          {/*        content={"oswestry"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Top applications with higher failure rate"}*/}
+          {/*        content={"grosmont"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
+          {/*<Row style={{marginTop:'1rem'}}>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Application with Complex Builds (based on duration and size of logs)"}*/}
+          {/*        content={"oswestry"}*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*  <Col md={6}>*/}
+          {/*    <DataBlockBoxContainer showBorder={true}>*/}
+          {/*      <MetricContentDataBlockBase*/}
+          {/*        title={"Top most common reasons of failure"}*/}
+          {/*        content={*/}
+          {/*          <div style={{display: "grid"}}>*/}
+          {/*            <span>Missing File or directory</span>*/}
+          {/*            <span>Incorrect Configuration</span>*/}
+          {/*          </div>*/}
+          {/*        }*/}
+          {/*      />*/}
+          {/*    </DataBlockBoxContainer>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
         </div>
       </>
     );
