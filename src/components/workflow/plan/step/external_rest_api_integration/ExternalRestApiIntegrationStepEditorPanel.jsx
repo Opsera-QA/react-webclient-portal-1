@@ -20,6 +20,8 @@ import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
 import ExternalApiIntegrationStepRunEndpointRequestInputBase
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
+import EndpointResponseEvaluationRulesInputBase
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
@@ -117,6 +119,13 @@ function ExternalRestApiIntegrationStepEditorPanel(
         toolId={externalRestApiIntegrationModel?.getData("toolId")}
         endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
       />
+      <EndpointResponseEvaluationRulesInputBase
+        fieldName={"runEndpointResponseEvaluationRules"}
+        model={externalRestApiIntegrationModel}
+        setModel={setExternalRestApiIntegrationModel}
+        toolId={externalRestApiIntegrationModel?.getData("toolId")}
+        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+      />
       <ExternalApiIntegrationStepStatusEndpointSelectInput
         fieldName={"statusEndpointId"}
         model={externalRestApiIntegrationModel}
@@ -128,6 +137,13 @@ function ExternalRestApiIntegrationStepEditorPanel(
         setModel={setExternalRestApiIntegrationModel}
         toolId={externalRestApiIntegrationModel?.getData("toolId")}
         endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+      />
+      <EndpointResponseEvaluationRulesInputBase
+        fieldName={"statusEndpointResponseEvaluationRules"}
+        model={externalRestApiIntegrationModel}
+        setModel={setExternalRestApiIntegrationModel}
+        toolId={externalRestApiIntegrationModel?.getData("toolId")}
+        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
       />
     </PipelineStepEditorPanelContainer>
   );
