@@ -163,7 +163,8 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
             loadData={loadData}
             filterModel={filterModel}
             setFilterModel={setFilterModel}
-            title={"Open Commits"}
+            title={"Open Pull Requests"}
+            type={"open"}
           />
         </div>
       );
@@ -177,7 +178,8 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
               loadData={loadData}
               filterModel={closedFilterModel}
               setFilterModel={setClosedFilterModel}
-              title={"Closed Commits"}
+              title={"Closed Pull Requests"}
+              type={"closed"}
             />
         </div>
       );
