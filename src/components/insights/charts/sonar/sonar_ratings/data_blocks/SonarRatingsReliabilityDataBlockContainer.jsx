@@ -10,8 +10,13 @@ import Col from "react-bootstrap/Col";
 import OneLineGoalDataBlockBase from "components/common/metrics/goals/single/OneLineGoalDataBlockBase";
 import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
+import ThreeLineScoreDataBlock from "../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
-function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData, dataPoint }) {
+function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData, dataPoint, className,
+                                                     lastScore,
+                                                     icon,
+                                                     iconOverlayBody, }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
@@ -44,7 +49,16 @@ function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount
   };
 
   const getMiddleDataBlock = () => {
-    return <TwoLineScoreDataBlock score={bugCount} subtitle={"Bugs"} />;
+    return (
+      <ThreeLineScoreDataBlock
+        className={`${className} p-2`}
+        score={bugCount}
+        topText={"Bugs"}
+        bottomText={"Last Scan: " + lastScore }
+        icon={icon}
+        iconOverlayBody={iconOverlayBody}
+      />
+    );
   };
 
   const getRightDataBlock = () => {
@@ -53,9 +67,9 @@ function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount
 
   return (
     <HorizontalDataBlocksContainer title={"Sonar Ratings: Reliability"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
-      <Col sm={4}>{getLeftDataBlock()}</Col>
+      <Col className={"my-4"} sm={4}>{getLeftDataBlock()}</Col>
       <Col sm={4}>{getMiddleDataBlock()}</Col>
-      <Col sm={4}>{getRightDataBlock()}</Col>
+      <Col className={"mb-3"} sm={3}>{getRightDataBlock()}</Col>
     </HorizontalDataBlocksContainer>
   );
 }
@@ -66,6 +80,10 @@ SonarRatingsReliabilityDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dataPoint: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default SonarRatingsReliabilityDataBlockContainer;
