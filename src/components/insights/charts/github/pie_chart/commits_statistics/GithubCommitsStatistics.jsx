@@ -118,7 +118,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     return (
       <Row className="px-4 justify-content-between">
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits}  onSelect={() => onRowSelect()} />
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits}  />
         </Col>
         <Col md={12} className={"my-1"}>
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
@@ -142,7 +142,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
           <Col md={3}>
             <div className="text-center col-12">
               <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Highest Merges
+                Approved Pull Requests
               </div>
             </div>
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
@@ -157,22 +157,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
           <Col md={3}>
             <div className="text-center col-12">
               <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Total Declined Merges
-              </div>
-            </div>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsivePie
-                data={totalDeclinedMerges}
-                {...defaultConfig("","",false, false, "","", true)}
-                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
-              />
-            </div>
-          </Col>
-          <Col md={3}>
-            <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Total Merges
+                Active Contributors
               </div>
             </div>
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
@@ -181,6 +166,21 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
                 {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
                 {...adjustBarWidth(mostActiveUsersMetrics, false)}
+              />
+            </div>
+          </Col>
+          <Col md={3}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Declined Pull Requests
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={totalDeclinedMerges}
+                {...defaultConfig("","",false, false, "","", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
               />
             </div>
           </Col>
@@ -202,6 +202,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
         header="Github Commits Statistics"

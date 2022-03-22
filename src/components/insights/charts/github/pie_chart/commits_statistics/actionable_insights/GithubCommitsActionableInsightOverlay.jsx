@@ -146,8 +146,9 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Open"} handleTabClick={handleTabClick} tabName={"opened"} />
-        <CustomTab activeTab={activeTab} tabText={"Closed"} handleTabClick={handleTabClick} tabName={"closed"} />
+        <CustomTab activeTab={activeTab} tabText={"Open Pull Requests"} handleTabClick={handleTabClick} tabName={"opened"} />
+        <CustomTab activeTab={activeTab} tabText={"Closed Pull Requests"} handleTabClick={handleTabClick} tabName={"closed"} />
+        <CustomTab activeTab={activeTab} tabText={"Contributors"} handleTabClick={handleTabClick} tabName={"contributors"} />
       </CustomTabContainer>
     );
   };
@@ -162,12 +163,13 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
             loadData={loadData}
             filterModel={filterModel}
             setFilterModel={setFilterModel}
-            title={"Open Commits"}
+            title={"Open Pull Requests"}
+            type={"open"}
           />
         </div>
       );
     }
-    else {
+    else if (activeTab == "closed") {
       return (
         <div className="p-2">
           <GithubCommitsActionableInsightTable
@@ -176,9 +178,14 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
               loadData={loadData}
               filterModel={closedFilterModel}
               setFilterModel={setClosedFilterModel}
-              title={"Closed Commits"}
+              title={"Closed Pull Requests"}
+              type={"closed"}
             />
         </div>
+      );
+    }  else {
+      return (
+        <div>-</div>
       );
     }
   };
