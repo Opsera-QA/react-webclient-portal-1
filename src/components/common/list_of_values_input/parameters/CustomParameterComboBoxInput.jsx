@@ -17,6 +17,8 @@ function CustomParameterComboBoxInput(
     allowCreate,
     showLabel,
     setDataFunction,
+    requireVaultSavedParameters,
+    requireInsensitiveParameters,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [customParameters, setCustomParameters] = useState([]);
@@ -65,7 +67,13 @@ function CustomParameterComboBoxInput(
   };
 
   const loadParameters = async (cancelSource = cancelTokenSource) => {
-    const response = await parametersActions.getParameters(getAccessToken, cancelSource);
+    const response = await parametersActions.getParameters(
+      getAccessToken,
+      cancelSource,
+      undefined,
+      requireVaultSavedParameters,
+      requireInsensitiveParameters,
+      );
     const parameters = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(parameters)) {
@@ -103,6 +111,8 @@ CustomParameterComboBoxInput.propTypes = {
   allowCreate: PropTypes.bool,
   showLabel: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  requireVaultSavedParameters: PropTypes.bool,
+  requireInsensitiveParameters: PropTypes.bool,
 };
 
 CustomParameterComboBoxInput.defaultProps = {
