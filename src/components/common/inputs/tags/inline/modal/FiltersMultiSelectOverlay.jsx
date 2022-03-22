@@ -1,6 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
@@ -8,15 +10,70 @@ import {faFilter} from "@fortawesome/pro-light-svg-icons/faTags";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import chartsActions from "components/insights/charts/charts-actions";
 
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+  const [filtersOptions, setFiltersOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     toastContext.removeInlineMessage();
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
   }, [showModal]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await getFilters(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        setErrorMessage("Could not load filters.");
+        console.error(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getFilters = async (cancelSource = cancelTokenSource) => {
+    const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getAllActionsFilterOptions");
+    let filters = response?.data?.data[0];
+
+    if (isMounted?.current === true && Array.isArray(filters) && filters.length > 0) {
+      setFiltersOptions(filters);
+    }
+  };
 
   const handleSave = async () => {
     dataObject.setData(fieldName, temporaryDataObject.getArrayData("amexFilters"));
@@ -24,6 +81,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     closePanel();
     return response;
   };
+  
   const getFiltersInput = () => {
     return (
     <div>
@@ -31,7 +89,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
         dataObject={temporaryDataObject}
         setDataObject={setTemporaryDataObject}
         fieldName={fieldName}
-        selectOptions={["Application: candleston", "Application: oswestry", "Director: Matt Preston", "Director: Sarah Johnson", "SVP: Raj Pandey", "SVP: Simon Drew"]}
+        selectOptions={filtersOptions}
       />
       </div>
     );

@@ -12,7 +12,7 @@ const SuccessExecutionsActionableInsightsMetaData = {
     },
     {
       label: "Success",
-      id: "success_percentage",
+      id: "successPercentage",
     },
     {
       label: "Trend",

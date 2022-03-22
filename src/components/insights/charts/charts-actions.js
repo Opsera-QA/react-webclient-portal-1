@@ -123,7 +123,6 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   actionableInsightsQueryData,
   coveritySeverity
 ) => {
-  console.log(projectTags);
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),

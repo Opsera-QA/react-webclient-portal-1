@@ -63,6 +63,9 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
           ?.value;
       const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -70,7 +73,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const topActions = response?.data?.data[0]?.topSuccessfulActions;
