@@ -13,6 +13,7 @@ function EndpointResponseEvaluationRulesInputBase(
     fieldName,
     model,
     setModel,
+    responseFields,
     disabled,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -58,6 +59,7 @@ function EndpointResponseEvaluationRulesInputBase(
         rule={endpointResponseEvaluationRuleModel.getData("success_rule")}
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
         updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
+        responseFields={responseFields}
         disabled={disabled}
       />
       <InfoText
@@ -71,6 +73,7 @@ function EndpointResponseEvaluationRulesInputBase(
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
         rule={endpointResponseEvaluationRuleModel.getData("running_rule")}
         updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
+        responseFields={responseFields}
         disabled={disabled}
       />
     </div>
@@ -81,6 +84,7 @@ EndpointResponseEvaluationRulesInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  responseFields: PropTypes.array,
   disabled: PropTypes.bool,
 };
 

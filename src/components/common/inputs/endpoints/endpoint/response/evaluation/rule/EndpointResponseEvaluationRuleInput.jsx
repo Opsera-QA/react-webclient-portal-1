@@ -13,12 +13,15 @@ import EndpointResponseEvaluationStatusRuleFilterSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/status/EndpointResponseEvaluationStatusRuleFilterSelectInput";
 import PositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/PositiveIntegerNumberTextInput";
+import EndpointResponseFieldEvaluationRulesInputBase
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseFieldEvaluationRulesInputBase";
 
 function EndpointResponseEvaluationRuleInput(
   {
     disabled,
     updateRuleFunction,
     endpointResponseEvaluationRuleModel,
+    responseFields,
     rule,
     fieldName,
   }) {
@@ -58,7 +61,13 @@ function EndpointResponseEvaluationRuleInput(
         );
       case "field":
         return (
-          <div>Field test</div>
+          <EndpointResponseFieldEvaluationRulesInputBase
+            fieldName={"field_rules"}
+            model={evaluationRuleModel}
+            setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
+            responseFields={responseFields}
+            disabled={disabled}
+          />
         );
     }
   };
@@ -77,6 +86,7 @@ function EndpointResponseEvaluationRuleInput(
             fieldName={"option"}
             setDataFunction={setRuleOptionFunction}
             disabled={disabled}
+            responseFields={responseFields}
           />
         </Col>
         {getInputForRuleOption()}
@@ -102,6 +112,7 @@ function EndpointResponseEvaluationRuleInput(
 EndpointResponseEvaluationRuleInput.propTypes = {
   updateRuleFunction: PropTypes.func,
   endpointResponseEvaluationRuleModel: PropTypes.object,
+  responseFields: PropTypes.array,
   rule: PropTypes.object,
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
