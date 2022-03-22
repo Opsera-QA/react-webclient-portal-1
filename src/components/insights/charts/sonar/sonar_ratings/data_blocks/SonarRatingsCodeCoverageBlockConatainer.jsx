@@ -34,6 +34,7 @@ function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate
         bottomText={"Last Scan: " + lastScore + "%"}
         icon={icon}
         iconOverlayBody={iconOverlayBody}
+        dataPoint={dataPoint}
       />
     );
   };
