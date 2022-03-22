@@ -98,17 +98,17 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
         </Row>
       </HorizontalDataBlocksContainer>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <DeploymentFrequencyStatisticsDataBlockContainer
           metricData={statisticsData}
           chartData={chartData}
           goalsData={1}
           kpiConfiguration={kpiConfiguration}
         />
-      </div>
+      </div> */}
 
-      <HorizontalDataBlocksContainer title={"Deployment Duration"} className="mt-3">
-        <div className="container-fluid">
+      {/* <HorizontalDataBlocksContainer title={"Deployment Duration"} className="mt-3">
+        <div className="container-fluid"> */}
           {/* <Row className="d-flex align-items-center">
             <Col xs={12} className={"p-2 mr-2"}>
               <LeadTimeAndReleaseDurationDeployMetric
@@ -122,7 +122,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
               />
             </Col>
           </Row> */}
-              <LeadTimeAndReleaseDurationDeployMetric
+              {/* <LeadTimeAndReleaseDurationDeployMetric
                 metric={metric}
                 kpiConfiguration={kpiConfiguration}
                 meanData={meanData}
@@ -130,9 +130,9 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
                 goalsData={123}
                 dashboardData={dashboardData}
                 className={"lead-time-deployment-duration-chart-container mr-4"}
-              />
-        </div>
-      </HorizontalDataBlocksContainer>
+              /> */}
+        {/* </div>
+      </HorizontalDataBlocksContainer> */}
     </>
   );
 }

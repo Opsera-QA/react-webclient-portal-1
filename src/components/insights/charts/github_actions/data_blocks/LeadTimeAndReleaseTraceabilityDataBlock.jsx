@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { getTimeDisplay } from "../github_actions-utility";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
@@ -204,7 +205,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={durationDataPoint}
-                      numberData={metrics?.avgLeadTime}
+                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
                       supportingText={"minutes"}
                       className={`${getIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
@@ -243,7 +244,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
                       className={`${getIconColor(metrics?.trend)}`}
-                      numberData={metrics?.avgLeadTime}
+                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
                       bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
