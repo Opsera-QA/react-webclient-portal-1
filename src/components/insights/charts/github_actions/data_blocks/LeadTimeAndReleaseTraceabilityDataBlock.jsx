@@ -205,7 +205,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       supportingText={"minutes"}
                       className={`${getIconColor(metrics.trend)}`}
                       topText={"Lead Time"}
-                      bottomText={"Previous result: " + applicationLeadTimeMetrics.previousResult}
+                      bottomText={"Previous result: " + metrics.previousTrendAvgLeadTime}
                       icon={getIcon(metrics.trend)}
                       iconOverlayBody={getDescription(metrics.trend)}
                     />
@@ -220,11 +220,11 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
-                      className={`${getIconColor(metrics.trend)}`}
+                      className={`${getIconColor(deploymentMetrics.trend)}`}
                       numberData={deploymentMetrics.deploymentFrequency}
                       supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
                       topText={"Frequency"}
-                      bottomText={"Previous result: " + deploymentMetrics.previousResult}
+                      bottomText={"Previous result: " + deploymentMetrics.previousTrendDeploymentFrequency}
                       icon={getIcon(deploymentMetrics.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics.trend)}
                     />
@@ -243,7 +243,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       numberData={metrics.avgLeadTime}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
-                      bottomText={"Previous result: " + metrics.previousResult}
+                      bottomText={"Previous result: " + metrics.previousTrendAvgLeadTime}
                       icon={getIcon(metrics.trend)}
                       iconOverlayBody={getDescription(metrics.trend)}
                     />

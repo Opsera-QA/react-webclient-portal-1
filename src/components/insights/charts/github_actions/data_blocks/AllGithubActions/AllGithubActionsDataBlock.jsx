@@ -241,7 +241,7 @@ function AllGithubActionsDataBlock({
                     dataPoint={successPercent}
                     percentage={metrics.successPercentage}
                     topText={"Success %"}
-                    bottomText={"Previous result: " + metrics.previousResult}
+                    bottomText={"Previous result: " + metrics.trendSuccessPercentage}
                     icon={getIcon(metrics.trend)}
                     iconOverlayBody={getDescription(metrics.trend)}
                   />

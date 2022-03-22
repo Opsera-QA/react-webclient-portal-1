@@ -11,8 +11,8 @@ const FailedExecutionsActionableInsightsMetaData = {
       id: "actionRunNumber",
     },
     {
-      label: "Failure",
-      id: "failure_percentage",
+      label: "Success",
+      id: "successPercentage",
     },
     {
       label: "Trend",

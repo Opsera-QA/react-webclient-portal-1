@@ -234,6 +234,8 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       const actionInsightsData = actionInsightsTraceabilityTable[i];
       const actionDurationInMins = actionInsightsData.actionDurationInMins;
       actionInsightsData.actionDurationInMins = actionDurationInMins + ' Mins';
+      const successPercentage = actionInsightsData.successPercentage;
+      actionInsightsData.successPercentage = successPercentage + '%';
       const actionInsightsTraceabilityTableDto = new Model({...actionInsightsData}, FailedExecutionsActionableInsightsMetaData, false);
       const runTrendData = actionInsightsTraceabilityTable[i]?.runTrend;
       const trendData = [];
@@ -285,7 +287,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
                         <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionRunNumber"} className="insight-detail-label my-2" />
                       </Col>
                       <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"failure_percentage"} className="insight-detail-label my-2" />
+                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"successPercentage"} className="insight-detail-label my-2" />
                       </Col>
                     </Row>
                   </Col>
