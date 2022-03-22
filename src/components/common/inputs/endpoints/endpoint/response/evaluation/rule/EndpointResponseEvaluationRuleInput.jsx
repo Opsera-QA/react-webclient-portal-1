@@ -11,7 +11,6 @@ import EndpointResponseEvaluationRuleOptionSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/options/EndpointResponseEvaluationRuleOptionSelectInput";
 import EndpointResponseEvaluationStatusRuleFilterSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/status/EndpointResponseEvaluationStatusRuleFilterSelectInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/PositiveIntegerNumberTextInput";
 

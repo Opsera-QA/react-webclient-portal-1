@@ -60,6 +60,14 @@ function EndpointRequestParameterInputRow(
     }
   };
 
+  const updateSensitiveCustomParameter = (fieldName, newValue) => {
+    updateMainModelFunction(fieldName, newValue?._id);
+  };
+
+  const updateInsensitiveCustomParameter = (fieldName, newValue) => {
+    updateMainModelFunction(fieldName, newValue?.value);
+  };
+
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -74,7 +82,7 @@ function EndpointRequestParameterInputRow(
               showLabel={false}
               className={"value-parameter"}
               requireVaultSavedParameters={true}
-              setDataFunction={updateMainModelFunction}
+              setDataFunction={updateSensitiveCustomParameter}
               disabled={disabled}
             />
           );
@@ -86,10 +94,9 @@ function EndpointRequestParameterInputRow(
             fieldName={"value"}
             showLabel={false}
             className={"value-parameter"}
-            requireVaultSavedParameters={isSensitiveData}
-            setDataFunction={updateMainModelFunction}
+            requireInsensitiveParameters={true}
+            setDataFunction={updateInsensitiveCustomParameter}
             disabled={disabled}
-            valueField={"value"}
           />
         );
       case "array":
