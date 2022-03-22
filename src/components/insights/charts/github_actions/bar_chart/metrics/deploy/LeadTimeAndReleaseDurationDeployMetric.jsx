@@ -4,23 +4,21 @@ import DataBlockAndChartContainer from "components/common/metrics/container/Data
 import LeadTimeAndReleaseDurationBarChartBase from "../../LeadTimeAndReleaseDurationBarChartBase";
 import LeadTimeAndReleaseDurationDataBlockBase from "../../../data_blocks/LeadTimeAndReleaseDurationDataBlockBase";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+// TODO
 import {SDLC_DURATION_BY_STAGE_METRICS_CONSTANTS as constants} from "../SDLCDurationByStageMetrics_kpi_datapoint_identifiers";
 
-function LeadTimeAndReleaseDurationDeployMetric({ kpiConfiguration, dashboardData, meanData, countData, goalsData, metric }) {
+function LeadTimeAndReleaseDurationDeployMetric({ kpiConfiguration, dashboardData, meanData, countData, goalsData, metric, className }) {
 
-  console.log('data - metric: ', meanData, countData, goalsData, metric);
+  console.log('data - metric: ', className);
 
   const getDataBlock = () => {
-    // kpiConfiguration?.dataPoints[0].identifier = constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOY_DURATION_DATA_POINT;
+    // TODO
     const deployDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
     constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOY_DURATION_DATA_POINT);
-    // TODO
-    // const deployDataPoint = ;
-    console.log('deployDataPoint', deployDataPoint);
+    
     return (
       <LeadTimeAndReleaseDurationDataBlockBase
-        // topText={metric[0]?.id}
-        topText={"Deploy"}
+        topText={(metric && metric[0]?.id) ? metric[0].id : '' }
         meanData={meanData}
         countData={countData}
         goalsData={goalsData}
@@ -39,8 +37,7 @@ function LeadTimeAndReleaseDurationDeployMetric({ kpiConfiguration, dashboardDat
     );
   };
 
-  return <DataBlockAndChartContainer dataBlock={getDataBlock()} chart={getChart()} />;
-  // return null;
+  return <DataBlockAndChartContainer dataBlock={getDataBlock()} chart={getChart()} className={className}/>;
 }
 
 LeadTimeAndReleaseDurationDeployMetric.propTypes = {
@@ -50,6 +47,7 @@ LeadTimeAndReleaseDurationDeployMetric.propTypes = {
   countData: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
+  className: PropTypes.string
 };
 
 export default LeadTimeAndReleaseDurationDeployMetric;
