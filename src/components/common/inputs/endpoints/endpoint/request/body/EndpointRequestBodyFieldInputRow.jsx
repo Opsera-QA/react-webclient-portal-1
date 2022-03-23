@@ -12,7 +12,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestFieldTypeStandaloneSelectInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeStandaloneSelectInput";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
-import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 import EndpointRequestFieldIsRequiredToggleInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
 import EndpointRequestFieldIsSensitiveDataToggleInput
