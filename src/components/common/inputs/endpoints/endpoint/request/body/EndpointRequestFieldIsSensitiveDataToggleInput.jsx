@@ -29,7 +29,7 @@ EndpointRequestFieldIsSensitiveDataToggleInput.propTypes = {
   model: PropTypes.object,
   updateMainModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  index: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 export default EndpointRequestFieldIsSensitiveDataToggleInput;

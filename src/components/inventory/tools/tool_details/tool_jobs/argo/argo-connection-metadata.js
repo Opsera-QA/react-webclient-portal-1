@@ -9,7 +9,9 @@ const argoConnectionMetadata = {
     {
       label: "Argo User ID",
       id: "userName",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return !model?.getData("secretAccessTokenEnabled");        
+      }
     },
     {
       label: "Argo Password",
@@ -20,8 +22,7 @@ const argoConnectionMetadata = {
     },
     {
       label: "Use Secret Access Token",
-      id: "secretAccessTokenEnabled",
-      isRequired: true
+      id: "secretAccessTokenEnabled",      
     },
     {
       label: "Secret Access Token",
@@ -37,7 +38,7 @@ const argoConnectionMetadata = {
     accountPassword: "",
     proxyEnable: false,
     secretAccessTokenEnabled: false,
-
+    secretAccessTokenKey: ""
   }
 };
 

@@ -46,6 +46,7 @@ export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket =
     case "teams":
       return <Image src={`${vendorIconPrefix}/icons8-microsoft-teams-48.png`} className={"small-title-icon"} />;
     case "terraform":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
       return <Image src={`${vendorIconPrefix}/hashicorp-terraform-48.png`} className={"small-title-icon"} />;
     case "gcp-deploy":
       return <Image src={`${vendorIconPrefix}/icons8-google-cloud-platform-64.png`} className={"small-title-icon"} />;

@@ -30,8 +30,8 @@ EndpointRequestFieldIsRequiredToggleInput.propTypes = {
   model: PropTypes.object,
   updateMainModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  index: PropTypes.bool,
   parentFieldName: PropTypes.string,
+  index: PropTypes.number,
 };
 
 export default EndpointRequestFieldIsRequiredToggleInput;

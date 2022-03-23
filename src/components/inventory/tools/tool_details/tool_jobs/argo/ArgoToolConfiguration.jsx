@@ -28,6 +28,7 @@ function ArgoToolConfiguration({ toolData }) {
   const saveArgoToolConfiguration = async () => {
     let newConfiguration = argoConfigurationDto.getPersistData();
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
+    newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken);
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
@@ -36,7 +37,12 @@ function ArgoToolConfiguration({ toolData }) {
     if (argoConfigurationDto && argoConfigurationDto.getData("secretAccessTokenEnabled")) {
       return (<VaultTextAreaInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"secretAccessTokenKey"} />);
     }
-    return (<VaultTextInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"accountPassword"} />);
+    return (
+      <>
+        <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"userName"} />
+        <VaultTextInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"accountPassword"} />        
+      </>    
+    );
   };
 
   return (
@@ -49,8 +55,7 @@ function ArgoToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"toolURL"} />
-          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"userName"} />
+          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"toolURL"} />          
           <ArgoToolSecretTokenToggleInput model={argoConfigurationDto} setModel={setArgoConfigurationDto} />
           { getDynamicFields() }
         </Col>
