@@ -448,16 +448,6 @@ pipelineActions.createMongodbRealmJobV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-pipelineActions.createTerraformPipeline = async (postBody, getAccessToken) => {
-
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/terraform-cloud/createPipeline`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
-};
-
 pipelineActions.createTerraformPipelineV2 = async (getAccessToken, cancelTokenSource, postBody) => {  
   const apiUrl = `/pipelines/terraform-cloud/createPipeline`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

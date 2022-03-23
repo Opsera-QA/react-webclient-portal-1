@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
@@ -82,6 +82,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import axios from "axios";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -101,6 +102,23 @@ function StepToolConfiguration({
   const [stepId, setStepId] = useState(undefined);
   const { getAccessToken } = contextType;
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;    
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (isMongoDbId(pipelineStepId) === true) {
@@ -430,9 +448,10 @@ function StepToolConfiguration({
         getAccessToken
       );      
 
-      const response = await PipelineActions.createTerraformPipeline(        
-        createPipelinePostBody,
-        getAccessToken,
+      const response = await PipelineActions.createTerraformPipelineV2(
+        getAccessToken, 
+        cancelTokenSource, 
+        createPipelinePostBody
       );
 
       if (response && response.data.status === 200) {
