@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {
@@ -156,7 +156,7 @@ function EndpointResponseBodyInputBase(
   return (
     <div className={"my-2"}>
       <PropertyInputContainer
-        titleIcon={faFilter}
+        titleIcon={faBracketsCurly}
         titleText={field?.label}
         addProperty={addField}
         type={"Field"}
