@@ -22,8 +22,7 @@ const argoConnectionMetadata = {
     },
     {
       label: "Use Secret Access Token",
-      id: "secretAccessTokenEnabled",
-      isRequired: true
+      id: "secretAccessTokenEnabled",      
     },
     {
       label: "Secret Access Token",
