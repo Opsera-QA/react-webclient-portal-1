@@ -1161,6 +1161,16 @@ function StepToolConfiguration({
     return titleText;
   };
 
+  const getToolsAndAccountText = () => {
+    if (stepTool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+      return (
+        <div className="text-muted small my-2">
+          Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
@@ -1171,7 +1181,7 @@ function StepToolConfiguration({
         getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
       ) : null}
 
-      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      {getToolsAndAccountText()}
     </div>
   );
 }
