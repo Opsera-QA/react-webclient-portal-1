@@ -15,6 +15,7 @@ function ArgoToolSecretTokenToggleInput(
     newModel.setData(fieldName, value);
     newModel.setData("accountPassword", "");
     newModel.setData("secretAccessTokenKey", "");
+    newModel.setData("userName", "");
     setModel({...newModel});
   };
 
