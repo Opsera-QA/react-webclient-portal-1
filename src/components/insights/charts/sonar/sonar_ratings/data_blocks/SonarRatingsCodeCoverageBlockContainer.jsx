@@ -7,7 +7,11 @@ import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineSc
 import SonarRatingCodeCoverageActionableInsightOverlay
   from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
 import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData, dataPoint
+import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
+function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData, dataPoint, className,
+                                                  lastScore,
+                                                  icon,
+                                                  iconOverlayBody,
                                                        }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -21,7 +25,17 @@ function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate
   };
 
   const getLeftDataBlock = () => {
-    return <TwoLinePercentageDataBlock percentage={lineCoverage} subtitle={"Line Coverage %"}/>;
+    return (
+      <ThreeLinePercentageBlockBase
+        className={`${className} p-2`}
+        percentage={lineCoverage}
+        topText={"Line Coverage%"}
+        bottomText={"Last Scan: " + lastScore + "%"}
+        icon={icon}
+        iconOverlayBody={iconOverlayBody}
+        dataPoint={dataPoint}
+      />
+    );
   };
 
   const getMiddleDataBlock = () => {
@@ -33,10 +47,10 @@ function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Code Coverage"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Line Coverage"} onClick={() => onRowSelect()} dataPoint={dataPoint}>
       <Col sm={4}>{getLeftDataBlock()}</Col>
-      <Col sm={4}>{getMiddleDataBlock()}</Col>
-      <Col sm={4}>{getRightDataBlock()}</Col>
+      <Col className={"my-4"} sm={4}>{getMiddleDataBlock()}</Col>
+      <Col className={"my-4"} sm={4}>{getRightDataBlock()}</Col>
     </HorizontalDataBlocksContainer>
   );
 }
@@ -48,6 +62,10 @@ SonarRatingsCodeCoverageBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dataPoint: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default SonarRatingsCodeCoverageBlockContainer;
