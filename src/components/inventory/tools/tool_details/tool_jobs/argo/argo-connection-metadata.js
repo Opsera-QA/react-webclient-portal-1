@@ -38,7 +38,7 @@ const argoConnectionMetadata = {
     accountPassword: "",
     proxyEnable: false,
     secretAccessTokenEnabled: false,
-
+    secretAccessTokenKey: ""
   }
 };
 
