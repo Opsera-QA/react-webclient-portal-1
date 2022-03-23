@@ -1,6 +1,6 @@
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
-export default (getColor, MeanLineLayer, RollingMeanLineLayer) => ({
+export default (getColor, MeanLineLayer) => ({
   indexBy: "date",
   xScale: {
     type: "time",
@@ -10,5 +10,5 @@ export default (getColor, MeanLineLayer, RollingMeanLineLayer) => ({
   xFormat: "time:%Y-%m-%d",
   yScale: { type: "linear", min: 0, max: "auto", stacked: false },
   colors: METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
-  layers: ["grid", "axes", MeanLineLayer, RollingMeanLineLayer, "nodes", "markers", "mesh"],
+  layers: ["grid", "axes", MeanLineLayer, "nodes", "markers", "mesh"],
 });
