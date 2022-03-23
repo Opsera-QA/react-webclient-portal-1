@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
@@ -27,6 +27,7 @@ import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStep
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCdStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
+import TerraformVcsStepConfiguration from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
@@ -81,6 +82,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import axios from "axios";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -100,6 +102,23 @@ function StepToolConfiguration({
   const [stepId, setStepId] = useState(undefined);
   const { getAccessToken } = contextType;
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;    
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (isMongoDbId(pipelineStepId) === true) {
@@ -403,6 +422,51 @@ function StepToolConfiguration({
     } catch (error) {
 
       const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${pipeline._id}.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
+  const createTerraformPipeline = async (
+    toolConfiguration,
+    stepId,
+    createPipelinePostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );      
+
+      const response = await PipelineActions.createTerraformPipelineV2(
+        getAccessToken, 
+        cancelTokenSource, 
+        createPipelinePostBody
+      );
+
+      if (response && response.data.status === 200) {
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the terraform pipeline.  Please see browser logs for details.`;
+        console.error(response.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving terraform pipeline.  Please see browser logs for details.`;
       console.error(error);
       toastContext.showCreateFailureResultDialog(errorMsg);
     }
@@ -759,6 +823,21 @@ function StepToolConfiguration({
             setToast={setToast}
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
+        return (
+          <TerraformVcsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createTerraformPipeline}
           />
         );
       case "elastic-beanstalk":
