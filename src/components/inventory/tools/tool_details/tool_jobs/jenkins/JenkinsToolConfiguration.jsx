@@ -68,7 +68,7 @@ function JenkinsToolConfiguration({ toolData }) {
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Jenkins"}
-      
+      leftSideButtons={<RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>}
     >
       <Row>
         <Col sm={12}>
