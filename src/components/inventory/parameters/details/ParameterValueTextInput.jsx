@@ -37,7 +37,7 @@ function ParameterValueTextInput(
 
   const validateAndSetData = (value) => {
     const newDataObject = {...model};
-    newDataObject.setTextData(model, value);
+    newDataObject.setTextData(fieldName, value);
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setModel({...newDataObject});
   };
