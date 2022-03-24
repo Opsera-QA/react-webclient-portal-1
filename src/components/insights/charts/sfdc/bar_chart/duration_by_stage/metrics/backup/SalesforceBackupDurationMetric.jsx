@@ -10,12 +10,15 @@ function SalesforceBackupDurationMetric({
   backupDurationMeanInMinutes,
   backupTotalRunCount,
   metric,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
       <SalesforceBackupDurationDataBlock
         backupDurationMeanInMinutes={backupDurationMeanInMinutes}
         backupTotalRunCount={backupTotalRunCount}
+        kpiConfiguration={kpiConfiguration}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -39,6 +42,7 @@ SalesforceBackupDurationMetric.propTypes = {
   backupDurationMeanInMinutes: PropTypes.number,
   backupTotalRunCount: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceBackupDurationMetric;

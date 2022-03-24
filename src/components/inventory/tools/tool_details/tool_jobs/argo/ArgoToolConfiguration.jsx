@@ -10,6 +10,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
+import ArgoToolSecretTokenToggleInput from "./ArgoToolSecretTokenToggleInput";
 
 function ArgoToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -26,8 +28,21 @@ function ArgoToolConfiguration({ toolData }) {
   const saveArgoToolConfiguration = async () => {
     let newConfiguration = argoConfigurationDto.getPersistData();
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
+    newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken);
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+  };
+
+  const getDynamicFields = () => {
+    if (argoConfigurationDto && argoConfigurationDto.getData("secretAccessTokenEnabled")) {
+      return (<VaultTextAreaInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"secretAccessTokenKey"} />);
+    }
+    return (
+      <>
+        <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"userName"} />
+        <VaultTextInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"accountPassword"} />        
+      </>    
+    );
   };
 
   return (
@@ -40,9 +55,9 @@ function ArgoToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"toolURL"} />
-          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"userName"} />
-          <VaultTextInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"accountPassword"} />
+          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"toolURL"} />          
+          <ArgoToolSecretTokenToggleInput model={argoConfigurationDto} setModel={setArgoConfigurationDto} />
+          { getDynamicFields() }
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

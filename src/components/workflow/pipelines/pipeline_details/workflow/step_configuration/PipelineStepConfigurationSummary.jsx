@@ -41,6 +41,8 @@ import teamcityStepConfigurationMetadata
 import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
+import TerraformVcsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfigurationSummaryPanel";
+import TerraformVcsStepFormMetadata from "./step_tool_configuration_forms/terraform_vcs/terraform-vcs-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
   from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
 import {parallelProcessorStepMetadata}
@@ -336,6 +338,13 @@ function PipelineStepConfigurationSummary({
             terraformPipelineDataObject={getModelWrappedObject(TerraformStepFormMetadata)}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
+        return (
+          <TerraformVcsStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
+          />
+        );  
       case "xunit":
         return (
           <XUnitPipelineStepConfigurationSummaryPanel
@@ -518,7 +527,7 @@ function PipelineStepConfigurationSummary({
             mongodbRealmPipelineDataObject={getModelWrappedObject(mongodbRealmStepFormMetadata)}
             />
         );
-      case "flyway-database-migrator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
         return (
           <FlywayDatabasePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}

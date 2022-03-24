@@ -30,7 +30,6 @@ function DashboardMetricDataPointsInputPanel(
 DashboardMetricDataPointsInputPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  dataPoint: PropTypes.object,
 };
 
 export default DashboardMetricDataPointsInputPanel;

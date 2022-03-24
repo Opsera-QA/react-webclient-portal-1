@@ -8,12 +8,11 @@ import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import awsLambdaFunctionTaskConfigurationMetadata from "./aws-lambda-metadata";
 import LanguageSelectInput from "./inputs/LanguageSelectInput";
-import OctopusProjectNameInput
-  from "../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusProjectNameInput";
 import FunctionNameWithButton from "./inputs/FunctionNameWithButton";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
-import AWSRegionSelectInput from "../../../../common/list_of_values_input/aws/AWSRegionSelectInput";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 
 function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {
@@ -42,9 +41,9 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
         />
       </Col>
       <Col lg={12}>
-        <AWSRegionSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
+        <AwsCloudProviderRegionSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
           fieldName={"regions"}
           disabled={gitTasksConfigurationData?.getData("awsToolConfigId")?.length === 0}
           awsTool={gitTasksConfigurationData?.getData("awsToolConfigId")}

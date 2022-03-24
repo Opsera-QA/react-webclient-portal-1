@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import RoleRestrictedToolByIdentifierInputBase
 from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 
 function FlywayToolSelectInput({ fieldName, model, setModel, disabled }) {
@@ -21,8 +22,8 @@ function FlywayToolSelectInput({ fieldName, model, setModel, disabled }) {
     
   return (
     <RoleRestrictedToolByIdentifierInputBase
-        toolIdentifier={"flyway-database-migrator"}
-        toolFriendlyName={"flyway-database-migrator"}
+        toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR}
+        toolFriendlyName={"Flyway Database Migrator"}
         fieldName={fieldName}
         model={model}
         setModel={setModel}

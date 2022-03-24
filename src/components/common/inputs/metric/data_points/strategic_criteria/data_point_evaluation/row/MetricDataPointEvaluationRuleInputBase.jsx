@@ -13,7 +13,6 @@ import DataPointEvaluationTriggerValuesInput
   from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 
 function MetricDataPointEvaluationRuleInputBase(
@@ -97,7 +96,10 @@ function MetricDataPointEvaluationRuleInputBase(
       </Row>
       <div className={"d-flex"}>
         <div className={"ml-auto mr-2 mb-2"}>
-          <InfoText errorMessage={errorMessage}/>
+          <InfoText
+            errorMessage={errorMessage}
+            customMessage={ruleData?.enabled === false ? "This rule is not enabled and will not take effect." : undefined}
+          />
         </div>
       </div>
     </InfoContainer>

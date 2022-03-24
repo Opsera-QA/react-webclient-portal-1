@@ -11,7 +11,7 @@ import axios from "axios";
 import awsActions from "../../aws-actions";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/general/AwsCloudProviderRegionSelectInput";
+  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 import AwsS3BucketVersionSelectInput from "./inputs/AwsS3BucketVersionSelectInput";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import modelHelpers from "components/common/model/modelHelpers";

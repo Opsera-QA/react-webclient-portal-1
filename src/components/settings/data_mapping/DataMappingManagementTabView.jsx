@@ -9,7 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import PipelineDataMappingManagement from "components/settings/data_mapping/pipelines/PipelineDataMappingManagement";
 
 function DataMappingManagementTabView() {
-  const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("projects");
 
   const handleTabClick = (tabSelection) => (e) => {
@@ -17,8 +17,9 @@ function DataMappingManagementTabView() {
     setActiveTab(tabSelection);
   };
 
+  // TODO: Put inline in the tab container function when approved for deploy
   const getPipelineDataMappingTab = () => {
-    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
+    if (featureFlagHideItemInProd() === false) {
       return (
         <CustomTab
           icon={faDraftingCompass}

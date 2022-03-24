@@ -14,7 +14,6 @@ function HorizontalDataBlocksContainer(
     className,
     dataPoint,
   }) {
-  
   if (dataPointHelpers.isDataPointVisible(dataPoint) === false) {
     return null;
   }

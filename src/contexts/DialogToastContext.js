@@ -10,7 +10,7 @@ import WarningToast from "../components/common/status_notifications/toasts/Warni
 import SuccessBanner from "../components/common/status_notifications/banners/SuccessBanner";
 import InformationBanner from "../components/common/status_notifications/banners/InformationBanner";
 import WarningBanner from "../components/common/status_notifications/banners/WarningBanner";
-import InlineError from "components/common/status_notifications/inline/InlineError";
+import InlineErrorBanner from "components/common/status_notifications/inline/InlineErrorBanner";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import SiteNotificationDisplayer from "components/admin/site_notifications/displayer/SiteNotificationDisplayer";
 import OverlayPanelContainer from "components/common/panels/OverlayPanelContainer";
@@ -448,7 +448,7 @@ function ToastContextProvider({children, navBar}) {
 
   const getInlineErrorBanner = (error, id, prependMessage = "") => {
     return (
-      <InlineError
+      <InlineErrorBanner
         error={error}
         prependMessage={prependMessage}
         id={id}
@@ -612,8 +612,8 @@ function ToastContextProvider({children, navBar}) {
         showModal: showModal,
         clearModal: clearModal
       }}>
-      <OverlayPanelContainer overlayPanel={infoOverlayPanel}/>
       <OverlayPanelContainer overlayPanel={overlayPanel}/>
+      <OverlayPanelContainer overlayPanel={infoOverlayPanel}/>
       {navBar}
       <SiteNotificationDisplayer/>
       <BannerMessageContainer bannerMessages={bannerMessages}/>

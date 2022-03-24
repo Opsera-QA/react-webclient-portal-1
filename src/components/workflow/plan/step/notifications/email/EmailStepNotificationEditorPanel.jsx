@@ -29,6 +29,7 @@ function EmailStepNotificationEditorPanel(
           dataObject={emailNotificationModel}
           setDataObject={setEmailNotificationModel}
           fieldName={"addresses"}
+          disabled={emailNotificationModel?.getData("enabled") === false}
         />
       </Col>
       <Col xs={12}>

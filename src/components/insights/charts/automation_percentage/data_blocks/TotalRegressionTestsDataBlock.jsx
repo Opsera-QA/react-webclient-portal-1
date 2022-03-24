@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 
-function TotalRegressionTestsDataBlock({ defects }) {
+function TotalRegressionTestsDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
-          className="m-3"
-          score={defects} 
+          className="p-2"
+          style={{minHeight: '100px'}}
+          score={defects}
+          dataPoint={dataPoint}
           subtitle={"Total Number of Regression Test Cases"}
       />
     </DataBlockBoxContainer>
@@ -17,6 +19,7 @@ function TotalRegressionTestsDataBlock({ defects }) {
 
 TotalRegressionTestsDataBlock.propTypes = {
   defects: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default TotalRegressionTestsDataBlock;

@@ -794,7 +794,6 @@ a:hover, .active, .link-text:hover {
     top: 0;
     left: 0;
     position: fixed;
-    padding: .75em;
     z-index: 1200;
 }
 

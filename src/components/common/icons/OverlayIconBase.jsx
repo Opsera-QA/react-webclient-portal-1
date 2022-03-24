@@ -18,6 +18,7 @@ function OverlayIconBase(
     iconColor,
     overlayTitle,
     overlayBody,
+    overlayPlacement,
   }) {
   if (icon == null) {
     return null;
@@ -28,6 +29,7 @@ function OverlayIconBase(
       innerText={overlayBody}
       title={overlayTitle}
       showCloseButton={false}
+      placement={overlayPlacement}
     >
       <div>
         <IconBase
@@ -62,6 +64,7 @@ OverlayIconBase.propTypes = {
   iconColor: PropTypes.string,
   overlayTitle: PropTypes.string,
   overlayBody: PropTypes.any,
+  overlayPlacement: PropTypes.string,
 };
 
 export default React.memo(OverlayIconBase);

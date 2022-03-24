@@ -11,8 +11,8 @@ import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
 import EC2SubForm from "./sub_forms/EC2SubForm";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
-import AWSRegionSelectInput from "../../../../common/list_of_values_input/aws/AWSRegionSelectInput";
-
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 
 function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -53,12 +53,11 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
         />
       </Col>
       <Col lg={12}>
-        <AWSRegionSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
+        <AwsCloudProviderRegionSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
           fieldName={"region"}
           disabled={gitTasksConfigurationData?.getData("awsToolId")?.length === 0}
-          awsTool={gitTasksConfigurationData?.getData("awsToolId")}
         />
       </Col>
       <Col lg={12}>

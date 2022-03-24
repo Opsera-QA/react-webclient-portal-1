@@ -18,6 +18,10 @@ import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import SalesforceDurationByStageMetricsEditorPanel
   from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
+import FirstPassYieldMetricsEditorPanel from "../../charts/first_pass/FirstPassYieldMetricsEditorPanel";
+import AutomationPercentageMetricEditorPanel
+  from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
+import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: combine with chart settings overlay?
@@ -86,6 +90,10 @@ function DashboardMetricOverlayContainer(
       dashboardData?.getData("_id"),
       metricModel,
     );
+
+    // TODO: This is not very ideal, we need to resolve the refresh issues
+    setKpiConfiguration({ ...metricModel?.getPersistData() });
+    dashboardData.getData("configuration")[index] = metricModel?.getPersistData();
   };
 
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
@@ -112,6 +120,33 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
           <SalesforceDurationByStageMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
+        return (
+          <AutomationPercentageMetricEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
+        return (
+          <FirstPassYieldMetricsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
+        return (
+          <SonarRatingMetricsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
@@ -176,6 +211,7 @@ function DashboardMetricOverlayContainer(
         <DashboardMetricTabPanel
           metricModel={metricModel}
           setMetricModel={setMetricModel}
+          setKpiConfiguration={setKpiConfiguration}
           metricEditorPanel={getMetricEditorPanel()}
         />
       </DashboardMetricEditorPanelContainer>

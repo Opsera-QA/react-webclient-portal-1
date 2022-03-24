@@ -23,13 +23,9 @@ function DashboardMetricTabPanel(
     setActiveTab(activeTab);
   };
 
-  const getTabContainer = () => {
-    return (
-      <CustomTabContainer styling={"metric-detail-tabs"}>
-        <SettingsTab
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-        />
+  const getDataPointSettingsTab = () => {
+    if (metricModel?.getArrayData("dataPoints")?.length > 0) {
+      return (
         <CustomTab
           icon={faChartNetwork}
           handleTabClick={handleTabClick}
@@ -37,6 +33,18 @@ function DashboardMetricTabPanel(
           tabText={"Data Point Settings"}
           tabName={"data-point-settings"}
         />
+      );
+    }
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer styling={"metric-detail-tabs"}>
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
+        {getDataPointSettingsTab()}
       </CustomTabContainer>
     );
   };
@@ -86,11 +94,6 @@ DashboardMetricTabPanel.propTypes = {
   metricModel: PropTypes.object,
   setMetricModel: PropTypes.func,
   metricEditorPanel: PropTypes.object,
-  closePanel: PropTypes.func,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
-  loadData: PropTypes.func,
-  settingsHelpComponent: PropTypes.object,
 };
 
 export default DashboardMetricTabPanel;

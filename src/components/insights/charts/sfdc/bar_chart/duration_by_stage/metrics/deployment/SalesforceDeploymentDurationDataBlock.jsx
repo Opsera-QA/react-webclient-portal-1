@@ -4,15 +4,13 @@ import ThreeLineDataBlockBase from "../../../../../../../common/metrics/data_blo
 import "../../salesforce-duration-by-stage-kpi.css";
 import MetricTextBase, { METRIC_QUALITY_LEVELS } from "components/common/metrics/text/MetricTextBase";
 import {dataPointHelpers} from "../../../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as constants
-} from "../../SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
 
 function SalesforceDeploymentDurationDataBlock({
   deploymentDurationMeanInMinutes,
   deploymentTotalRunCount,
   goalsData,
-  kpiConfiguration
+  kpiConfiguration,
+  dataPoint
 }) {
   const hasPositiveNumberValue = (potentialNumber) => {
     return potentialNumber == undefined ||
@@ -22,20 +20,18 @@ function SalesforceDeploymentDurationDataBlock({
       ? false
       : true;
   };
-  const durationDeploymentDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOYMENT_DATA_POINT);
 
   const getMetricQualityLevel = () => {
-    if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
-      return;
-    }
-
-    if (durationDeploymentDataPoint) {
-      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(durationDeploymentDataPoint, deploymentDurationMeanInMinutes);
+    if (dataPoint && hasPositiveNumberValue(deploymentDurationMeanInMinutes)) {
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, deploymentDurationMeanInMinutes);
 
       if (typeof evaluatedDataPoint === "string") {
         return evaluatedDataPoint;
       }
+    }
+
+    if (!hasPositiveNumberValue(deploymentDurationMeanInMinutes) || !hasPositiveNumberValue(goalsData)) {
+      return;
     }
 
     if (goalsData > deploymentDurationMeanInMinutes) {
@@ -48,8 +44,8 @@ function SalesforceDeploymentDurationDataBlock({
   };
 
   const getDeploymentMeanBlock = () => {
+    const qualityLevel = getMetricQualityLevel();
     if (hasPositiveNumberValue(deploymentDurationMeanInMinutes) && hasPositiveNumberValue(deploymentTotalRunCount)) {
-      const qualityLevel = getMetricQualityLevel();
       return (
         <>
           <div>
@@ -61,6 +57,9 @@ function SalesforceDeploymentDurationDataBlock({
         </>
       );
     }
+    if (hasPositiveNumberValue(deploymentDurationMeanInMinutes)) {
+      return <MetricTextBase formattedText={`${deploymentDurationMeanInMinutes} min`} className={"metric-block-content-text"} qualityLevel={qualityLevel}/>;
+    }
     return <span className={"metric-block-content-text"}> Error! </span>;
   };
   return (
@@ -68,7 +67,7 @@ function SalesforceDeploymentDurationDataBlock({
       className="salesforce-duration-by-stage-kpi"
       topText={"Deployment"}
       middleText={getDeploymentMeanBlock()}
-      dataPoint={durationDeploymentDataPoint}
+      dataPoint={dataPoint}
     />
   );
 }
@@ -78,6 +77,7 @@ SalesforceDeploymentDurationDataBlock.propTypes = {
   deploymentTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceDeploymentDurationDataBlock;

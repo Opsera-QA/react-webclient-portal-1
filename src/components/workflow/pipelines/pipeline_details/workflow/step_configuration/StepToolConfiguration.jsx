@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
@@ -27,6 +27,7 @@ import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStep
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCdStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdStepConfiguration";
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
+import TerraformVcsStepConfiguration from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
@@ -78,10 +79,15 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationStepEditorPanel
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import axios from "axios";
 
+// TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
   pipeline,
-  editItem,
+  pipelineStepId,
   parentCallback,
   reloadParentPipeline,
   closeEditorPanel,
@@ -90,30 +96,52 @@ function StepToolConfiguration({
 }) {
   const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
+  const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
   const { getAccessToken } = contextType;
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [editItem, pipeline]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;    
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMongoDbId(pipelineStepId) === true) {
+      loadData();
+    }
+  }, [pipelineStepId, pipeline]);
 
   const loadData = async () => {
-    let stepIndex = getStepIndex(editItem.step_id);
-    setStepTool(plan[stepIndex].tool);
-    setStepName(plan[stepIndex].name);
-    setStepId(plan[stepIndex]._id);
+    let stepIndex = getStepIndex(pipelineStepId);
+    setPipelineStep(plan[stepIndex]);
+    setStepTool(plan[stepIndex]?.tool);
+    setStepName(plan[stepIndex]?.name);
+    setStepId(plan[stepIndex]?._id);
   };
 
+  // TODO: Use existing helper to construct this instead
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
     return stepArrayIndex;
   };
 
   const callbackFunction = async (tool) => {
-    let stepArrayIndex = getStepIndex(editItem.step_id);
+    let stepArrayIndex = getStepIndex(pipelineStepId);
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
@@ -131,6 +159,7 @@ function StepToolConfiguration({
     return response;
   };
 
+  // TODO: Put into actions file, wire up cancel token
   const createJob = async (
     toolId,
     toolConfiguration,
@@ -197,6 +226,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO Put into coverity actions file, wire up cancel token
   const createCoverityJob = async (
     toolId,
     toolConfiguration,
@@ -263,7 +293,7 @@ function StepToolConfiguration({
     }
   };
 
-  // TODO: Move into twistlock helper
+  // TODO: Move into twistlock actions file, wire up cancel token
   const createTwistlockJob = async (
     toolId,
     toolConfiguration,
@@ -397,12 +427,65 @@ function StepToolConfiguration({
     }
   };
 
+  const createTerraformPipeline = async (
+    toolConfiguration,
+    stepId,
+    createPipelinePostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );      
+
+      const response = await PipelineActions.createTerraformPipelineV2(
+        getAccessToken, 
+        cancelTokenSource, 
+        createPipelinePostBody
+      );
+
+      if (response && response.data.status === 200) {
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the terraform pipeline.  Please see browser logs for details.`;
+        console.error(response.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving terraform pipeline.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
   // TODO: Alphabetize, simplify props when refactoring each panel.
   //  just pass pipeline and pull id and plan inside instead of passing them individually,
   //  remove deprecated toasts and use toast contexts, wire up latest buttons,
   //  instead of passing in get tools list, use pipeline tool input etc..
   const getConfigurationTool = (toolName) => {
     switch (toolName) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
       case "jenkins":
         return (
           <JenkinsStepConfiguration
@@ -742,6 +825,21 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
+        return (
+          <TerraformVcsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createTerraformPipeline}
+          />
+        );
       case "elastic-beanstalk":
         return (
           <EBSStepConfiguration
@@ -1029,7 +1127,7 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-        case "flyway-database-migrator":
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
           return (
             <FlywayDatabaseStepConfiguration
               pipelineId={pipeline._id}
@@ -1136,6 +1234,16 @@ function StepToolConfiguration({
     return titleText;
   };
 
+  const getToolsAndAccountText = () => {
+    if (stepTool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+      return (
+        <div className="text-muted small my-2">
+          Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
@@ -1143,17 +1251,17 @@ function StepToolConfiguration({
       </div>
 
       {typeof stepTool !== "undefined" ? (
-        getConfigurationTool(editItem.tool_name.toLowerCase())
+        getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
       ) : null}
 
-      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      {getToolsAndAccountText()}
     </div>
   );
 }
 
 StepToolConfiguration.propTypes = {
   pipeline: PropTypes.object,
-  editItem: PropTypes.object,
+  pipelineStepId: PropTypes.string,
   parentCallback: PropTypes.func,
   reloadParentPipeline: PropTypes.func,
   closeEditorPanel: PropTypes.func,
