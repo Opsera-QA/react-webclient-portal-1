@@ -6,12 +6,12 @@ function TerraformVcsJobTypeSelectInput({dataObject, setDataObject, disabled}) {
 
   const JOB_TYPES = [
     {
-      name: "Apply",
-      value: "APPLY",
+      name: "Execute",
+      value: "EXECUTE",
     },    
     {
-      name: "Destroy",
-      value: "DESTROY",
+      name: "Delete",
+      value: "DELETE",
     }
   ];
 

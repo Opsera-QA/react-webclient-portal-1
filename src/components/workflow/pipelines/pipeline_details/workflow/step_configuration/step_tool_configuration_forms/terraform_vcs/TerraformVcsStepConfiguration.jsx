@@ -58,6 +58,7 @@ function TerraformVcsStepConfiguration({ pipelineId, stepTool, stepId, createJob
       const createPipelinePostBody = {        
         pipelineId: pipelineId,
         stepId: stepId,
+        actionType: terraformVcsStepConfigurationModel.getData("toolActionType")
       };
       
       const toolConfiguration = {
