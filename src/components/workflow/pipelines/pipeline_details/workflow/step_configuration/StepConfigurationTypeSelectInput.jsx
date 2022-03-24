@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import SelectInputBase from "../../../../../common/inputs/select/SelectInputBase";
 
 function StepConfigurationTypeSelectInput({ dataObject, setDataObject, disabled, fieldName }) {
