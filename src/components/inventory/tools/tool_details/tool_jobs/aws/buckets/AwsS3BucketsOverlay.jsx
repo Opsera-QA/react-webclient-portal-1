@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import awsS3BucketMetadata from "./aws-s3-bucket-metadata";
 import AwsS3BucketEditorPanel from "./details/AwsS3BucketEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import axios from "axios";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function AwsS3BucketsOverlay({ loadData, toolData, editMode, editRowData }) {
@@ -44,12 +44,7 @@ function AwsS3BucketsOverlay({ loadData, toolData, editMode, editRowData }) {
   };
 
   return (
-    <CenterOverlayContainer   
-      closePanel={closePanel}
-      titleText={`S3 Bucket`}
-      showCloseButton={false}
-      showPanel={true}
-    >
+    <CreateCenterPanel closePanel={closePanel} objectType={awsS3BucketMetadata.type} loadData={loadData}>
       <AwsS3BucketEditorPanel
         awsS3BucketsData={awsS3BucketsData}
         toolData={toolData}
@@ -58,7 +53,7 @@ function AwsS3BucketsOverlay({ loadData, toolData, editMode, editRowData }) {
         editMode={editMode}
         editRowData={editRowData}
       />
-    </CenterOverlayContainer>
+    </CreateCenterPanel>
   );
 }
 
