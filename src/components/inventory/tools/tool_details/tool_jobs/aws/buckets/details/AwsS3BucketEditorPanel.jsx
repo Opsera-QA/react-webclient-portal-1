@@ -30,7 +30,7 @@ function AwsS3BucketEditorPanel({ awsS3BucketsData, toolData, handleClose, editM
       cancelTokenSource.cancel();
     }
 
-    const source = axios.CancelToken.source();
+    const source = axios.CancelToken.source(); 
     setCancelTokenSource(source);
     isMounted.current = true;
 
