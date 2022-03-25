@@ -167,13 +167,13 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 className="px-3 font-inter-light-400 dark-gray-text-primary"
                 style={{ float: "right", fontSize: "10px" }}
               >
-                {` Rolling Mean Lead Time `}
-                <IconBase
-                  icon={faMinus}
-                  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}
-                  iconSize={"lg"}
-                />
-                <br />
+                {/*{` Rolling Mean Lead Time `}*/}
+                {/*<IconBase*/}
+                {/*  icon={faMinus}*/}
+                {/*  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}*/}
+                {/*  iconSize={"lg"}*/}
+                {/*/>*/}
+                {/*<br />*/}
                 {`Mean Lead Time `}
                 <IconBase
                   icon={faMinus}
