@@ -261,6 +261,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   fieldName={"awsToolConfigId"}
                   model={octopusApplicationDataDto}
                   setModel={setOctopusApplicationDataDto}
+                  valueField={"_id"}
+                  textField={"name"}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
@@ -348,8 +350,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               <Col lg={12}>
                 <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
-                  dataObject={octopusApplicationDataDto}
-                  setDataObject={setOctopusApplicationDataDto}
+                  model={octopusApplicationDataDto}
+                  setModel={setOctopusApplicationDataDto} 
+                  valueField={"_id"}
+                  textField={"name"}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
