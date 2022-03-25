@@ -116,19 +116,19 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
     };
 
     //TODO: Do these need to be passed in via object props?
-    const RollingMeanLineLayer = ({ nodes, xScale, yScale }) => {
-      const lineGenerator = line()
-        .x((d) => xScale(d.data.x))
-        .y((d) => yScale(d.data.rolling_mean));
-      return (
-        <path
-          d={lineGenerator(nodes)}
-          fill="none"
-          stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
-          strokeWidth="2"
-        />
-      );
-    };
+    // const RollingMeanLineLayer = ({ nodes, xScale, yScale }) => {
+    //   const lineGenerator = line()
+    //     .x((d) => xScale(d.data.x))
+    //     .y((d) => yScale(d.data.rolling_mean));
+    //   return (
+    //     <path
+    //       d={lineGenerator(nodes)}
+    //       fill="none"
+    //       stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
+    //       strokeWidth="2"
+    //     />
+    //   );
+    // };
     const onNodeSelect = (node) => {
       setModalData(
         issueData.filter(function (item) {
@@ -167,13 +167,13 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 className="px-3 font-inter-light-400 dark-gray-text-primary"
                 style={{ float: "right", fontSize: "10px" }}
               >
-                {` Rolling Mean Lead Time `}
-                <IconBase
-                  icon={faMinus}
-                  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}
-                  iconSize={"lg"}
-                />
-                <br />
+                {/*{` Rolling Mean Lead Time `}*/}
+                {/*<IconBase*/}
+                {/*  icon={faMinus}*/}
+                {/*  iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_3}*/}
+                {/*  iconSize={"lg"}*/}
+                {/*/>*/}
+                {/*<br />*/}
                 {`Mean Lead Time `}
                 <IconBase
                   icon={faMinus}
@@ -200,7 +200,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                   false,
                   "circle"
                 )}
-                {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
+                {...config(getColor, MeanLineLayer)}
                 onClick={(node) => onNodeSelect(node)}
                 tooltip={({ node, color }) => (
                   <ChartTooltip
