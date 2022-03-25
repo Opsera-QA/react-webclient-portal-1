@@ -67,6 +67,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   TEAMS: "teams",
   TERRAFORM: "terraform",
   TERRAFORM_CLOUD: "terraform-cloud",
+  TERRAFORM_VCS: "terraform-vcs",
   TERRASCAN: "terrascan",
   TWISTLOCK: " twistlock",
   XUNIT: "xunit",

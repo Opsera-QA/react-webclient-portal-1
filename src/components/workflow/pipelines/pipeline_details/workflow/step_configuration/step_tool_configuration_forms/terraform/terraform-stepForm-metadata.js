@@ -118,7 +118,7 @@ const TerraformStepFormMetadata = {
       id: "azureToolConfigId",
     },
     {
-      label: "Terraform Cloud Tool",
+      label: "Terraform Tool",
       id: "terraformCloudId",
     },
     {
@@ -303,7 +303,7 @@ const TerraformStepFormMetadata = {
       id: "azureToolConfigId",
     },
     {
-      label: "Terraform Cloud Tool",
+      label: "Terraform Tool",
       id: "terraformCloudId",
     },
     {

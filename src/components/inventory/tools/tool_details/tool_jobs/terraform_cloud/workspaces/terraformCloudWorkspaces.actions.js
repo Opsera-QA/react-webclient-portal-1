@@ -2,11 +2,9 @@ import baseActions from "utils/actionsBase";
 
 const terraformCloudWorkspacesActions = {};
 
-terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName) => {
+terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, dataObject) => {
   const apiUrl = `/tools/${toolId}/terraform-cloud-workspaces/${organizationName}`;
-  const postBody = {
-    workspaceName: workspaceName
-  };
+  const postBody = dataObject.getPersistData();
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

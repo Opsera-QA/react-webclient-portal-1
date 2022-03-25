@@ -22,6 +22,9 @@ import ExternalApiIntegrationStepRunEndpointRequestInputBase
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
 import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
+import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
@@ -97,55 +100,24 @@ function ExternalRestApiIntegrationStepEditorPanel(
   }
 
   return (
-    <PipelineStepEditorPanelContainer
+    <EditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={externalRestApiIntegrationModel}
-      persistRecord={callbackFunction}
+      createRecord={callbackFunction}
+      updateRecord={callbackFunction}
+      lenient={true}
       isLoading={isLoading}
+      className={"m-0"}
     >
       <ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiIntegrationStepRunEndpointSelectInput
-        fieldName={"runEndpointId"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
+      <ExternalApiRestIntegrationStepEndpointVerticalTabContainer
+        externalRestApiIntegrationModel={externalRestApiIntegrationModel}
+        setExternalRestApiIntegrationModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiIntegrationStepRunEndpointRequestInputBase
-        fieldName={"runEndpointRequestParameters"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-      <EndpointResponseEvaluationRulesInputBase
-        fieldName={"runEndpointResponseEvaluationRules"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-      <ExternalApiIntegrationStepStatusEndpointSelectInput
-        fieldName={"statusEndpointId"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-      />
-      <ExternalApiIntegrationStepRunEndpointRequestInputBase
-        fieldName={"statusEndpointRequestParameters"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-      />
-      <EndpointResponseEvaluationRulesInputBase
-        fieldName={"statusEndpointResponseEvaluationRules"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-    </PipelineStepEditorPanelContainer>
+    </EditorPanelContainer>
   );
 }
 

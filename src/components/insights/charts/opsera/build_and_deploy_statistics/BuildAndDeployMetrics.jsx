@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+  from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
 import DeploymentStatisticsDataBlockContainer
   from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainer";
 import Row from "react-bootstrap/Row";
