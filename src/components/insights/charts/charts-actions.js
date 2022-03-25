@@ -45,17 +45,29 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
 
 chartsActions.getSonarUnitTestsMetrics = async (
   kpiConfiguration,
-  tags,
+  dashboardTags,
   getAccessToken,
   cancelTokenSource,
-  tableFilterDto
+  tableFilterDto,
+  dashboardOrgs
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
   };
