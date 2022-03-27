@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faCode} from "@fortawesome/pro-light-svg-icons";
+import {faCheckCircle, faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 import InfoContainer from "components/common/containers/InfoContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function EndpointRequestParametersInputBase(
   {
@@ -80,7 +82,7 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
-  const getBody = () => {
+  const getParameterBody = () => {
     if (!Array.isArray(parameters) || parameters?.length === 0) {
       return (
         <div className="text-center">
@@ -90,10 +92,10 @@ function EndpointRequestParametersInputBase(
     }
 
     return (
-      <div className={"m-3"}>
-        {parameters.map((fieldData, index) => {
+      <div>
+        {parameters?.map((fieldData, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "" : "my-2"}>
+            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
               <EndpointRequestParameterInputRow
                 index={index}
                 endpointBodyField={fieldData}
@@ -107,18 +109,59 @@ function EndpointRequestParametersInputBase(
     );
   };
 
+  const getParameterInputContainer = () => {
+    return (
+      <Col xs={8}>
+        <InfoContainer
+          titleClassName={"sub-input-title-bar"}
+          titleIcon={faCode}
+          titleText={field?.label}
+        >
+          <div className={"m-3"}>
+            {getParameterBody()}
+          </div>
+        </InfoContainer>
+      </Col>
+    );
+  };
+
+  const getConstructedParameterContainer = () => {
+    return (
+      <Col xs={4}>
+        <InfoContainer
+          titleClassName={"sub-input-title-bar"}
+          titleIcon={faCheckCircle}
+          titleText={`Constructed ${model?.getLabel(fieldName)}`}
+          className={"h-100"}
+        >
+          <div className={"m-3"}>
+            <StandaloneJsonField
+              className={"h-100 mb-2"}
+              model={model}
+              fieldName={fieldName}
+            />
+            <InfoText
+              customMessage={`
+                  Please Note: Until updated and saved, 
+                  this will include all previously saved fields.
+                `}
+            />
+          </div>
+        </InfoContainer>
+      </Col>
+    );
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
     <div className={"my-2"}>
-      <InfoContainer
-        titleIcon={faCode}
-        titleText={field?.label}
-      >
-        {getBody()}
-      </InfoContainer>
+      <Row>
+        {getParameterInputContainer()}
+        {getConstructedParameterContainer()}
+      </Row>
     </div>
   );
 }

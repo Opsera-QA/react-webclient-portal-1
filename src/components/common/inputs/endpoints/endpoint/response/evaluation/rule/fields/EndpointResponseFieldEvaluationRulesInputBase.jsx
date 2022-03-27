@@ -15,7 +15,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
   {
     fieldName,
     model,
-    responseFields,
+    responseBodyFields,
     setModel,
     disabled,
   }) {
@@ -151,7 +151,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
 EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
-  responseFields: PropTypes.array,
+  responseBodyFields: PropTypes.array,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };

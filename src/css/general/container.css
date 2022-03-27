@@ -218,6 +218,12 @@
     font-size: 1.1rem;
 }
 
+.sub-input-title-bar {
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    font-size: 1rem;
+}
+
 .object-properties-input .delete-button {
     margin-left: 2px;
 }
