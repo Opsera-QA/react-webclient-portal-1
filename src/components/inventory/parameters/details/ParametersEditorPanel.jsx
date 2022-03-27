@@ -6,9 +6,9 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
+import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
-import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {

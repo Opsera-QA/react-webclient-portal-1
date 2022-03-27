@@ -2,21 +2,26 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faPlus} from "@fortawesome/pro-light-svg-icons";
 import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {Button} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
-function EndpointRequestBodyInputBase(
+function EndpointRequestBodyInputPanel(
   {
     fieldName,
     model,
     setModel,
     disabled,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const [field, setField] = useState(model?.getFieldById(fieldName));
   const [error, setError] = useState("");
   const [fields, setFields] = useState([]);
   const isMounted = useRef(false);
@@ -24,12 +29,13 @@ function EndpointRequestBodyInputBase(
   useEffect(() => {
     isMounted.current = true;
 
+    setField(model?.getFieldById(fieldName));
     loadData();
 
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [fieldName]);
 
   const loadData = () => {
     const currentData = model?.getData(fieldName);
@@ -104,8 +110,8 @@ function EndpointRequestBodyInputBase(
     validateAndSetData(newFields);
   };
 
-  const getFieldBody = () => {
-    if (!fields || fields.length === 0) {
+  const getBody = () => {
+    if (!Array.isArray(fields) || fields.length === 0) {
       return (
         <div className="text-center">
           <div className="text-muted my-3">No fields have been added</div>
@@ -117,50 +123,17 @@ function EndpointRequestBodyInputBase(
       <div>
         {fields.map((fieldData, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
               <EndpointRequestBodyFieldInputRow
                 index={index}
                 deleteFieldFunction={() => deleteFieldFunction(index)}
                 endpointBodyField={fieldData}
                 updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
                 disabled={disabled}
-                parentFieldName={fieldName}
               />
             </div>
           );
         })}
-      </div>
-    );
-  };
-
-  const getHeaderBar = () => {
-    return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={11}>
-          <Row>
-            <Col xs={4} className={"my-auto"}>
-              <span className={'ml-3'}>Field Name</span>
-            </Col>
-            <Col xs={4} className={"my-auto"}>
-              <span>Type</span>
-            </Col>
-            <Col xs={4}/>
-          </Row>
-        </Col>
-        <Col xs={1}/>
-      </Row>
-    );
-  };
-
-  const getBody = () => {
-    return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
       </div>
     );
   };
@@ -200,30 +173,39 @@ function EndpointRequestBodyInputBase(
     return null;
   }
 
+  // TODO: Wire up tab content container when finishing field card input
   return (
-    <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faBracketsCurly}
-        titleText={field?.label}
-        addProperty={addField}
-        type={"Field"}
-        addAllowed={isAddAllowed()}
-      >
-        {getBody()}
-      </PropertyInputContainer>
-      <InfoText
-        customMessage={getInfoText()}
-        errorMessage={error}
-      />
-    </div>
+    <VanitySetTabContentContainer
+      titleIcon={faBracketsCurly}
+      title={field?.label}
+    >
+      <div className={"m-3"}>
+        <div>
+          {getBody()}
+        </div>
+        <SaveButtonContainer>
+          <NewRecordButton
+            variant={"secondary"}
+            disabled={isAddAllowed() !== true}
+            addRecordFunction={() => addField()}
+            type={"Field"}
+            size={"sm"}
+          />
+        </SaveButtonContainer>
+        <InfoText
+          customMessage={getInfoText()}
+          errorMessage={error}
+        />
+      </div>
+    </VanitySetTabContentContainer>
   );
 }
 
-EndpointRequestBodyInputBase.propTypes = {
+EndpointRequestBodyInputPanel.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default EndpointRequestBodyInputBase;
+export default EndpointRequestBodyInputPanel;

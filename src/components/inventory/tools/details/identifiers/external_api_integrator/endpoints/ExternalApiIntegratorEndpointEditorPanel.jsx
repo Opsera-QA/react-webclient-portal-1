@@ -13,7 +13,7 @@ import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EndpointRequestTypeSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
-import EndpointRequestBodyInputBase from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputBase";
+import EndpointRequestBodyInputPanel from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
 import EndpointResponseBodyInputBase
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
 import {
