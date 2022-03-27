@@ -26,13 +26,13 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     endpointId,
     disabled,
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [endpoint, setEndpoint] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [endpointRequestParametersModel, setEndpointRequestParametersModel] = useState(undefined);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -104,6 +104,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
             setModel={setModelFunction}
             parameterFields={endpoint?.queryParameterFields}
             fieldName={"queryParameters"}
+            disabled={disabled}
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
@@ -113,6 +114,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
             setModel={setModelFunction}
             parameterFields={endpoint?.requestBodyFields}
             fieldName={"requestBody"}
+            disabled={disabled}
           />
         );
       case ENDPOINT_REQUEST_TYPES.POST:
@@ -129,6 +131,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
               setModel={setModelFunction}
               parameterFields={endpoint?.requestBodyFields}
               fieldName={"requestBody"}
+              disabled={disabled}
             />
           </>
         );

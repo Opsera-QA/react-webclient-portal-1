@@ -39,7 +39,7 @@ function EndpointRequestParameterInputRow(
     let infoText = "";
 
     if (endpointFieldModel?.getData("isRequired") === true) {
-      infoText += `${endpointFieldModel?.getData("fieldName")} is required. `;
+      infoText += `${endpointFieldModel?.getData("fieldName")} is required. If this is not included, the run will fail.`;
     }
 
     if (endpointFieldModel?.getData("isSensitiveData") === true) {
@@ -127,6 +127,7 @@ function EndpointRequestParameterInputRow(
     <InfoContainer
       titleIcon={faCode}
       titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
+      titleClassName={"sub-input-title-bar"}
     >
       <div className={"mx-3 mb-3 mt-1"}>
         <Row>
