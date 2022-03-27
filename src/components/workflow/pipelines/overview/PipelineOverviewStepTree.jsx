@@ -21,7 +21,10 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
 
 
   return (
-    <VanitySetVerticalTabContainer title={"Pipeline Steps"} className={"h-100"}>
+    <VanitySetVerticalTabContainer
+      title={`Pipeline Steps`}
+      className={"h-100"}
+    >
       <VanitySetVerticalTab
         tabText={"Pipeline Settings"}
         tabName={0}

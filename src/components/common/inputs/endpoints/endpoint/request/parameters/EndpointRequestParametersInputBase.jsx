@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function EndpointRequestParametersInputBase(
   {
@@ -80,12 +80,20 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
-  const getFieldBody = () => {
+  const getBody = () => {
+    if (!Array.isArray(parameters) || parameters?.length === 0) {
+      return (
+        <div className="text-center">
+          <div className="text-muted my-5">There are no Parameters to configure</div>
+        </div>
+      );
+    }
+
     return (
-      <div>
+      <div className={"m-3"}>
         {parameters.map((fieldData, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+            <div key={index} className={index % 2 === 0 ? "" : "my-2"}>
               <EndpointRequestParameterInputRow
                 index={index}
                 endpointBodyField={fieldData}
@@ -99,52 +107,18 @@ function EndpointRequestParametersInputBase(
     );
   };
 
-  const getHeaderBar = () => {
-    return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={6} className={"my-auto"}>
-          <span className={'ml-3'}>Field Name</span>
-        </Col>
-        <Col xs={6} className={"my-auto"}>
-          <span>Value</span>
-        </Col>
-      </Row>
-    );
-  };
-
-  const getBody = () => {
-    if (!parameters || parameters?.length === 0) {
-      return (
-        <div className="text-center">
-          <div className="text-muted my-5">There are no Parameters to configure</div>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
-      </div>
-    );
-  };
-
   if (field == null) {
     return null;
   }
 
   return (
     <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faFilter}
+      <InfoContainer
+        titleIcon={faCode}
         titleText={field?.label}
       >
         {getBody()}
-      </PropertyInputContainer>
+      </InfoContainer>
     </div>
   );
 }

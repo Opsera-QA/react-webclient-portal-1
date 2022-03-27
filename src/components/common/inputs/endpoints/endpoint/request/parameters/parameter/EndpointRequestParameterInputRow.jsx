@@ -5,7 +5,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -14,6 +13,8 @@ import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function EndpointRequestParameterInputRow(
   {
@@ -81,7 +82,6 @@ function EndpointRequestParameterInputRow(
             <CustomParameterSelectInput
               model={endpointFieldModel}
               fieldName={"value"}
-              showLabel={false}
               className={"value-parameter"}
               requireVaultSavedParameters={true}
               setDataFunction={updateSensitiveCustomParameter}
@@ -94,7 +94,6 @@ function EndpointRequestParameterInputRow(
           <CustomParameterComboBoxInput
             model={endpointFieldModel}
             fieldName={"value"}
-            showLabel={false}
             className={"value-parameter"}
             requireInsensitiveParameters={true}
             setDataFunction={updateInsensitiveCustomParameter}
@@ -106,7 +105,6 @@ function EndpointRequestParameterInputRow(
           <MultiTextInputBase
             model={endpointFieldModel}
             fieldName={"value"}
-            showLabel={false}
             setDataFunction={updateMainModelFunction}
             disabled={disabled}
           />
@@ -126,22 +124,19 @@ function EndpointRequestParameterInputRow(
   }
 
   return (
-    <div className={"mx-2"}>
-      <Row className={"d-flex py-2"}>
-        <Col sm={4}>
-          <StandaloneTextInputBase
-            model={endpointFieldModel}
-            value={endpointFieldModel?.getData("fieldName")}
-            setDataFunction={updateMainModelFunction}
-            disabled={true}
-          />
-        </Col>
-        <Col sm={8}>
-          {getValueInput()}
-        </Col>
-      </Row>
-      {getInfoTextField()}
-    </div>
+    <InfoContainer
+      titleIcon={faCode}
+      titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
+    >
+      <div className={"mx-3 mb-3 mt-1"}>
+        <Row>
+          <Col sm={12}>
+            {getValueInput()}
+          </Col>
+        </Row>
+        {getInfoTextField()}
+      </div>
+    </InfoContainer>
   );
 }
 

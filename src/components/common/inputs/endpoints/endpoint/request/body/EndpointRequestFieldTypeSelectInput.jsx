@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const SUPPORTED_FIELD_TYPES = [
   // {
@@ -17,32 +18,35 @@ const SUPPORTED_FIELD_TYPES = [
   },
 ];
 
-function EndpointRequestFieldTypeStandaloneSelectInput(
+function EndpointRequestFieldTypeSelectInput(
   {
     model,
-    updateMainModelFunction,
+    setModel,
+    fieldName,
+    setDataFunction,
     disabled,
   }) {
-  const updateMainModel = (newValue) => {
-    updateMainModelFunction("type", newValue);
-  };
-  
   return (
-    <StandaloneSelectInput
+    <SelectInputBase
       selectOptions={SUPPORTED_FIELD_TYPES}
+      dataObject={model}
+      setDataObject={setModel}
+      fieldName={fieldName}
       valueField={"value"}
       textField={"text"}
       value={model?.getData("type")}
       disabled={disabled}
-      setDataFunction={updateMainModel}
+      setDataFunction={setDataFunction}
     />
   );
 }
 
-EndpointRequestFieldTypeStandaloneSelectInput.propTypes = {
+EndpointRequestFieldTypeSelectInput.propTypes = {
   model: PropTypes.object,
-  updateMainModelFunction: PropTypes.func,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  fieldName: PropTypes.string,
 };
 
-export default EndpointRequestFieldTypeStandaloneSelectInput;
+export default EndpointRequestFieldTypeSelectInput;
