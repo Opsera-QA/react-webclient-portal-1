@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {
@@ -14,14 +12,6 @@ import ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import ExternalApiIntegrationStepRunEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
-import ExternalApiIntegrationStepStatusEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
-import ExternalApiIntegrationStepRunEndpointRequestInputBase
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
-import EndpointResponseEvaluationRulesInputBase
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
   from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";

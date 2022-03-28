@@ -13,7 +13,6 @@ import EndpointResponseEvaluationRulesInputBase
 import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
 import InfoContainer from "components/common/containers/InfoContainer";
-import {disabled} from "react-widgets/PropTypes";
 
 function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   {

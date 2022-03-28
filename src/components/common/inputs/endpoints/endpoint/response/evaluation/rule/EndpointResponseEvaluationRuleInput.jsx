@@ -50,7 +50,8 @@ function EndpointResponseEvaluationRuleInput(
             <Col sm={4}>
               <EndpointResponseEvaluationStatusRuleFilterSelectInput
                 model={evaluationRuleModel}
-                setModel={(newModel) => updateMainModelFunction("filter", newModel?.getData("filter"))}
+                setModel={setEvaluationRuleModel}
+                setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
                 fieldName={"filter"}
                 disabled={disabled}
               />
@@ -58,7 +59,8 @@ function EndpointResponseEvaluationRuleInput(
             <Col sm={4}>
               <PositiveIntegerNumberTextInput
                 model={evaluationRuleModel}
-                setModel={(newModel) => updateMainModelFunction("value", newModel?.getData("value"))}
+                setModel={setEvaluationRuleModel}
+                setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
                 fieldName={"value"}
                 disabled={disabled}
               />
@@ -72,7 +74,8 @@ function EndpointResponseEvaluationRuleInput(
               <EndpointResponseFieldEvaluationRulesFilterSelectInput
                 fieldName={"filter"}
                 model={evaluationRuleModel}
-                setModel={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}
+                setModel={setEvaluationRuleModel}
+                setDataFunction={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}
                 responseBodyFields={responseBodyFields}
                 disabled={disabled}
               />
@@ -81,7 +84,8 @@ function EndpointResponseEvaluationRuleInput(
               <EndpointResponseFieldEvaluationRulesInputBase
                 fieldName={"field_rules"}
                 model={evaluationRuleModel}
-                setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
+                setModel={setEvaluationRuleModel}
+                setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}
                 responseBodyFields={responseBodyFields}
                 disabled={disabled}
               />
@@ -91,9 +95,8 @@ function EndpointResponseEvaluationRuleInput(
     }
   };
 
-  const setRuleOptionFunction = (fieldName, selectedOption) => {
-    const newModel = {...endpointResponseEvaluationRuleModel};
-    const newValue = selectedOption?.value;
+  const setRuleOptionFunction = (fieldName, newValue) => {
+    const newModel = {...evaluationRuleModel};
     newModel.setData(fieldName, newValue);
     newModel.setDefaultValue("field_rules");
     newModel.setDefaultValue("value");
@@ -104,6 +107,7 @@ function EndpointResponseEvaluationRuleInput(
     else {
       newModel.setData("filter", "all");
     }
+
     updateModelFunction(newModel);
   };
 
@@ -115,7 +119,7 @@ function EndpointResponseEvaluationRuleInput(
             model={evaluationRuleModel}
             setModel={setEvaluationRuleModel}
             fieldName={"option"}
-            setDataFunction={setRuleOptionFunction}
+            setDataFunction={(fieldName, selectedOption) => setRuleOptionFunction(fieldName, selectedOption?.value)}
             disabled={disabled}
             responseBodyFields={responseBodyFields}
           />

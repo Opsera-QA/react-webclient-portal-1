@@ -123,7 +123,7 @@ function EndpointResponseEvaluationRulesInputBase(
       {/*  <Col xs={12} sm={6}>*/}
           <EndpointResponseEvaluationRuleInput
             fieldName={"success_rule"}
-            rule={endpointResponseEvaluationRuleModel.getData("success_rule")}
+            rule={endpointResponseEvaluationRuleModel?.getData("success_rule")}
             endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
             updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
             responseBodyFields={endpoint?.responseBodyFields}
@@ -138,7 +138,7 @@ function EndpointResponseEvaluationRulesInputBase(
       <EndpointResponseEvaluationRuleInput
         fieldName={"running_rule"}
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-        rule={endpointResponseEvaluationRuleModel.getData("running_rule")}
+        rule={endpointResponseEvaluationRuleModel?.getData("running_rule")}
         updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
         responseBodyFields={endpoint?.responseBodyFields}
         disabled={disabled}

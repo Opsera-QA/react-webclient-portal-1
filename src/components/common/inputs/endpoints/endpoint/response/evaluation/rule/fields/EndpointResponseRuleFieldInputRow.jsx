@@ -16,6 +16,7 @@ import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -34,6 +35,15 @@ function EndpointResponseRuleFieldInputRow(
     updateFieldFunction({...endpointFieldModel?.getPersistData()});
   };
 
+  const updateMainModel = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+  };
+
+  const updateCustomParameterField = (fieldName, newValue) => {
+    const parsedValue = hasStringValue(newValue) === true ? newValue : newValue?.value || "";
+    updateMainModelFunction(fieldName, parsedValue);
+  };
+
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -47,10 +57,11 @@ function EndpointResponseRuleFieldInputRow(
             return (
               <CustomParameterSelectInput
                 model={endpointFieldModel}
+                setModel={setEndpointFieldModel}
                 fieldName={"value"}
                 className={"value-parameter"}
                 requireVaultSavedParameters={true}
-                setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+                setDataFunction={updateCustomParameterField}
                 disabled={disabled}
               />
             );
@@ -59,10 +70,11 @@ function EndpointResponseRuleFieldInputRow(
           return (
             <CustomParameterComboBoxInput
               model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
               fieldName={"value"}
               className={"value-parameter"}
               requireInsensitiveParameters={true}
-              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+              setDataFunction={updateCustomParameterField}
               disabled={disabled}
             />
           );
@@ -76,6 +88,7 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
+              className={"mt-2"}
             />
           );
         case "date":
@@ -88,6 +101,7 @@ function EndpointResponseRuleFieldInputRow(
               defaultToNull={true}
               disabled={disabled}
               clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              className={"mt-2"}
             />
           );
       }
@@ -112,7 +126,7 @@ function EndpointResponseRuleFieldInputRow(
             className={"px-0"}
             disabled={disabled}
             isSensitiveData={endpointBodyField?.isSensitiveData === true}
-            updateMainModelFunction={updateMainModelFunction}
+            updateMainModelFunction={updateMainModel}
           />
         </Col>
         <Col xs={12} className={"mt-2"}>

@@ -15,9 +15,11 @@ function ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelec
     isSensitiveData,
     updateMainModelFunction,
   }) {
-  const setDataFunction = (fieldName, selectOption) => {
-    updateMainModelFunction(fieldName, selectOption?.value);
-    updateMainModelFunction("value", dataParsingHelper.parseObjectValue(model?.getData("type")));
+  const setDataFunction = (fieldName, selectedOption) => {
+    const newModel = {...model};
+    newModel.setData(fieldName, selectedOption?.value);
+    newModel.setData("value", dataParsingHelper.parseObjectValue(model?.getData("type")));
+    updateMainModelFunction(newModel);
   };
 
   return (
