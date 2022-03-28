@@ -20,7 +20,7 @@ function ChartDetailsOverlay({ dashboardData, kpiConfiguration, chartModel, kpiI
     <CenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`[${chartModel.getType()}] Chart Details`}
+      titleText={`${chartModel.getType()} Chart Details`}
       // TODO: Make component that changes icon depending on chart type
       titleIcon={faChartBar}
       showToasts={true}
