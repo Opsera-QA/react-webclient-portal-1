@@ -129,7 +129,7 @@ function EndpointRequestParameterInputRow(
       titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
       titleClassName={"sub-input-title-bar"}
     >
-      <div className={"mx-3 mb-3 mt-1"}>
+      <div className={"mx-3 mb-3 mt-2"}>
         <Row>
           <Col sm={12}>
             {getValueInput()}

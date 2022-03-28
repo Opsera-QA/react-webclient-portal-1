@@ -1,16 +1,11 @@
 import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {faBracketsCurly, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
-import {Button} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
@@ -173,7 +168,6 @@ function EndpointRequestBodyInputPanel(
     return null;
   }
 
-  // TODO: Wire up tab content container when finishing field card input
   return (
     <VanitySetTabContentContainer
       titleIcon={faBracketsCurly}
@@ -187,7 +181,7 @@ function EndpointRequestBodyInputPanel(
           <NewRecordButton
             variant={"secondary"}
             disabled={isAddAllowed() !== true}
-            addRecordFunction={() => addField()}
+            addRecordFunction={addField}
             type={"Field"}
             size={"sm"}
           />
