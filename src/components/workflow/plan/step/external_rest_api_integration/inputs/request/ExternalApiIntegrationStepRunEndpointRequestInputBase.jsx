@@ -107,6 +107,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
+      case ENDPOINT_REQUEST_TYPES.POST:
         return (
           <EndpointRequestParametersInputBase
             model={endpointRequestParametersModel}
@@ -115,24 +116,6 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
             fieldName={"requestBody"}
             disabled={disabled}
           />
-        );
-      case ENDPOINT_REQUEST_TYPES.POST:
-        return (
-          <>
-            <EndpointRequestParametersInputBase
-              model={endpointRequestParametersModel}
-              setModel={setModelFunction}
-              parameterFields={endpoint?.queryParameterFields}
-              fieldName={"queryParameters"}
-            />
-            <EndpointRequestParametersInputBase
-              model={endpointRequestParametersModel}
-              setModel={setModelFunction}
-              parameterFields={endpoint?.requestBodyFields}
-              fieldName={"requestBody"}
-              disabled={disabled}
-            />
-          </>
         );
     }
   };

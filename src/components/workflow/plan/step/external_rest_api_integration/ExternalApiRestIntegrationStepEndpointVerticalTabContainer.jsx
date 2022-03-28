@@ -13,11 +13,13 @@ import EndpointResponseEvaluationRulesInputBase
 import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
 import InfoContainer from "components/common/containers/InfoContainer";
+import {disabled} from "react-widgets/PropTypes";
 
 function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   {
     externalRestApiIntegrationModel,
     setExternalRestApiIntegrationModel,
+    disabled,
   }) {
   const [activeTab, setActiveTab] = useState("run");
 
@@ -58,6 +60,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
             fieldName={"runEndpointId"}
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
+            disabled={disabled}
           />
           <ExternalApiIntegrationStepRunEndpointRequestInputBase
             fieldName={"runEndpointRequestParameters"}
@@ -65,6 +68,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
           />
           <EndpointResponseEvaluationRulesInputBase
             fieldName={"runEndpointResponseEvaluationRules"}
@@ -72,6 +76,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
           />
         </>
       );
@@ -83,6 +88,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
           fieldName={"statusEndpointId"}
           model={externalRestApiIntegrationModel}
           setModel={setExternalRestApiIntegrationModel}
+          disabled={disabled}
         />
         <ExternalApiIntegrationStepRunEndpointRequestInputBase
           fieldName={"statusEndpointRequestParameters"}
@@ -90,6 +96,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
           setModel={setExternalRestApiIntegrationModel}
           toolId={externalRestApiIntegrationModel?.getData("toolId")}
           endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+          disabled={disabled}
         />
         <EndpointResponseEvaluationRulesInputBase
           fieldName={"statusEndpointResponseEvaluationRules"}
@@ -97,6 +104,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
           setModel={setExternalRestApiIntegrationModel}
           toolId={externalRestApiIntegrationModel?.getData("toolId")}
           endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+          disabled={disabled}
         />
       </>
     );
@@ -127,6 +135,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
 ExternalApiRestIntegrationStepEndpointVerticalTabContainer.propTypes = {
   externalRestApiIntegrationModel: PropTypes.object,
   setExternalRestApiIntegrationModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ExternalApiRestIntegrationStepEndpointVerticalTabContainer;

@@ -15,6 +15,7 @@ function InputTitleBar(
     disabled,
     customTitle,
     loadDataFunction,
+    rightSideButton,
     className,
   }) {
   const getTitle = () => {
@@ -36,6 +37,16 @@ function InputTitleBar(
         <span>{getTitle()}</span>
       </div>
     );
+  };
+
+  const getRightSideButton = () => {
+    if (rightSideButton) {
+      return (
+        <div className={"ml-2 my-auto"}>
+          {rightSideButton}
+        </div>
+      );
+    }
   };
 
   // TODO: Make InputSearchBar component?
@@ -61,6 +72,7 @@ function InputTitleBar(
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
+        {getRightSideButton()}
       </div>
     </div>
   );
@@ -78,10 +90,11 @@ InputTitleBar.propTypes = {
   helpComponent: PropTypes.object,
   loadDataFunction: PropTypes.func,
   className: PropTypes.string,
+  rightSideButton: PropTypes.object,
 };
 
 InputTitleBar.defaultProps = {
-  className: "input-title-bar",
+  className: "input-title-bar p-2",
 };
 
 export default InputTitleBar;

@@ -17,7 +17,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
     externalApiIntegratorModel,
     setExternalApiIntegratorModel,
   }) {
-  const [activeTab, setActiveTab] = useState("requestBody");
+  const [activeTab, setActiveTab] = useState(externalApiIntegratorModel?.getData("requestType") === ENDPOINT_REQUEST_TYPES.GET ? "queryParameters" : "requestBody");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -36,6 +36,16 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             activeTab={activeTab}
           />
         );
+      case ENDPOINT_REQUEST_TYPES.PUT:
+      case ENDPOINT_REQUEST_TYPES.POST:
+        return (
+          <VanitySetVerticalTab
+            tabText={"Request Body"}
+            tabName={"requestBody"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
+        );
     }
   };
 
@@ -46,12 +56,6 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       >
         <div className={"tab-tree"}>
           {getDynamicTabsForRequestType()}
-          <VanitySetVerticalTab
-            tabText={"Request Body"}
-            tabName={"requestBody"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-          />
           <VanitySetVerticalTab
             tabText={"Response Body"}
             tabName={"responseBody"}

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {
   endpointResponseEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/endpointResponseEvaluationRule.metadata";

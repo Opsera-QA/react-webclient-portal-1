@@ -9,6 +9,8 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import TextValueCard from "components/common/inputs/list/text/TextValueCard";
+import InputContainer from "components/common/inputs/InputContainer";
 
 function MultiTextListInputBase(
   {
@@ -73,9 +75,13 @@ function MultiTextListInputBase(
 
   const formatItem = (item, index) => {
     return (
-      <div key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-        {item}
-        {/*<UserCard selectedUsers={selectedMembers} setSelectedUsers={setSelectedMembers} user={user}/>*/}
+      <div key={index} className={index % 2 === 0 ? "odd-row-background-color" : "even-row-background-color"}>
+        <TextValueCard
+          value={item}
+          className={"p-2"}
+          index={index}
+          deleteValueFunction={() => deleteValueFunction(index)}
+        />
       </div>
     );
   };
@@ -136,15 +142,44 @@ function MultiTextListInputBase(
     setPotentialValue("");
   };
 
+  const canAddPotentialValue = () => {
+    // TODO: Should we allow adding empty string?
+    if (hasStringValue(potentialValue) !== true) {
+      return false;
+    }
+
+    if (isPotentialValueValidFunction != null) {
+      return isPotentialValueValidFunction(potentialValue);
+    }
+
+    return true;
+  };
+
   const getAddButton = () => {
     return (
       <NewRecordButton
         addRecordFunction={addValue}
         type={singularTopic}
+        size={"md"}
         customButtonText={`Add ${singularTopic}`}
-        disabled={isPotentialValueValidFunction(potentialValue) !== true}
-
+        disabled={canAddPotentialValue() !== true}
       />
+    );
+  };
+
+  const getRemoveAllButton = () => {
+    return (
+      <div>
+        <Button
+          variant={"danger"}
+          size={"sm"}
+          onClick={removeAllItems}
+          disabled={model?.getArrayData(fieldName)?.length === 0}
+        >
+          <span className={"mr-2"}><IconBase icon={faMinusCircle} className={"mr-2"}/>Remove All</span>
+          <span className={"badge badge-secondary"}>{model?.getArrayData(fieldName).length}</span>
+        </Button>
+      </div>
     );
   };
 
@@ -153,31 +188,29 @@ function MultiTextListInputBase(
   }
 
   return (
-    <div className={className}>
-      <div className={"mb-2 d-flex justify-content-end"}>
-        <Button size={"sm"} variant={"danger"} onClick={removeAllItems}>
-          <span className={"mr-2"}><IconBase icon={faMinusCircle} className={"mr-2"}/>Remove All</span>
-          <span className={"badge badge-secondary"}>{model?.getArrayData(fieldName).length}</span>
-        </Button>
-      </div>
+    <InputContainer className={className}>
       <InfoContainer
         titleText={getTitle()}
+        titleRightSideButton={getRemoveAllButton()}
       >
-        <ul className={"list-group membership-list"}>
+        <ul className={"list-group text-input-list"}>
           {formatItems()}
         </ul>
       </InfoContainer>
-      <StandaloneTextInputBase
-        placeholderText={getPlaceholderText()}
-        value={potentialValue}
-        setDataFunction={setPotentialValue}
-        rightSideInputButton={getAddButton()}
-      />
+      <div className={"mt-3 d-flex"}>
+        <StandaloneTextInputBase
+          placeholderText={getPlaceholderText()}
+          value={potentialValue}
+          setDataFunction={setPotentialValue}
+          rightSideInputButton={getAddButton()}
+          className={"mb-0"}
+        />
+      </div>
       <InfoText
         field={field}
         errorMessage={getErrorMessage()}
       />
-    </div>
+    </InputContainer>
   );
 }
 
