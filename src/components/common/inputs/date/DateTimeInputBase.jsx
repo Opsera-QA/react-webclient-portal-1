@@ -14,12 +14,15 @@ function DateTimeInputBase(
     dataObject,
     setDataObject,
     setDataFunction,
+    clearDataFunction,
     disabled,
     showTime,
     minDate,
     maxDate,
     dropUp,
     defaultToNull,
+    showClearValueButton,
+    className,
   }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,13 +51,36 @@ function DateTimeInputBase(
     }
   };
 
+  const clearValue = () => {
+    if (!setDataFunction && !clearDataFunction) {
+      validateAndSetData(fieldName, dataObject?.getDefaultValue(fieldName));
+    }
+    else if (clearDataFunction) {
+      clearDataFunction();
+    }
+  };
+
+  const getClearDataFunction = () => {
+    if (
+      dataObject?.getData(fieldName) != null
+      && disabled !== true
+      && showClearValueButton !== false
+    ) {
+      return clearValue;
+    }
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
-    <InputContainer>
-      <InputLabel field={field} model={dataObject} />
+    <InputContainer className={className}>
+      <InputLabel
+        field={field}
+        model={dataObject}
+        clearDataFunction={getClearDataFunction()}
+      />
       <StandaloneDatePickerInput
         minDate={minDate}
         maxDate={maxDate}
@@ -80,12 +106,15 @@ DateTimeInputBase.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
+  showClearValueButton: PropTypes.bool,
   disabled: PropTypes.bool,
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
   maxDate: PropTypes.any,
   dropUp: PropTypes.bool,
   defaultToNull: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 DateTimeInputBase.defaultProps = {

@@ -13,6 +13,7 @@ function DateTimeInput(
     setDataFunction,
     dropUp,
     defaultToNull,
+    clearDataFunction,
   }) {
   return (
     <DateTimeInputBase
@@ -25,6 +26,7 @@ function DateTimeInput(
       setDataObject={setDataObject}
       defaultToNull={defaultToNull}
       dropUp={dropUp}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -39,6 +41,7 @@ DateTimeInput.propTypes = {
   maxDate: PropTypes.any,
   dropUp: PropTypes.bool,
   defaultToNull: PropTypes.bool,
+  clearDataFunction: PropTypes.func,
 };
 
 export default DateTimeInput;

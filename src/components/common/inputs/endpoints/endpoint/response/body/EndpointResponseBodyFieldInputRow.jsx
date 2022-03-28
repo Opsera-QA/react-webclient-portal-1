@@ -15,6 +15,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import {removeSpacesFromString} from "components/common/helpers/string-helpers";
 
 function EndpointResponseBodyFieldInputRow(
   {
@@ -51,7 +52,7 @@ function EndpointResponseBodyFieldInputRow(
               dataObject={endpointFieldModel}
               setDataObject={setEndpointFieldModel}
               fieldName={"fieldName"}
-              setDataFunction={updateMainModelFunction}
+              setDataFunction={(fieldName, value) => updateMainModelFunction(fieldName, removeSpacesFromString(value))}
               disabled={disabled}
             />
           </Col>
@@ -60,7 +61,7 @@ function EndpointResponseBodyFieldInputRow(
               model={endpointFieldModel}
               setModel={setEndpointFieldModel}
               fieldName={"type"}
-              setDataFunction={updateMainModelFunction}
+              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
               disabled={disabled}
             />
           </Col>

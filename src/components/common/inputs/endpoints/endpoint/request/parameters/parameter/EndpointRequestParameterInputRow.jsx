@@ -9,13 +9,12 @@ import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
 function EndpointRequestParameterInputRow(
   {
@@ -33,7 +32,6 @@ function EndpointRequestParameterInputRow(
     const newModel = {...endpointFieldModel};
     newModel.setData(fieldName, newValue);
     updateParameterFunction({...newModel?.getPersistData()});
-    setEndpointFieldModel({...newModel});
   };
 
   const getInfoText = () => {
@@ -80,7 +78,7 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <div className={"mx-3 mb-3 mt-2"}>
+            <div className={"mx-3 my-2"}>
               <CustomParameterSelectInput
                 model={endpointFieldModel}
                 fieldName={"value"}
@@ -97,7 +95,7 @@ function EndpointRequestParameterInputRow(
         }
 
         return (
-          <div className={"mx-3 mb-3 mt-2"}>
+          <div className={"mx-3 my-2"}>
             <CustomParameterComboBoxInput
               model={endpointFieldModel}
               fieldName={"value"}
@@ -127,10 +125,17 @@ function EndpointRequestParameterInputRow(
         );
       case "date":
         return (
-          <DateTimeInputBase
-
-            disabled={disabled}
-          />
+          <div className={"mx-3 mb-3 mt-2"}>
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          </div>
         );
     }
   };

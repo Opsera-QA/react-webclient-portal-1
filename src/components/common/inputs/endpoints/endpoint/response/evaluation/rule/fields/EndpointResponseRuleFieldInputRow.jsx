@@ -3,15 +3,19 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {
   endpointResponseFieldEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
+import CustomParameterComboBoxInput
+  from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -31,19 +35,62 @@ function EndpointResponseRuleFieldInputRow(
   };
 
   const getValueInput = () => {
+    const type = endpointFieldModel?.getData("type");
+    const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
     const canEnterValue = ["equals", "not_equals"];
-    if (canEnterValue.includes(endpointFieldModel?.getData("filter"))) {
-      return (
-        <Col sm={12}>
-          <TextInputBase
-            dataObject={endpointFieldModel}
-            setDataObject={setEndpointFieldModel}
-            fieldName={"value"}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
-        </Col>
-      );
+    const filter = endpointFieldModel?.getData("filter");
+
+    if (canEnterValue.includes(filter)) {
+      switch (type) {
+        case "string":
+          if (isSensitiveData === true) {
+            return (
+              <CustomParameterSelectInput
+                model={endpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+                disabled={disabled}
+              />
+            );
+          }
+
+          return (
+            <CustomParameterComboBoxInput
+              model={endpointFieldModel}
+              fieldName={"value"}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+              disabled={disabled}
+            />
+          );
+        case "array":
+          return (
+            <MultiTextListInputBase
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+            />
+          );
+        case "date":
+          return (
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          );
+      }
     }
   };
 
@@ -52,7 +99,8 @@ function EndpointResponseRuleFieldInputRow(
       <Row>
         <Col sm={12}>
           <H5FieldSubHeader
-            subheaderText={`This field will meet the rule's criteria if ${endpointFieldModel.getData("fieldName")}`}
+            className={"mt-auto"}
+            subheaderText={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
           />
         </Col>
         <Col sm={12}>
@@ -67,7 +115,9 @@ function EndpointResponseRuleFieldInputRow(
             updateMainModelFunction={updateMainModelFunction}
           />
         </Col>
-        {getValueInput()}
+        <Col xs={12} className={"mt-2"}>
+          {getValueInput()}
+        </Col>
       </Row>
     );
   };

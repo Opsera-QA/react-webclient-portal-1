@@ -46,7 +46,7 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
       textField={"text"}
       disabled={disabled}
       setDataFunction={setDataFunction}
-      // customInfoTextMessage={"Field Evaluation is only available if Response Fields are registered in the selected endpoint."}
+      customInfoTextMessage={"Field Evaluation is only available if Response Fields are registered in the selected Endpoint."}
     />
   );
 }
