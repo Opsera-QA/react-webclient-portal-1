@@ -24,7 +24,7 @@ function DateTimeInputBase(
     showClearValueButton,
     className,
   }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
 
@@ -109,11 +109,10 @@ DateTimeInputBase.propTypes = {
   clearDataFunction: PropTypes.func,
   showClearValueButton: PropTypes.bool,
   disabled: PropTypes.bool,
-  showDate: PropTypes.bool,
-  dropUp: PropTypes.bool,
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
   maxDate: PropTypes.any,
+  dropUp: PropTypes.bool,
   defaultToNull: PropTypes.bool,
   className: PropTypes.string,
 };
