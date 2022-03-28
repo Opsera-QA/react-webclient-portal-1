@@ -141,7 +141,7 @@ function EndpointResponseBodyInputBase(
           <NewRecordButton
             variant={"secondary"}
             disabled={isAddAllowed() !== true}
-            addRecordFunction={() => addField()}
+            addRecordFunction={addField}
             type={"Field"}
             size={"sm"}
           />

@@ -43,10 +43,9 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setEndpoint(undefined);
+    setEndpointRequestParametersModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointRequestParametersMetadata));
 
     if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
-      setEndpointRequestParametersModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointRequestParametersMetadata));
-
       loadData(source).catch((error) => {
         throw error;
       });
@@ -56,7 +55,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, endpointId]);
+  }, [fieldName, toolId, endpointId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

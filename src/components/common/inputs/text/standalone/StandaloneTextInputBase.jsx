@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
+import {InputGroup} from "react-bootstrap";
 
 function StandaloneTextInputBase(
   {
@@ -11,6 +12,8 @@ function StandaloneTextInputBase(
     type,
     className,
     error,
+    placeholderText,
+    rightSideInputButton,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -33,9 +36,10 @@ function StandaloneTextInputBase(
     return classes;
   };
 
-  return (
-    <>
+  const getInputBody = () => {
+    return (
       <input
+        placeholder={placeholderText}
         type={type}
         disabled={disabled}
         value={value}
@@ -43,6 +47,31 @@ function StandaloneTextInputBase(
         className={getInputClasses()}
         autoComplete={"off"}
       />
+    );
+  };
+
+  const getInput = () => {
+    if (rightSideInputButton != null) {
+      return (
+        <InputGroup className={"flex-nowrap text-input-with-button"}>
+          {getInputBody()}
+          <InputGroup.Append>
+            {rightSideInputButton}
+          </InputGroup.Append>
+        </InputGroup>
+      );
+    }
+
+    return (
+      <div className={"d-flex"}>
+        {getInputBody()}
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {getInput()}
       <InfoText errorMessage={errorMessage} />
     </>
   );
@@ -58,6 +87,8 @@ StandaloneTextInputBase.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  placeholderText: PropTypes.string,
+  rightSideInputButton: PropTypes.object,
 };
 
 export default StandaloneTextInputBase;

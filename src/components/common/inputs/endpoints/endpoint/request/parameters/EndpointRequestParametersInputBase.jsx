@@ -8,6 +8,7 @@ import EndpointRequestParameterInputRow
 import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 
 function EndpointRequestParametersInputBase(
   {
@@ -23,6 +24,7 @@ function EndpointRequestParametersInputBase(
 
   useEffect(() => {
     isMounted.current = true;
+    setParameters([]);
 
     if (Array.isArray(parameterFields)) {
       loadData();
@@ -39,7 +41,7 @@ function EndpointRequestParametersInputBase(
 
     parameterFields.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
-      const value = parseObjectValue(parameter.type, currentData[fieldName]);
+      const value = dataParsingHelper.parseObjectValue(parameter.type, currentData[fieldName]);
 
       unpackedParameters.push({
         ...parameter,
@@ -48,16 +50,6 @@ function EndpointRequestParametersInputBase(
     });
 
     setParameters([...unpackedParameters]);
-  };
-
-  // TODO: Wire up constants
-  const parseObjectValue = (type, value) => {
-    switch (type) {
-      case "string":
-        return typeof value === "string" ? value : "";
-      case "array":
-        return Array.isArray(value) ? value : [];
-    }
   };
 
   const validateAndSetData = (newParameters) => {
@@ -69,7 +61,7 @@ function EndpointRequestParametersInputBase(
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
-      constructedParameterObject[fieldName] = parseObjectValue(parameter?.type, value);
+      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
     });
 
     newModel.setData(fieldName, constructedParameterObject);

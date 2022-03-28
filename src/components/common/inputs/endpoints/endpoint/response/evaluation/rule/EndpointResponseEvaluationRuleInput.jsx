@@ -60,15 +60,17 @@ function EndpointResponseEvaluationRuleInput(
             </Col>
           </>
         );
-      case "field":
+      case "field_evaluation":
         return (
-          <EndpointResponseFieldEvaluationRulesInputBase
-            fieldName={"field_rules"}
-            model={evaluationRuleModel}
-            setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
-            responseBodyFields={responseBodyFields}
-            disabled={disabled}
-          />
+          <Col xs={12}>
+            <EndpointResponseFieldEvaluationRulesInputBase
+              fieldName={"field_rules"}
+              model={evaluationRuleModel}
+              setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
+              responseBodyFields={responseBodyFields}
+              disabled={disabled}
+            />
+          </Col>
         );
     }
   };

@@ -107,6 +107,12 @@ function EndpointResponseEvaluationRulesInputBase(
       <H5FieldSubHeader
         subheaderText={"Response Evaluation Rules"}
       />
+      <InfoText
+        customMessage={`
+          Success rules take precedence over Running rules. 
+          If the response does not match either the Success or Running rule, it will be considered a failure.
+        `}
+      />
       <EndpointResponseEvaluationRuleInput
         fieldName={"success_rule"}
         rule={endpointResponseEvaluationRuleModel.getData("success_rule")}
@@ -114,12 +120,6 @@ function EndpointResponseEvaluationRulesInputBase(
         updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
         responseBodyFields={endpoint?.responseBodyFields}
         disabled={disabled}
-      />
-      <InfoText
-        customMessage={`
-          Success rules take precedence over Running rules. 
-          If the response does not match either the Success or Running rules, it will be considered a failure.
-        `}
       />
       <EndpointResponseEvaluationRuleInput
         fieldName={"running_rule"}
