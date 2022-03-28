@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import {
   faCode,
-  faTimes,
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -64,7 +62,7 @@ function EndpointRequestBodyFieldInputRow(
               model={endpointFieldModel}
               setModel={setEndpointFieldModel}
               fieldName={"type"}
-              setDataFunction={updateMainModelFunction}
+              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
               disabled={disabled}
             />
           </Col>

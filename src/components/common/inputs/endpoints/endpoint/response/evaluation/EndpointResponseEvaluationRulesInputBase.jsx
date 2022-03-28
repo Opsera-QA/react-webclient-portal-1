@@ -25,12 +25,16 @@ function EndpointResponseEvaluationRulesInputBase(
   }) {
   const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [field] = useState(model?.getFieldById(fieldName));
+  const [field, setField] = useState(model?.getFieldById(fieldName));
   const [endpointResponseEvaluationRuleModel, setEndpointResponseEvaluationRuleModel] = useState(undefined);
   const [endpoint, setEndpoint] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
+
+  useEffect(() => {
+    setField(model?.getFieldById(fieldName));
+  }, [fieldName]);
 
   useEffect(() => {
     if (cancelTokenSource) {

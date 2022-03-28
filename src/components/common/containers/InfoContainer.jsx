@@ -9,6 +9,7 @@ function InfoContainer(
     titleIcon,
     titleText,
     titleClassName,
+    titleRightSideButton,
     helpComponent,
     className,
   }) {
@@ -20,6 +21,7 @@ function InfoContainer(
         helpComponent={helpComponent}
         isLoading={isLoading}
         className={titleClassName}
+        rightSideButton={titleRightSideButton}
       />
       <div className={"content-container"}>
         {children}
@@ -36,6 +38,7 @@ InfoContainer.propTypes = {
   helpComponent: PropTypes.any,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
+  titleRightSideButton: PropTypes.object,
 };
 
 export default InfoContainer;

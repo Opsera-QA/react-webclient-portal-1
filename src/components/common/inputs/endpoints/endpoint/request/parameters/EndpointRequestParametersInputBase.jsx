@@ -162,7 +162,7 @@ EndpointRequestParametersInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  parameterFields: PropTypes.object,
+  parameterFields: PropTypes.array,
   disabled: PropTypes.bool,
 };
 

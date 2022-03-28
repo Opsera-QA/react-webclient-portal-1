@@ -154,8 +154,8 @@ function EndpointRequestBodyInputPanel(
     }
 
     const duplicateName = hasDuplicateNames(fields);
-
-    return lastFieldComplete() === true && hasStringValue(duplicateName) === false;
+    const lastFieldIsComplete = lastFieldComplete();
+    return lastFieldIsComplete === true && hasStringValue(duplicateName) === false;
   };
 
   const getInfoText = () => {

@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {faBracketsCurly, faPlus} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {
   endpointResponseFieldMetadata
@@ -12,9 +9,6 @@ import EndpointResponseBodyFieldInputRow
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import {Button} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function EndpointResponseBodyInputBase(
@@ -124,6 +118,7 @@ function EndpointResponseBodyInputBase(
   };
 
   if (field == null) {
+    console.log("field is null: " + fieldName);
     return null;
   }
 

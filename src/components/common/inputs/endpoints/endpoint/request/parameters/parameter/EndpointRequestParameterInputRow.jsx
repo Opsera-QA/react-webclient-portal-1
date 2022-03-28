@@ -15,6 +15,7 @@ import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
+import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 
 function EndpointRequestParameterInputRow(
   {
@@ -79,35 +80,50 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <CustomParameterSelectInput
-              model={endpointFieldModel}
-              fieldName={"value"}
-              className={"value-parameter"}
-              requireVaultSavedParameters={true}
-              setDataFunction={updateSensitiveCustomParameter}
-              disabled={disabled}
-            />
+            <div className={"mx-3 mb-3 mt-2"}>
+              <CustomParameterSelectInput
+                model={endpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={updateSensitiveCustomParameter}
+                disabled={disabled}
+              />
+              <div className={"d-flex justify-content-end"}>
+                {getInfoTextField()}
+              </div>
+            </div>
           );
         }
 
         return (
-          <CustomParameterComboBoxInput
-            model={endpointFieldModel}
-            fieldName={"value"}
-            className={"value-parameter"}
-            requireInsensitiveParameters={true}
-            setDataFunction={updateInsensitiveCustomParameter}
-            disabled={disabled}
-          />
+          <div className={"mx-3 mb-3 mt-2"}>
+            <CustomParameterComboBoxInput
+              model={endpointFieldModel}
+              fieldName={"value"}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={updateInsensitiveCustomParameter}
+              disabled={disabled}
+            />
+            <div className={"d-flex justify-content-end"}>
+              {getInfoTextField()}
+            </div>
+          </div>
         );
       case "array":
         return (
-          <MultiTextInputBase
-            model={endpointFieldModel}
-            fieldName={"value"}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
+          <div className={"m-3"}>
+            <MultiTextListInputBase
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+            />
+          </div>
         );
       case "date":
         return (
@@ -129,13 +145,12 @@ function EndpointRequestParameterInputRow(
       titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
       titleClassName={"sub-input-title-bar"}
     >
-      <div className={"mx-3 mb-3 mt-2"}>
+      <div>
         <Row>
           <Col sm={12}>
             {getValueInput()}
           </Col>
         </Row>
-        {getInfoTextField()}
       </div>
     </InfoContainer>
   );
