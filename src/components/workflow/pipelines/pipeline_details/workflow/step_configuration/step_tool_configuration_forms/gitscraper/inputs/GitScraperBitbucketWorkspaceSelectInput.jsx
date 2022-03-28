@@ -5,12 +5,12 @@ import BitbucketWorkspaceInput from "components/common/list_of_values_input/tool
 function GitScraperBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData("bitbucketWorkspace", selectedOption?.key);
+    newModel.setData("workspace", selectedOption?.key);
     newModel.setData("bitbucketWorkspaceName", selectedOption?.name);
     setModel({...newModel});
   };
 
-  if (model?.getData("type") !== "bitbucket") {
+  if (model?.getData("service") !== "bitbucket") {
     return <></>;
   }
 

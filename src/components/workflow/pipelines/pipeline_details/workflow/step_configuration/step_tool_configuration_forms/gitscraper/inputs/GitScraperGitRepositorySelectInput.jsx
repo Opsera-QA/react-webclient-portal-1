@@ -7,8 +7,8 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
-    newModel.setData("gitRepository", selectedOption?.name);
-    newModel.setData("gitRepositoryID", repoId);
+    newModel.setData("repository", selectedOption?.name);
+    newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
     setModel({...newModel});
@@ -16,10 +16,10 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepository"}
-       service={model?.getData("type")}
+       fieldName={"repository"}
+       service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
+       workspace={model?.getData("workspace")}
        dataObject={model}
        setDataObject={setModel}
        setDataFunction={setDataFunction}

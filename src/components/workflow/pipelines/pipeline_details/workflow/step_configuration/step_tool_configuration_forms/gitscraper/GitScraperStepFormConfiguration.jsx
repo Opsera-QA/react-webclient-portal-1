@@ -73,7 +73,7 @@ function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         dataObject={gitscraperStepConfigurationModel}
         setDataObject={setGitscraperStepConfigurationModel}
         disabled={false}
-        fieldName={"library"}
+        fieldName={"type"}
       />
       <GitScraperScmToolTypeSelectInput
         model={gitscraperStepConfigurationModel}
@@ -95,26 +95,26 @@ function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         model={gitscraperStepConfigurationModel}
         setModel={setGitscraperStepConfigurationModel}
       />
-      <NumberPickerInputBase
-        fieldName={"commits"}
-        dataObject={gitscraperStepConfigurationModel}
-        setDataObject={setGitscraperStepConfigurationModel}
-      />
-      <NumberPickerInputBase
-        fieldName={"threshold"}
-        dataObject={gitscraperStepConfigurationModel}
-        setDataObject={setGitscraperStepConfigurationModel}
-      />
-      <GitIgnoreToggleInput
-        model={gitscraperStepConfigurationModel}
-        setModel={setGitscraperStepConfigurationModel}
-        fieldName={"secretsException"}
-        />
-      <GitIgnoreToggleInput
-        model={gitscraperStepConfigurationModel}
-        setModel={setGitscraperStepConfigurationModel}
-        fieldName={"filesException"}
-        />
+      {/*<NumberPickerInputBase*/}
+      {/*  fieldName={"commits"}*/}
+      {/*  dataObject={gitscraperStepConfigurationModel}*/}
+      {/*  setDataObject={setGitscraperStepConfigurationModel}*/}
+      {/*/>*/}
+      {/*<NumberPickerInputBase*/}
+      {/*  fieldName={"threshold"}*/}
+      {/*  dataObject={gitscraperStepConfigurationModel}*/}
+      {/*  setDataObject={setGitscraperStepConfigurationModel}*/}
+      {/*/>*/}
+      {/*<GitIgnoreToggleInput*/}
+      {/*  model={gitscraperStepConfigurationModel}*/}
+      {/*  setModel={setGitscraperStepConfigurationModel}*/}
+      {/*  fieldName={"secretsException"}*/}
+      {/*  />*/}
+      {/*<GitIgnoreToggleInput*/}
+      {/*  model={gitscraperStepConfigurationModel}*/}
+      {/*  setModel={setGitscraperStepConfigurationModel}*/}
+      {/*  fieldName={"filesException"}*/}
+      {/*  />*/}
     </PipelineStepEditorPanelContainer>
   );
 }

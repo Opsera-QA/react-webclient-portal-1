@@ -17,35 +17,38 @@ function GitScraperSummaryPanel({ gitScraperPipelineDataObject, pipelineData, se
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField model={gitScraperPipelineDataObject} fieldName={"gitRepository"} />
+          <ToolNameField model={gitScraperPipelineDataObject} fieldName={"repository"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"defaultBranch"} />
+          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"gitBranch"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"gitToolId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"library"} />
+          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"type"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"commits"} />
+          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"service"} />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"threshold"} />
-        </Col>{" "}
-        <Col lg={6}>
-          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"secretsToIgnore"} />
-        </Col>{" "}
-        <Col lg={6}>
-          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"filesToIgnore"} />
-        </Col>
-        <Col lg={6}>
-          <BooleanField dataObject={gitScraperPipelineDataObject} fieldName={"secretsException"} />
-        </Col>{" "}
-        <Col lg={6}>
-          <BooleanField dataObject={gitScraperPipelineDataObject} fieldName={"filesException"} />
-        </Col>
+        {/*<Col lg={6}>*/}
+        {/*  <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"commits"} />*/}
+        {/*</Col>*/}
+        {/*<Col lg={6}>*/}
+        {/*  <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"threshold"} />*/}
+        {/*</Col>{" "}*/}
+        {/*<Col lg={6}>*/}
+        {/*  <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"secretsToIgnore"} />*/}
+        {/*</Col>{" "}*/}
+        {/*<Col lg={6}>*/}
+        {/*  <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"filesToIgnore"} />*/}
+        {/*</Col>*/}
+        {/*<Col lg={6}>*/}
+        {/*  <BooleanField dataObject={gitScraperPipelineDataObject} fieldName={"secretsException"} />*/}
+        {/*</Col>{" "}*/}
+        {/*<Col lg={6}>*/}
+        {/*  <BooleanField dataObject={gitScraperPipelineDataObject} fieldName={"filesException"} />*/}
+        {/*</Col>*/}
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

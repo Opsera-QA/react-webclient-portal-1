@@ -5,17 +5,17 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 function GitScraperGitBranchSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...model};
-    newDataObject.setData("defaultBranch", selectedOption);
+    newDataObject.setData("gitBranch", selectedOption);
     setModel({...newDataObject});
   };
 
   return (
      <GitBranchInput
-       fieldName={"defaultBranch"}
-       service={model?.getData("type")}
+       fieldName={"gitBranch"}
+       service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
-       repoId={model?.getData("gitRepositoryID")}
+       workspace={model?.getData("workspace")}
+       repoId={model?.getData("repoId")}
        dataObject={model}
        setDataFunction={setDataFunction}
        setDataObject={setModel}

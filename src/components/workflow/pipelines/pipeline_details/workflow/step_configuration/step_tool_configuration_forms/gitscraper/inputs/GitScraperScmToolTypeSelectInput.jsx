@@ -22,17 +22,17 @@ function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}
     let newModel = {...model};
     await newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("gitToolId", "");
-    newModel.setData("gitRepository", "");
-    newModel.setData("defaultBranch", "");
+    newModel.setData("repository", "");
+    newModel.setData("gitBranch", "");
     newModel.setData("gitFilePath", "");
-    newModel.setData("bitbucketWorkspace", "");
+    newModel.setData("workspace", "");
     newModel.setData("bitbucketWorkspaceName", "");
     setModel({...newModel});
   };
 
   return (
      <SelectInputBase
-       fieldName={"type"}
+       fieldName={"service"}
        dataObject={model}
        setDataObject={setModel}
        selectOptions={SCRAPER_SCM_TOOL_LIST}

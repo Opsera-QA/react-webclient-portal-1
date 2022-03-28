@@ -7,7 +7,7 @@ function GitScraperScmToolSelectInput({model, setModel, className, disabled}) {
   return (
      <RoleRestrictedToolByIdentifierInputBase
        fieldName={"gitToolId"}
-       toolIdentifier={model?.getData("type")}
+       toolIdentifier={model?.getData("service")}
        className={className}
        model={model}
        setModel={setModel}

@@ -3,7 +3,7 @@ const GitScraperStepFormMetadata = {
   fields: [
     {
       label: "Source Code Management Tool Type",
-      id: "type",
+      id: "service",
       isRequired: true,
     },
     {
@@ -13,12 +13,12 @@ const GitScraperStepFormMetadata = {
     },
     {
       label: "Repository",
-      id: "gitRepository",
+      id: "repository",
       isRequired: true,
     },
     {
       label: "Branch",
-      id: "defaultBranch",
+      id: "gitBranch",
       isRequired: true,
     },
     {
@@ -32,11 +32,11 @@ const GitScraperStepFormMetadata = {
     },
     {
       label: "Git Repository ID",
-      id: "gitRepositoryID",
+      id: "repoId",
     },
     {
       label: "BitBucket Workspace",
-      id: "bitbucketWorkspace",
+      id: "workspace",
     },
     {
       label: "BitBucket Workspace/Project",
@@ -44,7 +44,7 @@ const GitScraperStepFormMetadata = {
     },
     {
       label: "Scraper Module",
-      id: "library",
+      id: "type",
     },
     {
       label: "Number of Commits to Scan",
@@ -74,21 +74,22 @@ const GitScraperStepFormMetadata = {
   ],
   newObjectFields: {
     gitFilePath: "",
-    gitRepository: "",
-    defaultBranch: "",
+    repository: "",
+    gitBranch: "",
     gitToolId: "",
-    gitRepositoryID: "",
+    repoId: "",
     sshUrl: "",
     gitUrl: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
-    library: "",
+    type: "",
     commits: "",
     threshold: "",
     secretsToIgnore: "",
     filesToIgnore: "",
     secretsException: false,
-    filesException: false
+    filesException: false,
+    service : ""
   },
 };
 
