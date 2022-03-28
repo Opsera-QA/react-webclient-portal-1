@@ -5,13 +5,14 @@ import EndpointResponseRuleFieldInputRow
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseRuleFieldInputRow";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import InfoContainer from "components/common/containers/InfoContainer";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
     fieldName,
     model,
     responseBodyFields,
-    setModel,
+    setDataFunction,
     disabled,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
@@ -20,27 +21,37 @@ function EndpointResponseFieldEvaluationRulesInputBase(
 
   useEffect(() => {
     isMounted.current = true;
-
     setField(model?.getFieldById(fieldName));
-    loadData();
 
     return () => {
       isMounted.current = false;
     };
   }, [fieldName]);
 
+  useEffect(() => {
+    setFields([]);
+
+    if (Array.isArray(responseBodyFields)) {
+      loadData();
+    }
+  }, [responseBodyFields]);
+
   const loadData = () => {
-    const currentData = model?.getObjectData(fieldName);
+    const currentData = model?.getArrayData(fieldName);
     const unpackedFields = [];
 
-    responseBodyFields.forEach((field) => {
+    responseBodyFields?.forEach((field) => {
+      const newField = {...field};
       const fieldName = field?.fieldName;
-      const value = dataParsingHelper.parseObjectValue(field?.type, currentData[fieldName]);
+      const foundItem = currentData.find((field) => field?.fieldName === fieldName);
+      newField.value = dataParsingHelper.parseObjectValue(field?.type, foundItem?.value);
+      const filter = foundItem?.filter;
 
-      unpackedFields.push({
-        ...field,
-        value: value,
-      });
+      if (hasStringValue(filter) === true) {
+        newField.filter = filter;
+      }
+
+      unpackedFields.push(newField);
     });
 
     setFields([...unpackedFields]);
@@ -48,10 +59,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
 
   const validateAndSetData = (newFields) => {
     const newArray = Array.isArray(newFields) ? newFields : [];
-    setFields([...newArray]);
-    const newModel = {...model};
-    newModel.setData(fieldName, [...newArray]);
-    setModel({...newModel});
+    setDataFunction(newArray);
   };
 
   const updateFieldFunction = (index, field) => {
@@ -111,8 +119,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
 EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
+  setDataFunction: PropTypes.func,
   responseBodyFields: PropTypes.array,
-  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
