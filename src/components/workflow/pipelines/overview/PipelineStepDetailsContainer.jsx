@@ -1,32 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
-import "components/analytics/charts/charts.css";
-import LoadingIcon from "components/common/icons/LoadingIcon";
-import IconBase from "components/common/icons/IconBase";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 
 function PipelineStepDetailsContainer({ isLoading, children, title }) {
-  const getTitleBar = () => {
+  const getTitleText = () => {
     if (isLoading) {
-      return (<span><LoadingIcon className={"mr-1"}/>Loading Pipeline Step</span>);
+      return (`Loading Pipeline Step`);
     }
 
-    return (
-      <div className="d-flex justify-content-between">
-        <div><IconBase icon={faCode} className={"mr-1"}/>{title}</div>
-      </div>
-    );
+    return (title);
   };
 
   return (
-    <div>
-      <div className="p-2 makeup-tab-content-title">
-        {getTitleBar()}
-      </div>
-      <div>
-        {children}
-      </div>
-    </div>
+    <VanitySetTabContentContainer
+      isLoading={isLoading}
+      title={getTitleText()}
+      titleIcon={faCode}
+    >
+      {children}
+    </VanitySetTabContentContainer>
   );
 }
 

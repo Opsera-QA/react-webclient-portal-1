@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+  from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
 import LegacySonarRatingsMaintainabilityDataBlockContainer
   from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlockContainer";
 import LegacySonarRatingsVulnerabilityDataBlockContainer

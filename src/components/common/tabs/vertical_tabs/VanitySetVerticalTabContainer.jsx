@@ -2,12 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Nav} from "react-bootstrap";
 
-function VanitySetVerticalTabContainer({children, className, title}) {
+function VanitySetVerticalTabContainer(
+  {
+    children,
+    className,
+    title,
+  }) {
   const getTitleBar = () => {
     if (title != null) {
       return (
-        <div className={"makeup-tree-title"}>
-          <div className="p-2 my-auto">{title}</div>
+        <div className={"makeup-tree-title d-flex"}>
+          <div className={"my-auto m-2"}>{title}</div>
         </div>
       );
     }

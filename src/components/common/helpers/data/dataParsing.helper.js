@@ -52,3 +52,13 @@ dataParsingHelper.parseJson = (json) => {
     return json;
   }
 };
+
+// TODO: Wire up constants
+dataParsingHelper.parseObjectValue = (type, value) => {
+  switch (type) {
+    case "string":
+      return dataParsingHelper.parseString(value, "");
+    case "array":
+      return dataParsingHelper.parseArray(value, []);
+  }
+};

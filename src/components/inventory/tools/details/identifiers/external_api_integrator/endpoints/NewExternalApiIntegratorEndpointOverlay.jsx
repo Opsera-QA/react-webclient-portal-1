@@ -35,12 +35,14 @@ function NewExternalApiIntegratorEndpointOverlay(
       loadData={loadData}
       closePanel={closePanelFunction}
     >
-      <ExternalApiIntegratorEndpointEditorPanel
-        externalApiIntegratorModel={externalApiIntegratorModel}
-        setExternalApiIntegratorModel={setExternalApiIntegratorModel}
-        closePanelFunction={closePanelFunction}
-        toolId={toolId}
-      />
+      <div className={"m-3"}>
+        <ExternalApiIntegratorEndpointEditorPanel
+          externalApiIntegratorModel={externalApiIntegratorModel}
+          setExternalApiIntegratorModel={setExternalApiIntegratorModel}
+          closePanelFunction={closePanelFunction}
+          toolId={toolId}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }
