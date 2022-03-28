@@ -24,7 +24,7 @@ function DateTimeInputBase(
     showClearValueButton,
     className,
   }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
 
