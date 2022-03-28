@@ -33,6 +33,14 @@ export function truncateString(string, maxLength){
   return string.length <= maxLength ? string : string.slice(0, maxLength) + "...";
 }
 
+export function removeSpacesFromString(string){
+  if (hasStringValue(string) !== true) {
+    return "";
+  }
+
+  return string.replace(/\s/g, '');
+}
+
 export function generateUUID() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)

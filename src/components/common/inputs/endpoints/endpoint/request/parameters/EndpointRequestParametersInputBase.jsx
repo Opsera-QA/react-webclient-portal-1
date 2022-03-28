@@ -9,6 +9,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 
 function EndpointRequestParametersInputBase(
   {
@@ -117,6 +118,11 @@ function EndpointRequestParametersInputBase(
     );
   };
 
+  const resetDataToDefault = () => {
+    const resetFields = Array.isArray(parameterFields) ? parameterFields : [];
+    validateAndSetData([...resetFields]);
+  };
+
   const getConstructedParameterContainer = () => {
     return (
       <Col xs={4}>
@@ -126,7 +132,13 @@ function EndpointRequestParametersInputBase(
           titleText={`Constructed ${model?.getLabel(fieldName)}`}
           className={"h-100"}
         >
-          <div className={"m-3"}>
+          <div className={"mx-3 mb-3"}>
+            <div className={"d-flex justify-content-end"}>
+              <ClearDataIcon
+                clearValueFunction={resetDataToDefault}
+                className={"my-2"}
+              />
+            </div>
             <StandaloneJsonField
               className={"h-100 mb-2"}
               model={model}

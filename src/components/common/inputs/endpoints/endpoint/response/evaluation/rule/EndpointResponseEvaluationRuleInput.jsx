@@ -15,6 +15,8 @@ import PositiveIntegerNumberTextInput
 import EndpointResponseFieldEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseFieldEvaluationRulesInputBase";
 import InfoContainer from "components/common/containers/InfoContainer";
+import EndpointResponseFieldEvaluationRulesFilterSelectInput
+  from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRulesFilterSelectInput";
 
 function EndpointResponseEvaluationRuleInput(
   {
@@ -34,6 +36,10 @@ function EndpointResponseEvaluationRuleInput(
   const updateMainModelFunction = (fieldName, newValue) => {
     evaluationRuleModel.setData(fieldName, newValue);
     updateRuleFunction({...evaluationRuleModel?.getPersistData()});
+  };
+
+  const updateModelFunction = (newModel) => {
+    updateRuleFunction({...newModel?.getPersistData()});
   };
 
   const getInputForRuleOption = () => {
@@ -61,21 +67,44 @@ function EndpointResponseEvaluationRuleInput(
         );
       case "field_evaluation":
         return (
-          <Col xs={12}>
-            <EndpointResponseFieldEvaluationRulesInputBase
-              fieldName={"field_rules"}
-              model={evaluationRuleModel}
-              setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
-              responseBodyFields={responseBodyFields}
-              disabled={disabled}
-            />
-          </Col>
+          <>
+            <Col xs={8}>
+              <EndpointResponseFieldEvaluationRulesFilterSelectInput
+                fieldName={"filter"}
+                model={evaluationRuleModel}
+                setModel={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}
+                responseBodyFields={responseBodyFields}
+                disabled={disabled}
+              />
+            </Col>
+            <Col xs={12}>
+              <EndpointResponseFieldEvaluationRulesInputBase
+                fieldName={"field_rules"}
+                model={evaluationRuleModel}
+                setModel={(newModel) => updateMainModelFunction("field_rules", newModel?.getPersistData())}
+                responseBodyFields={responseBodyFields}
+                disabled={disabled}
+              />
+            </Col>
+          </>
         );
     }
   };
 
   const setRuleOptionFunction = (fieldName, selectedOption) => {
-    updateMainModelFunction(fieldName, selectedOption?.value);
+    const newModel = {...endpointResponseEvaluationRuleModel};
+    const newValue = selectedOption?.value;
+    newModel.setData(fieldName, newValue);
+    newModel.setDefaultValue("field_rules");
+    newModel.setDefaultValue("value");
+
+    if (newValue === "status") {
+      newModel.setData("filter", "equals");
+    }
+    else {
+      newModel.setData("filter", "all");
+    }
+    updateModelFunction(newModel);
   };
 
   const getBody = () => {

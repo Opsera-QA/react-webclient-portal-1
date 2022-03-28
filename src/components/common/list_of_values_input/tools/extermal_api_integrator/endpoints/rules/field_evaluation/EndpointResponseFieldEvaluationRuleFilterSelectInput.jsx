@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+// TODO: We should probably have different options per type
 const SUPPORTED_FIELD_EVALUATION_FILTERS = [
   {
     text: "Equals",
@@ -12,11 +13,11 @@ const SUPPORTED_FIELD_EVALUATION_FILTERS = [
     value: "not_equals",
   },
   {
-    text: "Exists",
+    text: "Is Not Null",
     value: "is_not_null",
   },
   {
-    text: "Does Not Exist",
+    text: "Is Null",
     value: "is_null",
   },
 ];
@@ -37,11 +38,11 @@ function EndpointResponseFieldEvaluationRuleFilterSelectInput(
       return (
         [
           {
-            text: "Exists",
+            text: "Is Not Null",
             value: "is_not_null",
           },
           {
-            text: "Does Not Exist",
+            text: "Is Null",
             value: "is_null",
           },
         ]
