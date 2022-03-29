@@ -94,7 +94,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           </Col>
           <Col md={12}>
             <div className={"bg-white"} style={{borderRadius: "6px"}}>
-              <div className={"px-3 py-2"}>
+              <div className={"p-2"}>
                 <RoleAccessInput
                   fieldName={"roles"}
                   setDataObject={setDashboardDataDto}
