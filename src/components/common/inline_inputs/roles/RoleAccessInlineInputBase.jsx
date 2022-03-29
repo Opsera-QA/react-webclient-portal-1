@@ -1,24 +1,36 @@
-import React, { useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
+import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import RoleAccessField from "components/common/fields/multiple_items/roles/RoleAccessField";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage, helpComponent}) {
-  const [showModal, setShowModal] = useState(false);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+function RoleAccessInlineInputBase(
+  {
+    model,
+    fieldName,
+    disabled,
+    saveData,
+    visible,
+    noDataMessage,
+    helpComponent,
+  }) {
+  const toastContext = useContext(DialogToastContext);
 
   const showEditor = () => {
     if (!disabled) {
-      setShowModal(true);
+      toastContext.showOverlayPanel(
+        <EditRolesOverlay
+          model={model}
+          fieldName={fieldName}
+          saveDataFunction={saveData}
+        />
+      );
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return null;
   }
 
@@ -27,7 +39,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
       <div className="d-flex">
         <div>
           <RoleAccessField
-            model={dataObject}
+            model={model}
             fieldName={fieldName}
             noDataMessage={noDataMessage}
           />
@@ -46,13 +58,6 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
           />
         </div>
       </div>
-      <EditRolesModal
-        dataObject={dataObject}
-        fieldName={fieldName}
-        saveData={saveData}
-        showModal={showModal}
-        handleClose={closeModal}
-      />
     </div>
   );
 }
@@ -60,15 +65,11 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
 RoleAccessInlineInputBase.propTypes = {
   helpComponent: PropTypes.object,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   saveData: PropTypes.func,
   noDataMessage: PropTypes.any
-};
-
-RoleAccessInlineInputBase.defaultProps = {
-  visible: true
 };
 
 export default RoleAccessInlineInputBase;

@@ -22,7 +22,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
   const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const toastContext = useContext(DialogToastContext);
