@@ -28,9 +28,10 @@ import GitToGitSyncTaskHelpDocumentation
   from "components/common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
 import SalesforceBulkMigrationHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function TaskEditorPanel({ taskData, handleClose }) {
-  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [taskModel, setTaskModel] = useState(undefined);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -99,6 +100,21 @@ function TaskEditorPanel({ taskData, handleClose }) {
     }
   };
 
+  const getDynamicFields = () => {
+    if (taskModel?.isNew() && isSassUser() === false) {
+      return (
+        <Col lg={12} className={"mb-4"}>
+          <RoleAccessInput
+            dataObject={taskModel}
+            setDataObject={setTaskModel}
+            fieldName={"roles"}
+          />
+        </Col>
+      );
+    }
+  };
+
+
   const getBody = () => {
     return (
       <>
@@ -123,6 +139,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
           <Col lg={12}>
             <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
           </Col>
+          {getDynamicFields()}
         </Row>
         <TaskConfigurationPanel
           taskConfigurationModel={taskConfigurationModel}
