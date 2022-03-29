@@ -43,6 +43,12 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     responseBodyFields?.forEach((field) => {
       const newField = {...field};
       const fieldName = field?.fieldName;
+
+      // Skip incomplete fields. This shouldn't happen but being as defensive as possible
+      if (hasStringValue(fieldName) !== true) {
+        return;
+      }
+
       const foundItem = currentData.find((field) => field?.fieldName === fieldName);
       newField.value = dataParsingHelper.parseObjectValue(field?.type, foundItem?.value);
       const filter = foundItem?.filter;

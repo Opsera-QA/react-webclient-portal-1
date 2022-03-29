@@ -10,6 +10,7 @@ import StandaloneJsonField from "components/common/fields/json/StandaloneJsonFie
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function EndpointRequestParametersInputBase(
   {
@@ -42,6 +43,12 @@ function EndpointRequestParametersInputBase(
 
     parameterFields.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
+
+      // Skip incomplete fields. This shouldn't happen but being as defensive as possible
+      if (hasStringValue(fieldName) !== true) {
+        return;
+      }
+
       const value = dataParsingHelper.parseObjectValue(parameter.type, currentData[fieldName]);
 
       unpackedParameters.push({
