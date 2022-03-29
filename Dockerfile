@@ -1,5 +1,5 @@
 FROM node:lts-alpine3.9 as build
-ARG build_env=kube-generic
+ARG build_env=production
 RUN echo ${build_env}
 RUN apk add curl
 RUN mkdir -p /usr/src/app
