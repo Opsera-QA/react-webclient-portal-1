@@ -452,8 +452,10 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
   }
 
   return (
-    <div style={{minWidth: "575px"}}>
-      <InfoText customMessage={getRolesMessage()} />
+    <div className={"bg-white"} style={{minWidth: "575px"}}>
+      <div className={"mx-2"}>
+        <InfoText customMessage={getRolesMessage()} />
+      </div>
       <PropertyInputContainer
         titleIcon={faIdCard}
         field={field}
@@ -474,7 +476,9 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
           </div>
         </div>
       </PropertyInputContainer>
-      <InfoText customMessage={getRolesSubMessage()} />
+      <div className={"mx-2"}>
+        <InfoText customMessage={getRolesSubMessage()} />
+      </div>
     </div>
   );
 }

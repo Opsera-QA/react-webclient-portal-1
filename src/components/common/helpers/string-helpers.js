@@ -1,5 +1,5 @@
-export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString) {
-  if (typeof string === "string" && string.length > 0) {
+export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString = "") {
+  if (hasStringValue(string) === true) {
     let capitalizedString = "";
     const words = string.split(wordDelimiter);
 

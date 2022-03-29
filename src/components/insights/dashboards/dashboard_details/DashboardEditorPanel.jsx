@@ -17,6 +17,7 @@ import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -77,7 +78,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
       updateRecord={updateDashboard}
       addAnotherOption={false}
     >
-      <div className="mx-2">
+      <div className={"px-2"}>
         <Row>
           <Col md={6}>
             <TextInputBase fieldName={"name"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
@@ -90,6 +91,17 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           </Col>
           <Col md={6}>
             <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
+          </Col>
+          <Col md={12}>
+            <div className={"bg-white"} style={{borderRadius: "6px"}}>
+              <div className={"px-3 py-2"}>
+                <RoleAccessInput
+                  fieldName={"roles"}
+                  setDataObject={setDashboardDataDto}
+                  dataObject={dashboardDataDto}
+                />
+              </div>
+            </div>
           </Col>
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
