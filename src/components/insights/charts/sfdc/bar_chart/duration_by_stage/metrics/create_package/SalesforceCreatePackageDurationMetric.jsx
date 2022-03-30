@@ -10,6 +10,7 @@ function SalesforceCreatePackageDurationMetric({
   metric,
   kpiConfiguration,
   dashboardData,
+  dataPoint
 }) {
   const getDataBlock = () => {
     return (
@@ -17,6 +18,8 @@ function SalesforceCreatePackageDurationMetric({
         createPackageDurationMeanInMinutes={createPackageDurationMeanInMinutes}
         createPackageTotalRunCount={createPackageTotalRunCount}
         goalsData={goalsData}
+        kpiConfiguration={kpiConfiguration}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -41,6 +44,7 @@ SalesforceCreatePackageDurationMetric.propTypes = {
   createPackageTotalRunCount: PropTypes.number,
   goalsData: PropTypes.number,
   metric: PropTypes.array,
+  dataPoint: PropTypes.object
 };
 
 export default SalesforceCreatePackageDurationMetric;

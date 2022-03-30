@@ -6,7 +6,13 @@ import dataPointVisibilityMetadata
   from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function MetricDataPointVisibilityInput({ fieldName, model, setModel, disabled, fromDashboardMetric }) {
+function MetricDataPointVisibilityInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+  }) {
   const [dataPointVisibilityModel, setDataPointVisibilityModel] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -27,22 +33,20 @@ function MetricDataPointVisibilityInput({ fieldName, model, setModel, disabled, 
 
   const setDataFunction = (newModel) => {
     const visibility = newModel?.getPersistData();
-    model.setData(fieldName, visibility);
+    model?.setData(fieldName, visibility);
     setModel({...model});
     setDataPointVisibilityModel({...newModel});
   };
 
   const getUserVisibilityToggle = () => {
-    if (fromDashboardMetric !== true) {
-      return (
-        <BooleanToggleInput
-          dataObject={dataPointVisibilityModel}
-          setDataObject={setDataFunction}
-          fieldName={"userVisibilityToggleSupport"}
-          disabled={disabled}
-        />
-      );
-    }
+    return (
+      <BooleanToggleInput
+        dataObject={dataPointVisibilityModel}
+        setDataObject={setDataFunction}
+        fieldName={"userVisibilityToggleSupport"}
+        disabled={disabled}
+      />
+    );
   };
 
   if (model == null || dataPointVisibilityModel == null) {

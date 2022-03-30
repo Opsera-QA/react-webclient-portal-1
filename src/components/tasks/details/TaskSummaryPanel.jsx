@@ -13,10 +13,11 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagsInlineInputBase from "components/common/inputs/tags/inline/TagsInlineInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
-import ECSActionButtons from "components/tasks/ECSActionButtons";
-import AKSActionButtons from "components/tasks/AKSActionButtons";
+import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionButtons";
+import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
+import {TASK_TYPES} from "components/tasks/task.types";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -48,6 +49,49 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
+  const getDynamicField = () => {
+    if (gitTasksData.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
+      return (
+        <Col md={6}>
+          <TextFieldBase
+            className={"upper-case-first my-2"}
+            dataObject={gitTasksData}
+            fieldName={"tool_identifier"}
+          />
+        </Col>
+      );
+    }
+  };
+
+  const getButtonForTaskType = () => {
+    switch (gitTasksData?.getData("type")) {
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return (
+          <TaskAksActionButtons
+            gitTasksData={gitTasksData}
+            status={gitTasksData?.getData("status")}
+          />
+        );
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return (
+          <TasksEcsActionButtons
+            gitTasksData={gitTasksData}
+            status={gitTasksData?.getData("status")}
+          />
+        );
+      default:
+        return (
+          <RunTaskButton
+            taskModel={gitTasksData}
+            setTaskModel={setGitTasksData}
+            loadData={loadData}
+            actionAllowed={actionAllowed("run_task")}
+            taskType={gitTasksData?.getData("type")}
+          />
+        );
+    }
+  };
+
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
       <Row>
@@ -69,17 +113,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
-        {gitTasksData.getData("type") !== "ecs_cluster_creation" ||
-        (gitTasksData.getData("type") === "ecs_service_creation" && (
-          <Col md={6}>
-            <TextFieldBase
-              className={"upper-case-first my-2"}
-              dataObject={gitTasksData}
-              fieldName={"tool_identifier"}
-            />
-          </Col>
-        ))}
-
+        {getDynamicField()}
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
             type={"task"}
@@ -104,21 +138,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
           <div className={"mx-auto"}>
-            <RunTaskButton
-              taskModel={gitTasksData}
-              setTaskModel={setGitTasksData}
-              loadData={loadData}
-              actionAllowed={actionAllowed("run_task")}
-              taskType={gitTasksData?.getData("type")}
-            />
-          </div>
-        </div>
-      </Row>
-      <Row className={"mx-0 w-100 my-2"}>
-        <div className={"mx-auto"}>
-          <div className={"mx-auto"}>
-            <ECSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
-            <AKSActionButtons gitTasksData={gitTasksData} loadData={loadData} />
+            {getButtonForTaskType()}
           </div>
         </div>
       </Row>

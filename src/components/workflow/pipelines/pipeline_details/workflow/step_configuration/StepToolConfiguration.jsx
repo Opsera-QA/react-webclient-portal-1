@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
-import NpmStepConfiguration from "./step_tool_configuration_forms/npm/NpmStepConfiguration";
+import NpmStepConfiguration from "../../../../plan/step/npm/NpmStepConfiguration";
 import CommandLineStepConfiguration from "./step_tool_configuration_forms/command_line/CommandLineStepConfiguration";
 import TeamCityStepConfiguration from "./step_tool_configuration_forms/team_city/TeamCityStepConfiguration";
 import GcpDeployStepConfiguration from "./step_tool_configuration_forms/gcp/GcpDeployStepConfiguration";
@@ -14,11 +14,11 @@ import AwsDeployStepConfiguration from "./step_tool_configuration_forms/aws_depl
 import JmeterStepConfiguration from "./step_tool_configuration_forms/jmeter/JmeterStepConfiguration";
 import SeleniumStepConfiguration from "./step_tool_configuration_forms/selenium/SeleniumStepConfiguration";
 import TwistlockStepConfiguration from "./step_tool_configuration_forms/twistlock/TwistlockStepConfiguration";
-import S3StepConfiguration from "./step_tool_configuration_forms/s3/S3StepConfiguration";
+import S3StepConfiguration from "../../../../plan/step/s3/S3StepConfiguration";
 import DatabricksNotebookStepConfiguration from "./step_tool_configuration_forms/databricks_notebook/DatabricksNotebookStepConfiguration";
 import SshUploadDeployStepConfiguration from "./step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployStepConfiguration";
 import ElasticBeanstalkDeployStepConfiguration from "./step_tool_configuration_forms/elastic_beanstalk_deploy/ElasticBeanstalkDeployStepConfiguration";
-import SpinnakerStepConfiguration from "./step_tool_configuration_forms/spinnaker/SpinnakerStepConfiguration";
+import SpinnakerStepConfiguration from "../../../../plan/step/spinnaker/SpinnakerStepConfiguration";
 import ApprovalGateStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/ApprovalGateStepConfiguration";
 import LegacyCypressStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/LegacyCypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_push/DockerPushStepConfiguration";
@@ -31,10 +31,10 @@ import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/Oc
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
-import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
+import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
-  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
+  from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
@@ -74,11 +74,17 @@ import AzureZipDeploymentStepConfiguration
   from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
+import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationStepEditorPanel
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
+// TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
   pipeline,
-  editItem,
+  pipelineStepId,
   parentCallback,
   reloadParentPipeline,
   closeEditorPanel,
@@ -87,6 +93,7 @@ function StepToolConfiguration({
 }) {
   const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
+  const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
@@ -94,23 +101,27 @@ function StepToolConfiguration({
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    loadData();
-  }, [editItem, pipeline]);
+    if (isMongoDbId(pipelineStepId) === true) {
+      loadData();
+    }
+  }, [pipelineStepId, pipeline]);
 
   const loadData = async () => {
-    let stepIndex = getStepIndex(editItem.step_id);
-    setStepTool(plan[stepIndex].tool);
-    setStepName(plan[stepIndex].name);
-    setStepId(plan[stepIndex]._id);
+    let stepIndex = getStepIndex(pipelineStepId);
+    setPipelineStep(plan[stepIndex]);
+    setStepTool(plan[stepIndex]?.tool);
+    setStepName(plan[stepIndex]?.name);
+    setStepId(plan[stepIndex]?._id);
   };
 
+  // TODO: Use existing helper to construct this instead
   const getStepIndex = (step_id) => {
     let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
     return stepArrayIndex;
   };
 
   const callbackFunction = async (tool) => {
-    let stepArrayIndex = getStepIndex(editItem.step_id);
+    let stepArrayIndex = getStepIndex(pipelineStepId);
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;
@@ -128,6 +139,7 @@ function StepToolConfiguration({
     return response;
   };
 
+  // TODO: Put into actions file, wire up cancel token
   const createJob = async (
     toolId,
     toolConfiguration,
@@ -194,6 +206,7 @@ function StepToolConfiguration({
     }
   };
 
+  // TODO Put into coverity actions file, wire up cancel token
   const createCoverityJob = async (
     toolId,
     toolConfiguration,
@@ -260,7 +273,7 @@ function StepToolConfiguration({
     }
   };
 
-  // TODO: Move into twistlock helper
+  // TODO: Move into twistlock actions file, wire up cancel token
   const createTwistlockJob = async (
     toolId,
     toolConfiguration,
@@ -400,6 +413,14 @@ function StepToolConfiguration({
   //  instead of passing in get tools list, use pipeline tool input etc..
   const getConfigurationTool = (toolName) => {
     switch (toolName) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
       case "jenkins":
         return (
           <JenkinsStepConfiguration
@@ -464,10 +485,9 @@ function StepToolConfiguration({
       case "npm":
         return(
           <NpmStepConfiguration
-            data={stepTool}
+            pipelineStep={stepTool}
             parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "teamcity":
@@ -1028,7 +1048,7 @@ function StepToolConfiguration({
           closeEditorPanel={closeEditorPanel}
         />
       );  
-    case "flyway-database-migrator":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
       return (
         <FlywayDatabaseStepConfiguration
           pipelineId={pipeline._id}
@@ -1095,6 +1115,35 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case "buildkite":
+        return (
+          <BuildkiteStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "packer":
+        return (
+          <PackerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
   };
 
@@ -1112,6 +1161,16 @@ function StepToolConfiguration({
     return titleText;
   };
 
+  const getToolsAndAccountText = () => {
+    if (stepTool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+      return (
+        <div className="text-muted small my-2">
+          Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <div className="title-text-5 upper-case-first mb-3">
@@ -1119,17 +1178,17 @@ function StepToolConfiguration({
       </div>
 
       {typeof stepTool !== "undefined" ? (
-        getConfigurationTool(editItem.tool_name.toLowerCase())
+        getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
       ) : null}
 
-      <div className="text-muted small my-2">Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.</div>
+      {getToolsAndAccountText()}
     </div>
   );
 }
 
 StepToolConfiguration.propTypes = {
   pipeline: PropTypes.object,
-  editItem: PropTypes.object,
+  pipelineStepId: PropTypes.string,
   parentCallback: PropTypes.func,
   reloadParentPipeline: PropTypes.func,
   closeEditorPanel: PropTypes.func,

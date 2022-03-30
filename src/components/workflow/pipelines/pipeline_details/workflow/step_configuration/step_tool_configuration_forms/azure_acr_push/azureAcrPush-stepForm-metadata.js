@@ -52,7 +52,15 @@ const azureAcrPushStepFormMetadata = {
     {
       label:"Use Run Count as Repository Tag?",
       id:"useRunCount"
-    }
+    },
+    {
+      label:"Azure Tool Type",
+      id:"toolType"
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",
+    },
   ],
   newObjectFields: {
     toolConfigId: "",
@@ -68,13 +76,13 @@ const azureAcrPushStepFormMetadata = {
     newRepo: false,
     azureRepoName:"",
     useRunCount:false,
-    // azureCredentialId:"",
     resource: "https://management.azure.com",
     awsToolConfigId:"",
     ecrRepoName:"" ,
     acrLoginUrl:"", 
     autoScaleEnable: true,
-    
+    toolType: "",
+    azureCredentialId: ""
   }
 };
 

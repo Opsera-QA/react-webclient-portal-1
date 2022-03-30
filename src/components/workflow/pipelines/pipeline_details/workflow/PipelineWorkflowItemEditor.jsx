@@ -6,14 +6,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
-import PipelineStepNotificationEditorPanel from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import SourceRepositoryConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
-
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
   const contextType = useContext(AuthContext);
@@ -21,29 +18,11 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(undefined);
   const [showToast, setShowToast] = useState(false);
-  const [pipelineStep, setPipelineStep] = useState(false);
 
   useEffect(() => {
     setShowToast(false);
     setToast(undefined);
-    setPipelineStep(undefined);
-
-    unpackPipelineStep(editItem?.step_id);
   }, [editItem]);
-
-  const unpackPipelineStep = (stepId) => {
-    if (isMongoDbId(stepId) === true) {
-      const plan = pipeline?.workflow?.plan;
-
-      if (Array.isArray(plan)) {
-        const index = plan.findIndex(x => x._id === stepId);
-
-        if (index !== -1) {
-          setPipelineStep(plan[index]);
-        }
-      }
-    }
-  };
 
   // TODO: We should be handling this inside the step forms themselves
   const postData = async (pipeline, type) => {
@@ -113,21 +92,6 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     </>);
   }
 
-  // TODO: Remove when overlay is pushed to master
-  if (editItem.type === "notification") {
-    return (<>
-      {getTitleBar("Step Notification")}
-      <div className="p-3 bg-white step-settings-container">
-        {showToast && <div className="mb-2">{toast}</div>}
-        <PipelineStepNotificationEditorPanel
-          pipelineId={pipeline?._id}
-          pipelineStep={pipelineStep}
-          handleCloseClick={handleCloseClick}
-        />
-      </div>
-    </>);
-  }
-
   if (editItem.type === "step") {
     return (<>
       {getTitleBar("Step Setup")}
@@ -148,7 +112,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
         {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration
           pipeline={pipeline}
-          editItem={editItem}
+          pipelineStepId={editItem?.step_id}
           parentCallback={callbackFunctionTools}
           reloadParentPipeline={fetchPlan}
           closeEditorPanel={closeEditorPanel}

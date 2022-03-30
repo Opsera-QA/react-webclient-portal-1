@@ -196,6 +196,8 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       }
       //console.table(customerAccessRules);
       return customerAccessRules;
+    } else {
+      console.info("Unable to set user access rules: " + JSON.stringify(user));
     }
   };
 

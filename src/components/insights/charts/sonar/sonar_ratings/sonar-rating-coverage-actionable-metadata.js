@@ -23,6 +23,10 @@ const SonarCoverageTableMetadata = {
       id: "coverage",
     },
     {
+      label: "Unit Tests",
+      id: "tests",
+    },
+    {
       label: "Duplicated Lines",
       id: "duplicate_lines",
     },

@@ -268,7 +268,6 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     return (
       <VanityTable
         tableHeight={"250px"}
-        className={"no-table-border"}
         columns={columns}
         data={csvData}
       />

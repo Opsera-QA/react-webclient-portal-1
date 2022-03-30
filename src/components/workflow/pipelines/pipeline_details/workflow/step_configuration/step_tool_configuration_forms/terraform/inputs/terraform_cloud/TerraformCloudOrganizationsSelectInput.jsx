@@ -75,12 +75,28 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, selectedOption?.organizationName);
+    newDataObject.setDefaultValue("workspaceName");
+    setDataObject({...newDataObject});
+  };
+
+  const clearDataFunction = (fieldName) => {
+    let newDataObject = dataObject;
+    newDataObject.setDefaultValue("organizationName");
+    newDataObject.setDefaultValue("workspaceName");
+    setDataObject({...newDataObject});
+  };
+
   return (
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={organizations}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
         busy={isLoading}
         valueField={valueField}
         textField={textField}

@@ -13,7 +13,7 @@ export class TaskModel extends ModelBase {
   }
 
   createModel = async () => {
-    return await taskActions.createGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
+    return await taskActions.createTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   saveModel = async () => {

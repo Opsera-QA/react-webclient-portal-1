@@ -9,7 +9,7 @@ import StepValidationHelper from "./step_configuration/helpers/step-validation-h
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 
@@ -77,8 +77,8 @@ function PipelineWorkflowItemList(
   };
 
   const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource);
-    const identifiers = response?.data;
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+    const identifiers = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(identifiers)) {
       setToolIdentifiers(identifiers);

@@ -10,14 +10,13 @@ import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import VpcSelectInput from "./inputs/VpcSelectInput";
 import ClusterSelectInput from "./inputs/ClusterSelectInput";
 import LoadBalancerSelectInput from "./inputs/LoadBalancerSelectInput";
-import NetworkingOnlySubForm from "../ecs-cluster-creation/sub_forms/NetworkingOnlySubForm";
-import EC2SubForm from "../ecs-cluster-creation/sub_forms/EC2SubForm";
 import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import SubnetSelectInput from "./inputs/SubnetSelectInput";
 import LogGroupSelectInput from "./inputs/LogGroupSelectInput";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
-import AWSRegionSelectInput from "../../../../common/list_of_values_input/aws/AWSRegionSelectInput";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 
 function ECSServiceCreationTaskConfigurationPanel({
   gitTasksDataDto,
@@ -76,12 +75,11 @@ function ECSServiceCreationTaskConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <AWSRegionSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
+        <AwsCloudProviderRegionSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
           fieldName={"regions"}
           disabled={gitTasksConfigurationData?.getData("toolConfigId")?.length === 0}
-          awsTool={gitTasksConfigurationData?.getData("toolConfigId")}
         />
       </Col>
       <Col lg={12}>

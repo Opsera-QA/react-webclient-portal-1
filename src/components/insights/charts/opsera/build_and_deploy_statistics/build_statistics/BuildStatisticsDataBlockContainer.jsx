@@ -13,13 +13,16 @@ import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../OpseraBuildAndDeployLineChartConfig";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import ThreeLineDataBlockNoFocusBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockNoFocusBase";
+import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData }) {
+function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {    
@@ -53,10 +56,16 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
 
   const getLeftDataBlock = () => {
     return (      
-      <ThreeLineDataBlockNoFocusBase        
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
         topText={"Success Rate"}
-        middleText={<MetricPercentageText percentage={metricData?.build?.successPercent} qualityLevel={metricData?.build?.count && metricData?.build?.count > 0 ? metricData?.build?.successPercent < goalsData ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS : null } />}
-        bottomText={`Goal: ${goalsData}`}
+        middleText={
+        <MetricPercentageText
+          percentage={metricData?.build?.successPercent}
+          dataPoint={dataPoint}
+          className={"metric-block-content-text"}
+        />}
+        dataPoint={dataPoint}
       />
     );
   };
@@ -123,6 +132,7 @@ BuildStatisticsDataBlockContainer.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   goalsData: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default BuildStatisticsDataBlockContainer;

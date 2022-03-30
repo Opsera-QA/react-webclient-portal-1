@@ -84,7 +84,7 @@ function TaskDetailView() {
   };
 
   const getTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getGitTaskByIdV2(getAccessToken, cancelSource, id);
+    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, id);
     const task = response?.data?.data;
     const taskMetadata = response?.data?.metadata;
 

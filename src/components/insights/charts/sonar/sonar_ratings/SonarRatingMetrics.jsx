@@ -7,11 +7,15 @@ import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
 import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
+import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
+import {SONAR_RATING_METRIC_CONSTANTS as dataPointConstants} from "./SonarRatingMetrics_kpi_datapoint_identifiers";
+import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockContainer";
 import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
-import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockContainer";
+import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -21,6 +25,10 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [securityDataPoint, setSecurityDatapoint] = useState(undefined);
+  const [maintainabilityDataPoint, setMaintainabilityDatapoint] = useState(undefined);
+  const [reliabilityDataPoint, setReliabilityDatapoint] = useState(undefined);
+  const [codeCoverageDataPoint, setCodeCoverageDatapoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,6 +55,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -79,39 +88,122 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const sonarRatingSecurityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_SECURITY_DATA_POINT);
+    setSecurityDatapoint(sonarRatingSecurityDataPoint);
+    const sonarRatingMaintainabilityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_MAINTAINABILITY_DATA_POINT);
+    setMaintainabilityDatapoint(sonarRatingMaintainabilityDataPoint);
+    const sonarRatingReliabilityDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_RELIABILITY_DATA_POINT);
+    setReliabilityDatapoint(sonarRatingReliabilityDataPoint);
+    const sonarRatingCodeCoverageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SONAR_RATING_CODE_COVERAGE_DATA_POINT);
+    setCodeCoverageDatapoint(sonarRatingCodeCoverageDataPoint);
+  };
+
   const getChartBody = () => {
     if (sonarRatingsMetric == null) {
       return null;
     }
 
+    const getIcon = (severity) => {
+      switch (severity) {
+        case "Red":
+          return faArrowCircleUp;
+        case "Green":
+          return faArrowCircleDown;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
+    const getReverseIcon = (severity) => {
+      switch (severity) {
+        case "Red":
+          return faArrowCircleDown;
+        case "Green":
+          return faArrowCircleUp;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
+    const getIconColor = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "red";
+        case "Green":
+          return "green";
+        case "Neutral":
+          return "light-gray-text-secondary";
+        case "-":
+          return "black";
+        default:
+          break;
+      }
+    };
+
+    const getDescription = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "This project's issues are trending upward";
+        case "Green":
+          return "This project's issues are trending downward";
+        case "Neutral":
+          return "Neutral: This project's issues have experienced no change";
+      }
+    };
+
     return (
       <>
         <div className={"mx-2"}>
           <Row className={"mx-0 p-2 justify-content-between"}>
+            {dataPointHelpers.isDataPointVisible(securityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsVulnerabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
                 securityRating={sonarRatingsMetric?.security_rating}
                 vulnerabilityCount={sonarRatingsMetric?.vulnerabilities}
+                dataPoint={securityDataPoint}
+                icon={getIcon(sonarRatingsMetric?.vulnerability_trend)}
+                className={getIconColor(sonarRatingsMetric?.vulnerability_trend)}
+                lastScore={sonarRatingsMetric?.prevVulnerabilities}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.vulnerability_trend)}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(maintainabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsMaintainabilityDataBlockContainer
                 dashboardData={dashboardData}
                 kpiConfiguration={kpiConfiguration}
-                maintainabilityRating={sonarRatingsMetric?.maintainability_rating}
+                maintainabilityRating={sonarRatingsMetric?.technical_debt_ratio}
                 technicalDebtRatio={sonarRatingsMetric.technical_debt_ratio}
+                dataPoint={maintainabilityDataPoint}
+                icon={getIcon(sonarRatingsMetric?.debt_trend)}
+                className={getIconColor(sonarRatingsMetric?.debt_trend)}
+                lastScore={sonarRatingsMetric?.prev_technical_debt_ratio}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.debt_trend)}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(reliabilityDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsReliabilityDataBlockContainer
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
                 reliabilityRating={sonarRatingsMetric?.reliability_rating}
                 bugCount={sonarRatingsMetric?.bugs}
+                dataPoint={reliabilityDataPoint}
+                icon={getIcon(sonarRatingsMetric?.bugs_trend)}
+                className={getIconColor(sonarRatingsMetric?.bugs_trend)}
+                lastScore={sonarRatingsMetric?.prevBugs}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.bugs_trend)}
               />
-            </Col>
+            </Col> }
+            {dataPointHelpers.isDataPointVisible(codeCoverageDataPoint) &&
             <Col className={"px-0 my-3"} xl={6} lg={12}>
               <SonarRatingsCodeCoverageBlockContainer
                 dashboardData={dashboardData}
@@ -119,8 +211,13 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 tests={sonarRatingsMetric?.tests}
                 lineCoverage={sonarRatingsMetric?.line_percentage}
                 duplicate={sonarRatingsMetric?.duplication_percentage}
+                dataPoint={codeCoverageDataPoint}
+                icon={getReverseIcon(sonarRatingsMetric?.coverage_trend)}
+                className={getIconColor(sonarRatingsMetric?.coverage_trend)}
+                lastScore={sonarRatingsMetric?.prev_line_percentage}
+                iconOverlayBody={getDescription(sonarRatingsMetric?.coverage_trend)}
               />
-            </Col>
+            </Col> }
           </Row>
         </div>
         <BadgeBase className={"mx-2"} badgeText={"Please note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />

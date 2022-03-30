@@ -55,7 +55,6 @@ function PipelineOverviewContainer({ pipeline }) {
   );
 }
 
-
 PipelineOverviewContainer.propTypes = {
   pipeline: PropTypes.object,
 };

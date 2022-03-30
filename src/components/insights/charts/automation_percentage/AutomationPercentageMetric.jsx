@@ -17,6 +17,7 @@ import "components/insights/charts/qa_metrics/Styling.css";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 import AutomationPercentageChartHelpDocumentation from "components/common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import { AUTOMATION_PERCENTAGE_METRIC_CONSTANTS as dataPointConstants } from "./AutomationPercentageMteric_kpi_datapoint_identifiers";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./automationPercentageMetricConfig";
 import {
@@ -30,8 +31,6 @@ import TotalRegressionTestsDataBlock from "./data_blocks/TotalRegressionTestsDat
 import RegressionTestsAutomatedDataBlock from "./data_blocks/RegressionTestsAutomatedDataBlock";
 import RegressionTestsToBeAutomated from "./data_blocks/RegressionTestsToBeAutomated";
 
-const AUTOMATION_PERCENTAGE = "automation_percentage";
-
 function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -42,6 +41,11 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [automationDataPoint, setAutomationDataPoint] = useState(undefined);
+  const [totalAutomationCandidates, setTotalAutomationCandidates] = useState(undefined);
+  const [totalFunctionalTest, setTotalFunctionalTest] = useState(undefined);
+  const [totalRegressionTests, setTotalRegressionTests] = useState(undefined);
+  const [regressionTestAutomation, setRegressionTestAutomation] = useState(undefined);
+  const [regressionTestToBeAutomated, setRegressionTestToBeAutomated] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -117,8 +121,18 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
-    const automationPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, AUTOMATION_PERCENTAGE);
+    const automationPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.AUTOMATION_PERCENTAGE_DATA_POINT);
     setAutomationDataPoint(automationPercentageDataPoint);
+    const totalAutomationCandidatesDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_AUTOMATION_CANDIDATES_DATA_POINT);
+    setTotalAutomationCandidates(totalAutomationCandidatesDataPoint);
+    const totalFunctionalTestDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_FUNCTIONAL_TESTS_DATA_POINT);
+    setTotalFunctionalTest(totalFunctionalTestDataPoint);
+    const totalRegressionTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.TOTAL_REGRESSION_TESTS_DATA_POINT);
+    setTotalRegressionTests(totalRegressionTestsDataPoint);
+    const regressionTestAutomationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.REGRESSION_TESTS_AUTOMATION_DATA_POINT);
+    setRegressionTestAutomation(regressionTestAutomationDataPoint);
+    const regressionTestToBeAutomatedDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.REGRESSION_TESTS_TO_BE_AUTOMATED_DATA_POINT);
+    setRegressionTestToBeAutomated(regressionTestToBeAutomatedDataPoint);
   };
 
   const getNotesRow = () => {
@@ -138,28 +152,34 @@ function CumulativeOpenDefectsMetric({ kpiConfiguration, setKpiConfiguration, da
 
     return (
       <div>
-        <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
+        <div className="new-chart m-3 p-0" style={{ minheight: "300px" }}>
           <Row>
-            <Col xl={6} lg={6} md={8} className={"d-flex align-content-around"}>
+            <Col xl={6} lg={6} md={8} className={"align-content-around"}>
               <Row>
+                {dataPointHelpers.isDataPointVisible(totalAutomationCandidates) &&
                 <Col lg={6} className={"my-3"}>
-                  <TotalAutomationCandidatesDataBlock defects={metric?.totalTests} />
-                </Col>
+                  <TotalAutomationCandidatesDataBlock defects={metric?.totalTests} dataPoint={totalAutomationCandidates}/>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(totalFunctionalTest) &&
                 <Col lg={6} className={"my-3"}>
-                  <TotalFunctionalTestsDataBlock defects={metric?.functionalTests} />
-                </Col>
-                <Col lg={6} className={"mb-3"}>
-                  <TotalRegressionTestsDataBlock defects={metric?.regressionTests} />
-                </Col>
-                <Col lg={6} className={"mb-3"}>
-                  <RegressionTestsAutomatedDataBlock defects={metric?.automatedTests} />
-                </Col>
-                <Col lg={6} className={"mb-3"}>
-                  <RegressionTestsToBeAutomated defects={metric?.manualTests} />
-                </Col>
-                <Col lg={6} className={"mb-3"}>
+                  <TotalFunctionalTestsDataBlock defects={metric?.functionalTests} dataPoint={totalFunctionalTest}/>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(totalRegressionTests) &&
+                <Col lg={6} className={"my-3"}>
+                  <TotalRegressionTestsDataBlock defects={metric?.regressionTests} dataPoint={totalRegressionTests}/>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(regressionTestAutomation) &&
+                <Col lg={6} className={"my-3"}>
+                  <RegressionTestsAutomatedDataBlock defects={metric?.automatedTests} dataPoint={regressionTestAutomation}/>
+                </Col> }
+                {dataPointHelpers.isDataPointVisible(regressionTestToBeAutomated) &&
+                <Col lg={6} className={"my-3"}>
+                  <RegressionTestsToBeAutomated defects={metric?.manualTests} dataPoint={regressionTestToBeAutomated}/>
+                </Col>  }
+                {dataPointHelpers.isDataPointVisible(automationDataPoint) &&
+                <Col lg={6} className={"my-3"}>
                   <AutomationPercentageDataBlock score={metric?.automationRate} dataPoint={automationDataPoint} />
-                </Col>
+                </Col> }
               </Row>
             </Col>
             <Col xl={6} lg={4} md={3} className={"my-2 p-2"}>

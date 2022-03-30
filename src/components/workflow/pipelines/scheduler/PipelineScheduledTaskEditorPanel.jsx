@@ -11,7 +11,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipeline, taskList }) {
+function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -103,7 +103,6 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
           scheduleModel={scheduleModel}
           schedulerTaskModel={schedulerTaskModel}
           setSchedulerTaskModel={setSchedulerTaskModel}
-          pipeline={pipeline}
         />
          <Col lg={12}>
           <BooleanToggleInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
@@ -121,9 +120,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
 
 PipelineScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
-  setSchedulerTaskModel: PropTypes.func,
   handleClose: PropTypes.func,
-  pipeline: PropTypes.object,
   taskList: PropTypes.any,
 };
 

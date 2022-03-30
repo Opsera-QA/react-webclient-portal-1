@@ -25,7 +25,6 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -81,7 +80,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
     }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setHelpIsShown) => {
     switch (bulkMigrationWizardScreen) {
       // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
       //   return (
@@ -108,9 +107,7 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
 
   return (
     <OverlayPanelBodyContainer
-      helpComponent={getHelpComponent()}
-      helpIsShown={helpIsShown}
-      setHelpIsShown={setHelpIsShown}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
       isLoading={wizardModel?.getData("recordId")?.length === ""}
     >

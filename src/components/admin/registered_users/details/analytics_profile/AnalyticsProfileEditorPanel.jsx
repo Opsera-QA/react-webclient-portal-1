@@ -92,10 +92,10 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
       <Row>
         <Col>
           <ToolIdentifierMultiSelectInput
-            toolRegistryFilter={false}
             fieldName={"enabledTools"}
-            setDataObject={setAnalyticsProfileDataDto}
-            dataObject={analyticsProfileDataDto}
+            model={analyticsProfileDataDto}
+            setModel={setAnalyticsProfileDataDto}
+            toolRegistryFilter={false}
           />
         </Col>
         <Col>

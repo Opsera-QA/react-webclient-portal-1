@@ -150,7 +150,6 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
     return (
       <FilterContainer
         isLoading={isLoading}
-        showBorder={false}
         title={`Pipelines`}
         titleIcon={faDraftingCompass}
         body={getTable(projectDocs)}

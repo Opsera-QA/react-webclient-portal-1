@@ -107,18 +107,6 @@ pipelineActions.getPipelineStateAtRun = async (pipelineId, runNumber, getAccessT
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Refactor
-pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
-  const urlParams = {
-    params: {
-      size: 10000,
-    },
-  };
-
-  let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 pipelineActions.getPipelinesV3 = async (getAccessToken, cancelTokenSource, pipelineFilterModel, searchTerm, type, fields, active = true) => {
   const apiUrl = `/pipelines/v2`;
   const sortOption = pipelineFilterModel?.getData("sortOption");
@@ -134,7 +122,7 @@ pipelineActions.getPipelinesV3 = async (getAccessToken, cancelTokenSource, pipel
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
       active: active,
-      fields: fields
+      fields: fields,
     },
   };
 
@@ -203,6 +191,26 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.updatePipelineStepByIdV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  stepId,
+  pipelineStep,
+  ) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/update/`;
+  const postBody = {
+    ...pipelineStep,
+  };
+
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody
+  );
 };
 
 pipelineActions.updatePipelineStepNotificationConfiguration = async (getAccessToken, cancelTokenSource, pipelineId, stepId, notificationConfiguration) => {

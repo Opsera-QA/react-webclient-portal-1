@@ -94,7 +94,6 @@ function ConsolidatedUserPipelineAccessReport({ userEmailAddress }) {
       filterDto={pipelineFilterModel}
       setFilterDto={setPipelineFilterModel}
       supportSearch={true}
-      showBorder={false}
       isLoading={isLoading}
       metadata={pipelineSummaryMetadata}
       type={"Pipeline"}

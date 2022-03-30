@@ -23,12 +23,6 @@ function JiraProjectSummaryPanel({ jiraProjectData, jiraConfigurationData, setAc
           />
         </Col>
         <Col lg={6}>
-          <TextFieldBase
-            dataObject={jiraProjectData}
-            fieldName={"description"}
-          />
-        </Col>
-        <Col lg={6}>
           <ToolNameField
             model={jiraConfigurationData}
             fieldName={ "jiraToolId"}
@@ -38,29 +32,38 @@ function JiraProjectSummaryPanel({ jiraProjectData, jiraConfigurationData, setAc
           <JiraProjectNameField
             model={jiraConfigurationData}
             fieldName={"jiraProject"}
-            jiraToolId={jiraConfigurationData.getData("jiraToolId")}
+            jiraToolId={jiraConfigurationData?.getData("jiraToolId")}
+            jiraProjectKey={jiraConfigurationData?.getData("jiraProject")}
           />
         </Col>
         <Col lg={6}>
           <JiraBoardNameField
-            dataObject={jiraConfigurationData}
+            model={jiraConfigurationData}
             fieldName={"jiraBoard"}
-            jiraToolId={jiraConfigurationData.getData("jiraToolId")}
-            jiraProjectKey={jiraConfigurationData.getData("jiraProject")}
+            jiraToolId={jiraConfigurationData?.getData("jiraToolId")}
+            jiraProjectKey={jiraConfigurationData?.getData("jiraProject")}
+            jiraBoardId={jiraConfigurationData?.getData("jiraBoard")}
           />
         </Col>
         <Col lg={6}>
           <JiraSprintNameField
-            dataObject={jiraConfigurationData}
+            model={jiraConfigurationData}
             fieldName={"jiraSprint"}
-            jiraToolId={jiraConfigurationData.getData("jiraToolId")}
-            jiraBoard={jiraConfigurationData.getData("jiraBoard")}
+            jiraToolId={jiraConfigurationData?.getData("jiraToolId")}
+            jiraBoard={jiraConfigurationData?.getData("jiraBoard")}
+            jiraSprintId={jiraConfigurationData?.getData("jiraSprint")}
           />
         </Col>
         <Col lg={6}>
           <TextFieldBase
             dataObject={jiraConfigurationData}
             fieldName={"jiraParentTicket"}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextFieldBase
+            dataObject={jiraProjectData}
+            fieldName={"description"}
           />
         </Col>
       </Row>

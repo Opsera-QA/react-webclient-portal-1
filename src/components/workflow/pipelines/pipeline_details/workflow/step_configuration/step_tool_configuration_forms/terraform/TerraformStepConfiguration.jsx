@@ -107,11 +107,11 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <CustomScriptSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformCloudProviderSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"cloudProvider"} />
       <CloudCredentialSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
-      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />      
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
-        fieldName={"saveInputParameters"}
+        fieldName={"saveEnvironmentVariables"}
       />
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}

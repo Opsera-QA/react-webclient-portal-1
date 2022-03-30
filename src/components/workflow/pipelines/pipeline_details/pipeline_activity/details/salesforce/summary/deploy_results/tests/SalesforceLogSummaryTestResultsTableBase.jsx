@@ -10,6 +10,7 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
+import {getTimeColumnDefinition} from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestResultsTable";
 
 export const getApexClassUrlColumnDefinition = (field, maxLength, className) => {
   return {
@@ -34,6 +35,7 @@ function SalesforceLogSummaryTestResultsTableBase({ hasSuccessAndFailureTests, t
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "methodName")),
+      getTimeColumnDefinition(getField(fields, "time")),
       getTableTextColumn(getField(fields, "outcome")),
       getTableDateTimeColumn(getField(fields, "testTimestamp")),
       // getTableTextColumn(getField(fields, "apexClass.attributes.type")),

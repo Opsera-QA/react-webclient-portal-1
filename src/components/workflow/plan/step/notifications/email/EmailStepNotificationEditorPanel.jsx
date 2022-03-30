@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NotificationLevelInput from "components/workflow/plan/step/notifications/NotificationLevelInput";
+import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import EmailNotificationToggle
   from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function EmailStepNotificationEditorPanel(
   {
@@ -14,35 +16,29 @@ function EmailStepNotificationEditorPanel(
     return null;
   }
 
-  // TODO: Remove after updating the panel to use side tabs
-  if (emailNotificationModel.getData("enabled") === false) {
-    return (
-      <div className="my-4">
+  return (
+    <Row>
+      <Col xs={12}>
         <EmailNotificationToggle
           model={emailNotificationModel}
           setModel={setEmailNotificationModel}
         />
-      </div>
-    );
-  }
-
-  return (
-    <div className="my-4">
-      <EmailNotificationToggle
-        model={emailNotificationModel}
-        setModel={setEmailNotificationModel}
-      />
-      <MultiTextInputBase
-        dataObject={emailNotificationModel}
-        setDataObject={setEmailNotificationModel}
-        fieldName={"addresses"}
-      />
-      <NotificationLevelInput
-        dataObject={emailNotificationModel}
-        setDataObject={setEmailNotificationModel}
-        fieldName={"event"}
-      />
-    </div>
+      </Col>
+      <Col xs={12}>
+        <MultiTextInputBase
+          dataObject={emailNotificationModel}
+          setDataObject={setEmailNotificationModel}
+          fieldName={"addresses"}
+          disabled={emailNotificationModel?.getData("enabled") === false}
+        />
+      </Col>
+      <Col xs={12}>
+        <PipelineStepNotificationLevelSelectInput
+          model={emailNotificationModel}
+          setModel={setEmailNotificationModel}
+        />
+      </Col>
+    </Row>
   );
 }
 

@@ -109,7 +109,10 @@ BitbucketRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   workspace: PropTypes.string,

@@ -1,33 +1,54 @@
 import Model from "core/data_model/model";
 import ModelBase from "core/data_model/model.base";
 import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import _ from "lodash";
 
 const modelHelpers = {};
 
-// TODO: Rename getConfigurationModel
+// TODO: migrate to parseObjectIntoModel and remove
 modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
-  if (toolConfiguration == null || Object.entries(toolConfiguration).length === 0) {
-    return new Model({...metaData.newObjectFields}, metaData, true);
+  if (metaData == null) {
+    return null;
   }
-  return new Model(toolConfiguration, metaData, false);
+
+  const clonedMetadata = _.cloneDeep(metaData);
+
+  if (toolConfiguration == null || Object.entries(toolConfiguration).length === 0) {
+    return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, true);
+  }
+
+  return new Model(toolConfiguration, clonedMetadata, false);
 };
 
 modelHelpers.parseObjectIntoModel = (object, metaData) => {
-  if (object == null || Object.entries(object).length === 0) {
-    return new Model({...metaData.newObjectFields}, metaData, true);
+  if (metaData == null) {
+    return null;
   }
 
-  return new Model(object, metaData, false);
+  const clonedMetadata = _.cloneDeep(metaData);
+
+  if (object == null || Object.entries(object).length === 0) {
+    return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, true);
+  }
+
+  return new Model(object, clonedMetadata, false);
 };
 
 modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
-  if (object == null || Object.entries(object).length === 0) {
-    return new ModelBase({...metaData.newObjectFields}, metaData, true);
+  if (metaData == null) {
+    return null;
   }
 
-  return new ModelBase(object, metaData, false);
+  const clonedMetadata = _.cloneDeep(metaData);
+
+  if (object == null || Object.entries(object).length === 0) {
+    return new ModelBase({...clonedMetadata.newObjectFields}, clonedMetadata, true);
+  }
+
+  return new ModelBase(object, clonedMetadata, false);
 };
 
+// TODO: Migrate to using modelHelpers.parseObjectIntoModel and remove
 modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pipelineStepMetadata) => {
   let configuration = pipelineStepConfiguration?.configuration;
   if (configuration == null || Object.entries(configuration).length === 0) {
@@ -36,6 +57,7 @@ modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pip
   return new Model({...configuration}, pipelineStepMetadata, false);
 };
 
+// TODO: Migrate to using modelHelpers.parseObjectIntoModel and remove OR hardcode threshold metadata
 modelHelpers.getPipelineStepConfigurationThresholdModel = (pipelineStepConfiguration, thresholdMetadata) => {
   let threshold = pipelineStepConfiguration?.threshold;
   if (threshold == null || Object.entries(threshold).length === 0) {

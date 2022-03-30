@@ -25,9 +25,17 @@ primary analytics font*/
     font-weight: 400;
 }
 
+.analytics-font {
+    font-family: 'Inter', sans-serif;
+}
+
 .font-inter-light-500 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+}
+
+.metric-sub-header-text-spacing {
+    letter-spacing: 2px;
 }
 
 .metric-block-header-text {
@@ -53,7 +61,7 @@ primary analytics font*/
     color: white;
 }
 
-.chart-footer-text, .chart-subheader-text {
+.chart-footer-text, .metric-subheader-text {
     font-family: 'Inter', sans-serif;
     font-weight: 100;
     font-size: small;
@@ -778,7 +786,6 @@ a:hover, .active, .link-text:hover {
     top: 0;
     left: 0;
     position: fixed;
-    padding: .75em;
     z-index: 1200;
 }
 

@@ -4,19 +4,23 @@ import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/Two
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 
-function TotalFunctionalTestsDataBlock({ defects }) {
+function TotalFunctionalTestsDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
         <TwoLineScoreDataBlock
-          className={"p-3"}
+          className="p-2"
+          style={{minHeight: '100px'}}
           score={defects}
-          subtitle={"Total Number of Functional Test Cases"} />
+          dataPoint={dataPoint}
+          subtitle={"Total Number of Functional Test Cases"}
+        />
     </DataBlockBoxContainer>
   );
 }
 
 TotalFunctionalTestsDataBlock.propTypes = {
   defects: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default TotalFunctionalTestsDataBlock;

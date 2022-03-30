@@ -5,7 +5,7 @@ import TwoLinePercentageDataBlock from "components/common/metrics/percentage/Two
 function FirstPassYieldPercentageDataBlock({ score, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-      <div className={"p-2"} style={{minHeight: '100px'}}>
+      <div className={"p-2"}>
         <TwoLinePercentageDataBlock dataPoint={dataPoint} percentage={score} subtitle={"First Pass Yield"} />
       </div>
     </DataBlockBoxContainer>

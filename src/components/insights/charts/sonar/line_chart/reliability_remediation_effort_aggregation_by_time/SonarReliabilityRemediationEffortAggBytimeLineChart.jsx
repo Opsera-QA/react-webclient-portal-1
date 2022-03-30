@@ -174,7 +174,6 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
     return (
       <FilterContainer
         isLoading={isLoading}
-        showBorder={false}
         title={`Pipelines`}
         titleIcon={faDraftingCompass}
         body={getTable(projects)}

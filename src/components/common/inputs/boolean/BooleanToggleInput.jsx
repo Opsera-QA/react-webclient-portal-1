@@ -12,6 +12,7 @@ function BooleanToggleInput(
     setDataFunction,
     disabled,
     className,
+    id,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -57,14 +58,18 @@ function BooleanToggleInput(
   };
 
   const getUniqueId = () => {
-    let id = field?.id;
+    let constructedId = field?.id;
     const objectId = dataObject?.getMongoDbId();
 
     if (objectId) {
-      id += `-${objectId}`;
+      constructedId += `-${objectId}`;
     }
 
-    return id;
+    if (id) {
+      constructedId += `-${id}`;
+    }
+
+    return constructedId;
   };
 
   if (field == null) {
@@ -104,6 +109,7 @@ BooleanToggleInput.propTypes = {
   dataObject: PropTypes.object,
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default BooleanToggleInput;

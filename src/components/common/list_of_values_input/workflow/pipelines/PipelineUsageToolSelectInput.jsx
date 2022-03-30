@@ -6,7 +6,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import IconBase from "components/common/icons/IconBase";
 
 function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
@@ -14,6 +14,7 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
   const { getAccessToken } = useContext(AuthContext);
   const [pipelineUsageTools, setPipelineUsageTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -41,10 +42,10 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools(cancelSource);
+      setError(undefined);
+      await loadToolIdentifiers(cancelSource);
     }
     catch (error) {
-      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
@@ -52,12 +53,12 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
     }
   };
 
-  const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolManagementActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
-    const toolIdentifiers  = response?.data;
+  const loadToolIdentifiers = async (cancelSource = cancelTokenSource) => {
+    const response = await toolIdentifierActions.getPipelineUsageToolIdentifiersV2(getAccessToken, cancelSource);
+    const identifiers  = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {
-      setPipelineUsageTools(toolIdentifiers);
+    if (isMounted?.current === true && Array.isArray(identifiers)) {
+      setPipelineUsageTools(identifiers);
     }
   };
 

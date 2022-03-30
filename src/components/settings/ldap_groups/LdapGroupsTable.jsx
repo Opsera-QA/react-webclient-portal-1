@@ -67,7 +67,6 @@ function LdapGroupsTable(
   const getGroupsTable = () => {
     return (
       <CustomTable
-        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={groupData}

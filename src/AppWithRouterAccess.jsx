@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Navbar from "./Navbar";
-import ErrorDialog from "./components/common/status_notifications/error";
 import ToastContextProvider from "./contexts/DialogToastContext";
 import { axiosApiService } from "api/apiService";
 
@@ -13,6 +12,8 @@ import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 import AppRoutes from "./AppRoutes";
 import ClientWebsocket from "core/websocket/client.websocket";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import {generateUUID} from "components/common/helpers/string-helpers";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -108,6 +109,7 @@ const AppWithRouterAccess = () => {
 
   }, [authenticatedState, history.location.pathname]);
 
+  // TODO: We need to put this in an actions file and wire up cancel token
   const loadUsersData = async (token, loading) => {
     if (loading) { return; }
 
@@ -154,14 +156,16 @@ const AppWithRouterAccess = () => {
   const getError = () => {
     if (
       error &&
-      !error.message.includes("401") &&
-      !error.message.includes("undefined") &&
-      !error.message.includes("cancelToken")
+      !error?.message?.includes("401") &&
+      !error?.message?.includes("undefined") &&
+      !error?.message?.includes("cancelToken")
     ) {
       return (
-        <div style={{ height: "55px" }}>
-          <ErrorDialog align="top" error={error} />
-        </div>
+        <ErrorBanner
+          id={generateUUID()}
+          error={error}
+          removeBanner={() => setError(null)}
+        />
       );
     }
   };

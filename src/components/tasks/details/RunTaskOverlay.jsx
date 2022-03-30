@@ -34,7 +34,6 @@ import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
-  const [showHelp, setShowHelp] = useState(false);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const { getAccessRoleData } = useContext(AuthContext);
@@ -162,7 +161,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     }
   };
 
-  const getHelpComponent = () => {
+  const getHelpComponentFunction = (setShowHelp) => {
     switch (taskModel?.getData("type")) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (<SfdcOrgSyncPrerunHelpDocumentation closeHelpPanel={() => setShowHelp(false)}/>);
@@ -194,9 +193,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       buttonContainer={getButtonContainer()}
     >
       <OverlayPanelBodyContainer
-        helpComponent={getHelpComponent()}
-        helpIsShown={showHelp}
-        setHelpIsShown={setShowHelp}
+        getHelpComponentFunction={getHelpComponentFunction}
         hideCloseButton={true}
       >
         <div className={"mx-2 mb-2"}>

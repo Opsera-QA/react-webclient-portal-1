@@ -7,10 +7,13 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AwsS3BucketsOverlay from "./AwsS3BucketsOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import modelHelpers from "components/common/model/modelHelpers";
+import AwsS3BucketEditorPanel from "./details/AwsS3BucketEditorPanel";
 import VanityTable from "components/common/table/VanityTable";
 
 function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
   const toastContext = useContext(DialogToastContext);  
+  const [selectedBucket, setSelectedBucket] = useState(undefined);
   
   let fields = awsS3BucketMetadata.fields;
 
@@ -26,15 +29,13 @@ function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
     []
   );
 
-  const onRowSelect = async (grid, row) => {    
-    toastContext.showOverlayPanel(
-      <AwsS3BucketsOverlay 
-        toolData={toolData} 
-        loadData={loadData} 
-        editMode={true} 
-        editRowData={row}
-      />
-    );
+  const onRowSelect = async (grid, row) => {   
+    setSelectedBucket({...row});
+  };
+
+  const closePanelFunction = async () => {
+    setSelectedBucket(null);
+    await loadData();
   };
 
   const getTable = () => {
@@ -47,6 +48,19 @@ function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
       />
     );
   };
+
+  if(selectedBucket != null) {
+    return (
+      <AwsS3BucketEditorPanel
+        awsS3BucketsData={awsS3Buckets}
+        toolData={toolData}
+        loadData={loadData}
+        handleClose={closePanelFunction}
+        editMode={true}
+        editRowData={selectedBucket}
+      />
+    );
+  }
 
   return (
     <FilterContainer

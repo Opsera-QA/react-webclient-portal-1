@@ -7,9 +7,9 @@ import anchoreIntegratorStepConfigurationMetadata
 import Model from "../../../../../../core/data_model/model";
 import ReactJson from "react-json-view";
 import ChildPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/child/ChildPipelineStepConfigurationSummaryPanel";
-import childPipelineStepConfigurationMetadata
-  from "./step_tool_configuration_forms/child/child-pipeline-step-configuration-metadata";
+  from "../../../../plan/step/child/ChildPipelineStepConfigurationSummaryPanel";
+import {childPipelineStepMetadata}
+  from "components/workflow/plan/step/child/childPipelineStep.metadata";
 import AnchoreScanStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfigurationSummaryPanel";
 import anchoreScanStepConfigurationMetadata
@@ -23,8 +23,8 @@ import approvalGatePipelineStepConfigurationMetadata
 import ApprovalGatePipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/approval_gate/ApprovalGatePipelineStepConfigurationSummaryPanel";
 import SpinnakerPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
-import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
+  from "../../../../plan/step/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
+import spinnakerStepFormMetadata from "../../../../plan/step/spinnaker/spinnaker-stepForm-metadata";
 import ArgoCdPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
 import {ArgoCdStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
@@ -42,12 +42,12 @@ import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
-import parallelProcessorPipelineStepConfigurationMetadata
-  from "./step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-step-configuration-metadata";
+  from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
+import {parallelProcessorStepMetadata}
+  from "components/workflow/plan/step/parallel_processor/parallelProcessorStep.metadata";
 import NpmPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/npm/NpmPipelineStepConfigurationSummaryPanel";
-import npmPipelineStepConfigurationMetadata from "./step_tool_configuration_forms/npm/npm-step-configuration-metadata";
+  from "../../../../plan/step/npm/NpmPipelineStepConfigurationSummaryPanel";
+import {npmStepMetadata} from "components/workflow/plan/step/npm/npmStep.metadata";
 import ConditionalOperationPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfigurationSummaryPanel";
 import conditionalOperationStepConfigurationMetadata
@@ -103,7 +103,7 @@ import TwistlockPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
 import twistlockPipelineStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import S3PipelineStepConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
+  from "components/workflow/plan/step/s3/S3PipelineStepConfigurationSummaryPanel";
 import SshUploadDeployPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployPipelineStepConfigurationSummaryPanel";
 import sshUploadDeployPipelineStepConfigurationMetadata
@@ -156,7 +156,7 @@ import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_dep
 
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
-import {s3PipelineStepConfigurationMetadata} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfiguration.metadata";
+import {s3PipelineStepConfigurationMetadata} from "components/workflow/plan/step/s3/s3PipelineStepConfiguration.metadata";
 import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
 import mongodbRealmStepFormMetadata from "./step_tool_configuration_forms/mongodb_realm/mongodb-realm-stepForm-metadata";
 import MongodbRealmStepConfigurationSummaryPanel from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfigurationSummaryPanel";
@@ -172,7 +172,11 @@ import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import SentinelStepConfigurationSummaryPanel from "./step_tool_configuration_forms/sentenial/SentinelStepConfigurationSummaryPanel";
 import SentenialStepFormMetadata from "./step_tool_configuration_forms/sentenial/sentinel-stepForm-metadata";
-import {toolIdentifierConstants} from "components/admin/tools/tool_identifier/toolIdentifier.constants";
+import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
+import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
+import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/PackerPipelineStepConfigurationSummaryPanel";
+import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -223,7 +227,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ChildPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            childPipelineDataObject={getModelWrappedObject(childPipelineStepConfigurationMetadata)}
+            childPipelineDataObject={getModelWrappedObject(childPipelineStepMetadata)}
           />
         );
       case "conditional-operator":
@@ -286,7 +290,7 @@ function PipelineStepConfigurationSummary({
         return (
           <NpmPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            npmPipelineDataObject={getModelWrappedObject(npmPipelineStepConfigurationMetadata)}
+            npmPipelineDataObject={getModelWrappedObject(npmStepMetadata)}
           />
         );
       case "octopus":
@@ -300,7 +304,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ParallelProcessPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            parallelPipelineDataObject={getModelWrappedObject(parallelProcessorPipelineStepConfigurationMetadata)}
+            parallelPipelineDataObject={getModelWrappedObject(parallelProcessorStepMetadata)}
           />
         );
       case "spinnaker":
@@ -506,7 +510,7 @@ function PipelineStepConfigurationSummary({
             azureFunctionsPipelineDataObject={getModelWrappedObject(azureFunctionsStepFormMetadata)}
             />
         );
-      case "flyway-database-migrator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
         return (
           <FlywayDatabasePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
@@ -532,6 +536,20 @@ function PipelineStepConfigurationSummary({
           <SentinelStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
+          />
+        );
+      case "buildkite":
+        return (
+          <BuildkiteStepSummary
+            pipelineData={pipelineData}
+            buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
+          />
+        );
+      case "packer":
+        return (
+          <PackerPipelineStepConfigurationSummaryPanel 
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
           />
         );
       default:

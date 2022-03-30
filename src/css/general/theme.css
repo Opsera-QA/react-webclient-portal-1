@@ -34,6 +34,11 @@
     height: calc(1.5em + .75rem + 2px);
 }
 
+.text-input-with-button .btn {
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
 .btn {
     border-radius: .1rem;
 }
@@ -415,10 +420,15 @@ a.text-primary:hover, a.text-primary:focus {
 /* Table Style Changes */
 .filter-title-bar {
     border: 1px solid #e4e4e4;
+    border-collapse: collapse;
 }
 
 .dhx_grid-less-width {
     width: 0;
+}
+
+.dhx_grid-content {
+    border: none !important;
 }
 
 .custom-table .dhx_grid-filter__label {
@@ -440,8 +450,6 @@ a.text-primary:hover, a.text-primary:focus {
 
 .table-tree {
     height: 500px;
-    border: 1px solid #dfdfdf;
-    border-right: 0;
     background: #fff;
 }
 
@@ -483,25 +491,12 @@ a.text-primary:hover, a.text-primary:focus {
     height: 2em;
 }
 
-.custom-table .table-title-bar {
-    color: #3D3B36;
-    line-height: 2.4em;
-    font-weight: bold;
-    background-color: #E6E5E3;
-    width: 100%;
-}
-
-.custom-table .table-row {
-    margin-bottom: 2em;
-    line-height: 2em;
-}
-
 .custom-table .table-row, .primary-background {
     color: #3D3B36;
     background-color: #fff;
 }
 
-.custom-table .cell-center {
+.cell-center {
     text-align: center;
     vertical-align: middle;
 }
@@ -528,22 +523,6 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-footer {
     background-color: #E6E5E3;
     min-height: 5px;
-}
-
-.custom-table .top-pagination {
-    background-color: #E6E5E3;
-    border: 1px solid #e4e4e4;
-    border-bottom: none;
-    border-top: none;
-}
-
-.custom-table .status-icon {
-    display: flex;
-    justify-content: center;
-    width: 1rem;
-
-    /*TODO: REMOVE AFTER FIXING CENTERING*/
-    margin-left: 15px;
 }
 
 .custom-table > thead > tr > th {
@@ -964,17 +943,6 @@ a.nav-link {
     /*background-color: rgba(203, 205, 205, 0.1);*/
 }
 
-.content-block-top {
-    border-top: 1px solid #E6E5E3;
-    padding-top: 5px;
-}
-
-.table-content-block {
-    border: 1px solid #E6E5E3;
-    border-collapse: collapse;
-    border-radius: 0.25rem;
-}
-
 .image-container {
     min-width: 150px;
     min-height: 150px;
@@ -1065,6 +1033,19 @@ a.nav-link {
 .content-card-1 .even-row {
     background-color: rgba(0, 0, 0, .05);
     cursor: pointer;
+}
+
+.odd-row-background-color {
+    background-color: rgba(201, 199, 207, .75);
+}
+
+/*background-color: rgba(231, 229, 237, .75);*/
+.even-row-background-color {
+    background-color: rgba(231, 229, 237, .75);
+}
+
+.even-row-background-color:hover, .odd-row-background-color:hover {
+    background-color: #E7E5ED;
 }
 
 .content-card-1 .odd-row .selected {
@@ -1334,6 +1315,8 @@ div.data-blocks-ellipses {
 /* Pagination Container Styling */
 .pagination-container .top-pagination {
     background-color: #F3F3F1;
+    border-collapse: collapse;
+    border-top: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
 }
 
@@ -1353,6 +1336,7 @@ div.data-blocks-ellipses {
 
 .pagination-container .bottom-pagination {
     background-color: #F3F3F1;
+    border-collapse: collapse;
     border-top: 1px solid #e4e4e4;
 }
 
@@ -1360,6 +1344,10 @@ div.data-blocks-ellipses {
 
 /* Card Container Styling */
 .card-container {
+    background-color: #FFF;
+}
+
+.vanity-card-container {
     background-color: #FFF;
 }
 
@@ -1442,7 +1430,7 @@ div.data-blocks-ellipses {
 .filter-container {
 }
 
-.filter-container-body, .table-border {
+.container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
 }
@@ -1528,7 +1516,7 @@ div.data-blocks-ellipses {
     border-left: 8px solid green;
     padding: 2px;
     z-index: 3000;
-    width: 600px;
+    width: 775px;
 }
 
 .error-toast {
@@ -1538,7 +1526,7 @@ div.data-blocks-ellipses {
     border: 2px solid #dc3545;
     border-left: 8px solid #dc3545;
     font-size: 15px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
@@ -1549,7 +1537,7 @@ div.data-blocks-ellipses {
     border: 2px solid #1989F9;
     border-left: 8px solid #1989F9;
     padding: 1px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
@@ -1563,7 +1551,7 @@ div.data-blocks-ellipses {
     border: 2px solid #f9c116;
     border-left: 8px solid #f9c116;
     padding: 1px;
-    width: 600px;
+    width: 775px;
     z-index: 3000;
 }
 
