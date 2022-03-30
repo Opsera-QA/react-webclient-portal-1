@@ -8,11 +8,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig,
-  assignStandardColors,
-  adjustBarWidth,
-} from "../../../charts-views";
+import { defaultConfig, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import {
   METRIC_THEME_CHART_PALETTE_COLORS,
   METRIC_CHART_STANDARD_HEIGHT,
@@ -23,6 +19,7 @@ import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalM
 import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommitsTotalPullRequestsDataBlock";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
+import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,7 +65,13 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      const response = await chartsActions.getGithubTotalCommitsMetrics(kpiConfiguration, getAccessToken, cancelSource, dashboardTags, dashboardOrgs);
+      const response = await chartsActions.getGithubTotalCommitsMetrics(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
       dataObject.sort((a, b) => {
         if (a.commitCount < b.commitCount) {
@@ -110,6 +113,17 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       <GithubCommitsActionableInsightOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+      />
+    );
+  };
+
+  const showGithubDeclinedPullRequestModal = () => {
+    toastContext.showOverlayPanel(
+      <GithubDeclinedPullRequestActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
       />
     );
   };
@@ -118,7 +132,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     return (
       <Row className="px-4 justify-content-between">
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits}  />
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
         <Col md={12} className={"my-1"}>
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
@@ -148,7 +162,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={highestMergesMetric}
-                {...defaultConfig("","",false, false, "","", true)}
+                {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
                 onClick={() => setShowModal(true)}
               />
@@ -178,9 +192,9 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={totalDeclinedMerges}
-                {...defaultConfig("","",false, false, "","", true)}
+                {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={() => showGithubDeclinedPullRequestModal()}
               />
             </div>
           </Col>
