@@ -17,9 +17,10 @@ import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [dashboardDataDto, setDashboardDataDto] = useState({});
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +68,24 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
     return await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardDataDto);
   };
 
+  const getRolesInput = () => {
+    if (isSassUser() === false) {
+      return (
+        <Col md={12}>
+          <div className={"bg-white"} style={{borderRadius: "6px"}}>
+            <div className={"p-2"}>
+              <RoleAccessInput
+                fieldName={"roles"}
+                setDataObject={setDashboardDataDto}
+                dataObject={dashboardDataDto}
+              />
+            </div>
+          </div>
+        </Col>
+      );
+    }
+  };
+
   return (
     <EditorPanelContainer
       isLoading={isLoading}
@@ -77,7 +96,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
       updateRecord={updateDashboard}
       addAnotherOption={false}
     >
-      <div className="mx-2">
+      <div className={"px-2"}>
         <Row>
           <Col md={6}>
             <TextInputBase fieldName={"name"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
@@ -91,6 +110,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={6}>
             <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
           </Col>
+          {getRolesInput()}
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>

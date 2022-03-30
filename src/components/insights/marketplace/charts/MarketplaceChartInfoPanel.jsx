@@ -69,10 +69,11 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   };
 
   const getDashboardById = async (cancelSource = cancelTokenSource) => {
-    let response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, dashboardId);
+    const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, dashboardId);
+    const dashboard = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data) {
-      setSelectedDashboardData(new Model({dashboard: response.data}, dashboardSelectMetadata, false));
+    if (isMounted?.current === true && dashboard) {
+      setSelectedDashboardData(new Model({dashboard: dashboard}, dashboardSelectMetadata, false));
     }
   };
 

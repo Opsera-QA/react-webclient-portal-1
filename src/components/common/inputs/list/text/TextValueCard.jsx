@@ -9,9 +9,10 @@ function TextValueCard(
     className,
     deleteValueFunction,
     index,
+    disabled,
   }) {
   const getDeleteItemButton = () => {
-    if (deleteValueFunction) {
+    if (deleteValueFunction && disabled !== true) {
       return (
         <div className={"pointer danger-red"} onClick={deleteValueFunction}>
           <BadgeBase
@@ -45,6 +46,7 @@ TextValueCard.propTypes = {
   className: PropTypes.string,
   index: PropTypes.number,
   deleteValueFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default TextValueCard;

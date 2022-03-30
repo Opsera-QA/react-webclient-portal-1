@@ -7,6 +7,7 @@ import {InputGroup} from "react-bootstrap";
 function StandaloneTextInputBase(
   {
     setDataFunction,
+    onKeyPressFunction,
     value,
     disabled,
     type,
@@ -14,9 +15,10 @@ function StandaloneTextInputBase(
     error,
     placeholderText,
     rightSideInputButton,
+    field,
+    customInfoTextMessage,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
-
 
   useEffect(() => {
     setErrorMessage(error ? parseError(error) : "");
@@ -46,6 +48,7 @@ function StandaloneTextInputBase(
         onChange={(event) => setDataFunction(event.target.value)}
         className={getInputClasses()}
         autoComplete={"off"}
+        onKeyPress={onKeyPressFunction}
       />
     );
   };
@@ -70,10 +73,16 @@ function StandaloneTextInputBase(
   };
 
   return (
-    <>
+    <div>
       {getInput()}
-      <InfoText errorMessage={errorMessage} />
-    </>
+      <div>
+        <InfoText
+          errorMessage={errorMessage}
+          customMessage={customInfoTextMessage}
+          field={field}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -83,12 +92,15 @@ StandaloneTextInputBase.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func.isRequired,
+  onKeyPressFunction: PropTypes.func,
   error: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
   ]),
   placeholderText: PropTypes.string,
   rightSideInputButton: PropTypes.object,
+  field: PropTypes.object,
+  customInfoTextMessage: PropTypes.string,
 };
 
 export default StandaloneTextInputBase;
