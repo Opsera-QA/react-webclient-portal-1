@@ -1,28 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import PipelineMockStepTypeSelectInput
-  from "components/common/metrics/mock_pipeline/steps/PipelineMockStepTypeSelectInput";
+import PipelineMockStepTypeSelectInput from "components/common/metrics/mock_pipeline/steps/PipelineMockStepTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PipelineMappingEnvironmentInput
-  from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInput";
+import PipelineMappingEnvironmentInput from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
-import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
+import { pipelineMockStepMetadata } from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
+import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 
-function PipelineMockStepEditorPanel(
-  { 
-    disabled,
-    updateStepFunction,
-    pipelineStep,
-    deleteStepFunction,
-  }) {
+function PipelineMockStepEditorPanel({ disabled, updateStepFunction, pipelineStep, deleteStepFunction }) {
   const [stepModel, setStepModel] = useState(undefined);
 
   useEffect(() => {
@@ -39,10 +30,7 @@ function PipelineMockStepEditorPanel(
       return (
         <Button variant="link" onClick={deleteStepFunction}>
           <span>
-            <IconBase
-              className={"danger-red"}
-              icon={faTimes}
-            />
+            <IconBase className={"danger-red"} icon={faTimes} />
           </span>
         </Button>
       );
@@ -50,7 +38,7 @@ function PipelineMockStepEditorPanel(
   };
 
   const setDataFunction = (newModel) => {
-    setStepModel({...newModel});
+    setStepModel({ ...newModel });
     updateStepFunction(newModel);
   };
 
@@ -64,40 +52,20 @@ function PipelineMockStepEditorPanel(
       <Col sm={11}>
         <Row>
           <Col xs={12}>
-            <TextInputBase
-              fieldName={"name"}
-              dataObject={stepModel}
-              setDataObject={setDataFunction}
-            />
+            <TextInputBase fieldName={"name"} dataObject={stepModel} setDataObject={setDataFunction} />
           </Col>
           <Col xs={12}>
-            <PipelineMockStepTypeSelectInput
-              fieldName={"type"}
-              model={stepModel}
-              setModel={setDataFunction}
-            />
+            <PipelineMockStepTypeSelectInput fieldName={"type"} model={stepModel} setModel={setDataFunction} />
           </Col>
           <Col xs={12}>
-            <PipelineMappingEnvironmentInput
-              fieldName={"environments"}
-              model={stepModel}
-              setModel={setDataFunction}
-            />
+            <PipelineMappingEnvironmentInput fieldName={"environments"} model={stepModel} setModel={setDataFunction} />
           </Col>
           <Col xs={12}>
-            <TagManager
-              fieldName={"tags"}
-              model={stepModel}
-              setModel={setDataFunction}
-              type={"environment"}
-            />
+            {/* <TagManager fieldName={"tags"} model={stepModel} setModel={setDataFunction} type={"environment"} /> */}
+            <TagMultiSelectInput fieldName={"tags"} dataObject={stepModel} setDataObject={setDataFunction} />
           </Col>
           <Col xs={12}>
-            <TextInputBase
-              fieldName={"description"}
-              dataObject={stepModel}
-              setDataObject={setDataFunction}
-            />
+            <TextInputBase fieldName={"description"} dataObject={stepModel} setDataObject={setDataFunction} />
           </Col>
         </Row>
       </Col>
