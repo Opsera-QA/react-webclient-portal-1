@@ -7,6 +7,7 @@ import {InputGroup} from "react-bootstrap";
 function StandaloneTextInputBase(
   {
     setDataFunction,
+    onKeyPressFunction,
     value,
     disabled,
     type,
@@ -46,6 +47,7 @@ function StandaloneTextInputBase(
         onChange={(event) => setDataFunction(event.target.value)}
         className={getInputClasses()}
         autoComplete={"off"}
+        onKeyPress={onKeyPressFunction}
       />
     );
   };
@@ -88,6 +90,7 @@ StandaloneTextInputBase.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func.isRequired,
+  onKeyPressFunction: PropTypes.func,
   error: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,

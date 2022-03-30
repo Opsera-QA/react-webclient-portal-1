@@ -25,6 +25,7 @@ function MultiTextListInputBase(
     placeholderText,
     className,
     disabled,
+    allowDuplicates,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -122,6 +123,10 @@ function MultiTextListInputBase(
       return (`The entered ${singularTopic} is invalid.`);
     }
 
+    if (allowDuplicates !== true && isPotentialValueADuplicate() === true) {
+      return (`The entered ${singularTopic} is a duplicate. Duplicate ${pluralTopic} are not allowed.`);
+    }
+
     if (hasStringValue(internalErrorMessage) === true) {
       return internalErrorMessage;
     }
@@ -161,11 +166,20 @@ function MultiTextListInputBase(
       return false;
     }
 
+    if (allowDuplicates !== true && isPotentialValueADuplicate() === true) {
+      return false;
+    }
+
     if (isPotentialValueValidFunction != null) {
       return isPotentialValueValidFunction(potentialValue);
     }
 
     return true;
+  };
+
+  const isPotentialValueADuplicate = () => {
+    const currentValues = model?.getArrayData(fieldName);
+    return Array.isArray(currentValues) && currentValues.includes(potentialValue);
   };
 
   const getAddButton = () => {
@@ -196,6 +210,12 @@ function MultiTextListInputBase(
     );
   };
 
+  const onKeyPressFunction = async (event) => {
+    if (event.key === 'Enter' && canAddPotentialValue() === true) {
+      await addValue();
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -219,6 +239,7 @@ function MultiTextListInputBase(
           className={"mb-0"}
           disabled={disabled}
           field={field}
+          onKeyPressFunction={onKeyPressFunction}
           error={getErrorMessage()}
         />
       </div>
@@ -239,6 +260,7 @@ MultiTextListInputBase.propTypes = {
   placeholderText: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  allowDuplicates: PropTypes.bool,
 };
 
 MultiTextListInputBase.defaultProps = {
