@@ -14,9 +14,9 @@ function StandaloneTextInputBase(
     error,
     placeholderText,
     rightSideInputButton,
+    field,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
-
 
   useEffect(() => {
     setErrorMessage(error ? parseError(error) : "");
@@ -70,10 +70,15 @@ function StandaloneTextInputBase(
   };
 
   return (
-    <>
+    <div>
       {getInput()}
-      <InfoText errorMessage={errorMessage} />
-    </>
+      <div>
+        <InfoText
+          errorMessage={errorMessage}
+          field={field}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -89,6 +94,7 @@ StandaloneTextInputBase.propTypes = {
   ]),
   placeholderText: PropTypes.string,
   rightSideInputButton: PropTypes.object,
+  field: PropTypes.object,
 };
 
 export default StandaloneTextInputBase;

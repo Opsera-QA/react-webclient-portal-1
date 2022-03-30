@@ -5,7 +5,6 @@ import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
@@ -25,6 +24,7 @@ function MultiTextListInputBase(
     pluralTopic,
     placeholderText,
     className,
+    disabled,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +50,17 @@ function MultiTextListInputBase(
 
   const validateAndSetData = (fieldName, value) => {
     const newModel = {...model};
-    model.setData(fieldName, value);
+
+    if (value.length > field.maxItems) {
+      setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
+      return;
+    }
+
+    newModel?.setData(fieldName, value);
+    const errors = newModel?.isFieldValid(field.id);
+    const newErrorMessage = Array.isArray(errors) && errors.length > 0 ? errors[0] : "";
+    setErrorMessage(newErrorMessage);
+
     setModel({...newModel});
   };
 
@@ -73,19 +83,6 @@ function MultiTextListInputBase(
     updateValue(newFields);
   };
 
-  const formatItem = (item, index) => {
-    return (
-      <div key={index} className={index % 2 === 0 ? "odd-row-background-color" : "even-row-background-color"}>
-        <TextValueCard
-          value={item}
-          className={"p-2"}
-          index={index}
-          deleteValueFunction={() => deleteValueFunction(index)}
-        />
-      </div>
-    );
-  };
-
   const formatItems = () => {
     const items = model?.getArrayData(fieldName);
 
@@ -97,7 +94,19 @@ function MultiTextListInputBase(
       );
     }
 
-    return (items.map((user, i) => {return (formatItem(user, i));}));
+    return (items.map((item, index) => {
+      return (
+        <div key={index} className={index % 2 === 0 ? "odd-row-background-color" : "even-row-background-color"}>
+          <TextValueCard
+            value={item}
+            className={"p-2"}
+            index={index}
+            disabled={disabled}
+            deleteValueFunction={() => deleteValueFunction(index)}
+          />
+        </div>
+      );
+    }));
   };
 
   const getTitle = () => {
@@ -109,6 +118,10 @@ function MultiTextListInputBase(
   };
 
   const getErrorMessage = () => {
+    if (isPotentialValueValidFunction && hasStringValue(potentialValue) === true && isPotentialValueValidFunction(potentialValue) === false) {
+      return (`The entered ${singularTopic} is invalid.`);
+    }
+
     if (hasStringValue(internalErrorMessage) === true) {
       return internalErrorMessage;
     }
@@ -174,7 +187,7 @@ function MultiTextListInputBase(
           variant={"danger"}
           size={"sm"}
           onClick={removeAllItems}
-          disabled={model?.getArrayData(fieldName)?.length === 0}
+          disabled={model?.getArrayData(fieldName)?.length === 0 || disabled}
         >
           <span className={"mr-2"}><IconBase icon={faMinusCircle} className={"mr-2"}/>Remove All</span>
           <span className={"badge badge-secondary"}>{model?.getArrayData(fieldName).length}</span>
@@ -197,19 +210,18 @@ function MultiTextListInputBase(
           {formatItems()}
         </ul>
       </InfoContainer>
-      <div className={"mt-3 d-flex"}>
+      <div className={"mt-3"}>
         <StandaloneTextInputBase
           placeholderText={getPlaceholderText()}
           value={potentialValue}
           setDataFunction={setPotentialValue}
           rightSideInputButton={getAddButton()}
           className={"mb-0"}
+          disabled={disabled}
+          field={field}
+          error={getErrorMessage()}
         />
       </div>
-      <InfoText
-        field={field}
-        errorMessage={getErrorMessage()}
-      />
     </InputContainer>
   );
 }
@@ -226,6 +238,12 @@ MultiTextListInputBase.propTypes = {
   error: PropTypes.any,
   placeholderText: PropTypes.string,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
+MultiTextListInputBase.defaultProps = {
+  singularTopic: "value",
+  pluralTopic: "values",
 };
 
 export default MultiTextListInputBase;
