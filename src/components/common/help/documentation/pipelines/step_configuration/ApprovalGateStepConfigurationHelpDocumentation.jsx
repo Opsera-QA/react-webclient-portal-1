@@ -22,8 +22,8 @@ function ApprovalGateStepConfigurationHelpDocumentation() {
               <li>Select the <b>Save</b> button to proceed with configuring the pipeline step notification.</li>
               <li>To proceed to pipeline step notification, select the mail icon from the Approval Gate Step and continue with setup.</li>
             </ol>
-            <div className={"mt-2"}>Note: The Approval Gate step setup is not complete until pipeline step notification has been configured following this step setup. </div>
           </div>
+          <div className={"mt-2"}>Note: The Approval Gate step setup is not complete until pipeline step notification has been configured following this step setup. </div>
         </div>
       </div>
     );
