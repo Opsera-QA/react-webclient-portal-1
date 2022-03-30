@@ -13,14 +13,14 @@ export const endpointResponseEvaluationRuleMetadata = {
       id: "value",
     },
     {
-      label: "Values",
-      id: "values",
+      label: "Field Rules",
+      id: "field_rules",
     },
   ],
   newObjectFields: {
     option: "",
     filter: "equals",
     value: "",
-    values: [],
+    field_rules: [],
   }
 };

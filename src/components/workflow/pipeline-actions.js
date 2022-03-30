@@ -448,4 +448,9 @@ pipelineActions.createMongodbRealmJobV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+pipelineActions.createTerraformPipelineV2 = async (getAccessToken, cancelTokenSource, postBody) => {  
+  const apiUrl = `/pipelines/terraform-cloud/createPipeline`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default pipelineActions;

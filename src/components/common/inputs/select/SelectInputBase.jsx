@@ -39,6 +39,7 @@ function SelectInputBase(
     singularTopic,
     pluralTopic,
     visible,
+    customInfoTextMessage,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -162,6 +163,7 @@ function SelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
+        customMessage={customInfoTextMessage}
       />
     </InputContainer>
   );
@@ -207,6 +209,7 @@ SelectInputBase.propTypes = {
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
   visible: PropTypes.bool,
+  customInfoTextMessage: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

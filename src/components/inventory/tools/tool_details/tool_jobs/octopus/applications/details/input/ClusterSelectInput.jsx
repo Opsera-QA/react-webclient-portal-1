@@ -43,6 +43,7 @@ function ClusterSelectInput({ fieldName, dataObject, setDataObject, disabled, te
       const res = await OctopusStepActions.getClusters(dataObject.getData("toolId"),dataObject.getData("awsToolConfigId"), getAccessToken);
       if (res && res.status === 200) {
         setClusters(res.data);
+        setPlaceholder("Select Cluster");
         return;
       }
       setClusters([]);

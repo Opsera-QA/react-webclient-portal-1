@@ -18,7 +18,7 @@ export const terraformCloudWorkspacesMetadata = {
       },
       {
         label: "Workflow Type",
-        id: "workflowType",
+        id: "workFlowType",
         isRequired: true
       },
       {
@@ -29,21 +29,21 @@ export const terraformCloudWorkspacesMetadata = {
         label: "Terraform Version",
         id: "version",
         isRequiredFunction: (model) => {
-          return model?.getData("workflowType") === "VCS";
+          return model?.getData("workFlowType") === "VCS";
         },
       },
       {
         label: "VCS Service",
         id: "service",
         isRequiredFunction: (model) => {
-          return model?.getData("workflowType") === "VCS";
+          return model?.getData("workFlowType") === "VCS";
         },
       },
       {
         label: "VCS Provider",
         id: "provider",
         isRequiredFunction: (model) => {
-          return model?.getData("workflowType") === "VCS";
+          return model?.getData("workFlowType") === "VCS";
         },
       },
       {        
@@ -56,14 +56,14 @@ export const terraformCloudWorkspacesMetadata = {
         label: "Repository",
         id: "repository",
         isRequiredFunction: (model) => {
-          return model?.getData("workflowType") === "VCS";
+          return model?.getData("workFlowType") === "VCS";
         },
       },
       {
         label: "Branch",
         id: "branch",
         isRequiredFunction: (model) => {
-          return model?.getData("workflowType") === "VCS";
+          return model?.getData("workFlowType") === "VCS";
         },
       },
     ],
@@ -71,7 +71,7 @@ export const terraformCloudWorkspacesMetadata = {
       workspaceName: "",
       organizationName: "",
       description: "",
-      workflowType: "CLI",
+      workFlowType: "CLI",
       workingDirectory: "",
       version: "",
       service: "",
