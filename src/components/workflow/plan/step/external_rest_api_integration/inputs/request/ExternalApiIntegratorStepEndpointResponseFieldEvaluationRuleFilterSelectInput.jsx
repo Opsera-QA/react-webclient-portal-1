@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import EndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRuleFilterSelectInput";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 
 function ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput(
   {
@@ -14,9 +15,11 @@ function ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelec
     isSensitiveData,
     updateMainModelFunction,
   }) {
-  const setDataFunction = (fieldName, selectOption) => {
-    updateMainModelFunction(fieldName, selectOption?.value);
-    updateMainModelFunction("value", "");
+  const setDataFunction = (fieldName, selectedOption) => {
+    const newModel = {...model};
+    newModel.setData(fieldName, selectedOption?.value);
+    newModel.setData("value", dataParsingHelper.parseObjectValue(model?.getData("type")));
+    updateMainModelFunction(newModel);
   };
 
   return (

@@ -3,15 +3,20 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {
   endpointResponseFieldEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
+import CustomParameterComboBoxInput
+  from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -30,20 +35,76 @@ function EndpointResponseRuleFieldInputRow(
     updateFieldFunction({...endpointFieldModel?.getPersistData()});
   };
 
+  const updateMainModel = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+  };
+
+  const updateCustomParameterField = (fieldName, newValue) => {
+    const parsedValue = hasStringValue(newValue) === true ? newValue : newValue?.value || "";
+    updateMainModelFunction(fieldName, parsedValue);
+  };
+
   const getValueInput = () => {
+    const type = endpointFieldModel?.getData("type");
+    const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
     const canEnterValue = ["equals", "not_equals"];
-    if (canEnterValue.includes(endpointFieldModel?.getData("filter"))) {
-      return (
-        <Col sm={12}>
-          <TextInputBase
-            dataObject={endpointFieldModel}
-            setDataObject={setEndpointFieldModel}
-            fieldName={"value"}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
-        </Col>
-      );
+    const filter = endpointFieldModel?.getData("filter");
+
+    if (canEnterValue.includes(filter)) {
+      switch (type) {
+        case "string":
+          if (isSensitiveData === true) {
+            return (
+              <CustomParameterSelectInput
+                model={endpointFieldModel}
+                setModel={setEndpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={updateCustomParameterField}
+                disabled={disabled}
+              />
+            );
+          }
+
+          return (
+            <CustomParameterComboBoxInput
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={updateCustomParameterField}
+              disabled={disabled}
+            />
+          );
+        case "array":
+          return (
+            <MultiTextListInputBase
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+              className={"mt-2"}
+            />
+          );
+        case "date":
+          return (
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              className={"mt-2"}
+            />
+          );
+      }
     }
   };
 
@@ -52,7 +113,8 @@ function EndpointResponseRuleFieldInputRow(
       <Row>
         <Col sm={12}>
           <H5FieldSubHeader
-            subheaderText={`This field will meet the rule's criteria if ${endpointFieldModel.getData("fieldName")}`}
+            className={"mt-auto"}
+            subheaderText={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
           />
         </Col>
         <Col sm={12}>
@@ -64,10 +126,12 @@ function EndpointResponseRuleFieldInputRow(
             className={"px-0"}
             disabled={disabled}
             isSensitiveData={endpointBodyField?.isSensitiveData === true}
-            updateMainModelFunction={updateMainModelFunction}
+            updateMainModelFunction={updateMainModel}
           />
         </Col>
-        {getValueInput()}
+        <Col xs={12} className={"mt-2"}>
+          {getValueInput()}
+        </Col>
       </Row>
     );
   };
