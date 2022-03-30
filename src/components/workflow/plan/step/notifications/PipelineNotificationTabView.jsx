@@ -85,7 +85,7 @@ function PipelineNotificationTabView(
           />
         </Col>
         <Col sm={10} className={"px-0 full-height-overlay-container-with-buttons-and-title-body"}>
-          <div className={"mx-2 mt-1"}>
+          <div className={"mx-3 mt-1"}>
             {getCurrentView()}
             <RequiredFieldsMessage />
           </div>

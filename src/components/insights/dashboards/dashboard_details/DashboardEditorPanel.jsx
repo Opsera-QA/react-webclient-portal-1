@@ -18,6 +18,8 @@ import {dashboardAttributesMetadata} from "components/insights/dashboards/dashbo
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
@@ -80,6 +82,9 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
                 dataObject={dashboardDataDto}
               />
             </div>
+            <div className={"p-2 d-flex"}>
+              <InlineWarning className={"mx-auto"} warningMessage={"Please Note: Access Roles only affect visibility at this time"} />
+            </div>
           </div>
         </Col>
       );
@@ -111,17 +116,6 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
             <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
           </Col>
           {getRolesInput()}
-          <Col md={12}>
-            <div className={"bg-white"} style={{borderRadius: "6px"}}>
-              <div className={"p-2"}>
-                <RoleAccessInput
-                  fieldName={"roles"}
-                  setDataObject={setDashboardDataDto}
-                  dataObject={dashboardDataDto}
-                />
-              </div>
-            </div>
-          </Col>
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>

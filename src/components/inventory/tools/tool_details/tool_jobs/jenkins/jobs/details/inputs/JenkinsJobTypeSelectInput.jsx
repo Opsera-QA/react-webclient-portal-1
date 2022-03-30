@@ -20,6 +20,10 @@ const JENKINS_JOB_TYPES = [
     value: "CODE SCAN"
   },
   {
+    label: "Coverity Scan",
+    value: "COVERITY"
+  },
+  {
     label: "Unit Test",
     value: "UNIT TESTING"
   },

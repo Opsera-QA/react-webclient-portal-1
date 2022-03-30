@@ -79,13 +79,8 @@ function MultiSelectInputBase(
 
     newDataObject.setData(fieldName, parsedValues);
     const errors = newDataObject.isFieldValid(field.id);
-
-    if (Array.isArray(errors) && errors.length > 0) {
-      setErrorMessage(errors[0]);
-    }
-    else {
-      setErrorMessage("");
-    }
+    const newErrorMessage = Array.isArray(errors) && errors.length > 0 ? errors[0] : "";
+    setErrorMessage(newErrorMessage);
 
     setDataObject({...newDataObject});
   };
