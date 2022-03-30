@@ -137,6 +137,10 @@ function MultiTextListInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (hasMaximumItems() === true) {
+      return ("You have reached the maximum allowed number of values. Please remove one to add another.");
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -167,6 +171,10 @@ function MultiTextListInputBase(
     }
 
     if (allowDuplicates !== true && isPotentialValueADuplicate() === true) {
+      return false;
+    }
+
+    if (hasMaximumItems() === true) {
       return false;
     }
 
@@ -216,6 +224,11 @@ function MultiTextListInputBase(
     }
   };
 
+  const hasMaximumItems = () => {
+    const currentValues = model?.getArrayData(fieldName);
+    return Array.isArray(currentValues) && currentValues.length >= field.maxItems;
+  };
+
   if (field == null) {
     return null;
   }
@@ -237,7 +250,7 @@ function MultiTextListInputBase(
           setDataFunction={setPotentialValue}
           rightSideInputButton={getAddButton()}
           className={"mb-0"}
-          disabled={disabled}
+          disabled={disabled || hasMaximumItems() === true}
           field={field}
           onKeyPressFunction={onKeyPressFunction}
           error={getErrorMessage()}

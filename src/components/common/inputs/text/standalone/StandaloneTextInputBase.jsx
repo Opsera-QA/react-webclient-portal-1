@@ -16,6 +16,7 @@ function StandaloneTextInputBase(
     placeholderText,
     rightSideInputButton,
     field,
+    customInfoTextMessage,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -77,6 +78,7 @@ function StandaloneTextInputBase(
       <div>
         <InfoText
           errorMessage={errorMessage}
+          customMessage={customInfoTextMessage}
           field={field}
         />
       </div>
@@ -98,6 +100,7 @@ StandaloneTextInputBase.propTypes = {
   placeholderText: PropTypes.string,
   rightSideInputButton: PropTypes.object,
   field: PropTypes.object,
+  customInfoTextMessage: PropTypes.string,
 };
 
 export default StandaloneTextInputBase;
