@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
-import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import EmailNotificationToggle
   from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import MultiEmailListInput from "components/common/inputs/list/text/email/MultiEmailListInput";
 
 function EmailStepNotificationEditorPanel(
   {
@@ -25,11 +25,11 @@ function EmailStepNotificationEditorPanel(
         />
       </Col>
       <Col xs={12}>
-        <MultiTextInputBase
-          dataObject={emailNotificationModel}
-          setDataObject={setEmailNotificationModel}
+        <MultiEmailListInput
+          model={emailNotificationModel}
+          setModel={setEmailNotificationModel}
           fieldName={"addresses"}
-          disabled={emailNotificationModel?.getData("enabled") === false}
+          disabled={emailNotificationModel?.getData("enabled") !== true}
         />
       </Col>
       <Col xs={12}>

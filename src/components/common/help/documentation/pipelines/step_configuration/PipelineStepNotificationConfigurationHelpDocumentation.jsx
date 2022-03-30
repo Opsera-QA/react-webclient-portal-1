@@ -21,7 +21,6 @@ function PipelineStepNotificationConfigurationHelpDocumentation({closeHelpPanel}
         <div className={"ml-2 mb-1"}><b>Prerequisites</b> - In order to configure a notification trigger to Slack, you must first properly configure a Slack tool to your Slack account in the Tool Registry, and also add the Opsera app to the Slack channel where you want to receive notifications. To receive a notification within a specific Slack channel, navigate to the slack channel. In the text field, type “/app” to search through your connected app directory and locate Opsera. </div>
         <ol>
           <li>Enable the <b>Slack Notifications</b> toggle. </li>
-          <li>In <b>Email Addresses</b> field, provide email address(es) where you would like to receive a notification.</li>
           <li>In <b>Notification Level</b> field, select the scenario in which you want to be notified. Choose from <b>Step Completed</b>, <b>On Error</b>, or <b>All Activity</b>.</li>
           <li>In the <b>Slack Channel</b> field, provide the name of the slack channel where you previously added the Opsera app. The <b>#</b> is not required.</li>
           <li>Click the <b>Save</b> button in order for changes to take effect upon next pipeline run.</li>

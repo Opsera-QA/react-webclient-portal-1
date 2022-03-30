@@ -69,7 +69,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
+      model={dataObject}
       disabled={canEditRoles !== true || disabled}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}

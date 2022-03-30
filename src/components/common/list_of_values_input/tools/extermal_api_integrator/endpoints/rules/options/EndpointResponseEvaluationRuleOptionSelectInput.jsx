@@ -21,11 +21,11 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
     setDataFunction,
     disabled,
     className,
-    responseFields,
+    responseBodyFields,
   }) {
   // TODO: Find better way to disable options
   const getOptions = () => {
-    if (!Array.isArray(responseFields) || responseFields.length === 0) {
+    if (!Array.isArray(responseBodyFields) || responseBodyFields.length === 0) {
       return [{
         text: "Status Code",
         value: "status",
@@ -46,7 +46,7 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
       textField={"text"}
       disabled={disabled}
       setDataFunction={setDataFunction}
-      // customInfoTextMessage={"Field Evaluation is only available if Response Fields are registered in the selected endpoint."}
+      customInfoTextMessage={"Field Evaluation is only available if Response Fields are registered in the selected Endpoint."}
     />
   );
 }
@@ -58,7 +58,7 @@ EndpointResponseEvaluationRuleOptionSelectInput.propTypes = {
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  responseFields: PropTypes.array,
+  responseBodyFields: PropTypes.array,
 };
 
 export default EndpointResponseEvaluationRuleOptionSelectInput;

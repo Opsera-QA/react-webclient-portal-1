@@ -13,7 +13,7 @@ export const endpointResponseEvaluationRuleMetadata = {
       id: "value",
     },
     {
-      label: "Field Rules",
+      label: "Field Evaluation Rules",
       id: "field_rules",
     },
   ],

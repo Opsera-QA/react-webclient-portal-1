@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {
   endpointResponseFieldMetadata
 } from "components/common/inputs/endpoints/endpoint/response/body/endpointResponseField.metadata";
 import EndpointResponseBodyFieldInputRow
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function EndpointResponseBodyInputBase(
   {
@@ -74,8 +74,8 @@ function EndpointResponseBodyInputBase(
     validateAndSetData(newFields);
   };
 
-  const getFieldBody = () => {
-    if (!fields || fields.length === 0) {
+  const getBody = () => {
+    if (!Array.isArray(fields) || fields.length === 0) {
       return (
         <div className="text-center">
           <div className="text-muted my-3">No fields have been added</div>
@@ -87,7 +87,7 @@ function EndpointResponseBodyInputBase(
       <div>
         {fields.map((fieldData, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+            <div key={index} className={index % 2 === 0 ? "" : "my-2"}>
               <EndpointResponseBodyFieldInputRow
                 index={index}
                 deleteFieldFunction={() => deleteFieldFunction(index)}
@@ -102,38 +102,6 @@ function EndpointResponseBodyInputBase(
     );
   };
 
-  const getHeaderBar = () => {
-    return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={11}>
-          <Row>
-            <Col xs={5} className={"my-auto"}>
-              <span className={'ml-3'}>Field Name</span>
-            </Col>
-            <Col xs={5} className={"my-auto"}>
-              <span>Type</span>
-            </Col>
-            <Col xs={2}/>
-          </Row>
-        </Col>
-        <Col xs={1}/>
-      </Row>
-    );
-  };
-
-  const getBody = () => {
-    return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
-      </div>
-    );
-  };
-
   const isFieldComplete = (field) => {
     return (
       hasStringValue(field?.fieldName) === true
@@ -141,7 +109,7 @@ function EndpointResponseBodyInputBase(
     );
   };
 
-  const lastFieldComplete = () => {
+  const isAddAllowed = () => {
     if (fields.length === 0) {
       return true;
     }
@@ -150,21 +118,35 @@ function EndpointResponseBodyInputBase(
   };
 
   if (field == null) {
+    console.log("field is null: " + fieldName);
     return null;
   }
 
+  // TODO: Wire up tab content container when finishing field card input, and remove property input container
   return (
-    <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faBracketsCurly}
-        titleText={field?.label}
-        addProperty={addField}
-        type={"Field"}
-        addAllowed={lastFieldComplete() === true}
-      >
-        {getBody()}
-      </PropertyInputContainer>
-    </div>
+    <VanitySetTabContentContainer
+      titleIcon={faBracketsCurly}
+      title={field?.label}
+    >
+      <div className={"m-3"}>
+        <div>
+          {getBody()}
+        </div>
+        <SaveButtonContainer>
+          <NewRecordButton
+            variant={"secondary"}
+            disabled={isAddAllowed() !== true}
+            addRecordFunction={addField}
+            type={"Field"}
+            size={"sm"}
+          />
+        </SaveButtonContainer>
+        {/*<InfoText*/}
+        {/*  customMessage={getInfoText()}*/}
+        {/*  errorMessage={error}*/}
+        {/*/>*/}
+      </div>
+    </VanitySetTabContentContainer>
   );
 }
 

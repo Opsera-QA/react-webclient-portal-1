@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
-import {Form} from "react-bootstrap";
-import Row from "react-bootstrap/Row";
 import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 

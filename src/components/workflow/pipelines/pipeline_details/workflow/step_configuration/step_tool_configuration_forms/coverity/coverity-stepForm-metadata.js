@@ -89,10 +89,16 @@ const coverityStepFormMetadata = {
       label: "Delete workspace before building",
       id: "workspaceDeleteFlag",
     },
+    {
+      label: "Jenkins Job",
+      id: "toolJobId",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
     toolConfigId: "",
+    toolJobId: "",
     gitCredential: "",
     projectName:"",
     streamName:"",

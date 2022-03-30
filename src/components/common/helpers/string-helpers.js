@@ -1,5 +1,5 @@
-export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString) {
-  if (typeof string === "string" && string.length > 0) {
+export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString = "") {
+  if (hasStringValue(string) === true) {
     let capitalizedString = "";
     const words = string.split(wordDelimiter);
 
@@ -31,6 +31,14 @@ export function truncateString(string, maxLength){
   }
 
   return string.length <= maxLength ? string : string.slice(0, maxLength) + "...";
+}
+
+export function removeSpacesFromString(string){
+  if (hasStringValue(string) !== true) {
+    return "";
+  }
+
+  return string.replace(/\s/g, '');
 }
 
 export function generateUUID() {
