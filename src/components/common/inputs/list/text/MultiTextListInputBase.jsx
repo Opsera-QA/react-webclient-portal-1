@@ -150,10 +150,10 @@ function MultiTextListInputBase(
     }
 
     if (hasStringValue(singularTopic) === true) {
-      return `Select ${singularTopic}`;
+      return `Enter ${singularTopic}`;
     }
 
-    return "Select One";
+    return "Enter One";
   };
 
   const addValue = () => {
