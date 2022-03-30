@@ -112,17 +112,6 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           </Col>
           {getRolesInput()}
           <Col md={12}>
-            <div className={"bg-white"} style={{borderRadius: "6px"}}>
-              <div className={"p-2"}>
-                <RoleAccessInput
-                  fieldName={"roles"}
-                  setDataObject={setDashboardDataDto}
-                  dataObject={dashboardDataDto}
-                />
-              </div>
-            </div>
-          </Col>
-          <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
           <Col md={6}>
