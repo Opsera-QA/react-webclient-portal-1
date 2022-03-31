@@ -76,19 +76,49 @@ function CustomEnvironmentVariableManagement() {
     }
   };
 
+  // TODO: Don't include sensitive data parameters OR sanitize them
+  const getRelevantReactObjectProperties = () => {
+    return ({
+      NODE_ENV: process.env.NODE_ENV,
+      PUBLIC_URL: process.env.PUBLIC_URL,
+      REACT_APP_OPSERA_CLIENT_HOST: process.env.REACT_APP_OPSERA_CLIENT_HOST,
+      REACT_APP_OPSERA_CLIENT_ROOT_URL: process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL,
+      REACT_APP_OPSERA_API_SERVER_URL: process.env.REACT_APP_OPSERA_API_SERVER_URL,
+      REACT_APP_ANALYTICS_API_SERVER_URL: process.env.REACT_APP_ANALYTICS_API_SERVER_URL,
+      REACT_APP_OPSERA_ANALYTICS_SERVER_URL: process.env.REACT_APP_OPSERA_ANALYTICS_SERVER_URL,
+      REACT_APP_OPSERA_S3_STORAGE_URL: process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
+      REACT_APP_OPSERA_TENANT: process.env.REACT_APP_OPSERA_TENANT,
+    });
+  };
+
+  const getNodeContainer = () => {
+    return (
+      <div className={"my-2"}>
+        <StandaloneJsonField
+          titleText={"Node Custom Environment Variables"}
+          json={customEnvironmentVariableObject}
+          isLoading={isLoading}
+        />
+      </div>
+    );
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"customEnvironmentVariableManagement"}
-      isLoading={!accessRoleData || isLoading}
+      isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       navigationTabContainer={<CustomEnvironmentVariablesSubNavigationBar activeTab={"customEnvironmentVariableManagement"} />}
     >
       <div className={"mx-3 mb-3"}>
-        <StandaloneJsonField
-          titleText={"Node Custom Environment Variables"}
-          json={customEnvironmentVariableObject}
-        />
+        <div className={"my-2"}>
+          <StandaloneJsonField
+            titleText={"React Custom Environment Variables"}
+            json={getRelevantReactObjectProperties()}
+          />
+        </div>
+        {getNodeContainer()}
       </div>
     </ScreenContainer>
   );

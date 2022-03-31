@@ -12,12 +12,14 @@ function StandaloneJsonField(
     collapsed,
     enableClipboard,
     displayDataTypes,
+    isLoading,
   }) {
   return (
     <InfoContainer
       titleIcon={faBracketsCurly}
       titleText={titleText}
       className={className}
+      isLoading={isLoading}
     >
       <JsonFieldBase
         className={"m-3"}
@@ -37,6 +39,7 @@ StandaloneJsonField.propTypes = {
   collapsed: PropTypes.bool,
   enableClipboard: PropTypes.bool,
   displayDataTypes: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 StandaloneJsonField.defaultProps = {
