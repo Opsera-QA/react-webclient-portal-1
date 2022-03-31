@@ -69,6 +69,16 @@ const breadcrumbs = {
     title: "Administration Tools",
     icon: faTools
   },
+
+  customEnvironmentVariableManagement: {
+    parent: "admin",
+    name: "customEnvironmentVariableManagement",
+    path: paths.customEnviromentVariableManagement,
+    title: "Custom Environment Variable Management",
+    linkText: "Custom Environment Variable Management",
+    icon: faFileCode,
+    pageDescription: "View React and Node Custom Environment Variables",
+  },
   
   systemStatus: {
     parent: "admin", 

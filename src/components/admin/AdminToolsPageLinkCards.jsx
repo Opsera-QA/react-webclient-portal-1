@@ -15,6 +15,8 @@ import LdapCustomerOnboardingPageLinkCard
 import PipelineTemplateManagementPageLinkCard
   from "components/admin/template_editor/PipelineTemplateManagementPageLinkCard";
 import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPageLinkCard";
+import CustomEnvironmentVariableManagementPageLinkCard
+  from "components/admin/environment_variables/CustomEnvironmentVariableManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -22,6 +24,9 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <ApiConnectionDemoPageLinkCard
         accessRoleData={accessRoleData}
       />
+      {/*<CustomEnvironmentVariableManagementPageLinkCard*/}
+      {/*  accessRoleData={accessRoleData}*/}
+      {/*/>*/}
       <LdapCustomerOnboardingPageLinkCard
         accessRoleData={accessRoleData}
       />

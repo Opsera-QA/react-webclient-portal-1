@@ -13,6 +13,9 @@ import Col from "react-bootstrap/Col";
 import JsonField from "components/common/fields/json/JsonField";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ApiConnectionDemoSubNavigationBar from "components/admin/api_demo/ApiConnectionDemoSubNavigationBar";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import InfoContainer from "components/common/containers/InfoContainer";
+import {faChartNetwork, faUser} from "@fortawesome/pro-light-svg-icons";
 
 function ApiConnectionTest() {
   const {getAccessToken, getUserRecord} = useContext(AuthContext);
@@ -98,18 +101,85 @@ function ApiConnectionTest() {
   const getToolDetails = () => {
     if (registeredUserToolsDto != null) {
       return (
-        <div>
+        <div className={"my-2"}>
           <Row>
             <Col md={12} lg={6}>
               <JsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
             </Col>
-          </Row>
-          <Row>
             <Col md={12} lg={6}>
               <JsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
             </Col>
           </Row>
         </div>
+      );
+    }
+  };
+
+  const getUserFields = () => {
+    if (user) {
+      return (
+        <InfoContainer
+          titleText={"User"}
+          titleIcon={faUser}
+        >
+          <div className={"m-3"}>
+            User Name: {user.firstName ? `${user.firstName} ${user.lastName}` : ""}<br/>
+            User ID: {user ? `${user._id}` : ""}<br/>
+            Email: {user ? `${user.email}` : ""}<br/>
+            organizationName: {user ? `${user.organizationName}` : ""}<br/>
+            division: {user ? `${user.division}` : ""}<br/>
+            domain: {user ? `${user.domain}` : ""}<br/>
+            createdAt: {user ? `${user.createdAt}` : ""}<br/>
+            updatedAt: {user ? `${user.updatedAt}` : ""}<br/>
+            ssoSystem: {user ? `${user.ssoSystem}` : ""}<br/>
+            LDAP Account: {user ? `${JSON.stringify(user.ldap, null, 2)}` : ""}<br/>
+            Group Membership: {user ? `${JSON.stringify(user.groups, null, 2)}` : ""}<br/>
+            LDAP SyncAt: {user ? `${user.ldapSyncAt}` : ""}
+          </div>
+        </InfoContainer>
+      );
+    }
+  };
+
+  const getApiResponseDataPackageContainer = () => {
+    if (analyticsProfile) {
+      return (
+        <div className={"my-2"}>
+          <StandaloneJsonField
+            titleText={"API Response Data Package:"}
+            json={authData}
+          />
+        </div>
+      );
+    }
+  };
+
+  const getAnalyticsProfileContainer = () => {
+    if (analyticsProfile) {
+      return (
+        <InfoContainer
+          titleText={"Analytics Profile"}
+          className={"my-2"}
+          titleIcon={faChartNetwork}
+        >
+          <div className={"m-3"}>
+            <div>Enabled Tools: {JSON.stringify(analyticsProfile.enabledTools)}</div>
+            <div>dataUsage: {JSON.stringify(analyticsProfile.dataUsage)}</div>
+            <div>workflowType: {JSON.stringify(analyticsProfile.workflowType)}</div>
+
+            <div>enabledToolsOn: {JSON.stringify(analyticsProfile.enabledToolsOn)}</div>
+            <div>updatedToolsOn: {JSON.stringify(analyticsProfile.updatedToolsOn)}</div>
+            <div>disabledToolsOn: {JSON.stringify(analyticsProfile.disabledToolsOn)}</div>
+            <div>defaultPersona: {JSON.stringify(analyticsProfile.defaultPersona)}</div>
+            <div>query_configuration: {JSON.stringify(analyticsProfile.query_configuration)}</div>
+            <div>analyticsConfiguration: {JSON.stringify(analyticsProfile.analyticsConfiguration)}</div>
+
+            <div>personaConfiguration: {JSON.stringify(analyticsProfile.personaConfiguration)}</div>
+            <div>dashboardConfiguration: {JSON.stringify(analyticsProfile.dashboardConfiguration)}</div>
+            <div>customerDB: {JSON.stringify(analyticsProfile.customerDB)}</div>
+            <div>active: {JSON.stringify(analyticsProfile.active)}</div>
+          </div>
+        </InfoContainer>
       );
     }
   };
@@ -142,47 +212,9 @@ function ApiConnectionTest() {
         </div> */}
       {/* <div style={{ marginTop: 20 }}>Component getApiData() State Message: {JSON.stringify(messages)}</div> */}
 
-      {user && <div className="mt-3 mb-2">
-        <div className="lead">User:</div>
-        User Name: {user.firstName ? `${user.firstName} ${user.lastName}` : ""}<br/>
-        User ID: {user ? `${user._id}` : ""}<br/>
-        Email: {user ? `${user.email}` : ""}<br/>
-        organizationName: {user ? `${user.organizationName}` : ""}<br/>
-        division: {user ? `${user.division}` : ""}<br/>
-        domain: {user ? `${user.domain}` : ""}<br/>
-        createdAt: {user ? `${user.createdAt}` : ""}<br/>
-        updatedAt: {user ? `${user.updatedAt}` : ""}<br/>
-        ssoSystem: {user ? `${user.ssoSystem}` : ""}<br/>
-        LDAP Account: {user ? `${JSON.stringify(user.ldap, null, 2)}` : ""}<br/>
-        Group Membership: {user ? `${JSON.stringify(user.groups, null, 2)}` : ""}<br/>
-        LDAP SyncAt: {user ? `${user.ldapSyncAt}` : ""}
-      </div>}
-
-      {analyticsProfile !== undefined && <div className="mb-2">
-        <div className="lead mt-3">Analytics Profile:</div>
-        <div>Enabled Tools: {JSON.stringify(analyticsProfile.enabledTools)}</div>
-        <div>dataUsage: {JSON.stringify(analyticsProfile.dataUsage)}</div>
-        <div>workflowType: {JSON.stringify(analyticsProfile.workflowType)}</div>
-
-        <div>enabledToolsOn: {JSON.stringify(analyticsProfile.enabledToolsOn)}</div>
-        <div>updatedToolsOn: {JSON.stringify(analyticsProfile.updatedToolsOn)}</div>
-        <div>disabledToolsOn: {JSON.stringify(analyticsProfile.disabledToolsOn)}</div>
-        <div>defaultPersona: {JSON.stringify(analyticsProfile.defaultPersona)}</div>
-        <div>query_configuration: {JSON.stringify(analyticsProfile.query_configuration)}</div>
-        <div>analyticsConfiguration: {JSON.stringify(analyticsProfile.analyticsConfiguration)}</div>
-
-        <div>personaConfiguration: {JSON.stringify(analyticsProfile.personaConfiguration)}</div>
-        <div>dashboardConfiguration: {JSON.stringify(analyticsProfile.dashboardConfiguration)}</div>
-        <div>customerDB: {JSON.stringify(analyticsProfile.customerDB)}</div>
-        <div>active: {JSON.stringify(analyticsProfile.active)}</div>
-      </div>}
-
-
-      <div style={{width: "85vw", border: "1px solid #ced4da", borderRadius: ".25rem"}} className="mt-2 p-2">
-        <strong>API Response Data Package:</strong>
-        <ReactJson src={authData}/>
-      </div>
-
+      {getUserFields()}
+        {getAnalyticsProfileContainer()}
+        {getApiResponseDataPackageContainer()}
       {/*{getOldToolsDisplayer()}*/}
       {getToolDetails()}
       {showModal ? <Modal header="Log Details"
