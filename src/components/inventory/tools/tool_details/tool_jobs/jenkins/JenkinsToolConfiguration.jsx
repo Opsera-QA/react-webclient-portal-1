@@ -53,7 +53,12 @@ function JenkinsToolConfiguration({ toolData }) {
     }
 
     return (
-      <VaultTextInput dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jAuthToken"} />
+      <VaultTextInput 
+        dataObject={jenkinsConfigurationDto} 
+        setDataObject={setJenkinsConfigurationDto} 
+        fieldName={"jAuthToken"} 
+        rightSideInputButton={<RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>}
+        />
     );
   };
 
@@ -68,7 +73,6 @@ function JenkinsToolConfiguration({ toolData }) {
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Jenkins"}
-      leftSideButtons={<RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>}
     >
       <Row>
         <Col sm={12}>

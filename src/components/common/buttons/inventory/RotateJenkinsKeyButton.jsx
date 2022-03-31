@@ -49,7 +49,7 @@ function RotateJenkinsKeyButton ({toolId}){
 
   return (
     <Button size={"md"} variant="primary" disabled={isRotatingKey} onClick={() => rotateKey()} >
-      <span><IconBase icon={faKey} fixedWidth className="mr-2"/>{"Rotate Token"}</span>
+      <span><IconBase icon={faKey} fixedWidth className="mr-2"/>{"Generate Token"}</span>
     </Button>
   );
 }
