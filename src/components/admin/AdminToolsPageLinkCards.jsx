@@ -24,9 +24,9 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <ApiConnectionDemoPageLinkCard
         accessRoleData={accessRoleData}
       />
-      {/*<CustomEnvironmentVariableManagementPageLinkCard*/}
-      {/*  accessRoleData={accessRoleData}*/}
-      {/*/>*/}
+      <CustomEnvironmentVariableManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
       <LdapCustomerOnboardingPageLinkCard
         accessRoleData={accessRoleData}
       />
