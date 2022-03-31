@@ -54,7 +54,8 @@ function DashboardFiltersInlineInput(
   }
 
   return (
-    <div>
+    <Col>
+    <Row>
       <FiltersInlineInputBase
       tagLocation={"Dashboard"}
       disabled={disabled}
@@ -63,7 +64,17 @@ function DashboardFiltersInlineInput(
       fieldName={"amexFilters"}
       badgeClassName={"metric-badge"}
       saveDataFunction={updateDashboardFilters}
-      type={"svp"}
+      type={"SVP"}
+      />
+      {/* <FiltersInlineInputBase
+      tagLocation={"Dashboard"}
+      disabled={disabled}
+      visible={visible}
+      model={temporaryModel}
+      fieldName={"amexFilters"}
+      badgeClassName={"metric-badge"}
+      saveDataFunction={updateDashboardFilters}
+      type={"VP2"}
       />
       <FiltersInlineInputBase
       tagLocation={"Dashboard"}
@@ -73,7 +84,7 @@ function DashboardFiltersInlineInput(
       fieldName={"amexFilters"}
       badgeClassName={"metric-badge"}
       saveDataFunction={updateDashboardFilters}
-      type={"vp2"}
+      type={"VP1"}
       />
       <FiltersInlineInputBase
       tagLocation={"Dashboard"}
@@ -83,17 +94,7 @@ function DashboardFiltersInlineInput(
       fieldName={"amexFilters"}
       badgeClassName={"metric-badge"}
       saveDataFunction={updateDashboardFilters}
-      type={"vp1"}
-      />
-      <FiltersInlineInputBase
-      tagLocation={"Dashboard"}
-      disabled={disabled}
-      visible={visible}
-      model={temporaryModel}
-      fieldName={"amexFilters"}
-      badgeClassName={"metric-badge"}
-      saveDataFunction={updateDashboardFilters}
-      type={"director"}
+      type={"Director"}
       />
       <FiltersInlineInputBase
         tagLocation={"Dashboard"}
@@ -103,7 +104,7 @@ function DashboardFiltersInlineInput(
         fieldName={"amexFilters"}
         badgeClassName={"metric-badge"}
         saveDataFunction={updateDashboardFilters}
-        type={"application"}
+        type={"Application"}
       />
       <FiltersInlineInputBase
         tagLocation={"Dashboard"}
@@ -113,9 +114,10 @@ function DashboardFiltersInlineInput(
         fieldName={"amexFilters"}
         badgeClassName={"metric-badge"}
         saveDataFunction={updateDashboardFilters}
-        type={"action"}
-      />
-  </div>
+        type={"Action"}
+      /> */}
+      </Row>
+  </Col>
   );
 }
 

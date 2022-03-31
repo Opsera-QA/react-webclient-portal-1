@@ -102,44 +102,82 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   
   const getFiltersInput = () => {
     return (
-    <div>
-      {type === "svp" && <MultiSelectInputBase
+      <div>
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"svp"}
         selectOptions={svpOptions}
-      />}
-      {type === "vp2" && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"vp2"}
         selectOptions={vp2Options}
-      />}
-      {type === "vp1" && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"vp1"}
         selectOptions={vp1Options}
-      />}
-      {type === "director" && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"director"}
         selectOptions={directorOptions}
-      />}
-      {type === "application" && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"application"}
         selectOptions={applicationOptions}
-      />}
-      {type === "action" && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"action"}
         selectOptions={actionOptions}
-      />}
+      />
       </div>
+    // <div>
+    //   {type === "SVP" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"svp"}
+    //     selectOptions={svpOptions}
+    //   />}
+    //   {type === "VP2" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"vp2"}
+    //     selectOptions={vp2Options}
+    //   />}
+    //   {type === "VP1" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"vp1"}
+    //     selectOptions={vp1Options}
+    //   />}
+    //   {type === "Director" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"director"}
+    //     selectOptions={directorOptions}
+    //   />}
+    //   {type === "Application" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"application"}
+    //     selectOptions={applicationOptions}
+    //   />}
+    //   {type === "Action" && <MultiSelectInputBase
+    //     dataObject={amexFiltersDto}
+    //     setDataObject={setAmexFiltersDto}
+    //     fieldName={"action"}
+    //     selectOptions={actionOptions}
+    //   />}
+    //   </div>
     );
   };
 

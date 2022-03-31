@@ -51,7 +51,7 @@ function FiltersInlineInputBase(
             className={"ml-2 text-muted"}
             handleEditFunction={showEditor}
             disabled={disabled || saveDataFunction == null}
-            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Filters`}
+            tooltipBody={`Select ${type ? `${type} ` : ""}Filters`}
           />
         </div>
       </div>
