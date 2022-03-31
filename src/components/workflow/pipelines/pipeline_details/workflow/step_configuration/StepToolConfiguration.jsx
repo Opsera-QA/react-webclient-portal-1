@@ -80,6 +80,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -416,6 +417,14 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
           <ExternalRestApiIntegrationStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+        return (
+          <AzureScriptsStepEditorPanel
             pipelineId={pipeline._id}
             pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
