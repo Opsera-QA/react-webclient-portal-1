@@ -15,6 +15,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_AKS_DEPLOY: "azure_aks_deploy",
   AZURE_DEVOPS: "azure-devops",
   AZURE_FUNCTIONS: "azure-functions",
+  AZURE_SCRIPTS: "azure_scripts",
   AZURE_ZIP_DEPLOYMENT: "azure-zip-deployment",
   BITBUCKET: "bitbucket",
   BUILDKITE: "buildkite",
