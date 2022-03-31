@@ -57,11 +57,10 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "actionName")),
-      getTableTextColumn(getField(fields, "applicationDirector")),
       getTableTextColumn(getField(fields, "applicationSVP")),
-      getTableTextColumn(getField(fields, "applicationVP1")),
       getTableTextColumn(getField(fields, "applicationVP2")),
-      getTableTextColumn(getField(fields, "workflowName")),
+      getTableTextColumn(getField(fields, "applicationVP1")),
+      getTableTextColumn(getField(fields, "applicationDirector")),
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
       getTableTextColumn(getField(fields, "pointOfFailure"))
@@ -91,12 +90,13 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         "failedRunsActionableInsights",
         kpiConfiguration,
         dashboardTags,
-        null,
+        tableFilterDto,
         dashboardFilters,
         dashboardOrgs
       );
       const data = response?.data?.data[0];
-      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport;
+      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport[0]?.data;
+      console.log(response);
       setResponseData(data);
       setActionInsightsTraceabilityTable(actionableInsightsTableData);
     } catch (error) {
@@ -131,13 +131,15 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
 
   const getVerticalTabContainer = () => {
     const tabs = [];
-    for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      tabs.push(
-        <VanitySetVerticalTab
-          tabText={actionInsightsTraceabilityTable[i]?.applicationName}
-          tabName={actionInsightsTraceabilityTable[i]?.applicationName}
-        />
-      );
+    if (Array.isArray(actionInsightsTraceabilityTable) && actionInsightsTraceabilityTable.length > 0) {
+      for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
+        tabs.push(
+          <VanitySetVerticalTab
+            tabText={actionInsightsTraceabilityTable[i]?.applicationName}
+            tabName={actionInsightsTraceabilityTable[i]?.applicationName}
+          />
+        );
+      }
     }
     return (
       <VanitySetVerticalTabContainer className={"h-100"}>

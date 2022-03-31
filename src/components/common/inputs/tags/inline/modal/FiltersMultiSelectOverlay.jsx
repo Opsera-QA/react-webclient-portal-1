@@ -31,7 +31,6 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const [amexFiltersDto, setAmexFiltersDto] = useState(
     new Model({ ...amexFiltersMetadata.newObjectFields }, amexFiltersMetadata, false)
   );
-  console.log(amexFiltersDto);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -55,6 +54,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
 
   useEffect(() => {
     toastContext.removeInlineMessage();
+    setAmexFiltersDto(new Model (dataObject?.getData("amexFilters"), amexFiltersMetadata, false));
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
   }, [showModal]);
 
@@ -80,7 +80,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getAllActionsFilterOptions");
     let filters = response?.data?.data[0];
     filters = filters.reduce((acc, cur) => {
-      acc[cur["type"]] = [...acc[cur["type"]] || [], cur];
+      acc[cur["type"]] = [...acc[cur["type"]] || [], cur.value];
       return acc;
     }, {});
     if (isMounted?.current === true) {
@@ -94,8 +94,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   };
 
   const handleSave = async () => {
-    console.log(temporaryDataObject.getArrayData("amexFilters"));
-    dataObject.setData(fieldName, temporaryDataObject.getArrayData("amexFilters"));
+    dataObject.setData(fieldName, amexFiltersDto?.data);
     const response = await saveDataFunction(dataObject);
     closePanel();
     return response;
@@ -104,48 +103,42 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const getFiltersInput = () => {
     return (
     <div>
-      <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"application"}
-        textField={"value"}
-        selectOptions={applicationOptions}
-      />
-      <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"director"}
-        textField={"value"}
-        selectOptions={directorOptions}
-      />
-      <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"vp1"}
-        textField={"value"}
-        selectOptions={vp1Options}
-      />
-      <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"vp2"}
-        textField={"value"}
-        selectOptions={vp2Options}
-      />
-      <MultiSelectInputBase
+      {type === "svp" && <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"svp"}
-        textField={"value"}
         selectOptions={svpOptions}
-      />
-      <MultiSelectInputBase
+      />}
+      {type === "vp2" && <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"vp2"}
+        selectOptions={vp2Options}
+      />}
+      {type === "vp1" && <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"vp1"}
+        selectOptions={vp1Options}
+      />}
+      {type === "director" && <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"director"}
+        selectOptions={directorOptions}
+      />}
+      {type === "application" && <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"application"}
+        selectOptions={applicationOptions}
+      />}
+      {type === "action" && <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
         fieldName={"action"}
-        textField={"value"}
         selectOptions={actionOptions}
-      />
+      />}
       </div>
     );
   };

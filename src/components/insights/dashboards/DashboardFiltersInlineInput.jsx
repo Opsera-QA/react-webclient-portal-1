@@ -7,7 +7,9 @@ import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
 import Model from "core/data_model/model";
-
+import {amexFiltersMetadata} from "components/insights/dashboards/amex-filters-metadata.js";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 function DashboardFiltersInlineInput(
   {
     model,
@@ -30,7 +32,7 @@ function DashboardFiltersInlineInput(
     isMounted.current = true;
     if (model) {
       const newModel = {...new Model({...model.getPersistData()}, model?.getMetaData(), false)};
-      newModel.setData("amexFilters", getMetricFilterValue(model?.getData("filters"), "amexFilters") ? getMetricFilterValue(model?.getData("filters"), "amexFilters") : []);
+      newModel.setData("amexFilters", getMetricFilterValue(model?.getData("filters"), "amexFilters") ? getMetricFilterValue(model?.getData("filters"), "amexFilters") : amexFiltersMetadata.newObjectFields);
       setTemporaryModel({...newModel});
     }
 
@@ -52,7 +54,8 @@ function DashboardFiltersInlineInput(
   }
 
   return (
-    <FiltersInlineInputBase
+    <div>
+      <FiltersInlineInputBase
       tagLocation={"Dashboard"}
       disabled={disabled}
       visible={visible}
@@ -60,7 +63,59 @@ function DashboardFiltersInlineInput(
       fieldName={"amexFilters"}
       badgeClassName={"metric-badge"}
       saveDataFunction={updateDashboardFilters}
-    />
+      type={"svp"}
+      />
+      <FiltersInlineInputBase
+      tagLocation={"Dashboard"}
+      disabled={disabled}
+      visible={visible}
+      model={temporaryModel}
+      fieldName={"amexFilters"}
+      badgeClassName={"metric-badge"}
+      saveDataFunction={updateDashboardFilters}
+      type={"vp2"}
+      />
+      <FiltersInlineInputBase
+      tagLocation={"Dashboard"}
+      disabled={disabled}
+      visible={visible}
+      model={temporaryModel}
+      fieldName={"amexFilters"}
+      badgeClassName={"metric-badge"}
+      saveDataFunction={updateDashboardFilters}
+      type={"vp1"}
+      />
+      <FiltersInlineInputBase
+      tagLocation={"Dashboard"}
+      disabled={disabled}
+      visible={visible}
+      model={temporaryModel}
+      fieldName={"amexFilters"}
+      badgeClassName={"metric-badge"}
+      saveDataFunction={updateDashboardFilters}
+      type={"director"}
+      />
+      <FiltersInlineInputBase
+        tagLocation={"Dashboard"}
+        disabled={disabled}
+        visible={visible}
+        model={temporaryModel}
+        fieldName={"amexFilters"}
+        badgeClassName={"metric-badge"}
+        saveDataFunction={updateDashboardFilters}
+        type={"application"}
+      />
+      <FiltersInlineInputBase
+        tagLocation={"Dashboard"}
+        disabled={disabled}
+        visible={visible}
+        model={temporaryModel}
+        fieldName={"amexFilters"}
+        badgeClassName={"metric-badge"}
+        saveDataFunction={updateDashboardFilters}
+        type={"action"}
+      />
+  </div>
   );
 }
 

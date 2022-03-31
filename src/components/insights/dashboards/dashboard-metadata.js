@@ -133,7 +133,7 @@ export const dashboardFiltersMetadata = {
   newObjectFields: {
     value: [],
     organizations: [],
-    amexFilters: [],
+    amexFilters: {},
     date: {
       startDate: null,
       endDate: null,
