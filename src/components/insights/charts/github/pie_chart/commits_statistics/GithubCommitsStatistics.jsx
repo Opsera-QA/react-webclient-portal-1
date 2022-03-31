@@ -128,6 +128,22 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
+  const getHorizontalDataBlocks =() => {
+    return (
+      <Row className="px-4 justify-content-between">
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
+        </Col>
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+        </Col>
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+        </Col>
+      </Row>
+    );
+  };
+
   const getDataBlocks = () => {
     return (
       <Row className="px-4 justify-content-between">
@@ -143,14 +159,67 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       </Row>
     );
   };
-
-  const getChartBody = () => {
-    if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
-      return null;
-    }
-
+  const getSmallView = () => {
     return (
-      <div className="new-chart mb-3">
+      <div className={"d-block d-lg-none"}>
+         <Row>
+          <Col md={12}>{getHorizontalDataBlocks()}</Col>
+        </Row>
+        <Row>
+        <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Approved Pull Requests
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={highestMergesMetric}
+                {...defaultConfig("", "", false, false, "", "", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Active Contributors
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsiveBar
+                data={mostActiveUsersMetrics}
+                {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
+                {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+                {...adjustBarWidth(mostActiveUsersMetrics, false)}
+              />
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Declined Pull Requests
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={totalDeclinedMerges}
+                {...defaultConfig("", "", false, false, "", "", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => showGithubDeclinedPullRequestModal()}
+              />
+            </div>
+          </Col>
+        </Row>
+      </div>
+    );
+  };
+  
+
+  const getLargeView = () => {
+    return (
+      <div className={"d-none d-lg-block"}>
         <Row>
           <Col md={3}>{getDataBlocks()}</Col>
           <Col md={3}>
@@ -199,6 +268,20 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             </div>
           </Col>
         </Row>
+      </div>
+    );
+  };
+
+  const getChartBody = () => {
+    if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="new-chart mb-3">
+        {getLargeView()}
+        {getSmallView()}
+        
       </div>
     );
   };

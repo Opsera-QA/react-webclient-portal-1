@@ -10,9 +10,9 @@ function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboard
 
    const getTabContentContainer = () => {
     return (
-      <VanitySetTabViewContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
         {highestMergesMetric.map((item,index)=>(
-          <VanitySetTabView key={index} tabKey={item.id}>
+          <VanitySetTabView key={index} tabKey={item.id} >
             <GithubClosedCommitsTab
               repository={item.id}
               dashboardData={dashboardData}

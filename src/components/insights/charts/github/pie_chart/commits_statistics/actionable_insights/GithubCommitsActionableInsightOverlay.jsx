@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
+import { faTable, faCodeCommit, faBook, faCodeMerge } from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -69,24 +69,28 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           tabText={"Open Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"opened"}
+          icon={faCodeCommit}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Closed Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"closed"}
+          icon={faCodeMerge}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Merged Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"merged"}
+          icon={faTable}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Contributors"}
           handleTabClick={handleTabClick}
           tabName={"contributors"}
+          icon={faTable}
         />
       </CustomTabContainer>
     );
