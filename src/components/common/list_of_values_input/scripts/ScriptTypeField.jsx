@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import {getScriptTypeLabel} from "components/common/list_of_values_input/scripts/scriptTypes.constants";
+import {getScriptTypeLabel} from "components/common/list_of_values_input/scripts/scriptType.constants";
 
 function ScriptTypeField(
   {

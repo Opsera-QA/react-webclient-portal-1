@@ -72,5 +72,5 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   TERRASCAN: "terrascan",
   TWISTLOCK: " twistlock",
   XUNIT: "xunit",
-  YAML_GIT_PROCESSOR: "yaml_git_processor"
+  YAML_GIT_PROCESSOR: "yaml_git_processor",
 };

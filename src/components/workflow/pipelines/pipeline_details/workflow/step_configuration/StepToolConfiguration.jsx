@@ -82,7 +82,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import AzureCliCommandStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_scripts/AzureCliCommandStepConfiguration";
+import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
 import axios from "axios";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
@@ -482,6 +482,14 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
           <ExternalRestApiIntegrationStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+        return (
+          <AzureScriptsStepEditorPanel
             pipelineId={pipeline._id}
             pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
@@ -1113,22 +1121,7 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
-        );            
-      case "azure_scripts":
-        return (
-          <AzureCliCommandStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );            
+        );
       case "mongodb_realm":
         return (
           <MongodbRealmStepConfiguration

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {SCRIPT_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/scripts/scriptTypes.constants";
+import {SCRIPT_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/scripts/scriptType.constants";
 
 function ScriptTypeSelectInput(
   {
@@ -31,10 +31,6 @@ ScriptTypeSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-};
-
-ScriptTypeSelectInput.defaultProps = {
-  fieldName: "type"
 };
 
 export default ScriptTypeSelectInput;

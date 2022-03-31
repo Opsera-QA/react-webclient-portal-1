@@ -1,4 +1,4 @@
-const azureCliCommandStepFormMetadata = {
+export const azureScriptsStepMetadata = {
   type: "Azure Scripts Configuration",
   fields: [
     {
@@ -36,15 +36,10 @@ const azureCliCommandStepFormMetadata = {
   newObjectFields: {
     azureToolConfigId : "",
     azureCredentialId : "",
-    artifactToolId : "",
-    artifactStepId : "",
-    namePretext: "",
-    dynamicServiceName: false,
-    resourceGroupName: "",
-    useCustomResourceGroup: false,
-    deploymentType: "",
-    applicationType: ""
+    inlineCommand: "",
+    type: "",
+    filePath: "",
+    fileName: "",
+    bashScript: "",
   }
 };
-
-export default azureCliCommandStepFormMetadata;
