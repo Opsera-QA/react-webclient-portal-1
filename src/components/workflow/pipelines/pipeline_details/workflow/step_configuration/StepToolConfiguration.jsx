@@ -82,6 +82,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import AzureCliCommandStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_scripts/AzureCliCommandStepConfiguration";
 import axios from "axios";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
@@ -1101,6 +1102,21 @@ function StepToolConfiguration({
       case "azure-functions":
         return (
           <AzureFunctionsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );            
+      case "azure_scripts":
+        return (
+          <AzureCliCommandStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
