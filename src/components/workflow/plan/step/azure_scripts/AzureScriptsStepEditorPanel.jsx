@@ -10,13 +10,11 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import axios from "axios";
-import {
-  externalRestApiIntegrationStepMetadata
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
+import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
 
 function AzureScriptsStepEditorPanel(
   {
@@ -56,7 +54,7 @@ function AzureScriptsStepEditorPanel(
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.configuration, externalRestApiIntegrationStepMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.configuration, azureScriptsStepMetadata);
       setAzureScriptsStepModel(parsedModel);
       const thresholdModel = modelHelpers.parseObjectIntoModel(pipelineStep?.threshold, thresholdMetadata);
       setThresholdModel(thresholdModel);
