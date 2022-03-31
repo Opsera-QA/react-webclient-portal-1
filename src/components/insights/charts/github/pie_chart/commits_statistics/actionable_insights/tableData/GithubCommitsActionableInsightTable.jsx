@@ -1,7 +1,7 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import GithubCommitsActionableMetadata from "./github-commits-actionable-insight-metadata";
+import GithubCommitsActionableMetadata from "../github-commits-actionable-insight-metadata";
 import {
   getChartTrendStatusColumn, getTableDateTimeColumn,
   getTableTextColumn,
@@ -9,9 +9,8 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
 
-function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
+function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title, type }) {
   const fields = GithubCommitsActionableMetadata.fields;
   const tableTitle = "Github " + title + " Report";
   const noDataMessage = "Github " + title + " report is currently unavailable at this time";
@@ -29,13 +28,23 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
     ],
     []
   );
+  const openColumns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
+      getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
+      getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
+      getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
+      getChartTrendStatusColumn(getField(fields, "status"), "status")
+    ],
+    []
+  );
 
   const getTable = () => {
     return (
       <CustomTable
         isLoading={isLoading}
         loadData={loadData}
-        columns={columns}
+        columns={type =="open" ? openColumns : columns}
         data={data}
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
@@ -65,6 +74,7 @@ GithubCommitsActionableInsightTable.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   title: PropTypes.string,
+  type: PropTypes.string.isRequired,
 };
 
 export default GithubCommitsActionableInsightTable;

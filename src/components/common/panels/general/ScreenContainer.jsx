@@ -124,8 +124,8 @@ function ScreenContainer(
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar
-            titleIcon={breadcrumb.icon}
-            title={breadcrumb.title}
+            titleIcon={breadcrumb?.icon}
+            title={breadcrumb?.title}
             isLoading={isLoading}
             titleActionBar={titleActionBar}
             helpComponent={helpComponent}
