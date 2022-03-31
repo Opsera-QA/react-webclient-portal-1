@@ -17,7 +17,6 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
       setDataFunction(fieldName, newFile, fileName);
     }
     else {
-      console.log("setting file name: " + fileName);
       const newModel = {...model};
       newModel.setData(fieldName, newFile);
       newModel.setData("fileName", fileName);

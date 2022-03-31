@@ -63,6 +63,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "sfdc-configurator":
       case "nexus":
       case "terraform":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
       case "elastic-beanstalk":
       case "child-pipeline":
       case "mock-step":

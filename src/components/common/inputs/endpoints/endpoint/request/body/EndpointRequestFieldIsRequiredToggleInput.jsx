@@ -7,7 +7,6 @@ function EndpointRequestFieldIsRequiredToggleInput(
     model,
     updateMainModelFunction,
     disabled,
-    parentFieldName,
     index,
   }) {
   const updateMainModel = (fieldId, newValue) => {
@@ -17,7 +16,7 @@ function EndpointRequestFieldIsRequiredToggleInput(
   return (
     <StandaloneBooleanToggleInput
       setDataFunction={updateMainModel}
-      fieldId={`${index}-${parentFieldName}-request-isRequired`}
+      fieldId={`${index}-request-isRequired`}
       fieldLabel={model.getLabel("isRequired")}
       checkedValue={model?.getData("isRequired")}
       disabled={disabled}
@@ -30,8 +29,7 @@ EndpointRequestFieldIsRequiredToggleInput.propTypes = {
   model: PropTypes.object,
   updateMainModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  index: PropTypes.bool,
-  parentFieldName: PropTypes.string,
+  index: PropTypes.number,
 };
 
 export default EndpointRequestFieldIsRequiredToggleInput;

@@ -2,13 +2,12 @@ import baseActions from "utils/actionsBase";
 
 const parametersActions = {};
 
-parametersActions.getParameters = async (getAccessToken, cancelTokenSource, paginationModel, onlyVaultEnabled) => {
+parametersActions.getParameters = async (getAccessToken, cancelTokenSource, searchText, onlyVaultEnabled, notVaultEnabled) => {
   const urlParams = {
     params: {
-      // size: paginationModel?.getData("size"),
-      // page: paginationModel?.getData("currentPage"),
-      search: paginationModel?.getData("search"),
+      search: searchText,
       encrypted: onlyVaultEnabled,
+      unencrypted: notVaultEnabled,
     },
   };
 

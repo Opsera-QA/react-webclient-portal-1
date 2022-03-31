@@ -2,10 +2,15 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
+import {faCheckCircle, faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
+import InfoContainer from "components/common/containers/InfoContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function EndpointRequestParametersInputBase(
   {
@@ -21,6 +26,7 @@ function EndpointRequestParametersInputBase(
 
   useEffect(() => {
     isMounted.current = true;
+    setParameters([]);
 
     if (Array.isArray(parameterFields)) {
       loadData();
@@ -37,7 +43,13 @@ function EndpointRequestParametersInputBase(
 
     parameterFields.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
-      const value = parseObjectValue(parameter.type, currentData[fieldName]);
+
+      // Skip incomplete fields. This shouldn't happen but being as defensive as possible
+      if (hasStringValue(fieldName) !== true) {
+        return;
+      }
+
+      const value = dataParsingHelper.parseObjectValue(parameter.type, currentData[fieldName]);
 
       unpackedParameters.push({
         ...parameter,
@@ -46,16 +58,6 @@ function EndpointRequestParametersInputBase(
     });
 
     setParameters([...unpackedParameters]);
-  };
-
-  // TODO: Wire up constants
-  const parseObjectValue = (type, value) => {
-    switch (type) {
-      case "string":
-        return typeof value === "string" ? value : "";
-      case "array":
-        return Array.isArray(value) ? value : [];
-    }
   };
 
   const validateAndSetData = (newParameters) => {
@@ -67,10 +69,9 @@ function EndpointRequestParametersInputBase(
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
-      constructedParameterObject[fieldName] = parseObjectValue(parameter?.type, value);
+      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
     });
 
-    console.log("constructedParameterObject: " + JSON.stringify(constructedParameterObject));
     newModel.setData(fieldName, constructedParameterObject);
     setModel({...newModel});
   };
@@ -81,12 +82,20 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
-  const getFieldBody = () => {
+  const getParameterBody = () => {
+    if (!Array.isArray(parameters) || parameters?.length === 0) {
+      return (
+        <div className="text-center">
+          <div className="text-muted my-5">There are no Parameters to configure</div>
+        </div>
+      );
+    }
+
     return (
       <div>
-        {parameters.map((fieldData, index) => {
+        {parameters?.map((fieldData, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
               <EndpointRequestParameterInputRow
                 index={index}
                 endpointBodyField={fieldData}
@@ -100,37 +109,57 @@ function EndpointRequestParametersInputBase(
     );
   };
 
-  const getHeaderBar = () => {
+  const getParameterInputContainer = () => {
     return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={6} className={"my-auto"}>
-          <span className={'ml-3'}>Field Name</span>
-        </Col>
-        <Col xs={6} className={"my-auto"}>
-          <span>Value</span>
-        </Col>
-      </Row>
+      <Col xs={8}>
+        <InfoContainer
+          titleClassName={"sub-input-title-bar"}
+          titleIcon={faCode}
+          titleText={field?.label}
+        >
+          <div className={"m-3"}>
+            {getParameterBody()}
+          </div>
+        </InfoContainer>
+      </Col>
     );
   };
 
-  const getBody = () => {
-    if (!parameters || parameters?.length === 0) {
-      return (
-        <div className="text-center">
-          <div className="text-muted my-5">There are no Parameters to configure</div>
-        </div>
-      );
-    }
+  const resetDataToDefault = () => {
+    const resetFields = Array.isArray(parameterFields) ? parameterFields : [];
+    validateAndSetData([...resetFields]);
+  };
 
+  const getConstructedParameterContainer = () => {
     return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
-      </div>
+      <Col xs={4}>
+        <InfoContainer
+          titleClassName={"sub-input-title-bar"}
+          titleIcon={faCheckCircle}
+          titleText={`Constructed ${model?.getLabel(fieldName)}`}
+          className={"h-100"}
+        >
+          <div className={"mx-3 mb-3"}>
+            <div className={"d-flex justify-content-end"}>
+              <ClearDataIcon
+                clearValueFunction={resetDataToDefault}
+                className={"my-2"}
+              />
+            </div>
+            <StandaloneJsonField
+              className={"h-100 mb-2"}
+              model={model}
+              fieldName={fieldName}
+            />
+            <InfoText
+              customMessage={`
+                  Please Note: Until updated and saved, 
+                  this will include all previously saved fields.
+                `}
+            />
+          </div>
+        </InfoContainer>
+      </Col>
     );
   };
 
@@ -140,12 +169,10 @@ function EndpointRequestParametersInputBase(
 
   return (
     <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faFilter}
-        titleText={field?.label}
-      >
-        {getBody()}
-      </PropertyInputContainer>
+      <Row>
+        {getParameterInputContainer()}
+        {getConstructedParameterContainer()}
+      </Row>
     </div>
   );
 }
@@ -154,7 +181,7 @@ EndpointRequestParametersInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  parameterFields: PropTypes.object,
+  parameterFields: PropTypes.array,
   disabled: PropTypes.bool,
 };
 

@@ -22,6 +22,10 @@ const stepConfigurationMetadata = {
       label: "Tags",
       id: "tags"
     },
+    {
+      label: "Step Type",
+      id: "type"
+    },
   ],
   newObjectFields: {
     name: "",

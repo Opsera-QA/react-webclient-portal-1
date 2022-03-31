@@ -10,7 +10,7 @@ import {
   faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import EditRolesModal from "components/workflow/EditRolesModal";
+import EditPipelineRolesOverlay from "components/workflow/EditPipelineRolesOverlay";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
@@ -34,6 +34,7 @@ import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
+import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -116,10 +117,6 @@ function PipelineSummaryPanel(
         setWorkflowStatus(false);
       }
     }
-  };
-
-  const handleEditAccessRolesClick = () => {
-    setEditRoles(true);
   };
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
@@ -213,7 +210,7 @@ function PipelineSummaryPanel(
         setEditType(true);
         break;
       case "roles":
-        handleEditAccessRolesClick();
+        launchRolesEditOverlay();
         break;
       default:
         console.error("Missing value or type for edit field");
@@ -317,6 +314,21 @@ function PipelineSummaryPanel(
     );
   };
 
+  const launchRolesEditOverlay = () => {
+    const tempPipelineModel = new Model({...pipeline}, pipelineMetadata, false);
+
+    if (authorizedAction("edit_access_roles", pipeline.owner) === true) {
+      toastContext.showOverlayPanel(
+        <EditPipelineRolesOverlay
+          pipelineModel={tempPipelineModel}
+          fieldName={"roles"}
+          saveDataFunction={(roles) => handleSavePropertyClick(pipeline._id, roles, "roles")}
+          loadData={fetchPlan}
+        />
+      );
+    }
+  };
+
   const getRoleAccessField = () => {
     return (
       <Col xs={12} className="py-2"><span className="text-muted mr-1">Access Rules:</span>
@@ -326,8 +338,8 @@ function PipelineSummaryPanel(
         {authorizedAction("edit_access_roles", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
 
         {editRoles &&
-        <EditRolesModal setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles}
-                        visible={editRoles} onHide={() => {
+        <EditPipelineRolesOverlay setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles}
+                                  visible={editRoles} onHide={() => {
           setEditRoles(false);
         }} onClick={(roles) => {
           handleSavePropertyClick(pipeline._id, roles, "roles");

@@ -256,11 +256,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             )}
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-              <Col lg={12}>
+              <Col lg={12}>                
                 <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
                   model={octopusApplicationDataDto}
-                  setModel={setOctopusApplicationDataDto}
+                  setModel={setOctopusApplicationDataDto} 
+                  valueField={"_id"}
+                  textField={"name"}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
@@ -345,18 +347,19 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </Col>
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-              <Col lg={12}>
+              <Col lg={12}>                
                 <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
-                  dataObject={octopusApplicationDataDto}
-                  setDataObject={setOctopusApplicationDataDto}
+                  model={octopusApplicationDataDto}
+                  setModel={setOctopusApplicationDataDto} 
+                  valueField={"_id"}
+                  textField={"name"}
                   disabled={
                     (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
                     appID
                       ? true
                       : false
                   }
-                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
                 />
               </Col>
             )}
@@ -574,10 +577,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     }
   };
 
-  const getDeleteTomcatButton = () => {
-    if (type === "tomcat" && appID) {
+  const getDeleteButton = () => {
+    if (type === "tomcat" || (appID && octopusApplicationDataDto && octopusApplicationDataDto?.getData("id"))) {
       return (
-        <div className="mr-auto ml-2 mt-3 px-3">
+        <div className="mr-auto">
           <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
             <IconBase icon={faTrash} className={"danger-red"}/> Delete{" "}
             {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -611,7 +614,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       updateRecord={appID ? updateApplicationCaller : createApplication}
       createRecord={createApplication}
       setRecordDto={setOctopusApplicationDataDto}
-      extraButtons={getDeleteTomcatButton()}
+      extraButtons={getDeleteButton()}
       className={""}
     >
       {getCreateMessage()}

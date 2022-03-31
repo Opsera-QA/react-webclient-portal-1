@@ -26,13 +26,13 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     endpointId,
     disabled,
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [endpoint, setEndpoint] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [endpointRequestParametersModel, setEndpointRequestParametersModel] = useState(undefined);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -43,10 +43,9 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setEndpoint(undefined);
+    setEndpointRequestParametersModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointRequestParametersMetadata));
 
     if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
-      setEndpointRequestParametersModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointRequestParametersMetadata));
-
       loadData(source).catch((error) => {
         throw error;
       });
@@ -56,7 +55,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, endpointId]);
+  }, [fieldName, toolId, endpointId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -104,33 +103,19 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
             setModel={setModelFunction}
             parameterFields={endpoint?.queryParameterFields}
             fieldName={"queryParameters"}
+            disabled={disabled}
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
+      case ENDPOINT_REQUEST_TYPES.POST:
         return (
           <EndpointRequestParametersInputBase
             model={endpointRequestParametersModel}
             setModel={setModelFunction}
             parameterFields={endpoint?.requestBodyFields}
             fieldName={"requestBody"}
+            disabled={disabled}
           />
-        );
-      case ENDPOINT_REQUEST_TYPES.POST:
-        return (
-          <>
-            <EndpointRequestParametersInputBase
-              model={endpointRequestParametersModel}
-              setModel={setModelFunction}
-              parameterFields={endpoint?.queryParameterFields}
-              fieldName={"queryParameters"}
-            />
-            <EndpointRequestParametersInputBase
-              model={endpointRequestParametersModel}
-              setModel={setModelFunction}
-              parameterFields={endpoint?.requestBodyFields}
-              fieldName={"requestBody"}
-            />
-          </>
         );
     }
   };

@@ -5,15 +5,16 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
 import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
+import InfoContainer from "components/common/containers/InfoContainer";
+import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
 function EndpointRequestParameterInputRow(
   {
@@ -28,15 +29,16 @@ function EndpointRequestParameterInputRow(
   }, [endpointBodyField]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
-    endpointFieldModel.setData(fieldName, newValue);
-    updateParameterFunction({...endpointFieldModel?.getPersistData()});
+    const newModel = {...endpointFieldModel};
+    newModel.setData(fieldName, newValue);
+    updateParameterFunction({...newModel?.getPersistData()});
   };
 
   const getInfoText = () => {
     let infoText = "";
 
     if (endpointFieldModel?.getData("isRequired") === true) {
-      infoText += `${endpointFieldModel?.getData("fieldName")} is required. `;
+      infoText += `${endpointFieldModel?.getData("fieldName")} is required. If this is not included, the run will fail.`;
     }
 
     if (endpointFieldModel?.getData("isSensitiveData") === true) {
@@ -60,6 +62,14 @@ function EndpointRequestParameterInputRow(
     }
   };
 
+  const updateSensitiveCustomParameter = (fieldName, newValue) => {
+    updateMainModelFunction(fieldName, newValue?._id);
+  };
+
+  const updateInsensitiveCustomParameter = (fieldName, newValue) => {
+    updateMainModelFunction(fieldName, newValue?.value);
+  };
+
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -68,46 +78,64 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <CustomParameterSelectInput
-              model={endpointFieldModel}
-              fieldName={"value"}
-              showLabel={false}
-              className={"value-parameter"}
-              requireVaultSavedParameters={true}
-              setDataFunction={updateMainModelFunction}
-              disabled={disabled}
-            />
+            <div className={"mx-3 my-2"}>
+              <CustomParameterSelectInput
+                model={endpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={updateSensitiveCustomParameter}
+                disabled={disabled}
+              />
+              <div className={"d-flex justify-content-end"}>
+                {getInfoTextField()}
+              </div>
+            </div>
           );
         }
 
         return (
-          <CustomParameterComboBoxInput
-            model={endpointFieldModel}
-            fieldName={"value"}
-            showLabel={false}
-            className={"value-parameter"}
-            requireVaultSavedParameters={isSensitiveData}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-            valueField={"value"}
-          />
+          <div className={"mx-3 my-2"}>
+            <CustomParameterComboBoxInput
+              model={endpointFieldModel}
+              fieldName={"value"}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={updateInsensitiveCustomParameter}
+              disabled={disabled}
+            />
+            <div className={"d-flex justify-content-end"}>
+              {getInfoTextField()}
+            </div>
+          </div>
         );
       case "array":
         return (
-          <MultiTextInputBase
-            model={endpointFieldModel}
-            fieldName={"value"}
-            showLabel={false}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
+          <div className={"m-3"}>
+            <MultiTextListInputBase
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+            />
+          </div>
         );
       case "date":
         return (
-          <DateTimeInputBase
-
-            disabled={disabled}
-          />
+          <div className={"mx-3 mb-3 mt-2"}>
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          </div>
         );
     }
   };
@@ -117,22 +145,19 @@ function EndpointRequestParameterInputRow(
   }
 
   return (
-    <div className={"mx-2"}>
-      <Row className={"d-flex py-2"}>
-        <Col sm={4}>
-          <StandaloneTextInputBase
-            model={endpointFieldModel}
-            value={endpointFieldModel?.getData("fieldName")}
-            setDataFunction={updateMainModelFunction}
-            disabled={true}
-          />
-        </Col>
-        <Col sm={8}>
-          {getValueInput()}
-        </Col>
-      </Row>
-      {getInfoTextField()}
-    </div>
+    <InfoContainer
+      titleIcon={faCode}
+      titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
+      titleClassName={"sub-input-title-bar"}
+    >
+      <div>
+        <Row>
+          <Col sm={12}>
+            {getValueInput()}
+          </Col>
+        </Row>
+      </div>
+    </InfoContainer>
   );
 }
 

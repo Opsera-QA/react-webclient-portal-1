@@ -20,8 +20,8 @@ import {
   jiraStepNotificationMetadata
 } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import SfdcWizardInitializationHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
+import PipelineStepNotificationConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 
 function PipelineStepNotificationEditorPanel(
   {
@@ -149,12 +149,11 @@ function PipelineStepNotificationEditorPanel(
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
-    // TODO: Christina, put the help here
-    // return (
-    //   <SfdcWizardInitializationHelpDocumentation
-    //     closeHelpPanel={() => setHelpIsShown(false)}
-    //   />
-    // );
+    return (
+      <PipelineStepNotificationConfigurationHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+        />
+    );
   };
 
   if (isLoading) {

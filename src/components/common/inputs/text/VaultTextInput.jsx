@@ -3,9 +3,17 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import VaultInfoText from "components/common/inputs/info_text/vault/VaultInfoText";
+import {InputGroup} from "react-bootstrap";
 
-function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function VaultTextInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    rightSideInputButton,
+  }) {
+  const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
   const validateAndSetData = (value) => {
@@ -20,9 +28,8 @@ function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
     return typeof currentValue === "object" && Object.entries(currentValue).length > 0;
   };
 
-  return (
-    <InputContainer>
-      <InputLabel field={field} model={dataObject}/>
+  const getInputBody = () => {
+    return (
       <input
         type={"password"}
         disabled={disabled}
@@ -30,6 +37,36 @@ function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
         onChange={(event) => validateAndSetData(event.target.value)}
         className="form-control"
       />
+    );
+  };
+
+  const getInput = () => {
+    if (rightSideInputButton != null) {
+      return (
+        <InputGroup className={"flex-nowrap text-input-with-button"}>
+          {getInputBody()}
+          <InputGroup.Append>
+            {rightSideInputButton}
+          </InputGroup.Append>
+        </InputGroup>
+      );
+    }
+
+    return (
+      <div className={"d-flex"}>
+        {getInputBody()}
+      </div>
+    );
+  };
+
+  if (field == null) {
+    return null;
+  }
+
+  return (
+    <InputContainer>
+      <InputLabel field={field} model={dataObject}/>
+      {getInput()}
       <VaultInfoText storedInVault={isStoredInVault()} errorMessage={errorMessage}/>
     </InputContainer>
   );
@@ -39,7 +76,8 @@ VaultTextInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  rightSideInputButton: PropTypes.object,
 };
 
 export default VaultTextInput;
