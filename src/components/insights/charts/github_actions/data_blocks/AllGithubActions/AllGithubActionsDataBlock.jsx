@@ -218,7 +218,7 @@ function AllGithubActionsDataBlock({
         isLoading={false}
       >
         <div className={"p-3"}>
-          <FailedExecutionsActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+          <FailedExecutionsActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData}/>
         </div>
       </FullScreenCenterOverlayContainer>
     );

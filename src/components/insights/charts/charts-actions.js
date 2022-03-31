@@ -44,7 +44,6 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
-
 chartsActions.getSonarUnitTestsMetrics = async (
   kpiConfiguration,
   dashboardTags,

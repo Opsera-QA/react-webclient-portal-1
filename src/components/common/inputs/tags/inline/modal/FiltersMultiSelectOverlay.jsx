@@ -11,17 +11,27 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import chartsActions from "components/insights/charts/charts-actions";
+import {amexFiltersMetadata} from "components/insights/dashboards/amex-filters-metadata.js";
 
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
   const [filtersOptions, setFiltersOptions] = useState([]);
+  const [applicationOptions, setApplicationOptions] = useState([]);
+  const [directorOptions, setDirectorOptions] = useState([]);
+  const [vp1Options, setVP1Options] = useState([]);
+  const [vp2Options, setVP2Options] = useState([]);
+  const [svpOptions, setSVPOptions] = useState([]);
+  const [actionOptions, setActionOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [amexFiltersDto, setAmexFiltersDto] = useState(
+    new Model({ ...amexFiltersMetadata.newObjectFields }, amexFiltersMetadata, false)
+  );
+  console.log(amexFiltersDto);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -69,13 +79,22 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const getFilters = async (cancelSource = cancelTokenSource) => {
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getAllActionsFilterOptions");
     let filters = response?.data?.data[0];
-
-    if (isMounted?.current === true && Array.isArray(filters) && filters.length > 0) {
-      setFiltersOptions(filters);
+    filters = filters.reduce((acc, cur) => {
+      acc[cur["type"]] = [...acc[cur["type"]] || [], cur];
+      return acc;
+    }, {});
+    if (isMounted?.current === true) {
+      setApplicationOptions(filters["Application"]);
+      setDirectorOptions(filters["Director"]);
+      setVP1Options(filters["VP1"]);
+      setVP2Options(filters["VP2"]);
+      setSVPOptions(filters["SVP"]);
+      setActionOptions(filters["Action"]);
     }
   };
 
   const handleSave = async () => {
+    console.log(temporaryDataObject.getArrayData("amexFilters"));
     dataObject.setData(fieldName, temporaryDataObject.getArrayData("amexFilters"));
     const response = await saveDataFunction(dataObject);
     closePanel();
@@ -86,10 +105,46 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     return (
     <div>
       <MultiSelectInputBase
-        dataObject={temporaryDataObject}
-        setDataObject={setTemporaryDataObject}
-        fieldName={fieldName}
-        selectOptions={filtersOptions}
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"application"}
+        textField={"value"}
+        selectOptions={applicationOptions}
+      />
+      <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"director"}
+        textField={"value"}
+        selectOptions={directorOptions}
+      />
+      <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"vp1"}
+        textField={"value"}
+        selectOptions={vp1Options}
+      />
+      <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"vp2"}
+        textField={"value"}
+        selectOptions={vp2Options}
+      />
+      <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"svp"}
+        textField={"value"}
+        selectOptions={svpOptions}
+      />
+      <MultiSelectInputBase
+        dataObject={amexFiltersDto}
+        setDataObject={setAmexFiltersDto}
+        fieldName={"action"}
+        textField={"value"}
+        selectOptions={actionOptions}
       />
       </div>
     );
