@@ -1171,7 +1171,12 @@ function StepToolConfiguration({
   };
 
   const getToolsAndAccountText = () => {
-    if (stepTool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+    const newOverlayToolIdentifiers = [
+      toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
+      toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+    ];
+
+    if (newOverlayToolIdentifiers.includes(stepTool?.tool_identifier) === false) {
       return (
         <div className="text-muted small my-2">
           Tools and Accounts can be saved in <Link to="/inventory/tools">Tool Registry</Link>.

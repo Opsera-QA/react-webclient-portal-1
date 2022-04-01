@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationTriangle, faFileCode, faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import FieldTitleBar from "components/common/fields/FieldTitleBar";

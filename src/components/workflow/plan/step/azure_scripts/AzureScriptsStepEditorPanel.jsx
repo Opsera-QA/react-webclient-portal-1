@@ -15,6 +15,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
+import CustomParameterMultiSelectListInput
+  from "components/common/list_of_values_input/parameters/list/CustomParameterMultiSelectListInput";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import CodeInput from "components/common/inputs/code/CodeInput";
 
 function AzureScriptsStepEditorPanel(
   {
@@ -86,35 +93,47 @@ function AzureScriptsStepEditorPanel(
     switch (azureScriptsStepModel?.getData("type")){
       case "inline":
         return (
-          <TextAreaInput
-            fieldName={"inlineCommand"}
-            dataObject={azureScriptsStepModel}
-            setDataObject={setAzureScriptsStepModel}
-          />
+          <Col xs={12} md={6}>
+            <CodeInput
+              fieldName={"inlineCommand"}
+              model={azureScriptsStepModel}
+              setModel={setAzureScriptsStepModel}
+            />
+          </Col>
         );
       case "package":
         return (
           <>
-            <TextInputBase
-              fieldName={"filePath"}
-              dataObject={azureScriptsStepModel}
-              setDataObject={setAzureScriptsStepModel}
-            />
-            <TextInputBase
-              fieldName={"fileName"}
-              dataObject={azureScriptsStepModel}
-              setDataObject={setAzureScriptsStepModel}
-            />
+            <Col xs={12} md={6}>
+              <TextInputBase
+                fieldName={"filePath"}
+                dataObject={azureScriptsStepModel}
+                setDataObject={setAzureScriptsStepModel}
+              />
+            </Col>
+            <Col xs={12} md={6}>
+              <TextInputBase
+                fieldName={"fileName"}
+                dataObject={azureScriptsStepModel}
+                setDataObject={setAzureScriptsStepModel}
+              />
+            </Col>
           </>
         );
       case "script":
         return (
-          <ScriptLibrarySelectInput
-            fieldName={"bashScript"}
-            dataObject={azureScriptsStepModel}
-            setDataObject={setAzureScriptsStepModel}
-            language={"bash"}
-          />
+          <Col xs={12} md={6}>
+            <ScriptLibrarySelectInput
+              fieldName={"bashScript"}
+              dataObject={azureScriptsStepModel}
+              setDataObject={setAzureScriptsStepModel}
+              // language={"bash"}
+            />
+            {/*<ScriptValueInput*/}
+            {/*  model={azureScriptsStepModel}*/}
+            {/*  fieldName={"bashScript"}*/}
+            {/*/>*/}
+          </Col>
         );
       default:
         return null;
@@ -132,22 +151,38 @@ function AzureScriptsStepEditorPanel(
       persistRecord={saveAzureCliCommandStepConfiguration}
       isLoading={isLoading}
     >
-      <AzureScriptsStepAzureToolSelectInput
-        model={azureScriptsStepModel}
-        setModel={setAzureScriptsStepModel}
-      />
-      <AzureScriptsStepAzureApplicationCredentialSelectInput
-        fieldName={"azureCredentialId"}
-        model={azureScriptsStepModel}
-        setModel={setAzureScriptsStepModel}
-        azureToolId={azureScriptsStepModel?.getData("azureToolConfigId")}
-      />
-      <ScriptTypeSelectInput
-       fieldName={"type"}
-       model={azureScriptsStepModel}
-       setModel={setAzureScriptsStepModel}
-      />
-      {getFieldsByScriptType()}
+      <Row>
+        <Col xs={12} md={6}>
+          <AzureScriptsStepAzureToolSelectInput
+            model={azureScriptsStepModel}
+            setModel={setAzureScriptsStepModel}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <AzureScriptsStepAzureApplicationCredentialSelectInput
+            fieldName={"azureCredentialId"}
+            model={azureScriptsStepModel}
+            setModel={setAzureScriptsStepModel}
+            azureToolId={azureScriptsStepModel?.getData("azureToolConfigId")}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <ScriptTypeSelectInput
+            fieldName={"type"}
+            model={azureScriptsStepModel}
+            setModel={setAzureScriptsStepModel}
+          />
+        </Col>
+        <Col xs={0} md={6} />
+        {getFieldsByScriptType()}
+        <Col xs={12} md={6}>
+          <CustomParameterMultiSelectListInput
+            model={azureScriptsStepModel}
+            setModel={setAzureScriptsStepModel}
+            fieldName={"parameters"}
+          />
+        </Col>
+      </Row>
     </PipelineStepEditorPanelContainer>
   );
 }
