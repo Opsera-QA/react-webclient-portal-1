@@ -13,9 +13,11 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import BadgeBase from "components/common/badges/BadgeBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import InputContainer from "components/common/inputs/InputContainer";
+import {Button} from "react-bootstrap";
+import CustomParameterInputRow from "components/common/list_of_values_input/parameters/list/CustomParameterInputRow";
+import ButtonBase from "components/common/buttons/ButtonBase";
 
 function CustomParameterMultiSelectListInput(
   {
@@ -133,36 +135,16 @@ function CustomParameterMultiSelectListInput(
     updateValue(currentData);
   };
 
-  const getPropertyRow = (property, index) => {
-    return (
-      <Row className={"mx-0 py-2"}>
-        <Col sm={11}>
-          <Row className={"mx-0"}>
-            <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-              {property["parameterName"]}
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-              {property["outputKey"] ? "Terraform Output" : "User defined parameter"}
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1}>
-          {getDeletePropertyButton(index)}
-        </Col>
-      </Row>
-    );
-  };
-
   const getFieldBody = () => {
     const currentParameters = model?.getArrayData(fieldName);
 
     if (!Array.isArray(currentParameters) || currentParameters?.length === 0) {
       return (
-        <ul className={"list-group text-input-list"}>
-          <div className={"h-100 m-auto text-center"}>
+        <div className={"d-flex h-100"}>
+          <div className={"m-auto"}>
             <span>No Parameters Added</span>
           </div>
-        </ul>
+        </div>
       );
     }
 
@@ -175,7 +157,12 @@ function CustomParameterMultiSelectListInput(
               className={index % 2 === 0 ? "odd-row-background-color px-3" : "even-row-background-color px-3"}
               key={index}
             >
-              {getPropertyRow(parameter, index)}
+              <CustomParameterInputRow
+                parameter={parameter}
+                deleteParameterFunction={deleteParameter}
+                disabled={disabled}
+                index={index}
+              />
             </div>
           );
         })}
@@ -183,54 +170,51 @@ function CustomParameterMultiSelectListInput(
     );
   };
 
-  const getDeletePropertyButton = (index) => {
-    if (disabled !== true) {
-      return (
-        <div className={"pointer danger-red"} onClick={() => deleteParameter(index)}>
-          <BadgeBase
-            badgeText={"Remove"}
-            icon={faMinusCircle}
-          />
-        </div>
-      );
-    }
-  };
-
   const getHeaderBar = () => {
     return (
-      <div className="d-flex justify-content-between page-description">
-        <Col sm={11}>
-          <Row>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter</span>
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter Origin</span>
-            </Col>
-          </Row>
+      <div className={"d-flex justify-content-between page-description py-2 text-muted"}>
+        <Col xs={5}>
+          <span>Parameter</span>
         </Col>
+        <Col xs={5}>
+          <span>Parameter Origin</span>
+        </Col>
+        <Col xs={2}/>
       </div>
     );
   };
 
-  // const refreshParameters = () => {
-  //   let terraformStep = plan.find((step) => step._id === terraformStepId);
-  //   let newDataObject = { ...model };
-  //   let tempCustomParamsObject =
-  //     terraformStep?.tool?.configuration?.customParameters &&
-  //     Array.isArray(terraformStep?.tool?.configuration?.customParameters)
-  //       ? terraformStep?.tool?.configuration?.customParameters
-  //       : [];
-  //   let currentCustomParamsObject = newDataObject?.getData("customParameters");
-  //   let filtered = [];
-  //   for (let item in currentCustomParamsObject) {
-  //     if (!currentCustomParamsObject[item]?.outputKey) {
-  //       filtered.push(currentCustomParamsObject[item]);
-  //     }
-  //   }
-  //   newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filtered]);
-  //   setModel({ ...newDataObject });
-  // };
+  const syncTerraformStepParameters = (terraformStepParameters) => {
+    const currentParameters = model?.getArrayData(fieldName);
+    const newArray = currentParameters?.filter((parameter) => parameter?.outputKey == null);
+
+    if (Array.isArray(terraformStepParameters) && terraformStepParameters > 0) {
+      terraformStepParameters.forEach((terraformParameter) => {
+        if (terraformParameter?.outputKey) {
+          newArray.push(terraformParameter);
+        }
+      });
+    }
+
+    updateValue(newArray);
+  };
+
+  const getTerraformButton = () => {
+    // if (isMongoDbId(terraformStepId) === true) {
+      return (
+        <div className={"mr-1"}>
+          <div style={{minWidth: "275px"}}>
+            <ButtonBase
+              variant={"primary"}
+              disabled={disabled || hasMaximumItems() || isPotentialValueADuplicate()}
+              onClickFunction={syncTerraformStepParameters}
+              buttonText={"Sync Terraform Output Parameters"}
+            />
+          </div>
+        </div>
+      );
+    // }
+  };
 
   // const getRefreshButton = () => {
   //   if (isMongoDbId(terraformStepId) === true) {
@@ -306,22 +290,6 @@ function CustomParameterMultiSelectListInput(
     }
   };
 
-  const getTerraformButton = () => {
-    if (isMongoDbId(terraformStepId) === true) {
-      return (
-        <div className={"mr-2"} style={{minWidth: "156px"}}>
-          <NewRecordButton
-            size={"md"}
-            variant={"primary"}
-            disabled={disabled || hasMaximumItems() || isPotentialValueADuplicate()}
-            addRecordFunction={addParameter}
-            customButtonText={"Add Parameter"}
-          />
-        </div>
-      );
-    }
-  };
-
   if (field == null) {
     return null;
   }
@@ -331,7 +299,6 @@ function CustomParameterMultiSelectListInput(
       <InfoContainer
         titleText={titleText}
         titleIcon={titleIcon}
-        // titleRightSideButton={getRefreshButton}
       >
         <div
           style={{height: height, maxHeight: height}}
@@ -351,6 +318,7 @@ function CustomParameterMultiSelectListInput(
             busy={isLoading}
             setDataFunction={(data) => setSelectedParameter(data)}
             disabled={disabled}
+            dropUp={true}
           />
           <div className={"ml-2"} style={{minWidth: "156px"}}>
             <NewRecordButton
