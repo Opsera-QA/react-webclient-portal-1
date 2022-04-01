@@ -11,15 +11,20 @@ import GenericChartSettingsHelpDocumentation
   from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import MeanTimeToDeployHelpDocumentation
   from "components/common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+import InsightsHelpDocumentation from "components/common/help/documentation/insights/InsightsHelpDocumentation";
 
 const HELP_DOCUMENTS = {
 ...INSIGHTS_HELP_DOCUMENTS,
 
 };
 
+// we should have a module property
+
 function HelpDocumentationView({ currentView }) {
   const getConfigurationSummaryPanel = () => {
     switch (currentView) {
+      case HELP_DOCUMENTS.INSIGHTS_MAIN_HELP_DOCUMENTATION:
+        return (<InsightsHelpDocumentation />);
       case HELP_DOCUMENTS.SONAR_RATINGS:
         return (<SonarRatingsChartHelpDocumentation />);
       case HELP_DOCUMENTS.PIPELINES_OVERVIEW:
