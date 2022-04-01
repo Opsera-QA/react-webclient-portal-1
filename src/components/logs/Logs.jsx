@@ -12,6 +12,8 @@ import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import {Row} from "react-bootstrap";
 import InfoDialog from "components/common/status_notifications/info";
+import LogsHelpDocumentation from "../common/help/documentation/logs/LogsHelpDocumentation";
+import BlueprintsHelpDocumentation from "../common/help/documentation/blueprints/BlueprintsHelpDocumentation";
 
 function Logs() {
   const {getAccessToken} = useContext(AuthContext);
@@ -135,10 +137,15 @@ function Logs() {
     );
   };
 
+  const getHelpComponent = () => {
+    return (<LogsHelpDocumentation/>);
+  };
+
   return (
     <ScreenContainer
       isLoading={isLoading}
       breadcrumbDestination={"logs"}
+      helpComponent={getHelpComponent()}
       pageDescription={`
           Opsera provides users with access to a vast repository of logging with industry leading search and filtering
           capability. Access all available logging, reports and configurations around the Opsera Analytics Platform or
