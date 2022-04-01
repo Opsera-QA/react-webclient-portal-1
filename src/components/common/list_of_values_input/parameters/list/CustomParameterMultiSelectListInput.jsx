@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faHandshake, faMinusCircle} from "@fortawesome/pro-light-svg-icons";
+import { faHandshake, faMinusCircle } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { AuthContext } from "contexts/AuthContext";
@@ -8,28 +8,28 @@ import parametersActions from "components/inventory/parameters/parameters-action
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import InfoContainer from "components/common/containers/InfoContainer";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import BadgeBase from "components/common/badges/BadgeBase";
-import {parseError} from "components/common/helpers/error-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { parseError } from "components/common/helpers/error-helpers";
 import InputContainer from "components/common/inputs/InputContainer";
+import CustomParameterInputRow from "components/common/list_of_values_input/parameters/list/CustomParameterInputRow";
+import ButtonBase from "components/common/buttons/ButtonBase";
 
-function CustomParameterMultiSelectListInput(
-  {
-    model,
-    setModel,
-    fieldName,
-    setDataFunction,
-    titleIcon,
-    titleText,
-    disabled,
-    terraformStepId,
-    className,
-    height,
-  }) {
+function CustomParameterMultiSelectListInput({
+  model,
+  setModel,
+  fieldName,
+  setDataFunction,
+  titleIcon,
+  titleText,
+  disabled,
+  terraformStepId,
+  className,
+  height,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(model.getFieldById(fieldName));
   const [error, setError] = useState("");
@@ -103,8 +103,7 @@ function CustomParameterMultiSelectListInput(
   const updateValue = (newParameterList) => {
     if (setDataFunction) {
       setDataFunction(fieldName, newParameterList);
-    }
-    else {
+    } else {
       validateAndSetData(newParameterList);
     }
   };
@@ -133,36 +132,16 @@ function CustomParameterMultiSelectListInput(
     updateValue(currentData);
   };
 
-  const getPropertyRow = (property, index) => {
-    return (
-      <Row className={"mx-0 py-2"}>
-        <Col sm={11}>
-          <Row className={"mx-0"}>
-            <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-              {property["parameterName"]}
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-              {property["outputKey"] ? "Terraform Output" : "User defined parameter"}
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1}>
-          {getDeletePropertyButton(index)}
-        </Col>
-      </Row>
-    );
-  };
-
   const getFieldBody = () => {
     const currentParameters = model?.getArrayData(fieldName);
 
     if (!Array.isArray(currentParameters) || currentParameters?.length === 0) {
       return (
-        <ul className={"list-group text-input-list"}>
-          <div className={"h-100 m-auto text-center"}>
+        <div className={"d-flex h-100"}>
+          <div className={"m-auto"}>
             <span>No Parameters Added</span>
           </div>
-        </ul>
+        </div>
       );
     }
 
@@ -175,7 +154,12 @@ function CustomParameterMultiSelectListInput(
               className={index % 2 === 0 ? "odd-row-background-color px-3" : "even-row-background-color px-3"}
               key={index}
             >
-              {getPropertyRow(parameter, index)}
+              <CustomParameterInputRow
+                parameter={parameter}
+                deleteParameterFunction={deleteParameter}
+                disabled={disabled}
+                index={index}
+              />
             </div>
           );
         })}
@@ -183,54 +167,51 @@ function CustomParameterMultiSelectListInput(
     );
   };
 
-  const getDeletePropertyButton = (index) => {
-    if (disabled !== true) {
-      return (
-        <div className={"pointer danger-red"} onClick={() => deleteParameter(index)}>
-          <BadgeBase
-            badgeText={"Remove"}
-            icon={faMinusCircle}
-          />
-        </div>
-      );
-    }
-  };
-
   const getHeaderBar = () => {
     return (
-      <div className="d-flex justify-content-between page-description">
-        <Col sm={11}>
-          <Row>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter</span>
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter Origin</span>
-            </Col>
-          </Row>
+      <div className={"d-flex justify-content-between page-description py-2 text-muted"}>
+        <Col xs={5}>
+          <span>Parameter</span>
         </Col>
+        <Col xs={5}>
+          <span>Parameter Origin</span>
+        </Col>
+        <Col xs={2} />
       </div>
     );
   };
 
-  // const refreshParameters = () => {
-  //   let terraformStep = plan.find((step) => step._id === terraformStepId);
-  //   let newDataObject = { ...model };
-  //   let tempCustomParamsObject =
-  //     terraformStep?.tool?.configuration?.customParameters &&
-  //     Array.isArray(terraformStep?.tool?.configuration?.customParameters)
-  //       ? terraformStep?.tool?.configuration?.customParameters
-  //       : [];
-  //   let currentCustomParamsObject = newDataObject?.getData("customParameters");
-  //   let filtered = [];
-  //   for (let item in currentCustomParamsObject) {
-  //     if (!currentCustomParamsObject[item]?.outputKey) {
-  //       filtered.push(currentCustomParamsObject[item]);
-  //     }
-  //   }
-  //   newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filtered]);
-  //   setModel({ ...newDataObject });
-  // };
+  const syncTerraformStepParameters = (terraformStepParameters) => {
+    const currentParameters = model?.getArrayData(fieldName);
+    const newArray = currentParameters?.filter((parameter) => parameter?.outputKey == null);
+
+    if (Array.isArray(terraformStepParameters) && terraformStepParameters > 0) {
+      terraformStepParameters.forEach((terraformParameter) => {
+        if (terraformParameter?.outputKey) {
+          newArray.push(terraformParameter);
+        }
+      });
+    }
+
+    updateValue(newArray);
+  };
+
+  const getTerraformButton = () => {
+    if (isMongoDbId(terraformStepId) === true) {
+      return (
+        <div className={"mr-1"}>
+          <div style={{ minWidth: "275px" }}>
+            <ButtonBase
+              variant={"primary"}
+              disabled={disabled || hasMaximumItems() || isPotentialValueADuplicate()}
+              onClickFunction={syncTerraformStepParameters}
+              buttonText={"Sync Terraform Output Parameters"}
+            />
+          </div>
+        </div>
+      );
+    }
+  };
 
   // const getRefreshButton = () => {
   //   if (isMongoDbId(terraformStepId) === true) {
@@ -259,13 +240,12 @@ function CustomParameterMultiSelectListInput(
     if (isMongoDbId(terraformStepId) === true) {
       return (
         <div>
-          <H5FieldSubHeader
-            subheaderText={"Pipelines with Terraform Steps"}
-          />
-          <div>If the <strong>Use Terraform Output</strong> checkbox has been
-          selected, the available parameters will
-          appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.</div>
-            <div>They must use the same syntax mentioned above in order to be used in the commands.</div>
+          <H5FieldSubHeader subheaderText={"Pipelines with Terraform Steps"} />
+          <div>
+            If the <strong>Use Terraform Output</strong> checkbox has been selected, the available parameters will
+            appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
+          </div>
+          <div>They must use the same syntax mentioned above in order to be used in the commands.</div>
         </div>
       );
     }
@@ -288,7 +268,7 @@ function CustomParameterMultiSelectListInput(
 
   const getErrorMessage = () => {
     if (isPotentialValueADuplicate() === true) {
-      return (`The entered Parameter is a duplicate. Duplicate Parameters are not allowed.`);
+      return `The entered Parameter is a duplicate. Duplicate Parameters are not allowed.`;
     }
 
     if (error) {
@@ -302,23 +282,7 @@ function CustomParameterMultiSelectListInput(
 
   const getInfoText = () => {
     if (hasMaximumItems() === true) {
-      return ("You have reached the maximum allowed number of parameters. Please remove one to add another.");
-    }
-  };
-
-  const getTerraformButton = () => {
-    if (isMongoDbId(terraformStepId) === true) {
-      return (
-        <div className={"mr-2"} style={{minWidth: "156px"}}>
-          <NewRecordButton
-            size={"md"}
-            variant={"primary"}
-            disabled={disabled || hasMaximumItems() || isPotentialValueADuplicate()}
-            addRecordFunction={addParameter}
-            customButtonText={"Add Parameter"}
-          />
-        </div>
-      );
+      return "You have reached the maximum allowed number of parameters. Please remove one to add another.";
     }
   };
 
@@ -328,13 +292,12 @@ function CustomParameterMultiSelectListInput(
 
   return (
     <InputContainer className={className}>
-      <InfoContainer
-        titleText={titleText}
-        titleIcon={titleIcon}
-        // titleRightSideButton={getRefreshButton}
-      >
+      <InfoContainer titleText={titleText} titleIcon={titleIcon}>
         <div
-          style={{height: height, maxHeight: height}}
+          style={{
+            height: height,
+            maxHeight: height,
+          }}
           className={"scroll-y"}
         >
           {getFieldBody()}
@@ -351,8 +314,9 @@ function CustomParameterMultiSelectListInput(
             busy={isLoading}
             setDataFunction={(data) => setSelectedParameter(data)}
             disabled={disabled}
+            dropUp={true}
           />
-          <div className={"ml-2"} style={{minWidth: "156px"}}>
+          <div className={"ml-2"} style={{ minWidth: "156px" }}>
             <NewRecordButton
               size={"md"}
               variant={"primary"}
@@ -377,12 +341,10 @@ function CustomParameterMultiSelectListInput(
           matches an Opsera Parameter name.
         </div>
         <div className={"mb-2"}>
-          All Parameters passed in the commands or scripts must be selected in
-          order for the details to be fetched during runtime.
+          All Parameters passed in the commands or scripts must be selected in order for the details to be fetched
+          during runtime.
         </div>
-        <div>
-          Opsera Parameters are defined under the Parameters tab in Tool Registry.
-        </div>
+        <div>Opsera Parameters are defined under the Parameters tab in Tool Registry.</div>
         {getTerraformStepText()}
       </div>
     </InputContainer>
