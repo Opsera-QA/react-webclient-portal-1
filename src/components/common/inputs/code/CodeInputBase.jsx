@@ -15,7 +15,17 @@ import "ace-builds/src-noconflict/mode-xml";
 import "ace-builds/src-noconflict/mode-yaml";
 ace.config.set('basePath', 'ace-builds/');
 
-function CodeInputBase({value, inputId, mode, theme, isLoading, disabled, setDataFunction}) {
+function CodeInputBase(
+  {
+    value,
+    inputId,
+    mode,
+    theme,
+    isLoading,
+    disabled,
+    setDataFunction,
+    height,
+  }) {
   const [script, setScript] = useState("");
 
   useEffect(() => {
@@ -44,6 +54,7 @@ function CodeInputBase({value, inputId, mode, theme, isLoading, disabled, setDat
         value={script}
         editorProps={{$blockScrolling: true}}
         width={"100%"}
+        height={height}
       />
     </div>
   );
@@ -57,6 +68,7 @@ CodeInputBase.propTypes = {
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  height: PropTypes.string,
 };
 
 export default CodeInputBase;

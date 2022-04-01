@@ -28,6 +28,7 @@ function CustomParameterMultiSelectListInput(
     disabled,
     terraformStepId,
     className,
+    height,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(model.getFieldById(fieldName));
@@ -305,6 +306,22 @@ function CustomParameterMultiSelectListInput(
     }
   };
 
+  const getTerraformButton = () => {
+    if (isMongoDbId(terraformStepId) === true) {
+      return (
+        <div className={"mr-2"} style={{minWidth: "156px"}}>
+          <NewRecordButton
+            size={"md"}
+            variant={"primary"}
+            disabled={disabled || hasMaximumItems() || isPotentialValueADuplicate()}
+            addRecordFunction={addParameter}
+            customButtonText={"Add Parameter"}
+          />
+        </div>
+      );
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -316,12 +333,16 @@ function CustomParameterMultiSelectListInput(
         titleIcon={titleIcon}
         // titleRightSideButton={getRefreshButton}
       >
-        <div className={"text-input-list"}>
+        <div
+          style={{height: height, maxHeight: height}}
+          className={"scroll-y"}
+        >
           {getFieldBody()}
         </div>
       </InfoContainer>
       <div className={"mt-3"}>
         <div className={"d-flex"}>
+          {getTerraformButton()}
           <StandaloneSelectInput
             selectOptions={parametersList}
             valueField={"_id"}
@@ -378,12 +399,14 @@ CustomParameterMultiSelectListInput.propTypes = {
   disabled: PropTypes.bool,
   terraformStepId: PropTypes.string,
   className: PropTypes.string,
+  height: PropTypes.string,
 };
 
 CustomParameterMultiSelectListInput.defaultProps = {
   titleIcon: faHandshake,
   titleText: "Parameter Selection",
   disabledFields: [],
+  height: "250px",
 };
 
 export default CustomParameterMultiSelectListInput;

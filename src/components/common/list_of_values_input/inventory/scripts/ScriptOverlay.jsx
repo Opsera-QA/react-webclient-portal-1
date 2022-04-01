@@ -66,7 +66,7 @@ function ScriptOverlay({ scriptId }) {
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
+    toastContext.clearInfoOverlayPanel();
   };
 
   const getBody = () => {

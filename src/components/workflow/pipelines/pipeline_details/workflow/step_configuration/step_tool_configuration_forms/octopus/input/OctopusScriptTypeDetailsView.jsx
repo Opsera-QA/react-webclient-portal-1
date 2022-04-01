@@ -37,15 +37,13 @@ function OctopusScriptTypeDetailsView({dataObject, setDataObject, isLoading, dis
   const getInlineFields = () => {
     if (dataObject?.getData("scriptSource") === "inline") {
       return (
-        <>
-          <ScriptLibrarySelectInput
-            fieldName={"scriptId"}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
-            busy={isLoading}
-            disabled={disabled || isLoading}
-            />
-        </>
+        <ScriptLibrarySelectInput
+          fieldName={"scriptId"}
+          model={dataObject}
+          setModel={setDataObject}
+          busy={isLoading}
+          disabled={disabled || isLoading}
+        />
       );
     }
   };
