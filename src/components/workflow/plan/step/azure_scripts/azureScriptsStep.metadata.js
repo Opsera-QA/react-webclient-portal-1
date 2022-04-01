@@ -32,6 +32,10 @@ export const azureScriptsStepMetadata = {
       label: "Bash Script",
       id: "bashScript"
     },
+    {
+      label: "Parameters",
+      id: "parameters"
+    },
   ],
   newObjectFields: {
     azureToolConfigId : "",
@@ -41,5 +45,6 @@ export const azureScriptsStepMetadata = {
     filePath: "",
     fileName: "",
     bashScript: "",
+    parameters: [],
   }
 };

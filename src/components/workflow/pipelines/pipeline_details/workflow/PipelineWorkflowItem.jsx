@@ -168,7 +168,12 @@ const PipelineWorkflowItem = (
     setIsLoading(true);
     const toolIdentifier = tool?.tool_identifier;
     if (hasStringValue(toolIdentifier) === true) {
-      if (toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
+
+      const newOverlayToolIdentifiers = [
+        toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
+        toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+      ];
+      if (newOverlayToolIdentifiers.includes(toolIdentifier) === true) {
         toastContext.showOverlayPanel(
           <PipelineStepEditorOverlay
             pipeline={pipeline}
