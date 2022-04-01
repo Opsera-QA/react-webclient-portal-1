@@ -12,7 +12,7 @@ function TableCardView(
     tableHeight,
   }) {
   const getView = () => {
-    if (isLoading === true && !Array.isArray(data) || data.length === 0) {
+    if (isLoading === true && (!Array.isArray(data) || data.length === 0)) {
       return (
         <div style={{height: tableHeight}}>
           <CenterLoadingIndicator/>
