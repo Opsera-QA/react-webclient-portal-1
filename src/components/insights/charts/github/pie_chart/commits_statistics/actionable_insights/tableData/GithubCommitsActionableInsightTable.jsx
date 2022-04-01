@@ -19,22 +19,18 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
-      getChartTrendStatusColumn(getField(fields, "status"), "status"),
       getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt")
     ],
     []
   );
   const openColumns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
-      getChartTrendStatusColumn(getField(fields, "status"), "status")
     ],
     []
   );
