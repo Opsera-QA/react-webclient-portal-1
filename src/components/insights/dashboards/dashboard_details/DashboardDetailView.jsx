@@ -65,9 +65,10 @@ function DashboardDetailView() {
 
   const getDashboard = async (cancelSource = cancelTokenSource) => {
     const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, id);
+    const dashboard = response?.data?.data;
 
-    if (isMounted.current === true && response?.data) {
-      setDashboardData(new Model(response.data, dashboardMetadata, false));
+    if (isMounted.current === true && dashboard) {
+      setDashboardData(new Model(dashboard, dashboardMetadata, false));
     }
   };
 

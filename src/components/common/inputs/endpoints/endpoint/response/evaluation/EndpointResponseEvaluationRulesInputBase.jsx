@@ -13,6 +13,8 @@ import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 import {AuthContext} from "contexts/AuthContext";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function EndpointResponseEvaluationRulesInputBase(
   {
@@ -117,18 +119,26 @@ function EndpointResponseEvaluationRulesInputBase(
           If the response does not match either the Success or Running rule, it will be considered a failure.
         `}
       />
-      <EndpointResponseEvaluationRuleInput
-        fieldName={"success_rule"}
-        rule={endpointResponseEvaluationRuleModel.getData("success_rule")}
-        endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-        updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
-        responseBodyFields={endpoint?.responseBodyFields}
-        disabled={disabled}
-      />
+      {/*<Row>*/}
+      {/*  <Col xs={12} sm={6}>*/}
+          <EndpointResponseEvaluationRuleInput
+            fieldName={"success_rule"}
+            rule={endpointResponseEvaluationRuleModel?.getData("success_rule")}
+            endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
+            updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
+            responseBodyFields={endpoint?.responseBodyFields}
+            disabled={disabled}
+          />
+      {/* TODO: Make field that converts the selected values into human readable text */}
+      {/*  </Col>*/}
+      {/*  <Col xs={12} sm={6}>*/}
+      {/*    */}
+      {/*  </Col>*/}
+      {/*</Row>*/}
       <EndpointResponseEvaluationRuleInput
         fieldName={"running_rule"}
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-        rule={endpointResponseEvaluationRuleModel.getData("running_rule")}
+        rule={endpointResponseEvaluationRuleModel?.getData("running_rule")}
         updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
         responseBodyFields={endpoint?.responseBodyFields}
         disabled={disabled}

@@ -179,6 +179,8 @@ import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pip
 import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
 import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
 import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
+import AzureScriptsStepSummaryPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepSummaryPanel";
+import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function PipelineStepConfigurationSummary({
@@ -191,6 +193,13 @@ function PipelineStepConfigurationSummary({
   // TODO: Pass in already wrapped data object?
   const getStepConfigurationSummary = () => {
     switch (pipelineData?.tool?.tool_identifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+        return (
+          <AzureScriptsStepSummaryPanel
+            pipelineData={pipelineData}
+            azureScriptsStepModel={getModelWrappedObject(azureScriptsStepMetadata)}
+          />
+        );
       case "anchore-integrator":
         return (
           <AnchoreIntegratorStepConfigurationSummaryPanel

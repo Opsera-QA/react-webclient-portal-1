@@ -4,12 +4,13 @@ export const endpointRequestFieldMetadata = {
     {
       label: "Field Type",
       id: "type",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Field Name",
       id: "fieldName",
       isRequired: true,
+
     },
     {
       label: "Is Sensitive Data",

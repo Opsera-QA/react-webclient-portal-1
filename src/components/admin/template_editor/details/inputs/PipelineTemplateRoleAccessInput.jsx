@@ -24,7 +24,7 @@ function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, 
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
+      model={dataObject}
       disabled={disabled}
       visible={visible}
       saveData={saveData}

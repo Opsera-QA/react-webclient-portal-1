@@ -192,6 +192,21 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.getPipelineStepById = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  stepId,
+) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+
 pipelineActions.updatePipelineStepByIdV2 = async (
   getAccessToken,
   cancelTokenSource,

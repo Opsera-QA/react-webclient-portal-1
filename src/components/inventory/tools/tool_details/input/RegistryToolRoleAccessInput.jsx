@@ -48,7 +48,7 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
+      model={dataObject}
       disabled={disabled}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}

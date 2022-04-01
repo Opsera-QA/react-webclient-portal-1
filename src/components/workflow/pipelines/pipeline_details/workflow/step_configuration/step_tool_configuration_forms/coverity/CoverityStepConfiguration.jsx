@@ -15,7 +15,8 @@ import CoverityStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsToolSelectInput";
 import CoverityStepCoverityToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
-
+import CoverityStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [coverityStepConfigurationDto, setCoverityStepConfigurationDataDto] = useState(undefined);
@@ -80,6 +81,10 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
       isLoading={isLoading}
     >
      <CoverityStepJenkinsToolSelectInput
+        model={coverityStepConfigurationDto}
+        setModel={setCoverityStepConfigurationDataDto}
+      />
+      <CoverityStepJenkinsJobSelectInput  
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />

@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import  {faTimes} from "@fortawesome/free-solid-svg-icons";
+import { Button } from "react-bootstrap";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Change isLoading to disabled
-function CancelButton({isLoading, cancelFunction, size, className, buttonText}) {
+function CancelButton({
+  isLoading,
+  cancelFunction,
+  size,
+  className,
+  buttonText,
+}) {
   return (
     <div className={className}>
       <Button
@@ -16,7 +22,10 @@ function CancelButton({isLoading, cancelFunction, size, className, buttonText}) 
         className={"w-100"}
       >
         <span>
-          <IconBase icon={faTimes} className="mr-1" fixedWidth/>
+          <IconBase
+            icon={faTimes}
+            className="mr-1"
+          />
           {buttonText}
         </span>
       </Button>

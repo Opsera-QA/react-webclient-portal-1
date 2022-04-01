@@ -17,6 +17,7 @@ export const pieChartConfig = (METRIC_THEME_CHART_PALETTE_COLORS) => ({
   innerRadius: .5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
+  enableArcLinkLabels:false,
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
