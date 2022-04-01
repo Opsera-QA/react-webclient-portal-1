@@ -86,8 +86,8 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
            (
               <ScriptLibrarySelectInput
                 fieldName={"dockerComposeScriptId"}
-                dataObject={ebsStepConfigurationDto}
-                setDataObject={setEBSStepConfigurationDataDto}
+                model={ebsStepConfigurationDto}
+                setModel={setEBSStepConfigurationDataDto}
                 busy={isLoading}
                 disabled={isLoading}
               />

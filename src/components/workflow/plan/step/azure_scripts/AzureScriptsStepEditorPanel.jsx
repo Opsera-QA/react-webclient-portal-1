@@ -98,6 +98,7 @@ function AzureScriptsStepEditorPanel(
               fieldName={"inlineCommand"}
               model={azureScriptsStepModel}
               setModel={setAzureScriptsStepModel}
+              height={"400px"}
             />
           </Col>
         );
@@ -122,18 +123,23 @@ function AzureScriptsStepEditorPanel(
         );
       case "script":
         return (
-          <Col xs={12} md={6}>
-            <ScriptLibrarySelectInput
-              fieldName={"bashScript"}
-              dataObject={azureScriptsStepModel}
-              setDataObject={setAzureScriptsStepModel}
-              // language={"bash"}
-            />
-            {/*<ScriptValueInput*/}
-            {/*  model={azureScriptsStepModel}*/}
-            {/*  fieldName={"bashScript"}*/}
-            {/*/>*/}
-          </Col>
+          <>
+            <Col xs={12} md={6}>
+              <ScriptLibrarySelectInput
+                fieldName={"bashScript"}
+                model={azureScriptsStepModel}
+                setModel={setAzureScriptsStepModel}
+                language={"bash"}
+              />
+            </Col>
+            <Col xs={6}/>
+            <Col xs={12} md={6}>
+              {/*<ScriptValueInput*/}
+              {/*  model={azureScriptsStepModel}*/}
+              {/*  fieldName={"bashScript"}*/}
+              {/*/>*/}
+            </Col>
+          </>
         );
       default:
         return null;
@@ -180,6 +186,7 @@ function AzureScriptsStepEditorPanel(
             model={azureScriptsStepModel}
             setModel={setAzureScriptsStepModel}
             fieldName={"parameters"}
+            height={"400px"}
           />
         </Col>
       </Row>

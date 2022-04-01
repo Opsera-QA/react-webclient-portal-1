@@ -63,7 +63,7 @@ function ScriptsInventory() {
   };
 
   const getScripts = async (filterDto = scriptFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await scriptsActions.getScripts(getAccessToken, cancelSource, filterDto);
+    const response = await scriptsActions.getScripts(getAccessToken, cancelSource, filterDto?.getData("search"));
     const scripts = response?.data?.data;
     const userRoleAccess = await getAccessRoleData();
 

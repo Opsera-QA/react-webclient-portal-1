@@ -10,13 +10,26 @@ import ScriptOverlay from "components/common/list_of_values_input/inventory/scri
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getScriptLanguageDisplayText} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className, fields, setDataFunction, language}) {
+function ScriptLibrarySelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    textField,
+    valueField,
+    className,
+    fields,
+    setDataFunction,
+    language,
+  }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [scripts, setScripts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -48,8 +61,7 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setErrorMessage("Could Not Load Scripts");
+        setError(error);
       }
     }
     finally {
@@ -60,63 +72,66 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
   };
 
   const loadScripts = async (cancelSource = cancelTokenSource) => {
-    const response = await scriptsActions.getScripts(getAccessToken, cancelSource, undefined, fields);
+    const response = await scriptsActions.getScripts(getAccessToken, cancelSource, undefined, language, fields);
     const scriptList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(scriptList)) {
-      if (typeof language === "string" && language.length > 0) {
-        const filteredScripts = scriptList.filter((script) => script.type === language);
-        setScripts(filteredScripts);
-      }
-      else {
-        setScripts(scriptList);
-      }
+      setScripts(scriptList);
     }
   };
 
   const toggleScriptOverlay = () => {
-    toastContext.showOverlayPanel(<ScriptOverlay scriptId={dataObject.getData(fieldName)} />);
+    toastContext.showInfoOverlayPanel(
+      <ScriptOverlay
+        scriptId={model?.getData(fieldName)}
+      />
+    );
   };
 
-  // TODO: Add script overlay toggle when finished
   const getInfoText = () => {
-    if (dataObject.getData(fieldName) !== "") {
+    if (isMongoDbId(model?.getData(fieldName)) === true) {
       return (
-        <div className="text-muted d-flex pointer" onClick={() => {toggleScriptOverlay();}}>
+        <div className={"text-muted d-flex pointer"} onClick={() => {toggleScriptOverlay();}}>
           <span><IconBase icon={faFileCode} className={"pr-1"} />View this Script</span>
         </div>
       );
     }
   };
 
-  if (!isLoading && (scripts == null || scripts.length === 0)) {
-    const dynamicText = language ? `${getScriptLanguageDisplayText(language)} ` : "";
-    return (
-      <div className="form-text text-muted p-2">
-        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
-        No {dynamicText}scripts have been registered.
-        Please go to
-        <Link to="/inventory/scripts"> Scripts Library</Link> and add an entry in order to proceed.
-      </div>
-    );
-  }
+  const getNoScriptsMessage = () => {
+    if (isLoading === false && (!Array.isArray(scripts) || scripts.length === 0)) {
+      const dynamicText = language ? `${getScriptLanguageDisplayText(language)} ` : "";
+      return (
+        <div className="form-text text-muted p-2">
+          <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
+          No {dynamicText}scripts have been registered.
+          Please go to
+          <Link to="/inventory/scripts"> Scripts Library</Link> and add an entry in order to proceed.
+        </div>
+      );
+    }
+
+  };
 
   return (
     <>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
         selectOptions={scripts}
         busy={isLoading}
-        errorMessage={errorMessage}
+        errorMessage={error}
         valueField={valueField}
         textField={textField}
         className={className}
-        placeholderText={"Select a Script"}
-        disabled={disabled || isLoading}
+        disabled={disabled}
+        singularTopic={"Script"}
+        pluralTopic={"Scripts"}
+        error={error}
       />
+      {getNoScriptsMessage()}
       {getInfoText()}
     </>
   );
@@ -124,8 +139,8 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
 
 ScriptLibrarySelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
