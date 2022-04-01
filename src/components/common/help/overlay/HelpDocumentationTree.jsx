@@ -17,7 +17,7 @@ function HelpDocumentationTree({ setCurrentView }) {
   };
 
   return (
-    <div className={"h-100 scroll-y hide-x-overflow p-2"}>
+    <div className={"h-100 scroll-y hide-x-overflow"}>
       <TreeBase
         data={HELP_DOCUMENTATION_TREE}
         onItemClick={onTreeItemClick}
