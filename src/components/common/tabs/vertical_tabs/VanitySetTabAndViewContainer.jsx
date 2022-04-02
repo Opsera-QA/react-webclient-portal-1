@@ -62,9 +62,11 @@ function VanitySetTabAndViewContainer(
         <Row className={bodyClassName} style={getContainerStylingObject()}>
           <Col
             xs={getTabColumnSize()}
-            className={"px-0"}
+            className={"px-0 h-100 makeup-tree-container"}
           >
-            {verticalTabContainer}
+            <div style={getBodyStylingObject()}>
+              {verticalTabContainer}
+            </div>
           </Col>
           <Col
             xs={getViewColumnSize()}

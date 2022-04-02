@@ -41,47 +41,39 @@ function EndpointResponseBodyFieldInputRow(
   }
 
   return (
-    <InfoContainer
-      titleIcon={faCode}
-      titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
-    >
-      <div className={"mx-3 mb-3 mt-1"}>
-        <Row>
-          <Col sm={6}>
-            <TextInputBase
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
-              fieldName={"fieldName"}
-              setDataFunction={(fieldName, value) => updateMainModelFunction(fieldName, removeSpacesFromString(value))}
-              disabled={disabled}
-            />
-          </Col>
-          <Col sm={6}>
-            <EndpointResponseFieldTypeSelectInput
-              model={endpointFieldModel}
-              setModel={setEndpointFieldModel}
-              fieldName={"type"}
-              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
-              disabled={disabled}
-            />
-          </Col>
-          <Col sm={6}>
-            <EndpointResponseFieldIsSensitiveDataToggleInput
-              model={endpointFieldModel}
-              updateMainModelFunction={updateMainModelFunction}
-              index={index}
-              disabled={disabled}
-            />
-          </Col>
-        </Row>
-        <ButtonContainerBase>
-          <DeleteButton
+    <div className={"mx-3 mb-3 mt-1 h-100"}>
+      <Row>
+        <Col sm={6}>
+          <TextInputBase
             dataObject={endpointFieldModel}
-            deleteRecord={deleteFieldFunction}
+            setDataObject={setEndpointFieldModel}
+            fieldName={"fieldName"}
+            setDataFunction={(fieldName, value) => updateMainModelFunction(fieldName, removeSpacesFromString(value))}
+            disabled={disabled}
           />
-        </ButtonContainerBase>
-      </div>
-    </InfoContainer>
+        </Col>
+        <Col sm={6}>
+          <EndpointResponseFieldTypeSelectInput
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
+            fieldName={"type"}
+            setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+            disabled={disabled}
+          />
+        </Col>
+        <Col sm={6}>
+          <EndpointResponseFieldIsSensitiveDataToggleInput
+            model={endpointFieldModel}
+            updateMainModelFunction={updateMainModelFunction}
+            index={index}
+            disabled={disabled}
+          />
+        </Col>
+      </Row>
+      <ButtonContainerBase className={"mt-2"}>
+        <DeleteButton dataObject={endpointFieldModel} deleteRecord={deleteFieldFunction} />
+      </ButtonContainerBase>
+    </div>
   );
 }
 

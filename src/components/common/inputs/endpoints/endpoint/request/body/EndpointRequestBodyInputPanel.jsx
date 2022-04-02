@@ -5,9 +5,13 @@ import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/e
 import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 function EndpointRequestBodyInputPanel(
   {
@@ -20,6 +24,13 @@ function EndpointRequestBodyInputPanel(
   const [error, setError] = useState("");
   const [fields, setFields] = useState([]);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState(`0`);
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
 
   useEffect(() => {
     isMounted.current = true;
@@ -95,41 +106,113 @@ function EndpointRequestBodyInputPanel(
 
   const addField = () => {
     const newFields = fields;
-    newFields.push({...endpointRequestFieldMetadata.newObjectFields});
+    const newField = {...endpointRequestFieldMetadata.newObjectFields};
+    newField.fieldName = `field${fields.length}`;
+    newFields.push(newField);
+    loadData();
     validateAndSetData(newFields);
+    setActiveTab(`${newFields.length - 1}`);
   };
 
   const deleteFieldFunction = (index) => {
     const newFields = [...fields];
     newFields.splice(index, 1);
+    loadData();
     validateAndSetData(newFields);
+
+    if (index !== 0) {
+      setActiveTab(`${index - 1}`);
+    }
+  };
+
+  const getFieldTab = (parameter, index) => {
+    return (
+      <VanitySetVerticalTab
+        key={index}
+        tabText={hasStringValue(parameter.fieldName) ? parameter.fieldName : `No Field Name`}
+        tabName={`${index}`}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <VanitySetVerticalTabContainer>
+        {fields?.map((fieldData, index) => {
+          return getFieldTab(fieldData, index);
+        })}
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    if (hasStringValue(activeTab) !== true) {
+      return null;
+    }
+
+    const index =  parseInt(activeTab);
+
+    if (typeof index !== "number" || !Array.isArray(fields) || fields.length <= index) {
+      return null;
+    }
+
+    const fieldData = fields[index];
+
+    if (fieldData) {
+      return (
+        <EndpointRequestBodyFieldInputRow
+          index={index}
+          deleteFieldFunction={() => deleteFieldFunction(index)}
+          endpointBodyField={fieldData}
+          updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
+          disabled={disabled}
+        />
+      );
+    }
   };
 
   const getBody = () => {
     if (!Array.isArray(fields) || fields.length === 0) {
       return (
-        <div className="text-center">
-          <div className="text-muted my-3">No fields have been added</div>
-        </div>
+        <CenteredContentWrapper>
+          <span>No fields have been added</span>
+        </CenteredContentWrapper>
       );
     }
 
     return (
-      <div>
-        {fields.map((fieldData, index) => {
-          return (
-            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
-              <EndpointRequestBodyFieldInputRow
-                index={index}
-                deleteFieldFunction={() => deleteFieldFunction(index)}
-                endpointBodyField={fieldData}
-                updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
-                disabled={disabled}
+        <div>
+          <VanitySetTabAndViewContainer
+            title={field?.label}
+            icon={faBracketsCurly}
+            verticalTabContainer={getVerticalTabContainer()}
+            currentView={getCurrentView()}
+            minimumHeight={"calc(100vh - 764px)"}
+            maximumHeight={"calc(100vh - 764px)"}
+            tabColumnSize={3}
+          />
+          <ButtonContainerBase
+            className={"mt-2"}
+            leftSideButtons={
+            <div className={"mt-auto"}>
+              <InfoText
+                customMessage={getInfoText()}
+                errorMessage={getErrorText()}
               />
             </div>
-          );
-        })}
-      </div>
+            }
+          >
+            <NewRecordButton
+              variant={"secondary"}
+              disabled={isAddAllowed() !== true}
+              addRecordFunction={addField}
+              type={"Field"}
+              size={"sm"}
+            />
+          </ButtonContainerBase>
+        </div>
     );
   };
 
@@ -140,13 +223,28 @@ function EndpointRequestBodyInputPanel(
     );
   };
 
-  const lastFieldComplete = () => {
+  const getFirstIncompleteFieldIndex = () => {
     if (fields.length === 0) {
-      return true;
+      return null;
     }
 
-    return isFieldComplete(fields.lastItem);
+    let incompleteIndex;
+
+    fields.forEach((field, index) => {
+      if (incompleteIndex !== undefined) {
+        return;
+      }
+
+      const fieldComplete = isFieldComplete(field);
+
+      if (fieldComplete !== true) {
+        incompleteIndex = index;
+      }
+    });
+
+    return incompleteIndex;
   };
+
 
   const isAddAllowed = () => {
     if (!Array.isArray(fields) || fields?.length >= field.maxItems) {
@@ -154,8 +252,8 @@ function EndpointRequestBodyInputPanel(
     }
 
     const duplicateName = hasDuplicateNames(fields);
-    const lastFieldIsComplete = lastFieldComplete();
-    return lastFieldIsComplete === true && hasStringValue(duplicateName) === false;
+    const incompleteFieldIndex = getFirstIncompleteFieldIndex();
+    return typeof incompleteFieldIndex !== "number" && hasStringValue(duplicateName) === false;
   };
 
   const getInfoText = () => {
@@ -164,34 +262,26 @@ function EndpointRequestBodyInputPanel(
     }
   };
 
+  const getErrorText = () => {
+    const incompleteFieldIndex = getFirstIncompleteFieldIndex();
+
+    if (typeof incompleteFieldIndex === "number") {
+      return (`Field ${incompleteFieldIndex + 1} is incomplete. Fields must include a name and type.`);
+    }
+
+    if (hasStringValue(error) === true) {
+      return error;
+    }
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
-    <VanitySetTabContentContainer
-      titleIcon={faBracketsCurly}
-      title={field?.label}
-    >
-      <div className={"m-3"}>
-        <div>
-          {getBody()}
-        </div>
-        <SaveButtonContainer>
-          <NewRecordButton
-            variant={"secondary"}
-            disabled={isAddAllowed() !== true}
-            addRecordFunction={addField}
-            type={"Field"}
-            size={"sm"}
-          />
-        </SaveButtonContainer>
-        <InfoText
-          customMessage={getInfoText()}
-          errorMessage={error}
-        />
-      </div>
-    </VanitySetTabContentContainer>
+    <div className={"m-2"}>
+      {getBody()}
+    </div>
   );
 }
 
