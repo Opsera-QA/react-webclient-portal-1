@@ -15,6 +15,7 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 function EndpointRequestParametersInputBase(
   {
@@ -146,8 +147,8 @@ function EndpointRequestParametersInputBase(
         <InfoContainer
           titleIcon={faCode}
           titleText={field?.label}
-          minimumHeight={"calc(100vh - 595px)"}
-          maximumHeight={"calc(100vh - 595px)"}
+          minimumHeight={"calc(100vh - 546px)"}
+          maximumHeight={"calc(100vh - 546px)"}
         >
           <CenteredContentWrapper>
             <span>There are no Parameters to configure</span>
@@ -160,8 +161,8 @@ function EndpointRequestParametersInputBase(
       <VanitySetTabAndViewContainer
         icon={faCode}
         title={field?.label}
-        minimumHeight={"calc(100vh - 595px)"}
-        maximumHeight={"calc(100vh - 595px)"}
+        minimumHeight={"calc(100vh - 546px)"}
+        maximumHeight={"calc(100vh - 546px)"}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
@@ -174,34 +175,38 @@ function EndpointRequestParametersInputBase(
     validateAndSetData([...resetFields]);
   };
 
+  const getRightSideButton = () => {
+    return (
+        <ClearDataIcon
+          clearValueFunction={resetDataToDefault}
+          className={"my-auto mr-1"}
+        />
+    );
+  };
+
   const getConstructedParameterContainer = () => {
     return (
       <InfoContainer
-        titleClassName={"sub-input-title-bar"}
         titleIcon={faCheckCircle}
         titleText={`Constructed ${model?.getLabel(fieldName)}`}
         className={"h-100"}
-        minimumHeight={"calc(100vh - 560px)"}
-        maximumHeight={"calc(100vh - 560px)"}
+        minimumHeight={"calc(100vh - 546px)"}
+        maximumHeight={"calc(100vh - 546px)"}
+        titleRightSideButton={getRightSideButton()}
       >
-        <div className={"mx-3 mb-3"}>
-          <div className={"d-flex justify-content-end"}>
-            <ClearDataIcon
-              clearValueFunction={resetDataToDefault}
-              className={"my-2"}
-            />
-          </div>
-          <JsonField
+        <div className={"m-3"}>
+          <JsonFieldBase
             className={"h-100 mb-2"}
-            dataObject={model}
-            fieldName={fieldName}
+            json={model?.getData(fieldName)}
           />
-          <InfoText
-            customMessage={`
+          <div className={"mt-auto"}>
+            <InfoText
+              customMessage={`
                  Please Note: Until updated and saved, 
                  this will include all previously saved fields.
                `}
-          />
+            />
+          </div>
         </div>
       </InfoContainer>
     );
@@ -214,10 +219,10 @@ function EndpointRequestParametersInputBase(
   return (
     <div className={"mt-2"}>
       <Row>
-        <Col xs={8}>
+        <Col xs={8} className={"pr-2"}>
           {getParameterInputContainer()}
         </Col>
-        <Col xs={4}>
+        <Col xs={4} className={"pl-0"}>
           {getConstructedParameterContainer()}
         </Col>
       </Row>
