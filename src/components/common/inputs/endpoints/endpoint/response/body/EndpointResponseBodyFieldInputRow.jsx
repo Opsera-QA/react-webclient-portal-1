@@ -11,7 +11,6 @@ import EndpointResponseFieldTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldTypeSelectInput";
 import EndpointResponseFieldIsSensitiveDataToggleInput
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldIsSensitiveDataToggleInput";
-import InfoContainer from "components/common/containers/InfoContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";

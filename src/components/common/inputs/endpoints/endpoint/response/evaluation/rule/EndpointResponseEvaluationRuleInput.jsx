@@ -86,7 +86,7 @@ function EndpointResponseEvaluationRuleInput(
                 model={evaluationRuleModel}
                 setModel={setEvaluationRuleModel}
                 setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}
-                responseBodyFields={responseBodyFields}
+                responseBodyFields={[...responseBodyFields]}
                 disabled={disabled}
               />
             </Col>
