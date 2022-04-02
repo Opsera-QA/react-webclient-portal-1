@@ -15,6 +15,17 @@ import {AuthContext} from "contexts/AuthContext";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import {
+  ENDPOINT_REQUEST_TYPES
+} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
+import EndpointRequestBodyInputPanel
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
+import EndpointResponseBodyInputBase
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
+import {faBracketsCurly, faCheckCircle, faSync} from "@fortawesome/pro-light-svg-icons";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function EndpointResponseEvaluationRulesInputBase(
   {
@@ -33,6 +44,13 @@ function EndpointResponseEvaluationRulesInputBase(
   const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState("runningRule");
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
 
   useEffect(() => {
     setField(model?.getFieldById(fieldName));
@@ -104,44 +122,85 @@ function EndpointResponseEvaluationRulesInputBase(
     validateAndSetData(endpointResponseEvaluationRuleModel);
   };
 
-  if (field == null || endpointResponseEvaluationRuleModel == null) {
-    return null;
-  }
-
-  return (
-    <div>
-      <H5FieldSubHeader
-        subheaderText={"Response Evaluation Rules"}
-      />
+  const getWarningMessage = () => {
+    return (
       <InfoText
         customMessage={`
           Success rules take precedence over Running rules. 
           If the response does not match either the Success or Running rule, it will be considered a failure.
         `}
       />
-      {/*<Row>*/}
-      {/*  <Col xs={12} sm={6}>*/}
-          <EndpointResponseEvaluationRuleInput
-            fieldName={"success_rule"}
-            rule={endpointResponseEvaluationRuleModel?.getData("success_rule")}
-            endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-            updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
-            responseBodyFields={endpoint?.responseBodyFields}
-            disabled={disabled}
-          />
-      {/* TODO: Make field that converts the selected values into human readable text */}
-      {/*  </Col>*/}
-      {/*  <Col xs={12} sm={6}>*/}
-      {/*    */}
-      {/*  </Col>*/}
-      {/*</Row>*/}
-      <EndpointResponseEvaluationRuleInput
-        fieldName={"running_rule"}
-        endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-        rule={endpointResponseEvaluationRuleModel?.getData("running_rule")}
-        updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
-        responseBodyFields={endpoint?.responseBodyFields}
-        disabled={disabled}
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <VanitySetVerticalTabContainer>
+        <VanitySetVerticalTab
+          tabText={"Success Rule"}
+          tabName={"successRule"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          icon={faCheckCircle}
+        />
+        <VanitySetVerticalTab
+          tabText={"Running Rule"}
+          tabName={"runningRule"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          icon={faSync}
+        />
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "successRule":
+        return (
+          <div className={"m-2"}>
+            {getWarningMessage()}
+            <EndpointResponseEvaluationRuleInput
+              fieldName={"success_rule"}
+              rule={endpointResponseEvaluationRuleModel?.getData("success_rule")}
+              endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
+              updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
+              responseBodyFields={endpoint?.responseBodyFields}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "runningRule":
+        return (
+          <div className={"m-2"}>
+            {getWarningMessage()}
+            <EndpointResponseEvaluationRuleInput
+              fieldName={"running_rule"}
+              endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
+              rule={endpointResponseEvaluationRuleModel?.getData("running_rule")}
+              updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
+              responseBodyFields={endpoint?.responseBodyFields}
+              disabled={disabled}
+            />
+          </div>
+        );
+    }
+  };
+
+  if (field == null || endpointResponseEvaluationRuleModel == null) {
+    return null;
+  }
+
+  return (
+    <div>
+      <VanitySetTabAndViewContainer
+        icon={faBracketsCurly}
+        title={`Response Evaluation Rules`}
+        verticalTabContainer={getVerticalTabContainer()}
+        bodyClassName={"mx-0"}
+        currentView={getCurrentView()}
+        minimumHeight={"calc(100vh - 488px)"}
+        maximumHeight={"calc(100vh - 488px)"}
       />
       <InfoText errorMessage={error} />
     </div>

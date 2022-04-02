@@ -7,7 +7,6 @@ import {
   endpointResponseFieldEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import InfoContainer from "components/common/containers/InfoContainer";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -17,6 +16,7 @@ import CustomParameterComboBoxInput
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -32,7 +32,7 @@ function EndpointResponseRuleFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    updateMainModel(endpointFieldModel);
   };
 
   const updateMainModel = (newModel) => {
@@ -141,15 +141,14 @@ function EndpointResponseRuleFieldInputRow(
   }
 
   return (
-    <InfoContainer
+    <VanitySetTabContentContainer
       titleIcon={faBracketsCurly}
-      titleText={endpointFieldModel?.getData("fieldName")}
-      titleClassName={"sub-input-title-bar"}
+      title={endpointFieldModel?.getData("fieldName")}
     >
       <div className={"m-3"}>
         {getBody()}
       </div>
-    </InfoContainer>
+    </VanitySetTabContentContainer>
   );
 }
 

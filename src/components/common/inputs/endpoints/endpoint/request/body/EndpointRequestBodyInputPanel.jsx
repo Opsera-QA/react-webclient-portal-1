@@ -5,7 +5,6 @@ import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/e
 import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
@@ -183,36 +182,36 @@ function EndpointRequestBodyInputPanel(
     }
 
     return (
-        <div>
-          <VanitySetTabAndViewContainer
-            title={field?.label}
-            icon={faBracketsCurly}
-            verticalTabContainer={getVerticalTabContainer()}
-            currentView={getCurrentView()}
-            minimumHeight={"calc(100vh - 764px)"}
-            maximumHeight={"calc(100vh - 764px)"}
-            tabColumnSize={3}
-          />
-          <ButtonContainerBase
-            className={"mt-2"}
-            leftSideButtons={
-            <div className={"mt-auto"}>
-              <InfoText
-                customMessage={getInfoText()}
-                errorMessage={getErrorText()}
-              />
-            </div>
-            }
-          >
-            <NewRecordButton
-              variant={"secondary"}
-              disabled={isAddAllowed() !== true}
-              addRecordFunction={addField}
-              type={"Field"}
-              size={"sm"}
+      <div>
+        <VanitySetTabAndViewContainer
+          title={field?.label}
+          icon={faBracketsCurly}
+          verticalTabContainer={getVerticalTabContainer()}
+          currentView={getCurrentView()}
+          minimumHeight={"calc(100vh - 764px)"}
+          maximumHeight={"calc(100vh - 764px)"}
+          tabColumnSize={3}
+        />
+        <ButtonContainerBase
+          className={"mt-2"}
+          leftSideButtons={
+          <div className={"mt-auto"}>
+            <InfoText
+              customMessage={getInfoText()}
+              errorMessage={getErrorText()}
             />
-          </ButtonContainerBase>
-        </div>
+          </div>
+        }
+        >
+          <NewRecordButton
+            variant={"secondary"}
+            disabled={isAddAllowed() !== true}
+            addRecordFunction={addField}
+            type={"Field"}
+            size={"sm"}
+          />
+        </ButtonContainerBase>
+      </div>
     );
   };
 
