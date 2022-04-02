@@ -1543,7 +1543,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       // GitSrapperMetrics
-      case "git-scrapper-metrics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPPER_METRICS:
         return (
           <Col xl={6} md={12} className="p-2">
             <GitSrapperMetrics
