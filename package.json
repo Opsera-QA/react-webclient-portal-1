@@ -49,6 +49,7 @@
     "react-json-editor-ajrm": "2.5.13",
     "react-json-view": "^1.21.3",
     "react-lineto": "^3.2.0",
+    "react-markdown": "8.0.1",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
@@ -58,6 +59,8 @@
     "react-widgets": "^5.8.3",
     "react-widgets-moment": "^5.0.19",
     "react-widgets-simple-number": "^5.0.19",
+    "rehype-raw": "^6.1.1",
+    "rehype-sanitize": "^5.0.1",
     "socket.io-client": "^4.4.1",
     "text-encoding": "^0.7.0",
     "websocket": "^1.0.34"
