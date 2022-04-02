@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
-import {faBracketsCurly, faCode} from "@fortawesome/pro-light-svg-icons";
-import InfoContainer from "components/common/containers/InfoContainer";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
@@ -150,12 +147,8 @@ function EndpointRequestParameterInputRow(
       titleIcon={faCode}
       title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
-      <div>
-        <Row>
-          <Col sm={12}>
-            {getValueInput()}
-          </Col>
-        </Row>
+      <div className={"h-100"}>
+        {getValueInput()}
       </div>
     </VanitySetTabContentContainer>
   );

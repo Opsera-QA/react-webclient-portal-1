@@ -29,9 +29,9 @@ function VanitySetTabContentContainer(
   };
 
   return (
-    <div style={{overflowY: "hidden"}} className={"h-100"}>
+    <div className={"h-100"}>
       {getTitleBar()}
-      <div className={"my-auto h-100 scroll-y"}>
+      <div className={"my-auto h-100"}>
         {children}
       </div>
     </div>
