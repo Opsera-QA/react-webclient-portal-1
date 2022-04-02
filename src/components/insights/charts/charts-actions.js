@@ -50,7 +50,7 @@ chartsActions.getSonarUnitTestsMetrics = async (
   getAccessToken,
   cancelTokenSource,
   tableFilterDto,
-  dashboardOrgs
+  dashboardOrgs,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
@@ -159,11 +159,7 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   getAccessToken,
   cancelTokenSource,
   dashboardTags,
-<<<<<<< HEAD
   dashboardOrgs,
-=======
-  dashboardOrgs
->>>>>>> 91525715b9c2d09cfbb7bf80422ce0fbf4010e8e
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubTotalCommits";
