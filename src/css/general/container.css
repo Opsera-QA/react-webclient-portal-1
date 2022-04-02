@@ -234,7 +234,7 @@
     overflow-x: hidden
 }
 
-.object-properties-input .properties-body-alt {
+.object-properties-input .properties-body-alt, .input-panel-body {
     min-height: 195px;
 }
 

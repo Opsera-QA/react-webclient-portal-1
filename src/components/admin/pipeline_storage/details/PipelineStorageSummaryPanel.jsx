@@ -6,8 +6,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
+import JsonField from "components/common/fields/json/JsonField";
 
 function PipelineStorageSummaryPanel({ pipelineStorageData }) {
   if (pipelineStorageData == null) {
@@ -45,7 +45,12 @@ function PipelineStorageSummaryPanel({ pipelineStorageData }) {
           <DateTimeField dataObject={pipelineStorageData} fieldName={"createdAt"} />
         </Col>
         <Col lg={12}>
-          <StandaloneJsonField model={pipelineStorageData} fieldName={"data"} label={"Custom Pipeline Storage Data"} collapsed={true} />
+          <JsonField
+            dataObject={pipelineStorageData}
+            fieldName={"data"}
+            label={"Custom Pipeline Storage Data"}
+            collapsed={true}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>

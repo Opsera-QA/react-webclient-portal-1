@@ -8,11 +8,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig,
-  assignStandardColors,
-  adjustBarWidth,
-} from "../../../charts-views";
+import { defaultConfig, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import {
   METRIC_THEME_CHART_PALETTE_COLORS,
   METRIC_CHART_STANDARD_HEIGHT,
@@ -23,6 +19,7 @@ import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalM
 import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommitsTotalPullRequestsDataBlock";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
+import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,7 +65,13 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      const response = await chartsActions.getGithubTotalCommitsMetrics(kpiConfiguration, getAccessToken, cancelSource, dashboardTags, dashboardOrgs);
+      const response = await chartsActions.getGithubTotalCommitsMetrics(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs
+      );
       let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
       dataObject.sort((a, b) => {
         if (a.commitCount < b.commitCount) {
@@ -110,7 +113,34 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       <GithubCommitsActionableInsightOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
       />
+    );
+  };
+
+  const showGithubDeclinedPullRequestModal = () => {
+    toastContext.showOverlayPanel(
+      <GithubDeclinedPullRequestActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+      />
+    );
+  };
+
+  const getHorizontalDataBlocks =() => {
+    return (
+      <Row className="px-4 justify-content-between">
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
+        </Col>
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+        </Col>
+        <Col md={4} className={"my-1"}>
+          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+        </Col>
+      </Row>
     );
   };
 
@@ -118,7 +148,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     return (
       <Row className="px-4 justify-content-between">
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits}  />
+          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
         <Col md={12} className={"my-1"}>
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
@@ -129,14 +159,67 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       </Row>
     );
   };
-
-  const getChartBody = () => {
-    if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
-      return null;
-    }
-
+  const getSmallView = () => {
     return (
-      <div className="new-chart mb-3">
+      <div className={"d-block d-lg-none"}>
+         <Row>
+          <Col md={12}>{getHorizontalDataBlocks()}</Col>
+        </Row>
+        <Row>
+        <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Approved Pull Requests
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={highestMergesMetric}
+                {...defaultConfig("", "", false, false, "", "", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => setShowModal(true)}
+              />
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Active Contributors
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsiveBar
+                data={mostActiveUsersMetrics}
+                {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
+                {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+                {...adjustBarWidth(mostActiveUsersMetrics, false)}
+              />
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="text-center col-12">
+              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Declined Pull Requests
+              </div>
+            </div>
+            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+              <ResponsivePie
+                data={totalDeclinedMerges}
+                {...defaultConfig("", "", false, false, "", "", true)}
+                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                onClick={() => showGithubDeclinedPullRequestModal()}
+              />
+            </div>
+          </Col>
+        </Row>
+      </div>
+    );
+  };
+  
+
+  const getLargeView = () => {
+    return (
+      <div className={"d-none d-lg-block"}>
         <Row>
           <Col md={3}>{getDataBlocks()}</Col>
           <Col md={3}>
@@ -148,7 +231,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={highestMergesMetric}
-                {...defaultConfig("","",false, false, "","", true)}
+                {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
                 onClick={() => setShowModal(true)}
               />
@@ -178,13 +261,27 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={totalDeclinedMerges}
-                {...defaultConfig("","",false, false, "","", true)}
+                {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={() => showGithubDeclinedPullRequestModal()}
               />
             </div>
           </Col>
         </Row>
+      </div>
+    );
+  };
+
+  const getChartBody = () => {
+    if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="new-chart mb-3">
+        {getLargeView()}
+        {getSmallView()}
+        
       </div>
     );
   };

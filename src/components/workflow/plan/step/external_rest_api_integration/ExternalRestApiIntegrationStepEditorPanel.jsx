@@ -67,7 +67,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
     }
   };
 
-  const callbackFunction = async () => {
+  const saveRecord = async () => {
     const newPipelineStep = pipelineStep;
     newPipelineStep.configuration = {...externalRestApiIntegrationModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
@@ -93,8 +93,8 @@ function ExternalRestApiIntegrationStepEditorPanel(
     <EditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={externalRestApiIntegrationModel}
-      createRecord={callbackFunction}
-      updateRecord={callbackFunction}
+      createRecord={saveRecord}
+      updateRecord={saveRecord}
       lenient={true}
       isLoading={isLoading}
       className={"m-0"}

@@ -16,7 +16,7 @@ function HelpDocumentation({initialView}) {
 
   return (
     <VanitySetTreeAndViewContainer
-      treeColumnSize={3}
+      treeColumnSize={4}
       icon={faQuestionCircle}
       title={`Help`}
       treeContainer={<HelpDocumentationTree setCurrentView={setCurrentView} />}
