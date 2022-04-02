@@ -17,6 +17,7 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function EndpointResponseBodyInputBase(
   {
@@ -160,12 +161,44 @@ function EndpointResponseBodyInputBase(
     }
   };
 
+  const getAddFieldButton = () => {
+    return (
+      <ButtonContainerBase
+        leftSideButtons={
+          <div className={"mt-auto"}>
+            <InfoText
+              customMessage={getInfoText()}
+              errorMessage={getErrorText()}
+            />
+          </div>
+        }
+      >
+        <NewRecordButton
+          variant={"success"}
+          disabled={isAddAllowed() !== true}
+          addRecordFunction={addField}
+          type={"Field"}
+          customButtonText={"Add Field"}
+          size={"sm"}
+        />
+      </ButtonContainerBase>
+    );
+  };
+
   const getBody = () => {
     if (!Array.isArray(fields) || fields.length === 0) {
       return (
-        <CenteredContentWrapper>
-          <span>No fields have been added</span>
-        </CenteredContentWrapper>
+        <InfoContainer
+          title={field?.label}
+          icon={faBracketsCurly}
+          minimumHeight={"calc(100vh - 730px)"}
+          maximumHeight={"calc(100vh - 730px)"}
+          titleRightSideButton={getAddFieldButton()}
+        >
+          <CenteredContentWrapper>
+            <span>No fields have been added</span>
+          </CenteredContentWrapper>
+        </InfoContainer>
       );
     }
 
@@ -176,29 +209,11 @@ function EndpointResponseBodyInputBase(
           icon={faBracketsCurly}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getCurrentView()}
-          minimumHeight={"calc(100vh - 764px)"}
-          maximumHeight={"calc(100vh - 764px)"}
+          minimumHeight={"calc(100vh - 730px)"}
+          maximumHeight={"calc(100vh - 730px)"}
           tabColumnSize={3}
+          titleRightSideButton={getAddFieldButton()}
         />
-        <ButtonContainerBase
-          className={"mt-2"}
-          leftSideButtons={
-            <div className={"mt-auto"}>
-              <InfoText
-                customMessage={getInfoText()}
-                errorMessage={getErrorText()}
-              />
-            </div>
-          }
-        >
-          <NewRecordButton
-            variant={"secondary"}
-            disabled={isAddAllowed() !== true}
-            addRecordFunction={addField}
-            type={"Field"}
-            size={"sm"}
-          />
-        </ButtonContainerBase>
       </div>
     );
   };
