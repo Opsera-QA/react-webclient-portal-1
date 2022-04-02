@@ -27,7 +27,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
   const [error, setError] = useState(undefined);
   const [responseData, setResponseData] = useState(undefined);
   const [actionInsightsTraceabilityTable, setActionInsightsTraceabilityTable] = useState([]);
-  const [tableFilterDto, setTableFilterDto] = useState(new Model({ ...FailedExecutionsActionableInsightsMetaData.newObjectFields }, FailedExecutionsActionableInsightsMetaData, false));
+  const [tableFilterDto, setTableFilterDto] = useState([new Model({ ...FailedExecutionsActionableInsightsMetaData.newObjectFields }, FailedExecutionsActionableInsightsMetaData, false)]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -56,11 +56,15 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
 
   const columns = useMemo(
     () => [
+      getTableTextColumn(getField(fields, "repositoryName")),
       getTableTextColumn(getField(fields, "actionName")),
       getTableTextColumn(getField(fields, "applicationSVP")),
       getTableTextColumn(getField(fields, "applicationVP2")),
+<<<<<<< HEAD
       getTableTextColumn(getField(fields, "applicationVP1")),
       getTableTextColumn(getField(fields, "applicationDirector")),
+=======
+>>>>>>> db063ae68cbdbec44043c172538ddb7a42e07b86
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
       getTableTextColumn(getField(fields, "pointOfFailure"))
@@ -73,7 +77,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
   };
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardOrgs =
@@ -90,13 +94,12 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         "failedRunsActionableInsights",
         kpiConfiguration,
         dashboardTags,
-        tableFilterDto,
-        dashboardFilters,
+        filterDto[0],
+        null,
         dashboardOrgs
       );
       const data = response?.data?.data[0];
-      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport[0]?.data;
-      console.log(response);
+      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport?.[0]?.data;
       setResponseData(data);
       setActionInsightsTraceabilityTable(actionableInsightsTableData);
     } catch (error) {
@@ -115,13 +118,17 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
     }
+    if(!responseData) {
+      return null;
+    }
     return (
       <>
         {getDateRange()}
         {getFailedSummaryBlocks()}
         <VanitySetTabAndViewContainer
+          className={"mb-3"}
           title={`Failed Executions`}
-          defaultActiveKey={"summary"}
+          defaultActiveKey={actionInsightsTraceabilityTable?.[0]?.applicationName}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getTable()}
         />
@@ -130,6 +137,9 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
   };
 
   const getVerticalTabContainer = () => {
+    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
+      return null;
+    }
     const tabs = [];
     if (Array.isArray(actionInsightsTraceabilityTable) && actionInsightsTraceabilityTable.length > 0) {
       for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
@@ -142,27 +152,35 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       }
     }
     return (
-      <VanitySetVerticalTabContainer className={"h-100"}>
-        {tabs}
-      </VanitySetVerticalTabContainer>
+      <div className={"h-100"}>
+        <div style={{backgroundColor:"#F3F3F1",border:"1px solid #e4e4e4"}} className={"py-2 w-100 px-2"}>
+          <div>Application Name</div>
+        </div>
+        <VanitySetVerticalTabContainer className={"h-100"}>
+          {tabs}
+        </VanitySetVerticalTabContainer>
+      </div>
     );
   };
 
   const getTable = () => {
+    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
+      return null;
+    }
     const projectData = [];
     for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      let newFilterDto = tableFilterDto;
-      newFilterDto.setData(
-        "totalCount",
-        actionInsightsTraceabilityTable[i]?.docs ? actionInsightsTraceabilityTable[i]?.docs.length : 0
-      );
+      let newFilterDto = Object.assign([], tableFilterDto);
+      if(!newFilterDto[i]) {
+        newFilterDto.push(new Model({ ...FailedExecutionsActionableInsightsMetaData.newObjectFields }, FailedExecutionsActionableInsightsMetaData, false));
+      }
+      newFilterDto[i]['totalCount'] = actionInsightsTraceabilityTable[i]?.docs ? actionInsightsTraceabilityTable[i]?.docs.length : 0;
       projectData.push(
         <VanitySetTabView tabKey={actionInsightsTraceabilityTable[i]?.applicationName}>
           <CustomTable
             columns={columns}
             data={actionInsightsTraceabilityTable[i]?.docs}
             noDataMessage={noDataMessage}
-            paginationDto={newFilterDto}
+            paginationDto={newFilterDto[i]}
             setPaginationDto={setTableFilterDto}
             loadData={loadData}
           />
@@ -170,7 +188,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       );
     }
     return (
-      <VanitySetTabViewContainer>
+      <VanitySetTabViewContainer className={"p-2"}>
         {projectData}
       </VanitySetTabViewContainer>
     );
@@ -255,7 +273,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     );
   };
 
-  return <>{getBody()}</>;
+  return <div className={"p-3"}>{getBody()}</div>;
 }
 
 FailedExecutionsActionableInsights.propTypes = {

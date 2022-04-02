@@ -31,6 +31,10 @@ const FailedExecutionsActionableInsightsMetaData = {
       id: "applicationVP2"
     },
     {
+      label: "Repository Name",
+      id: "repositoryName"
+    },
+    {
       label: "Workflow Name",
       id: "workflowName",
     },
