@@ -12,7 +12,10 @@ import LenientSaveButton from "components/common/buttons/saving/LenientSaveButto
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import chartsActions from "components/insights/charts/charts-actions";
 import {amexFiltersMetadata} from "components/insights/dashboards/amex-filters-metadata.js";
-
+import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata.js";
+import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
+import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
+import modelHelpers from "components/common/model/modelHelpers";
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -30,6 +33,9 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const [errorMessage, setErrorMessage] = useState("");
   const [amexFiltersDto, setAmexFiltersDto] = useState(
     new Model({ ...amexFiltersMetadata.newObjectFields }, amexFiltersMetadata, false)
+  );
+  const [dashboardFiltersDto, setDashboardFiltersDto] = useState(
+    new Model({ ...dashboardFiltersMetadata.newObjectFields }, dashboardFiltersMetadata, false)
   );
   useEffect(() => {
     if (cancelTokenSource) {
@@ -54,7 +60,14 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
 
   useEffect(() => {
     toastContext.removeInlineMessage();
-    setAmexFiltersDto(new Model (dataObject?.getData("amexFilters"), amexFiltersMetadata, false));
+    let temporaryDashboardFilters = {
+      tags:  dataObject.getData("filters")[dataObject.getData("filters").findIndex((obj) => obj.type === "tags")]?.value,
+      organizations: dataObject.getData("filters")[dataObject.getData("filters").findIndex((obj) => obj.type === "organizations")]?.value,
+      amexFilters: dataObject.getData("filters")[dataObject.getData("filters").findIndex((obj) => obj.type === "amexFilters")]?.value,
+      date: dataObject.getData("filters")[dataObject.getData("filters").findIndex((obj) => obj.type === "date")]?.value
+    };
+    setAmexFiltersDto(new Model(dataObject.getData("filters")[dataObject.getData("filters").findIndex((obj) => obj.type === "amexFilters")]?.value, amexFiltersMetadata, false));
+    setDashboardFiltersDto(new Model(temporaryDashboardFilters, dashboardFiltersMetadata, false));
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
   }, [showModal]);
 
@@ -94,8 +107,8 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   };
 
   const handleSave = async () => {
-    dataObject.setData(fieldName, amexFiltersDto?.data);
-    const response = await saveDataFunction(dataObject);
+    dashboardFiltersDto.setData("amexFilters", amexFiltersDto?.data);
+    const response = await saveDataFunction(dashboardFiltersDto);
     closePanel();
     return response;
   };
@@ -103,6 +116,16 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const getFiltersInput = () => {
     return (
       <div>
+      <OrganizationMultiSelectInput
+        dataObject={dashboardFiltersDto}
+        setDataObject={setDashboardFiltersDto}
+        fieldName={"organizations"}
+      />
+      <TagMultiSelectInput
+        dataObject={dashboardFiltersDto}
+        setDataObject={setDashboardFiltersDto}
+        fieldName={"tags"}
+      />
       <MultiSelectInputBase
         dataObject={amexFiltersDto}
         setDataObject={setAmexFiltersDto}
