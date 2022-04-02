@@ -140,8 +140,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
         icon={faBracketsCurly}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
-        minimumHeight={"calc(100vh - 726px)"}
-        maximumHeight={"calc(100vh - 726px)"}
+        minimumHeight={"calc(100vh - 555px)"}
+        maximumHeight={"calc(100vh - 555px)"}
         tabColumnSize={3}
       />
     );
@@ -152,7 +152,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
   }
 
   return (
-    <div className={"my-2"}>
+    <div className={"mt-2"}>
       {getBody()}
     </div>
   );
