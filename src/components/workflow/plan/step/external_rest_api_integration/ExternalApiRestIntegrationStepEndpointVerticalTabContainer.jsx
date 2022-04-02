@@ -133,9 +133,9 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       title={`Endpoint Configuration`}
       verticalTabContainer={getVerticalTabContainer()}
       currentView={
-      <div className={"m-3"}>
-        {getCurrentView()}
-      </div>
+        <div className={"m-3"}>
+          {getCurrentView()}
+        </div>
       }
       minimumHeight={"calc(100vh - 395px)"}
       maximumHeight={"calc(100vh - 395px)"}

@@ -140,47 +140,32 @@ function EndpointRequestParametersInputBase(
     );
   };
 
-  const getParameterBody = () => {
+  const getParameterInputContainer = () => {
     if (!Array.isArray(parameters) || parameters?.length === 0) {
       return (
-        <CenteredContentWrapper>
-          <span>There are no Parameters to configure</span>
-        </CenteredContentWrapper>
+        <InfoContainer
+          titleIcon={faCode}
+          titleText={field?.label}
+          minimumHeight={"calc(100vh - 595px)"}
+          maximumHeight={"calc(100vh - 595px)"}
+        >
+          <CenteredContentWrapper>
+            <span>There are no Parameters to configure</span>
+          </CenteredContentWrapper>
+        </InfoContainer>
       );
     }
 
     return (
-      // <div>
-      //   <VanitySetTabAndViewContainer
-      //     title={`Endpoint Configuration`}
-      //     verticalTabContainer={getVerticalTabContainer()}
-      //     currentView={getCurrentView()}
-      //   />
-      // </div>
-      <Row className={"mx-0"}>
-        <Col sm={3} className={"px-0"}>
-          {getVerticalTabContainer()}
-        </Col>
-        <Col sm={9} className={"px-0"}>
-          <div style={{minHeight: "500px"}}>
-            {getCurrentView()}
-          </div>
-        </Col>
-      </Row>
-    );
-  };
-
-  const getParameterInputContainer = () => {
-    return (
-      <Col xs={8}>
-        <InfoContainer
-          titleClassName={"sub-input-title-bar"}
-          titleIcon={faCode}
-          titleText={field?.label}
-        >
-          {getParameterBody()}
-        </InfoContainer>
-      </Col>
+      <VanitySetTabAndViewContainer
+        icon={faCode}
+        title={field?.label}
+        minimumHeight={"calc(100vh - 595px)"}
+        maximumHeight={"calc(100vh - 595px)"}
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getCurrentView()}
+        tabColumnSize={3}
+      />
     );
   };
 
@@ -191,34 +176,34 @@ function EndpointRequestParametersInputBase(
 
   const getConstructedParameterContainer = () => {
     return (
-      <Col xs={4}>
-        <InfoContainer
-          titleClassName={"sub-input-title-bar"}
-          titleIcon={faCheckCircle}
-          titleText={`Constructed ${model?.getLabel(fieldName)}`}
-          className={"h-100"}
-        >
-          <div className={"mx-3 mb-3"}>
-            <div className={"d-flex justify-content-end"}>
-              <ClearDataIcon
-                clearValueFunction={resetDataToDefault}
-                className={"my-2"}
-              />
-            </div>
-            <JsonField
-              className={"h-100 mb-2"}
-              dataObject={model}
-              fieldName={fieldName}
-            />
-            <InfoText
-              customMessage={`
-                  Please Note: Until updated and saved, 
-                  this will include all previously saved fields.
-                `}
+      <InfoContainer
+        titleClassName={"sub-input-title-bar"}
+        titleIcon={faCheckCircle}
+        titleText={`Constructed ${model?.getLabel(fieldName)}`}
+        className={"h-100"}
+        minimumHeight={"calc(100vh - 560px)"}
+        maximumHeight={"calc(100vh - 560px)"}
+      >
+        <div className={"mx-3 mb-3"}>
+          <div className={"d-flex justify-content-end"}>
+            <ClearDataIcon
+              clearValueFunction={resetDataToDefault}
+              className={"my-2"}
             />
           </div>
-        </InfoContainer>
-      </Col>
+          <JsonField
+            className={"h-100 mb-2"}
+            dataObject={model}
+            fieldName={fieldName}
+          />
+          <InfoText
+            customMessage={`
+                 Please Note: Until updated and saved, 
+                 this will include all previously saved fields.
+               `}
+          />
+        </div>
+      </InfoContainer>
     );
   };
 
@@ -227,10 +212,14 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div className={"my-2"}>
+    <div className={"mt-2"}>
       <Row>
-        {getParameterInputContainer()}
-        {getConstructedParameterContainer()}
+        <Col xs={8}>
+          {getParameterInputContainer()}
+        </Col>
+        <Col xs={4}>
+          {getConstructedParameterContainer()}
+        </Col>
       </Row>
     </div>
   );
