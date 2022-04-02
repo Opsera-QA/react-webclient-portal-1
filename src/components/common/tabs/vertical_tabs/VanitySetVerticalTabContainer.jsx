@@ -40,4 +40,8 @@ VanitySetVerticalTabContainer.propTypes = {
   title: PropTypes.any,
 };
 
+VanitySetVerticalTabContainer.defaultProps = {
+  className: "h-100 w-100",
+};
+
 export default VanitySetVerticalTabContainer;

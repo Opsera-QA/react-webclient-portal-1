@@ -11,10 +11,11 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
-import {faCode} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faCode} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 
 function EndpointRequestParameterInputRow(
   {
@@ -145,10 +146,9 @@ function EndpointRequestParameterInputRow(
   }
 
   return (
-    <InfoContainer
+    <VanitySetTabContentContainer
       titleIcon={faCode}
-      titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
-      titleClassName={"sub-input-title-bar"}
+      title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
       <div>
         <Row>
@@ -157,7 +157,7 @@ function EndpointRequestParameterInputRow(
           </Col>
         </Row>
       </div>
-    </InfoContainer>
+    </VanitySetTabContentContainer>
   );
 }
 

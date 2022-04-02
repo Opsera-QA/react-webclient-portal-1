@@ -16,9 +16,7 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
+      <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
           <VanitySetVerticalTab
             tabText={"Welcome"}

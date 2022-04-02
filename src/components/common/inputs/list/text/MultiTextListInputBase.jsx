@@ -26,6 +26,8 @@ function MultiTextListInputBase(
     className,
     disabled,
     allowDuplicates,
+    minimumHeight,
+    maximumHeight,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -239,7 +241,13 @@ function MultiTextListInputBase(
         titleText={getTitle()}
         titleRightSideButton={getRemoveAllButton()}
       >
-        <ul className={"list-group text-input-list"}>
+        <ul
+          className={"list-group text-input-list"}
+          style={{
+            minHeight: minimumHeight,
+            maxHeight: maximumHeight,
+          }}
+        >
           {formatItems()}
         </ul>
       </InfoContainer>
@@ -274,11 +282,15 @@ MultiTextListInputBase.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   allowDuplicates: PropTypes.bool,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };
 
 MultiTextListInputBase.defaultProps = {
   singularTopic: "value",
   pluralTopic: "values",
+  minimumHeight: "100px",
+  maximumHeight: "350px",
 };
 
 export default MultiTextListInputBase;
