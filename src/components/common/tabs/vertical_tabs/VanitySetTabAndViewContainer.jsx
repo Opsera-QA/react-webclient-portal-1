@@ -14,7 +14,10 @@ function VanitySetTabAndViewContainer(
     icon,
     title,
     defaultActiveKey,
-    bodyClassName, // TODO: Remove and instead make different sized containers that use this as a base
+    bodyClassName,
+    minimumHeight,
+    maximumHeight,
+    isLoading,
   }) {
   const getTabColumnSize = () => {
     if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
@@ -32,19 +35,44 @@ function VanitySetTabAndViewContainer(
     return 10;
   };
 
+  const getContainerStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "hidden",
+    });
+  };
+
+  const getBodyStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "auto",
+    });
+  };
+
   return (
     <InfoContainer
       titleText={title}
       titleIcon={icon}
       className={className}
+      isLoading={isLoading}
     >
       <Tab.Container defaultActiveKey={defaultActiveKey}>
-        <Row className={bodyClassName}>
-          <Col sm={getTabColumnSize()} className={"px-0"}>
+        <Row className={bodyClassName} style={getContainerStylingObject()}>
+          <Col
+            xs={getTabColumnSize()}
+            className={"px-0"}
+          >
             {verticalTabContainer}
           </Col>
-          <Col sm={getViewColumnSize()} className={"px-0"}>
-            {currentView}
+          <Col
+            xs={getViewColumnSize()}
+            className={"px-0"}
+          >
+            <div style={getBodyStylingObject()}>
+              {currentView}
+            </div>
           </Col>
         </Row>
       </Tab.Container>
@@ -62,10 +90,15 @@ VanitySetTabAndViewContainer.propTypes = {
   icon: PropTypes.object,
   defaultActiveKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   bodyClassName: PropTypes.string,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 VanitySetTabAndViewContainer.defaultProps = {
-  bodyClassName: "makeup-container-body mx-0",
+  bodyClassName: "mx-0",
+  minimumHeight: "calc(100vh - 264px)",
+  maximumHeight: "calc(100vh - 264px)",
 };
 
 export default VanitySetTabAndViewContainer;

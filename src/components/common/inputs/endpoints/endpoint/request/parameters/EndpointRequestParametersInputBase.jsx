@@ -11,6 +11,10 @@ import {dataParsingHelper} from "components/common/helpers/data/dataParsing.help
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import JsonField from "components/common/fields/json/JsonField";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function EndpointRequestParametersInputBase(
   {
@@ -23,6 +27,13 @@ function EndpointRequestParametersInputBase(
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState("run");
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
 
   useEffect(() => {
     isMounted.current = true;
@@ -82,30 +93,80 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
+  const getFieldTab = (parameter, index) => {
+    return (
+      <VanitySetVerticalTab
+        key={index}
+        tabText={`${parameter.fieldName}`}
+        tabName={parameter.fieldName}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <VanitySetVerticalTabContainer>
+        <div className={"tab-tree"}>
+          {parameters?.map((fieldData, index) => {
+            return (getFieldTab(fieldData, index));
+          })}
+        </div>
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    if (hasStringValue(activeTab) !== true) {
+      return null;
+    }
+
+    const index = parameters.findIndex((parameter) => parameter.fieldName === activeTab);
+
+    if (index === -1) {
+      return null;
+    }
+
+    const fieldData = parameters[index];
+
+    return (
+      <EndpointRequestParameterInputRow
+        index={index}
+        endpointBodyField={fieldData}
+        updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
+        disabled={disabled}
+      />
+    );
+  };
+
   const getParameterBody = () => {
     if (!Array.isArray(parameters) || parameters?.length === 0) {
       return (
-        <div className="text-center">
-          <div className="text-muted my-5">There are no Parameters to configure</div>
-        </div>
+        <CenteredContentWrapper>
+          <span>There are no Parameters to configure</span>
+        </CenteredContentWrapper>
       );
     }
 
     return (
-      <div>
-        {parameters?.map((fieldData, index) => {
-          return (
-            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
-              <EndpointRequestParameterInputRow
-                index={index}
-                endpointBodyField={fieldData}
-                updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
-                disabled={disabled}
-              />
-            </div>
-          );
-        })}
-      </div>
+      // <div>
+      //   <VanitySetTabAndViewContainer
+      //     title={`Endpoint Configuration`}
+      //     verticalTabContainer={getVerticalTabContainer()}
+      //     currentView={getCurrentView()}
+      //   />
+      // </div>
+      <Row className={"mx-0"}>
+        <Col sm={3} className={"px-0"}>
+          {getVerticalTabContainer()}
+        </Col>
+        <Col sm={9} className={"px-0"}>
+          <div style={{minHeight: "500px"}}>
+            {getCurrentView()}
+          </div>
+        </Col>
+      </Row>
     );
   };
 
@@ -117,9 +178,7 @@ function EndpointRequestParametersInputBase(
           titleIcon={faCode}
           titleText={field?.label}
         >
-          <div className={"m-3"}>
-            {getParameterBody()}
-          </div>
+          {getParameterBody()}
         </InfoContainer>
       </Col>
     );
