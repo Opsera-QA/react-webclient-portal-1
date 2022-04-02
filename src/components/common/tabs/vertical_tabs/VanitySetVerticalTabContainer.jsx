@@ -20,7 +20,7 @@ function VanitySetVerticalTabContainer(
 
   return (
     <div className={className}>
-      <div className={"makeup-tree-container h-100 w-100"}>
+      <div className={"h-100 w-100"}>
         {getTitleBar()}
         <Nav variant={"pills"}>
           <div className={"h-100 w-100"}>

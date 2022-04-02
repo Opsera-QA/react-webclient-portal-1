@@ -105,6 +105,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
+      minimumHeight={"calc(100vh - 650px)"}
+      maximumHeight={"calc(100vh - 650px)"}
     />
   );
 }
