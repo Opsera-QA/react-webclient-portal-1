@@ -96,8 +96,8 @@ function MultiSelectInputBase(
 
   const getClearDataFunction = () => {
     if (
-         dataObject.getData(field.id) !== ""
-      && !disabled
+         dataObject?.getArrayData(fieldName).length !== 0
+      && disabled !== true
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction))
     {

@@ -11,7 +11,7 @@ function PipelineNotificationVerticalTabContainer(
     activeTab,
   }) {
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
+    <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faEnvelope}
         tabText={"Email"}

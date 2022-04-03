@@ -51,9 +51,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
+      <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
           {getDynamicTabsForRequestType()}
           <VanitySetVerticalTab
@@ -107,6 +105,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
+      minimumHeight={"calc(100vh - 650px)"}
+      maximumHeight={"calc(100vh - 650px)"}
     />
   );
 }

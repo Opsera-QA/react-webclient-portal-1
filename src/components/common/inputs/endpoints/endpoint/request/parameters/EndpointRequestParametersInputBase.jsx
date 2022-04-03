@@ -11,6 +11,11 @@ import {dataParsingHelper} from "components/common/helpers/data/dataParsing.help
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import JsonField from "components/common/fields/json/JsonField";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 function EndpointRequestParametersInputBase(
   {
@@ -23,6 +28,13 @@ function EndpointRequestParametersInputBase(
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState("run");
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
 
   useEffect(() => {
     isMounted.current = true;
@@ -82,46 +94,79 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
-  const getParameterBody = () => {
-    if (!Array.isArray(parameters) || parameters?.length === 0) {
-      return (
-        <div className="text-center">
-          <div className="text-muted my-5">There are no Parameters to configure</div>
+  const getFieldTab = (parameter, index) => {
+    return (
+      <VanitySetVerticalTab
+        key={index}
+        tabText={`${parameter.fieldName}`}
+        tabName={parameter.fieldName}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <VanitySetVerticalTabContainer>
+        <div className={"tab-tree"}>
+          {parameters?.map((fieldData, index) => {
+            return (getFieldTab(fieldData, index));
+          })}
         </div>
-      );
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    if (hasStringValue(activeTab) !== true) {
+      return null;
     }
 
+    const index = parameters.findIndex((parameter) => parameter.fieldName === activeTab);
+
+    if (index === -1) {
+      return null;
+    }
+
+    const fieldData = parameters[index];
+
     return (
-      <div>
-        {parameters?.map((fieldData, index) => {
-          return (
-            <div key={index} className={index % 2 === 0 ? "" : "my-3"}>
-              <EndpointRequestParameterInputRow
-                index={index}
-                endpointBodyField={fieldData}
-                updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
-                disabled={disabled}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <EndpointRequestParameterInputRow
+        index={index}
+        endpointBodyField={fieldData}
+        updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
+        disabled={disabled}
+      />
     );
   };
 
   const getParameterInputContainer = () => {
-    return (
-      <Col xs={8}>
+    if (!Array.isArray(parameters) || parameters?.length === 0) {
+      return (
         <InfoContainer
-          titleClassName={"sub-input-title-bar"}
           titleIcon={faCode}
           titleText={field?.label}
+          minimumHeight={"calc(100vh - 546px)"}
+          maximumHeight={"calc(100vh - 546px)"}
         >
-          <div className={"m-3"}>
-            {getParameterBody()}
-          </div>
+          <CenteredContentWrapper>
+            <span>There are no Parameters to configure</span>
+          </CenteredContentWrapper>
         </InfoContainer>
-      </Col>
+      );
+    }
+
+    return (
+      <VanitySetTabAndViewContainer
+        icon={faCode}
+        title={field?.label}
+        minimumHeight={"calc(100vh - 546px)"}
+        maximumHeight={"calc(100vh - 546px)"}
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getCurrentView()}
+        tabColumnSize={3}
+      />
     );
   };
 
@@ -130,36 +175,40 @@ function EndpointRequestParametersInputBase(
     validateAndSetData([...resetFields]);
   };
 
+  const getRightSideButton = () => {
+    return (
+        <ClearDataIcon
+          clearValueFunction={resetDataToDefault}
+          className={"my-auto mr-1"}
+        />
+    );
+  };
+
   const getConstructedParameterContainer = () => {
     return (
-      <Col xs={4}>
-        <InfoContainer
-          titleClassName={"sub-input-title-bar"}
-          titleIcon={faCheckCircle}
-          titleText={`Constructed ${model?.getLabel(fieldName)}`}
-          className={"h-100"}
-        >
-          <div className={"mx-3 mb-3"}>
-            <div className={"d-flex justify-content-end"}>
-              <ClearDataIcon
-                clearValueFunction={resetDataToDefault}
-                className={"my-2"}
-              />
-            </div>
-            <JsonField
-              className={"h-100 mb-2"}
-              dataObject={model}
-              fieldName={fieldName}
-            />
+      <InfoContainer
+        titleIcon={faCheckCircle}
+        titleText={`Constructed ${model?.getLabel(fieldName)}`}
+        className={"h-100"}
+        minimumHeight={"calc(100vh - 546px)"}
+        maximumHeight={"calc(100vh - 546px)"}
+        titleRightSideButton={getRightSideButton()}
+      >
+        <div className={"m-3"}>
+          <JsonFieldBase
+            className={"h-100 mb-2"}
+            json={model?.getData(fieldName)}
+          />
+          <div className={"mt-auto"}>
             <InfoText
               customMessage={`
-                  Please Note: Until updated and saved, 
-                  this will include all previously saved fields.
-                `}
+                 Please Note: Until updated and saved, 
+                 this will include all previously saved fields.
+               `}
             />
           </div>
-        </InfoContainer>
-      </Col>
+        </div>
+      </InfoContainer>
     );
   };
 
@@ -168,10 +217,14 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div className={"my-2"}>
+    <div className={"mt-2"}>
       <Row>
-        {getParameterInputContainer()}
-        {getConstructedParameterContainer()}
+        <Col xs={8} className={"pr-2"}>
+          {getParameterInputContainer()}
+        </Col>
+        <Col xs={4} className={"pl-0"}>
+          {getConstructedParameterContainer()}
+        </Col>
       </Row>
     </div>
   );
