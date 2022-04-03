@@ -1,4 +1,4 @@
-import {validateData, validateField} from "core/data_model/modelValidation";
+import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
 import _ from "lodash";
 
 export const DataState = {
@@ -180,6 +180,21 @@ export class Model {
   checkCurrentValidity = () => {
     let isValid = validateData(this);
     return isValid === true;
+  };
+
+  getPotentialFieldValidationError = (potentialValue, fieldName) => {
+    const errorMessages = validatePotentialValue(potentialValue, this, this.getFieldById(fieldName));
+
+    if (Array.isArray(errorMessages) !== true || errorMessages.length === 0) {
+      return null;
+    }
+
+    return errorMessages[0];
+  };
+
+  isPotentialFieldValid = (potentialValue, fieldName) => {
+    const errorMessages = validatePotentialValue(potentialValue, this, this.getFieldById(fieldName));
+    return Array.isArray(errorMessages) !== true || errorMessages.length === 0;
   };
 
   isFieldValid = (fieldName) => {

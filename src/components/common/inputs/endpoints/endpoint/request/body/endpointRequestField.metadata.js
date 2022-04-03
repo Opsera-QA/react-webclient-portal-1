@@ -10,7 +10,7 @@ export const endpointRequestFieldMetadata = {
       label: "Field Name",
       id: "fieldName",
       isRequired: true,
-
+      maxLength: 25,
     },
     {
       label: "Is Sensitive Data",

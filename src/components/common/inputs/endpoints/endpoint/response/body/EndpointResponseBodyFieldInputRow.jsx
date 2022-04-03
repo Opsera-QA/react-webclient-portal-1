@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  faCode,
-} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
@@ -11,10 +8,10 @@ import EndpointResponseFieldTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldTypeSelectInput";
 import EndpointResponseFieldIsSensitiveDataToggleInput
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldIsSensitiveDataToggleInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import {removeSpacesFromString} from "components/common/helpers/string-helpers";
+import EndpointResponseFieldNameTextInput
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldNameTextInput";
 
 function EndpointResponseBodyFieldInputRow(
   {
@@ -33,8 +30,9 @@ function EndpointResponseBodyFieldInputRow(
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
     updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    return endpointFieldModel;
   };
-  
+
   if (endpointFieldModel == null) {
     return null;
   }
@@ -43,12 +41,11 @@ function EndpointResponseBodyFieldInputRow(
     <div className={"mx-3 mb-3 mt-1 h-100"}>
       <Row>
         <Col sm={6}>
-          <TextInputBase
-            dataObject={endpointFieldModel}
-            setDataObject={setEndpointFieldModel}
-            fieldName={"fieldName"}
-            setDataFunction={(fieldName, value) => updateMainModelFunction(fieldName, removeSpacesFromString(value))}
+          <EndpointResponseFieldNameTextInput
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
             disabled={disabled}
+            updateMainModelFunction={updateMainModelFunction}
           />
         </Col>
         <Col sm={6}>

@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {
-  endpointResponseFieldMetadata
-} from "components/common/inputs/endpoints/endpoint/response/body/endpointResponseField.metadata";
 import EndpointResponseBodyFieldInputRow
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
@@ -49,14 +46,8 @@ function EndpointResponseBodyInputBase(
   }, []);
 
   const loadData = () => {
-    const currentData = model?.getData(fieldName);
-    const items = Array.isArray(currentData) ? currentData : [];
-
-    if (items.length === 0) {
-      items.push({...endpointResponseFieldMetadata.newObjectFields});
-    }
-
-    setFields([...items]);
+    const currentData = model?.getArrayData(fieldName);
+    setFields([...currentData]);
   };
 
   const validateAndSetData = (newFields) => {
@@ -75,15 +66,22 @@ function EndpointResponseBodyInputBase(
       return;
     }
 
+    const parsedFields = [];
+
+    if (Array.isArray(newArray) && newArray.length > 0) {
+      newArray.forEach((endpointField) => {
+        const fieldComplete = isFieldComplete(endpointField);
+
+        if (fieldComplete === true) {
+          parsedFields.push(endpointField);
+        }
+      });
+    }
+
     setError("");
     const newModel = {...model};
-    newModel.setData(fieldName, [...newFields]);
+    newModel.setData(fieldName, [...parsedFields]);
     setModel({...newModel});
-
-    if (newArray.length === 0) {
-      newFields.push({...endpointRequestFieldMetadata.newObjectFields});
-      setFields(newFields);
-    }
   };
 
   const updateFieldFunction = (index, field) => {
@@ -165,7 +163,7 @@ function EndpointResponseBodyInputBase(
     return (
       <ButtonContainerBase
         leftSideButtons={
-          <div className={"mt-auto"}>
+          <div className={"my-auto mr-3"}>
             <InfoText
               customMessage={getInfoText()}
               errorMessage={getErrorText()}
@@ -189,14 +187,14 @@ function EndpointResponseBodyInputBase(
     if (!Array.isArray(fields) || fields.length === 0) {
       return (
         <InfoContainer
-          title={field?.label}
-          icon={faBracketsCurly}
+          titleText={field?.label}
+          titleIcon={faBracketsCurly}
           minimumHeight={"calc(100vh - 730px)"}
           maximumHeight={"calc(100vh - 730px)"}
           titleRightSideButton={getAddFieldButton()}
         >
           <CenteredContentWrapper>
-            <span>No fields have been added</span>
+            <div className={"mt-5"}>No fields have been added</div>
           </CenteredContentWrapper>
         </InfoContainer>
       );
