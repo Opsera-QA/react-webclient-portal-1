@@ -9,6 +9,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const CODE_THEME_TYPES = {
@@ -70,32 +72,23 @@ function CodeInput(
 
   const getBody = () => {
     if (isLoading === true) {
-      return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            <LoadingDialog size={"sm"} message={"Loading Data"} />
-          </div>
-        </div>
-      );
+      return (<CenterLoadingIndicator />);
     }
 
     if (dataPullError != null && dataPullError !== "") {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto"}>
+        <CenteredContentWrapper>
             <IconBase icon={faExclamationTriangle} className={"mr-2"} />{dataPullError}
-          </div>
-        </div>
+        </CenteredContentWrapper>
       );
     }
 
     if (isDataPulled === false) {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto"}>
-            <IconBase icon={faFileDownload} className={"mr-2"} />{model?.getLabel(fieldName)} must be pulled from the database before it can be seen
-          </div>
-        </div>
+        <CenteredContentWrapper>
+            <IconBase icon={faFileDownload} className={"mr-2"} />
+           <span>{model?.getLabel(fieldName)} must be pulled from the database before it can be seen</span>
+        </CenteredContentWrapper>
       );
     }
 

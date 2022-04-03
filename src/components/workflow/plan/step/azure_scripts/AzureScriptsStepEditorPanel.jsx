@@ -6,7 +6,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import AzureScriptsStepAzureApplicationCredentialSelectInput from "components/workflow/plan/step/azure_scripts/inputs/AzureScriptsStepAzureApplicationCredentialSelectInput";
 import AzureScriptsStepAzureToolSelectInput from "components/workflow/plan/step/azure_scripts/inputs/AzureScriptsStepAzureToolSelectInput";
 import ScriptTypeSelectInput from "components/common/list_of_values_input/scripts/ScriptTypeSelectInput";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import axios from "axios";
@@ -19,9 +18,8 @@ import CustomParameterMultiSelectListInput
   from "components/common/list_of_values_input/parameters/list/CustomParameterMultiSelectListInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
-import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import CodeInput from "components/common/inputs/code/CodeInput";
+import ScriptViewerField from "components/common/fields/inventory/scripts/ScriptViewerField";
 
 function AzureScriptsStepEditorPanel(
   {
@@ -93,18 +91,22 @@ function AzureScriptsStepEditorPanel(
     switch (azureScriptsStepModel?.getData("type")){
       case "inline":
         return (
-          <Col xs={12} md={6}>
-            <CodeInput
-              fieldName={"inlineCommand"}
-              model={azureScriptsStepModel}
-              setModel={setAzureScriptsStepModel}
-              height={"400px"}
-            />
-          </Col>
+          <>
+            <Col xs={0} md={6} />
+            <Col xs={12} md={6}>
+              <CodeInput
+                fieldName={"inlineCommand"}
+                model={azureScriptsStepModel}
+                setModel={setAzureScriptsStepModel}
+                height={"400px"}
+              />
+            </Col>
+          </>
         );
       case "package":
         return (
           <>
+            <Col xs={0} md={6} />
             <Col xs={12} md={6}>
               <TextInputBase
                 fieldName={"filePath"}
@@ -124,20 +126,24 @@ function AzureScriptsStepEditorPanel(
       case "script":
         return (
           <>
+            <Col xs={0} md={6}/>
             <Col xs={12} md={6}>
               <ScriptLibrarySelectInput
                 fieldName={"bashScript"}
                 model={azureScriptsStepModel}
                 setModel={setAzureScriptsStepModel}
                 language={"bash"}
+                showViewScriptOverlayIcon={false}
               />
             </Col>
-            <Col xs={6}/>
+            <Col xs={0} md={6}/>
             <Col xs={12} md={6}>
-              {/*<ScriptValueInput*/}
-              {/*  model={azureScriptsStepModel}*/}
-              {/*  fieldName={"bashScript"}*/}
-              {/*/>*/}
+              <ScriptViewerField
+                model={azureScriptsStepModel}
+                fieldName={"bashScript"}
+                scriptId={azureScriptsStepModel?.getData("bashScript")}
+                height={400}
+              />
             </Col>
           </>
         );
@@ -179,7 +185,6 @@ function AzureScriptsStepEditorPanel(
             setModel={setAzureScriptsStepModel}
           />
         </Col>
-        <Col xs={0} md={6} />
         {getFieldsByScriptType()}
         <Col xs={12} md={6}>
           <CustomParameterMultiSelectListInput

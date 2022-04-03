@@ -37,7 +37,7 @@ function CodeInputBase(
     setDataFunction(newValue);
   };
 
-  if (setDataFunction == null) {
+  if (setDataFunction == null && disabled !== true) {
     console.log("set data function is null");
     return null;
   }
