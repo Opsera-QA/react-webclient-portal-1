@@ -107,7 +107,7 @@ function ExternalApiIntegratorEndpointEditorPanel(
       updateRecord={updateEndpoint}
       handleClose={closePanelFunction}
       extraButtons={getDeleteButton()}
-      className={"mx-0"}
+      className={"mx-2 mt-2"}
     >
       <Row>
         <Col lg={12}>
