@@ -46,11 +46,6 @@ function EndpointRequestBodyInputPanel(
   const loadData = () => {
     const currentData = model?.getData(fieldName);
     const items = Array.isArray(currentData) ? currentData : [];
-
-    if (items.length === 0) {
-      items.push({...endpointRequestFieldMetadata.newObjectFields});
-    }
-
     setFields([...items]);
   };
 
@@ -70,15 +65,22 @@ function EndpointRequestBodyInputPanel(
       return;
     }
 
+    const parsedFields = [];
+
+    if (Array.isArray(newArray) && newArray.length > 0) {
+      newArray.forEach((endpointField) => {
+        const fieldComplete = isFieldComplete(endpointField);
+
+        if (fieldComplete === true) {
+          parsedFields.push(endpointField);
+        }
+      });
+    }
+
     setError("");
     const newModel = {...model};
-    newModel.setData(fieldName, [...newFields]);
+    newModel.setData(fieldName, [...parsedFields]);
     setModel({...newModel});
-
-    if (newArray.length === 0) {
-      newFields.push({...endpointRequestFieldMetadata.newObjectFields});
-      setFields(newFields);
-    }
   };
 
   const hasDuplicateNames = (newFields) => {
@@ -107,7 +109,7 @@ function EndpointRequestBodyInputPanel(
   const addField = () => {
     const newFields = fields;
     const newField = {...endpointRequestFieldMetadata.newObjectFields};
-    newField.fieldName = `field${fields.length}`;
+    newField.fieldName = `field${fields.length + 1}`;
     newFields.push(newField);
     loadData();
     validateAndSetData(newFields);
@@ -177,7 +179,7 @@ function EndpointRequestBodyInputPanel(
     return (
       <ButtonContainerBase
         leftSideButtons={
-          <div className={"mt-auto"}>
+          <div className={"mt-auto mr-2"}>
             <InfoText
               customMessage={getInfoText()}
               errorMessage={getErrorText()}
@@ -201,14 +203,14 @@ function EndpointRequestBodyInputPanel(
     if (!Array.isArray(fields) || fields.length === 0) {
       return (
         <InfoContainer
-          title={field?.label}
-          icon={faBracketsCurly}
+          titleText={field?.label}
+          titleIcon={faBracketsCurly}
           minimumHeight={"calc(100vh - 730px)"}
           maximumHeight={"calc(100vh - 730px)"}
           titleRightSideButton={getAddFieldButton()}
         >
           <CenteredContentWrapper>
-            <span>No fields have been added</span>
+            <div className={"mt-5"}>No fields have been added</div>
           </CenteredContentWrapper>
         </InfoContainer>
       );
