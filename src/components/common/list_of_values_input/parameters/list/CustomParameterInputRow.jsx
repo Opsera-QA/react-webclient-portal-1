@@ -22,7 +22,7 @@ function CustomParameterInputRow(
         {parameter?.parameterName}
       </Col>
       <Col xs={5}>
-        {parameter?.outputKey != null ? "Terraform Output Parameter" : "User Defined Parameter"}
+        {parameter?.outputKey != null ? "Terraform Output" : "Tool Registry"}
       </Col>
       <Col xs={2}>
         <RemoveListItemBadge
