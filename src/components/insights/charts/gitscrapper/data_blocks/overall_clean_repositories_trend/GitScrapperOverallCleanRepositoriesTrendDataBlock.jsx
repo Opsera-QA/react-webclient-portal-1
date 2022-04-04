@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
-function CoverityIssuesOverallMediumTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody }) {
+function GitScrapperOverallCleanRepositoriesTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
@@ -18,7 +18,7 @@ function CoverityIssuesOverallMediumTrendDataBlock({ score, icon, className, onS
   );
 }
 
-CoverityIssuesOverallMediumTrendDataBlock.propTypes = {
+GitScrapperOverallCleanRepositoriesTrendDataBlock.propTypes = {
   score: PropTypes.number,
   icon: PropTypes.object,
   className: PropTypes.string,
@@ -27,4 +27,4 @@ CoverityIssuesOverallMediumTrendDataBlock.propTypes = {
   iconOverlayBody: PropTypes.any,
 };
 
-export default CoverityIssuesOverallMediumTrendDataBlock;
+export default GitScrapperOverallCleanRepositoriesTrendDataBlock;

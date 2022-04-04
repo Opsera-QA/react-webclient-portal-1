@@ -1,24 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
-function CoverityIssuesOverallLowTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody }) {
+function GitScrapperOverallIssuesTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody}) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
         className={`${className} p-2`}
         score={score}
-        topText={"Total Repositories Scanned"}
+        topText={"Total number of Issues"}
         bottomText={"Last Scan: " + lastScore}
         icon={icon}
-        iconOverlayBody={iconOverlayBody}
+        iconOverlayBody = {iconOverlayBody}
+
       />
     </DataBlockBoxContainer>
   );
 }
 
-CoverityIssuesOverallLowTrendDataBlock.propTypes = {
+GitScrapperOverallIssuesTrendDataBlock.propTypes = {
   score: PropTypes.number,
   icon: PropTypes.object,
   className: PropTypes.string,
@@ -27,4 +29,4 @@ CoverityIssuesOverallLowTrendDataBlock.propTypes = {
   iconOverlayBody: PropTypes.any,
 };
 
-export default CoverityIssuesOverallLowTrendDataBlock;
+export default GitScrapperOverallIssuesTrendDataBlock;
