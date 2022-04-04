@@ -29,8 +29,12 @@ function EndpointResponseBodyFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
-    return endpointFieldModel;
+    return updateModelFunction(endpointFieldModel);
+  };
+
+  const updateModelFunction = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+    return newModel;
   };
 
   if (endpointFieldModel == null) {
@@ -53,18 +57,19 @@ function EndpointResponseBodyFieldInputRow(
             model={endpointFieldModel}
             setModel={setEndpointFieldModel}
             fieldName={"type"}
-            setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+            updateModelFunction={updateModelFunction}
             disabled={disabled}
           />
         </Col>
-        <Col sm={6}>
-          <EndpointResponseFieldIsSensitiveDataToggleInput
-            model={endpointFieldModel}
-            updateMainModelFunction={updateMainModelFunction}
-            index={index}
-            disabled={disabled}
-          />
-        </Col>
+        {/*TODO: For future enhancement if customers ask for not logging response fields*/}
+        {/*<Col sm={6}>*/}
+        {/*  <EndpointResponseFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
       </Row>
       <ButtonContainerBase className={"mt-2"}>
         <DeleteButton dataObject={endpointFieldModel} deleteRecord={deleteFieldFunction} />

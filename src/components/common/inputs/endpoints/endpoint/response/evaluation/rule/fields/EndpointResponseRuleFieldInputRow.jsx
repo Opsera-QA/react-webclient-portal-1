@@ -140,7 +140,7 @@ function EndpointResponseRuleFieldInputRow(
     <VanitySetTabContentContainer
       titleIcon={faBracketsCurly}
       title={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
-      tileBarInput={getRuleFilterInput()}
+      titleBarInput={getRuleFilterInput()}
     >
       <div className={"mx-3 mt-2"}>
         {getBody()}

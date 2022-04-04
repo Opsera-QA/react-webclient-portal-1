@@ -12,6 +12,7 @@ import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
+const height = "calc(100vh - 395px)";
 function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   {
     externalRestApiIntegrationModel,
@@ -118,7 +119,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case "status-endpoint-configuration":
         return (
-          <>
+          <div className={"mx-2"}>
             <ExternalApiIntegrationStepStatusEndpointSelectInput
               fieldName={"statusEndpointId"}
               model={externalRestApiIntegrationModel}
@@ -133,7 +134,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
               endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
               disabled={disabled}
             />
-          </>
+          </div>
         );
       case "status-success-rule":
         return (
@@ -171,12 +172,12 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       title={`Endpoint Configuration`}
       verticalTabContainer={getVerticalTabContainer()}
       currentView={
-        <div style={{overflowX: "hidden"}}>
+        <div style={{overflowX: "hidden", minHeight: height}}>
           {getCurrentView()}
         </div>
       }
-      minimumHeight={"calc(100vh - 395px)"}
-      maximumHeight={"calc(100vh - 395px)"}
+      minimumHeight={height}
+      maximumHeight={height}
       defaultActiveKey={activeTab}
     />
   );

@@ -29,7 +29,7 @@ function EndpointRequestParameterInputRow(
   const updateMainModelFunction = (fieldName, newValue) => {
     const newModel = {...endpointFieldModel};
     newModel.setData(fieldName, newValue);
-    updateParameterFunction({...newModel?.getPersistData()});
+    updateParameterFunction({...newModel?.getCurrentData()});
   };
 
   const getInfoText = () => {
@@ -64,10 +64,6 @@ function EndpointRequestParameterInputRow(
     updateMainModelFunction(fieldName, newValue?._id);
   };
 
-  const updateInsensitiveCustomParameter = (fieldName, newValue) => {
-    updateMainModelFunction(fieldName, newValue?.value);
-  };
-
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -99,7 +95,7 @@ function EndpointRequestParameterInputRow(
               fieldName={"value"}
               className={"value-parameter"}
               requireInsensitiveParameters={true}
-              setDataFunction={updateInsensitiveCustomParameter}
+              setDataFunction={updateMainModelFunction}
               disabled={disabled}
             />
             <div className={"d-flex justify-content-end"}>

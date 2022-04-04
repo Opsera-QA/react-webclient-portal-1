@@ -239,6 +239,10 @@ export class Model {
     return this.trimStrings();
   };
 
+  getCurrentData = () => {
+    return this.data;
+  };
+
   trimStrings = () => {
     let data = this.data;
 

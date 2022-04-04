@@ -57,7 +57,7 @@ function EndpointResponseEvaluationRuleInput(
               <PositiveIntegerNumberTextInput
                 model={evaluationRuleModel}
                 setModel={setEvaluationRuleModel}
-                setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+                setDataFunction={updateMainModelFunction}
                 fieldName={"value"}
                 disabled={disabled}
               />
