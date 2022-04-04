@@ -4,16 +4,17 @@ import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
+import SonarRatingsV2ChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
 import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
 import ThreeStackedHorizontalMetricsContainer from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import {SONAR_RATING_METRIC_CONSTANTS as dataPointConstants} from "./SonarRatingMetrics_kpi_datapoint_identifiers";
-import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockContainer";
 import SonarRatingsReliabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
+import SonarRatingsCodeCoverageBlockContainer from "./data_blocks/SonarRatingsCodeCoverageBlockConatainer";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -238,7 +239,7 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => <SonarRatingsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        chartHelpComponent={(closeHelpPanel) => <SonarRatingsV2ChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Build Duration"
