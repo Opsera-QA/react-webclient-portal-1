@@ -118,12 +118,13 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
-  const showGithubDeclinedPullRequestModal = () => {
+  const showGithubDeclinedPullRequestModal = (node) => {
     toastContext.showOverlayPanel(
       <GithubDeclinedPullRequestActionableInsightOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         highestMergesMetric={highestMergesMetric}
+        repository={node?.id}
       />
     );
   };
@@ -207,7 +208,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={totalDeclinedMerges}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => showGithubDeclinedPullRequestModal()}
+                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
               />
             </div>
           </Col>
@@ -258,7 +259,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={totalDeclinedMerges}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => showGithubDeclinedPullRequestModal()}
+                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
               />
             </div>
             <div className="text-center col-12">

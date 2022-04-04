@@ -5,7 +5,7 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubClosedCommitsTab from "./tableData/GithubClosedCommitsTab";
 
-function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData, highestMergesMetric }) {
+function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData, highestMergesMetric , repository }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -27,6 +27,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
         <GithubClosedCommitsTab
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          repository={repository}
         />
       </div>
     </FullScreenCenterOverlayContainer>
@@ -37,6 +38,7 @@ GithubCommitsActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   highestMergesMetric: PropTypes.array,
+  repository: PropTypes.string,
 };
 
 export default GithubCommitsActionableInsightOverlay;
