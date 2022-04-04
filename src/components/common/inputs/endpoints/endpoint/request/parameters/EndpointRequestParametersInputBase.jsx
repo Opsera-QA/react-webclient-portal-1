@@ -6,11 +6,11 @@ import {faCheckCircle, faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 import InfoContainer from "components/common/containers/InfoContainer";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import JsonField from "components/common/fields/json/JsonField";
 
 function EndpointRequestParametersInputBase(
   {
@@ -146,9 +146,9 @@ function EndpointRequestParametersInputBase(
                 className={"my-2"}
               />
             </div>
-            <StandaloneJsonField
+            <JsonField
               className={"h-100 mb-2"}
-              model={model}
+              dataObject={model}
               fieldName={fieldName}
             />
             <InfoText
