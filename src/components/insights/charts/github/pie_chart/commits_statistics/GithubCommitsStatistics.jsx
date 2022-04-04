@@ -118,12 +118,13 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
-  const showGithubDeclinedPullRequestModal = () => {
+  const showGithubDeclinedPullRequestModal = (node) => {
     toastContext.showOverlayPanel(
       <GithubDeclinedPullRequestActionableInsightOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         highestMergesMetric={highestMergesMetric}
+        repository={node?.id}
       />
     );
   };
@@ -207,7 +208,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={totalDeclinedMerges}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => showGithubDeclinedPullRequestModal()}
+                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
               />
             </div>
           </Col>
@@ -223,11 +224,6 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         <Row>
           <Col md={3}>{getDataBlocks()}</Col>
           <Col md={3}>
-            <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Approved Pull Requests
-              </div>
-            </div>
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={highestMergesMetric}
@@ -236,13 +232,13 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 onClick={() => setShowModal(true)}
               />
             </div>
-          </Col>
-          <Col md={3}>
             <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Active Contributors
+              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Approved Pull Requests
               </div>
             </div>
+          </Col>
+          <Col md={3}>
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsiveBar
                 data={mostActiveUsersMetrics}
@@ -251,20 +247,25 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 {...adjustBarWidth(mostActiveUsersMetrics, false)}
               />
             </div>
-          </Col>
-          <Col md={3}>
             <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Declined Pull Requests
+              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Active Contributors
               </div>
             </div>
+          </Col>
+          <Col md={3}>
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsivePie
                 data={totalDeclinedMerges}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => showGithubDeclinedPullRequestModal()}
+                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
               />
+            </div>
+            <div className="text-center col-12">
+              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                Declined Pull Requests
+              </div>
             </div>
           </Col>
         </Row>

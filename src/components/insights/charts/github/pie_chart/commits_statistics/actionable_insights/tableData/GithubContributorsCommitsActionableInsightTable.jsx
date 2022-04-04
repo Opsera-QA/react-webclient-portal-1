@@ -21,7 +21,6 @@ function GithubContributorsCommitsActionableInsightTable({
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
       getTableTextColumn(getField(fields, "contributorName"), "contributorName"),
       getTableTextColumn(getField(fields, "totalCommits"), "totalCommits"),
     ],
