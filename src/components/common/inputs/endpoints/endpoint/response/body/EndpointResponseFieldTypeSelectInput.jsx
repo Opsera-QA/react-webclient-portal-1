@@ -22,9 +22,16 @@ function EndpointResponseFieldTypeSelectInput(
     model,
     setModel,
     fieldName,
-    setDataFunction,
+    updateModelFunction,
     disabled,
   }) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    const newModel = {...model};
+    newModel.setData(fieldName, selectedOption?.value);
+    newModel.setDefaultValue("isSensitiveData");
+    updateModelFunction(newModel);
+  };
+
   return (
     <SelectInputBase
       selectOptions={SUPPORTED_FIELD_TYPES}
@@ -43,7 +50,7 @@ EndpointResponseFieldTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
-  setDataFunction: PropTypes.func,
+  updateModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
 

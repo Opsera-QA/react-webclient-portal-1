@@ -8,7 +8,7 @@ function VanitySetTabContentContainer(
     children,
     title,
     titleIcon,
-    tileBarInput,
+    titleBarInput,
   }) {
   const getTitleBar = () => {
     if (title) {
@@ -25,7 +25,7 @@ function VanitySetTabContentContainer(
             </div>
           </div>
           <div className={"ml-2"}>
-            {tileBarInput}
+            {titleBarInput}
           </div>
         </div>
       );
@@ -48,7 +48,7 @@ VanitySetTabContentContainer.propTypes = {
   children: PropTypes.any,
   title: PropTypes.string,
   titleIcon: PropTypes.object,
-  tileBarInput: PropTypes.string,
+  titleBarInput: PropTypes.any,
 };
 
 export default VanitySetTabContentContainer;

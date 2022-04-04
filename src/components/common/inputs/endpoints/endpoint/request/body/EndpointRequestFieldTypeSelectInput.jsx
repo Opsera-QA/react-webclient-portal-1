@@ -22,9 +22,17 @@ function EndpointRequestFieldTypeSelectInput(
     model,
     setModel,
     fieldName,
-    setDataFunction,
+    updateModelFunction,
     disabled,
   }) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    const newModel = {...model};
+    newModel.setData(fieldName, selectedOption?.value);
+    newModel.setDefaultValue("isSensitiveData");
+    newModel.setDefaultValue("isRequired");
+    updateModelFunction(newModel);
+  };
+
   return (
     <SelectInputBase
       selectOptions={SUPPORTED_FIELD_TYPES}
@@ -42,7 +50,7 @@ function EndpointRequestFieldTypeSelectInput(
 EndpointRequestFieldTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  setDataFunction: PropTypes.func,
+  updateModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
 };
