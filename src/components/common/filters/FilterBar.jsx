@@ -7,6 +7,8 @@ import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import ExportDataButton from "components/common/buttons/data/export/ExportDataButton";
+import ImportDataButton from "components/common/buttons/data/import/ImportDataButton";
 
 function FilterBar(
   { 
@@ -24,6 +26,8 @@ function FilterBar(
     exportButton,
     type,
     metadata,
+    handleExportFunction,
+    handleImportFunction,
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -49,6 +53,16 @@ function FilterBar(
             type={getType()}
             isLoading={isLoading}
             variant={"success"}
+          />
+          <ImportDataButton
+            className={"mr-2"}
+            importDataFunction={handleImportFunction}
+            isLoading={isLoading}
+          />
+          <ExportDataButton
+            className={"mr-2"}
+            exportDataFunction={handleExportFunction}
+            isLoading={isLoading}
           />
           <span className="d-none d-xl-inline">{inlineFilters}</span>
           <InlineSearchFilter
@@ -109,6 +123,8 @@ FilterBar.propTypes = {
   type: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.any,
+  handleExportFunction: PropTypes.func,
+  handleImportFunction: PropTypes.func,
 };
 
 export default FilterBar;
