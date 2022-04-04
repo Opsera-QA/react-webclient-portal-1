@@ -16,7 +16,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
   };
 
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
+    <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faDraftingCompass}
         tabText={"All Pipelines"}

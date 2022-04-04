@@ -59,7 +59,7 @@ function ScriptOverlay({ scriptId }) {
     const scriptMetadata = response?.data?.metadata;
 
     if (newScript) {
-      let newModel = {...new ScriptModel({...newScript}, scriptMetadata, false, setScriptModel, getAccessToken, cancelTokenSource, loadData)};
+      const newModel = {...new ScriptModel({...newScript}, scriptMetadata, false, setScriptModel, getAccessToken, cancelTokenSource, loadData)};
       setScriptModel({...newModel});
     }
   };
@@ -75,7 +75,11 @@ function ScriptOverlay({ scriptId }) {
     }
 
     if (scriptModel != null) {
-      return <ScriptSummaryPanel scriptModel={scriptModel} />;
+      return (
+        <ScriptSummaryPanel
+          scriptModel={scriptModel}
+        />
+      );
     }
 
     return `No Script Found`;

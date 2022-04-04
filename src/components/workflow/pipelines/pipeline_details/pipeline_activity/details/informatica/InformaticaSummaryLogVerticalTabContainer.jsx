@@ -5,7 +5,7 @@ import { faFileAlt } from "@fortawesome/pro-light-svg-icons";
 
 function InformaticaSummaryLogVerticalTabContainer() {
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
+    <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faFileAlt}
         tabText={"Overview"}

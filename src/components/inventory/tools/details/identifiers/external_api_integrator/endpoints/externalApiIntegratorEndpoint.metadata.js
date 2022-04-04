@@ -40,7 +40,7 @@ const externalApiIntegratorEndpointMetadata = {
   newObjectFields: {
     name: "",
     description: "",
-    requestType: "",
+    requestType: "get",
     url: "",
     queryParameterFields: [],
     requestBodyFields: [],

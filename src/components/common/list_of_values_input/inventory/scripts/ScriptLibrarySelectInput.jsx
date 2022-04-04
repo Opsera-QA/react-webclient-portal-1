@@ -11,6 +11,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {getScriptLanguageDisplayText} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import ScriptViewerField from "components/common/fields/inventory/scripts/ScriptViewerField";
 
 function ScriptLibrarySelectInput(
   {
@@ -24,6 +25,8 @@ function ScriptLibrarySelectInput(
     fields,
     setDataFunction,
     language,
+    showInlineScriptViewer,
+    showViewScriptOverlayIcon,
   }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -90,11 +93,23 @@ function ScriptLibrarySelectInput(
 
   const getInfoText = () => {
     if (isMongoDbId(model?.getData(fieldName)) === true) {
-      return (
-        <div className={"text-muted d-flex pointer"} onClick={() => {toggleScriptOverlay();}}>
-          <span><IconBase icon={faFileCode} className={"pr-1"} />View this Script</span>
-        </div>
-      );
+      if (showInlineScriptViewer === true) {
+        return (
+          <ScriptViewerField
+            scriptId={model?.getData(fieldName)}
+          />
+        );
+      }
+
+      if (showViewScriptOverlayIcon !== false) {
+        return (
+          <div className={"text-muted d-flex pointer"} onClick={() => {
+            toggleScriptOverlay();
+          }}>
+            <span><IconBase icon={faFileCode} className={"pr-1"} />View this Script</span>
+          </div>
+        );
+      }
     }
   };
 
@@ -148,6 +163,8 @@ ScriptLibrarySelectInput.propTypes = {
   fields: PropTypes.array,
   setDataFunction: PropTypes.func,
   language: PropTypes.string,
+  showInlineScriptViewer: PropTypes.bool,
+  showViewScriptOverlayIcon: PropTypes.bool,
 };
 
 ScriptLibrarySelectInput.defaultProps = {

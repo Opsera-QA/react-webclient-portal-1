@@ -51,14 +51,11 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
 
   return (
     <PipelineStepDetailsContainer title={`Pipeline Settings`}>
-      <div className={"pt-2 pl-2 makeup-container-tab-container"}>
+      <div className={"pt-2 pl-2"}>
         <GeneralTabPanelContainer
-          currentView={
-            <div className={"makeup-container-content-body step-configuration-summary"}>
-              {getCurrentView()}
-            </div>
-          }
-          tabContainer={getTabContainer()} />
+          currentView={getCurrentView()}
+          tabContainer={getTabContainer()}
+        />
       </div>
     </PipelineStepDetailsContainer>
   );
