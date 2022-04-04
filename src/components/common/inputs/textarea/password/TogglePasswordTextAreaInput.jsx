@@ -6,7 +6,13 @@ import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiv
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 
-function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
+function TogglePasswordTextAreaInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+  }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [valueShown, setValueShown] = useState(false);
@@ -15,6 +21,7 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
   useEffect(() => {
     isMounted.current = true;
 
+    setValueShown(false);
     setField(model?.getFieldById(fieldName));
 
     return () => {
@@ -38,14 +45,16 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
   };
 
   const getSensitiveDataButton = () => {
-    return (
-      <ShowSensitiveDataButton
-        showDataFunction={showDataFunction}
-        hideDataFunction={hideDataFunction}
-        className={"input-button"}
-        valueShown={valueShown}
-      />
-    );
+    if (model?.isNew() === true || model?.getData("vaultEnabled") === true) {
+      return (
+        <ShowSensitiveDataButton
+          showDataFunction={showDataFunction}
+          hideDataFunction={hideDataFunction}
+          className={"input-button mb-2"}
+          valueShown={valueShown}
+        />
+      );
+    }
   };
 
   const getButtons = () => {
@@ -55,7 +64,7 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
           {getSensitiveDataButton()}
           <CopyToClipboardButton
             copyString={model?.getData(fieldName)}
-            className={"input-button mt-2"}
+            className={"input-button"}
           />
         </div>
       );
@@ -66,6 +75,12 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
         {getSensitiveDataButton()}
       </div>
     );
+  };
+
+  const getInputStyling = () => {
+    if ((model?.isNew() === true || model?.getData("vaultEnabled") === true) && valueShown === false) {
+      return ({WebkitTextSecurity: 'disc'});
+    }
   };
 
   if (model == null || field == null) {
@@ -80,7 +95,7 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
       />
       <div className={"d-flex"}>
         <textarea
-          style={valueShown  === false ? {WebkitTextSecurity: 'disc'} : undefined}
+          style={getInputStyling()}
           disabled={disabled}
           value={model?.getData(fieldName)}
           onChange={(event) => validateAndSetData(event.target.value)}
@@ -91,6 +106,9 @@ function TogglePasswordTextAreaInput({fieldName, model, setModel, disabled}) {
           {getButtons()}
         </div>
       </div>
+      <InfoText
+        errorMessage={errorMessage}
+      />
     </InputContainer>
   );
 }

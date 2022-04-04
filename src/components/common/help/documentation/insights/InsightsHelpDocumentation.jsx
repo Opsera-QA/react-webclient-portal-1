@@ -43,18 +43,13 @@ function InsightsHelpDocumentation() {
   };
 
   return (
-    <HelpDocumentationContainer
+    <HelpOverlayBase
+      closePanel={closePanel}
+      showPanel={true}
       helpTopic={"Insights: My Dashboard"}
+      helpDocumentation={getHelpDocumentation()}
     >
-      {getHelpDocumentation()}
-    </HelpDocumentationContainer>
-    // <HelpOverlayBase
-    //   closePanel={closePanel}
-    //   showPanel={true}
-    //   helpTopic={"Insights: My Dashboard"}
-    //   helpDocumentation={getHelpDocumentation()}
-    // >
-    // </HelpOverlayBase>
+    </HelpOverlayBase>
   );
 }
 
