@@ -30,7 +30,7 @@ function VisibleVaultTextAreaInput(
   useEffect(() => {
     isMounted.current = true;
 
-    if (hasStringValue(model?.getData(fieldName) !== true)) {
+    if (hasStringValue(model?.getData(fieldName)) !== true) {
       setValueShown(false);
     }
 
