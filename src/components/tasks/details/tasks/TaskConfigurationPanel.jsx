@@ -88,7 +88,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksDataDto={taskModel}
             />
         );
-      case "":
+      case TASK_TYPES.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION:
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;
     }
