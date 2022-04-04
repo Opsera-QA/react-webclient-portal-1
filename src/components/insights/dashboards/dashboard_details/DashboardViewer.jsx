@@ -52,15 +52,24 @@ function DashboardViewer({ dashboardModel, loadData }) {
   };
 
   const getActiveFilters = () => {
-    let svpFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.svp.map((value) => {return {"type": "SVP", "value": value};});
-    let vp2Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.vp2.map((value) => {return {"type": "VP2", "value": value};});
-    let vp1Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.vp1.map((value) => {return {"type": "VP1", "value": value};});
-    let directorFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.director.map((value) => {return {"type": "Director", "value": value};});
-    let applicationFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.application.map((value) => {return {"type": "Application", "value": value};});
-    let actionFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters").value.action.map((value) => {return {"type": "Action", "value": value};});
-    let organizationFilters = dashboardModel.getData("filters").find(x => x.type === "organizations").value.map((value) => {return {"type": "Organization", "value": value.name};});
-    let tagFilters = dashboardModel.getData("filters").find(x => x.type === "tags").value;
-    let activeFilters = [...svpFilters, ...vp2Filters, ...vp1Filters, ...directorFilters, ...applicationFilters, ...actionFilters, ...organizationFilters, ...tagFilters];
+    let svpFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.svp?.map((value) => {return {"type": "SVP", "value": value};});
+    let vp2Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.vp2?.map((value) => {return {"type": "VP2", "value": value};});
+    let vp1Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.vp1?.map((value) => {return {"type": "VP1", "value": value};});
+    let directorFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.director?.map((value) => {return {"type": "Director", "value": value};});
+    let applicationFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.application?.map((value) => {return {"type": "Application", "value": value};});
+    let actionFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.action?.map((value) => {return {"type": "Action", "value": value};});
+    let organizationFilters = dashboardModel.getData("filters").find(x => x.type === "organizations")?.value?.map((value) => {return {"type": "Organization", "value": value?.name};});
+    let tagFilters = dashboardModel.getData("filters").find(x => x.type === "tags")?.value;
+    let activeFilters = [];
+    if (Array.isArray(svpFilters)) {activeFilters = [...activeFilters, ...svpFilters];}
+    if (Array.isArray(vp2Filters)) {activeFilters = [...activeFilters, ...vp2Filters];}
+    if (Array.isArray(vp1Filters)) {activeFilters = [...activeFilters, ...vp1Filters];}
+    if (Array.isArray(directorFilters)) {activeFilters = [...activeFilters, ...directorFilters];}
+    if (Array.isArray(applicationFilters)) {activeFilters = [...activeFilters, ...applicationFilters];}
+    if (Array.isArray(actionFilters)) {activeFilters = [...activeFilters, ...actionFilters];}
+    if (Array.isArray(organizationFilters)) {activeFilters = [...activeFilters, ...organizationFilters];}
+    if (Array.isArray(tagFilters)) {activeFilters = [...activeFilters, ...tagFilters];}
+
     if (Array.isArray(activeFilters) && activeFilters.length > 0) {
       return (
         <div className="item-field py-2 px-1" style={{overflow: "hidden"}}>
