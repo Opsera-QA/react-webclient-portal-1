@@ -18,6 +18,11 @@ import {ResponsiveBar} from "@nivo/bar";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import chartsActions from "../../../../charts-actions";
 import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
+import MetricBadgeBase from "../../../../../../common/badges/metric/MetricBadgeBase";
+import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
+import AddNewCirclesGroup from "../../../../../../common/icons/create/AddNewCirclesGroup";
+import InsightsCardContainerBase from "../../../../../../common/card_containers/InsightsCardContainerBase";
 
 function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -220,6 +225,14 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     );
   };
 
+  const getTitleBar = (currentElement) => {
+    return (
+      <div className="d-flex justify-content-between w-100">
+        <div>{topSuccessfulActions?.[currentElement]?.actionName}</div>
+      </div>
+    );
+  };
+
   const getSuccessPercentSummaryTextBoxes = () => {
     if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
       return null;
@@ -227,27 +240,27 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     var successPercentSummary = [];
     for (var i = 0; i <= topSuccessfulActions.length - 1; i++) {
       successPercentSummary.push(
-        <Col md={6} className={'mb-2'}>
-          <DataBlockBoxContainer showBorder={true} className={'github-actions-border-left'}>
-            <MetricContentDataBlockBase
-              title={topSuccessfulActions[i].actionName}
-              content={
-                <div style={{display: "grid"}}>
-                  <span>Application Name: {topSuccessfulActions[i].applicationName}</span>
-                  <Row className="pb-3 px-2 my-5">
-                    <Col xl={12} lg={12} md={12} className={"my-1"} style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-                      <ResponsiveBar
-                        data={topSuccessfulActions[i].docs}
-                        {...defaultConfig("Percentage", "", false, false, "", "")}
-                        {...barConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                        {...adjustBarWidth(topSuccessfulActions[i].docs)}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-              }
-            />
-          </DataBlockBoxContainer>
+        <Col xl={6} lg={6} md={6} className={"my-1"}>
+          <InsightsCardContainerBase titleBar={getTitleBar(i)}>
+            <div className="m-2">
+              <div className={"d-flex"}>
+                <MetricBadgeBase
+                  className={"mr-3"}
+                  badgeText={`Application Name: ${topSuccessfulActions?.[i]?.applicationName}`}
+                />
+              </div>
+              <Row className="d-flex align-items-center">
+                <Col xl={12} lg={12} md={12} className={"my-1"} style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
+                  <ResponsiveBar
+                    data={topSuccessfulActions[i].docs}
+                    {...defaultConfig("Percentage", "", false, false, "", "")}
+                    {...barConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
+                    {...adjustBarWidth(topSuccessfulActions[i].docs)}
+                  />
+                </Col>
+              </Row>
+            </div>
+          </InsightsCardContainerBase>
         </Col>
       );
     }

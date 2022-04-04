@@ -6,7 +6,18 @@ export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
   enableArcLinkLabels: false,
-  legends:[],
+  legends:[
+  {
+    "anchor": "top-left",
+    "direction": "column",
+    "translateX": -20,
+    "translateY": -30,
+    "itemWidth": 100,
+    "itemHeight": 18,
+    "symbolSize": 16,
+    "symbolShape": "square"
+  }
+],
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,

@@ -7,16 +7,15 @@ import AppliedFiltersOverlay from "components/common/fields/multiple_items/tags/
 
 function AppliedFiltersBadge({ tags, tagLocation, className, showNoTagsAppliedBadge }) {
   const getTagLabel = () => {
-    let tagText = `${tags?.length} `;
-
+    let tagText = `${tags?.svp.length} `;
     if (hasStringValue(tagLocation) === true) {
       tagText += `${tagLocation} `;
     }
 
-    return tagText + (tags?.length !== 1 ? "Filters Applied" : "Filter Applied");
+    return tagText + (tags?.svp.length !== 1 ? "Filters Applied" : "Filter Applied");
   };
 
-  if (!Array.isArray(tags) || tags.length === 0) {
+  if (!Array.isArray(tags.svp) || tags.svp.length === 0) {
     if (showNoTagsAppliedBadge === true) {
       return (
         <div className={className}>
