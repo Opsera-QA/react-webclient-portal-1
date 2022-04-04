@@ -1,8 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import CodeInput from "components/common/inputs/code/CodeInput";
 
-function CodeFieldBase({model, fieldName, mode, className, isLoading}) {
+function CodeFieldBase(
+  {
+    model,
+    fieldName,
+    mode,
+    className,
+    isLoading,
+    height,
+  }) {
   return (
     <CodeInput
       disabled={true}
@@ -11,6 +19,7 @@ function CodeFieldBase({model, fieldName, mode, className, isLoading}) {
       isLoading={isLoading}
       fieldName={fieldName}
       className={className}
+      height={height}
     />
   );
 }
@@ -20,7 +29,8 @@ CodeFieldBase.propTypes = {
   model: PropTypes.object,
   className: PropTypes.string,
   mode: PropTypes.string,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  height: PropTypes.string,
 };
 
 export default CodeFieldBase;

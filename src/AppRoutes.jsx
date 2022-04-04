@@ -122,6 +122,10 @@ import SiteRoleDetailView from "components/settings/ldap_site_roles/details/Site
 import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
 import PipelineDataMappingDetailView
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
+import Faq from "components/about/faq/Faq";
+import CustomEnvironmentVariableManagement
+  from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
+import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -179,6 +183,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <Route path="/logout" exact component={Logout} />
 
           <Route path="/signup" exact component={Signup} />
+          <Route path="/faq" exact component={Faq} />
+          <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
           <Route path="/about" exact component={About} />
           <Route path="/about/pricing" component={Pricing} />
           <Route path="/help" component={OnlineHelp} />
@@ -249,6 +255,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
 
           <SecureRoute path="/admin" exact component={AdminTools} />
+          <SecureRoute path="/admin/custom-environment-variables" exact component={CustomEnvironmentVariableManagement} />
           <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
           <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement} />
           <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />

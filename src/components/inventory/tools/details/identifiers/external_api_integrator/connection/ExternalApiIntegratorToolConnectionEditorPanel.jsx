@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import {
   externalApiIntegratorToolConnectionMetadata

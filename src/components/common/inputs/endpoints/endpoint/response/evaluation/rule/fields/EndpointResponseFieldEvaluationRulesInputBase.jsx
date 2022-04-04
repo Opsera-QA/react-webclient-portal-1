@@ -1,60 +1,84 @@
 import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {faBracketsCurly, faFilter} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {
-  endpointResponseFieldMetadata
-} from "components/common/inputs/endpoints/endpoint/response/body/endpointResponseField.metadata";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import EndpointResponseRuleFieldInputRow
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseRuleFieldInputRow";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
     fieldName,
     model,
-    responseFields,
-    setModel,
+    responseBodyFields,
+    setDataFunction,
     disabled,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const [field, setField] = useState(model?.getFieldById(fieldName));
   const [fields, setFields] = useState([]);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState(undefined);
+  const [currentFieldData, setCurrentFieldData] = useState(undefined);
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+      const newFieldData = fields[newTab];
+      setCurrentFieldData({...newFieldData});
+    }
+  };
 
   useEffect(() => {
     isMounted.current = true;
-
-    loadData();
+    setField(model?.getFieldById(fieldName));
 
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [fieldName]);
+
+  useEffect(() => {
+    setFields([]);
+
+    if (Array.isArray(responseBodyFields)) {
+      loadData();
+    }
+  }, [responseBodyFields]);
 
   const loadData = () => {
-    const currentData = model?.getData(fieldName);
-    const items = Array.isArray(currentData) ? currentData : [];
+    const currentData = model?.getArrayData(fieldName);
+    const unpackedFields = [];
 
-    if (items.length === 0) {
-      items.push({...endpointResponseFieldMetadata.newObjectFields});
-    }
+    responseBodyFields?.forEach((field) => {
+      const newField = {...field};
+      const fieldName = field?.fieldName;
 
-    setFields([...items]);
+      // Skip incomplete fields. This shouldn't happen but being as defensive as possible
+      if (hasStringValue(fieldName) !== true) {
+        return;
+      }
+
+      const foundItem = currentData.find((field) => field?.fieldName === fieldName);
+      newField.value = dataParsingHelper.parseObjectValue(field?.type, foundItem?.value);
+      const filter = foundItem?.filter;
+
+      if (hasStringValue(filter) === true) {
+        newField.filter = filter;
+      }
+
+      unpackedFields.push(newField);
+    });
+
+    setFields([...unpackedFields]);
   };
 
   const validateAndSetData = (newFields) => {
     const newArray = Array.isArray(newFields) ? newFields : [];
-
-    if (newArray.length === 0) {
-      newFields.push({...endpointResponseFieldMetadata.newObjectFields});
-    }
-
-    setFields([...newFields]);
-    const newModel = {...model};
-    newModel.setData(fieldName, [...newFields]);
-    setModel({...newModel});
+    setDataFunction(newArray);
   };
 
   const updateFieldFunction = (index, field) => {
@@ -63,72 +87,64 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     validateAndSetData(newFields);
   };
 
-  const getFieldBody = () => {
-    if (!fields || fields.length === 0) {
+  const getFieldTab = (field, index) => {
+    return (
+      <VanitySetVerticalTab
+        key={index}
+        tabText={hasStringValue(field.fieldName) ? field.fieldName : `No Field Name`}
+        tabName={`${index}`}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <VanitySetVerticalTabContainer>
+        {fields?.map((fieldData, index) => {
+          return getFieldTab(fieldData, index);
+        })}
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    if (currentFieldData) {
       return (
-        <div className="text-center">
-          <div className="text-muted my-3">There are no Response fields configured for this Endpoint. Please select another response evaluation option.</div>
-        </div>
+        <EndpointResponseRuleFieldInputRow
+          endpointBodyField={currentFieldData}
+          updateFieldFunction={(newField) => updateFieldFunction(parseInt(activeTab), newField)}
+          disabled={disabled}
+        />
+      );
+    }
+  };
+
+
+  const getBody = () => {
+    if (!Array.isArray(fields) || fields?.length === 0) {
+      return (
+        <CenteredContentWrapper>
+          <span>
+            There are no Response fields configured for this Endpoint.
+            Please update the response fields in the Endpoint or select another response evaluation option.
+          </span>
+        </CenteredContentWrapper>
       );
     }
 
     return (
-      <div>
-        {fields.map((fieldData, index) => {
-          return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              <EndpointResponseRuleFieldInputRow
-                endpointBodyField={fieldData}
-                updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
-                disabled={disabled}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <VanitySetTabAndViewContainer
+        title={field?.label}
+        icon={faBracketsCurly}
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getCurrentView()}
+        minimumHeight={"calc(100vh - 555px)"}
+        maximumHeight={"calc(100vh - 555px)"}
+        tabColumnSize={3}
+      />
     );
-  };
-
-  const getHeaderBar = () => {
-    return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={5} className={"my-auto"}>
-          <span className={'ml-3'}>Field Name</span>
-        </Col>
-        <Col xs={5} className={"my-auto"}>
-          <span>Value</span>
-        </Col>
-        <Col xs={2}/>
-      </Row>
-    );
-  };
-
-  const getBody = () => {
-    return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
-      </div>
-    );
-  };
-
-  const isFieldComplete = (field) => {
-    return (
-      hasStringValue(field?.fieldName) === true
-      && hasStringValue(field?.type) === true
-    );
-  };
-
-  const lastFieldComplete = () => {
-    if (fields.length === 0) {
-      return true;
-    }
-
-    return isFieldComplete(fields.lastItem);
   };
 
   if (field == null) {
@@ -136,14 +152,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
   }
 
   return (
-    <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faBracketsCurly}
-        titleText={field?.label}
-        addAllowed={lastFieldComplete() === true}
-      >
-        {getBody()}
-      </PropertyInputContainer>
+    <div className={"mt-2"}>
+      {getBody()}
     </div>
   );
 }
@@ -151,8 +161,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
 EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
-  responseFields: PropTypes.array,
-  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  responseBodyFields: PropTypes.array,
   disabled: PropTypes.bool,
 };
 

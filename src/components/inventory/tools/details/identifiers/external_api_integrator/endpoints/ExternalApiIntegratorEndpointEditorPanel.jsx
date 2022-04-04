@@ -13,12 +13,6 @@ import StandaloneDeleteButtonWithConfirmationModal
   from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EndpointRequestTypeSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
-import EndpointRequestBodyInputBase from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputBase";
-import EndpointResponseBodyInputBase
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
-import {
-  ENDPOINT_REQUEST_TYPES
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import ExternalApiIntegratorEndpointParametersVerticalTabContainer
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointParametersVerticalTabContainer";
 
@@ -113,7 +107,7 @@ function ExternalApiIntegratorEndpointEditorPanel(
       updateRecord={updateEndpoint}
       handleClose={closePanelFunction}
       extraButtons={getDeleteButton()}
-      className={"mx-0"}
+      className={"mx-2 mt-2"}
     >
       <Row>
         <Col lg={12}>

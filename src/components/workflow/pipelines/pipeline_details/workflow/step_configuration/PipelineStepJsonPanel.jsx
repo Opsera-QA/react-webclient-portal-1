@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ReactJson from "react-json-view";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 function PipelineStepJsonPanel({ pipelineStepData }) {
   return (
-    <SummaryPanelContainer>
-      <Row>
-        <Col md={12}>
-          <ReactJson src={pipelineStepData} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
-        </Col>
-      </Row>
-    </SummaryPanelContainer>
+    <div className={"mt-1"}>
+      <StandaloneJsonField
+        titleText={"Pipeline Step JSON"}
+        json={pipelineStepData}
+        enableClipboard={false}
+        displayDataTypes={false}
+        collapsed={false}
+        minimumHeight={"calc(100vh - 418px)"}
+        maximumHeight={"calc(100vh - 418px)"}
+      />
+    </div>
   );
 }
 

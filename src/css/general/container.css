@@ -56,17 +56,13 @@
 }
 
 .makeup-tree-container-body {
-    /*TODO: Leaving these here temporarily, They're for taking up the entire space. If left unused, remove.*/
-    /*min-height: calc(100vh - 264px);*/
-    /*height: calc(100vh - 264px);*/
-    /*max-height: calc(100vh - 264px);*/
     min-height: 100%;
     height: 100%;
     max-height: 100%;
     overflow-y: auto;
 }
 
-.makeup-tree-title {
+.makeup-tree-title, .makeup-tab-content-title {
     min-height: 49px;
     font-weight: 500;
     line-height: 1.4;
@@ -78,18 +74,7 @@
     border-right: none;
 }
 
-.makeup-tab-content-title {
-    min-height: 49px;
-    font-weight: 500;
-    line-height: 1.4;
-    font-size: 1.2rem;
-    background-color: #F3F3F1;
-    color: #3D3B36;
-    border: 1px solid #e4e4e4;
-    border-left: none;
-    border-right: none;
-}
-
+/*TODO: Remove*/
 .makeup-container-body {
     min-height: calc(100vh - 264px);
     height: calc(100vh - 264px);
@@ -101,17 +86,6 @@
     min-height: calc(70vh - 82px - .5rem);
 }
 
-.makeup-container-tab-container {
-    max-height: 100%;
-    overflow-y: hidden;
-}
-
-.makeup-container-content-body {
-    min-height: calc(100vh - 264px);
-    height: calc(100vh - 264px);
-    max-height: calc(100vh - 264px);
-    overflow-y: auto;
-}
 /* End Makeup Container Styling */
 
 /* Full Height Container Styling with Title and Description */
@@ -230,6 +204,12 @@
     font-size: 1.1rem;
 }
 
+.sub-input-title-bar {
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    font-size: 1rem;
+}
+
 .object-properties-input .delete-button {
     margin-left: 2px;
 }
@@ -240,7 +220,7 @@
     overflow-x: hidden
 }
 
-.object-properties-input .properties-body-alt {
+.object-properties-input .properties-body-alt, .input-panel-body {
     min-height: 195px;
 }
 

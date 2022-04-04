@@ -1,7 +1,7 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import GithubCommitsActionableMetadata from "./github-commits-actionable-insight-metadata";
+import GithubCommitsActionableMetadata from "../github-commits-actionable-insight-metadata";
 import {
   getChartTrendStatusColumn, getTableDateTimeColumn,
   getTableTextColumn,
@@ -9,7 +9,6 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
 
 function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title, type }) {
   const fields = GithubCommitsActionableMetadata.fields;

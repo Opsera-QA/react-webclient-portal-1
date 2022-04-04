@@ -3,12 +3,12 @@ import baseActions from "utils/actionsBase";
 const dashboardsActions = {};
 
 dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/analytics/dashboard/${id}`;
+  const apiUrl = `/analytics/dashboards/${id}`;
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, dashboardFilterDto) => {
-  const apiUrl = "/analytics/dashboard";
+  const apiUrl = "/analytics/dashboards";
   let sortOption = dashboardFilterDto.getData("sortOption");
 
   let urlParams = {
@@ -29,7 +29,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
 };
 
 dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSource) => {
-  const apiUrl = "/analytics/dashboard";
+  const apiUrl = "/analytics/dashboards";
 
   let urlParams = {
     params: {
@@ -46,7 +46,7 @@ dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSour
 
 
 dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSource) => {
-  const apiUrl = "/analytics/dashboard";
+  const apiUrl = "/analytics/dashboards";
 
   let urlParams = {
     params: {

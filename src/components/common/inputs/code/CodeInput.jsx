@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationTriangle, faFileCode, faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import FieldTitleBar from "components/common/fields/FieldTitleBar";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CodeInputBase from "components/common/inputs/code/CodeInputBase";
 import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
+import InfoContainer from "components/common/containers/InfoContainer";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const CODE_THEME_TYPES = {
@@ -15,7 +18,21 @@ export const CODE_THEME_TYPES = {
   DARK: "twilight"
 };
 
-function CodeInput({model, setModel, fieldName, mode, className, isLoading, disabled, titleBarActionButtons, isDataPulled, dataPullError}) {
+function CodeInput(
+  {
+    model,
+    setModel,
+    fieldName,
+    mode,
+    className,
+    isLoading,
+    disabled,
+    titleBarActionButtons,
+    isDataPulled,
+    dataPullError,
+    height,
+    customTitleText,
+  }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [theme, setTheme] = useState(CODE_THEME_TYPES.LIGHT);
@@ -55,32 +72,23 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
 
   const getBody = () => {
     if (isLoading === true) {
-      return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            <LoadingDialog size={"sm"} message={"Loading Data"} />
-          </div>
-        </div>
-      );
+      return (<CenterLoadingIndicator />);
     }
 
     if (dataPullError != null && dataPullError !== "") {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto"}>
+        <CenteredContentWrapper>
             <IconBase icon={faExclamationTriangle} className={"mr-2"} />{dataPullError}
-          </div>
-        </div>
+        </CenteredContentWrapper>
       );
     }
 
     if (isDataPulled === false) {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto"}>
-            <IconBase icon={faFileDownload} className={"mr-2"} />{model?.getLabel(fieldName)} must be pulled from the database before it can be seen
-          </div>
-        </div>
+        <CenteredContentWrapper>
+            <IconBase icon={faFileDownload} className={"mr-2"} />
+           <span>{model?.getLabel(fieldName)} must be pulled from the database before it can be seen</span>
+        </CenteredContentWrapper>
       );
     }
 
@@ -93,8 +101,17 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
         inputId={`${model?.getData("_id")}-${fieldName}`}
         value={model?.getData(fieldName)}
         disabled={isLoading || disabled}
+        height={height}
       />
     );
+  };
+
+  const getTitleText = () => {
+    if (hasStringValue(customTitleText) === true) {
+      return customTitleText;
+    }
+
+    return field?.label;
   };
 
   if (field == null) {
@@ -103,24 +120,22 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
 
   return (
     <InputContainer className={className}>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} actionButtons={getTitleBarActionButtons()} />
-          <div style={{height: "500px"}}>
-            {getBody()}
-          </div>
+      <InfoContainer
+      titleIcon={faFileCode}
+      titleText={getTitleText()}
+      titleRightSideButton={getTitleBarActionButtons()}
+      >
+        <div style={{height: height}}>
+          {getBody()}
         </div>
-      </div>
-      <div className={"object-properties-footer"}>
-        <div className={"px-2"}>
-          <InfoText
-            field={field}
-            errorMessage={errorMessage}
-            model={model}
-            fieldName={fieldName}
-          />
-        </div>
-      </div>
+        <div className={"object-properties-footer"}/>
+      </InfoContainer>
+      <InfoText
+        field={field}
+        errorMessage={errorMessage}
+        model={model}
+        fieldName={fieldName}
+      />
     </InputContainer>
   );
 }
@@ -135,7 +150,13 @@ CodeInput.propTypes = {
   disabled: PropTypes.bool,
   titleBarActionButtons: PropTypes.any,
   isDataPulled: PropTypes.bool,
-  dataPullError: PropTypes.string
+  dataPullError: PropTypes.string,
+  height: PropTypes.string,
+  customTitleText: PropTypes.string,
+};
+
+CodeInput.defaultProps = {
+  height: "500px",
 };
 
 export default CodeInput;

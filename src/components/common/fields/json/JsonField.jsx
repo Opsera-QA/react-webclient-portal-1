@@ -1,28 +1,26 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import ReactJson from "react-json-view";
-import FieldLabel from "components/common/fields/FieldLabel";
-import FieldContainer from "components/common/fields/FieldContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
-function JsonField({dataObject, fieldName, className}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+function JsonField(
+  {
+    dataObject,
+    fieldName,
+    className,
+  }) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
-  const getJsonBody = () => {
-    const json = dataObject.getData(fieldName);
-    if (json && typeof json === "object") {
-      return json;
-    }
-
-    return {};
-  };
+  if (field == null) {
+    return null;
+  }
 
   return (
-    <FieldContainer className={className}>
-      <div><FieldLabel field={field}/></div>
-      <div className="ml-3">
-        <ReactJson src={getJsonBody()} enableClipboard={false} displayDataTypes={false} collapsed={field.isCollapsed}/>
-      </div>
-    </FieldContainer>
+    <StandaloneJsonField
+      json={dataObject?.getData(fieldName)}
+      titleText={field?.label}
+      collapsed={field?.isCollapsed}
+      className={className}
+    />
   );
 }
 

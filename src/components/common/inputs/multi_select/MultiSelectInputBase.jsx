@@ -79,13 +79,8 @@ function MultiSelectInputBase(
 
     newDataObject.setData(fieldName, parsedValues);
     const errors = newDataObject.isFieldValid(field.id);
-
-    if (Array.isArray(errors) && errors.length > 0) {
-      setErrorMessage(errors[0]);
-    }
-    else {
-      setErrorMessage("");
-    }
+    const newErrorMessage = Array.isArray(errors) && errors.length > 0 ? errors[0] : "";
+    setErrorMessage(newErrorMessage);
 
     setDataObject({...newDataObject});
   };
@@ -101,8 +96,8 @@ function MultiSelectInputBase(
 
   const getClearDataFunction = () => {
     if (
-         dataObject.getData(field.id) !== ""
-      && !disabled
+         dataObject?.getArrayData(fieldName).length !== 0
+      && disabled !== true
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction))
     {

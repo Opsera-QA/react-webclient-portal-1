@@ -17,6 +17,7 @@ import Col from "react-bootstrap/Col";
 import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setPipelineFilterModel, loadData, saveCookies }) {
   const history = useHistory();
@@ -75,7 +76,7 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
 
     return (
       <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0"}>
+        <Col sm={2} className={"px-0 makeup-tree-container"}>
           <PipelineVerticalTabContainer
             pipelineFilterModel={pipelineFilterModel}
             isLoading={isLoading}

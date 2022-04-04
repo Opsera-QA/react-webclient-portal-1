@@ -1,5 +1,5 @@
-export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString) {
-  if (typeof string === "string" && string.length > 0) {
+export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString = "") {
+  if (hasStringValue(string) === true) {
     let capitalizedString = "";
     const words = string.split(wordDelimiter);
 
@@ -25,12 +25,34 @@ export function stringIncludesValue(string, searchTerm) {
   return hasStringValue(string) && hasStringValue(searchTerm) && string.toLowerCase().includes(searchTerm.toLowerCase());
 }
 
-export function truncateString(string, maxLength){
+export function truncateString(string, maxLength, addEllipsis = true){
   if (hasStringValue(string) !== true) {
     return "";
   }
 
-  return string.length <= maxLength ? string : string.slice(0, maxLength) + "...";
+  if (typeof maxLength !== "number" || maxLength < 1) {
+    return string;
+  }
+
+  if (string.length <= maxLength) {
+    return string;
+  }
+
+  const truncatedString = string.slice(0, maxLength);
+
+  if (addEllipsis !== false) {
+    return (`${truncatedString}...`);
+  }
+
+  return truncatedString;
+}
+
+export function removeSpacesFromString(string){
+  if (hasStringValue(string) !== true) {
+    return "";
+  }
+
+  return string.replace(/\s/g, '');
 }
 
 export function generateUUID() {

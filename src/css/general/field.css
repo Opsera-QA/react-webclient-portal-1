@@ -81,6 +81,12 @@
     border-bottom: 1px solid #E6E5E3;
 }
 
+.text-input-list {
+    border-radius: 0 !important;
+    list-style-type: none;
+    overflow-y: auto;
+}
+
 .membership-search {
     width: 300px;
 }

@@ -8,6 +8,16 @@ function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const getPullScriptIcon = () => {
+    return (
+      <PullScriptValueIcon
+        setIsLoading={setIsLoading}
+        loadScriptFunction={model?.pullScriptFromDb}
+        setErrorMessage={setErrorMessage}
+      />
+    );
+  };
+
   return (
     <CodeInput
       disabled={model?.canUpdate() !== true || disabled}
@@ -19,7 +29,7 @@ function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
       setModel={setModel}
       fieldName={fieldName}
       isDataPulled={model?.isNew() || model?.hasScriptBeenPulled()}
-      titleBarActionButtons={<PullScriptValueIcon setIsLoading={setIsLoading} scriptModel={model} setErrorMessage={setErrorMessage} />}
+      titleBarActionButtons={getPullScriptIcon()}
     />
   );
 }

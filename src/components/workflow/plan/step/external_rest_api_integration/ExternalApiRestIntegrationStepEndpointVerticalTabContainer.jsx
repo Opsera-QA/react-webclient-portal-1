@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import ExternalApiIntegrationStepRunEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
 import ExternalApiIntegrationStepRunEndpointRequestInputBase
@@ -12,14 +10,15 @@ import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import ExternalApiIntegrationStepStatusEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
-import InfoContainer from "components/common/containers/InfoContainer";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   {
     externalRestApiIntegrationModel,
     setExternalRestApiIntegrationModel,
+    disabled,
   }) {
-  const [activeTab, setActiveTab] = useState("run");
+  const [activeTab, setActiveTab] = useState("run-endpoint-configuration");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -29,77 +28,138 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
-        <div className={"tab-tree"}>
+      <VanitySetVerticalTabContainer>
+        <div className={"tab-tree scroll-y"}>
           <VanitySetVerticalTab
-            tabText={"Run"}
-            tabName={"run"}
+            tabText={"Run Endpoint Configuration"}
+            tabName={"run-endpoint-configuration"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
           <VanitySetVerticalTab
-            tabText={"Status"}
-            tabName={"status"}
+            tabText={"Run Response Success Evaluation"}
+            tabName={"run-success-rule"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
+          <VanitySetVerticalTab
+            tabText={"Run Response Running Evaluation"}
+            tabName={"run-running-rule"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
+          <VanitySetVerticalTab
+            tabText={"Status Endpoint Configuration"}
+            tabName={"status-endpoint-configuration"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
         </div>
+        <VanitySetVerticalTab
+          tabText={"Status Response Success Evaluation"}
+          tabName={"status-success-rule"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
+        <VanitySetVerticalTab
+          tabText={"Status Response Running Evaluation"}
+          tabName={"status-running-rule"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
       </VanitySetVerticalTabContainer>
     );
   };
 
   const getCurrentView = () => {
-    if (activeTab === "run") {
-      return (
-        <>
-          <ExternalApiIntegrationStepRunEndpointSelectInput
-            fieldName={"runEndpointId"}
-            model={externalRestApiIntegrationModel}
-            setModel={setExternalRestApiIntegrationModel}
-          />
-          <ExternalApiIntegrationStepRunEndpointRequestInputBase
-            fieldName={"runEndpointRequestParameters"}
-            model={externalRestApiIntegrationModel}
-            setModel={setExternalRestApiIntegrationModel}
-            toolId={externalRestApiIntegrationModel?.getData("toolId")}
-            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-          />
+    switch (activeTab) {
+      case "run-endpoint-configuration":
+        return (
+          <div className={"mx-2"}>
+            <ExternalApiIntegrationStepRunEndpointSelectInput
+              fieldName={"runEndpointId"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              disabled={disabled}
+            />
+            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+              fieldName={"runEndpointRequestParameters"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              toolId={externalRestApiIntegrationModel?.getData("toolId")}
+              endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "run-success-rule":
+        return (
           <EndpointResponseEvaluationRulesInputBase
             fieldName={"runEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
           />
-        </>
-      );
+        );
+      case "run-running-rule":
+        return (
+          <EndpointResponseEvaluationRulesInputBase
+            fieldName={"runEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"running_rule"}
+            model={externalRestApiIntegrationModel}
+            setModel={setExternalRestApiIntegrationModel}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
+          />
+        );
+      case "status-endpoint-configuration":
+        return (
+          <>
+            <ExternalApiIntegrationStepStatusEndpointSelectInput
+              fieldName={"statusEndpointId"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              disabled={disabled}
+            />
+            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+              fieldName={"statusEndpointRequestParameters"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              toolId={externalRestApiIntegrationModel?.getData("toolId")}
+              endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+              disabled={disabled}
+            />
+          </>
+        );
+      case "status-success-rule":
+        return (
+          <EndpointResponseEvaluationRulesInputBase
+            fieldName={"statusEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"success_rule"}
+            model={externalRestApiIntegrationModel}
+            setModel={setExternalRestApiIntegrationModel}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
+          />
+        );
+      case "status-running-rule":
+        return (
+          <EndpointResponseEvaluationRulesInputBase
+            fieldName={"statusEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"running_rule"}
+            model={externalRestApiIntegrationModel}
+            setModel={setExternalRestApiIntegrationModel}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+            disabled={disabled}
+          />
+        );
     }
-
-    return (
-      <>
-        <ExternalApiIntegrationStepStatusEndpointSelectInput
-          fieldName={"statusEndpointId"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-        />
-        <ExternalApiIntegrationStepRunEndpointRequestInputBase
-          fieldName={"statusEndpointRequestParameters"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-        />
-        <EndpointResponseEvaluationRulesInputBase
-          fieldName={"statusEndpointResponseEvaluationRules"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-        />
-      </>
-    );
   };
 
   if (externalRestApiIntegrationModel == null) {
@@ -107,26 +167,25 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   }
 
   return (
-    <InfoContainer
-      titleText={`Endpoint Configuration`}
-    >
-      <Row className={"mx-0"}>
-        <Col sm={1} className={"px-0"}>
-          {getVerticalTabContainer()}
-        </Col>
-        <Col sm={11} className={"px-0"}>
-          <div className={"m-3"}>
-            {getCurrentView()}
-          </div>
-        </Col>
-      </Row>
-    </InfoContainer>
+    <VanitySetTabAndViewContainer
+      title={`Endpoint Configuration`}
+      verticalTabContainer={getVerticalTabContainer()}
+      currentView={
+        <div style={{overflowX: "hidden"}}>
+          {getCurrentView()}
+        </div>
+      }
+      minimumHeight={"calc(100vh - 395px)"}
+      maximumHeight={"calc(100vh - 395px)"}
+      defaultActiveKey={activeTab}
+    />
   );
 }
 
 ExternalApiRestIntegrationStepEndpointVerticalTabContainer.propTypes = {
   externalRestApiIntegrationModel: PropTypes.object,
   setExternalRestApiIntegrationModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ExternalApiRestIntegrationStepEndpointVerticalTabContainer;
