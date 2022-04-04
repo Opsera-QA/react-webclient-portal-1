@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function ButtonBase(
   {
@@ -30,7 +31,14 @@ function ButtonBase(
             disabled={isLoading || disabled}
             onClick={onClickFunction}
           >
-            <span><IconBase isLoading={isLoading} icon={icon} className={"mr-2"}/>{buttonText}</span>
+            <span>
+              <IconBase
+                isLoading={isLoading}
+                icon={icon}
+                className={hasStringValue(buttonText) === true ? "mr-2" : ""}
+              />
+              {buttonText}
+            </span>
           </Button>
         </div>
       </TooltipWrapper>

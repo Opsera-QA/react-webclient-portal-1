@@ -24,6 +24,8 @@ function FilterContainer(
     exportButton,
     supportClientSideSearching,
     bodyClassName,
+    handleExportFunction,
+    handleImportFunction,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -45,6 +47,8 @@ function FilterContainer(
         inlineFilters={inlineFilters}
         exportButton={exportButton}
         supportClientSideSearching={supportClientSideSearching}
+        handleExportFunction={handleExportFunction}
+        handleImportFunction={handleImportFunction}
       />
     );
   };
@@ -94,6 +98,8 @@ FilterContainer.propTypes = {
   exportButton: PropTypes.object,
   supportClientSideSearching: PropTypes.bool,
   bodyClassName: PropTypes.bool,
+  handleExportFunction: PropTypes.func,
+  handleImportFunction: PropTypes.func,
 };
 
 export default FilterContainer;
