@@ -10,10 +10,10 @@ import EndpointRequestFieldIsRequiredToggleInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
 import EndpointRequestFieldIsSensitiveDataToggleInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import {removeSpacesFromString} from "components/common/helpers/string-helpers";
+import EndpointRequestFieldNameTextInput
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -32,8 +32,9 @@ function EndpointRequestBodyFieldInputRow(
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
     updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    return endpointFieldModel;
   };
-  
+
   if (endpointFieldModel == null) {
     return null;
   }
@@ -42,12 +43,11 @@ function EndpointRequestBodyFieldInputRow(
     <div className={"mx-3 mb-3 mt-1 h-100"}>
       <Row>
         <Col xs={12}>
-          <TextInputBase
-            dataObject={endpointFieldModel}
-            setDataObject={setEndpointFieldModel}
-            fieldName={"fieldName"}
-            setDataFunction={(fieldName, value) => updateMainModelFunction(fieldName, removeSpacesFromString(value))}
+          <EndpointRequestFieldNameTextInput
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
             disabled={disabled}
+            updateMainModelFunction={updateMainModelFunction}
           />
         </Col>
         <Col xs={12}>
