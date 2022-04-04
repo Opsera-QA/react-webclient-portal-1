@@ -26,6 +26,8 @@ function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}
     newModel.setData("gitBranch", "");
     newModel.setData("gitFilePath", "");
     newModel.setData("workspace", "");
+    newModel.setData("projectId", "");
+    newModel.setData("repoId", "");
     newModel.setData("bitbucketWorkspaceName", "");
     setModel({...newModel});
   };

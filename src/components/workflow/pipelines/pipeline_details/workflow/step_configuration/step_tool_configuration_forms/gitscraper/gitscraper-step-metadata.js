@@ -35,6 +35,10 @@ const GitScraperStepFormMetadata = {
       id: "repoId",
     },
     {
+      label: "Git Project ID",
+      id: "projectId",
+    },
+    {
       label: "BitBucket Workspace",
       id: "workspace",
     },

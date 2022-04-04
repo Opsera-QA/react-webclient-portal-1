@@ -100,21 +100,21 @@ function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       {/*  dataObject={gitscraperStepConfigurationModel}*/}
       {/*  setDataObject={setGitscraperStepConfigurationModel}*/}
       {/*/>*/}
-      {/*<NumberPickerInputBase*/}
-      {/*  fieldName={"threshold"}*/}
-      {/*  dataObject={gitscraperStepConfigurationModel}*/}
-      {/*  setDataObject={setGitscraperStepConfigurationModel}*/}
-      {/*/>*/}
-      {/*<GitIgnoreToggleInput*/}
-      {/*  model={gitscraperStepConfigurationModel}*/}
-      {/*  setModel={setGitscraperStepConfigurationModel}*/}
-      {/*  fieldName={"secretsException"}*/}
-      {/*  />*/}
-      {/*<GitIgnoreToggleInput*/}
-      {/*  model={gitscraperStepConfigurationModel}*/}
-      {/*  setModel={setGitscraperStepConfigurationModel}*/}
-      {/*  fieldName={"filesException"}*/}
-      {/*  />*/}
+      <NumberPickerInputBase
+        fieldName={"threshold"}
+        dataObject={gitscraperStepConfigurationModel}
+        setDataObject={setGitscraperStepConfigurationModel}
+      />
+      <GitIgnoreToggleInput
+        model={gitscraperStepConfigurationModel}
+        setModel={setGitscraperStepConfigurationModel}
+        fieldName={"secretsException"}
+        />
+      <GitIgnoreToggleInput
+        model={gitscraperStepConfigurationModel}
+        setModel={setGitscraperStepConfigurationModel}
+        fieldName={"filesException"}
+        />
     </PipelineStepEditorPanelContainer>
   );
 }

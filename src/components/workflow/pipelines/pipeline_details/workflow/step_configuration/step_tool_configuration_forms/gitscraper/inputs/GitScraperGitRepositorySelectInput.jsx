@@ -9,6 +9,7 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption?.name);
     newModel.setData("repoId", repoId);
+    newModel.setData("projectId", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
     setModel({...newModel});
