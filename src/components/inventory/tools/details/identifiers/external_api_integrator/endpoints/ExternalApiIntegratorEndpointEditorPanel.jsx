@@ -115,7 +115,6 @@ function ExternalApiIntegratorEndpointEditorPanel(
             fieldName={"name"}
             dataObject={externalApiIntegratorModel}
             setDataObject={setExternalApiIntegratorModel}
-            disabled={externalApiIntegratorModel?.isNew() !== true}
           />
         </Col>
         <Col xs={12} sm={2}>
