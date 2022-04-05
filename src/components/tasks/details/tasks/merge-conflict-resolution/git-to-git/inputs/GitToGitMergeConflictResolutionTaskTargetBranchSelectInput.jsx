@@ -27,11 +27,11 @@ function GitToGitMergeConflictResolutionTaskTargetBranchSelectInput({
 
   return (
     <GitBranchInput
-      fieldName={"gitBranch"}
-      service={model.getData("service")}
-      gitToolId={model.getData("gitToolId")}
-      workspace={model.getData("workspace")}
-      repoId={model.getData("projectId")}
+      fieldName={"targetBranch"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("workspace")}
+      repoId={model?.getData("projectId")}
       dataObject={model}
       setDataFunction={setDataFunction}
       setDataObject={setModel}
