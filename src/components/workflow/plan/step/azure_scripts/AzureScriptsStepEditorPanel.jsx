@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import AzureScriptsStepAzureApplicationCredentialSelectInput from "components/workflow/plan/step/azure_scripts/inputs/AzureScriptsStepAzureApplicationCredentialSelectInput";
@@ -20,6 +19,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CodeInput from "components/common/inputs/code/CodeInput";
 import ScriptViewerField from "components/common/fields/inventory/scripts/ScriptViewerField";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 
 function AzureScriptsStepEditorPanel(
   {
@@ -157,11 +157,14 @@ function AzureScriptsStepEditorPanel(
   }
 
   return (
-    <PipelineStepEditorPanelContainer
+    <EditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={azureScriptsStepModel}
-      persistRecord={saveAzureCliCommandStepConfiguration}
+      createRecord={saveAzureCliCommandStepConfiguration}
+      updateRecord={saveAzureCliCommandStepConfiguration}
+      lenient={true}
       isLoading={isLoading}
+      className={"m-0"}
     >
       <Row>
         <Col xs={12} md={6}>
@@ -195,7 +198,7 @@ function AzureScriptsStepEditorPanel(
           />
         </Col>
       </Row>
-    </PipelineStepEditorPanelContainer>
+    </EditorPanelContainer>
   );
 }
 

@@ -32,6 +32,7 @@ export const nonProductionTaskTypes = [
 
   // Git
   {text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git"},
+  {text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION, value: TASK_TYPES.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION, category: "Git"},
 
   // Salesforce
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},

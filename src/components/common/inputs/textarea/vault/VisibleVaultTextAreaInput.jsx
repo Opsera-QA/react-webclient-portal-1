@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import {parseError} from "components/common/helpers/error-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function VisibleVaultTextAreaInput(
   {
@@ -18,8 +19,9 @@ function VisibleVaultTextAreaInput(
     setDataFunction,
     error,
     customMessage,
+    parameterId,
   }) {
-  const [field, setField] = useState(model?.getFieldById(fieldName));
+  const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [pullingValueFromVault, setPullingValueFromVault] = useState(false);
   const [valueShown, setValueShown] = useState(false);
@@ -28,10 +30,14 @@ function VisibleVaultTextAreaInput(
   useEffect(() => {
     isMounted.current = true;
 
+    if (hasStringValue(model?.getData(fieldName)) !== true) {
+      setValueShown(false);
+    }
+
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [parameterId]);
 
   useEffect(() => {
     setErrorMessage(error ? parseError(error) : "");
@@ -110,10 +116,29 @@ function VisibleVaultTextAreaInput(
     }
   };
 
+  const getPlaceholderText = () => {
+    if (valueShown === false) {
+      return ("Value must be pulled from the Vault to be visible.");
+    }
+
+    return ("No value saved in the Vault.");
+  };
+
+  const getCurrentValue = () => {
+    if (pullingValueFromVault || isLoading) {
+      return ("Loading Value From Vault");
+    }
+
+    if (valueShown === true) {
+      return model?.getData(fieldName);
+    }
+
+    return "";
+  };
+
   if (field == null) {
     return null;
   }
-
 
   return (
     <InputContainer>
@@ -125,9 +150,10 @@ function VisibleVaultTextAreaInput(
         <textarea
           style={valueShown === false && !pullingValueFromVault ? {WebkitTextSecurity: 'disc'} : undefined}
           disabled={disabled || pullingValueFromVault}
-          value={pullingValueFromVault || isLoading ? "Loading Value From Vault" : model?.getData(fieldName)}
+          value={getCurrentValue()}
           onChange={(event) => updateValue(event.target.value)}
           className={"form-control"}
+          placeholder={getPlaceholderText()}
           rows={5}
         />
         <div className={"ml-2"}>
@@ -155,6 +181,7 @@ VisibleVaultTextAreaInput.propTypes = {
   setDataFunction: PropTypes.func,
   error: PropTypes.any,
   customMessage: PropTypes.string,
+  parameterId: PropTypes.string,
 };
 
 export default VisibleVaultTextAreaInput;

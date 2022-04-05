@@ -125,10 +125,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       // call to trigger merge request
       try{
         setIsLoading(true);
-        let postBody = {
-          "taskId":gitTasksData.getData("_id")
-        };
-        let result = await taskActions.createECSCluster(postBody, getAccessToken);
+        await taskActions.createEcsClusterWithTaskIdV2(getAccessToken, cancelTokenSource, gitTasksData?.getMongoDbId());
         toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);
