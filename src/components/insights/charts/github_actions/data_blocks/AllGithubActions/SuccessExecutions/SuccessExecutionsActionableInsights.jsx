@@ -1,26 +1,24 @@
-import React, {useEffect, useState, useRef, useContext} from "react";
+import React, {useEffect, useState, useRef, useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import { defaultConfig } from "../../../../charts-views";
-import chartConfig from "./SuccessExecutionsActionableInsightsChartConfig";
-import {
-  METRIC_CHART_STANDARD_HEIGHT,
-  METRIC_THEME_CHART_PALETTE_COLORS
-} from "../../../../../../common/helpers/metrics/metricTheme.helpers";
-import {ResponsivePie} from "@nivo/pie";
 import SuccessExecutionsActionableInsightsMetaData from "./SuccessExecutionsActionableInsightsMetaData";
-import InsightsCardContainerBase from "../../../../../../common/card_containers/InsightsCardContainerBase";
-import MetricBadgeBase from "../../../../../../common/badges/metric/MetricBadgeBase";
 import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
-import AddNewCirclesGroup from "../../../../../../common/icons/create/AddNewCirclesGroup";
 import chartsActions from "../../../../charts-actions";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import Model from "../../../../../../../core/data_model/model";
-import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
 import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
+import {getTableTextColumn} from "../../../../../../common/table/table-column-helpers";
+import {getField} from "../../../../../../common/metadata/metadata-helpers";
+import VanitySetTabAndViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
+import VanitySetVerticalTabContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";
+import CustomTable from "../../../../../../common/table/CustomTable";
+import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import DataBlockBoxContainer from "../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
 function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -28,10 +26,10 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const [topSuccessfulActions, setTopSuccessfulActions] = useState([]);
-  const [topSuccessfulApplications, setTopSuccessfulApplications] = useState([]);
-  const [topSuccessfulJobs, setTopSuccessfulJobs] = useState([]);
+  const [responseData, setResponseData] = useState(undefined);
   const [actionInsightsTraceabilityTable, setActionInsightsTraceabilityTable] = useState([]);
+  const [tableFilterDto, setTableFilterDto] = useState([new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false)]);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -53,7 +51,26 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const noDataMessage = "Success Executions report is currently unavailable at this time";
+
+  const fields = SuccessExecutionsActionableInsightsMetaData.fields;
+
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "repositoryName")),
+      getTableTextColumn(getField(fields, "actionName")),
+      getTableTextColumn(getField(fields, "applicationDirector")),
+      getTableTextColumn(getField(fields, "applicationSVP")),
+      getTableTextColumn(getField(fields, "applicationVP1")),
+      getTableTextColumn(getField(fields, "applicationVP2")),
+      getTableTextColumn(getField(fields, "actionRunNumber")),
+      getTableTextColumn(getField(fields, "jobName")),
+      getTableTextColumn(getField(fields, "date")),
+    ],
+    []
+  );
+
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardOrgs =
@@ -64,30 +81,24 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "releaseTraceabilitySuccess",
+        "successRunsActionableInsights",
         kpiConfiguration,
         dashboardTags,
-        null,
+        filterDto[0],
         null,
         dashboardOrgs
       );
-      const topActions = response?.data?.data[0]?.topSuccessfulActions;
-      const topApplications = response?.data?.data[0]?.topSuccessfulApplications;
-      const topJobs = response?.data?.data[0]?.topSuccessfulJobs;
-      const actionableInsightsTableData = response?.data?.data[0]?.actionInsightsTraceabilityTable;
-      //To remove following for loops once api is chnaged to send value param as expected.
-      for(let i =0; i<=topActions.length - 1; i++){
-        topActions[i].value = topActions[i].success_percentage;
+      const data = response?.data?.data[0];
+      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport;
+      let newFilterDto = Object.assign([], tableFilterDto);
+      for(let i = 0; i <= actionableInsightsTableData.length - 1; i++) {
+        if(!newFilterDto[i]) {
+          newFilterDto.push(new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false));
+        }
+        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.docs.length : 0;
       }
-      for(let j =0; j<=topApplications.length - 1; j++){
-        topApplications[j].value = topApplications[j].success_percentage;
-      }
-      for(let k =0; k<=topJobs.length - 1; k++){
-        topJobs[k].value = topJobs[k].success_percentage;
-      }
-      setTopSuccessfulActions(topActions);
-      setTopSuccessfulApplications(topApplications);
-      setTopSuccessfulJobs(topJobs);
+      setTableFilterDto(newFilterDto);
+      setResponseData(data);
       setActionInsightsTraceabilityTable(actionableInsightsTableData);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -105,11 +116,20 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
     }
+    if(!responseData) {
+      return null;
+    }
     return (
       <>
         {getDateRange()}
-        {getSuccessExecutionsSummaryCharts()}
-        {getSuccessExecutionsInsightTable()}
+        {getSuccessSummaryBlocks()}
+        <VanitySetTabAndViewContainer
+          className={"mb-3"}
+          title={`Success Executions`}
+          defaultActiveKey={actionInsightsTraceabilityTable?.[0]?.applicationName}
+          verticalTabContainer={getVerticalTabContainer()}
+          currentView={getTable()}
+        />
       </>
     );
   };
@@ -119,198 +139,137 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
     return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
   };
 
-  const getSuccessExecutionsSummaryCharts = () => {
+  const getVerticalTabContainer = () => {
+    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
+      return null;
+    }
+    const tabs = [];
+    for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
+      tabs.push(
+        <VanitySetVerticalTab
+          tabText={actionInsightsTraceabilityTable[i]?.applicationName}
+          tabName={actionInsightsTraceabilityTable[i]?.applicationName}
+        />
+      );
+    }
     return (
-      <Row className="pb-3 px-2 my-5">
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulApplicationsPieChart()}
+      <div className={"h-100"}>
+        <div style={{backgroundColor:"#F3F3F1",border:"1px solid #e4e4e4"}} className={"py-2 w-100 px-2"}>
+          <div>Application Name</div>
+        </div>
+        <VanitySetVerticalTabContainer className={"h-100"}>
+          {tabs}
+        </VanitySetVerticalTabContainer>
+      </div>
+    );
+  };
+
+  const getTable = () => {
+    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
+      return null;
+    }
+    const projectData = [];
+    for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
+      projectData.push(
+        <VanitySetTabView tabKey={actionInsightsTraceabilityTable[i]?.applicationName}>
+          <CustomTable
+            columns={columns}
+            data={actionInsightsTraceabilityTable[i]?.docs}
+            noDataMessage={noDataMessage}
+            paginationDto={tableFilterDto[i]}
+            setPaginationDto={setTableFilterDto}
+            loadData={loadData}
+          />
+        </VanitySetTabView>
+      );
+    }
+    return (
+      <VanitySetTabViewContainer className={"p-2"}>
+        {projectData}
+      </VanitySetTabViewContainer>
+    );
+  };
+
+  const getSuccessSummaryBlocks = () => {
+    return (
+      <Row className="pb-3 px-2">
+        <Col lg={6} md={6} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalRepositoryCounts?.[0].successCount}
+              subtitle={'Total Repositories'}
+            />
+          </DataBlockBoxContainer>
         </Col>
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulActionsPieChart()}
+        <Col lg={6} md={6} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalWorkflowsCounts?.[0].successCount}
+              subtitle={'Total Workflows'}
+            />
+          </DataBlockBoxContainer>
         </Col>
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulJobsPieChart()}
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalSuccessfulBuilds}
+              subtitle={'Total Builds'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-3"
+              score={responseData?.totalSecurity}
+              subtitle={'Total Security'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalQuality}
+              subtitle={'Total Quality'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalE1SuccessfulDeploy?.[0]?.successCount}
+              subtitle={'Total E1 Deployments'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalE2SuccessfulDeploy?.[0]?.successCount}
+              subtitle={'Total E2 Deployments'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={4} md={4} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.totalE3SuccessfulDeploy?.[0]?.successCount}
+              subtitle={'Total E3 Deployments'}
+            />
+          </DataBlockBoxContainer>
         </Col>
       </Row>
     );
   };
 
-  const getTopSuccessfulApplicationsPieChart = () => {
-    if(!topSuccessfulApplications || topSuccessfulApplications.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulApplications.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful applications found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulApplications}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Applications
-        </div>
-      </div>
-    );
-  };
-
-  const getTopSuccessfulActionsPieChart = () => {
-    if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulActions.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful actions found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulActions}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Actions
-        </div>
-      </div>
-    );
-  };
-
-  const getTopSuccessfulJobsPieChart = () => {
-    if(!topSuccessfulJobs || topSuccessfulJobs.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulJobs.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful jobs found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulJobs}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Jobs
-        </div>
-      </div>
-    );
-  };
-
-  const getSuccessExecutionsInsightTable = () => {
-    if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
-      return null;
-    }
-    const actionableInsightsTable = [];
-    for (var i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      const actionInsightsData = actionInsightsTraceabilityTable[i];
-      const actionDurationInMins = actionInsightsData.actionDurationInMins;
-      actionInsightsData.actionDurationInMins = actionDurationInMins + ' Mins';
-      const successPercentage = actionInsightsData.successPercentage;
-      actionInsightsData.successPercentage = successPercentage + '%';
-      const actionInsightsTraceabilityTableDto = new Model({...actionInsightsData}, SuccessExecutionsActionableInsightsMetaData, false);
-      const runTrendData = actionInsightsTraceabilityTable[i]?.runTrend;
-      const trendData = [];
-      for(let i = 0;i<=runTrendData.length - 1; i++) {
-        if(runTrendData[i] === "success") {
-          trendData.push({color: 'green'});
-        } else if(runTrendData[i] === "failure") {
-          trendData.push({color: 'red'});
-        }
-      }
-      actionableInsightsTable.push(
-        <InsightsCardContainerBase titleBar={getTitleBar(i)}>
-          <div className="m-2">
-            <div className={"d-flex"}>
-              <MetricBadgeBase
-                className={"mr-3"}
-                badgeText={`Application Name: ${actionInsightsTraceabilityTable?.[i]?.applicationName}`}
-              />
-              <MetricBadgeBase
-                className={"mr-3"}
-                badgeText={`Repository Name: ${actionInsightsTraceabilityTable?.[i]?.repositoryName}`}
-              />
-            </div>
-            <Row className="d-flex align-items-center">
-              <Col lg={12} className={"px-0"}>
-                <Row className={'d-flex align-items-center'}>
-                  <Col sm={12} md={5} lg={3}>
-                    <TwoLineScoreDataBlock
-                      className="p-3"
-                      score={actionInsightsTraceabilityTable?.[i]?.numberOfCommits}
-                      subtitle={"Total Commits"}
-                    />
-                  </Col>
-                  <Col sm={12} md={7} lg={9}>
-                    <Row>
-                      <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionDurationInMins"} className="insight-detail-label my-2" />
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <div className={"my-2"}>
-                          <label className="mb-0 mr-2 text-muted">
-                            <span>
-                              Trend: <AddNewCirclesGroup data={trendData}/>
-                            </span>
-                          </label>
-                        </div>
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"actionRunNumber"} className="insight-detail-label my-2" />
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={actionInsightsTraceabilityTableDto} fieldName={"successPercentage"} className="insight-detail-label my-2" />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </div>
-        </InsightsCardContainerBase>
-      );
-    }
-    return (
-      <div>
-        {actionableInsightsTable}
-      </div>
-    );
-  };
-
-  const getTitleBar = (currentElementIndex) => {
-    return (
-      <div className="d-flex justify-content-between w-100">
-        <div>{actionInsightsTraceabilityTable?.[currentElementIndex]?.actionName}</div>
-      </div>
-    );
-  };
-
-  return <>{getBody()}</>;
+  return <div className={"p-3"}>{getBody()}</div>;
 }
 
 SuccessExecutionsActionableInsights.propTypes = {

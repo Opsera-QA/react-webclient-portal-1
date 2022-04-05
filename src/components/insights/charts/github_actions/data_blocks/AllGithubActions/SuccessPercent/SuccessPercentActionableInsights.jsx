@@ -4,25 +4,11 @@ import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import {adjustBarWidth, defaultConfig} from "../../../../charts-views";
-import barConfig from "./SuccessPercentActionableInsightsBarConfig";
-import chartConfig from "./SuccessPercentActionableInsightsChartConfig";
-import {
-  METRIC_CHART_STANDARD_HEIGHT,
-  METRIC_THEME_CHART_PALETTE_COLORS
-} from "../../../../../../common/helpers/metrics/metricTheme.helpers";
-import {ResponsivePie} from "@nivo/pie";
 import DataBlockBoxContainer from "../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import MetricContentDataBlockBase from "../../../../../../common/metrics/data_blocks/MetricContentDataBlockBase";
-import {ResponsiveBar} from "@nivo/bar";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import chartsActions from "../../../../charts-actions";
 import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
-import MetricBadgeBase from "../../../../../../common/badges/metric/MetricBadgeBase";
 import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
-import TextFieldBase from "../../../../../../common/fields/text/TextFieldBase";
-import AddNewCirclesGroup from "../../../../../../common/icons/create/AddNewCirclesGroup";
-import InsightsCardContainerBase from "../../../../../../common/card_containers/InsightsCardContainerBase";
 
 function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,9 +16,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const [topSuccessfulActions, setTopSuccessfulActions] = useState([]);
-  const [topSuccessfulApplications, setTopSuccessfulApplications] = useState([]);
-  const [topSuccessfulJobs, setTopSuccessfulJobs] = useState([]);
+  const [responseData, setResponseData] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -71,29 +55,15 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "releaseTraceabilitySuccess",
+        "actionsSuccessFailureCancelledSkipped",
         kpiConfiguration,
         dashboardTags,
         null,
         null,
         dashboardOrgs
       );
-      const topActions = response?.data?.data[0]?.topSuccessfulActions;
-      const topApplications = response?.data?.data[0]?.topSuccessfulApplications;
-      const topJobs = response?.data?.data[0]?.topSuccessfulJobs;
-      //To remove following for loops once api is chnaged to send value param as expected.
-      for(let i =0; i<=topActions.length - 1; i++){
-        topActions[i].value = topActions[i].success_percentage;
-      }
-      for(let j =0; j<=topApplications.length - 1; j++){
-        topApplications[j].value = topApplications[j].success_percentage;
-      }
-      for(let k =0; k<=topJobs.length - 1; k++){
-        topJobs[k].value = topJobs[k].success_percentage;
-      }
-      setTopSuccessfulActions(topActions);
-      setTopSuccessfulApplications(topApplications);
-      setTopSuccessfulJobs(topJobs);
+      const data = response?.data?.data?.[0];
+      setResponseData(data);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -113,160 +83,51 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
     return (
       <>
         {getDateRange()}
-        {getSuccessPercentSummaryCharts()}
-        {getSuccessPercentSummaryTextBoxes()}
+        {getDataBlocks()}
       </>
     );
   };
 
-  const getSuccessPercentSummaryCharts = () => {
+  const getDataBlocks = () => {
     return (
-      <Row className="pb-3 px-2 my-5">
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulApplicationsPieChart()}
+      <Row className="pb-3 px-2">
+        <Col lg={3} md={3} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.successPercentage}
+              subtitle={'Success%'}
+            />
+          </DataBlockBoxContainer>
         </Col>
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulActionsPieChart()}
+        <Col lg={3} md={3} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.failurePercentage}
+              subtitle={'Failed'}
+            />
+          </DataBlockBoxContainer>
         </Col>
-        <Col xl={4} lg={4} md={4} className={"my-1"}>
-          {getTopSuccessfulJobsPieChart()}
+        <Col lg={3} md={3} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.cancelledPercentage}
+              subtitle={'Cancelled'}
+            />
+          </DataBlockBoxContainer>
+        </Col>
+        <Col lg={3} md={3} className="mt-3">
+          <DataBlockBoxContainer showBorder={true}>
+            <TwoLineScoreDataBlock
+              className="p-2"
+              score={responseData?.skippedPercentage == null ? 'N/A' : responseData?.skippedPercentage}
+              subtitle={'Skipped'}
+            />
+          </DataBlockBoxContainer>
         </Col>
       </Row>
-    );
-  };
-
-  const getTopSuccessfulApplicationsPieChart = () => {
-    if(!topSuccessfulApplications || topSuccessfulApplications.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulApplications.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful applications found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulApplications}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Applications
-        </div>
-      </div>
-    );
-  };
-
-  const getTopSuccessfulActionsPieChart = () => {
-    if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulActions.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful actions found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulActions}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Actions
-        </div>
-      </div>
-    );
-  };
-
-  const getTopSuccessfulJobsPieChart = () => {
-    if(!topSuccessfulJobs || topSuccessfulJobs.length === 0) {
-      return null;
-    }
-    let noSuccess = true;
-    topSuccessfulJobs.forEach((element) => {
-      if(element.value > 0) {
-        noSuccess = false;
-      }
-    });
-    return (
-      <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-        {noSuccess ?
-          <div className={'light-gray-text-secondary metric-block-footer-text'} style={{textAlign:'center', height: METRIC_CHART_STANDARD_HEIGHT, paddingTop: '8rem'}}>
-            No successful jobs found.
-          </div>  :
-          <ResponsivePie
-            data={topSuccessfulJobs}
-            {...defaultConfig()}
-            {...chartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-          />
-        }
-        <div style={noSuccess ? {textAlign: 'center'} : {textAlign: 'center', marginLeft: '3rem'}}>
-          Top Five Jobs
-        </div>
-      </div>
-    );
-  };
-
-  const getTitleBar = (currentElement) => {
-    return (
-      <div className="d-flex justify-content-between w-100">
-        <div>{topSuccessfulActions?.[currentElement]?.actionName}</div>
-      </div>
-    );
-  };
-
-  const getSuccessPercentSummaryTextBoxes = () => {
-    if(!topSuccessfulActions || topSuccessfulActions.length === 0) {
-      return null;
-    }
-    var successPercentSummary = [];
-    for (var i = 0; i <= topSuccessfulActions.length - 1; i++) {
-      successPercentSummary.push(
-        <Col xl={6} lg={6} md={6} className={"my-1"}>
-          <InsightsCardContainerBase titleBar={getTitleBar(i)}>
-            <div className="m-2">
-              <div className={"d-flex"}>
-                <MetricBadgeBase
-                  className={"mr-3"}
-                  badgeText={`Application Name: ${topSuccessfulActions?.[i]?.applicationName}`}
-                />
-              </div>
-              <Row className="d-flex align-items-center">
-                <Col xl={12} lg={12} md={12} className={"my-1"} style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-                  <ResponsiveBar
-                    data={topSuccessfulActions[i].docs}
-                    {...defaultConfig("Percentage", "", false, false, "", "")}
-                    {...barConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                    {...adjustBarWidth(topSuccessfulActions[i].docs)}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </InsightsCardContainerBase>
-        </Col>
-      );
-    }
-    return (
-      <div>
-        <Row className="pb-3 px-2 my-5">
-          {successPercentSummary}
-        </Row>
-      </div>
     );
   };
 
