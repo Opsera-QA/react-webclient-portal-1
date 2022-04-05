@@ -13,6 +13,8 @@ function StandaloneJsonField(
     enableClipboard,
     displayDataTypes,
     isLoading,
+    minimumHeight,
+    maximumHeight,
   }) {
   return (
     <InfoContainer
@@ -20,6 +22,8 @@ function StandaloneJsonField(
       titleText={titleText}
       className={className}
       isLoading={isLoading}
+      minimumHeight={minimumHeight}
+      maximumHeight={maximumHeight}
     >
       <JsonFieldBase
         className={"m-3"}
@@ -40,6 +44,8 @@ StandaloneJsonField.propTypes = {
   enableClipboard: PropTypes.bool,
   displayDataTypes: PropTypes.bool,
   isLoading: PropTypes.bool,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };
 
 StandaloneJsonField.defaultProps = {

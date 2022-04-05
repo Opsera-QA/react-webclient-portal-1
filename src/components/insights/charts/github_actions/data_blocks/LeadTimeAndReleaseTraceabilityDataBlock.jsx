@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { getTimeDisplay } from "../github_actions-utility";
 import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
@@ -64,6 +65,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+            ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -71,7 +75,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.leadTime?.data;
@@ -83,37 +87,37 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
 
       const deploymentMetrics = deploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
 
-      const applicationDeploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "githubActionsApplicationDeploymentFrequency",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
+      // const applicationDeploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "githubActionsApplicationDeploymentFrequency",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
 
-      const applicationDeploymentMetrics = applicationDeploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
+      // const applicationDeploymentMetrics = applicationDeploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
 
-      const applicationLeadTimeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "githubActionsApplicationLeadTime",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
+      // const applicationLeadTimeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "githubActionsApplicationLeadTime",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
 
-      const applicationLeadTimeMetrics = applicationLeadTimeResponse?.data?.data[0]?.leadTime?.data;
+      // const applicationLeadTimeMetrics = applicationLeadTimeResponse?.data?.data[0]?.leadTime?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
@@ -201,13 +205,13 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={durationDataPoint}
-                      numberData={metrics.avgLeadTime}
+                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
                       supportingText={"minutes"}
-                      className={`${getIconColor(metrics.trend)}`}
+                      className={`${getIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
-                      bottomText={"Previous result: " + metrics.previousTrendAvgLeadTime}
-                      icon={getIcon(metrics.trend)}
-                      iconOverlayBody={getDescription(metrics.trend)}
+                      bottomText={applicationLeadTimeMetrics?.previousResult ? "Previous result: " + applicationLeadTimeMetrics?.previousResult : "No previous result"}
+                      icon={getIcon(metrics?.trend)}
+                      iconOverlayBody={getDescription(metrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -220,13 +224,13 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={frequencyDataPoint}
-                      className={`${getIconColor(deploymentMetrics.trend)}`}
-                      numberData={deploymentMetrics.deploymentFrequency}
-                      supportingText={deploymentMetrics.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
+                      className={`${getIconColor(deploymentMetrics?.trend)}`}
+                      numberData={deploymentMetrics?.deploymentFrequency}
+                      supportingText={deploymentMetrics?.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
                       topText={"Frequency"}
-                      bottomText={"Previous result: " + deploymentMetrics.previousTrendDeploymentFrequency}
-                      icon={getIcon(deploymentMetrics.trend)}
-                      iconOverlayBody={getDescription(deploymentMetrics.trend)}
+                      bottomText={deploymentMetrics?.previousResult ? "Previous result: " + deploymentMetrics?.previousResult : "No previous result"}
+                      icon={getIcon(deploymentMetrics?.trend)}
+                      iconOverlayBody={getDescription(deploymentMetrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -239,13 +243,13 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
-                      className={`${getIconColor(metrics.trend)}`}
-                      numberData={metrics.avgLeadTime}
+                      className={`${getIconColor(metrics?.trend)}`}
+                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
-                      bottomText={"Previous result: " + metrics.previousTrendAvgLeadTime}
-                      icon={getIcon(metrics.trend)}
-                      iconOverlayBody={getDescription(metrics.trend)}
+                      bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
+                      icon={getIcon(metrics?.trend)}
+                      iconOverlayBody={getDescription(metrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>

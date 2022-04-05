@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "../../../overlays/center/help/HelpOverlayBase";
+import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
 function InsightsHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
@@ -42,13 +43,18 @@ function InsightsHelpDocumentation() {
   };
 
   return (
-    <HelpOverlayBase
-      closePanel={closePanel}
-      showPanel={true}
+    <HelpDocumentationContainer
       helpTopic={"Insights: My Dashboard"}
-      helpDocumentation={getHelpDocumentation()}
     >
-    </HelpOverlayBase>
+      {getHelpDocumentation()}
+    </HelpDocumentationContainer>
+    // <HelpOverlayBase
+    //   closePanel={closePanel}
+    //   showPanel={true}
+    //   helpTopic={"Insights: My Dashboard"}
+    //   helpDocumentation={getHelpDocumentation()}
+    // >
+    // </HelpOverlayBase>
   );
 }
 

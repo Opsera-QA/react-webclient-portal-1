@@ -203,14 +203,15 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         // setDataBlockMeanValues(means);
         setBuildAndDeployMetricData(statisticsData);
         setBuildAndDeployChartData(chartData);
-        if (goals) {
-          setGoalsData(goals);
-        } else {
-          kpiConfiguration.filters[
-            kpiConfiguration.filters.findIndex((obj) => obj.type === "goals")
-          ].value = DEFAULT_GOALS;
-          setGoalsData(DEFAULT_GOALS);
-        }
+        setGoalsData(goals);
+        // if (goals) {
+        //   setGoalsData(goals);
+        // } else {
+        //   kpiConfiguration.filters[
+        //     kpiConfiguration.filters.findIndex((obj) => obj.type === "goals")
+        //   ].value = DEFAULT_GOALS;
+        //   setGoalsData(DEFAULT_GOALS);
+        // }
       }
     } catch (error) {
       if (isMounted?.current === true) {

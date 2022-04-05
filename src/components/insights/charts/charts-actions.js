@@ -44,7 +44,14 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
-chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, dashboardTags, getAccessToken, cancelTokenSource, tableFilterDto, dashboardOrgs)=>{
+chartsActions.getSonarUnitTestsMetrics = async (
+  kpiConfiguration,
+  dashboardTags,
+  getAccessToken,
+  cancelTokenSource,
+  tableFilterDto,
+  dashboardOrgs,
+) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -71,7 +78,16 @@ chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, dashboardTags, 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, type, repository)=>{
+chartsActions.getGithubPullRequestsMetrics = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+  tableFilterDto,
+  type,
+  repository,
+) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubcommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -101,7 +117,15 @@ chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessTo
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, repository)=>{
+chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+  tableFilterDto,
+  repository,
+) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -130,7 +154,13 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiCon
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
+chartsActions.getGithubTotalCommitsMetrics = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubTotalCommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -150,7 +180,7 @@ chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessTo
     startDate: date.start,
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
-    dashboardOrgs: dashboardOrgs
+    dashboardOrgs: dashboardOrgs,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -169,7 +199,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   currentDate,
   dateRange,
   actionableInsightsQueryData,
-  coveritySeverity
+  coveritySeverity,
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),

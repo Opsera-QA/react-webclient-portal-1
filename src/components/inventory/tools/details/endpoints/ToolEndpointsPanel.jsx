@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalApiIntegratorEndpointsPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointsPanel";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function ToolEndpointsPanel({toolModel}) {
   const getPathsPanel = () => {
@@ -16,9 +17,9 @@ function ToolEndpointsPanel({toolModel}) {
         );
       default:
         return (
-          <div className="text-center p-5 text-muted mt-5">
-            Opsera endpoint management is not currently available for this tool.
-          </div>
+          <CenteredContentWrapper>
+            <div className={"my-5"}>Opsera endpoint management is not currently available for this tool.</div>
+          </CenteredContentWrapper>
         );
     }
   };
@@ -28,8 +29,7 @@ function ToolEndpointsPanel({toolModel}) {
   }
 
   return (
-    <div className="p-3">
-      <div className="mb-3 text-muted">Register tool-specific endpoints.</div>
+    <div>
       {getPathsPanel()}
     </div>
   );

@@ -8,6 +8,9 @@ paths.home = "";
 paths.logs = "logs";
 paths.blueprint = "blueprint";
 
+paths.frequentlyAskedQuestions = "faq";
+paths.helpDocumentation = "help-documentation";
+
 // Admin Paths
 paths.admin = "admin";
 

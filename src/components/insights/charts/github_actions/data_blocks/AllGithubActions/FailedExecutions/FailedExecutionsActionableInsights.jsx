@@ -60,9 +60,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     () => [
       getTableTextColumn(getField(fields, "repositoryName")),
       getTableTextColumn(getField(fields, "actionName")),
-      getTableTextColumn(getField(fields, "applicationDirector")),
       getTableTextColumn(getField(fields, "applicationSVP")),
-      getTableTextColumn(getField(fields, "applicationVP1")),
       getTableTextColumn(getField(fields, "applicationVP2")),
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
@@ -84,6 +82,9 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           ?.value;
       const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -145,13 +146,15 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       return null;
     }
     const tabs = [];
-    for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      tabs.push(
-        <VanitySetVerticalTab
-          tabText={actionInsightsTraceabilityTable[i]?.applicationName}
-          tabName={actionInsightsTraceabilityTable[i]?.applicationName}
-        />
-      );
+    if (Array.isArray(actionInsightsTraceabilityTable) && actionInsightsTraceabilityTable.length > 0) {
+      for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
+        tabs.push(
+          <VanitySetVerticalTab
+            tabText={actionInsightsTraceabilityTable[i]?.applicationName}
+            tabName={actionInsightsTraceabilityTable[i]?.applicationName}
+          />
+        );
+      }
     }
     return (
       <div className={"h-100"}>

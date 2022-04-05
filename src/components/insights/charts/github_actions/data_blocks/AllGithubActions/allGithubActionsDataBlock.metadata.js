@@ -10,18 +10,13 @@ export const allGithubActionsDataBlockMetadata = {
       id: "date",
     },
     {
-      label: "Application",
+      label: "Job Type",
       id: "amex-application",
-    },
-    {
-      label: "Director",
-      id: "amex-director",
     },
   ],
   newObjectFields: {
     tags: [],
     date: undefined,
     "amex-application": [],
-    "amex-director": [],
   },
 };

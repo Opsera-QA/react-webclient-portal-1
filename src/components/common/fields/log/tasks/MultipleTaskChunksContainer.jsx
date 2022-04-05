@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 import {faLaptopCode} from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import InfoContainer from "components/common/containers/InfoContainer";
 import TaskLogChunkDisplayer from "components/common/fields/log/tasks/TaskLogChunkDisplayer";
-import VanitySetTabAndViewOverlayContainer
-  from "components/common/tabs/vertical_tabs/VanitySetTabAndViewOverlayContainer";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function MultipleTaskChunksContainer(
   {
@@ -62,10 +58,12 @@ function MultipleTaskChunksContainer(
 
   const getCurrentView = () => {
     return (
-      <TaskLogChunkDisplayer
-        logMetaRecordId={logMetaRecordId}
-        chunkNumber={activeTab}
-      />
+      <div className={"console-text h-100"}>
+        <TaskLogChunkDisplayer
+          logMetaRecordId={logMetaRecordId}
+          chunkNumber={activeTab}
+        />
+      </div>
     );
   };
 
@@ -74,13 +72,14 @@ function MultipleTaskChunksContainer(
   }
 
   return (
-    <VanitySetTabAndViewOverlayContainer
+    <VanitySetTabAndViewContainer
       isLoading={isLoading}
-      titleIcon={faLaptopCode}
-      titleText={"Console Logs"}
+      icon={faLaptopCode}
+      title={"Console Logs"}
       currentView={getCurrentView()}
       verticalTabContainer={getVerticalTabContainer()}
-      viewClassName={"console-text"}
+      minimumHeight={"calc(100vh - 300px)"}
+      maximumHeight={"calc(100vh - 300px)"}
     />
   );
 }

@@ -8,12 +8,13 @@ function VanitySetTabContentContainer(
     children,
     title,
     titleIcon,
+    tileBarInput,
   }) {
   const getTitleBar = () => {
     if (title) {
       return (
-        <div className={"p-2 makeup-tab-content-title d-flex"}>
-          <div className={"my-auto justify-content-between"}>
+        <div className={"p-2 makeup-tab-content-title d-flex justify-content-between"}>
+          <div className={"my-auto"}>
             <div>
               <IconBase
                 isLoading={isLoading}
@@ -23,15 +24,18 @@ function VanitySetTabContentContainer(
               {title}
             </div>
           </div>
+          <div className={"ml-2"}>
+            {tileBarInput}
+          </div>
         </div>
       );
     }
   };
 
   return (
-    <div>
+    <div className={"h-100"}>
       {getTitleBar()}
-      <div>
+      <div className={"my-auto h-100"}>
         {children}
       </div>
     </div>
@@ -44,6 +48,7 @@ VanitySetTabContentContainer.propTypes = {
   children: PropTypes.any,
   title: PropTypes.string,
   titleIcon: PropTypes.object,
+  tileBarInput: PropTypes.string,
 };
 
 export default VanitySetTabContentContainer;

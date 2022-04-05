@@ -65,6 +65,9 @@ function AllGithubActionsDataBlock({
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+            ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -72,53 +75,53 @@ function AllGithubActionsDataBlock({
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.traceability?.data;
 
-      const applicationResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "githubActionsTopApplicationsSuccessAndFailurePercentage",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
-      const applicationMetrics = applicationResponse?.data?.data;
+      // const applicationResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "githubActionsTopApplicationsSuccessAndFailurePercentage",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
+      // const applicationMetrics = applicationResponse?.data?.data;
 
-      const reasonsResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "githubActionsCommonReasonsForFailure",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
-      const reasonsMetrics = reasonsResponse?.data?.data[0]?.commonReasonsForFailure?.data;
+      // const reasonsResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "githubActionsCommonReasonsForFailure",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
+      // const reasonsMetrics = reasonsResponse?.data?.data[0]?.commonReasonsForFailure?.data;
 
-      const durationResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "githubActionsTopApplicationsDuration",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
+      // const durationResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "githubActionsTopApplicationsDuration",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
 
-      const durationMetrics = durationResponse?.data?.data;
+      // const durationMetrics = durationResponse?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
-        setApplicationMetrics(applicationMetrics[0]);
-        setReasonsMetrics(reasonsMetrics);
-        setDurationMetrics(durationMetrics[0]);
+        // setApplicationMetrics(applicationMetrics[0]);
+        // setReasonsMetrics(reasonsMetrics);
+        // setDurationMetrics(durationMetrics[0]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -237,13 +240,13 @@ function AllGithubActionsDataBlock({
               <div className={"github-actions-success-rate-contained-data-block"}>
                 <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessPercentRowSelect()}>
                   <ThreeLinePercentageBlockBase
-                    className={`${getIconColor(metrics.trend)} p-2`}
+                    className={`${getIconColor(metrics?.trend)} p-2`}
                     dataPoint={successPercent}
-                    percentage={metrics.successPercentage}
+                    percentage={metrics?.successPercentage}
                     topText={"Success %"}
-                    bottomText={"Previous result: " + metrics.trendSuccessPercentage}
-                    icon={getIcon(metrics.trend)}
-                    iconOverlayBody={getDescription(metrics.trend)}
+                    bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage : "No previous result"}
+                    icon={getIcon(metrics?.trend)}
+                    iconOverlayBody={getDescription(metrics?.trend)}
                   />
                 </DataBlockBoxContainer>
               </div>
@@ -252,7 +255,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
-                  score={metrics.successCount}
+                  score={metrics?.successCount}
                   subtitle={"Total Successful Executions"}
                 />
               </DataBlockBoxContainer>
@@ -261,7 +264,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
-                  score={metrics.failureCount}
+                  score={metrics?.failureCount}
                   subtitle={"Total Failed Executions"}
                 />
               </DataBlockBoxContainer>

@@ -25,12 +25,26 @@ export function stringIncludesValue(string, searchTerm) {
   return hasStringValue(string) && hasStringValue(searchTerm) && string.toLowerCase().includes(searchTerm.toLowerCase());
 }
 
-export function truncateString(string, maxLength){
+export function truncateString(string, maxLength, addEllipsis = true){
   if (hasStringValue(string) !== true) {
     return "";
   }
 
-  return string.length <= maxLength ? string : string.slice(0, maxLength) + "...";
+  if (typeof maxLength !== "number" || maxLength < 1) {
+    return string;
+  }
+
+  if (string.length <= maxLength) {
+    return string;
+  }
+
+  const truncatedString = string.slice(0, maxLength);
+
+  if (addEllipsis !== false) {
+    return (`${truncatedString}...`);
+  }
+
+  return truncatedString;
 }
 
 export function removeSpacesFromString(string){

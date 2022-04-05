@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import toolsActions from "components/inventory/tools/tools-actions";
 
 function AmexApplicationSelectInput({
   placeholderText,
@@ -61,7 +60,7 @@ function AmexApplicationSelectInput({
   const getTools = async (cancelSource = cancelTokenSource) => {
     // let response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, "servicenow");
     // const toolList = response?.data?.data;
-    const toolList = ["candleston", "oswestry"];
+    const toolList = ["Build", "Scan", "Test", "Deploy"];
 
     if (isMounted?.current === true && toolList) {
       setTools(toolList);
@@ -86,7 +85,7 @@ function AmexApplicationSelectInput({
   };
 
   return (
-    <MultiSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}

@@ -1,4 +1,4 @@
-import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
+import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
 
 const dashboardMetadata = {
   idProperty: "_id",
@@ -13,19 +13,19 @@ const dashboardMetadata = {
   fields: [
     {
       label: "Account",
-      id: "account"
+      id: "account",
     },
     {
       label: "ID",
-      id: "_id"
+      id: "_id",
     },
     {
       label: "Created",
-      id: "createdAt"
+      id: "createdAt",
     },
     {
       label: "Last Update",
-      id: "updatedAt"
+      id: "updatedAt",
     },
     {
       label: "Type",
@@ -40,6 +40,10 @@ const dashboardMetadata = {
       id: "organizations",
     },
     {
+      label: "Filters",
+      id: "amexFilters",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
@@ -50,32 +54,32 @@ const dashboardMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Description",
       id: "description",
-      maxLength: 255
+      maxLength: 255,
     },
     {
       label: "Active",
-      id: "active"
+      id: "active",
     },
     {
       label: "Favorite",
-      id: "isFavorite"
+      id: "isFavorite",
     },
     {
       label: "Configuration",
-      id: "configuration"
+      id: "configuration",
     },
     {
       label: "Filters",
-      id: "filters"
+      id: "filters",
     },
     {
       label: "Roles",
-      id: "roles"
+      id: "roles",
     },
   ],
   newObjectFields: {
@@ -90,7 +94,7 @@ const dashboardMetadata = {
     attributes: {},
     filters: [],
     roles: [],
-  }
+  },
 };
 
 export const dashboardAttributesMetadata = {
@@ -98,12 +102,12 @@ export const dashboardAttributesMetadata = {
   fields: [
     {
       label: "Persona",
-      id: "persona"
-    }
+      id: "persona",
+    },
   ],
   newObjectFields: {
-    persona: ""
-  }
+    persona: "",
+  },
 };
 
 export const dashboardFiltersMetadata = {
@@ -111,25 +115,30 @@ export const dashboardFiltersMetadata = {
   fields: [
     {
       label: "Tags",
-      id: "value"
+      id: "tags",
     },
     {
       label: "Organizations",
-      id: "organizations"
+      id: "organizations",
+    },
+    {
+      label: "Filters",
+      id: "amexFilters",
     },
     {
       label: "Date",
-      id: "date"
-    }
+      id: "date",
+    },
   ],
   newObjectFields: {
-    value: [],
+    tags: [],
     organizations: [],
+    amexFilters: {},
     date: {
       startDate: null,
       endDate: null,
       key: "selection",
-    }
+    },
   },
 };
 

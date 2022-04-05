@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
+import InfoContainer from "components/common/containers/InfoContainer";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function TextAreaInputBase(
   {
@@ -14,6 +15,9 @@ function TextAreaInputBase(
     rowCount,
     disabled,
     error,
+    className,
+    customTitleText,
+    titleIcon,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,23 +55,34 @@ function TextAreaInputBase(
     }
   };
 
+  const getTitleText = () => {
+    if (hasStringValue(customTitleText) === true) {
+      return customTitleText;
+    }
+
+    return field?.label;
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
-    <InputContainer>
-      <InputLabel
-        model={model}
-        field={field}
-      />
-      <textarea
-        disabled={disabled}
-        value={model?.getData(fieldName)}
-        onChange={(event) => updateValue(event.target.value)}
-        className={"form-control"}
-        rows={rowCount}
-      />
+    <InputContainer className={className}>
+      <InfoContainer
+        titleText={getTitleText()}
+        titleIcon={titleIcon}
+      >
+        <div className={"m-2"}>
+          <textarea
+            disabled={disabled}
+            value={model?.getData(fieldName)}
+            onChange={(event) => updateValue(event.target.value)}
+            className={"form-control"}
+            rows={rowCount}
+          />
+        </div>
+      </InfoContainer>
       <InfoText
         field={field}
         errorMessage={errorMessage}
@@ -89,6 +104,9 @@ TextAreaInputBase.propTypes = {
     PropTypes.object,
   ]),
   rowCount: PropTypes.number,
+  className: PropTypes.string,
+  customTitleText: PropTypes.string,
+  titleIcon: PropTypes.object,
 };
 
 TextAreaInputBase.defaultProps = {

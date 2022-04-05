@@ -20,7 +20,7 @@ function VanitySetVerticalTabContainer(
 
   return (
     <div className={className}>
-      <div className={"makeup-tree-container h-100 w-100"}>
+      <div className={"h-100 w-100"}>
         {getTitleBar()}
         <Nav variant={"pills"}>
           <div className={"h-100 w-100"}>
@@ -38,6 +38,10 @@ VanitySetVerticalTabContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   className: PropTypes.string,
   title: PropTypes.any,
+};
+
+VanitySetVerticalTabContainer.defaultProps = {
+  className: "h-100 w-100",
 };
 
 export default VanitySetVerticalTabContainer;
