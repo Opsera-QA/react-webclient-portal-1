@@ -77,6 +77,7 @@ function ExternalApiIntegratorEndpointsTable(
       metadata={externalApiIntegratorEndpointMetadata}
       titleIcon={faLink}
       title={"Endpoints"}
+      className={"mt-2"}
     />
   );
 }

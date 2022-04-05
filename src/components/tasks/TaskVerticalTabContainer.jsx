@@ -14,7 +14,7 @@ function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
   };
 
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
+    <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faTasks}
         tabText={"All"}

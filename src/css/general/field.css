@@ -82,8 +82,6 @@
 }
 
 .text-input-list {
-    min-height: 100px;
-    max-height: 500px;
     border-radius: 0 !important;
     list-style-type: none;
     overflow-y: auto;

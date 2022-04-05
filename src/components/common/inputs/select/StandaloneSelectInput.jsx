@@ -22,6 +22,7 @@ function StandaloneSelectInput(
     onToggleFunction,
     hasErrorState,
     lazyLoad,
+    dropUp,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -48,6 +49,7 @@ function StandaloneSelectInput(
       defaultValue={defaultValue}
       onCreate={onCreate}
       onToggle={onToggleFunction}
+      dropUp={dropUp}
       placeholder={getPlaceholderText()}
       onChange={(newValue) => setDataFunction(newValue)}
       disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
@@ -86,6 +88,7 @@ StandaloneSelectInput.propTypes = {
   defaultValue: PropTypes.any,
   hasErrorState: PropTypes.bool,
   lazyLoad: PropTypes.bool,
+  dropUp: PropTypes.bool,
 };
 
 StandaloneSelectInput.defaultProps = {

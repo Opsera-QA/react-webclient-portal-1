@@ -15,6 +15,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_AKS_DEPLOY: "azure_aks_deploy",
   AZURE_DEVOPS: "azure-devops",
   AZURE_FUNCTIONS: "azure-functions",
+  AZURE_SCRIPTS: "azure_scripts",
   AZURE_ZIP_DEPLOYMENT: "azure-zip-deployment",
   BITBUCKET: "bitbucket",
   BUILDKITE: "buildkite",
@@ -71,5 +72,5 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   TERRASCAN: "terrascan",
   TWISTLOCK: " twistlock",
   XUNIT: "xunit",
-  YAML_GIT_PROCESSOR: "yaml_git_processor"
+  YAML_GIT_PROCESSOR: "yaml_git_processor",
 };

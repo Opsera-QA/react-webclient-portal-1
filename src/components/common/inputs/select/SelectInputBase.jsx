@@ -82,8 +82,8 @@ function SelectInputBase(
 
   const getClearDataFunction = () => {
     if (
-         dataObject?.getData(field?.id) !== ""
-      && (disabled !== true || lenientClearValueButton === true)
+      hasStringValue(dataObject.getData(field.id)) === true
+      && ((disabled !== true && field?.isRequired !== true) || lenientClearValueButton === true)
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction)
     ) {

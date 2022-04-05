@@ -19,6 +19,14 @@ export const validateData = (data) => {
   return errors;
 };
 
+export const validatePotentialValue = (potentialValue, data, field) => {
+  if (typeof field !== "object") {
+    return "Invalid Field Given";
+  }
+
+  return fieldValidation(potentialValue, data, field);
+};
+
 export const validateField = (data, field) => {
   return fieldValidation(data.getData(field.id), data, field);
 };
