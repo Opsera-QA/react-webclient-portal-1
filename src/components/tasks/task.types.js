@@ -28,7 +28,7 @@ export const TASK_TYPE_LABELS = {
 
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",
-  MERGE_CONFLICT_RESOLUTION: "Merge Conflict Resolution",
+  GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION: "Git to Git Merge Conflict Resolution",
 
   // AWS
   AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",
