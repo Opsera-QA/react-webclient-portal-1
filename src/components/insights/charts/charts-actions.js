@@ -30,13 +30,7 @@ import {
 
 const chartsActions = {};
 
-chartsActions.getChartMetrics = async (
-  request,
-  metric,
-  date,
-  tags,
-  getAccessToken,
-) => {
+chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
   const apiUrl = "/analytics/metrics";
 
   const postBody = {
@@ -46,28 +40,16 @@ chartsActions.getChartMetrics = async (
     tags: tags,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
-chartsActions.getSonarUnitTestsMetrics = async (
-  kpiConfiguration,
-  dashboardTags,
-  getAccessToken,
-  cancelTokenSource,
-  tableFilterDto,
-  dashboardOrgs,
-) => {
+
+chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, dashboardTags, getAccessToken, cancelTokenSource, tableFilterDto, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
-    kpiConfiguration,
-  );
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -79,43 +61,22 @@ chartsActions.getSonarUnitTestsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubPullRequestsMetrics = async (
-  kpiConfiguration,
-  getAccessToken,
-  cancelTokenSource,
-  dashboardTags,
-  dashboardOrgs,
-  tableFilterDto,
-  type,
-  repository,
-) => {
+chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, type, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubcommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
-    kpiConfiguration,
-  );
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -128,12 +89,7 @@ chartsActions.getGithubPullRequestsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -141,32 +97,16 @@ chartsActions.getGithubPullRequestsMetrics = async (
     repository,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
-  kpiConfiguration,
-  getAccessToken,
-  cancelTokenSource,
-  dashboardTags,
-  dashboardOrgs,
-  tableFilterDto,
-  repository,
-) => {
+chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const apiUrl =
-    "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
+  const apiUrl = "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
-    kpiConfiguration,
-  );
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -179,41 +119,23 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     repository,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsMetrics = async (
-  kpiConfiguration,
-  getAccessToken,
-  cancelTokenSource,
-  dashboardTags,
-  dashboardOrgs,
-) => {
+chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubTotalCommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
-    kpiConfiguration,
-  );
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -226,21 +148,11 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
-    dashboardOrgs: dashboardOrgs,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (
@@ -256,61 +168,36 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   currentDate,
   dateRange,
   actionableInsightsQueryData,
-  coveritySeverity,
+  coveritySeverity
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
     jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration),
-    jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(
-      kpiConfiguration,
-    ),
+    jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration),
     jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration),
-    jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(
-      kpiConfiguration,
-    ),
+    jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration),
     jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration),
     jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration),
-    jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(
-      kpiConfiguration,
-    ),
+    jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration),
+    jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration),
     sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration),
     domain = getDomainFromKpiConfiguration(kpiConfiguration),
     application = getApplicationFromKpiConfiguration(kpiConfiguration),
     sprint = getSprintFromKpiConfiguration(kpiConfiguration),
     release = getReleaseFromKpiConfiguration(kpiConfiguration),
     project = getProjectFromKpiConfiguration(kpiConfiguration),
-    seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(
-      kpiConfiguration,
-    ),
-    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(
-      kpiConfiguration,
-    );
-
+    seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration),
+    sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration),
+    serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration),
+    serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration),
+    serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
+    serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
+    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
-    kpiConfiguration,
-  );
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -324,12 +211,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     request: request,
     startDate: date.start,
     endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     jenkinsResult: jenkinsResult,
     jenkinsJobUrl: jenkinsJobUrl,
     jenkinsBuildNumber: jenkinsBuildNumber,
@@ -362,15 +244,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
     actionableInsightsQueryData: actionableInsightsQueryData,
-    coveritySeverity: coveritySeverity,
+    coveritySeverity: coveritySeverity
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default chartsActions;
