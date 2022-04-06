@@ -77,7 +77,6 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
         null,
         dashboardOrgs
       );
-      console.log('opseraSdlcPipelineStageDuration response', response);
       let dataObject = response?.data?.data ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data : [];
       const objectLength = response?.data?.data ? response?.data?.data[0]?.opseraSdlcDurationByStage?.data.length : 0;
       let means = response?.data?.data

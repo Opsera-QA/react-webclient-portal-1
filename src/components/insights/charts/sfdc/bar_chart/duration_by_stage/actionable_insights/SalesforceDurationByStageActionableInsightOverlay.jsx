@@ -83,7 +83,6 @@ function SalesforceDurationByStageActionableInsightsOverlay({
         null,
         actionableInsightsQueryData
       );
-      console.log('actionableInsightsQueryData', actionableInsightsQueryData);
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data?.metrics[0]?.data : [];
       let dataCount = response?.data
         ? response?.data?.data[0]?.salesforceDurationByStage?.data?.metrics[0]?.count[0]?.count
