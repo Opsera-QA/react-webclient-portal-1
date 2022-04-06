@@ -4,7 +4,6 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import {
   getMiddleText
 } from "../github_actions-utility";
-import "components/insights/charts/github_actions/lead-time-release-duration-kpi.css";
 function LeadTimeAndReleaseDurationDataBlockBase({ topText, meanData, countData, goalsData, dataPoint }) {
 
   return (
