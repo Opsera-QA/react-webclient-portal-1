@@ -1,25 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-const SUPPORTED_RESPONSE_BODY_TYPES = [
-  {
-    text: "Array",
-    value: "array",
-  },
-  {
-    text: "Boolean",
-    value: "boolean",
-  },
-  {
-    text: "Object",
-    value: "object",
-  },
-  {
-    text: "String",
-    value: "string",
-  },
-];
+import ApiResponseBodyTypeSelectInput
+  from "components/common/list_of_values_input/api/response/body/type/ApiResponseBodyTypeSelectInput";
 
 function EndpointResponseBodyTypeSelectInput(
   {
@@ -38,15 +21,12 @@ function EndpointResponseBodyTypeSelectInput(
   };
 
   return (
-    <SelectInputBase
-      selectOptions={SUPPORTED_RESPONSE_BODY_TYPES}
-      dataObject={model}
-      setDataObject={setModel}
-      fieldName={fieldName}
-      valueField={"value"}
-      textField={"text"}
-      disabled={disabled}
+    <ApiResponseBodyTypeSelectInput
+      model={model}
+      setModel={setModel}
       setDataFunction={setDataFunction}
+      fieldName={fieldName}
+      disabled={disabled}
     />
   );
 }
