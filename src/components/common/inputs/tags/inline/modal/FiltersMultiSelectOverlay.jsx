@@ -163,44 +163,6 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
         selectOptions={actionOptions}
       />
       </div>
-    // <div>
-    //   {type === "SVP" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"svp"}
-    //     selectOptions={svpOptions}
-    //   />}
-    //   {type === "VP2" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"vp2"}
-    //     selectOptions={vp2Options}
-    //   />}
-    //   {type === "VP1" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"vp1"}
-    //     selectOptions={vp1Options}
-    //   />}
-    //   {type === "Director" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"director"}
-    //     selectOptions={directorOptions}
-    //   />}
-    //   {type === "Application" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"application"}
-    //     selectOptions={applicationOptions}
-    //   />}
-    //   {type === "Action" && <MultiSelectInputBase
-    //     dataObject={amexFiltersDto}
-    //     setDataObject={setAmexFiltersDto}
-    //     fieldName={"action"}
-    //     selectOptions={actionOptions}
-    //   />}
-    //   </div>
     );
   };
 

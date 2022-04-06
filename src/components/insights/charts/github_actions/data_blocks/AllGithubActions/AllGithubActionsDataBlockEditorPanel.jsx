@@ -2,8 +2,6 @@ import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
-import MetricAmexApplicationFilterInput from "components/common/inputs/metric/filters/MetricAmexApplicationFilterInput";
-import MetricAmexDirectorFilterInput from "components/common/inputs/metric/filters/MetricAmexDirectorFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import {allGithubActionsDataBlockMetadata} from "./allGithubActionsDataBlock.metadata";
 
@@ -35,16 +33,6 @@ function AllGithubActionsDataBlockEditorPanel(
         setMetricFilterModel={setMetricFilterModel}
       />
       <MetricDateRangeFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-      <MetricAmexApplicationFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-      <MetricAmexDirectorFilterInput
         metricModel={metricModel}
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}

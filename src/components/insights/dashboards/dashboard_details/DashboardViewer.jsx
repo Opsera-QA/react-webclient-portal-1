@@ -10,7 +10,6 @@ import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
-import DashboardFiltersInlineInput from "components/insights/dashboards/DashboardFiltersInlineInput";
 import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
 
 function DashboardViewer({ dashboardModel, loadData }) {
@@ -125,16 +124,6 @@ function DashboardViewer({ dashboardModel, loadData }) {
           />
         </div>
         <div className={"d-flex"}>
-          {/*TODO: Make version for dashboards, wire that up instead*/}
-          {/* <div className={"mr-2"}>
-            <DashboardFiltersInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          </div>
-          <div className={"mr-2"}>
-            <DashboardTagsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          </div>
-          <div>
-            <DashboardOrganizationsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          </div> */}
            {getActiveFilters()}
          </div>
       </div>
