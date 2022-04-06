@@ -142,7 +142,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Release Traceability: Success %`}
+        titleText={`Actionable Report: Success %`}
         showToasts={true}
         isLoading={false}
       >
@@ -158,7 +158,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Release Traceability: Success`}
+        titleText={`Actionable Report: Success Runs`}
         showToasts={true}
         isLoading={false}
       >
@@ -213,7 +213,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Release Traceability: Failed`}
+        titleText={`Actionable Report: Failed Runs`}
         showToasts={true}
         isLoading={false}
       >

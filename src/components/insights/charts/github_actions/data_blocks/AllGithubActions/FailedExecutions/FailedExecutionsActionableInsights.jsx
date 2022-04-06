@@ -18,6 +18,8 @@ import VanitySetTabAndViewContainer from "../../../../../../common/tabs/vertical
 import VanitySetVerticalTabContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import SuccessExecutionsActionableInsightsMetaData
+  from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
 
 function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -94,7 +96,15 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         dashboardOrgs
       );
       const data = response?.data?.data[0];
-      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport?.[0]?.data;
+      const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport;
+      let newFilterDto = Object.assign([], tableFilterDto);
+      for(let i = 0; i <= actionableInsightsTableData.length - 1; i++) {
+        if(!newFilterDto[i]) {
+          newFilterDto.push(new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false));
+        }
+        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.docs.length : 0;
+      }
+      setTableFilterDto(newFilterDto);
       setResponseData(data);
       setActionInsightsTraceabilityTable(actionableInsightsTableData);
     } catch (error) {
@@ -164,18 +174,13 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
     }
     const projectData = [];
     for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-      let newFilterDto = Object.assign([], tableFilterDto);
-      if(!newFilterDto[i]) {
-        newFilterDto.push(new Model({ ...FailedExecutionsActionableInsightsMetaData.newObjectFields }, FailedExecutionsActionableInsightsMetaData, false));
-      }
-      newFilterDto[i]['totalCount'] = actionInsightsTraceabilityTable[i]?.docs ? actionInsightsTraceabilityTable[i]?.docs.length : 0;
       projectData.push(
         <VanitySetTabView tabKey={actionInsightsTraceabilityTable[i]?.applicationName}>
           <CustomTable
             columns={columns}
             data={actionInsightsTraceabilityTable[i]?.docs}
             noDataMessage={noDataMessage}
-            paginationDto={newFilterDto[i]}
+            paginationDto={tableFilterDto[i]}
             setPaginationDto={setTableFilterDto}
             loadData={loadData}
           />
