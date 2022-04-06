@@ -89,6 +89,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
         dashboardTags,
         filterDto[0],
         null,
+        dashboardFilters,
         dashboardOrgs
       );
       const data = response?.data?.data[0];
