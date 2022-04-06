@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ApiRequestFieldTypeSelectInput
-  from "components/common/list_of_values_input/api/request/body/ApiRequestFieldTypeSelectInput";
+import ApiResponseFieldTypeSelectInput
+  from "components/common/list_of_values_input/api/response/body/fields/ApiResponseFieldTypeSelectInput";
 
-function EndpointRequestFieldTypeSelectInput(
+function EndpointResponseFieldTypeSelectInput(
   {
     model,
     setModel,
@@ -15,12 +15,11 @@ function EndpointRequestFieldTypeSelectInput(
     const newModel = {...model};
     newModel.setData(fieldName, selectedOption?.value);
     newModel.setDefaultValue("isSensitiveData");
-    newModel.setDefaultValue("isRequired");
     updateModelFunction(newModel);
   };
 
   return (
-    <ApiRequestFieldTypeSelectInput
+    <ApiResponseFieldTypeSelectInput
       model={model}
       setModel={setModel}
       fieldName={fieldName}
@@ -30,12 +29,12 @@ function EndpointRequestFieldTypeSelectInput(
   );
 }
 
-EndpointRequestFieldTypeSelectInput.propTypes = {
+EndpointResponseFieldTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  fieldName: PropTypes.string,
   updateModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  fieldName: PropTypes.string,
 };
 
-export default EndpointRequestFieldTypeSelectInput;
+export default EndpointResponseFieldTypeSelectInput;

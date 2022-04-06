@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import EndpointResponseBodyFieldInputRow
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
+  from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
