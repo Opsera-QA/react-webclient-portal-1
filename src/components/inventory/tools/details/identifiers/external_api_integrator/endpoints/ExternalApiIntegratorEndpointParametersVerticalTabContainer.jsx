@@ -12,6 +12,8 @@ import EndpointResponseBodyInputBase
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
+const height = "calc(100vh - 650px)";
+
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
     externalApiIntegratorModel,
@@ -105,8 +107,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
-      minimumHeight={"calc(100vh - 650px)"}
-      maximumHeight={"calc(100vh - 650px)"}
+      minimumHeight={height}
+      maximumHeight={height}
     />
   );
 }

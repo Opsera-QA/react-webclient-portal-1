@@ -13,6 +13,8 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 
+const height = "calc(100vh - 745px)";
+
 function EndpointRequestBodyInputPanel(
   {
     fieldName,
@@ -205,8 +207,8 @@ function EndpointRequestBodyInputPanel(
         <InfoContainer
           titleText={field?.label}
           titleIcon={faBracketsCurly}
-          minimumHeight={"calc(100vh - 730px)"}
-          maximumHeight={"calc(100vh - 730px)"}
+          minimumHeight={height}
+          maximumHeight={height}
           titleRightSideButton={getAddFieldButton()}
         >
           <CenteredContentWrapper>
@@ -223,8 +225,8 @@ function EndpointRequestBodyInputPanel(
           icon={faBracketsCurly}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getCurrentView()}
-          minimumHeight={"calc(100vh - 730px)"}
-          maximumHeight={"calc(100vh - 730px)"}
+          minimumHeight={height}
+          maximumHeight={height}
           tabColumnSize={3}
           titleRightSideButton={getAddFieldButton()}
         />
@@ -295,7 +297,7 @@ function EndpointRequestBodyInputPanel(
   }
 
   return (
-    <div className={"m-2"}>
+    <div className={"m-3"}>
       {getBody()}
     </div>
   );
