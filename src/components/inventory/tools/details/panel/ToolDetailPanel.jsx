@@ -104,7 +104,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <ToolConnectionPanel
             toolData={toolData}
-            loadData={loadData}
+            setToolData={setToolData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
