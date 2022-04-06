@@ -26,8 +26,6 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_SERVICE_OFFERINGS: "servicenow-service-offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "servicenow-configuration-items",
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
-  AMEX_APPLICATION: "amex-application",
-  AMEX_DIRECTOR: "amex-director",
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -58,8 +56,6 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_SERVICE_OFFERINGS: "Service Now Service Offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "Service Now Configuration Items",
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
-  AMEX_APPLICATION: "Amex-Application",
-  AMEX_DIRECTOR: "Amex-Director",
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -252,16 +248,6 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.SERVICE_NOW_BUSINESS_SERVICES,
     text: KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES,
-    value: [],
-  },
-  {
-    type: KPI_FILTER_TYPES.AMEX_APPLICATION,
-    text: KPI_FILTER_TYPE_LABELS.AMEX_APPLICATION,
-    value: [],
-  },
-  {
-    type: KPI_FILTER_TYPES.AMEX_DIRECTOR,
-    text: KPI_FILTER_TYPE_LABELS.AMEX_DIRECTOR,
     value: [],
   },
 ];

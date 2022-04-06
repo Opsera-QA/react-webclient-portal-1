@@ -24,15 +24,19 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
-  getAmexApplicationFromKpiConfiguration,
-  getAmexDirectorFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
 
-chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
+chartsActions.getChartMetrics = async (
+  request,
+  metric,
+  date,
+  tags,
+  getAccessToken,
+) => {
   const apiUrl = "/analytics/metrics";
 
   const postBody = {
@@ -42,7 +46,11 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    apiUrl,
+    postBody,
+  );
 };
 chartsActions.getSonarUnitTestsMetrics = async (
   kpiConfiguration,
@@ -57,7 +65,9 @@ chartsActions.getSonarUnitTestsMetrics = async (
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
+    kpiConfiguration,
+  );
 
   if (!useKpiTags) {
     tags = null;
@@ -69,13 +79,23 @@ chartsActions.getSonarUnitTestsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 chartsActions.getGithubPullRequestsMetrics = async (
@@ -93,7 +113,9 @@ chartsActions.getGithubPullRequestsMetrics = async (
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
+    kpiConfiguration,
+  );
 
   if (!useKpiTags) {
     tags = null;
@@ -106,7 +128,12 @@ chartsActions.getGithubPullRequestsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -114,7 +141,12 @@ chartsActions.getGithubPullRequestsMetrics = async (
     repository,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
@@ -127,11 +159,14 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
   repository,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const apiUrl = "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
+  const apiUrl =
+    "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
+    kpiConfiguration,
+  );
 
   if (!useKpiTags) {
     tags = null;
@@ -144,14 +179,24 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     repository,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 chartsActions.getGithubTotalCommitsMetrics = async (
@@ -166,7 +211,9 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
+    kpiConfiguration,
+  );
 
   if (!useKpiTags) {
     tags = null;
@@ -179,11 +226,21 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
     dashboardOrgs: dashboardOrgs,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (
@@ -205,33 +262,57 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
     jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration),
-    jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration),
+    jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(
+      kpiConfiguration,
+    ),
     jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration),
-    jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration),
+    jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(
+      kpiConfiguration,
+    ),
     jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration),
     jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration),
-    jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration),
-    jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration),
+    jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(
+      kpiConfiguration,
+    ),
     sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration),
     domain = getDomainFromKpiConfiguration(kpiConfiguration),
     application = getApplicationFromKpiConfiguration(kpiConfiguration),
     sprint = getSprintFromKpiConfiguration(kpiConfiguration),
     release = getReleaseFromKpiConfiguration(kpiConfiguration),
     project = getProjectFromKpiConfiguration(kpiConfiguration),
-    seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration),
-    sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration),
-    serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration),
-    serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration),
-    serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
-    serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
-    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
+    seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    serviceNowPriorities = getServiceNowPrioritiesFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(
+      kpiConfiguration,
+    ),
+    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(
+      kpiConfiguration,
+    ),
     amexApplication = getAmexApplicationFromKpiConfiguration(kpiConfiguration),
     amexDirector = getAmexDirectorFromKpiConfiguration(kpiConfiguration);
 
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(
+    kpiConfiguration,
+  );
 
   if (!useKpiTags) {
     tags = null;
@@ -245,7 +326,12 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     request: request,
     startDate: date.start,
     endDate: date.end,
-    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
     jenkinsResult: jenkinsResult,
     jenkinsJobUrl: jenkinsJobUrl,
     jenkinsBuildNumber: jenkinsBuildNumber,
@@ -277,13 +363,16 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings: serviceNowServiceOfferings,
     serviceNowConfigurationItems: serviceNowConfigurationItems,
     serviceNowBusinessServices: serviceNowBusinessServices,
-    amexApplication: amexApplication,
-    amexDirector: amexDirector,
     actionableInsightsQueryData: actionableInsightsQueryData,
     coveritySeverity: coveritySeverity,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 export default chartsActions;
