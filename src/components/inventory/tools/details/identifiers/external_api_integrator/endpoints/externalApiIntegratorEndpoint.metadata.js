@@ -33,6 +33,11 @@ const externalApiIntegratorEndpointMetadata = {
       id: "requestBodyFields",
     },
     {
+      label: "Response Body Type",
+      id: "responseBodyType",
+      isRequired: true,
+    },
+    {
       label: "Response Body Fields",
       id: "responseBodyFields",
     },
@@ -44,6 +49,7 @@ const externalApiIntegratorEndpointMetadata = {
     url: "",
     queryParameterFields: [],
     requestBodyFields: [],
+    responseBodyType: "object",
     responseBodyFields: [],
   }
 };

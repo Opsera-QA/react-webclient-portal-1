@@ -9,7 +9,7 @@ import GithubBranchSelectInput
 import GitlabBranchSelectInput
   from "components/common/list_of_values_input/tools/gitlab/branches/GitlabBranchSelectInput";
 
-// TODO: Rework this into multiple inputs, rename BranchSelectInputBase
+// TODO: rename BranchSelectInputBase
 function GitBranchInput(
   {
     service,

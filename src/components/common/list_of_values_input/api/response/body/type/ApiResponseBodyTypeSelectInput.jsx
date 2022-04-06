@@ -2,39 +2,36 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-const SUPPORTED_FIELD_TYPES = [
+const SUPPORTED_RESPONSE_BODY_TYPES = [
   {
     text: "Array",
     value: "array",
   },
   {
+    text: "Boolean",
+    value: "boolean",
+  },
+  {
+    text: "Object",
+    value: "object",
+  },
+  {
     text: "String",
     value: "string",
   },
-  {
-    text: "Date",
-    value: "date",
-  },
 ];
 
-function EndpointResponseFieldTypeSelectInput(
+function ApiResponseBodyTypeSelectInput(
   {
     model,
     setModel,
     fieldName,
-    updateModelFunction,
     disabled,
+    setDataFunction,
   }) {
-  const setDataFunction = (fieldName, selectedOption) => {
-    const newModel = {...model};
-    newModel.setData(fieldName, selectedOption?.value);
-    newModel.setDefaultValue("isSensitiveData");
-    updateModelFunction(newModel);
-  };
-
   return (
     <SelectInputBase
-      selectOptions={SUPPORTED_FIELD_TYPES}
+      selectOptions={SUPPORTED_RESPONSE_BODY_TYPES}
       dataObject={model}
       setDataObject={setModel}
       fieldName={fieldName}
@@ -46,12 +43,12 @@ function EndpointResponseFieldTypeSelectInput(
   );
 }
 
-EndpointResponseFieldTypeSelectInput.propTypes = {
+ApiResponseBodyTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
-  updateModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
 
-export default EndpointResponseFieldTypeSelectInput;
+export default ApiResponseBodyTypeSelectInput;
