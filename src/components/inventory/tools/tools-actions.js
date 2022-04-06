@@ -276,6 +276,11 @@ toolsActions.saveToolConfigurationV2 = async (getAccessToken, cancelTokenSource,
   return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
+toolsActions.updateToolConnectionDetails = async (getAccessToken, cancelTokenSource, toolId, newConfiguration) => {
+  const apiUrl = `/registry/${toolId}/connection/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, newConfiguration);
+};
+
 toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
   let newToolData = toolData.getPersistData();
   newToolData["actions"] = configurationItem.actions;
