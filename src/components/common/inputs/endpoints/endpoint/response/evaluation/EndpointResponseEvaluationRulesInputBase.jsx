@@ -113,7 +113,7 @@ function EndpointResponseEvaluationRulesInputBase(
         rule={endpointResponseEvaluationRuleModel?.getData(evaluationRuleFieldName)}
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
         updateRuleFunction={(newRule) => updateRuleFunction(evaluationRuleFieldName, newRule)}
-        responseBodyFields={endpoint?.responseBodyFields}
+        endpoint={endpoint}
         disabled={disabled}
       />
       <InfoText errorMessage={error} />
