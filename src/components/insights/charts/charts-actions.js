@@ -303,9 +303,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     ),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(
       kpiConfiguration,
-    ),
-    amexApplication = getAmexApplicationFromKpiConfiguration(kpiConfiguration),
-    amexDirector = getAmexDirectorFromKpiConfiguration(kpiConfiguration);
+    );
 
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
