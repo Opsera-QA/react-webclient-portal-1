@@ -21,7 +21,7 @@ function EndpointResponseEvaluationRuleInput(
   {
     disabled,
     updateRuleFunction,
-    responseBodyFields,
+    endpoint,
     rule,
   }) {
   const [evaluationRuleModel, setEvaluationRuleModel] = useState(undefined);
@@ -73,7 +73,6 @@ function EndpointResponseEvaluationRuleInput(
                 model={evaluationRuleModel}
                 setModel={setEvaluationRuleModel}
                 setDataFunction={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}
-                responseBodyFields={responseBodyFields}
                 disabled={disabled}
               />
             </Col>
@@ -83,10 +82,35 @@ function EndpointResponseEvaluationRuleInput(
                 model={evaluationRuleModel}
                 setModel={setEvaluationRuleModel}
                 setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}
-                responseBodyFields={Array.isArray(responseBodyFields) ? [...responseBodyFields] : undefined}
+                responseBodyFields={Array.isArray(endpoint?.responseBodyFields) ? [...endpoint?.responseBodyFields] : undefined}
                 disabled={disabled}
               />
             </Col>
+          </>
+        );
+      case "response_evaluation":
+        return (
+          <>
+            <div>In progress</div>
+            {/*<Col xs={8}>*/}
+            {/*  <EndpointResponseFieldEvaluationRulesFilterSelectInput*/}
+            {/*    fieldName={"filter"}*/}
+            {/*    model={evaluationRuleModel}*/}
+            {/*    setModel={setEvaluationRuleModel}*/}
+            {/*    setDataFunction={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}*/}
+            {/*    disabled={disabled}*/}
+            {/*  />*/}
+            {/*</Col>*/}
+            {/*<Col xs={12}>*/}
+            {/*  <EndpointResponseFieldEvaluationRulesInputBase*/}
+            {/*    fieldName={"field_rules"}*/}
+            {/*    model={evaluationRuleModel}*/}
+            {/*    setModel={setEvaluationRuleModel}*/}
+            {/*    setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}*/}
+            {/*    responseBodyFields={Array.isArray(endpoint?.responseBodyFields) ? [...endpoint?.responseBodyFields] : undefined}*/}
+            {/*    disabled={disabled}*/}
+            {/*  />*/}
+            {/*</Col>*/}
           </>
         );
     }
@@ -118,7 +142,7 @@ function EndpointResponseEvaluationRuleInput(
             fieldName={"option"}
             setDataFunction={(fieldName, selectedOption) => setRuleOptionFunction(fieldName, selectedOption?.value)}
             disabled={disabled}
-            responseBodyFields={responseBodyFields}
+            endpoint={endpoint}
           />
         </Col>
         {getInputForRuleOption()}
@@ -126,7 +150,7 @@ function EndpointResponseEvaluationRuleInput(
     );
   };
 
-  if (evaluationRuleModel == null) {
+  if (evaluationRuleModel == null || endpoint == null) {
     return null;
   }
 
@@ -139,7 +163,7 @@ function EndpointResponseEvaluationRuleInput(
 
 EndpointResponseEvaluationRuleInput.propTypes = {
   updateRuleFunction: PropTypes.func,
-  responseBodyFields: PropTypes.array,
+  endpoint: PropTypes.object,
   rule: PropTypes.object,
   disabled: PropTypes.bool,
 };
