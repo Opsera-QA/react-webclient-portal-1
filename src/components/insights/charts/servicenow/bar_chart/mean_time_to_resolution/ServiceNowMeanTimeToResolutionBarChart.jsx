@@ -22,6 +22,9 @@ import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/Service
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import IconBase from "components/common/icons/IconBase";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
+import ServiceNowAverageTimeToResolveDataBlock from "../../data_blocks/ServiceNowAverageTimeToResolveDataBlock";
+import ServiceNowMinMTTRDataBlock from "../../data_blocks/ServiceNowMinMTTRDataBlock";
+import ServiceNowMaxMTTRDataBlock from "../../data_blocks/ServiceNowMaxMTTRDataBlock";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -45,6 +48,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [overallMean, setOverallMean] = useState(undefined);
+  const [minMTTR, setMinMTTR] = useState(undefined);
+  const [maxMTTR, setMaxMTTR] = useState(undefined);
   const [goalsData, setGoalsData] = useState(undefined);
   const [totalIncidents, setTotalIncidents] = useState(0);
   const [totalResolvedIncidents, setTotalResolvedIncidents] = useState(0);
@@ -118,6 +123,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
       const responseData = response?.data?.data[0]?.serviceNowMTTR?.data[0];
       setTotalIncidents(responseData?.totalIncidents ? responseData?.totalIncidents : 0);
       setTotalResolvedIncidents(responseData?.totalResolvedIncidents ? responseData?.totalResolvedIncidents : 0);
+      setMinMTTR(responseData?.minMTTR ? responseData?.minMTTR : 0);
+      setMaxMTTR(responseData?.maxMTTR ? responseData?.maxMTTR : 0);
       setLastFiveDays(responseData?.lastFiveDays ? responseData?.lastFiveDays : 0);
       setFiveToFifteenDays(responseData?.fiveToFifteenDays ? responseData?.fiveToFifteenDays : 0);
       setFifteenToThirtyDays(responseData?.fifteenToThirtyDays ? responseData?.fifteenToThirtyDays : 0);
@@ -198,25 +205,68 @@ function ServiceNowMeanTimeToResolutionBarChart({
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
-          <div className="ml-2 p-0">
-            {getMetricTopRow()}
-          </div>
-          <div className="ml-2 p-0">
-            {getMetricBottomRow()}
-          </div>
-          <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
-            <Row>
-              <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
-                <Row>
-                  <Col lg={12} className={"my-3"} style={{ paddingTop: "8px"}}>
+          {/*<div className="ml-2 p-0">*/}
+          {/*  {getMetricBottomRow()}*/}
+          {/*</div>*/}
+          <div className="new-chart m-3 p-0" style={{ minHeight: "600px", display: "flex" }}>
+            <Row className={"justify-content-center"}>
+              <Row xl={6} lg={6} md={7} className={"d-flex px-2 justify-content-center"}>
+                  <Col md={12} >
                     <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
                   </Col>
-                  <Col lg={12} className={"my-3"}>
+                  <Col md={12} >
                     <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
                   </Col>
-                </Row>
-              </Col>
+                  <Col md={12} >
+                    <ServiceNowAverageTimeToResolveDataBlock data={overallMean} />
+                  </Col>
+                  <Col md={12} >
+                    <ServiceNowMinMTTRDataBlock data={minMTTR} />
+                  </Col>
+                  <Col md={12} >
+                    <ServiceNowMaxMTTRDataBlock data={maxMTTR} />
+                  </Col>
+              </Row>
               <Col xl={9} lg={9} md={8} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+                <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
+                      style={{ float: "right", fontSize: "10px" }}>
+                  Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
+                  <br></br>
+                  Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
+                  <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
+                  <br></br>
+                  MTTR{" "}
+                  <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
+                </div>
+                <ResponsiveBar
+                  data={metrics}
+                  {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
+                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                  {...adjustBarWidth(metrics)}
+                  // onClick={(data) => onRowSelect(data)}
+                  tooltip={({ indexValue, value, data, color }) => (
+                    <ChartTooltip
+                      titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
+                      values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
+                      style={false}
+                      // color={color}
+                    />
+                  )}
+                  markers={[
+                    {
+                      axis: "y",
+                      value: overallMean ? overallMean : 0,
+                      lineStyle: { stroke: neutralColor, strokeWidth: 2 },
+                      legend: "",
+                    },
+                    {
+                      axis: "y",
+                      value: goalsData?.mttrAvgMeanTimeGoal ? goalsData?.mttrAvgMeanTimeGoal : 0,
+                      lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                      legend: "",
+                    },
+                  ]}
+                />
                 <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
                   Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
@@ -258,6 +308,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
                 />
               </Col>
             </Row>
+          </div>
+          <div className="ml-2 p-0">
+            {getMetricTopRow()}
           </div>
         </>
     );
