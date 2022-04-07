@@ -10,6 +10,8 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
+const height = "calc(100vh - 555px)";
+
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
     fieldName,
@@ -52,6 +54,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
   const loadData = () => {
     const currentData = model?.getArrayData(fieldName);
     const unpackedFields = [];
+    let requiresUpdate = false;
 
     responseBodyFields?.forEach((field) => {
       const newField = {...field};
@@ -69,9 +72,23 @@ function EndpointResponseFieldEvaluationRulesInputBase(
       if (hasStringValue(filter) === true) {
         newField.filter = filter;
       }
+      else {
+        newField.filter = "is_not_null";
+        requiresUpdate = true;
+      }
 
       unpackedFields.push(newField);
     });
+
+    if (requiresUpdate === true) {
+      validateAndSetData(unpackedFields);
+      return;
+    }
+
+    if (activeTab == null && Array.isArray(unpackedFields) && unpackedFields.length > 0) {
+      setActiveTab('0');
+      setCurrentFieldData(unpackedFields[0]);
+    }
 
     setFields([...unpackedFields]);
   };
@@ -140,8 +157,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
         icon={faBracketsCurly}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
-        minimumHeight={"calc(100vh - 555px)"}
-        maximumHeight={"calc(100vh - 555px)"}
+        minimumHeight={height}
+        maximumHeight={height}
         tabColumnSize={3}
       />
     );

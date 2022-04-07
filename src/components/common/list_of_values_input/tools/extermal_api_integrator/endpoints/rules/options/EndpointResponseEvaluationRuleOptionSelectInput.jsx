@@ -21,18 +21,35 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
     setDataFunction,
     disabled,
     className,
-    responseBodyFields,
+    endpoint,
   }) {
   // TODO: Find better way to disable options
   const getOptions = () => {
-    if (!Array.isArray(responseBodyFields) || responseBodyFields.length === 0) {
-      return [{
-        text: "Status Code",
-        value: "status",
-      },];
+    const supportedRuleOptions = [{
+      text: "Status Code",
+      value: "status",
+    },];
+
+    if (endpoint?.responseBodyType === "object") {
+      const responseBodyFields = endpoint?.responseBodyFields;
+
+      if (Array.isArray(responseBodyFields) && responseBodyFields.length > 0) {
+        supportedRuleOptions.push({
+          text: "Response Field Evaluation",
+          value: "field_evaluation",
+        });
+      }
     }
 
-    return SUPPORTED_RULE_OPTIONS;
+    const simpleResponseEvaluationSupportedResponseBodyTypes = ["boolean", "array", "string"];
+    if (simpleResponseEvaluationSupportedResponseBodyTypes.includes(endpoint?.responseBodyType)) {
+      supportedRuleOptions.push({
+        text: "Response Evaluation",
+        value: "response_evaluation",
+      });
+    }
+
+    return supportedRuleOptions;
   };
 
   return (
@@ -58,7 +75,7 @@ EndpointResponseEvaluationRuleOptionSelectInput.propTypes = {
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  responseBodyFields: PropTypes.array,
+  endpoint: PropTypes.object,
 };
 
 export default EndpointResponseEvaluationRuleOptionSelectInput;
