@@ -29,7 +29,7 @@ function GithubCommitsActionableInsightContributorsTab({highestMergesMetric, das
   return (
     <VanitySetTabAndViewContainer
       title={`Github Contributors`}
-      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0].id && highestMergesMetric[0].id}
+      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]?.id && highestMergesMetric[0]?.id}
       verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
       currentView={getTabContentContainer()}
     />
