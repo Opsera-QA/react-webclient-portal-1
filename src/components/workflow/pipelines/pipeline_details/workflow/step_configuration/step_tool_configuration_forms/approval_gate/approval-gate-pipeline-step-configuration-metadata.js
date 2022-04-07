@@ -19,9 +19,7 @@ const approvalGatePipelineStepConfigurationMetadata = {
       id: "contact",
       maxLength: 50,
       formText: "Point of contact if approval assignee has questions.",
-      isRequiredFunction: (model) => {
-        return model?.getData("sendCustomMessage") === true;
-      },
+      isRequired: true,
     },
   ],
   newObjectFields: {
