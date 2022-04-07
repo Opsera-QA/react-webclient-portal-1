@@ -25,6 +25,10 @@ const externalApiIntegratorEndpointMetadata = {
       isRequired: true,
     },
     {
+      label: "Headers",
+      id: "headerConfiguration",
+    },
+    {
       label: "Query Parameter Fields",
       id: "queryParameterFields",
     },
@@ -47,6 +51,7 @@ const externalApiIntegratorEndpointMetadata = {
     description: "",
     requestType: "get",
     url: "",
+    headerConfiguration: {},
     queryParameterFields: [],
     requestBodyFields: [],
     responseBodyType: "object",

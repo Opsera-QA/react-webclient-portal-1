@@ -85,7 +85,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
       return;
     }
 
-    if (Array.isArray(unpackedFields) && unpackedFields.length > 0) {
+    if (activeTab == null && Array.isArray(unpackedFields) && unpackedFields.length > 0) {
       setActiveTab('0');
       setCurrentFieldData(unpackedFields[0]);
     }
