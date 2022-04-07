@@ -79,11 +79,13 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
         fieldName={"message"}
         dataObject={approvalGateData}
         setDataObject={setApprovalGateData}
+        disabled={approvalGateData?.getData("sendCustomMessage") !== true}
       />
       <TextInputBase
         fieldName={"contact"}
         dataObject={approvalGateData}
         setDataObject={setApprovalGateData}
+        disabled={approvalGateData?.getData("sendCustomMessage") !== true}
       />
     </PipelineStepEditorPanelContainer>
   );
