@@ -38,10 +38,10 @@ function GitScraperSummaryPanel({ gitScraperPipelineDataObject, pipelineData, se
           <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"threshold"} />
         </Col>{" "}
         <Col lg={6}>
-          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"secretsToIgnore"} />
+          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"excludeSecrets"} />
         </Col>{" "}
         <Col lg={6}>
-          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"filesToIgnore"} />
+          <JsonField dataObject={gitScraperPipelineDataObject} fieldName={"excludeFiles"} />
         </Col>
         <Col lg={6}>
           <BooleanField dataObject={gitScraperPipelineDataObject} fieldName={"secretsException"} />

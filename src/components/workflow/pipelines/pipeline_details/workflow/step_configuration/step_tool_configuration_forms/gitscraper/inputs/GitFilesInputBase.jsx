@@ -46,7 +46,7 @@ function GitFilesInputBase({
       const res = await KafkaConnectActions.getSCMRepoFiles(dataObject, getAccessToken, cancelTokenSource);
       if (res && res.status === 200) {
         if (res.message.length === 0) {
-          dataObject.setData("filesToIgnore", "");
+          dataObject.setData("excludeFiles", []);
           setPlaceholder("No Files Found");
           return;
         }
@@ -54,11 +54,11 @@ function GitFilesInputBase({
         setKafkaConnectSCMRepoFiles(res.message);
         return;
       }
-      dataObject.setData("filesToIgnore", "");
+      dataObject.setData("excludeFiles", []);
       setPlaceholder("No Files Found");
       setKafkaConnectSCMRepoFiles([]);
     } catch (error) {
-      dataObject.setData("filesToIgnore", "");
+      dataObject.setData("excludeFiles", []);
       setPlaceholder("No Files Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
@@ -110,7 +110,7 @@ GitFilesInputBase.propTypes = {
 GitFilesInputBase.defaultProps = {
   valueField: "name",
   textField: "name",
-  fieldName: "filesToIgnore",
+  fieldName: "excludeFiles",
 };
 
 export default GitFilesInputBase;

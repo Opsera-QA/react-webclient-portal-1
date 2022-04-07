@@ -60,11 +60,11 @@ const GitScraperStepFormMetadata = {
     },
     {
       label: "Permitted Secret Keys",
-      id: "secretsToIgnore",
+      id: "excludeSecrets",
     },
     {
       label: "Git Files to Ignore for Scan",
-      id: "filesToIgnore",
+      id: "excludeFiles",
     },
     {
       label: "Exclude Certain Secrets from Scan",
@@ -88,9 +88,9 @@ const GitScraperStepFormMetadata = {
     bitbucketWorkspaceName: "",
     type: "",
     commits: "",
-    threshold: "",
-    secretsToIgnore: "",
-    filesToIgnore: "",
+    threshold: 0,
+    excludeSecrets: [],
+    excludeFiles: [],
     secretsException: false,
     filesException: false,
     service : ""

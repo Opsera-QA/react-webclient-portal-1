@@ -9,8 +9,8 @@ function GitIgnoreToggleInput({model, setModel, fieldName, disabled}) {
   const setDataFunction = () => {
     let newDataObject = model;
     newDataObject.setData(fieldName, !model.getData(fieldName));
-    if (fieldName === "secretsException") newDataObject.setData("secretsToIgnore", []);
-    if (fieldName === "filesException") newDataObject.setData("filesToIgnore", []);
+    if (fieldName === "secretsException") newDataObject.setData("excludeSecrets", []);
+    if (fieldName === "filesException") newDataObject.setData("excludeFiles", []);
     setModel({...newDataObject});
   };
 
@@ -21,7 +21,7 @@ function GitIgnoreToggleInput({model, setModel, fieldName, disabled}) {
           titleIcon={faUserSecret}
           dataObject={model}
           setDataObject={setModel}
-          fieldName={"secretsToIgnore"}
+          fieldName={"excludeSecrets"}
           allowIncompleteItems={false}
           type={"Secrets"}
           disabled={false}
@@ -37,7 +37,7 @@ function GitIgnoreToggleInput({model, setModel, fieldName, disabled}) {
           titleIcon={faFileCode}
           dataObject={model}
           setDataObject={setModel}
-          fieldName={"filesToIgnore"}
+          fieldName={"excludeFiles"}
           allowIncompleteItems={false}
           type={"Git Files"}
           disabled={false}
