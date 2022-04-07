@@ -2,6 +2,10 @@ const approvalGatePipelineStepConfigurationMetadata = {
   type: "Approval Gate Pipeline Configuration",
   fields: [
     {
+      label: "Send Custom Message",
+      id: "sendCustomMessage",
+    },
+    {
       label: "Custom Step Message",
       id: "message",
       isRequired: true,
@@ -15,8 +19,9 @@ const approvalGatePipelineStepConfigurationMetadata = {
     },
   ],
   newObjectFields: {
+    sendCustomMessage: false,
     message: "",
-    contact: ""
+    contact: "",
   }
 };
 

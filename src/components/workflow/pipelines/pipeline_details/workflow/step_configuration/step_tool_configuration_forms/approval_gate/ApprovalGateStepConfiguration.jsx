@@ -12,6 +12,7 @@ import PipelineStepEditorPanelContainer
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import IconBase from "components/common/icons/IconBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
   const contextType = useContext(AuthContext);
@@ -69,8 +70,21 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
         But <b>only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action</b>.
         <div className="my-3">Use the notification icon (<IconBase icon={faEnvelope}/>) to enable the various channels to use.</div>
       </div>
-      <TextAreaInput fieldName={"message"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />
-      <TextInputBase fieldName={"contact"} dataObject={approvalGateData} setDataObject={setApprovalGateData} />
+      <BooleanToggleInput
+        fieldName={"sendCustomMessage"}
+        dataObject={approvalGateData}
+        setDataObject={setApprovalGateData}
+      />
+      <TextAreaInput
+        fieldName={"message"}
+        dataObject={approvalGateData}
+        setDataObject={setApprovalGateData}
+      />
+      <TextInputBase
+        fieldName={"contact"}
+        dataObject={approvalGateData}
+        setDataObject={setApprovalGateData}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
