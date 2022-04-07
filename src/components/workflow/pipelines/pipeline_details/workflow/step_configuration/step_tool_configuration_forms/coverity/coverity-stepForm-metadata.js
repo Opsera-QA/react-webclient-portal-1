@@ -94,6 +94,14 @@ const coverityStepFormMetadata = {
       id: "toolJobId",
       isRequired: true
     },
+    {
+      label: ".Net CLI Type",
+      id: "dotnetType",      
+    },
+    {
+      label: ".Net SDK Version",
+      id: "dotnetSdkVersion",      
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
@@ -116,7 +124,9 @@ const coverityStepFormMetadata = {
     toolJobType: ["CODE SCAN"],
     workspaceDeleteFlag:false,
     jobName:"" ,
-    coverityCredntialId :""
+    coverityCredntialId :"",
+    dotnetType: "",
+    dotnetSdkVersion : "",
   }
 };
 
