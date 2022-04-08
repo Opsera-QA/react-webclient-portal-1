@@ -7,6 +7,11 @@ export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
     "name": "Ubuntu Agent",
     "env" : "linux",
     "value": "generic-linux",
+  },
+  {
+    "name": "Windows Agent",
+    "env" : "windows",
+    "value": "generic-windows",
   }
 ];
 
