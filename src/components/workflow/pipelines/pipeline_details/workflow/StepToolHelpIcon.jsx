@@ -20,6 +20,8 @@ import PipelineSourceRepositoryHelpDocumentation
 import AnsibleStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ApprovalGateStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ApprovalGateStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -39,6 +41,8 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <OctopusDeployStepConfigurationHelpDocumentation/>;
       case "ansible":
         return <AnsibleStepConfigurationHelpDocumentation/>;
+      case "approval":
+        return <ApprovalGateStepConfigurationHelpDocumentation/>;
       case "jenkins":
       case "junit":
       case "xunit":
@@ -55,7 +59,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "databricks-notebook":
       case "ssh-upload":
       case "spinnaker":
-      case "approval":
       case "cypress":
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "anchore-scan":
@@ -63,6 +66,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "sfdc-configurator":
       case "nexus":
       case "terraform":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
       case "elastic-beanstalk":
       case "child-pipeline":
       case "mock-step":

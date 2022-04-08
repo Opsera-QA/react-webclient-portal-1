@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import VanitySetTreeAndViewContainer from "components/common/tree/VanitySetTreeAndViewContainer";
 import PropTypes from "prop-types";
 import HelpDocumentationTree from "components/common/help/overlay/HelpDocumentationTree";
 import HelpDocumentationView from "components/common/help/overlay/HelpDocumentationView";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
 function HelpDocumentation({initialView}) {
   const [currentView, setCurrentView] = useState("welcome");
@@ -15,11 +15,11 @@ function HelpDocumentation({initialView}) {
   }, [initialView]);
 
   return (
-    <VanitySetTreeAndViewContainer
-      treeColumnSize={3}
+    <VanitySetTabAndViewContainer
+      tabColumnSize={4}
       icon={faQuestionCircle}
       title={`Help`}
-      treeContainer={<HelpDocumentationTree setCurrentView={setCurrentView} />}
+      verticalTabContainer={<HelpDocumentationTree setCurrentView={setCurrentView} />}
       currentView={<HelpDocumentationView currentView={currentView} />}
     />
   );

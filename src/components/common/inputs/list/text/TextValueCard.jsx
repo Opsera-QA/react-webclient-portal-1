@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faMinusCircle} from "@fortawesome/pro-light-svg-icons";
 import BadgeBase from "components/common/badges/BadgeBase";
+import RemoveListItemBadge from "components/common/badges/general/RemoveListItemBadge";
 
 function TextValueCard(
   {
@@ -9,20 +10,8 @@ function TextValueCard(
     className,
     deleteValueFunction,
     index,
+    disabled,
   }) {
-  const getDeleteItemButton = () => {
-    if (deleteValueFunction) {
-      return (
-        <div className={"pointer danger-red"} onClick={deleteValueFunction}>
-          <BadgeBase
-            badgeText={"Remove"}
-            icon={faMinusCircle}
-          />
-        </div>
-      );
-    }
-  };
-
   if (value == null) {
     return null;
   }
@@ -34,7 +23,10 @@ function TextValueCard(
     >
       <div className={"pl-2 justify-content-between d-flex w-100"}>
         <div>{value}</div>
-        <div>{getDeleteItemButton()}</div>
+        <RemoveListItemBadge
+          deleteValueFunction={deleteValueFunction}
+          disabled={disabled}
+        />
       </div>
     </li>
   );
@@ -45,6 +37,7 @@ TextValueCard.propTypes = {
   className: PropTypes.string,
   index: PropTypes.number,
   deleteValueFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default TextValueCard;

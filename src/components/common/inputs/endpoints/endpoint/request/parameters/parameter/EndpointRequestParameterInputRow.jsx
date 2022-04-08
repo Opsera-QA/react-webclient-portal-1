@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
-import InfoContainer from "components/common/containers/InfoContainer";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 
 function EndpointRequestParameterInputRow(
   {
@@ -31,7 +29,7 @@ function EndpointRequestParameterInputRow(
   const updateMainModelFunction = (fieldName, newValue) => {
     const newModel = {...endpointFieldModel};
     newModel.setData(fieldName, newValue);
-    updateParameterFunction({...newModel?.getPersistData()});
+    updateParameterFunction({...newModel?.getCurrentData()});
   };
 
   const getInfoText = () => {
@@ -66,10 +64,6 @@ function EndpointRequestParameterInputRow(
     updateMainModelFunction(fieldName, newValue?._id);
   };
 
-  const updateInsensitiveCustomParameter = (fieldName, newValue) => {
-    updateMainModelFunction(fieldName, newValue?.value);
-  };
-
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -101,7 +95,7 @@ function EndpointRequestParameterInputRow(
               fieldName={"value"}
               className={"value-parameter"}
               requireInsensitiveParameters={true}
-              setDataFunction={updateInsensitiveCustomParameter}
+              setDataFunction={updateMainModelFunction}
               disabled={disabled}
             />
             <div className={"d-flex justify-content-end"}>
@@ -145,19 +139,14 @@ function EndpointRequestParameterInputRow(
   }
 
   return (
-    <InfoContainer
+    <VanitySetTabContentContainer
       titleIcon={faCode}
-      titleText={`Field: ${endpointFieldModel?.getData("fieldName")}`}
-      titleClassName={"sub-input-title-bar"}
+      title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
-      <div>
-        <Row>
-          <Col sm={12}>
-            {getValueInput()}
-          </Col>
-        </Row>
+      <div className={"h-100"}>
+        {getValueInput()}
       </div>
-    </InfoContainer>
+    </VanitySetTabContentContainer>
   );
 }
 

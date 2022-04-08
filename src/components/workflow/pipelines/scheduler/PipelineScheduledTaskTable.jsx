@@ -78,7 +78,7 @@ function PipelineScheduledTaskTable(
   const createScheduledTask = () => {
     if (isMounted?.current === true) {
       let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
-      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId}); //task type to be set to "pipeline-run" when tasks can be scheduled 
       setScheduledTaskData({...newModel});
     }
   };

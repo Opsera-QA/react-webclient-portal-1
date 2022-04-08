@@ -126,9 +126,6 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
 
   return (
     <div>
-      <H5FieldSubHeader
-        subheaderText={"Endpoint Parameters"}
-      />
       <InfoText errorMessage={error} />
       {getDynamicInputsForRequestType()}
     </div>

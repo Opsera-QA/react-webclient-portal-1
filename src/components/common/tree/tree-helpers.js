@@ -1,13 +1,13 @@
-export function getBaseTreeItem(id, label, children = []) {
+export function getBaseTreeItem(id, label, children = [], fontAwesomeIconClassName = "fa-book") {
   return (
     {
       id: id,
       items: children,
       value: label,
       icon: {
-        "folder": "fal fa-tasks opsera-primary",
-        "openFolder": "fal fa-tasks opsera-yellow",
-        "file": "fal fa-tasks opsera-primary"
+        folder: `fal ${fontAwesomeIconClassName} opsera-primary`,
+        openFolder: `fal ${fontAwesomeIconClassName} opsera-yellow`,
+        file: `fal ${fontAwesomeIconClassName} opsera-primary`,
       }
     }
   );

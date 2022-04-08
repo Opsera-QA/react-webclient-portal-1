@@ -16,7 +16,7 @@ const EXTERNAL_LINKS = {
 };
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
-  const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, loginUserContext, logoutUserContext } = useContext(AuthContext);
+  const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
@@ -95,6 +95,26 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     }
   };
 
+  const getFrequentlyAskedQuestionsLink = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
+        <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
+          Frequently Asked Questions
+        </Link>
+      );
+    }
+  };
+
+  const getHelpDocumentationLink = () => {
+    if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
+      return (
+        <Link to={"/help-documentation"} id={"help-button"} className={"dropdown-item nav-drop-down-item"}>
+          Help Documentation
+        </Link>
+      );
+    }
+  };
+
   if (process.env.REACT_APP_STACK === "free-trial") {
     return (
       <Navbar className="nav-bar">
@@ -159,6 +179,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
+              {getFrequentlyAskedQuestionsLink()}
+              {getHelpDocumentationLink()}
               <NavDropdown.Divider/>
 
               <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"

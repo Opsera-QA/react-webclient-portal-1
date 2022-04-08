@@ -15,6 +15,9 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
   from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
@@ -67,7 +70,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
     }
   };
 
-  const callbackFunction = async () => {
+  const saveRecord = async () => {
     const newPipelineStep = pipelineStep;
     newPipelineStep.configuration = {...externalRestApiIntegrationModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
@@ -78,6 +81,20 @@ function ExternalRestApiIntegrationStepEditorPanel(
       pipelineId,
       pipelineStep?._id,
       newPipelineStep,
+    );
+  };
+
+  const getWarningMessage = () => {
+    return (
+      <div className={"ml-2 mb-auto d-flex"}>
+        <IconBase icon={faExclamationTriangle} className={"mr-2"} />
+        <div className={"my-auto"}>
+          {`
+          Success rules take precedence over Running rules. 
+          If the response does not match either the Success or Running rule, it will be considered a failure.
+        `}
+        </div>
+      </div>
     );
   };
 
@@ -93,10 +110,11 @@ function ExternalRestApiIntegrationStepEditorPanel(
     <EditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={externalRestApiIntegrationModel}
-      createRecord={callbackFunction}
-      updateRecord={callbackFunction}
+      createRecord={saveRecord}
+      updateRecord={saveRecord}
       lenient={true}
       isLoading={isLoading}
+      extraButtons={getWarningMessage()}
       className={"m-0"}
     >
       <ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput

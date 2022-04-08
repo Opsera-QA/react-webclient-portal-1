@@ -11,13 +11,18 @@ import EndpointResponseBodyInputBase
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import EndpointRequestHeaderConfigurationInput
+  from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderConfigurationInput";
+
+const height = "calc(100vh - 650px)";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
     externalApiIntegratorModel,
     setExternalApiIntegratorModel,
+    disabled,
   }) {
-  const [activeTab, setActiveTab] = useState(externalApiIntegratorModel?.getData("requestType") === ENDPOINT_REQUEST_TYPES.GET ? "queryParameters" : "requestBody");
+  const [activeTab, setActiveTab] = useState("requestHeaderConfiguration");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -51,10 +56,14 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
+      <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
+          {/*<VanitySetVerticalTab*/}
+          {/*  tabText={"Request Header"}*/}
+          {/*  tabName={"requestHeaderConfiguration"}*/}
+          {/*  handleTabClick={handleTabClick}*/}
+          {/*  activeTab={activeTab}*/}
+          {/*/>*/}
           {getDynamicTabsForRequestType()}
           <VanitySetVerticalTab
             tabText={"Response Body"}
@@ -69,12 +78,21 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getCurrentView = () => {
     switch (activeTab) {
+      case "requestHeaderConfiguration":
+        return (
+          <EndpointRequestHeaderConfigurationInput
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
+            disabled={disabled}
+          />
+        );
       case "queryParameters":
         return (
           <EndpointRequestBodyInputPanel
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"queryParameterFields"}
+            disabled={disabled}
           />
         );
       case "requestBody":
@@ -83,6 +101,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"requestBodyFields"}
+            disabled={disabled}
           />
         );
       case "responseBody":
@@ -91,6 +110,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"responseBodyFields"}
+            disabled={disabled}
           />
         );
     }
@@ -107,6 +127,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
+      minimumHeight={height}
+      maximumHeight={height}
     />
   );
 }
@@ -114,6 +136,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 ExternalApiIntegratorEndpointParametersVerticalTabContainer.propTypes = {
   externalApiIntegratorModel: PropTypes.object,
   setExternalApiIntegratorModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ExternalApiIntegratorEndpointParametersVerticalTabContainer;

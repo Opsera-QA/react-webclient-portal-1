@@ -5,7 +5,7 @@ import {faClipboardListCheck, faFileAlt, faFileCode, faObjectGroup} from "@forta
 
 function SalesforceSummaryLogVerticalTabContainer() {
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
+    <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faFileAlt}
         tabText={"Overview"}
