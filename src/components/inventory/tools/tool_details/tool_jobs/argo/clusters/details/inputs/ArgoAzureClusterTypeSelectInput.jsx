@@ -8,8 +8,6 @@ const CLUSTER_TYPES = [
 ];
 
 function ArgoAzureClusterTypeSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
-  
-  console.log("ArgoAzureClusterTypeSelectInput");
 
   return (
     <SelectInputBase
