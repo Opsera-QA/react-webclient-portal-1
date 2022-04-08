@@ -18,6 +18,7 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
         return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobTypeData}/>;
       case "SHELL SCRIPT":
       case "DOCKER PUSH":
+      case "COVERITY":
       case "ARTIFACTORY_DOCKER_PUSH":
         return (
           <>
