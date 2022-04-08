@@ -87,7 +87,7 @@ import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
-import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActionsDataBlock";
+import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
@@ -1179,6 +1179,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                 dashboardData={dashboardData}
                 setKpis={setKpis}
                 index={index}
+                showViewDetailsToggle={true}
               />
             </Col>
           );

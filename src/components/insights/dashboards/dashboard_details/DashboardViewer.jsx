@@ -6,6 +6,9 @@ import { faUsers } from "@fortawesome/pro-light-svg-icons";
 import ChartView from "components/insights/charts/ChartView";
 import axios from "axios";
 import BadgeBase from "components/common/badges/BadgeBase";
+import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
+import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
 import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
 
@@ -37,6 +40,44 @@ function DashboardViewer({ dashboardModel, loadData }) {
 
   const initializeModel = async (newDashboardData) => {
     setKpis(newDashboardData?.getData("configuration"));
+  };
+
+  const getFilterActiveButton = (filter, key) => {
+    return (
+      <div key={key} className="mx-1 badge badge-light filter-badge">
+        <span>{filter.type + ": " + filter.value}</span>
+      </div>
+    );
+  };
+
+  const getActiveFilters = () => {
+    let svpFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.svp?.map((value) => {return {"type": "SVP", "value": value};});
+    let vp2Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.vp2?.map((value) => {return {"type": "VP2", "value": value};});
+    let vp1Filters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.vp1?.map((value) => {return {"type": "VP1", "value": value};});
+    let directorFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.director?.map((value) => {return {"type": "Director", "value": value};});
+    let applicationFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.application?.map((value) => {return {"type": "Application", "value": value};});
+    let actionFilters = dashboardModel.getData("filters").find(x => x.type === "amexFilters")?.value?.action?.map((value) => {return {"type": "Action", "value": value};});
+    let organizationFilters = dashboardModel.getData("filters").find(x => x.type === "organizations")?.value?.map((value) => {return {"type": "Organization", "value": value?.name};});
+    let tagFilters = dashboardModel.getData("filters").find(x => x.type === "tags")?.value;
+    let activeFilters = [];
+    if (Array.isArray(svpFilters)) {activeFilters = [...activeFilters, ...svpFilters];}
+    if (Array.isArray(vp2Filters)) {activeFilters = [...activeFilters, ...vp2Filters];}
+    if (Array.isArray(vp1Filters)) {activeFilters = [...activeFilters, ...vp1Filters];}
+    if (Array.isArray(directorFilters)) {activeFilters = [...activeFilters, ...directorFilters];}
+    if (Array.isArray(applicationFilters)) {activeFilters = [...activeFilters, ...applicationFilters];}
+    if (Array.isArray(actionFilters)) {activeFilters = [...activeFilters, ...actionFilters];}
+    if (Array.isArray(organizationFilters)) {activeFilters = [...activeFilters, ...organizationFilters];}
+    if (Array.isArray(tagFilters)) {activeFilters = [...activeFilters, ...tagFilters];}
+
+    if (Array.isArray(activeFilters) && activeFilters.length > 0) {
+      return (
+        <div className="item-field py-2 px-1" style={{overflow: "hidden"}}>
+          {activeFilters.map((filter, key) =>  getFilterActiveButton(filter, key))}
+        </div>
+      );
+    }
+
+    return null;
   };
 
   const getKpiView = () => {
@@ -83,14 +124,8 @@ function DashboardViewer({ dashboardModel, loadData }) {
           />
         </div>
         <div className={"d-flex"}>
-          {/*TODO: Make version for dashboards, wire that up instead*/}
-          <div className={"mr-2"}>
-            <DashboardTagsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          </div>
-          <div>
-            <DashboardOrganizationsInlineInput model={dashboardModel} loadData={loadData} className={"mr-2"} />
-          </div>
-        </div>
+           {getActiveFilters()}
+         </div>
       </div>
       {getKpiView()}
     </div>
