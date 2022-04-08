@@ -8,6 +8,8 @@ function CoverityStepJenkinsJobSelectInput({model, setModel, disabled}) {
     let newDataObject = {...model};
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
+    newDataObject.setData("dotnetType", "");
+    newDataObject.setData("dotnetSdkVersion", "");
     setModel({...newDataObject});
   };
 
@@ -15,6 +17,8 @@ function CoverityStepJenkinsJobSelectInput({model, setModel, disabled}) {
     let newDataObject = {...model};
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("agentLabels", "");
+    newDataObject.setData("dotnetType", "");
+    newDataObject.setData("dotnetSdkVersion", "");
     setModel({...newDataObject});
   };
 
