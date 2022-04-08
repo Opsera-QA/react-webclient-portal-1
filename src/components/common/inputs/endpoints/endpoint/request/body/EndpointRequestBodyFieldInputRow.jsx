@@ -31,8 +31,12 @@ function EndpointRequestBodyFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
-    return endpointFieldModel;
+    return updateModelFunction(endpointFieldModel);
+  };
+
+  const updateModelFunction = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+    return newModel;
   };
 
   if (endpointFieldModel == null) {
@@ -55,7 +59,7 @@ function EndpointRequestBodyFieldInputRow(
             model={endpointFieldModel}
             setModel={setEndpointFieldModel}
             fieldName={"type"}
-            setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+            updateModelFunction={updateModelFunction}
             disabled={disabled}
           />
         </Col>

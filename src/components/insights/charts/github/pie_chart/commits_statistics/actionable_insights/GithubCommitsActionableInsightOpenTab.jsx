@@ -29,8 +29,8 @@ function GithubCommitsActionableInsightOpenTab({ highestMergesMetric, dashboardD
       defaultActiveKey={
         highestMergesMetric &&
         Array.isArray(highestMergesMetric) &&
-        highestMergesMetric[0].id &&
-        highestMergesMetric[0].id
+        highestMergesMetric[0]?.id &&
+        highestMergesMetric[0]?.id
       }
       verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
       currentView={getTabContentContainer()}

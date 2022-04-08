@@ -124,6 +124,18 @@ function VisibleVaultTextAreaInput(
     return ("No value saved in the Vault.");
   };
 
+  const getCurrentValue = () => {
+    if (pullingValueFromVault || isLoading) {
+      return ("Loading Value From Vault");
+    }
+
+    if (valueShown === true) {
+      return model?.getData(fieldName);
+    }
+
+    return "";
+  };
+
   if (field == null) {
     return null;
   }
@@ -138,7 +150,7 @@ function VisibleVaultTextAreaInput(
         <textarea
           style={valueShown === false && !pullingValueFromVault ? {WebkitTextSecurity: 'disc'} : undefined}
           disabled={disabled || pullingValueFromVault}
-          value={pullingValueFromVault || isLoading ? "Loading Value From Vault" : model?.getData(fieldName)}
+          value={getCurrentValue()}
           onChange={(event) => updateValue(event.target.value)}
           className={"form-control"}
           placeholder={getPlaceholderText()}

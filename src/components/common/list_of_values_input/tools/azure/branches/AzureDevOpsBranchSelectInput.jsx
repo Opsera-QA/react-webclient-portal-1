@@ -89,7 +89,7 @@ AzureDevOpsBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  toolId: PropTypes.string.isRequired,
+  toolId: PropTypes.string,
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,

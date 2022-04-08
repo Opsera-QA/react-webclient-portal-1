@@ -280,7 +280,7 @@ export const isAnLdapUser = (user, accessRole) => {
  *
  *
  */
-export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions, allowAllIfNoRolesAssigned) => {
+export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions, allowAllIfNoRolesAssigned = true) => {
   if (customerAccessRules == null || roleDefinitions == null) {
     return false;
   }

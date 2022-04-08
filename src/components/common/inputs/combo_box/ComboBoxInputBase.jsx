@@ -48,7 +48,8 @@ function ComboBoxInputBase(
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(fieldName, newValue);
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+      setDataFunction(fieldName, parsedValue);
     }
     else {
       const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];

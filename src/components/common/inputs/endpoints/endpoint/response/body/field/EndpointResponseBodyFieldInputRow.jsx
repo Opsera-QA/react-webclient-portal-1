@@ -5,13 +5,11 @@ import Row from "react-bootstrap/Row";
 import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointResponseFieldTypeSelectInput
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldTypeSelectInput";
-import EndpointResponseFieldIsSensitiveDataToggleInput
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldIsSensitiveDataToggleInput";
+  from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseFieldTypeSelectInput";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import EndpointResponseFieldNameTextInput
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseFieldNameTextInput";
+  from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseFieldNameTextInput";
 
 function EndpointResponseBodyFieldInputRow(
   {
@@ -29,8 +27,12 @@ function EndpointResponseBodyFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
-    return endpointFieldModel;
+    return updateModelFunction(endpointFieldModel);
+  };
+
+  const updateModelFunction = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+    return newModel;
   };
 
   if (endpointFieldModel == null) {
@@ -53,18 +55,19 @@ function EndpointResponseBodyFieldInputRow(
             model={endpointFieldModel}
             setModel={setEndpointFieldModel}
             fieldName={"type"}
-            setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+            updateModelFunction={updateModelFunction}
             disabled={disabled}
           />
         </Col>
-        <Col sm={6}>
-          <EndpointResponseFieldIsSensitiveDataToggleInput
-            model={endpointFieldModel}
-            updateMainModelFunction={updateMainModelFunction}
-            index={index}
-            disabled={disabled}
-          />
-        </Col>
+        {/*TODO: For future enhancement if customers ask for not logging response fields*/}
+        {/*<Col sm={6}>*/}
+        {/*  <EndpointResponseFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
       </Row>
       <ButtonContainerBase className={"mt-2"}>
         <DeleteButton dataObject={endpointFieldModel} deleteRecord={deleteFieldFunction} />

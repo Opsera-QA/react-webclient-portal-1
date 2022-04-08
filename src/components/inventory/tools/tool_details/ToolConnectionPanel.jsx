@@ -39,7 +39,7 @@ import FlywayDatabaseToolConnectionEditorPanel
 import ExternalApiIntegratorToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionEditorPanel";
 
-function ToolConnectionPanel({ toolData }) {
+function ToolConnectionPanel({ toolData, setToolData }) {
   const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
@@ -49,7 +49,8 @@ function ToolConnectionPanel({ toolData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
           <ExternalApiIntegratorToolConnectionEditorPanel
-            toolData={toolData}
+            toolModel={toolData}
+            setToolModel={setToolData}
           />
         );
       case "jenkins":
@@ -132,8 +133,8 @@ function ToolConnectionPanel({ toolData }) {
 }
 
 ToolConnectionPanel.propTypes = {
-  toolId: PropTypes.string,
   toolData: PropTypes.object,
+  setToolData: PropTypes.func,
 };
 
 
