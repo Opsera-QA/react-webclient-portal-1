@@ -143,7 +143,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   };
 
   const onRowSelect = (stat) => {
-    console.log('onRowSelect', stat);
+    // console.log('onRowSelect', stat);
     const chartModel = new Model(
       { ...GitScrapperActionableMetadata.newObjectFields },
       GitScrapperActionableMetadata,
@@ -151,7 +151,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     );
     toastContext.showOverlayPanel(
       <GitScrapperActionableInsightOverlay
-        title={stat + " Issues Insights"}
+        title={stat}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         gitScrapperSeverity={stat}
@@ -257,7 +257,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 }
                 icon={getIcon(metrics[0]?.overallScannedRepositoriesTrend)}
                 className={getIconColor(metrics[0]?.overallScannedRepositoriesTrend)}
-                onSelect={() => onRowSelect("Low")}
+                onSelect={() => onRowSelect("Total Repositories Scanned")}
                 lastScore={metrics[0]?.previousTotalScannedRepositories}
                 iconOverlayBody={getDescription(metrics[0]?.overallScannedRepositoriesTrend)}
               />
@@ -271,7 +271,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 }
                 icon={getIcon(metrics[0]?.overallCleanRepositoriesTrend)}
                 className={getIconColor(metrics[0]?.overallCleanRepositoriesTrend)}
-                onSelect={() => onRowSelect("Medium")}
+                onSelect={() => onRowSelect("Total Clean Repositories")}
                 lastScore={metrics[0]?.previousTotalCleanRepositories}
                 iconOverlayBody={getDescription(metrics[0]?.overallCleanRepositoriesTrend)}
               />
@@ -285,7 +285,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 }
                 icon={getIcon(metrics[0].overallTotalIssuesTrend)}
                 className={getIconColor(metrics[0].overallTotalIssuesTrend)}
-                onSelect={() => onRowSelect("High")}
+                onSelect={() => onRowSelect("Total Number of Issues")}
                 lastScore={metrics[0].previousTotalIssues}
                 iconOverlayBody={getDescription(metrics[0].overallTotalIssuesTrend)}
               />
