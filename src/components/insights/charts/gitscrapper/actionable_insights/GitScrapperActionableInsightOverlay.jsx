@@ -16,6 +16,12 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import IconBase from "components/common/icons/IconBase";
+import FilterContainer from "components/common/table/FilterContainer";
+import GitScrapperCardView from "./card/GitScrapperCardView";
+
+import GitScrapperMetricScorecardMetaData from "../gitScrapperMetricScorecardMetaData";
+import gitScrapperPipelineFilterMetadata from "../git-scrapper-pipeline-filter-metadata";
+
 
 function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -24,16 +30,21 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [dataBlockValues, setDataBlockValues] = useState([]);
+  const [dataScorecardMetrics, setDataScorecardMetrics] = useState([]);
+  const fields = GitScrapperMetricScorecardMetaData.fields;
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [filterModel, setFilterModel] = useState(
-    new Model(
-      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-      actionableInsightsGenericChartFilterMetadata,
-      false
-    )
+  // const [filterModel, setFilterModel] = useState(
+  //   new Model(
+  //     { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+  //     actionableInsightsGenericChartFilterMetadata,
+  //     false
+  //   )
+  // );
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...gitScrapperPipelineFilterMetadata.newObjectFields }, gitScrapperPipelineFilterMetadata, false)
   );
 
   useEffect(() => {
@@ -56,7 +67,7 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags =
@@ -79,8 +90,20 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
         null,
         null,
         gitScrapperSeverity
+      ),
+      responseRepoScorecardBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "sonarBugsCodeBasedMetricScorecard",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        null,
+        dashboardOrgs
       );
 
+      responseRepoScorecardBlockValues['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"gitScrapperBasedMetricScorecard":{"tool":"Git Scrapper","data":[{"data":[{"projectName":"Java BE MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":16,"gitScrapperLatestMeasureValue":10,"gitScrapperPrimaryLanguage":"java","prevScanResult":10,"currScanResult":10,"status":"Neutral","libraryName":"Coverity","repositoryName":"Java BE MicroService"},{"projectName":"Python MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":30,"gitScrapperLatestMeasureValue":25,"gitScrapperPrimaryLanguage":"python","prevScanResult":5,"currScanResult":25,"status":"Red","libraryName":"SonarQube","repositoryName":"Python MicroService"},{"projectName":"C++ System Service","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":7,"gitScrapperLatestMeasureValue":12,"gitScrapperPrimaryLanguage":"c++","prevScanResult":15,"currScanResult":12,"status":"Green","libraryName":"SonarQube","repositoryName":"C++ System Service"}],"count":[{"count":3}]}],"length":1,"status":200,"status_text":"OK"}}]};
+      const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data ? responseRepoScorecardBlockValues?.data?.data[0]?.gitScrapperBasedMetricScorecard?.data[0]?.data : [];
       // TODO
 
       console.log('gitScrapperSeverity', gitScrapperSeverity);
@@ -107,16 +130,26 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
         _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
       }));
 
+
+
       console.log('response', response);
       console.log('dataObject', dataObject);
     
 
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataCount);
-      setFilterModel({ ...newFilterDto });
-      if (isMounted?.current === true && dataObject) {
+      // let newFilterDto = filterDto;
+      // newFilterDto.setData("totalCount", dataCount);
+      // setFilterModel({ ...newFilterDto });
+      if (isMounted?.current === true && dataObject && dataObjectRepoScorecardDataBlocks) {
         setMetrics(dataObject);
         setDataBlockValues(DataBlocks);
+        setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);
+
+        let newFilterDto = filterDto;
+        newFilterDto.setData(
+          "totalCount",
+          responseRepoScorecardBlockValues?.data?.data[0]?.gitScrapperBasedMetricScorecard?.data[0]?.count[0]?.count
+        );
+        setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -129,6 +162,32 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
       }
     }
   };
+
+  const getCardView = () => {
+    return (
+      <GitScrapperCardView
+        gitScrapperDataFilterDto={tableFilterDto}
+        setGitScrapperDataFilterDto={setTableFilterDto}
+        isLoading={isLoading}
+        data={dataScorecardMetrics}
+        loadData={loadData}
+      />
+    );
+  };
+
+  const getFilterContainer = () => {
+    return (
+      <FilterContainer
+        filterDto={tableFilterDto}
+        setFilterDto={setTableFilterDto}
+        body={getCardView()}
+        isLoading={isLoading}
+        loadData={loadData}
+        supportSearch={true}
+      />
+    );
+  };
+  
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -152,7 +211,7 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
     >
       <div className={"p-3"}>
         {getDateRange()}
-        <GitScrapperActionableDataBlockContainers data={dataBlockValues} level={gitScrapperSeverity} />
+        {/* <GitScrapperActionableDataBlockContainers data={dataBlockValues} level={gitScrapperSeverity} />
         <GitScrapperActionableInsightTable
           data={metrics}
           isLoading={isLoading}
@@ -160,7 +219,8 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           title={title}
-        />
+        /> */}
+        {getFilterContainer()}
         {/* {getFooterDetails()} */}
       </div>
     </FullScreenCenterOverlayContainer>
