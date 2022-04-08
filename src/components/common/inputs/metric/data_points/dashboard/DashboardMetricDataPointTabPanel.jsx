@@ -56,9 +56,7 @@ function DashboardMetricDataPointTabPanel(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
+      <VanitySetVerticalTabContainer>
         <div className={"metric-tab-tree"}>
           {dataPoints.map((dataPoint) => {
             return (

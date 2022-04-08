@@ -18,7 +18,7 @@ function SonarRatingsV2ChartHelpDocumentation({closeHelpPanel}) {
         <h6 className={"mt-2"}>Sonar Ratings: Maintainability</h6>
         <div className={"ml-3"}>
           <div><b>Maintainability</b> - Rating given to your project related to the value of your Technical Debt Ratio.</div>
-          <div><b>Maintainability Rating</b>: <b>A</b> = 0-0.5, <b>B</b> = 0.6-0.1, <b>C</b> = 0.11-0.20, <b>D</b> = 0.21-0.5, <b>E</b> = 0.51-1.</div>
+          <div><b>Maintainability Rating</b>: <b>A</b> = 0-0.05, <b>B</b> = 0.06-0.1, <b>C</b> = 0.11-0.20, <b>D</b> = 0.21-0.5, <b>E</b> = 0.51-1.</div>
           <div><b>Technical Debt Ratio</b> - Cumulative percentage of ration between remediation cost and development cost, from most recent scans, of associated pipelines from applied tags, and chosen time filter.</div>
         </div>
         <h6 className={"mt-2"}>Sonar Ratings: Reliability</h6>

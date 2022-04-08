@@ -7,16 +7,15 @@ import {
   endpointResponseFieldEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import InfoContainer from "components/common/containers/InfoContainer";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -32,7 +31,7 @@ function EndpointResponseRuleFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    updateMainModel(endpointFieldModel);
   };
 
   const updateMainModel = (newModel) => {
@@ -88,7 +87,6 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
-              className={"mt-2"}
             />
           );
         case "date":
@@ -101,7 +99,6 @@ function EndpointResponseRuleFieldInputRow(
               defaultToNull={true}
               disabled={disabled}
               clearDataFunction={() => updateMainModelFunction("value", undefined)}
-              className={"mt-2"}
             />
           );
       }
@@ -111,13 +108,16 @@ function EndpointResponseRuleFieldInputRow(
   const getBody = () => {
     return (
       <Row>
-        <Col sm={12}>
-          <H5FieldSubHeader
-            className={"mt-auto"}
-            subheaderText={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
-          />
+        <Col xs={12}>
+          {getValueInput()}
         </Col>
-        <Col sm={12}>
+      </Row>
+    );
+  };
+
+  const getRuleFilterInput = () => {
+    return (
+        <div style={{minWidth: "400px"}}>
           <ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
             model={endpointFieldModel}
             setModel={setEndpointFieldModel}
@@ -128,11 +128,7 @@ function EndpointResponseRuleFieldInputRow(
             isSensitiveData={endpointBodyField?.isSensitiveData === true}
             updateMainModelFunction={updateMainModel}
           />
-        </Col>
-        <Col xs={12} className={"mt-2"}>
-          {getValueInput()}
-        </Col>
-      </Row>
+        </div>
     );
   };
 
@@ -141,15 +137,15 @@ function EndpointResponseRuleFieldInputRow(
   }
 
   return (
-    <InfoContainer
+    <VanitySetTabContentContainer
       titleIcon={faBracketsCurly}
-      titleText={endpointFieldModel?.getData("fieldName")}
-      titleClassName={"sub-input-title-bar"}
+      title={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
+      titleBarInput={getRuleFilterInput()}
     >
-      <div className={"m-3"}>
+      <div className={"mx-3 mt-2"}>
         {getBody()}
       </div>
-    </InfoContainer>
+    </VanitySetTabContentContainer>
   );
 }
 

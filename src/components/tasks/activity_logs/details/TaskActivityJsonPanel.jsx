@@ -1,19 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ReactJson from "react-json-view";
-import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 function TaskActivityJsonPanel({ gitTaskActivityData }) {
   return (
-    <SummaryPanelContainer>
-      <Row>
-        <Col md={12}>
-          <ReactJson src={gitTaskActivityData} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
-        </Col>
-      </Row>
-    </SummaryPanelContainer>
+    <StandaloneJsonField
+      titleText={"Task Activity JSON"}
+      json={gitTaskActivityData}
+      enableClipboard={false}
+      displayDataTypes={false}
+      collapsed={false}
+      minimumHeight={"calc(100vh - 285px)"}
+      maximumHeight={"calc(100vh - 285px)"}
+    />
   );
 }
 

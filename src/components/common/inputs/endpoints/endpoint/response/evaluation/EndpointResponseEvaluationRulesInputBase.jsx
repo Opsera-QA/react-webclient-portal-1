@@ -12,15 +12,13 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 import {AuthContext} from "contexts/AuthContext";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 function EndpointResponseEvaluationRulesInputBase(
   {
     toolId,
     endpointId,
     fieldName,
+    evaluationRuleFieldName,
     model,
     setModel,
     disabled,
@@ -109,38 +107,13 @@ function EndpointResponseEvaluationRulesInputBase(
   }
 
   return (
-    <div>
-      <H5FieldSubHeader
-        subheaderText={"Response Evaluation Rules"}
-      />
-      <InfoText
-        customMessage={`
-          Success rules take precedence over Running rules. 
-          If the response does not match either the Success or Running rule, it will be considered a failure.
-        `}
-      />
-      {/*<Row>*/}
-      {/*  <Col xs={12} sm={6}>*/}
-          <EndpointResponseEvaluationRuleInput
-            fieldName={"success_rule"}
-            rule={endpointResponseEvaluationRuleModel?.getData("success_rule")}
-            endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-            updateRuleFunction={(newRule) => updateRuleFunction("success_rule", newRule)}
-            responseBodyFields={endpoint?.responseBodyFields}
-            disabled={disabled}
-          />
-      {/* TODO: Make field that converts the selected values into human readable text */}
-      {/*  </Col>*/}
-      {/*  <Col xs={12} sm={6}>*/}
-      {/*    */}
-      {/*  </Col>*/}
-      {/*</Row>*/}
+    <div className={"mx-2"}>
       <EndpointResponseEvaluationRuleInput
-        fieldName={"running_rule"}
+        fieldName={evaluationRuleFieldName}
+        rule={endpointResponseEvaluationRuleModel?.getData(evaluationRuleFieldName)}
         endpointResponseEvaluationRuleModel={endpointResponseEvaluationRuleModel}
-        rule={endpointResponseEvaluationRuleModel?.getData("running_rule")}
-        updateRuleFunction={(newRule) => updateRuleFunction("running_rule", newRule)}
-        responseBodyFields={endpoint?.responseBodyFields}
+        updateRuleFunction={(newRule) => updateRuleFunction(evaluationRuleFieldName, newRule)}
+        endpoint={endpoint}
         disabled={disabled}
       />
       <InfoText errorMessage={error} />
@@ -150,6 +123,7 @@ function EndpointResponseEvaluationRulesInputBase(
 
 EndpointResponseEvaluationRulesInputBase.propTypes = {
   fieldName: PropTypes.string,
+  evaluationRuleFieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,

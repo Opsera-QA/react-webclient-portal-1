@@ -29,6 +29,10 @@ const argoClusterMetadata = {
       id: "name"
     },
     {
+      label: "Cluster Type",
+      id: "clusterType"
+    },
+    {
       label: "Server",
       id: "server"
     },
@@ -63,7 +67,8 @@ const argoClusterMetadata = {
     clientSecret: "",
     iamRoleFlag: false,
     roleArn: "",
-    roleSessionName: ""
+    roleSessionName: "",
+    clusterType: ""
   }
 };
 

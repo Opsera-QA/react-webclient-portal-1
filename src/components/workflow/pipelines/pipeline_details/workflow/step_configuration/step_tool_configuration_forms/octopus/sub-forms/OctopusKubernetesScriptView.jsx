@@ -35,8 +35,8 @@ function OctopusKubernetesScriptView({dataObject, setDataObject, isLoading, disa
         <>
           <ScriptLibrarySelectInput
             fieldName={"scriptId"}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
+            model={dataObject}
+            setModel={setDataObject}
             busy={isLoading}
             disabled={disabled || isLoading}
           />

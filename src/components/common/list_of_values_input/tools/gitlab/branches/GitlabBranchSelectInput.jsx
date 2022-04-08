@@ -6,7 +6,6 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import {errorHelpers} from "components/common/helpers/error-helpers";
 
 function GitlabBranchSelectInput(
   {
@@ -96,7 +95,7 @@ GitlabBranchSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  toolId: PropTypes.string.isRequired,
+  toolId: PropTypes.string,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,

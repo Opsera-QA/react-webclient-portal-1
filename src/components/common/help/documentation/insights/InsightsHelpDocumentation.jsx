@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "../../../overlays/center/help/HelpOverlayBase";
+import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
 function InsightsHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
