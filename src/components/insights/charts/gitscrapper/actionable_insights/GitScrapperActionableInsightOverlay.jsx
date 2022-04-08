@@ -75,23 +75,23 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      let request = "coverityInsightsDatablocks";
-      let response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        request,
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        null,
-        dashboardOrgs,
-        null,
-        null,
-        null,
-        null,
-        gitScrapperSeverity
-      ),
-      responseRepoScorecardBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
+      // let request = "coverityInsightsDatablocks";
+      // let response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   request,
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   filterDto,
+      //   null,
+      //   dashboardOrgs,
+      //   null,
+      //   null,
+      //   null,
+      //   null,
+      //   gitScrapperSeverity
+      // ),
+      let responseRepoScorecardBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "sonarBugsCodeBasedMetricScorecard",
@@ -104,44 +104,46 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperSeverity, kpiCo
 
       responseRepoScorecardBlockValues['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"gitScrapperBasedMetricScorecard":{"tool":"Git Scrapper","data":[{"data":[{"projectName":"Java BE MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":16,"gitScrapperLatestMeasureValue":10,"gitScrapperPrimaryLanguage":"java","prevScanResult":10,"currScanResult":10,"status":"Neutral","libraryName":"Coverity","repositoryName":"Java BE MicroService"},{"projectName":"Python MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":30,"gitScrapperLatestMeasureValue":25,"gitScrapperPrimaryLanguage":"python","prevScanResult":5,"currScanResult":25,"status":"Red","libraryName":"SonarQube","repositoryName":"Python MicroService"},{"projectName":"C++ System Service","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":7,"gitScrapperLatestMeasureValue":12,"gitScrapperPrimaryLanguage":"c++","prevScanResult":15,"currScanResult":12,"status":"Green","libraryName":"SonarQube","repositoryName":"C++ System Service"}],"count":[{"count":3}]}],"length":1,"status":200,"status_text":"OK"}}]};
       const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data ? responseRepoScorecardBlockValues?.data?.data[0]?.gitScrapperBasedMetricScorecard?.data[0]?.data : [];
+      
       // TODO
 
-      console.log('gitScrapperSeverity', gitScrapperSeverity);
+      // console.log('gitScrapperSeverity', gitScrapperSeverity);
 
-      if (gitScrapperSeverity === 'Low') {
-        response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
-      } else if (gitScrapperSeverity === 'Medium') {
-        response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":2,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":2,"trend":"Neutral","trendNumber":0,"quality_issues":2,"security_issues":0,"various_issues":0},{"length":2,"total_issues":1,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":1,"trend":"Neutral","trendNumber":0,"quality_issues":1,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":3,"totalSecurity":0,"totalQuality":3,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
-      } else {
-        response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
-      }
+      // if (gitScrapperSeverity === 'Low') {
+      //   response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
+      // } else if (gitScrapperSeverity === 'Medium') {
+      //   response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":2,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":2,"trend":"Neutral","trendNumber":0,"quality_issues":2,"security_issues":0,"various_issues":0},{"length":2,"total_issues":1,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":1,"trend":"Neutral","trendNumber":0,"quality_issues":1,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":3,"totalSecurity":0,"totalQuality":3,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
+      // } else {
+      //   response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"coverityInsightsDatablocks":{"tool":"Coverity","data":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52}],"count":[{"count":4}]}],"length":1,"status":200,"status_text":"OK"}}]};
+      // }
 
       
 
-      let dataObject = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.data : [];
-      let dataCount = response?.data
-        ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
-        : [];
-      let DataBlocks = response?.data
-        ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0]
-        : [];
-      dataObject = dataObject.map((bd, index) => ({
-        ...bd,
-        _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-      }));
+      // let dataObject = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.data : [];
+      // let dataCount = response?.data
+      //   ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
+      //   : [];
+      // let DataBlocks = response?.data
+      //   ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0]
+      //   : [];
+      // dataObject = dataObject.map((bd, index) => ({
+      //   ...bd,
+      //   _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
+      // }));
 
 
 
-      console.log('response', response);
-      console.log('dataObject', dataObject);
+      // console.log('response', response);
+      // console.log('dataObject', dataObject);
     
 
       // let newFilterDto = filterDto;
       // newFilterDto.setData("totalCount", dataCount);
       // setFilterModel({ ...newFilterDto });
-      if (isMounted?.current === true && dataObject && dataObjectRepoScorecardDataBlocks) {
-        setMetrics(dataObject);
-        setDataBlockValues(DataBlocks);
+      // if (isMounted?.current === true && dataObject && dataObjectRepoScorecardDataBlocks) {
+      if (isMounted?.current === true && dataObjectRepoScorecardDataBlocks) {
+        // setMetrics(dataObject);
+        // setDataBlockValues(DataBlocks);
         setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);
 
         let newFilterDto = filterDto;
