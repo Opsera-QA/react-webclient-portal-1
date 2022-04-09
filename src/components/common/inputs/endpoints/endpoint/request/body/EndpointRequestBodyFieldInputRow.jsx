@@ -79,6 +79,23 @@ function EndpointRequestBodyFieldInputRow(
             disabled={disabled}
           />
         </Col>
+        {/*TODO: Add default value and hardcoded value inputs*/}
+        {/*<Col xs={6}>*/}
+        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        {/*<Col xs={6}>*/}
+        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
       </Row>
       <ButtonContainerBase className={"mt-2"}>
         <DeleteButton dataObject={endpointFieldModel} deleteRecord={deleteFieldFunction} />
