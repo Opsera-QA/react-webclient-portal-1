@@ -20,11 +20,22 @@ export const endpointRequestFieldMetadata = {
       label: "Is Required",
       id: "isRequired",
     },
+    {
+      label: "Default Value",
+      id: "defaultValue",
+    },
+    {
+      label: "Hardcode Value",
+      id: "hardcodeValue",
+      formText: "Hardcoded values cannot be edited in the Pipeline Step."
+    },
   ],
   newObjectFields: {
     type: "string",
     fieldName: "",
     isRequired: false,
     isSensitiveData: false,
+    defaultValue: "",
+    hardcodeValue: false,
   }
 };

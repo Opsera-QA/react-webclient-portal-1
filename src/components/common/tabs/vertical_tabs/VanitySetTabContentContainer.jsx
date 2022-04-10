@@ -24,7 +24,7 @@ function VanitySetTabContentContainer(
               {title}
             </div>
           </div>
-          <div className={"ml-2"}>
+          <div className={"mx-3"}>
             {titleBarInput}
           </div>
         </div>
