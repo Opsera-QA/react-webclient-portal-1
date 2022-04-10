@@ -29,7 +29,7 @@ function EndpointRequestParametersInputBase(
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
-  const [activeTab, setActiveTab] = useState("run");
+  const [activeTab, setActiveTab] = useState(undefined);
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -69,6 +69,10 @@ function EndpointRequestParametersInputBase(
         value: value,
       });
     });
+
+    if (activeTab == null && Array.isArray(unpackedParameters) && unpackedParameters.length > 0) {
+      setActiveTab(`${unpackedParameters[0]?.fieldName}`);
+    }
 
     setParameters([...unpackedParameters]);
   };

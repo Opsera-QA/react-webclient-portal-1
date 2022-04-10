@@ -16,6 +16,8 @@ import EndpointResponseFieldEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseFieldEvaluationRulesInputBase";
 import EndpointResponseFieldEvaluationRulesFilterSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRulesFilterSelectInput";
+import EndpointResponseEvaluationInput
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/EndpointResponseValueInput";
 
 function EndpointResponseEvaluationRuleInput(
   {
@@ -90,28 +92,14 @@ function EndpointResponseEvaluationRuleInput(
         );
       case "response_evaluation":
         return (
-          <>
-            <div>In progress</div>
-            {/*<Col xs={8}>*/}
-            {/*  <EndpointResponseFieldEvaluationRulesFilterSelectInput*/}
-            {/*    fieldName={"filter"}*/}
-            {/*    model={evaluationRuleModel}*/}
-            {/*    setModel={setEvaluationRuleModel}*/}
-            {/*    setDataFunction={(fieldName, selectOption) => updateMainModelFunction(fieldName, selectOption?.value)}*/}
-            {/*    disabled={disabled}*/}
-            {/*  />*/}
-            {/*</Col>*/}
-            {/*<Col xs={12}>*/}
-            {/*  <EndpointResponseFieldEvaluationRulesInputBase*/}
-            {/*    fieldName={"field_rules"}*/}
-            {/*    model={evaluationRuleModel}*/}
-            {/*    setModel={setEvaluationRuleModel}*/}
-            {/*    setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}*/}
-            {/*    responseBodyFields={Array.isArray(endpoint?.responseBodyFields) ? [...endpoint?.responseBodyFields] : undefined}*/}
-            {/*    disabled={disabled}*/}
-            {/*  />*/}
-            {/*</Col>*/}
-          </>
+          <EndpointResponseEvaluationInput
+            disabled={disabled}
+            updateModelFunction={updateModelFunction}
+            updateMainModelFunction={updateMainModelFunction}
+            evaluationRuleModel={evaluationRuleModel}
+            setEvaluationRuleModel={setEvaluationRuleModel}
+            responseBodyType={endpoint?.responseBodyType}
+          />
         );
     }
   };
@@ -122,11 +110,15 @@ function EndpointResponseEvaluationRuleInput(
     newModel.setDefaultValue("field_rules");
     newModel.setDefaultValue("value");
 
-    if (newValue === "status") {
+    if (newValue === "status" || newValue === "response_evaluation") {
       newModel.setData("filter", "equals");
     }
     else {
       newModel.setData("filter", "all");
+    }
+
+    if (newValue === "response_evaluation") {
+      newModel.setData("value", []);
     }
 
     updateModelFunction(newModel);
