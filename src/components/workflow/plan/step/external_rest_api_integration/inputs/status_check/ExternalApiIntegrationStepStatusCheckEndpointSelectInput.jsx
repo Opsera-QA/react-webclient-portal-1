@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ExternalApiIntegratorToolEndpointSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/ExternalApiIntegratorToolEndpointSelectInput";
 
-function ExternalApiIntegrationStepStatusEndpointSelectInput(
+function ExternalApiIntegrationStepStatusCheckEndpointSelectInput(
   {
     model,
     setModel,
@@ -29,10 +29,10 @@ function ExternalApiIntegrationStepStatusEndpointSelectInput(
   );
 }
 
-ExternalApiIntegrationStepStatusEndpointSelectInput.propTypes = {
+ExternalApiIntegrationStepStatusCheckEndpointSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default ExternalApiIntegrationStepStatusEndpointSelectInput;
+export default ExternalApiIntegrationStepStatusCheckEndpointSelectInput;
