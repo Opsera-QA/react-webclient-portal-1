@@ -12,6 +12,8 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 import {AuthContext} from "contexts/AuthContext";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function EndpointResponseEvaluationRulesInputBase(
   {
@@ -33,10 +35,6 @@ function EndpointResponseEvaluationRulesInputBase(
   const isMounted = useRef(false);
 
   useEffect(() => {
-    setField(model?.getFieldById(fieldName));
-  }, [fieldName]);
-
-  useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -45,6 +43,7 @@ function EndpointResponseEvaluationRulesInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setEndpoint(undefined);
+    setField(model?.getFieldById(fieldName));
 
     if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
       setEndpointResponseEvaluationRuleModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata));
@@ -58,7 +57,7 @@ function EndpointResponseEvaluationRulesInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, endpointId]);
+  }, [toolId, endpointId, fieldName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -101,6 +100,26 @@ function EndpointResponseEvaluationRulesInputBase(
     endpointResponseEvaluationRuleModel.setData(fieldName, rule);
     validateAndSetData(endpointResponseEvaluationRuleModel);
   };
+
+  if (isLoading === true) {
+    return (
+      <CenteredContentWrapper>
+        <div className={"my-5"}>
+          <CenterLoadingIndicator />
+        </div>
+      </CenteredContentWrapper>
+    );
+  }
+
+  if (isMongoDbId(endpointId) !== true) {
+    return (
+      <CenteredContentWrapper>
+        <div className={"my-5"}>
+          An External API Integrator Tool and Endpoint must be selected before you can configure evaluation rules.
+        </div>
+      </CenteredContentWrapper>
+    );
+  }
 
   if (field == null || endpointResponseEvaluationRuleModel == null) {
     return null;

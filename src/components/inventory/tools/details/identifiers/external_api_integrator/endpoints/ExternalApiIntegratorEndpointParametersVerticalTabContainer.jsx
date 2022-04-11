@@ -58,12 +58,12 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
     return (
       <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
-          {/*<VanitySetVerticalTab*/}
-          {/*  tabText={"Request Header"}*/}
-          {/*  tabName={"requestHeaderConfiguration"}*/}
-          {/*  handleTabClick={handleTabClick}*/}
-          {/*  activeTab={activeTab}*/}
-          {/*/>*/}
+          <VanitySetVerticalTab
+            tabText={"Request Header"}
+            tabName={"requestHeaderConfiguration"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
           {getDynamicTabsForRequestType()}
           <VanitySetVerticalTab
             tabText={"Response Body"}

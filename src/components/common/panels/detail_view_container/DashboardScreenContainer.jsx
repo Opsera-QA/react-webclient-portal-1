@@ -21,6 +21,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
+import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashboardFiltersIcon";
 
 function DashboardScreenContainer(
   {
@@ -78,8 +79,14 @@ function DashboardScreenContainer(
             className={"mr-3"}
           />
           <ToggleSettingsIcon
+            className={"mr-3"}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+          />
+          <EditDashboardFiltersIcon
+            dashboardModel={dashboardModel}
+            setDashboardModel={setDashboardModel}
+            loadData={loadData}
           />
         </TitleActionBarContainer>
       );
