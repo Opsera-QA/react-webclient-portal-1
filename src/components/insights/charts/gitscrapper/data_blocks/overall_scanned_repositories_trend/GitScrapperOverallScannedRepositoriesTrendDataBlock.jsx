@@ -9,7 +9,7 @@ function GitScrapperOverallScannedRepositoriesTrendDataBlock({ score, icon, clas
       <ThreeLineScoreDataBlock
         className={`${className} p-2`}
         score={score}
-        topText={"Total Repositories Scanned"}
+        topText={"Scanned Repositories"}
         bottomText={"Last Scan: " + lastScore}
         icon={icon}
         iconOverlayBody={iconOverlayBody}

@@ -10,7 +10,7 @@ function GitScrapperOverallIssuesTrendDataBlock({ score, icon, className, onSele
       <ThreeLineScoreDataBlock
         className={`${className} p-2`}
         score={score}
-        topText={"Total number of Issues"}
+        topText={"Total Number of Issues"}
         bottomText={"Last Scan: " + lastScore}
         icon={icon}
         iconOverlayBody = {iconOverlayBody}

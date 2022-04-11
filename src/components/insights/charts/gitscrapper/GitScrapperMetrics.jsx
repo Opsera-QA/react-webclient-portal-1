@@ -8,35 +8,23 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Model from "core/data_model/model";
-import GitScrapperActionableMetadata from "./actionable_insights/git-scrapper-actionable-insight-metadata";
 
 import { DialogToastContext } from "contexts/DialogToastContext";
-// import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import GitScrapperActionableInsightOverlay from "./actionable_insights/GitScrapperActionableInsightOverlay";
 
 import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/overall_scanned_repositories_trend/GitScrapperOverallScannedRepositoriesTrendDataBlock";
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
 
-// import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-// import IconBase from "components/common/icons/IconBase";
-// import { faPauseCircle } from "@fortawesome/pro-solid-svg-icons";
-
 
 import GitScrapperMetricScorecardMetaData from "./gitScrapperMetricScorecardMetaData";
 import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
 import { useHistory } from "react-router-dom";
-import FilterContainer from "components/common/table/FilterContainer";
-import GitScrapperCardView from "./card/GitScrapperCardView";
 
 function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-  const history = useHistory();
-  const fields = GitScrapperMetricScorecardMetaData.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [dataMetrics, setDataMetrics] = useState([]);
-  const [dataScorecardMetrics, setDataScorecardMetrics] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -109,7 +97,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       );
       
 
-      response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"overallGitScrapperTrend":{"tool":"Git scrapper","data":[{"currentTotalScannedRepositories":3,"currentTotalCleanRepositories":3,"currentTotalIssues":88,"previousTotalScannedRepositories":2,"previousTotalCleanRepositories":2,"previousTotalIssues":33,"overallScannedRepositoriesTrend":"Green","overallCleanRepositoriesTrend":"Neutral","overallTotalIssuesTrend":"Red"}],"length":1,"status":200,"status_text":"OK"}}]},
+      response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"overallGitScrapperTrend":{"tool":"Git scrapper","data":[{"lastScanRepositories":23,"lastScanClean":1,"lastScanIssues":89,"trendRepositories":"Red","trendClean":"Neutral","trendIssues":"Green","totalRepositoriesScanned":3,"totalCleanRepositories":1,"totalNumberofIssues":88}],"length":1,"status":200,"status_text":"OK"}}]},
       responseBaseKPIBlockValues['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"gitScrapperBaseKPIDataBlocks":{"tool":"Git Scrapper","data":{"totalScannedRepositories":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52,"total":3}],"count":[{"count":4}]}],"totalCleanRepositories":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":2,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":2,"trend":"Neutral","trendNumber":0,"quality_issues":2,"security_issues":0,"various_issues":0},{"length":2,"total_issues":1,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":1,"trend":"Neutral","trendNumber":0,"quality_issues":1,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":3,"totalSecurity":0,"totalQuality":3,"totalVarious":0,"totalProjects":4,"totalScans":52,"total":3}],"count":[{"count":4}]}],"totalIssues":[{"data":[{"length":46,"total_issues":0,"project":"github-integrator","pipeline":"623a5aa91fdb2f0012a3d84a","pipelineName":"Coverity Test Automation DO NOT DELETE Copy","run":2,"timestamp":"2022-03-22T23:52:22.224Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-ant","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:58:07.433Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov-node1","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:56:10.079Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0},{"length":2,"total_issues":0,"project":"cov","pipeline":"6104118328b45b573c285eba","pipelineName":"Coverity_test","run":72,"timestamp":"2022-01-13T15:53:22.787Z","totalIssues":0,"trend":"Neutral","trendNumber":0,"quality_issues":0,"security_issues":0,"various_issues":0}],"DataBlocks":[{"_id":1,"totalIssues":0,"totalSecurity":0,"totalQuality":0,"totalVarious":0,"totalProjects":4,"totalScans":52,"total":88}],"count":[{"count":4}]}]},"status":204,"status_text":"OK"}}]};
       responseRepoScorecardBlockValues['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"gitScrapperBasedMetricScorecard":{"tool":"Git Scrapper","data":[{"data":[{"projectName":"Java BE MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":16,"gitScrapperLatestMeasureValue":10,"gitScrapperPrimaryLanguage":"java","prevScanResult":10,"currScanResult":10,"status":"Neutral","libraryName":"Coverity","repositoryName":"Java BE MicroService"},{"projectName":"Python MicroService","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":30,"gitScrapperLatestMeasureValue":25,"gitScrapperPrimaryLanguage":"python","prevScanResult":5,"currScanResult":25,"status":"Red","libraryName":"SonarQube","repositoryName":"Python MicroService"},{"projectName":"C++ System Service","timestamp":"2022-02-08T12:48:41.947Z","metricName":"bugs","pipelineId":"6202652df55dad00128f7012","pipelineName":"New pipeline test","run_count":7,"gitScrapperLatestMeasureValue":12,"gitScrapperPrimaryLanguage":"c++","prevScanResult":15,"currScanResult":12,"status":"Green","libraryName":"SonarQube","repositoryName":"C++ System Service"}],"count":[{"count":3}]}],"length":1,"status":200,"status_text":"OK"}}]};
 
@@ -121,8 +109,6 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       if (isMounted?.current === true && dataObject && dataObjectBaseKPIDataBlocks) {
 
         setMetrics(dataObject);
-        setDataMetrics(dataObjectBaseKPIDataBlocks);
-        setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
@@ -142,19 +128,13 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     }
   };
 
-  const onRowSelect = (stat) => {
-    // console.log('onRowSelect', stat);
-    const chartModel = new Model(
-      { ...GitScrapperActionableMetadata.newObjectFields },
-      GitScrapperActionableMetadata,
-      false
-    );
+  const onRowSelect = (data) => {
     toastContext.showOverlayPanel(
       <GitScrapperActionableInsightOverlay
-        title={stat}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
-        gitScrapperSeverity={stat}
+        title={data?.label}
+        gitScrapperType={data?.type}
       />
     );
   };
@@ -162,9 +142,9 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
   const getIcon = (severity) => {
     switch (severity) {
       case "Red":
-        return faArrowCircleUp;
-      case "Green":
         return faArrowCircleDown;
+      case "Green":
+        return faArrowCircleUp;
       case "Neutral":
         return faMinusCircle;
       default:
@@ -182,6 +162,19 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         return "light-gray-text-secondary";
       case "-":
         return "black";
+      default:
+        break;
+    }
+  };
+
+  const getIconIssuesTrend = (severity) => {
+    switch (severity) {
+      case "Red":
+        return faArrowCircleUp;
+      case "Green":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
       default:
         break;
     }
@@ -212,35 +205,10 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         return "Neutral: This project's issues have experienced no change";
     }
   };
-
-  const getCardView = () => {
-    return (
-      <GitScrapperCardView
-        gitScrapperDataFilterDto={tableFilterDto}
-        setGitScrapperDataFilterDto={setTableFilterDto}
-        isLoading={isLoading}
-        data={dataScorecardMetrics}
-        loadData={loadData}
-      />
-    );
-  };
-
-  const getFilterContainer = () => {
-    return (
-      <FilterContainer
-        filterDto={tableFilterDto}
-        setFilterDto={setTableFilterDto}
-        body={getCardView()}
-        isLoading={isLoading}
-        loadData={loadData}
-        supportSearch={true}
-      />
-    );
-  };
   
   
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0 || dataMetrics.length === 0) {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
@@ -250,50 +218,35 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
           <Row className="p-1 gray">
             <Col>
               <GitScrapperOverallScannedRepositoriesTrendDataBlock
-                score={metrics[0]?.currentTotalScannedRepositories || 0
-                  // dataMetrics?.totalScannedRepositories[0]?.DataBlocks[0]?.total
-                  //   ? dataMetrics?.totalScannedRepositories[0]?.DataBlocks[0]?.total
-                  //   : 0
-                }
-                icon={getIcon(metrics[0]?.overallScannedRepositoriesTrend)}
-                className={getIconColor(metrics[0]?.overallScannedRepositoriesTrend)}
-                onSelect={() => onRowSelect("Total Repositories Scanned")}
-                lastScore={metrics[0]?.previousTotalScannedRepositories}
-                iconOverlayBody={getDescription(metrics[0]?.overallScannedRepositoriesTrend)}
+                score={metrics[0]?.totalRepositoriesScanned || 0 }
+                icon={getIcon(metrics[0]?.trendRepositories)}
+                className={getIconColor(metrics[0]?.trendRepositories)}
+                // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
+                lastScore={metrics[0]?.lastScanRepositories}
+                iconOverlayBody={getDescription(metrics[0]?.trendRepositories)}
               />
             </Col>
             <Col>
               <GitScrapperOverallCleanRepositoriesTrendDataBlock
-                score={metrics[0]?.currentTotalCleanRepositories || 0
-                  // dataMetrics?.totalCleanRepositories[0]?.DataBlocks[0]?.total
-                  //   ? dataMetrics?.totalCleanRepositories[0]?.DataBlocks[0]?.total
-                  //   : 0
-                }
-                icon={getIcon(metrics[0]?.overallCleanRepositoriesTrend)}
-                className={getIconColor(metrics[0]?.overallCleanRepositoriesTrend)}
-                onSelect={() => onRowSelect("Total Clean Repositories")}
-                lastScore={metrics[0]?.previousTotalCleanRepositories}
-                iconOverlayBody={getDescription(metrics[0]?.overallCleanRepositoriesTrend)}
+                score={metrics[0]?.totalCleanRepositories || 0 }
+                icon={getIcon(metrics[0]?.trendClean)}
+                className={getIconColor(metrics[0]?.trendClean)}
+                onSelect={() => onRowSelect({type: 'totalCleanRepositories', label: "Total Clean Repositories"})}
+                lastScore={metrics[0]?.lastScanClean}
+                iconOverlayBody={getDescription(metrics[0]?.trendClean)}
               />
             </Col>
             <Col>
               <GitScrapperOverallIssuesTrendDataBlock
-                score={metrics[0]?.currentTotalIssues || 0
-                  // dataMetrics?.totalIssues[0]?.DataBlocks[0]?.total
-                  //   ? dataMetrics?.totalIssues[0]?.DataBlocks[0]?.total
-                  //   : 0
-                }
-                icon={getIcon(metrics[0].overallTotalIssuesTrend)}
-                className={getIconColor(metrics[0].overallTotalIssuesTrend)}
-                onSelect={() => onRowSelect("Total Number of Issues")}
-                lastScore={metrics[0].previousTotalIssues}
-                iconOverlayBody={getDescription(metrics[0].overallTotalIssuesTrend)}
+                score={metrics[0]?.totalNumberofIssues || 0 }
+                icon={getIconIssuesTrend(metrics[0]?.trendIssues)}
+                className={getIconColor(metrics[0]?.trendIssues)}
+                onSelect={() => onRowSelect({type: 'totalNumberofIssues', label: "Total Number of Issues"})}
+                lastScore={metrics[0]?.lastScanIssues}
+                iconOverlayBody={getDescription(metrics[0]?.trendIssues)}
               />
             </Col>
           </Row>
-          <div className={"mt-5"}>
-            {getFilterContainer()}
-          </div>
         </Container>
       </div>
     );

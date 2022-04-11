@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import { useHistory } from "react-router-dom";
 
 function GitScrapperViewActionableInsightsButton({ dataObject }) {
-
+  console.log('GitScrapperViewActionableInsightsButton dataObject', dataObject);
   const history = useHistory();
 
   const getActionableInsights = () => {
@@ -17,8 +17,8 @@ function GitScrapperViewActionableInsightsButton({ dataObject }) {
     <div>
       <ActionBarButton
         action={() => getActionableInsights()}
-        icon={faSearchPlus}
-        popoverText={`Pipeline Blueprint`}
+        icon={faSearch}
+        popoverText={`View Actionable Insights`}
       />
     </div>
   );
