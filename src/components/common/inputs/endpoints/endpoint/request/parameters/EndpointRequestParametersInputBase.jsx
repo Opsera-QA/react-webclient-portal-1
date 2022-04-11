@@ -181,12 +181,14 @@ function EndpointRequestParametersInputBase(
   };
 
   const getRightSideButton = () => {
-    return (
+    if (disabled !== true) {
+      return (
         <ClearDataIcon
           clearValueFunction={resetDataToDefault}
           className={"my-auto mr-1"}
         />
-    );
+      );
+    }
   };
 
   const getConstructedParameterContainer = () => {
