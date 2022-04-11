@@ -1,0 +1,40 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
+import { useHistory } from "react-router-dom";
+
+function GitScrapperViewActionableInsightsButton({ dataObject }) {
+
+  const history = useHistory();
+
+  const getActionableInsights = () => {
+    console.log('getActionableInsights trigger');
+    // history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);
+    // toastContext.showOverlayPanel(
+    //   <GitScrapperActionableInsightOverlay
+    //     kpiConfiguration={kpiConfiguration}
+    //     dashboardData={dashboardData}
+    //     title={data?.label}
+    //     gitScrapperType={data?.type}
+    //   />
+    // );
+  };
+
+
+  return (
+    <div>
+      <ActionBarButton
+        action={() => getActionableInsights()}
+        icon={faSearch}
+        popoverText={`View Actionable Insights`}
+      />
+    </div>
+  );
+}
+
+GitScrapperViewActionableInsightsButton.propTypes = {
+  dataObject: PropTypes.object,
+};
+
+export default GitScrapperViewActionableInsightsButton;

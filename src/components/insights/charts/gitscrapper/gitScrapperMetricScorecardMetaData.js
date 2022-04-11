@@ -1,10 +1,9 @@
-// TODO
 const GitScrapperMetricScorecardMetaData = {
   idProperty: "_id",
   type: "Git Scrapper Metric Scorecard",
   fields: [
     {
-      label: "Total Scans",
+      label: "Run Count",
       id: "run_count",
     },
     {
@@ -25,7 +24,7 @@ const GitScrapperMetricScorecardMetaData = {
     },
     {
       label: "Total Issues",
-      id: "gitScrapperLatestMeasureValue",
+      id: "totalIssues",
     },
     {
       label: "Trend",
@@ -37,16 +36,28 @@ const GitScrapperMetricScorecardMetaData = {
     },
     {
       label: "Library Used",
-      id: "libraryName",
+      id: "library",
     },
     {
       label: "Repository Name",
-      id: "repositoryName",
+      id: "repository",
     },
     {
       label: "Page Size",
       id: "pageSize",
     },
+    {
+      label: "Total Scans",
+      id: "totalScans"
+    },
+    {
+      label: "Branch Name",
+      id: "branch"
+    },
+    {
+      label: "Activity Date",
+      id: "activityDate"
+    }
   ],
   newObjectFields: {},
 };
