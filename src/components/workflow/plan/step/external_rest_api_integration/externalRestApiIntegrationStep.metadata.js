@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const externalRestApiIntegrationStepMetadata = {
   type: "External Rest API Integration Step",
   fields: [
@@ -10,6 +12,10 @@ export const externalRestApiIntegrationStepMetadata = {
       label: "Connection Check Endpoint",
       id: "connectionCheckEndpointId",
       isRequired: true,
+    },
+    {
+      label: "Use Connection Check",
+      id: "useConnectionCheck",
     },
     {
       label: "Connection Check Request Parameters",
@@ -54,6 +60,7 @@ export const externalRestApiIntegrationStepMetadata = {
   ],
   newObjectFields: {
     toolId: "",
+    useConnectionCheck: false,
     connectionCheckEndpointId: "",
     connectionCheckRequestParameters: {},
     connectionCheckResponseEvaluationRules: {},

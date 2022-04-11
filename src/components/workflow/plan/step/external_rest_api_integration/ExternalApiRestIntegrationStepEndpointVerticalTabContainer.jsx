@@ -2,18 +2,22 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import ExternalApiIntegrationStepRunEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
+import ExternalApiIntegrationStepRunTriggerEndpointSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/run_trigger/ExternalApiIntegrationStepRunTriggerEndpointSelectInput";
 import ExternalApiIntegrationStepRunEndpointRequestInputBase
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
 import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
-import ExternalApiIntegrationStepStatusEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
+import ExternalApiIntegrationStepStatusCheckEndpointSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/status_check/ExternalApiIntegrationStepStatusCheckEndpointSelectInput";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ExternalApiIntegrationStepConnectionCheckEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepConnectionCheckEndpointSelectInput";
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/connection_check/ExternalApiIntegrationStepConnectionCheckEndpointSelectInput";
+import { Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/connection_check/ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput";
 
 const height = "calc(100vh - 395px)";
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
@@ -115,18 +119,29 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_API_CONFIGURATION:
         return (
           <div className={"mx-2"}>
-            <ExternalApiIntegrationStepConnectionCheckEndpointSelectInput
-              model={externalRestApiIntegrationModel}
-              setModel={setExternalRestApiIntegrationModel}
-              disabled={disabled}
-            />
+            <Row>
+              <Col xs={6} sm={3}>
+                <ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
+                  model={externalRestApiIntegrationModel}
+                  setModel={setExternalRestApiIntegrationModel}
+                  disabled={disabled}
+                />
+              </Col>
+              <Col xs={6} md={9}>
+                <ExternalApiIntegrationStepConnectionCheckEndpointSelectInput
+                  model={externalRestApiIntegrationModel}
+                  setModel={setExternalRestApiIntegrationModel}
+                  disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
+                />
+              </Col>
+            </Row>
             <ExternalApiIntegrationStepRunEndpointRequestInputBase
               fieldName={"connectionCheckEndpointRequestParameters"}
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}
               toolId={externalRestApiIntegrationModel?.getData("toolId")}
-              endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-              disabled={disabled}
+              endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
+              disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
             />
           </div>
         );
@@ -145,7 +160,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_API_CONFIGURATION:
         return (
           <div className={"mx-2"}>
-            <ExternalApiIntegrationStepRunEndpointSelectInput
+            <ExternalApiIntegrationStepRunTriggerEndpointSelectInput
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}
               disabled={disabled}
@@ -187,7 +202,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION:
         return (
           <div className={"mx-2"}>
-            <ExternalApiIntegrationStepStatusEndpointSelectInput
+            <ExternalApiIntegrationStepStatusCheckEndpointSelectInput
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}
               disabled={disabled}
