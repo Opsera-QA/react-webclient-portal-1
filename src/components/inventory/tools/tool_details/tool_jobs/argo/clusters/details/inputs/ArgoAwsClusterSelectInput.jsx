@@ -23,6 +23,7 @@ function ArgoAwsClusterSelectInput({
   const [placeholder, setPlaceholder] = useState("Select a Cluster");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -53,8 +54,7 @@ function ArgoAwsClusterSelectInput({
       await loadAwsClusters(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setError(error);        
       }
     } finally {
       if (isMounted?.current === true) {
@@ -64,26 +64,17 @@ function ArgoAwsClusterSelectInput({
   };
 
   const loadAwsClusters = async (cancelSource) => {
-    try {
-      setClusters([]);
-      const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
-      if (res && res.status === 200) {
-        if (res.data.length === 0) {
-          setPlaceholder("No Clusters Found");
-          return;
-        }
-        setPlaceholder("Select a Cluster");
-        const clusterNames = clusterData.map(c => c.name.trim());                
-        const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
-        setClusters(tempClusters);
+    setClusters([]);
+    const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
+    if (res && res.status === 200) {
+      if (res.data.length === 0) {
+        setPlaceholder("No Clusters Found");
         return;
       }
-      setPlaceholder("No Clusters Found");
-      setClusters([]);
-    } catch (error) {
-      setPlaceholder("No Clusters Found");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      setPlaceholder("Select a Cluster");
+      const clusterNames = clusterData.map(c => c.name.trim());
+      const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
+      setClusters(tempClusters);
     }
   };
 
@@ -95,6 +86,7 @@ function ArgoAwsClusterSelectInput({
       selectOptions={clusters}
       textField={textField}
       valueField={valueField}
+      error={error}
       busy={isLoading}
       placeholderText={placeholder}
       disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
