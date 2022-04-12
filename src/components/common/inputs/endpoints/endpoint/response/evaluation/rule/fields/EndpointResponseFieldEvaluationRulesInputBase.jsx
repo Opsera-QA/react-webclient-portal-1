@@ -9,8 +9,9 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-
-const height = "calc(100vh - 555px)";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
@@ -157,8 +158,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
         icon={faBracketsCurly}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
-        minimumHeight={height}
-        maximumHeight={height}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         tabColumnSize={3}
       />
     );

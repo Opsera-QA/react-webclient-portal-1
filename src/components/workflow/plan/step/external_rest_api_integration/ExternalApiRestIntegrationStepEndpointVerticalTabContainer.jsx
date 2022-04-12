@@ -18,8 +18,10 @@ import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/connection_check/ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
-const height = "calc(100vh - 395px)";
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
   CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION: "connection-check-successful-evaluation-rules-configuration",
@@ -254,12 +256,12 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       tabColumnSize={3}
       currentView={
-        <div style={{overflowX: "hidden", minHeight: height}}>
+        <div style={{overflowX: "hidden", minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.EXTERNAL_API_INTEGRATION_STEP_ENDPOINT_VERTICAL_TAB_CONTAINER_HEIGHT}}>
           {getCurrentView()}
         </div>
       }
-      minimumHeight={height}
-      maximumHeight={height}
+      minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.EXTERNAL_API_INTEGRATION_STEP_ENDPOINT_VERTICAL_TAB_CONTAINER_HEIGHT}
+      maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.EXTERNAL_API_INTEGRATION_STEP_ENDPOINT_VERTICAL_TAB_CONTAINER_HEIGHT}
       defaultActiveKey={activeTab}
     />
   );

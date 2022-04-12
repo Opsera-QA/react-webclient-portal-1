@@ -15,8 +15,9 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
-
-const containerHeight = "calc(100vh - 546px)";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointRequestParametersInputBase(
   {
@@ -152,8 +153,8 @@ function EndpointRequestParametersInputBase(
         <InfoContainer
           titleIcon={faCode}
           titleText={field?.label}
-          minimumHeight={containerHeight}
-          maximumHeight={containerHeight}
+          minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+          maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         >
           <CenteredContentWrapper>
             <span>There are no Parameters to configure</span>
@@ -166,8 +167,8 @@ function EndpointRequestParametersInputBase(
       <VanitySetTabAndViewContainer
         icon={faCode}
         title={field?.label}
-        minimumHeight={containerHeight}
-        maximumHeight={containerHeight}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
@@ -197,8 +198,8 @@ function EndpointRequestParametersInputBase(
         titleIcon={faCheckCircle}
         titleText={`Constructed ${model?.getLabel(fieldName)}`}
         className={"h-100"}
-        minimumHeight={containerHeight}
-        maximumHeight={containerHeight}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         titleRightSideButton={getRightSideButton()}
       >
         <div className={"m-3"}>
