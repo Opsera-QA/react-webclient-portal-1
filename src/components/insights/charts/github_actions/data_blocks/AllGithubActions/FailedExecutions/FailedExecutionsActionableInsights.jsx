@@ -64,7 +64,8 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       getTableTextColumn(getField(fields, "applicationVP2")),
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
-      getTableTextColumn(getField(fields, "pointOfFailure"))
+      getTableTextColumn(getField(fields, "pointOfFailure")),
+      getTableTextColumn(getField(fields, "stepCompletedAt"))
     ],
     []
   );

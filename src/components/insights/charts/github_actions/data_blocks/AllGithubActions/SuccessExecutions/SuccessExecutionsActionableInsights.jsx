@@ -65,7 +65,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
       getTableTextColumn(getField(fields, "applicationVP2")),
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
-      getTableTextColumn(getField(fields, "date")),
+      getTableTextColumn(getField(fields, "stepCompletedAt")),
     ],
     []
   );

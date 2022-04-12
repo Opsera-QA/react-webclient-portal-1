@@ -80,8 +80,8 @@ const SuccessExecutionsActionableInsightsMetaData = {
        id: "activeFilters",
      },
      {
-       label: "Date",
-       id: "date"
+       label: "Timestamp",
+       id: "stepCompletedAt"
      }
   ],
   getActiveFilters(filterDto) {

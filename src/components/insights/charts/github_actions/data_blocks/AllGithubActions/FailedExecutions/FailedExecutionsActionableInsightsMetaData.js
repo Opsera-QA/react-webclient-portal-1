@@ -7,6 +7,10 @@ const FailedExecutionsActionableInsightsMetaData = {
       id: "actionDurationInMins",
     },
     {
+      label: "Timestamp",
+      id: "stepCompletedAt"
+    },
+    {
       label: "Application Name",
       id: "applicationName",
     },
