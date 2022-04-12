@@ -128,7 +128,7 @@ function SdlcDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, das
 
     return (
       <div className="new-chart mb-3 pointer" style={{ minHeight: "450px" }}>
-        <Row className="mr-1">
+        <Row className="m-0">
           {dataPointHelpers.isDataPointVisible(sdlcBuildDatapoint) &&
           <Col xs={12} sm={6} key={`metric-build`}>
             <SdlcBuildDurationMetric
