@@ -27,6 +27,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faCodeCommit}
         />
       );
     } else if (activeTab == "closed") {
@@ -35,6 +36,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faCodeMerge}
         />
       );
     } else if (activeTab == "merged") {
@@ -43,6 +45,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faTable}
         />
       );
     } else if (activeTab == "contributors") {
@@ -51,6 +54,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faTable}
         />
       );
     }

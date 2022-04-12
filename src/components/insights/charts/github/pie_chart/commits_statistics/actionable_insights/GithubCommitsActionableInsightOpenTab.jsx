@@ -6,7 +6,7 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import GithubCommitsVerticalTabContainer from "./GithubCommitsVerticalTabContainer";
 import GithubOpenCommitsTab from "./tableData/GithubOpenCommitsTab";
 
-function GithubCommitsActionableInsightOpenTab({ highestMergesMetric, dashboardData, kpiConfiguration }) {
+function GithubCommitsActionableInsightOpenTab({ highestMergesMetric, dashboardData, kpiConfiguration, icon }) {
   const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer>
@@ -16,6 +16,7 @@ function GithubCommitsActionableInsightOpenTab({ highestMergesMetric, dashboardD
               repository={item.id}
               dashboardData={dashboardData}
               kpiConfiguration={kpiConfiguration}
+              icon={icon}
             />
           </VanitySetTabView>
         ))}
@@ -41,5 +42,6 @@ GithubCommitsActionableInsightOpenTab.propTypes = {
   highestMergesMetric: PropTypes.array,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object
 };
 export default GithubCommitsActionableInsightOpenTab;
