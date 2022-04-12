@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 function JsonField(
   {
@@ -15,12 +16,14 @@ function JsonField(
   }
 
   return (
-    <StandaloneJsonField
-      json={dataObject?.getData(fieldName)}
-      titleText={field?.label}
-      collapsed={field?.isCollapsed}
-      className={className}
-    />
+    <FieldContainer>
+      <StandaloneJsonField
+        json={dataObject?.getData(fieldName)}
+        titleText={field?.label}
+        collapsed={field?.isCollapsed}
+        className={className}
+      />
+    </FieldContainer>
   );
 }
 

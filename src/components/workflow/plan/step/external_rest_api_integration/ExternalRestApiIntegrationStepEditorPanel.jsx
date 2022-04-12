@@ -15,7 +15,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
   from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
@@ -57,7 +56,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.configuration, externalRestApiIntegrationStepMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.tool?.configuration, externalRestApiIntegrationStepMetadata);
       setExternalRestApiIntegrationModel(parsedModel);
       const thresholdModel = modelHelpers.parseObjectIntoModel(pipelineStep?.threshold, thresholdMetadata);
       setThresholdModel(thresholdModel);
@@ -72,7 +71,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
 
   const saveRecord = async () => {
     const newPipelineStep = pipelineStep;
-    newPipelineStep.configuration = {...externalRestApiIntegrationModel.getPersistData()};
+    newPipelineStep.tool.configuration = {...externalRestApiIntegrationModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
 
     return await pipelineActions.updatePipelineStepByIdV2(

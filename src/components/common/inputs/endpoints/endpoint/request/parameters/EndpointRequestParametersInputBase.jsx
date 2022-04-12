@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faCheckCircle, faCode} from "@fortawesome/pro-light-svg-icons";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 import InfoContainer from "components/common/containers/InfoContainer";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -14,10 +13,11 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import ExternalApiIntegrationEndpointParameterField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiIntegrationEndpointParameterField";
 
 function EndpointRequestParametersInputBase(
   {
@@ -194,29 +194,12 @@ function EndpointRequestParametersInputBase(
 
   const getConstructedParameterContainer = () => {
     return (
-      <InfoContainer
-        titleIcon={faCheckCircle}
-        titleText={`Constructed ${model?.getLabel(fieldName)}`}
-        className={"h-100"}
-        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
-        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+      <ExternalApiIntegrationEndpointParameterField
+        model={model}
+        fieldName={fieldName}
+        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         titleRightSideButton={getRightSideButton()}
-      >
-        <div className={"m-3"}>
-          <JsonFieldBase
-            className={"h-100 mb-2"}
-            json={model?.getData(fieldName)}
-          />
-          <div className={"mt-auto"}>
-            <InfoText
-              customMessage={`
-                 Please Note: Until updated and saved, 
-                 this will include all previously saved fields.
-               `}
-            />
-          </div>
-        </div>
-      </InfoContainer>
+      />
     );
   };
 

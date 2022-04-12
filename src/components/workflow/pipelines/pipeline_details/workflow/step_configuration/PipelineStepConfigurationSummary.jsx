@@ -184,6 +184,8 @@ import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scri
 import GitScraperSummaryPanel from "./step_tool_configuration_forms/gitscraper/GitScraperSummaryPanel";
 import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscraper/gitscraper-step-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationStepSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -195,6 +197,12 @@ function PipelineStepConfigurationSummary({
   // TODO: Pass in already wrapped data object?
   const getStepConfigurationSummary = () => {
     switch (pipelineData?.tool?.tool_identifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationStepSummaryPanel
+            pipelineData={pipelineData}
+          />
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
         return (
           <AzureScriptsStepSummaryPanel
