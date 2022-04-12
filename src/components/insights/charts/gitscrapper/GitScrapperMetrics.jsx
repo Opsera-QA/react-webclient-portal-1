@@ -16,8 +16,6 @@ import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/o
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
 
-
-import GitScrapperMetricScorecardMetaData from "./gitScrapperMetricScorecardMetaData";
 import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
 import { useHistory } from "react-router-dom";
 

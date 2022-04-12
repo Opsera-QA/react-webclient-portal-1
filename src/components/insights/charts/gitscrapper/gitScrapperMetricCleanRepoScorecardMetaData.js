@@ -1,4 +1,4 @@
-const GitScrapperMetricScorecardMetaData = {
+const GitScrapperMetricCleanRepoScorecardMetaData = {
   idProperty: "_id",
   type: "Git Scrapper Metric Scorecard",
   fields: [
@@ -62,4 +62,4 @@ const GitScrapperMetricScorecardMetaData = {
   newObjectFields: {},
 };
 
-export default GitScrapperMetricScorecardMetaData;
+export default GitScrapperMetricCleanRepoScorecardMetaData;
