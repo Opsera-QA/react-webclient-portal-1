@@ -12,8 +12,9 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoContainer from "components/common/containers/InfoContainer";
-
-const height = "calc(100vh - 745px)";
+import {
+  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
+} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function EndpointRequestBodyInputPanel(
   {
@@ -207,8 +208,8 @@ function EndpointRequestBodyInputPanel(
         <InfoContainer
           titleText={field?.label}
           titleIcon={faBracketsCurly}
-          minimumHeight={height}
-          maximumHeight={height}
+          minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_REQUEST_BODY_INPUT_HEIGHT}
+          maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_REQUEST_BODY_INPUT_HEIGHT}
           titleRightSideButton={getAddFieldButton()}
         >
           <CenteredContentWrapper>
@@ -225,8 +226,8 @@ function EndpointRequestBodyInputPanel(
           icon={faBracketsCurly}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getCurrentView()}
-          minimumHeight={height}
-          maximumHeight={height}
+          minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_REQUEST_BODY_INPUT_HEIGHT}
+          maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_REQUEST_BODY_INPUT_HEIGHT}
           tabColumnSize={3}
           titleRightSideButton={getAddFieldButton()}
         />

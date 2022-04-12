@@ -13,6 +13,9 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointRequestParameterInputRow(
   {
@@ -114,6 +117,9 @@ function EndpointRequestParameterInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
+              allowDuplicates={true}
+              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
             />
           </div>
         );

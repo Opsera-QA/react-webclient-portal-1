@@ -181,6 +181,8 @@ import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/Buil
 import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
 import AzureScriptsStepSummaryPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepSummaryPanel";
 import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
+import GitScraperSummaryPanel from "./step_tool_configuration_forms/gitscraper/GitScraperSummaryPanel";
+import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscraper/gitscraper-step-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function PipelineStepConfigurationSummary({
@@ -576,6 +578,13 @@ function PipelineStepConfigurationSummary({
           <BuildkiteStepSummary
             pipelineData={pipelineData}
             buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
+          />
+        );
+      case "gitscraper":
+        return (
+          <GitScraperSummaryPanel
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
           />
         );
       default:
