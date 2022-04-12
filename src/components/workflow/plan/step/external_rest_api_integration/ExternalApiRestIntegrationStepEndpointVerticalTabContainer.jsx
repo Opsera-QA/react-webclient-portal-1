@@ -138,7 +138,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
               </Col>
             </Row>
             <ExternalApiIntegrationStepRunEndpointRequestInputBase
-              fieldName={"connectionCheckEndpointRequestParameters"}
+              fieldName={"connectionCheckRequestParameters"}
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}
               toolId={externalRestApiIntegrationModel?.getData("toolId")}

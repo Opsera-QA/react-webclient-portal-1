@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export const externalRestApiIntegrationStepMetadata = {
   type: "External Rest API Integration Step",
   fields: [
