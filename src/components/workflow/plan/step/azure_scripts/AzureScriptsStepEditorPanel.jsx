@@ -59,7 +59,7 @@ function AzureScriptsStepEditorPanel(
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.configuration, azureScriptsStepMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.tool?.configuration, azureScriptsStepMetadata);
       setAzureScriptsStepModel(parsedModel);
       const thresholdModel = modelHelpers.parseObjectIntoModel(pipelineStep?.threshold, thresholdMetadata);
       setThresholdModel(thresholdModel);
@@ -75,7 +75,7 @@ function AzureScriptsStepEditorPanel(
 
   const saveAzureCliCommandStepConfiguration = async () => {
     const newPipelineStep = pipelineStep;
-    newPipelineStep.configuration = {...azureScriptsStepModel.getPersistData()};
+    newPipelineStep.tool.configuration = {...azureScriptsStepModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
 
     return await pipelineActions.updatePipelineStepByIdV2(

@@ -46,18 +46,6 @@ function FilterBar(
 
   // TODO: Remove or combine the duplicate search filters
   const getSearchBar = () => {
-    if (typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true) {
-      return (
-        <SearchFilter
-          isLoading={isLoading}
-          paginationModel={filterModel}
-          loadData={loadData}
-          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-          metadata={metadata}
-        />
-      );
-    }
-
     if (supportClientSideSearching === true) {
       return (
         <InlineClientSideSearchFilter
@@ -66,6 +54,18 @@ function FilterBar(
           isLoading={isLoading}
           supportClientSideSearching={supportClientSideSearching}
           className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        />
+      );
+    }
+
+    if (typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true) {
+      return (
+        <SearchFilter
+          isLoading={isLoading}
+          paginationModel={filterModel}
+          loadData={loadData}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          metadata={metadata}
         />
       );
     }
