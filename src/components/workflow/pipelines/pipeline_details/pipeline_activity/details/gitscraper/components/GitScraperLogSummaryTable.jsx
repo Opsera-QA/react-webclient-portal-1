@@ -41,7 +41,7 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
     return (
       <div className={"mt-3"}>
         <IconBase className={"mr-2"} icon={faCheckCircle} />
-        There were no deployed objects with this execution.
+        There were no secrets identified with this execution.
       </div>
     );
   }
