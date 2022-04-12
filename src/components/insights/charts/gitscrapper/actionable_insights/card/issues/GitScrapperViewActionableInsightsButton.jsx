@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import { useHistory } from "react-router-dom";
 
 function GitScrapperViewActionableInsightsButton({ dataObject }) {
-  console.log('GitScrapperViewActionableInsightsButton dataObject', dataObject);
   const history = useHistory();
 
   const getActionableInsights = () => {
@@ -25,7 +24,7 @@ function GitScrapperViewActionableInsightsButton({ dataObject }) {
 }
 
 GitScrapperViewActionableInsightsButton.propTypes = {
-  dataObject: PropTypes.object,
+  dataObject: PropTypes.object
 };
 
 export default GitScrapperViewActionableInsightsButton;
