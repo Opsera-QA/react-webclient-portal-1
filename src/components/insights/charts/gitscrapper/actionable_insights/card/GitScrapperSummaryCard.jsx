@@ -41,7 +41,7 @@ function GitScrapperSummaryCard({ gitScrapperData, type}) {
     return (
       <div className="d-flex justify-content-between w-100">
         <div><IconBase icon={faFileCode} className={"mr-1"}/>{gitScrapperMetricScorecardDto.getData("projectName")}</div>
-        <div><GitScrapperViewActionableInsightsButton dataObject={gitScrapperMetricScorecardDto}/></div>
+        {(type === 'totalNumberofIssues') && <div><GitScrapperViewActionableInsightsButton dataObject={gitScrapperMetricScorecardDto}/></div>}
       </div>
     );
   };

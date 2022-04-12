@@ -1,36 +1,27 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-// import { Col, Row } from "react-bootstrap";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
+import { faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import chartsActions from "components/insights/charts/charts-actions";
 import { useHistory } from "react-router-dom";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import IconBase from "components/common/icons/IconBase";
 import FilterContainer from "components/common/table/FilterContainer";
-import GitScrapperCardView from "./card/issues/GitScrapperCardView";
+import GitScrapperCardView from "./card/GitScrapperCardView";
 
-// import GitScrapperMetricScorecardMetaData from "../gitScrapperMetricScorecardMetaData";
 import gitScrapperPipelineFilterMetadata from "../git-scrapper-pipeline-filter-metadata";
 
 
 function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
-  const history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
-  const [dataBlockValues, setDataBlockValues] = useState([]);
   const [dataScorecardMetrics, setDataScorecardMetrics] = useState([]);
-  // const fields = GitScrapperMetricScorecardMetaData.fields;
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
