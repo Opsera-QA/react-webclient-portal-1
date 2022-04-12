@@ -142,5 +142,5 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
   // GitScrapper
-  GIT_SCRAPPER_METRICS: "git-scrapper-metrics",
+  GIT_SCRAPER_METRICS: "git-scraper",
 };
