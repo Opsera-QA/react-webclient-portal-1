@@ -54,7 +54,10 @@ const FailedExecutionsActionableInsightsMetaData = {
       label: "Run Number",
       id: "actionRunNumber",
     },
-
+    {
+      label: "Step",
+      id:"stepName"
+    },
     {
       label: "Success",
       id: "successPercentage",
@@ -102,7 +105,8 @@ const FailedExecutionsActionableInsightsMetaData = {
          currentPage: 1,
          sortOption: {text: "Newest", value: ""},
          search: "",
-         activeFilters: []
+         activeFilters: [],
+         stepCompletedAt: null
        },
        sortOptions: [
          {text: "Newest", option: ""},

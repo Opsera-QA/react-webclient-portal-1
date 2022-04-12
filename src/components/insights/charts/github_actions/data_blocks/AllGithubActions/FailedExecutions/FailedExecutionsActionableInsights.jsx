@@ -20,6 +20,7 @@ import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/Va
 import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import SuccessExecutionsActionableInsightsMetaData
   from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
+import { getTableDateTimeColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 
 function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -65,7 +66,8 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
       getTableTextColumn(getField(fields, "pointOfFailure")),
-      getTableTextColumn(getField(fields, "stepCompletedAt"))
+      getTableTextColumn(getField(fields, "stepCompletedAt")),
+      getTableTextColumn(getField(fields, "stepName"))
     ],
     []
   );
