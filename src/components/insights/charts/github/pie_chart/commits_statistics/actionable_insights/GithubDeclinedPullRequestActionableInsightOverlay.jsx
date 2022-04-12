@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
+import { faTable, faCodeMerge } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubClosedCommitsTab from "./tableData/GithubClosedCommitsTab";
 
@@ -28,6 +28,8 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           repository={repository}
+          icon={faCodeMerge}
+          type="declinedPie"
         />
       </div>
     </FullScreenCenterOverlayContainer>

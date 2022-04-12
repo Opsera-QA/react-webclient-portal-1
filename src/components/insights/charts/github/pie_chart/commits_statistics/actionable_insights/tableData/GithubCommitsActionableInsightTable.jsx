@@ -10,7 +10,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 
-function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title, type }) {
+function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title, type, tableTitleIcon }) {
   const fields = GithubCommitsActionableMetadata.fields;
   const tableTitle = "Github " + title + " Report";
   const noDataMessage = "Github " + title + " report is currently unavailable at this time";
@@ -34,13 +34,23 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
     ],
     []
   );
+  const declinedColumns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
+      getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
+      getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
+      getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
+      getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt")
+    ],
+    []
+  );
 
   const getTable = () => {
     return (
       <CustomTable
         isLoading={isLoading}
         loadData={loadData}
-        columns={type =="open" ? openColumns : columns}
+        columns={type === "open" ? openColumns : type === "declined" ? declinedColumns : columns}
         data={data}
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
@@ -53,7 +63,7 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
     <FilterContainer
       isLoading={isLoading}
       title={tableTitle}
-      titleIcon={faDraftingCompass}
+      titleIcon={tableTitleIcon}
       body={getTable()}
       className={"px-2 pb-2"}
       loadData={loadData}
@@ -71,6 +81,7 @@ GithubCommitsActionableInsightTable.propTypes = {
   setFilterModel: PropTypes.func,
   title: PropTypes.string,
   type: PropTypes.string.isRequired,
+  tableTitleIcon: PropTypes.object
 };
 
 export default GithubCommitsActionableInsightTable;
