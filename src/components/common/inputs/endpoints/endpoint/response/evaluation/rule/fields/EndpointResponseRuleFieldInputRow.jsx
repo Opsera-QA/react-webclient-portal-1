@@ -16,6 +16,9 @@ import MultiTextListInputBase from "components/common/inputs/list/text/MultiText
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -87,6 +90,7 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
+              maximumHeight={`calc(${EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT} - 200px)`}
             />
           );
         case "date":
