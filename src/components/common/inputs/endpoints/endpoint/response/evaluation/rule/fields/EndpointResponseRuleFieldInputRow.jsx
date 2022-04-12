@@ -19,6 +19,7 @@ import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/V
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -105,6 +106,13 @@ function EndpointResponseRuleFieldInputRow(
               clearDataFunction={() => updateMainModelFunction("value", undefined)}
             />
           );
+        case "object":
+        default:
+        return (
+          <CenteredContentWrapper>
+            <div>{`Entering this parameter type's value is not currently supported.`}</div>
+          </CenteredContentWrapper>
+        );
       }
     }
   };
@@ -129,7 +137,7 @@ function EndpointResponseRuleFieldInputRow(
             showLabel={false}
             className={"px-0"}
             disabled={disabled}
-            isSensitiveData={endpointBodyField?.isSensitiveData === true}
+            isSensitiveData={endpointBodyField?.isSensitiveData === true || endpointBodyField?.type === "object"}
             updateMainModelFunction={updateMainModel}
           />
         </div>

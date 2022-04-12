@@ -8,12 +8,16 @@ const SUPPORTED_FIELD_TYPES = [
     value: "array",
   },
   {
-    text: "String",
-    value: "string",
-  },
-  {
     text: "Date",
     value: "date",
+  },
+  {
+    text: "Object",
+    value: "object",
+  },
+  {
+    text: "String",
+    value: "string",
   },
 ];
 
