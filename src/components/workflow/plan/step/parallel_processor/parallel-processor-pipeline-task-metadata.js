@@ -40,7 +40,11 @@ const parallelProcessorPipelineTaskMetadata = {
     {
       label: null,
       id: "api_response.apiResponse.message.runResponse"
-    }
+    },
+    {
+      label: "Triggered By",
+      id: "user_id"
+    },
   ],
   newObjectFields: {
   }

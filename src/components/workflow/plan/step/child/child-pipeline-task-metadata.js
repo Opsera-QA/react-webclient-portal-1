@@ -40,7 +40,11 @@ const childPipelineTaskMetadata = {
     {
       label: null,
       id: "api_response.body.pipelineId"
-    }
+    },
+    {
+      label: "Triggered By",
+      id: "user_id"
+    },
   ],
   newObjectFields: {
   }
