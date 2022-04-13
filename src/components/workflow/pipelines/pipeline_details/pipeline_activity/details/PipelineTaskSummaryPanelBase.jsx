@@ -8,11 +8,15 @@ import PipelineTaskStateField from "components/common/fields/workflow/pipelines/
 import PipelineTaskSummaryMessageField
   from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
+import UserNameField from "components/common/fields/user/UserNameField";
 
 function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
   return (
     <SummaryPanelContainer className={"mx-2"}>
       <Row>
+        <Col md={12}>
+          <UserNameField model={pipelineTaskData} fieldName={"user_id"}/>
+        </Col>
         <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"step_name"}/>
         </Col>
