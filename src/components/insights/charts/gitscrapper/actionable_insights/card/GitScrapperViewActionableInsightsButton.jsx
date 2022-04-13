@@ -7,8 +7,7 @@ import { useHistory } from "react-router-dom";
 function GitScrapperViewActionableInsightsButton({ dataObject }) {
   const history = useHistory();
 
-  const getActionableInsights = () => {
-    console.log('getActionableInsights trigger');
+  const getActionableInsights = () => {    
     // history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);
   };
 
