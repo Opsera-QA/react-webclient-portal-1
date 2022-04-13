@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScraperCommonInputBase from "./ScraperCommonInputBase";
 import { faFileCode, faHandshake, faUserSecret } from "@fortawesome/pro-light-svg-icons";
-import GitSecretsToIgnoreInput from "./GitSecretsToIgnoreInput";
 import ParameterSelectListInputBase
   from "../../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
 
