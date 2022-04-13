@@ -62,19 +62,15 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
       let response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "overallCoverityIssuesTrend",
+        "gitScraperMetrics",
         kpiConfiguration,
         dashboardTags,
         null,
         null,
         dashboardOrgs
       );
-      
 
-      response['data'] = {"status":200,"status_text":"ES Pipeline Summary Query Results","message":"ES Query Response from Living Connection","data":[{"overallGitScrapperTrend":{"tool":"Git scrapper","data":[{"lastScanRepositories":23,"lastScanClean":1,"lastScanIssues":89,"trendRepositories":"Red","trendClean":"Neutral","trendIssues":"Green","totalRepositoriesScanned":3,"totalCleanRepositories":1,"totalNumberofIssues":88}],"length":1,"status":200,"status_text":"OK"}}]};
-
-      const dataObject = response?.data ? response?.data?.data[0]?.overallGitScrapperTrend?.data : [];
-
+      const dataObject = response?.data && response?.data?.status === 200 ? response?.data?.data[0]?.gitScraperMetrics?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -166,32 +162,32 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
           <Row className="p-1 gray">
             <Col>
               <GitScrapperOverallScannedRepositoriesTrendDataBlock
-                score={metrics[0]?.totalRepositoriesScanned || 0 }
-                icon={getIcon(metrics[0]?.trendRepositories)}
-                className={getIconColor(metrics[0]?.trendRepositories)}
+                score={metrics[0]?.current?.count || 0 }
+                icon={getIcon(metrics[0]?.trend?.count)}
+                className={getIconColor(metrics[0]?.trend?.count)}
                 // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
-                lastScore={metrics[0]?.lastScanRepositories}
-                iconOverlayBody={getDescription(metrics[0]?.trendRepositories)}
+                lastScore={metrics[0]?.previous?.count}
+                iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
             </Col>
             <Col>
               <GitScrapperOverallCleanRepositoriesTrendDataBlock
-                score={metrics[0]?.totalCleanRepositories || 0 }
-                icon={getIcon(metrics[0]?.trendClean)}
-                className={getIconColor(metrics[0]?.trendClean)}
-                onSelect={() => onRowSelect({type: 'totalCleanRepositories', label: "Total Clean Repositories"})}
-                lastScore={metrics[0]?.lastScanClean}
-                iconOverlayBody={getDescription(metrics[0]?.trendClean)}
+                score={metrics[0]?.current?.cleanRepoCount || 0 }
+                icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
+                className={getIconColor(metrics[0]?.trend?.cleanRepoCount)}
+                // onSelect={() => onRowSelect({type: 'totalCleanRepositories', label: "Total Clean Repositories"})}
+                lastScore={metrics[0]?.previous?.cleanRepoCount}
+                iconOverlayBody={getDescription(metrics[0]?.trend?.cleanRepoCount)}
               />
             </Col>
             <Col>
               <GitScrapperOverallIssuesTrendDataBlock
-                score={metrics[0]?.totalNumberofIssues || 0 }
-                icon={getIconIssuesTrend(metrics[0]?.trendIssues)}
-                className={getIconColor(metrics[0]?.trendIssues)}
-                onSelect={() => onRowSelect({type: 'totalNumberofIssues', label: "Total Number of Issues"})}
-                lastScore={metrics[0]?.lastScanIssues}
-                iconOverlayBody={getDescription(metrics[0]?.trendIssues)}
+                score={metrics[0]?.current?.issueCount || 0 }
+                icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
+                className={getIconColor(metrics[0]?.trend?.issueCount)}
+                // onSelect={() => onRowSelect({type: 'totalNumberofIssues', label: "Total Number of Issues"})}
+                lastScore={metrics[0]?.previous?.issueCount}
+                iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
               />
             </Col>
           </Row>
