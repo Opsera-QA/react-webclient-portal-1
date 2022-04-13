@@ -21,9 +21,14 @@ function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardDa
       />
     );
   };
+  const max = metric && metric[0] && metric[0].max;
+  const min = metric && metric[0] && metric[0].min;
   return (
     <div style={{ height: "150px" }} >
-      <div className="text-right pr-3"><MetricBadgeBase badgeText={`Min Value: 2.34 Minutes`} /> <MetricBadgeBase badgeText={`Max Value: 4.34 Minutes`} /></div>
+      <div className="text-right pr-3">
+        {min ? <MetricBadgeBase badgeText={`Min Value: ${min} Minutes`} /> : ''}
+        {max ? <MetricBadgeBase badgeText={`Max Value: 4.34 Minutes`} /> : ''}
+      </div>
       <ResponsiveLine
         data={metric}
         {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}
