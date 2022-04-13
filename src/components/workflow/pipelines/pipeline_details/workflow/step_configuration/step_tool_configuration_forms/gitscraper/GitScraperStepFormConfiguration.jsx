@@ -13,7 +13,7 @@ import GitScraperGitBranchSelectInput from "./inputs/GitScraperGitBranchSelectIn
 import GitScraperStepFormMetadata from "./gitscraper-step-metadata";
 import GitIgnoreToggleInput from "./inputs/GitIgnoreToggleInput";
 
-function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
+function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback,plan }) {
   const [isLoading, setIsLoading] = useState(true);
   const [jobType, setJobType] = useState("");
   const [gitscraperStepConfigurationModel, setGitscraperStepConfigurationModel] = useState(undefined);
@@ -126,6 +126,7 @@ GitscraperStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   closeEditorPanel: PropTypes.func,
   parentCallback: PropTypes.func,
+  plan:PropTypes.array
 };
 
 export default GitscraperStepConfiguration;
