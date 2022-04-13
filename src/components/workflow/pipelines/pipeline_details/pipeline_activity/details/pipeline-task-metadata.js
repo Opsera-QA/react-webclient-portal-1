@@ -36,6 +36,10 @@ const pipelineTaskMetadata = {
     {
       label: "Task",
       id: "step_name"
+    },
+    {
+      label: "Triggered By",
+      id: "user_id"
     }
   ],
   newObjectFields: {
