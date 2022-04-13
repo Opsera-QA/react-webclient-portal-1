@@ -208,7 +208,7 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div className={"mt-2"}>
+    <div>
       <Row>
         <Col xs={8} className={"pr-2"}>
           {getParameterInputContainer()}

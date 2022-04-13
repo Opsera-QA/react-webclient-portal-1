@@ -76,7 +76,7 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <div className={"mx-3 my-2"}>
+            <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
               <CustomParameterSelectInput
                 model={endpointFieldModel}
                 fieldName={"value"}
@@ -93,7 +93,7 @@ function EndpointRequestParameterInputRow(
         }
 
         return (
-          <div className={"mx-3 my-2"}>
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
             <CustomParameterComboBoxInput
               model={endpointFieldModel}
               fieldName={"value"}
@@ -126,7 +126,7 @@ function EndpointRequestParameterInputRow(
         );
       case "date":
         return (
-          <div className={"mx-3 mb-3 mt-2"}>
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
             <DateTimeInput
               dataObject={endpointFieldModel}
               setDataObject={setEndpointFieldModel}

@@ -58,28 +58,32 @@ function EndpointResponseRuleFieldInputRow(
         case "string":
           if (isSensitiveData === true) {
             return (
-              <CustomParameterSelectInput
-                model={endpointFieldModel}
-                setModel={setEndpointFieldModel}
-                fieldName={"value"}
-                className={"value-parameter"}
-                requireVaultSavedParameters={true}
-                setDataFunction={updateCustomParameterField}
-                disabled={disabled}
-              />
+              <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+                <CustomParameterSelectInput
+                  model={endpointFieldModel}
+                  setModel={setEndpointFieldModel}
+                  fieldName={"value"}
+                  className={"value-parameter"}
+                  requireVaultSavedParameters={true}
+                  setDataFunction={updateCustomParameterField}
+                  disabled={disabled}
+                />
+              </div>
             );
           }
 
           return (
-            <CustomParameterComboBoxInput
-              model={endpointFieldModel}
-              setModel={setEndpointFieldModel}
-              fieldName={"value"}
-              className={"value-parameter"}
-              requireInsensitiveParameters={true}
-              setDataFunction={updateCustomParameterField}
-              disabled={disabled}
-            />
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+              <CustomParameterComboBoxInput
+                model={endpointFieldModel}
+                setModel={setEndpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireInsensitiveParameters={true}
+                setDataFunction={updateCustomParameterField}
+                disabled={disabled}
+              />
+            </div>
           );
         case "array":
           return (
@@ -91,20 +95,23 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
-              maximumHeight={`calc(${EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT} - 200px)`}
+              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
             />
           );
         case "date":
           return (
-            <DateTimeInput
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
-              setDataFunction={updateMainModelFunction}
-              fieldName={"value"}
-              defaultToNull={true}
-              disabled={disabled}
-              clearDataFunction={() => updateMainModelFunction("value", undefined)}
-            />
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+              <DateTimeInput
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                defaultToNull={true}
+                disabled={disabled}
+                clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              />
+            </div>
           );
         case "object":
         default:
