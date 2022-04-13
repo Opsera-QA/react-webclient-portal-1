@@ -100,37 +100,37 @@ function UserNameFieldBase({ userId, label, className, showLabel }) {
   const getClipboardButtons = () => {
     if (userData) {
       return (
-        <div className={"d-flex"}>
+        // <div className={"d-flex"}>
           <CopyToClipboardIconBase
             copyString={userData?.email}
             copyText={`Copy User's Email ${userData?.email} to clipboard`}
             copiedText={`Copied User's Email ${userData?.email} to clipboard!`}
             className={"ml-2"}
           />
-          <div className={"ml-2"}>{userId}</div>
-          <CopyToClipboardIconBase
-            copyString={userId}
-            copyText={`Copy User ID ${userId} to clipboard`}
-            copiedText={`Copied User ID ${userId} to clipboard!`}
-            className={"ml-2"}
-          />
-        </div>
+        //   <div className={"ml-2"}>{userId}</div>
+        //   <CopyToClipboardIconBase
+        //     copyString={userId}
+        //     copyText={`Copy User ID ${userId} to clipboard`}
+        //     copiedText={`Copied User ID ${userId} to clipboard!`}
+        //     className={"ml-2"}
+        //   />
+        // </div>
       );
     }
-
-    if (isMongoDbId(userId) === true) {
-      return (
-        <div className={"d-flex"}>
-          <div className={"ml-2"}>{userId}</div>
-          <CopyToClipboardIconBase
-            copyString={userId}
-            copyText={`Copy User ID ${userId} to clipboard`}
-            copiedText={`Copied User ID ${userId} to clipboard!`}
-            className={"ml-2"}
-          />
-        </div>
-      );
-    }
+    //
+    // if (isMongoDbId(userId) === true) {
+    //   return (
+    //     <div className={"d-flex"}>
+    //       <div className={"ml-2"}>{userId}</div>
+    //       <CopyToClipboardIconBase
+    //         copyString={userId}
+    //         copyText={`Copy User ID ${userId} to clipboard`}
+    //         copiedText={`Copied User ID ${userId} to clipboard!`}
+    //         className={"ml-2"}
+    //       />
+    //     </div>
+    //   );
+    // }
   };
 
   return (
