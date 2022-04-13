@@ -4,7 +4,7 @@ const GitScrapperMetricCleanRepoScorecardMetaData = {
   fields: [
     {
       label: "Run Count",
-      id: "run_count",
+      id: "runCount",
     },
     {
       label: "Pipeline Id",

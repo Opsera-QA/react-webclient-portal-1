@@ -40,7 +40,7 @@ function GitScrapperSummaryCard({ gitScrapperData, type}) {
   const getTitleBar = () => {
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><IconBase icon={faFileCode} className={"mr-1"}/>{gitScrapperMetricScorecardDto.getData("projectName")}</div>
+        <div><IconBase icon={faFileCode} className={"mr-1"}/>{gitScrapperMetricScorecardDto.getData("repository")}</div>
         {(type === 'totalNumberofIssues') && <div><GitScrapperViewActionableInsightsButton dataObject={gitScrapperMetricScorecardDto}/></div>}
       </div>
     );
@@ -65,13 +65,13 @@ function GitScrapperSummaryCard({ gitScrapperData, type}) {
             <Col sm={12} md={7} lg={9}>
                 <Row>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={gitScrapperMetricScorecardDto} fieldName={(type === 'totalNumberofIssues') ? "totalScans" : "pipelineName"} className="insight-detail-label my-2" />
+                        <TextFieldBase dataObject={gitScrapperMetricScorecardDto} fieldName={"pipelineId"} className="insight-detail-label my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
                         <TextFieldBase dataObject={gitScrapperMetricScorecardDto} fieldName={"library"} className="insight-detail-label my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={gitScrapperMetricScorecardDto} fieldName={"repository"} className="insight-detail-label my-2" />
+                        <TextFieldBase dataObject={gitScrapperMetricScorecardDto} fieldName={(type === 'totalNumberofIssues') ? "branch" : "runCount"} className="insight-detail-label my-2" />
                     </Col>
                     <Col sm={12} md={6} lg={6}>
                       <DateTimeField dataObject={gitScrapperMetricScorecardDto} fieldName={"activityDate"} className="insight-detail-label my-2" />
