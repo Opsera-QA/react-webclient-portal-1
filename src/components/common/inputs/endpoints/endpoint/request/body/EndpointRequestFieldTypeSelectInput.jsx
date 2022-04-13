@@ -1,21 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-const SUPPORTED_FIELD_TYPES = [
-  {
-    text: "Array",
-    value: "array",
-  },
-  {
-    text: "String",
-    value: "string",
-  },
-  {
-    text: "Date",
-    value: "date",
-  },
-];
+import ApiRequestFieldTypeSelectInput
+  from "components/common/list_of_values_input/api/request/body/ApiRequestFieldTypeSelectInput";
 
 function EndpointRequestFieldTypeSelectInput(
   {
@@ -34,13 +20,10 @@ function EndpointRequestFieldTypeSelectInput(
   };
 
   return (
-    <SelectInputBase
-      selectOptions={SUPPORTED_FIELD_TYPES}
-      dataObject={model}
-      setDataObject={setModel}
+    <ApiRequestFieldTypeSelectInput
+      model={model}
+      setModel={setModel}
       fieldName={fieldName}
-      valueField={"value"}
-      textField={"text"}
       disabled={disabled}
       setDataFunction={setDataFunction}
     />

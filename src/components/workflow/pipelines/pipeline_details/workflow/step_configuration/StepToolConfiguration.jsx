@@ -84,6 +84,8 @@ import ExternalRestApiIntegrationStepEditorPanel
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
 import axios from "axios";
+import GitScraperStepFormConfiguration
+  from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1215,6 +1217,20 @@ function StepToolConfiguration({
       case "buildkite":
         return (
           <BuildkiteStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "gitscraper":
+        return (
+          <GitScraperStepFormConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faCheckCircle, faCode} from "@fortawesome/pro-light-svg-icons";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 import InfoContainer from "components/common/containers/InfoContainer";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -14,9 +13,11 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
-
-const containerHeight = "calc(100vh - 546px)";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import ExternalApiIntegrationEndpointParameterField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiIntegrationEndpointParameterField";
 
 function EndpointRequestParametersInputBase(
   {
@@ -29,7 +30,7 @@ function EndpointRequestParametersInputBase(
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
-  const [activeTab, setActiveTab] = useState("run");
+  const [activeTab, setActiveTab] = useState(undefined);
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -69,6 +70,10 @@ function EndpointRequestParametersInputBase(
         value: value,
       });
     });
+
+    if (activeTab == null && Array.isArray(unpackedParameters) && unpackedParameters.length > 0) {
+      setActiveTab(`${unpackedParameters[0]?.fieldName}`);
+    }
 
     setParameters([...unpackedParameters]);
   };
@@ -148,8 +153,8 @@ function EndpointRequestParametersInputBase(
         <InfoContainer
           titleIcon={faCode}
           titleText={field?.label}
-          minimumHeight={containerHeight}
-          maximumHeight={containerHeight}
+          minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+          maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         >
           <CenteredContentWrapper>
             <span>There are no Parameters to configure</span>
@@ -162,8 +167,8 @@ function EndpointRequestParametersInputBase(
       <VanitySetTabAndViewContainer
         icon={faCode}
         title={field?.label}
-        minimumHeight={containerHeight}
-        maximumHeight={containerHeight}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
@@ -177,39 +182,24 @@ function EndpointRequestParametersInputBase(
   };
 
   const getRightSideButton = () => {
-    return (
+    if (disabled !== true) {
+      return (
         <ClearDataIcon
           clearValueFunction={resetDataToDefault}
           className={"my-auto mr-1"}
         />
-    );
+      );
+    }
   };
 
   const getConstructedParameterContainer = () => {
     return (
-      <InfoContainer
-        titleIcon={faCheckCircle}
-        titleText={`Constructed ${model?.getLabel(fieldName)}`}
-        className={"h-100"}
-        minimumHeight={containerHeight}
-        maximumHeight={containerHeight}
+      <ExternalApiIntegrationEndpointParameterField
+        model={model}
+        fieldName={fieldName}
+        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
         titleRightSideButton={getRightSideButton()}
-      >
-        <div className={"m-3"}>
-          <JsonFieldBase
-            className={"h-100 mb-2"}
-            json={model?.getData(fieldName)}
-          />
-          <div className={"mt-auto"}>
-            <InfoText
-              customMessage={`
-                 Please Note: Until updated and saved, 
-                 this will include all previously saved fields.
-               `}
-            />
-          </div>
-        </div>
-      </InfoContainer>
+      />
     );
   };
 
@@ -218,7 +208,7 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div className={"mt-2"}>
+    <div>
       <Row>
         <Col xs={8} className={"pr-2"}>
           {getParameterInputContainer()}

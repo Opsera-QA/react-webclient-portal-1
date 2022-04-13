@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GithubCommitsActionableInsightTable from "./GithubCommitsActionableInsightTable";
 
-function GithubClosedCommitsTab({ repository, dashboardData, kpiConfiguration }) {
+function GithubClosedCommitsTab({ repository, dashboardData, kpiConfiguration, icon, type }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -26,10 +26,8 @@ function GithubClosedCommitsTab({ repository, dashboardData, kpiConfiguration })
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -94,8 +92,9 @@ function GithubClosedCommitsTab({ repository, dashboardData, kpiConfiguration })
         loadData={loadData}
         filterModel={filterModel}
         setFilterModel={setFilterModel}
-        title={repository ? "Closed Pull Requests" : "Declined Pull Requests"}
-        type={"closed"}
+        title={type === "declinedPie" ? "Declined Pull Requests" : "Closed Pull Requests"}
+        type={type === "declinedPie" ? "declined" : "closed"}
+        tableTitleIcon={icon}
       />
     </div>
   );
@@ -104,5 +103,7 @@ GithubClosedCommitsTab.propTypes = {
   repository: PropTypes.string,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object,
+  type: PropTypes.string
 };
 export default GithubClosedCommitsTab;

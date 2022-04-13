@@ -6,7 +6,7 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import GithubCommitsVerticalTabContainer from "./GithubCommitsVerticalTabContainer";
 import GithubClosedCommitsTab from "./tableData/GithubClosedCommitsTab";
 
-function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboardData, kpiConfiguration}) {
+function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboardData, kpiConfiguration,icon}) {
 
    const getTabContentContainer = () => {
     return (
@@ -17,6 +17,7 @@ function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboard
               repository={item.id}
               dashboardData={dashboardData}
               kpiConfiguration={kpiConfiguration}
+              icon={icon}
             />
           </VanitySetTabView>
         ))}
@@ -29,7 +30,7 @@ function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboard
   return (
     <VanitySetTabAndViewContainer
       title={`Github Closed Pull Requests`}
-      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0].id && highestMergesMetric[0].id}
+      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]?.id && highestMergesMetric[0]?.id}
       verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
       currentView={getTabContentContainer()}
     />
@@ -40,6 +41,7 @@ GithubCommitsActionableInsightClosedTab.propTypes = {
   highestMergesMetric: PropTypes.array,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object
 };
 export default GithubCommitsActionableInsightClosedTab;
 

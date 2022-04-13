@@ -192,4 +192,17 @@ userActions.getAccountInformationV2 = async (cancelTokenSource, domain, token) =
   return await baseActions.customTokenApiPostCallV2(cancelTokenSource, token, apiUrl, postBody);
 };
 
+userActions.getUserNameAndEmailForIdV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+) => {
+  const apiUrl = `/users/${userId}/name`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 export default userActions;

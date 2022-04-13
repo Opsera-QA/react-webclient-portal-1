@@ -24,7 +24,7 @@ function VanitySetTabContentContainer(
               {title}
             </div>
           </div>
-          <div className={"ml-2"}>
+          <div>
             {titleBarInput}
           </div>
         </div>
@@ -35,7 +35,7 @@ function VanitySetTabContentContainer(
   return (
     <div className={"h-100"}>
       {getTitleBar()}
-      <div className={"my-auto h-100"}>
+      <div className={"my-auto h-100"} style={{overflowX: "hidden"}}>
         {children}
       </div>
     </div>

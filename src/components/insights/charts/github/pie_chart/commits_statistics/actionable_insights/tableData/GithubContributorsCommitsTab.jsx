@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GithubContributorsCommitsActionableInsightTable from "./GithubContributorsCommitsActionableInsightTable";
 
-function GithubContributorsCommitsTab({ repository, dashboardData, kpiConfiguration }) {
+function GithubContributorsCommitsTab({ repository, dashboardData, kpiConfiguration, icon }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -94,6 +94,7 @@ function GithubContributorsCommitsTab({ repository, dashboardData, kpiConfigurat
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         title={"Contributors"}
+        tableTitleIcon={icon}
       />
     </div>
   );
@@ -102,5 +103,6 @@ GithubContributorsCommitsTab.propTypes = {
   repository: PropTypes.string,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object
 };
 export default GithubContributorsCommitsTab;

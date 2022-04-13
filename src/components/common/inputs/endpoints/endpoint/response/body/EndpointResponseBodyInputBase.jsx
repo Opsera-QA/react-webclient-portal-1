@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import EndpointResponseBodyFieldInputRow
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyFieldInputRow";
+  from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -15,6 +15,11 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
+import EndpointResponseBodyTypeSelectInput
+  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
+import {
+  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
+} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function EndpointResponseBodyInputBase(
   {
@@ -184,36 +189,39 @@ function EndpointResponseBodyInputBase(
   };
 
   const getBody = () => {
-    if (!Array.isArray(fields) || fields.length === 0) {
-      return (
-        <InfoContainer
-          titleText={field?.label}
-          titleIcon={faBracketsCurly}
-          minimumHeight={"calc(100vh - 730px)"}
-          maximumHeight={"calc(100vh - 730px)"}
-          titleRightSideButton={getAddFieldButton()}
-        >
-          <CenteredContentWrapper>
-            <div className={"mt-5"}>No fields have been added</div>
-          </CenteredContentWrapper>
-        </InfoContainer>
-      );
-    }
+    switch (model?.getData("responseBodyType")) {
+      case "object":
+        if (!Array.isArray(fields) || fields.length === 0) {
+          return (
+            <InfoContainer
+              titleText={field?.label}
+              titleIcon={faBracketsCurly}
+              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              titleRightSideButton={getAddFieldButton()}
+            >
+              <CenteredContentWrapper>
+                <div className={"mt-5"}>No fields have been added</div>
+              </CenteredContentWrapper>
+            </InfoContainer>
+          );
+        }
 
-    return (
-      <div>
-        <VanitySetTabAndViewContainer
-          title={field?.label}
-          icon={faBracketsCurly}
-          verticalTabContainer={getVerticalTabContainer()}
-          currentView={getCurrentView()}
-          minimumHeight={"calc(100vh - 730px)"}
-          maximumHeight={"calc(100vh - 730px)"}
-          tabColumnSize={3}
-          titleRightSideButton={getAddFieldButton()}
-        />
-      </div>
-    );
+        return (
+          <div>
+            <VanitySetTabAndViewContainer
+              title={field?.label}
+              icon={faBracketsCurly}
+              verticalTabContainer={getVerticalTabContainer()}
+              currentView={getCurrentView()}
+              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              tabColumnSize={3}
+              titleRightSideButton={getAddFieldButton()}
+            />
+          </div>
+        );
+    }
   };
 
   const isFieldComplete = (field) => {
@@ -290,12 +298,23 @@ function EndpointResponseBodyInputBase(
     }
   };
 
+  const resetFields = () => {
+    setFields([]);
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
-    <div className={"m-2"}>
+    <div className={"m-3"}>
+      <EndpointResponseBodyTypeSelectInput
+        model={model}
+        setModel={setModel}
+        fieldName={"responseBodyType"}
+        disabled={disabled}
+        resetFields={resetFields}
+      />
       {getBody()}
     </div>
   );

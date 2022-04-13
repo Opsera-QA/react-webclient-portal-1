@@ -9,6 +9,9 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
@@ -52,6 +55,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
   const loadData = () => {
     const currentData = model?.getArrayData(fieldName);
     const unpackedFields = [];
+    let requiresUpdate = false;
 
     responseBodyFields?.forEach((field) => {
       const newField = {...field};
@@ -69,9 +73,23 @@ function EndpointResponseFieldEvaluationRulesInputBase(
       if (hasStringValue(filter) === true) {
         newField.filter = filter;
       }
+      else {
+        newField.filter = "is_not_null";
+        requiresUpdate = true;
+      }
 
       unpackedFields.push(newField);
     });
+
+    if (requiresUpdate === true) {
+      validateAndSetData(unpackedFields);
+      return;
+    }
+
+    if (activeTab == null && Array.isArray(unpackedFields) && unpackedFields.length > 0) {
+      setActiveTab('0');
+      setCurrentFieldData(unpackedFields[0]);
+    }
 
     setFields([...unpackedFields]);
   };
@@ -140,8 +158,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
         icon={faBracketsCurly}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
-        minimumHeight={"calc(100vh - 555px)"}
-        maximumHeight={"calc(100vh - 555px)"}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
         tabColumnSize={3}
       />
     );

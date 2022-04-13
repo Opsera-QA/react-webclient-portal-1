@@ -15,7 +15,7 @@ import {
   endpointRequestParametersMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/endpointRequestParameters.metadata";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function ExternalApiIntegrationStepRunEndpointRequestInputBase(
   {
@@ -119,6 +119,14 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
         );
     }
   };
+
+  if (isLoading === true) {
+    return (
+      <div className={"my-5"}>
+        <CenterLoadingIndicator />
+      </div>
+    );
+  }
 
   if (endpoint == null) {
     return null;

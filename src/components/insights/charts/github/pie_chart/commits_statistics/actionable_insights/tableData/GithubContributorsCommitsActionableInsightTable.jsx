@@ -14,6 +14,7 @@ function GithubContributorsCommitsActionableInsightTable({
   filterModel,
   setFilterModel,
   title,
+  tableTitleIcon
 }) {
   const fields = GithubCommitsActionableMetadata.fields;
   const tableTitle = "Github " + title + " Report";
@@ -45,7 +46,7 @@ function GithubContributorsCommitsActionableInsightTable({
     <FilterContainer
       isLoading={isLoading}
       title={tableTitle}
-      titleIcon={faDraftingCompass}
+      titleIcon={tableTitleIcon}
       body={getTable()}
       className={"px-2 pb-2"}
       loadData={loadData}
@@ -62,6 +63,7 @@ GithubContributorsCommitsActionableInsightTable.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   title: PropTypes.string,
+  tableTitleIcon: PropTypes.object
 };
 
 export default GithubContributorsCommitsActionableInsightTable;

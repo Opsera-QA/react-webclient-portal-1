@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GithubCommitsActionableInsightTable from "./GithubCommitsActionableInsightTable";
 
-function GithubMergedCommitsTab({ repository, dashboardData, kpiConfiguration }) {
+function GithubMergedCommitsTab({ repository, dashboardData, kpiConfiguration, icon }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -96,6 +96,7 @@ function GithubMergedCommitsTab({ repository, dashboardData, kpiConfiguration })
         setFilterModel={setFilterModel}
         title={"Merged Pull Requests"}
         type={"merged"}
+        tableTitleIcon={icon}
       />
     </div>
   );
@@ -104,5 +105,6 @@ GithubMergedCommitsTab.propTypes = {
   repository: PropTypes.string,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object
 };
 export default GithubMergedCommitsTab;

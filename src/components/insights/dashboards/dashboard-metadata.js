@@ -40,6 +40,10 @@ const dashboardMetadata = {
       id: "organizations",
     },
     {
+      label: "Filters",
+      id: "amexFilters",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
@@ -111,11 +115,15 @@ export const dashboardFiltersMetadata = {
   fields: [
     {
       label: "Tags",
-      id: "value"
+      id: "tags"
     },
     {
       label: "Organizations",
       id: "organizations"
+    },
+    {
+      label: "Filters",
+      id: "amexFilters",
     },
     {
       label: "Date",
@@ -123,8 +131,9 @@ export const dashboardFiltersMetadata = {
     }
   ],
   newObjectFields: {
-    value: [],
+    tags: [],
     organizations: [],
+    amexFilters: {},
     date: {
       startDate: null,
       endDate: null,

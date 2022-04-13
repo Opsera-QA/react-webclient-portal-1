@@ -32,7 +32,7 @@ function TwoLineScoreDataBlock(
 }
 
 TwoLineScoreDataBlock.propTypes = {
-  score: PropTypes.number,
+  score: PropTypes.any,
   subtitle: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
