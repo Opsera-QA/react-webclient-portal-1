@@ -1,17 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
 
 function FieldLabel({ field, fieldName, showLabel }) {
   if (field == null) {
     console.error(`No Metadata For This Field [${fieldName}]`);
-    return <label className="mb-0 mr-2 text-muted"><span>{fieldName}:</span></label>;
+    return (
+      <FieldLabelBase
+        label={fieldName}
+        showLabel={showLabel}
+      />
+    );
   }
 
-  if (field.label == null || showLabel === false) {
-    return null;
-  }
-
-  return (<label className="mb-0 mr-2 text-muted"><span>{field.label}:</span></label>);
+  return (
+    <FieldLabelBase
+      label={field?.label}
+      showLabel={showLabel}
+    />
+  );
 }
 
 FieldLabel.propTypes = {
