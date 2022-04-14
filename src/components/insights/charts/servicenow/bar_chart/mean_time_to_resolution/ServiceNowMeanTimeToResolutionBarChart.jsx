@@ -276,12 +276,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
                 />
                 <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
-                  Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
-                  <br></br>
-                  Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
-                  <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
-                  <br></br>
-                  MTTR{" "}
+                  Number of Incidents{" "}
                   <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
                 <ResponsiveBar
