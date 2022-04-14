@@ -4,6 +4,7 @@ import Model from "core/data_model/model";
 import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
+import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -15,6 +16,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
       case "informatica":
         return (
           <InformaticaLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case "gitscraper":
+        return (
+          <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
         return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
