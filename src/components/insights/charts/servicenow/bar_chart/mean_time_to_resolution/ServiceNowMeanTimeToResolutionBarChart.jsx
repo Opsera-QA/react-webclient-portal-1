@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./ServiceNowMeanTimeToResolutionConfigs.js";
+import config2 from "./ServiceNowSeverityCountConfig";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -43,6 +44,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
   // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [sevMetrics, setSevMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -104,6 +106,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           dashboardOrgs
         ),
         dataObject = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.docs,
+        barchart = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.severityData,
         overallMeanValue = response?.data?.data[0]?.serviceNowMTTR?.data[0]?.overallMttrHours;
 
       setGoalsData(goals);
@@ -114,11 +117,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setSevMetrics(barchart);
         setOverallMean(overallMeanValue);
       }
 
       if (!dataObject) {
         setMetrics([]);
+        setSevMetrics([]);
       }
       const responseData = response?.data?.data[0]?.serviceNowMTTR?.data[0];
       setTotalIncidents(responseData?.totalIncidents ? responseData?.totalIncidents : 0);
@@ -195,6 +200,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
     );
   };
 
+  console.log("sevmetrics", sevMetrics);
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -210,7 +217,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           {/*</div>*/}
           <div className="new-chart m-3 p-0" style={{ minHeight: "600px", display: "flex" }}>
             <Row className={"justify-content-center"}>
-              <Row xl={6} lg={6} md={7} className={"d-flex px-2 justify-content-center"}>
+              <Row xl={6} lg={6} md={7} className={"d-flex justify-content-center"}>
                   <Col md={12} >
                     <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
                   </Col>
@@ -278,33 +285,19 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
                 <ResponsiveBar
-                  data={metrics}
-                  {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                  {...adjustBarWidth(metrics)}
+                  data={sevMetrics}
+                  {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers",)}
+                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                  {...adjustBarWidth(sevMetrics)}
                   // onClick={(data) => onRowSelect(data)}
-                  tooltip={({ indexValue, value, data, color }) => (
+                  tooltip={({ indexValue, value }) => (
                     <ChartTooltip
-                      titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
-                      values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
+                      titles={["Severity", "Number of Incidents"]}
+                      values={[indexValue, `${value}`]}
                       style={false}
                       // color={color}
                     />
                   )}
-                  markers={[
-                    {
-                      axis: "y",
-                      value: overallMean ? overallMean : 0,
-                      lineStyle: { stroke: neutralColor, strokeWidth: 2 },
-                      legend: "",
-                    },
-                    {
-                      axis: "y",
-                      value: goalsData?.mttrAvgMeanTimeGoal ? goalsData?.mttrAvgMeanTimeGoal : 0,
-                      lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                      legend: "",
-                    },
-                  ]}
                 />
               </Col>
             </Row>
