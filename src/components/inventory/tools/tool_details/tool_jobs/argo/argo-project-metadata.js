@@ -38,7 +38,6 @@ const argoProjectMetadata = {
     {
       label: "Blacklisted Namespaced Resources",
       id: "namespaceResourceBlacklist",
-      isRequired: true,
       formText: "Namespace-scoped K8s API Groups and Kinfs which are prohibited from being deloyed"
     },
     {

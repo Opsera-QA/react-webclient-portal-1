@@ -5,6 +5,7 @@ import ArgoClusterAzureToolSelectInput from "components/inventory/tools/tool_det
 import ArgoAzureClusterSelectInput from "../inputs/ArgoAzureClusterSelectInput";
 import ArgoAzureApplicationSelectInput from "../inputs/ArgoAzureApplicationSelectInput";
 import ArgoAzureResourceGroupSelectInput from "../inputs/ArgoAzureResourceGroupSelectInput";
+import ArgoAzureClusterTypeSelectInput from "../inputs/ArgoAzureClusterTypeSelectInput";
 
 const ArgoAzureClusterEditorForm = ({ model, setModel, disabled, clusterData }) => {
 
@@ -31,6 +32,12 @@ const ArgoAzureClusterEditorForm = ({ model, setModel, disabled, clusterData }) 
           disabled={disabled || ( model && model.getData("platformToolId") === "" )}
           azureToolConfigId={model && model.getData("platformToolId")}
           applicationId={model && model.getData("azureApplicationId")}
+        />
+      </Col>
+      <Col lg={12}>
+        <ArgoAzureClusterTypeSelectInput 
+          model={model}
+          setModel={setModel}
         />
       </Col>
       <Col lg={12}>
