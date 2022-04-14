@@ -26,6 +26,7 @@ function ParameterSelectListInputBase({
   disabled,
   plan,
   tool_prop,
+  showHelp
 }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -321,7 +322,7 @@ function ParameterSelectListInputBase({
         </div>
         <span>
         {getRefreshButton()}
-        {getHelpText()}
+        {showHelp && getHelpText()}
         </span>
       </div>
     );
@@ -407,6 +408,7 @@ ParameterSelectListInputBase.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   tool_prop: PropTypes.string,
+  showHelp: PropTypes.bool,
 };
 
 ParameterSelectListInputBase.defaultProps = {
@@ -415,6 +417,7 @@ ParameterSelectListInputBase.defaultProps = {
   allowIncompleteItems: false,
   disabled: false,
   nameMaxLength: 50,
+  showHelp: true
 };
 
 export default ParameterSelectListInputBase;
