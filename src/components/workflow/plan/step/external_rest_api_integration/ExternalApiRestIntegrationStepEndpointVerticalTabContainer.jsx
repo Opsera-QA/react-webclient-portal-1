@@ -21,6 +21,7 @@ import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
@@ -126,7 +127,7 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
                 <ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
                   model={externalRestApiIntegrationModel}
                   setModel={setExternalRestApiIntegrationModel}
-                  disabled={disabled}
+                  disabled={disabled || isMongoDbId(externalRestApiIntegrationModel?.getData("toolId")) !== true}
                 />
               </Col>
               <Col xs={6} md={9}>
