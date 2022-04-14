@@ -22,6 +22,10 @@ import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/Service
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import IconBase from "components/common/icons/IconBase";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
+import GithubCommitsActionableInsightOverlay
+  from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
+import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -57,6 +61,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const [priorityThree, setPriorityThree] = useState(0);
   const [priorityFour, setPriorityFour] = useState(0);
   const [priorityFive, setPriorityFive] = useState(0);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -140,6 +145,15 @@ function ServiceNowMeanTimeToResolutionBarChart({
         setIsLoading(false);
       }
     }
+  };
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <MTTRActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getMetricBottomRow = () =>{
@@ -276,6 +290,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
         header="Mean Time to Resolution"
