@@ -108,6 +108,14 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
             />
           </Col>
           <Col lg={12}>
+            <TextInputBase
+              setDataObject={setArgoApplicationModel}
+              dataObject={argoApplicationModel}
+              fieldName={"namespace"}
+              disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
             <ArgoClusterSelectInput
               fieldName={"cluster"}
               argoToolId={toolData?._id}
