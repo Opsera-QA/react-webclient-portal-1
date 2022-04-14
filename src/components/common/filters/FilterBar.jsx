@@ -9,17 +9,18 @@ import InlineClientSideSearchFilter from "components/common/filters/search/Inlin
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import ExportDataButton from "components/common/buttons/data/export/ExportDataButton";
 import ImportDataButton from "components/common/buttons/data/import/ImportDataButton";
+import SearchFilter from "components/common/filters/search/SearchFilter";
 
 function FilterBar(
-  { 
-    filterModel, 
-    setFilterModel, 
+  {
+    filterModel,
+    setFilterModel,
     loadData,
-    isLoading, 
-    saveCookies, 
+    isLoading,
+    saveCookies,
     addRecordFunction,
     inlineFilters,
-    supportSearch, 
+    supportSearch,
     supportViewToggle,
     dropdownFilters,
     supportClientSideSearching,
@@ -41,6 +42,45 @@ function FilterBar(
     if (hasStringValue(filterModel?.getType()) === true) {
       return filterModel?.getType();
     }
+  };
+
+  // TODO: Remove or combine the duplicate search filters
+  const getSearchBar = () => {
+    if (supportClientSideSearching === true) {
+      return (
+        <InlineClientSideSearchFilter
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          isLoading={isLoading}
+          supportClientSideSearching={supportClientSideSearching}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        />
+      );
+    }
+
+    if (typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true) {
+      return (
+        <SearchFilter
+          isLoading={isLoading}
+          paginationModel={filterModel}
+          loadData={loadData}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          metadata={metadata}
+        />
+      );
+    }
+
+    return (
+      <InlineSearchFilter
+        isLoading={isLoading}
+        supportSearch={supportSearch}
+        filterDto={filterModel}
+        setFilterDto={setFilterModel}
+        loadData={loadData}
+        className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        metadata={metadata}
+      />
+    );
   };
 
   return (
@@ -65,22 +105,7 @@ function FilterBar(
             isLoading={isLoading}
           />
           <span className="d-none d-xl-inline">{inlineFilters}</span>
-          <InlineSearchFilter
-            isLoading={isLoading}
-            supportSearch={supportSearch}
-            filterDto={filterModel}
-            setFilterDto={setFilterModel}
-            loadData={loadData}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-            metadata={metadata}
-          />
-          <InlineClientSideSearchFilter
-            filterModel={filterModel}
-            setFilterModel={setFilterModel}
-            isLoading={isLoading}
-            supportClientSideSearching={supportClientSideSearching}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-          />
+          {getSearchBar()}
           <ViewToggle
             supportViewToggle={supportViewToggle}
             filterModel={filterModel}
