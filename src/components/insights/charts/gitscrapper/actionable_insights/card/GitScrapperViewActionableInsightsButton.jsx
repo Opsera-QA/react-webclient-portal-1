@@ -1,0 +1,29 @@
+import React, {useContext} from "react";
+import PropTypes from "prop-types";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
+import { useHistory } from "react-router-dom";
+
+function GitScrapperViewActionableInsightsButton({ dataObject }) {
+  const history = useHistory();
+
+  const getActionableInsights = () => {    
+    // history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);
+  };
+
+  return (
+    <div>
+      <ActionBarButton
+        action={() => getActionableInsights()}
+        icon={faSearch}
+        popoverText={`View Actionable Insights`}
+      />
+    </div>
+  );
+}
+
+GitScrapperViewActionableInsightsButton.propTypes = {
+  dataObject: PropTypes.object
+};
+
+export default GitScrapperViewActionableInsightsButton;
