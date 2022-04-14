@@ -57,24 +57,28 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
 
-      let request = 'gitScraperCleanRepoDetails';  
+      let responseRepoScorecardBlockValues;
+
       if (gitScrapperType === 'totalNumberofIssues') {
-        request = 'gitScraperIssuesDetails';
+        responseRepoScorecardBlockValues = await chartsActions.getGitScraperIssues(
+          kpiConfiguration,
+          getAccessToken,
+          cancelSource,
+          dashboardTags,
+          dashboardOrgs
+        );
+      } else {
+        responseRepoScorecardBlockValues = await chartsActions.getGitScraperCleanRepos(
+          kpiConfiguration,
+          getAccessToken,
+          cancelSource,
+          dashboardTags,
+          dashboardOrgs
+        );
       }
 
-      let responseRepoScorecardBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        request,
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        null,
-        dashboardOrgs
-      );
-
-      const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data && responseRepoScorecardBlockValues?.data?.status === 200 ? 
-                                                  responseRepoScorecardBlockValues?.data?.data[0]?.data : [];
+      const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data && responseRepoScorecardBlockValues?.status === 200 ? 
+                                                  responseRepoScorecardBlockValues?.data?.data?.data : [];
 
       if (isMounted?.current === true && dataObjectRepoScorecardDataBlocks) {
         setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);

@@ -59,18 +59,15 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
 
-      let response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await chartsActions.getGitScraperMetrics(
+        kpiConfiguration,
         getAccessToken,
         cancelSource,
-        "gitScraperMetrics",
-        kpiConfiguration,
         dashboardTags,
-        null,
-        null,
         dashboardOrgs
       );
 
-      const dataObject = response?.data && response?.data?.status === 200 ? response?.data?.data[0]?.gitScraperMetrics?.data : [];
+      const dataObject = response?.data && response?.status === 200 ? response?.data?.data?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -159,8 +156,8 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Container>
-          <Row className="p-1 gray">
-            <Col>
+          <Row className="p-2 gray">
+            <Col md={4} className={"px-1"}>
               <GitScrapperOverallScannedRepositoriesTrendDataBlock
                 score={metrics[0]?.current?.count || 0 }
                 icon={getIcon(metrics[0]?.trend?.count)}
@@ -170,7 +167,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
             </Col>
-            <Col>
+            <Col md={4} className={"px-1"}>
               <GitScrapperOverallCleanRepositoriesTrendDataBlock
                 score={metrics[0]?.current?.cleanRepoCount || 0 }
                 icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
@@ -180,7 +177,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 iconOverlayBody={getDescription(metrics[0]?.trend?.cleanRepoCount)}
               />
             </Col>
-            <Col>
+            <Col md={4} className={"px-1"}>
               <GitScrapperOverallIssuesTrendDataBlock
                 score={metrics[0]?.current?.issueCount || 0 }
                 icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
