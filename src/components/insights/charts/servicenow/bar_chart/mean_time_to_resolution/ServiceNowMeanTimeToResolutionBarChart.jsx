@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./ServiceNowMeanTimeToResolutionConfigs.js";
-import config2 from "./ServiceNowSeverityCountConfig";
+import config2 from "./ServiceNowSeverityCountConfig.js";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -11,7 +11,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
-import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth, spaceOutServiceNowCountBySeverityLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import {
@@ -114,7 +114,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
       }
-
+      spaceOutServiceNowCountBySeverityLegend(barchart);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setSevMetrics(barchart);
@@ -200,8 +200,6 @@ function ServiceNowMeanTimeToResolutionBarChart({
     );
   };
 
-  console.log("sevmetrics", sevMetrics);
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -274,14 +272,14 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     },
                   ]}
                 />
-                <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
+                {/* <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
                   Number of Incidents{" "}
                   <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-                </div>
+                </div> */}
                 <ResponsiveBar
                   data={sevMetrics}
-                  {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers",)}
+                  {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers")}
                   {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
                   {...adjustBarWidth(sevMetrics)}
                   // onClick={(data) => onRowSelect(data)}

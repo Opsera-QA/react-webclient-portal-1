@@ -1,9 +1,8 @@
 export default (getColor) => ({
-  keys: ["numberOfIncidents"],
+  keys: ["Number of Incidents"],
   indexBy: "priority",
   colorBy: "id",
   minValue: 0,
-  layers: ["grid", "axes", "bars", "markers", "mesh"],
   colors: getColor,
   enableLabel: true,
   labelTextColor: "white",
