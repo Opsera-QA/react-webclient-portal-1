@@ -44,7 +44,7 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
     const simpleResponseEvaluationSupportedResponseBodyTypes = ["boolean", "array", "string"];
     if (simpleResponseEvaluationSupportedResponseBodyTypes.includes(endpoint?.responseBodyType)) {
       supportedRuleOptions.push({
-        text: "Response Evaluation",
+        text: "API Response Evaluation",
         value: "response_evaluation",
       });
     }
