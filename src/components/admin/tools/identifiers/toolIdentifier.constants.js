@@ -73,4 +73,5 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   TWISTLOCK: " twistlock",
   XUNIT: "xunit",
   YAML_GIT_PROCESSOR: "yaml_git_processor",
+  GITHUB_DEPLOY_KEY: "github-deploykey",
 };
