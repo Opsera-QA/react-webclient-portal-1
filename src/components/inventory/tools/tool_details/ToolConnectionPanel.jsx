@@ -120,6 +120,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <BuildkiteToolConfiguration toolData={toolData} />;
       case "gcp_account":
         return <GcpToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
+        return <InformaticaToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
