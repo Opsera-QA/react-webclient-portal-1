@@ -6,10 +6,14 @@ import { Col, Row } from "react-bootstrap";
 function DataBlockAndChartContainer({ chart, dataBlock, className, onClickFunction }) {
   return (
     <div className={className} onClick={onClickFunction}>
-      <Row style={{ height: "150px" }}>
-        <Col xs={3}>{dataBlock}</Col>
-        <Col xs={9}>{chart}</Col>
-      </Row>
+      <Row className="align-items-center" >
+          <Col sm={3} className={"p-2"}>
+            {dataBlock}        
+          </Col>      
+          <Col sm={9} className={"p-2"}>
+            {chart}
+          </Col>
+        </Row>
     </div>
   );
 }
