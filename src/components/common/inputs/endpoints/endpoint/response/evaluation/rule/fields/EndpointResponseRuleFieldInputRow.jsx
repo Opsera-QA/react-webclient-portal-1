@@ -16,6 +16,10 @@ import MultiTextListInputBase from "components/common/inputs/list/text/MultiText
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -54,28 +58,32 @@ function EndpointResponseRuleFieldInputRow(
         case "string":
           if (isSensitiveData === true) {
             return (
-              <CustomParameterSelectInput
-                model={endpointFieldModel}
-                setModel={setEndpointFieldModel}
-                fieldName={"value"}
-                className={"value-parameter"}
-                requireVaultSavedParameters={true}
-                setDataFunction={updateCustomParameterField}
-                disabled={disabled}
-              />
+              <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+                <CustomParameterSelectInput
+                  model={endpointFieldModel}
+                  setModel={setEndpointFieldModel}
+                  fieldName={"value"}
+                  className={"value-parameter"}
+                  requireVaultSavedParameters={true}
+                  setDataFunction={updateCustomParameterField}
+                  disabled={disabled}
+                />
+              </div>
             );
           }
 
           return (
-            <CustomParameterComboBoxInput
-              model={endpointFieldModel}
-              setModel={setEndpointFieldModel}
-              fieldName={"value"}
-              className={"value-parameter"}
-              requireInsensitiveParameters={true}
-              setDataFunction={updateCustomParameterField}
-              disabled={disabled}
-            />
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+              <CustomParameterComboBoxInput
+                model={endpointFieldModel}
+                setModel={setEndpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireInsensitiveParameters={true}
+                setDataFunction={updateCustomParameterField}
+                disabled={disabled}
+              />
+            </div>
           );
         case "array":
           return (
@@ -87,20 +95,31 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
+              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
             />
           );
         case "date":
           return (
-            <DateTimeInput
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
-              setDataFunction={updateMainModelFunction}
-              fieldName={"value"}
-              defaultToNull={true}
-              disabled={disabled}
-              clearDataFunction={() => updateMainModelFunction("value", undefined)}
-            />
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+              <DateTimeInput
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                defaultToNull={true}
+                disabled={disabled}
+                clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              />
+            </div>
           );
+        case "object":
+        default:
+        return (
+          <CenteredContentWrapper>
+            <div>{`Entering this parameter type's value is not currently supported.`}</div>
+          </CenteredContentWrapper>
+        );
       }
     }
   };
@@ -125,7 +144,7 @@ function EndpointResponseRuleFieldInputRow(
             showLabel={false}
             className={"px-0"}
             disabled={disabled}
-            isSensitiveData={endpointBodyField?.isSensitiveData === true}
+            isSensitiveData={endpointBodyField?.isSensitiveData === true || endpointBodyField?.type === "object"}
             updateMainModelFunction={updateMainModel}
           />
         </div>

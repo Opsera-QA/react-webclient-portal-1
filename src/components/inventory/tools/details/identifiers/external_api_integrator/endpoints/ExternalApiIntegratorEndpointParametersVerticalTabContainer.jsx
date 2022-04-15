@@ -13,8 +13,9 @@ import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import EndpointRequestHeaderConfigurationInput
   from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderConfigurationInput";
-
-const height = "calc(100vh - 650px)";
+import {
+  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
+} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
@@ -127,8 +128,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
-      minimumHeight={height}
-      maximumHeight={height}
+      minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT}
+      maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT}
     />
   );
 }

@@ -118,6 +118,7 @@ function EndpointResponseEvaluationRuleInput(
     }
 
     if (newValue === "response_evaluation") {
+      newModel?.setData("responseBodyType", endpoint?.responseBodyType);
       newModel.setData("value", []);
     }
 

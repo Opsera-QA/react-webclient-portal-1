@@ -15,6 +15,12 @@ import CoverityStepJenkinsToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsToolSelectInput";
 import CoverityStepCoverityToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
+import CoverityStepJenkinsJobSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
+import DotNetCliTypeSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
+import DotNetCliSdkVersionSelectInput 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
 
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +73,18 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
     }
   };
 
+  const getDotnetFields = () => {
+    if (coverityStepConfigurationDto.getData("agentLabels") === "generic-windows") {
+      return (
+        <>
+          <DotNetCliTypeSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} fieldName={"dotnetType"}  />
+          {coverityStepConfigurationDto?.getData("dotnetType") && 
+            <DotNetCliSdkVersionSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
+          }
+        </>
+      );
+    }
+  };
 
   if (isLoading || coverityStepConfigurationDto == null) {
     return <DetailPanelLoadingDialog />;
@@ -80,6 +98,10 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
       isLoading={isLoading}
     >
      <CoverityStepJenkinsToolSelectInput
+        model={coverityStepConfigurationDto}
+        setModel={setCoverityStepConfigurationDataDto}
+      />
+      <CoverityStepJenkinsJobSelectInput  
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />
@@ -101,6 +123,7 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
               dataObject={coverityStepConfigurationDto}
               fieldName={"streamName"}
       />
+      { getDotnetFields() }
       <CoverityJenkinsAccountInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityBitbucketWorkspaceInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityGitRepositoryInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />

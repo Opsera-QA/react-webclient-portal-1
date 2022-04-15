@@ -13,6 +13,10 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function EndpointRequestParameterInputRow(
   {
@@ -72,7 +76,7 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <div className={"mx-3 my-2"}>
+            <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
               <CustomParameterSelectInput
                 model={endpointFieldModel}
                 fieldName={"value"}
@@ -89,7 +93,7 @@ function EndpointRequestParameterInputRow(
         }
 
         return (
-          <div className={"mx-3 my-2"}>
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
             <CustomParameterComboBoxInput
               model={endpointFieldModel}
               fieldName={"value"}
@@ -114,12 +118,15 @@ function EndpointRequestParameterInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
+              allowDuplicates={true}
+              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
             />
           </div>
         );
       case "date":
         return (
-          <div className={"mx-3 mb-3 mt-2"}>
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
             <DateTimeInput
               dataObject={endpointFieldModel}
               setDataObject={setEndpointFieldModel}
@@ -130,6 +137,13 @@ function EndpointRequestParameterInputRow(
               clearDataFunction={() => updateMainModelFunction("value", undefined)}
             />
           </div>
+        );
+      case "object":
+      default:
+        return (
+          <CenteredContentWrapper>
+            <div>{`Entering this parameter type's value is not currently supported.`}</div>
+          </CenteredContentWrapper>
         );
     }
   };

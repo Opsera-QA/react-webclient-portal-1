@@ -16,7 +16,7 @@ function ArgoAzureApplicationSelectInput({fieldName, model, setModel}) {
 
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
-    newModel.setData(fieldName, "");
+    newModel.setData("azureApplicationId", "");
     newModel.setData("clientId", "");
     newModel.setData("clientSecret", "");
     newModel.setData("clusterName", "");

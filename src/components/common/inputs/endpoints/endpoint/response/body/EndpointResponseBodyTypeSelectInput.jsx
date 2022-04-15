@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import ApiResponseBodyTypeSelectInput
   from "components/common/list_of_values_input/api/response/body/type/ApiResponseBodyTypeSelectInput";
 

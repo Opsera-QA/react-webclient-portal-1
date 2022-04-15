@@ -4,17 +4,17 @@ import PlatformApplicationSelectInput from "components/common/list_of_values_inp
 
 function PlatformInventoryPlatformApplicationSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = {...model};
-    newDataObject.setData("applicationId", selectedOption?._id, "");
-    newDataObject.setData("toolsList", selectedOption?.tools, []);
-    setModel({...newDataObject});
+    const newModel = {...model};
+    newModel.setData("applicationId", selectedOption?._id, "");
+    newModel.setData("toolsList", selectedOption?.tools, []);
+    setModel({...newModel});
   };
 
   const clearDataFunction = () => {
-    let newDataObject = {...model};
-    newDataObject.setDefaultValue("applicationId");
-    newDataObject.setDefaultValue("toolsList");
-    setModel({...newDataObject});
+    const newModel = {...model};
+    newModel.setDefaultValue("applicationId");
+    newModel.setDefaultValue("toolsList");
+    setModel({...newModel});
   };
 
   return (

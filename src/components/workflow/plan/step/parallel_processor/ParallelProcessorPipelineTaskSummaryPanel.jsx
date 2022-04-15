@@ -9,37 +9,42 @@ import PipelineTaskSummaryMessageField
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
+import UserNameField from "components/common/fields/user/UserNameField";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
-    <SummaryPanelContainer className={"mx-2"}>
+    <SummaryPanelContainer>
       <Row>
-        <Col md={12} className="px-1">
-          <h6>Step Activity Log Summary:</h6>
+        <Col md={12}>
+          <H5FieldSubHeader subheaderText={"Step Activity Log Summary:"} />
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={12}>
+          <UserNameField model={pipelineTaskData} fieldName={"user_id"}/>
+        </Col>
+        <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"step_name"}/>
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"tool_identifier"}/>
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"action"}/>
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"run_count"}/>
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={6}>
           <DateTimeField dataObject={pipelineTaskData} fieldName={"createdAt"}/>
         </Col>
-        <Col md={6} className="p-1">
+        <Col md={6}>
           <PipelineTaskStateField dataObject={pipelineTaskData} fieldName={"status"}/>
         </Col>
-        <Col md={12} className="px-1">
+        <Col md={12}>
           <PipelineTaskSummaryMessageField fieldName={"api_response.apiResponse.message.message"} dataObject={pipelineTaskData} />
         </Col>
-        <Col md={12} className="px-1 py-2">
-          <h6>Pipelines Orchestrated by this Step:</h6>
+        <Col md={12} className={"py-2"}>
+          <H5FieldSubHeader subheaderText={"Pipelines Orchestrated by this Step:"} />
           <ParallelPipelineTaskSummariesField dataObject={pipelineTaskData}/>
         </Col>
       </Row>

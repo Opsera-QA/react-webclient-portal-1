@@ -68,7 +68,7 @@ function EndpointRequestBodyFieldInputRow(
             model={endpointFieldModel}
             updateMainModelFunction={updateMainModelFunction}
             index={index}
-            disabled={disabled}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
         <Col xs={6}>
@@ -76,7 +76,7 @@ function EndpointRequestBodyFieldInputRow(
             model={endpointFieldModel}
             updateMainModelFunction={updateMainModelFunction}
             index={index}
-            disabled={disabled}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
         {/*TODO: Add default value and hardcoded value inputs*/}

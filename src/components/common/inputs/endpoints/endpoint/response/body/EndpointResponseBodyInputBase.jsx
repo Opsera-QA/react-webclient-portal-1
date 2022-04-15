@@ -17,8 +17,9 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import InfoContainer from "components/common/containers/InfoContainer";
 import EndpointResponseBodyTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
-
-const height = "calc(100vh - 822px)";
+import {
+  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
+} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function EndpointResponseBodyInputBase(
   {
@@ -195,8 +196,8 @@ function EndpointResponseBodyInputBase(
             <InfoContainer
               titleText={field?.label}
               titleIcon={faBracketsCurly}
-              minimumHeight={height}
-              maximumHeight={height}
+              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
               titleRightSideButton={getAddFieldButton()}
             >
               <CenteredContentWrapper>
@@ -213,8 +214,8 @@ function EndpointResponseBodyInputBase(
               icon={faBracketsCurly}
               verticalTabContainer={getVerticalTabContainer()}
               currentView={getCurrentView()}
-              minimumHeight={height}
-              maximumHeight={height}
+              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
               tabColumnSize={3}
               titleRightSideButton={getAddFieldButton()}
             />

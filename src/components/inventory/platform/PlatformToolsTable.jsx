@@ -6,6 +6,7 @@ import {getTableDateColumn, getTableTextColumn} from "components/common/table/ta
 import FilterContainer from "components/common/table/FilterContainer";
 import { faTools} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PlatformToolsTable({ platformApplication, applicationTools, isLoading }) {
   const fields = platformToolsMetadata.fields;
@@ -24,7 +25,7 @@ function PlatformToolsTable({ platformApplication, applicationTools, isLoading }
   );
 
   const getNoDataMessage = () => {
-    if (platformApplication != null) {
+    if (isMongoDbId(platformApplication) === true) {
       return ("No Tools are currently configured for this application.");
     }
 
