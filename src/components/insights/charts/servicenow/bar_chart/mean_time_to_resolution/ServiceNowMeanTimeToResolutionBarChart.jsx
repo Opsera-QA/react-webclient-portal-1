@@ -116,8 +116,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
       }
       spaceOutServiceNowCountBySeverityLegend(barchart);
       if (isMounted?.current === true && dataObject) {
-        setMetrics(metrics);
-        setSevMetrics(sevMetrics);
+        setMetrics(dataObject);
+        setSevMetrics(barchart);
         setOverallMean(overallMeanValue);
       }
 
