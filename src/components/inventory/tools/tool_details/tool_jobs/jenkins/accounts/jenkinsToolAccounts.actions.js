@@ -29,4 +29,10 @@ jenkinsToolAccountActions.deleteJenkinsAccountV2 = async (getAccessToken, cancel
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+jenkinsToolAccountActions.rotateJenkinsKey = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `tools/${toolId}/accounts/jenkins/rotate-key`;
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default jenkinsToolAccountActions;
