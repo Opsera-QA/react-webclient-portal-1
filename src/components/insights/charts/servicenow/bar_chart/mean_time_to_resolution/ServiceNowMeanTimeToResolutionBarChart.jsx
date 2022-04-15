@@ -210,12 +210,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
-          {/*<div className="ml-2 p-0">*/}
-          {/*  {getMetricBottomRow()}*/}
-          {/*</div>*/}
-          <div className="new-chart m-3 p-0" style={{ minHeight: "600px", display: "flex" }}>
-            <Row className={"justify-content-center"}>
-              <Row xl={6} lg={6} md={7} className={"d-flex justify-content-center"}>
+          <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
+            <Row>
+              <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
                   <Col md={12} >
                     <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
                   </Col>
@@ -232,8 +229,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     <ServiceNowMaxMTTRDataBlock data={maxMTTR} />
                   </Col>
               </Row>
-              <Col xl={9} lg={9} md={8} className={"my-2 p-0 d-flex flex-column align-items-end"}>
-                <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
+              <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+              <div  className="px-1 font-inter-light-400 dark-gray-text-primary"
                       style={{ float: "right", fontSize: "10px" }}>
                   Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
                   <br></br>
@@ -243,7 +240,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   MTTR{" "}
                   <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
-                <ResponsiveBar
+              <ResponsiveBar
                   data={metrics}
                   {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
                   {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
@@ -272,11 +269,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     },
                   ]}
                 />
-                {/* <div  className="px-3 font-inter-light-400 dark-gray-text-primary"
-                      style={{ float: "right", fontSize: "10px" }}>
-                  Number of Incidents{" "}
-                  <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-                </div> */}
+                </Col>
+                <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
                 <ResponsiveBar
                   data={sevMetrics}
                   {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers")}
@@ -292,8 +286,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     />
                   )}
                 />
-              </Col>
-            </Row>
+                </Col>
+                </Row>
           </div>
           <div className="ml-2 p-0">
             {getMetricTopRow()}
