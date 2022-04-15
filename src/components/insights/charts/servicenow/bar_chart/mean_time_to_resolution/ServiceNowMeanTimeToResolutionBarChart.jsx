@@ -116,8 +116,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
       }
       spaceOutServiceNowCountBySeverityLegend(barchart);
       if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
-        setSevMetrics(barchart);
+        setMetrics(metrics);
+        setSevMetrics(sevMetrics);
         setOverallMean(overallMeanValue);
       }
 
@@ -199,7 +199,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
       </Row>
     );
   };
-
+  console.log(metrics);
+  console.log(sevMetrics);
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -210,7 +211,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
-          <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
+          <div className="new-chart m-3 p-0" style={{ minHeight: "450px", display: "flex" }}>
             <Row>
               <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
                   <Col md={12} >
@@ -230,8 +231,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   </Col>
               </Row>
               <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
-              <div  className="px-1 font-inter-light-400 dark-gray-text-primary"
-                      style={{ float: "right", fontSize: "10px" }}>
+              <div className="px-1 font-inter-light-400 dark-gray-text-primary" style={{ float: "right", fontSize: "10px" }}>
                   Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
                   <br></br>
                   Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
@@ -335,3 +335,4 @@ ServiceNowMeanTimeToResolutionBarChart.propTypes = {
 };
 
 export default ServiceNowMeanTimeToResolutionBarChart;
+
