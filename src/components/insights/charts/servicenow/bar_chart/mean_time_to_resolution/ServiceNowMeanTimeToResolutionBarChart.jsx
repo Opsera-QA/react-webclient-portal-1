@@ -26,6 +26,10 @@ import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import ServiceNowAverageTimeToResolveDataBlock from "../../data_blocks/ServiceNowAverageTimeToResolveDataBlock";
 import ServiceNowMinMTTRDataBlock from "../../data_blocks/ServiceNowMinMTTRDataBlock";
 import ServiceNowMaxMTTRDataBlock from "../../data_blocks/ServiceNowMaxMTTRDataBlock";
+import GithubCommitsActionableInsightOverlay
+  from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
+import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -64,6 +68,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const [priorityThree, setPriorityThree] = useState(0);
   const [priorityFour, setPriorityFour] = useState(0);
   const [priorityFive, setPriorityFive] = useState(0);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -154,6 +159,15 @@ function ServiceNowMeanTimeToResolutionBarChart({
     }
   };
 
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <MTTRActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
+  };
+
   const getMetricBottomRow = () =>{
     return (
       <Row>
@@ -199,8 +213,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
       </Row>
     );
   };
-  console.log(metrics);
-  console.log(sevMetrics);
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -309,6 +322,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
         header="Mean Time to Resolution"
@@ -335,4 +349,3 @@ ServiceNowMeanTimeToResolutionBarChart.propTypes = {
 };
 
 export default ServiceNowMeanTimeToResolutionBarChart;
-
