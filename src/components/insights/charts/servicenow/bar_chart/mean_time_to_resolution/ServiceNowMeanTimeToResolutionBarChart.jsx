@@ -26,8 +26,6 @@ import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import ServiceNowAverageTimeToResolveDataBlock from "../../data_blocks/ServiceNowAverageTimeToResolveDataBlock";
 import ServiceNowMinMTTRDataBlock from "../../data_blocks/ServiceNowMinMTTRDataBlock";
 import ServiceNowMaxMTTRDataBlock from "../../data_blocks/ServiceNowMaxMTTRDataBlock";
-import GithubCommitsActionableInsightOverlay
-  from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 
