@@ -9,6 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend } from "../../../charts-views";
+import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
   setKpiConfiguration,
@@ -81,7 +82,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
           data={metrics}
           {...defaultConfig("Time (Hours)", "Project", 
                       true, false, "values", "cutoffString")}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
         />
