@@ -43,7 +43,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.totalIssues}
+              score={data?.totalIssues ? data?.totalIssues : 0}
               subtitle={"Total Incidents"}
             />
           </DataBlockBoxContainer>
@@ -52,7 +52,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.resolvedIssues}
+              score={data?.resolvedIssues ? data?.totalIssues : 0}
               subtitle={"Resolved Incidents"}
             />
           </DataBlockBoxContainer>
@@ -61,7 +61,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.overallMTTR}
+              score={data?.overallMTTR ? data?.overallMTTR : 0}
               subtitle={"Overall MTTR"}
             />
           </DataBlockBoxContainer>
@@ -70,7 +70,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.minMTTR}
+              score={data?.minMTTR ? data?.minMTTR : 0}
               subtitle={"Min MTTR"}
             />
           </DataBlockBoxContainer>
@@ -79,7 +79,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.maxMTTR}
+              score={data?.maxMTTR ? data?.maxMTTR : 0}
               subtitle={"Max MTTR"}
             />
           </DataBlockBoxContainer>
