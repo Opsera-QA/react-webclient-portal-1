@@ -10,6 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
+import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 
 function BitbucketTimeTakenToCompleteMergeRequestReview({
   kpiConfiguration,
@@ -83,7 +84,7 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
           data={metrics}
           {...defaultConfig("Reviewer", "Time (Hours)", 
                       true, false, "subString", "values")}
-          {...config(getColorByData)}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value }) => <ChartTooltip 
