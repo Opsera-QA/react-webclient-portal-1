@@ -5,11 +5,28 @@ import {
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
   faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat, faCircle
+  faUserHardHat, faCircle, faQuestion, faBook
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
+  frequentlyAskedQuestions: {
+    parent: undefined,
+    name: "frequentlyAskedQuestions",
+    path: paths.frequentlyAskedQuestions,
+    linkText: "Frequently Asked Questions",
+    title: "Frequently Asked Questions",
+    icon: faQuestion,
+  },
+  helpDocumentation: {
+    parent: undefined,
+    name: "frequentlyAskedQuestions",
+    path: paths.helpDocumentation,
+    linkText: "Help Documentation",
+    title: "Help Documentation",
+    icon: faBook,
+  },
+
   // Inventory
   toolRegistry: {
     parent: undefined,
@@ -68,6 +85,16 @@ const breadcrumbs = {
     linkText: "Administration Tools",
     title: "Administration Tools",
     icon: faTools
+  },
+
+  customEnvironmentVariableManagement: {
+    parent: "admin",
+    name: "customEnvironmentVariableManagement",
+    path: paths.customEnviromentVariableManagement,
+    title: "Custom Environment Variable Management",
+    linkText: "Custom Environment Variable Management",
+    icon: faFileCode,
+    pageDescription: "View React and Node Custom Environment Variables",
   },
   
   systemStatus: {

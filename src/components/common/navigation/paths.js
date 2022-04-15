@@ -8,6 +8,9 @@ paths.home = "";
 paths.logs = "logs";
 paths.blueprint = "blueprint";
 
+paths.frequentlyAskedQuestions = "faq";
+paths.helpDocumentation = "help-documentation";
+
 // Admin Paths
 paths.admin = "admin";
 
@@ -40,6 +43,7 @@ paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
 paths.customerOnboarding = "admin/accounts/create";
 
+paths.customEnviromentVariableManagement = paths.admin + "/custom-environment-variables";
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
 paths.apiConnectionTest = paths.admin + "/demo/api";

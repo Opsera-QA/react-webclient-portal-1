@@ -209,6 +209,16 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.type === "sass-user" || (Array.isArray(groups) && groups?.includes("NonLDAPEndUser"));
   };
 
+  const isOpseraAdministrator = () => {
+    if (userData == null) {
+      return false;
+    }
+
+    const ldap = userData?.ldap;
+    const groups = userData?.groups;
+    return ldap?.domain === "opsera.io" && Array.isArray(groups) && groups?.includes("Administrators");
+  };
+
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -226,6 +236,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isSassUser: isSassUser,
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
+      isOpseraAdministrator: isOpseraAdministrator,
       // getWebsocketClient: getWebSocketClient,
     }}>
       {children}

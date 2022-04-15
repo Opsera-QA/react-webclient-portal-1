@@ -27,11 +27,23 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <PipelineStepConfigurationSummary pipelineData={pipelineStep} />;
+        return (
+          <PipelineStepConfigurationSummary
+            pipelineData={pipelineStep}
+          />
+        );
       case "notifications":
-        return <PipelineStepNotificationConfigurationSummaryPanel pipelineStepData={pipelineStep} />;
+        return (
+          <PipelineStepNotificationConfigurationSummaryPanel
+            pipelineStepData={pipelineStep}
+          />
+        );
       case "json":
-        return <PipelineStepJsonPanel pipelineStepData={pipelineStep} />;
+        return (
+          <PipelineStepJsonPanel
+            pipelineStepData={pipelineStep}
+          />
+        );
       case "yaml":
       default:
         return null;
@@ -76,14 +88,11 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
 
   return (
     <PipelineStepDetailsContainer title={`Step ${index + 1}: ${pipelineStep?.name}`}>
-      <div className={"pt-2 pl-2 makeup-container-tab-container"}>
+      <div className={"pt-2 px-2"}>
         <GeneralTabPanelContainer
-          currentView={
-            <div className={"makeup-container-content-body"}>
-              {getCurrentView()}
-            </div>
-          }
-          tabContainer={getTabContainer()} />
+          currentView={getCurrentView()}
+          tabContainer={getTabContainer()}
+        />
       </div>
     </PipelineStepDetailsContainer>
   );

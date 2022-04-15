@@ -14,6 +14,7 @@ import ArgoRepositoryScmTypeSelectInput from "components/inventory/tools/tool_de
 import ArgoRepositorySourceControlToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/inputs/ArgoRepositorySourceControlToolSelectInput";
 import ArgoBitbucketWorkspaceInput from "./inputs/ArgoBitbucketWorkspaceInput";
 import ArgoGitRepositoryInput from "./inputs/ArgoGitRepositoryInput";
+import ArgoRepositoriesArgoProjectSelectInput from "./inputs/ArgoRepositoriesArgoProjectSelectInput";
 
 function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -93,6 +94,15 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
               dataObject={argoRepositoryModel}
               fieldName={"name"}
               disabled={!argoRepositoryData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoRepositoriesArgoProjectSelectInput 
+              argoToolId={toolData?._id}
+              setModel={setArgoRepositoryModel}
+              model={argoRepositoryModel}
+              fieldName={"projectName"}
+              disabled={!argoRepositoryModel?.isNew()}
             />
           </Col>
           <Col lg={12}>

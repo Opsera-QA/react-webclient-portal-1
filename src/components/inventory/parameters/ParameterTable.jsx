@@ -7,11 +7,28 @@ import NewParameterOverlay from "components/inventory/parameters/NewParameterOve
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import {AuthContext} from "contexts/AuthContext";
 import {
-  getEditableTextColumn, getTableBooleanIconColumn,
-  getTableTextColumn
+  getColumnHeader, getColumnId,
+  getTableBooleanIconColumn,
+  getTableTextColumn,
 } from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
+
+export const getParameterValueColumn = (field, className, width) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    width: width,
+    template: function (text, row) {
+      if (row?.getData("vaultEnabled") === true) {
+        return "[Encrypted Value]";
+      }
+
+      return (row?.getData("value"));
+    },
+    class: className,
+  };
+};
 
 function ParameterTable(
   {
@@ -62,7 +79,7 @@ function ParameterTable(
       setColumns(
         [
           getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
-          getEditableTextColumn(getField(fields, "value")),
+          getParameterValueColumn(getField(fields, "value")),
           getTableBooleanIconColumn(getField(fields, "vaultEnabled"), undefined, 150),
         ]
       );

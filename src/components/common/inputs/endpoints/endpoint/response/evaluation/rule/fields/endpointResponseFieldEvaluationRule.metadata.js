@@ -14,12 +14,12 @@ export const endpointResponseFieldEvaluationRuleMetadata = {
       label: "Value",
       id: "value",
       isRequired: true,
-      infoText: "Filter by selected component types or leave blank for all"
+      // maxLength: 20,
     },
   ],
   newObjectFields: {
     fieldName: "",
-    filter: "not_null",
+    filter: "is_not_null",
     value: "",
   }
 };

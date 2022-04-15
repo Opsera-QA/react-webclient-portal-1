@@ -89,10 +89,24 @@ const coverityStepFormMetadata = {
       label: "Delete workspace before building",
       id: "workspaceDeleteFlag",
     },
+    {
+      label: "Jenkins Job",
+      id: "toolJobId",
+      isRequired: true
+    },
+    {
+      label: ".Net CLI Type",
+      id: "dotnetType",      
+    },
+    {
+      label: ".Net SDK Version",
+      id: "dotnetSdkVersion",      
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
     toolConfigId: "",
+    toolJobId: "",
     gitCredential: "",
     projectName:"",
     streamName:"",
@@ -110,7 +124,9 @@ const coverityStepFormMetadata = {
     toolJobType: ["CODE SCAN"],
     workspaceDeleteFlag:false,
     jobName:"" ,
-    coverityCredntialId :""
+    coverityCredntialId :"",
+    dotnetType: "",
+    dotnetSdkVersion : "",
   }
 };
 

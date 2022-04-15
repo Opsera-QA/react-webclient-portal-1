@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import StepToolConfiguration
@@ -32,7 +32,7 @@ function PipelineStepEditorOverlay(
       closePanel={closePanel}
       showPanel={true}
       titleText={`Pipeline Step Configuration`}
-      titleIcon={faEnvelope}
+      titleIcon={faDraftingCompass}
       showToasts={true}
       showCloseButton={false}
     >

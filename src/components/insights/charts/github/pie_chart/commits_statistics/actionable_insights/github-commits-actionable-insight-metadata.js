@@ -15,6 +15,14 @@ const GithubCommitsActionableMetadata = {
       id: "createdAt",
     },
     {
+      label: "Total Commits",
+      id: "totalCommits",
+    },
+    {
+      label: "Contributor Name",
+      id: "contributorName",
+    },
+    {
       label: "Commit Message",
       id: "mergeRequestTitle",
     },

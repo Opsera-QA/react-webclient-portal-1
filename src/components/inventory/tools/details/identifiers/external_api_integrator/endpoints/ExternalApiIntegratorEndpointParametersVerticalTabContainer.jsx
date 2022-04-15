@@ -2,23 +2,28 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import InfoContainer from "components/common/containers/InfoContainer";
 import {
   ENDPOINT_REQUEST_TYPES
 } from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
-import EndpointRequestBodyInputBase
-  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputBase";
+import EndpointRequestBodyInputPanel
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
 import EndpointResponseBodyInputBase
   from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import EndpointRequestHeaderConfigurationInput
+  from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderConfigurationInput";
+import {
+  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
+} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
     externalApiIntegratorModel,
     setExternalApiIntegratorModel,
+    disabled,
   }) {
-  const [activeTab, setActiveTab] = useState("requestBody");
+  const [activeTab, setActiveTab] = useState("requestHeaderConfiguration");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -31,8 +36,18 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
       case ENDPOINT_REQUEST_TYPES.GET:
         return (
           <VanitySetVerticalTab
-            tabText={"Query Parameter Fields"}
+            tabText={"Query Parameters"}
             tabName={"queryParameters"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
+        );
+      case ENDPOINT_REQUEST_TYPES.PUT:
+      case ENDPOINT_REQUEST_TYPES.POST:
+        return (
+          <VanitySetVerticalTab
+            tabText={"Request Body"}
+            tabName={"requestBody"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
@@ -42,19 +57,17 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <VanitySetVerticalTabContainer
-        className={"h-100 w-100"}
-      >
+      <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
-          {getDynamicTabsForRequestType()}
           <VanitySetVerticalTab
-            tabText={"Request Body Fields"}
-            tabName={"requestBody"}
+            tabText={"Request Header"}
+            tabName={"requestHeaderConfiguration"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
+          {getDynamicTabsForRequestType()}
           <VanitySetVerticalTab
-            tabText={"Response Body Fields"}
+            tabText={"Response Body"}
             tabName={"responseBody"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
@@ -66,20 +79,30 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getCurrentView = () => {
     switch (activeTab) {
+      case "requestHeaderConfiguration":
+        return (
+          <EndpointRequestHeaderConfigurationInput
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
+            disabled={disabled}
+          />
+        );
       case "queryParameters":
         return (
-          <EndpointRequestBodyInputBase
+          <EndpointRequestBodyInputPanel
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"queryParameterFields"}
+            disabled={disabled}
           />
         );
       case "requestBody":
         return (
-          <EndpointRequestBodyInputBase
+          <EndpointRequestBodyInputPanel
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"requestBodyFields"}
+            disabled={disabled}
           />
         );
       case "responseBody":
@@ -88,6 +111,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             fieldName={"responseBodyFields"}
+            disabled={disabled}
           />
         );
     }
@@ -98,26 +122,22 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   }
 
   return (
-    <InfoContainer
-      titleText={`Endpoint Field Configuration`}
-    >
-      <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0"}>
-          {getVerticalTabContainer()}
-        </Col>
-        <Col sm={10} className={"px-0"}>
-          <div className={"m-3"}>
-            {getCurrentView()}
-          </div>
-        </Col>
-      </Row>
-    </InfoContainer>
+    <VanitySetTabAndViewContainer
+      icon={faBracketsCurly}
+      title={`Endpoint Field Configuration`}
+      verticalTabContainer={getVerticalTabContainer()}
+      bodyClassName={"mx-0"}
+      currentView={getCurrentView()}
+      minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT}
+      maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT}
+    />
   );
 }
 
 ExternalApiIntegratorEndpointParametersVerticalTabContainer.propTypes = {
   externalApiIntegratorModel: PropTypes.object,
   setExternalApiIntegratorModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ExternalApiIntegratorEndpointParametersVerticalTabContainer;

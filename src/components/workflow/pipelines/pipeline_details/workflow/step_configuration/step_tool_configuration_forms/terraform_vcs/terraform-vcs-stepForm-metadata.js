@@ -44,7 +44,7 @@ const TerraformVcsStepFormMetadata = {
     },
   ],
   newObjectFields: {
-    toolActionType: "APPLY",
+    toolActionType: "EXECUTE",
     terraformCloudId: "",
     organizationName: "",
     workspaceId: "",

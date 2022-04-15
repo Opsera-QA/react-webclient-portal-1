@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+// TODO: We should probably have different options per type
 const SUPPORTED_FIELD_EVALUATION_FILTERS = [
   {
     text: "Equals",
@@ -12,11 +13,11 @@ const SUPPORTED_FIELD_EVALUATION_FILTERS = [
     value: "not_equals",
   },
   {
-    text: "Exists",
+    text: "Is Not Null",
     value: "is_not_null",
   },
   {
-    text: "Does Not Exist",
+    text: "Is Null",
     value: "is_null",
   },
 ];
@@ -29,17 +30,41 @@ function EndpointResponseFieldEvaluationRuleFilterSelectInput(
     setDataFunction,
     disabled,
     className,
+    showLabel,
+    isSensitiveData,
   }) {
+  const getSelectOptions = () => {
+    if (isSensitiveData === true) {
+      return (
+        [
+          {
+            text: "Is Not Null",
+            value: "is_not_null",
+          },
+          {
+            text: "Is Null",
+            value: "is_null",
+          },
+        ]
+      );
+    }
+
+    return (
+      SUPPORTED_FIELD_EVALUATION_FILTERS
+    );
+  };
+
   return (
     <SelectInputBase
       className={className}
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={SUPPORTED_FIELD_EVALUATION_FILTERS}
+      selectOptions={getSelectOptions()}
       valueField={"value"}
       textField={"text"}
       disabled={disabled}
+      showLabel={showLabel}
       setDataFunction={setDataFunction}
     />
   );
@@ -52,6 +77,8 @@ EndpointResponseFieldEvaluationRuleFilterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  isSensitiveData: PropTypes.bool,
 };
 
 export default EndpointResponseFieldEvaluationRuleFilterSelectInput;

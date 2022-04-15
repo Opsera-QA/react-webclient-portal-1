@@ -6,6 +6,7 @@ import { defaultConfig } from "components/insights/charts/charts-views";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import SdlcDurationByStageActionableInsightOverlay from "./actionable_insights/SdlcDurationByStageActionableInsightOverlay";
 function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -20,8 +21,14 @@ function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardDa
       />
     );
   };
+  const max = metric && metric[0] && metric[0].max;
+  const min = metric && metric[0] && metric[0].min;
   return (
-    <div style={{ height: "150px" }}>
+    <div style={{ height: "150px" }} >
+      <div className="text-right pr-3">
+        {min ? <MetricBadgeBase badgeText={`Minimum: ${min} Minutes`} /> : ''}
+        {max ? <MetricBadgeBase badgeText={`Maximum: ${max} Minutes`} /> : ''}
+      </div>
       <ResponsiveLine
         data={metric}
         {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}

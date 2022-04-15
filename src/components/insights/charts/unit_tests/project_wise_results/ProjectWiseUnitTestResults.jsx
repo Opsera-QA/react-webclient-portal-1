@@ -46,7 +46,10 @@ function ProjectWiseUnitTestResults({ kpiConfiguration, setKpiConfiguration, das
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.getSonarUnitTestsMetrics(kpiConfiguration, dashboardTags, getAccessToken, cancelSource, filterDto );
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.getSonarUnitTestsMetrics(kpiConfiguration, dashboardTags, getAccessToken, cancelSource, filterDto, dashboardOrgs );
       const  responseObject = response?.data?.data?.sonarUnitTestMetrics?.data[0];
       let dataObject = responseObject?.data;
       dataObject = dataObject?.map(item => ({...item, status: '-'}));

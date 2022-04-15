@@ -57,6 +57,7 @@ function ParameterValueTextAreaInput(
       pullVaultDataFunction={getValueFromVault}
       error={errorMessage}
       customMessage={getCustomMessage()}
+      parameterId={model?.getMongoDbId()}
     />
   );
 }
@@ -66,7 +67,6 @@ ParameterValueTextAreaInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  parameterId: PropTypes.string
 };
 
 export default ParameterValueTextAreaInput;

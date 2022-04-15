@@ -2,10 +2,22 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 import EndpointRequestParameterInputRow
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
+import InfoContainer from "components/common/containers/InfoContainer";
+import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import ExternalApiIntegrationEndpointParameterField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiIntegrationEndpointParameterField";
 
 function EndpointRequestParametersInputBase(
   {
@@ -18,9 +30,17 @@ function EndpointRequestParametersInputBase(
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState(undefined);
+
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
 
   useEffect(() => {
     isMounted.current = true;
+    setParameters([]);
 
     if (Array.isArray(parameterFields)) {
       loadData();
@@ -37,7 +57,13 @@ function EndpointRequestParametersInputBase(
 
     parameterFields.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
-      const value = parseObjectValue(parameter.type, currentData[fieldName]);
+
+      // Skip incomplete fields. This shouldn't happen but being as defensive as possible
+      if (hasStringValue(fieldName) !== true) {
+        return;
+      }
+
+      const value = dataParsingHelper.parseObjectValue(parameter.type, currentData[fieldName]);
 
       unpackedParameters.push({
         ...parameter,
@@ -45,17 +71,11 @@ function EndpointRequestParametersInputBase(
       });
     });
 
-    setParameters([...unpackedParameters]);
-  };
-
-  // TODO: Wire up constants
-  const parseObjectValue = (type, value) => {
-    switch (type) {
-      case "string":
-        return typeof value === "string" ? value : "";
-      case "array":
-        return Array.isArray(value) ? value : [];
+    if (activeTab == null && Array.isArray(unpackedParameters) && unpackedParameters.length > 0) {
+      setActiveTab(`${unpackedParameters[0]?.fieldName}`);
     }
+
+    setParameters([...unpackedParameters]);
   };
 
   const validateAndSetData = (newParameters) => {
@@ -67,7 +87,7 @@ function EndpointRequestParametersInputBase(
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
-      constructedParameterObject[fieldName] = parseObjectValue(parameter?.type, value);
+      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
     });
 
     newModel.setData(fieldName, constructedParameterObject);
@@ -80,56 +100,106 @@ function EndpointRequestParametersInputBase(
     validateAndSetData(newParameters);
   };
 
-  const getFieldBody = () => {
+  const getFieldTab = (parameter, index) => {
     return (
-      <div>
-        {parameters.map((fieldData, index) => {
-          return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              <EndpointRequestParameterInputRow
-                index={index}
-                endpointBodyField={fieldData}
-                updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
-                disabled={disabled}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <VanitySetVerticalTab
+        key={index}
+        tabText={`${parameter.fieldName}`}
+        tabName={parameter.fieldName}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
     );
   };
 
-  const getHeaderBar = () => {
+  const getVerticalTabContainer = () => {
     return (
-      <Row className={"d-flex py-1 justify-content-between"}>
-        <Col xs={6} className={"my-auto"}>
-          <span className={'ml-3'}>Field Name</span>
-        </Col>
-        <Col xs={6} className={"my-auto"}>
-          <span>Value</span>
-        </Col>
-      </Row>
-    );
-  };
-
-  const getBody = () => {
-    if (!parameters || parameters?.length === 0) {
-      return (
-        <div className="text-center">
-          <div className="text-muted my-5">There are no Parameters to configure</div>
+      <VanitySetVerticalTabContainer>
+        <div className={"tab-tree"}>
+          {parameters?.map((fieldData, index) => {
+            return (getFieldTab(fieldData, index));
+          })}
         </div>
+      </VanitySetVerticalTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    if (hasStringValue(activeTab) !== true) {
+      return null;
+    }
+
+    const index = parameters.findIndex((parameter) => parameter.fieldName === activeTab);
+
+    if (index === -1) {
+      return null;
+    }
+
+    const fieldData = parameters[index];
+
+    return (
+      <EndpointRequestParameterInputRow
+        index={index}
+        endpointBodyField={fieldData}
+        updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
+        disabled={disabled}
+      />
+    );
+  };
+
+  const getParameterInputContainer = () => {
+    if (!Array.isArray(parameters) || parameters?.length === 0) {
+      return (
+        <InfoContainer
+          titleIcon={faCode}
+          titleText={field?.label}
+          minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+          maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        >
+          <CenteredContentWrapper>
+            <span>There are no Parameters to configure</span>
+          </CenteredContentWrapper>
+        </InfoContainer>
       );
     }
 
     return (
-      <div>
-        <div className={"filter-bg-white"}>
-          {getHeaderBar()}
-        </div>
-        <div className="fields-input">
-          {getFieldBody()}
-        </div>
-      </div>
+      <VanitySetTabAndViewContainer
+        icon={faCode}
+        title={field?.label}
+        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getCurrentView()}
+        tabColumnSize={3}
+      />
+    );
+  };
+
+  const resetDataToDefault = () => {
+    const resetFields = Array.isArray(parameterFields) ? parameterFields : [];
+    validateAndSetData([...resetFields]);
+  };
+
+  const getRightSideButton = () => {
+    if (disabled !== true) {
+      return (
+        <ClearDataIcon
+          clearValueFunction={resetDataToDefault}
+          className={"my-auto mr-1"}
+        />
+      );
+    }
+  };
+
+  const getConstructedParameterContainer = () => {
+    return (
+      <ExternalApiIntegrationEndpointParameterField
+        model={model}
+        fieldName={fieldName}
+        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        titleRightSideButton={getRightSideButton()}
+      />
     );
   };
 
@@ -138,13 +208,15 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div className={"my-2"}>
-      <PropertyInputContainer
-        titleIcon={faFilter}
-        titleText={field?.label}
-      >
-        {getBody()}
-      </PropertyInputContainer>
+    <div>
+      <Row>
+        <Col xs={8} className={"pr-2"}>
+          {getParameterInputContainer()}
+        </Col>
+        <Col xs={4} className={"pl-0"}>
+          {getConstructedParameterContainer()}
+        </Col>
+      </Row>
     </div>
   );
 }
@@ -153,7 +225,7 @@ EndpointRequestParametersInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  parameterFields: PropTypes.object,
+  parameterFields: PropTypes.array,
   disabled: PropTypes.bool,
 };
 

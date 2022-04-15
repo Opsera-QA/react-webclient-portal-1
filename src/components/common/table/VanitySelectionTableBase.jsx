@@ -61,6 +61,7 @@ function VanitySelectionTableBase(
       data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
+      sortable: false,
       selection: rowSelection,
       headerRowHeight: 30,
       rowHeight: 30,

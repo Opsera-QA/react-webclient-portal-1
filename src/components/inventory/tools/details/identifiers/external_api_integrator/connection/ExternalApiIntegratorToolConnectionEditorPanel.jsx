@@ -1,21 +1,17 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import {
-  externalApiIntegratorToolConnectionMetadata
-} from "components/inventory/tools/details/identifiers/external_api_integrator/connection/externalApiIntegratorToolConnection.metadata";
-import ExternalApiIntegratorConnectionCheckUrlTextInput
-  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/inputs/connection_check/ExternalApiIntegratorConnectionCheckUrlTextInput";
+import { externalApiIntegratorToolConnectionMetadata } from "components/inventory/tools/details/identifiers/external_api_integrator/connection/externalApiIntegratorToolConnection.metadata";
+import ExternalApiIntegratorConnectionCheckUrlTextInput from "components/inventory/tools/details/identifiers/external_api_integrator/connection/inputs/connection_check/ExternalApiIntegratorConnectionCheckUrlTextInput";
 
-function ExternalApiIntegratorToolConnectionEditorPanel({ toolData }) {
+// TODO: After validating we don't want anything here, remove the old code
+function ExternalApiIntegratorToolConnectionEditorPanel({ toolModel, setToolModel }) {
   const { getAccessToken } = useContext(AuthContext);
   const [externalApiConnectionModel, setExternalApiConnectionModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -43,14 +39,25 @@ function ExternalApiIntegratorToolConnectionEditorPanel({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    setExternalApiConnectionModel(modelHelpers.parseObjectIntoModel(toolData?.getData("configuration"), externalApiIntegratorToolConnectionMetadata));
+    setExternalApiConnectionModel(
+      modelHelpers.parseObjectIntoModel(
+        toolModel?.getData("configuration"),
+        externalApiIntegratorToolConnectionMetadata,
+      ),
+    );
   };
 
-  // TODO: Make route that just takes the connection body and updates inside the tool after checking RBAC-- If anything is saved in vault, do it there.
   const saveToolConnectionDetails = async () => {
     const newConfiguration = externalApiConnectionModel.getPersistData();
-    // newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource,toolData, flywayConfigurationModel, "password", newConfiguration?.password);
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData,newConfiguration);
+    const response = await toolsActions.updateToolConnectionDetails(
+      getAccessToken,
+      cancelTokenSource,
+      toolModel?.getMongoDbId(),
+      newConfiguration,
+    );
+    toolModel?.setData("configuration", newConfiguration);
+    setToolModel({...toolModel});
+    return response;
   };
 
   if (externalApiConnectionModel == null) {
@@ -58,27 +65,33 @@ function ExternalApiIntegratorToolConnectionEditorPanel({ toolData }) {
   }
 
   return (
-    <ToolConfigurationEditorPanelContainer
-      model={externalApiConnectionModel}
-      setModel={setExternalApiConnectionModel}
-      persistRecord={saveToolConnectionDetails}
-      toolData={toolData}
-    >
-      <Row>
-        <Col sm={12}>
-          <ExternalApiIntegratorConnectionCheckUrlTextInput
-            model={externalApiConnectionModel}
-            setModel={setExternalApiConnectionModel}
-            fieldName={"connection_check_url"}
-          />
-        </Col>
-      </Row>
-    </ToolConfigurationEditorPanelContainer>
+    <div className={"text-center p-5 text-muted mt-5"}>
+      Connection configuration is handled using Endpoints. For an API
+      Integration Pipeline Step, please create an endpoint to validate status
+      and configure it on the pipeline step.
+    </div>
+    // <ToolConfigurationEditorPanelContainer
+    //   model={externalApiConnectionModel}
+    //   setModel={setExternalApiConnectionModel}
+    //   persistRecord={saveToolConnectionDetails}
+    //   toolData={toolModel}
+    // >
+    //   <Row>
+    //     <Col sm={12}>
+    //       <ExternalApiIntegratorConnectionCheckUrlTextInput
+    //         model={externalApiConnectionModel}
+    //         setModel={setExternalApiConnectionModel}
+    //         fieldName={"connection_check_url"}
+    //       />
+    //     </Col>
+    //   </Row>
+    // </ToolConfigurationEditorPanelContainer>
   );
 }
 
 ExternalApiIntegratorToolConnectionEditorPanel.propTypes = {
-  toolData: PropTypes.object,
+  toolModel: PropTypes.object,
+  setToolModel: PropTypes.func,
 };
 
 export default ExternalApiIntegratorToolConnectionEditorPanel;

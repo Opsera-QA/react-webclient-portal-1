@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestParameterMetadata
 } from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/endpointRequestParameter.metadata";
-import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
-import Row from "react-bootstrap/Row";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
-import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 import CustomParameterComboBoxInput
   from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
+import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function EndpointRequestParameterInputRow(
   {
@@ -28,15 +31,16 @@ function EndpointRequestParameterInputRow(
   }, [endpointBodyField]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
-    endpointFieldModel.setData(fieldName, newValue);
-    updateParameterFunction({...endpointFieldModel?.getPersistData()});
+    const newModel = {...endpointFieldModel};
+    newModel.setData(fieldName, newValue);
+    updateParameterFunction({...newModel?.getCurrentData()});
   };
 
   const getInfoText = () => {
     let infoText = "";
 
     if (endpointFieldModel?.getData("isRequired") === true) {
-      infoText += `${endpointFieldModel?.getData("fieldName")} is required. `;
+      infoText += `${endpointFieldModel?.getData("fieldName")} is required. If this is not included, the run will fail.`;
     }
 
     if (endpointFieldModel?.getData("isSensitiveData") === true) {
@@ -64,10 +68,6 @@ function EndpointRequestParameterInputRow(
     updateMainModelFunction(fieldName, newValue?._id);
   };
 
-  const updateInsensitiveCustomParameter = (fieldName, newValue) => {
-    updateMainModelFunction(fieldName, newValue?.value);
-  };
-
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
@@ -76,45 +76,74 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <CustomParameterSelectInput
-              model={endpointFieldModel}
-              fieldName={"value"}
-              showLabel={false}
-              className={"value-parameter"}
-              requireVaultSavedParameters={true}
-              setDataFunction={updateSensitiveCustomParameter}
-              disabled={disabled}
-            />
+            <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+              <CustomParameterSelectInput
+                model={endpointFieldModel}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={updateSensitiveCustomParameter}
+                disabled={disabled}
+              />
+              <div className={"d-flex justify-content-end"}>
+                {getInfoTextField()}
+              </div>
+            </div>
           );
         }
 
         return (
-          <CustomParameterComboBoxInput
-            model={endpointFieldModel}
-            fieldName={"value"}
-            showLabel={false}
-            className={"value-parameter"}
-            requireInsensitiveParameters={true}
-            setDataFunction={updateInsensitiveCustomParameter}
-            disabled={disabled}
-          />
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+            <CustomParameterComboBoxInput
+              model={endpointFieldModel}
+              fieldName={"value"}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+            />
+            <div className={"d-flex justify-content-end"}>
+              {getInfoTextField()}
+            </div>
+          </div>
         );
       case "array":
         return (
-          <MultiTextInputBase
-            model={endpointFieldModel}
-            fieldName={"value"}
-            showLabel={false}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
+          <div className={"m-3"}>
+            <MultiTextListInputBase
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={updateMainModelFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+              allowDuplicates={true}
+              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+            />
+          </div>
         );
       case "date":
         return (
-          <DateTimeInputBase
-
-            disabled={disabled}
-          />
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          </div>
+        );
+      case "object":
+      default:
+        return (
+          <CenteredContentWrapper>
+            <div>{`Entering this parameter type's value is not currently supported.`}</div>
+          </CenteredContentWrapper>
         );
     }
   };
@@ -124,22 +153,14 @@ function EndpointRequestParameterInputRow(
   }
 
   return (
-    <div className={"mx-2"}>
-      <Row className={"d-flex py-2"}>
-        <Col sm={4}>
-          <StandaloneTextInputBase
-            model={endpointFieldModel}
-            value={endpointFieldModel?.getData("fieldName")}
-            setDataFunction={updateMainModelFunction}
-            disabled={true}
-          />
-        </Col>
-        <Col sm={8}>
-          {getValueInput()}
-        </Col>
-      </Row>
-      {getInfoTextField()}
-    </div>
+    <VanitySetTabContentContainer
+      titleIcon={faCode}
+      title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
+    >
+      <div className={"h-100"}>
+        {getValueInput()}
+      </div>
+    </VanitySetTabContentContainer>
   );
 }
 
