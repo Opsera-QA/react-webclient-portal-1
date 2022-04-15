@@ -23,7 +23,7 @@ function MTTRActionableInsightsMainSevOneTab({highestMergesMetric, dashboardData
 
 
   return (
-    <VanitySetTabContentContainer title={`MTTR Severity One Incidents Report`}>
+    <VanitySetTabContentContainer title={`MTTR Severity 1 Incidents Report`}>
       {getTabContentContainer()}
     </VanitySetTabContentContainer>
   );

@@ -23,7 +23,7 @@ function MTTRActionableInsightsMainSevTwoTab({ dashboardData, kpiConfiguration,i
 
 
   return (
-    <VanitySetTabContentContainer title={`MTTR Severity Two Incidents Report`}>
+    <VanitySetTabContentContainer title={`MTTR Severity 2 Incidents Report`}>
       {getTabContentContainer()}
     </VanitySetTabContentContainer>
   );
