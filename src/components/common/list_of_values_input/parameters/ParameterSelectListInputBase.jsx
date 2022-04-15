@@ -26,6 +26,7 @@ function ParameterSelectListInputBase({
   disabled,
   plan,
   tool_prop,
+  showHelp
 }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -235,8 +236,8 @@ function ParameterSelectListInputBase({
     return (
       <>
         <div className="flex-fill">
-          {(dataObject?.getData("customParameters") && Array.isArray(dataObject?.getData("customParameters"))
-            ? dataObject?.getData("customParameters")
+          {(dataObject?.getData(fieldName) && Array.isArray(dataObject?.getData(fieldName))
+            ? dataObject?.getData(fieldName)
             : []
           ).map((property, index) => {
             return getPropertyRow(property, index);
@@ -321,7 +322,7 @@ function ParameterSelectListInputBase({
         </div>
         <span>
         {getRefreshButton()}
-        {getHelpText()}
+        {showHelp && getHelpText()}
         </span>
       </div>
     );
@@ -335,14 +336,14 @@ function ParameterSelectListInputBase({
       Array.isArray(terraformStep?.tool?.configuration?.customParameters)
         ? terraformStep?.tool?.configuration?.customParameters
         : [];
-    let currentCustomParamsObject = newDataObject?.getData("customParameters");
+    let currentCustomParamsObject = newDataObject?.getData(fieldName);
     let filtered = [];
     for (let item in currentCustomParamsObject) {
       if (!currentCustomParamsObject[item]?.outputKey) {
         filtered.push(currentCustomParamsObject[item]);
       }
     }
-    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filtered]);
+    newDataObject.setData(fieldName, [...tempCustomParamsObject, ...filtered]);
     setDataObject({ ...newDataObject });
   };
 
@@ -407,6 +408,7 @@ ParameterSelectListInputBase.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   tool_prop: PropTypes.string,
+  showHelp: PropTypes.bool,
 };
 
 ParameterSelectListInputBase.defaultProps = {
@@ -415,6 +417,7 @@ ParameterSelectListInputBase.defaultProps = {
   allowIncompleteItems: false,
   disabled: false,
   nameMaxLength: 50,
+  showHelp: true
 };
 
 export default ParameterSelectListInputBase;
