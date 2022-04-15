@@ -89,8 +89,10 @@ function ExternalRestApiIntegrationStepEditorPanel(
         <IconBase icon={faExclamationTriangle} className={"mr-2"} />
         <div className={"my-auto"}>
           {`
-          Success rules take precedence over In Progress evaluation rules. 
-          If the response does not match either the Success or In Progress rule, it will be considered a failure.
+          Successful Completion Evaluation Rules take precedence over In Progress Evaluation Rules. 
+          If the response does not match either the Successful Completion or In Progress Evaluation Rule, it will be considered a failure. 
+          The Pipeline will continue running while it meets the In Progress Evaluation Rules until it meets the criteria 
+          for Successful Completion or until the Pipeline Run timeout is reached.
         `}
         </div>
       </div>
