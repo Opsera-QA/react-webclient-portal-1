@@ -11,6 +11,10 @@ const FailedExecutionsActionableInsightsMetaData = {
       id: "stepCompletedAt"
     },
     {
+      label: "Timestamp",
+      id: "commitTimeStamp"
+    },
+    {
       label: "Application Name",
       id: "applicationName",
     },
@@ -90,6 +94,22 @@ const FailedExecutionsActionableInsightsMetaData = {
        label: "Active Filters",
        id: "activeFilters",
      },
+     {
+       label: "Commit ID",
+       id: "checkoutSha",
+     },
+     {
+       label: "Commit Message",
+       id: "commitTitle",
+     },
+     {
+       label: "Branch Name",
+       id: "branch",
+     },
+     {
+       label: "Author",
+       id: "authorName",
+     }
    ],
        getActiveFilters(filterDto) {
          let activeFilters = [];
