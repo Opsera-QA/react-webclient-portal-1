@@ -36,8 +36,6 @@ function MTTRActionableDataBlocks({ data }) {
   //   }
   // };
 
-  const overallMTTR = data?.overalhours/data?.totalIssues;
-
   return (
     <div>
       <Row className="justify-content-sm-center px-2">
@@ -63,7 +61,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={overallMTTR}
+              score={data?.overallMTTR}
               subtitle={"Overall MTTR"}
             />
           </DataBlockBoxContainer>

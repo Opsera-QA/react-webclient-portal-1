@@ -12,7 +12,7 @@ import CustomTable from "components/common/table/CustomTable";
 function MTTRActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon }) {
   const fields = ServiceNowMTTRActionableMetadata.fields;
   const tableTitle = "Service Now MTTR Severity " + priority + " Report";
-  const noDataMessage = "Github " + priority + " report is currently unavailable at this time";
+  const noDataMessage = "No severity " + priority + " incidents found";
 
 
 

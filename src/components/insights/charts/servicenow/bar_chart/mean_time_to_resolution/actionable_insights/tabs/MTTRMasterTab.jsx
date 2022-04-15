@@ -76,12 +76,11 @@ function MTTRMasterTab({ priority, dashboardData, kpiConfiguration, icon }) {
 
       );
       let dataObject = response?.data ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0].tableData : [];
-      console.log(dataObject, "dataobj");
       let dataCount = response?.data
         ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.count[0]?.count
         : [];
       let DataBlocks = response?.data
-        ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.blockData
+        ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.blockData[0]
         : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,

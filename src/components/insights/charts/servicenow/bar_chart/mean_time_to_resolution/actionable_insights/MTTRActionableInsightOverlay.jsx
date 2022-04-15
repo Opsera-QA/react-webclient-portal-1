@@ -14,7 +14,7 @@ import MTTRActionableInsightMainSevFiveTab from "./tabs/MTTRActionableInsightMai
 
 function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
-  const [activeTab, setActiveTab] = useState("opened");
+  const [activeTab, setActiveTab] = useState("one");
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -78,14 +78,14 @@ function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
           tabText={"Severity 1"}
           handleTabClick={handleTabClick}
           tabName={"one"}
-          icon={faCodeCommit}
+          icon={faTable}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Severity 2"}
           handleTabClick={handleTabClick}
           tabName={"two"}
-          icon={faCodeMerge}
+          icon={faTable}
         />
         <CustomTab
           activeTab={activeTab}
