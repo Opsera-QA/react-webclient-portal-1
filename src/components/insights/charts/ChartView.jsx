@@ -158,6 +158,7 @@ import AutomatedTestAdoptionRateMetric
 import LoadingDialog from "components/common/status_notifications/loading";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
+import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1495,6 +1496,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <CoverityIssuesByCategory
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      // GitSrapperMetrics
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <GitSrapperMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
