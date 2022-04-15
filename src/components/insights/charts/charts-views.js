@@ -239,6 +239,11 @@ export const spaceOutMergeRequestTimeTakenLegend = (data) => {
     data.forEach((d) => (d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]));
   }
 };
+export const spaceOutServiceNowCountBySeverityLegend = (data) => {
+  if (Array.isArray(data)) {
+    data.forEach((d) => (d["Number of Incidents"] = d["numberOfIncidents"]));
+  }
+};
 
 // ----- End of helper functions for legend -----
 
