@@ -7,10 +7,10 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import MTTRActionableInsightsMainSevOneTab from "./tabs/MTTRActionableInsightsMainSevOneTab";
-import MTTRActionableInsightsMainSevTwoTab from "./tabs/MTTRActionableInsightMainSevTwoTab";
-import MTTRActionableInsightMainSevThreeTab from "./tabs/MTTRActionableInsightMainSevThreeTab";
-import MTTRActionableInsightMainSevFourTab from "./tabs/MTTRActionableInsightMainSevFourTab";
-import MTTRActionableInsightMainSevFiveTab from "./tabs/MTTRActionableInsightMainSevFiveTab";
+import MTTRActionableInsightsMainSevTwoTab from "./tabs/MTTRActionableInsightsMainSevTwoTab";
+import MTTRActionableInsightsMainSevFiveTab from "./tabs/MTTRActionableInsightsMainSevFiveTab";
+import MTTRActionableInsightsMainSevFourTab from "./tabs/MTTRActionableInsightsMainSevFourTab";
+import MTTRActionableInsightsMainSevThreeTab from "./tabs/MTTRActionableInsightsMainSevThreeTab";
 
 function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -40,7 +40,7 @@ function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
       );
     } else if (activeTab == "three") {
       return (
-        <MTTRActionableInsightMainSevThreeTab
+        <MTTRActionableInsightsMainSevThreeTab
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           icon={faTable}
@@ -48,7 +48,7 @@ function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
       );
     } else if (activeTab == "four") {
       return (
-        <MTTRActionableInsightMainSevFourTab
+        <MTTRActionableInsightsMainSevFourTab
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           icon={faTable}
@@ -56,7 +56,7 @@ function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
       );
     } else if (activeTab == "five") {
       return (
-        <MTTRActionableInsightMainSevFiveTab
+        <MTTRActionableInsightsMainSevFiveTab
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           icon={faTable}
