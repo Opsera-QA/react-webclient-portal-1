@@ -10,7 +10,7 @@ import chartsActions from "../../../../charts-actions";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import Model from "../../../../../../../core/data_model/model";
 import LoadingIcon from "../../../../../../common/icons/LoadingIcon";
-import {getTableTextColumn} from "../../../../../../common/table/table-column-helpers";
+import { getTableTextColumn, getTableDateTimeColumn } from "../../../../../../common/table/table-column-helpers";
 import {getField} from "../../../../../../common/metadata/metadata-helpers";
 import VanitySetTabAndViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
@@ -19,7 +19,8 @@ import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/Vanity
 import CustomTable from "../../../../../../common/table/CustomTable";
 import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import DataBlockBoxContainer from "../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import { getTableDateTimeColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
+import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
+import SuccessExecutionsDetailedActionableInsights from "./SuccessExecutionsDetailedActionableInsights";
 
 function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,6 +31,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
   const [responseData, setResponseData] = useState(undefined);
   const [actionInsightsTraceabilityTable, setActionInsightsTraceabilityTable] = useState([]);
   const [tableFilterDto, setTableFilterDto] = useState([new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false)]);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,7 +68,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
       getTableTextColumn(getField(fields, "applicationVP2")),
       getTableTextColumn(getField(fields, "actionRunNumber")),
       getTableTextColumn(getField(fields, "jobName")),
-      getTableTextColumn(getField(fields, "stepCompletedAt")),
+      getTableDateTimeColumn(getField(fields, "stepCompletedAt")),
       getTableTextColumn(getField(fields, "stepName"))
     ],
     []
@@ -116,6 +118,18 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
         setIsLoading(false);
       }
     }
+  };
+
+  const onRowSelect = (rowData) => {
+    toastContext.showInfoOverlayPanel(
+      <SuccessExecutionsDetailedActionableInsights
+        repositoryName={rowData?.original?.repositoryName}
+        actionName={rowData?.original?.actionName}
+        headCommitSha={rowData?.original?.headCommitSha}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getBody = () => {
@@ -185,6 +199,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
             paginationDto={tableFilterDto[i]}
             setPaginationDto={setTableFilterDto}
             loadData={loadData}
+            onRowSelect={onRowSelect}
           />
         </VanitySetTabView>
       );
@@ -203,7 +218,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalRepositoryCounts?.[0].successCount}
+              score={responseData?.totalRepositoryCounts?.[0]?.successCount}
               subtitle={'Total Repositories'}
             />
           </DataBlockBoxContainer>
@@ -212,7 +227,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalWorkflowsCounts?.[0].successCount}
+              score={responseData?.totalWorkflowsCounts?.[0]?.successCount}
               subtitle={'Total Workflows'}
             />
           </DataBlockBoxContainer>

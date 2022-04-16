@@ -87,6 +87,26 @@ const SuccessExecutionsActionableInsightsMetaData = {
       label: "Step",
       id:"stepName"
     },
+    {
+      label: "Timestamp",
+      id: "commitTimeStamp"
+    },
+    {
+      label: "Commit ID",
+      id: "checkoutSha",
+    },
+    {
+      label: "Commit Message",
+      id: "commitTitle",
+    },
+    {
+      label: "Branch Name",
+      id: "branch",
+    },
+    {
+      label: "Author",
+      id: "authorName",
+    }
   ],
   getActiveFilters(filterDto) {
      let activeFilters = [];
