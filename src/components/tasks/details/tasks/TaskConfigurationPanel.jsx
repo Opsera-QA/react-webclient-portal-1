@@ -13,7 +13,7 @@ import SalesforceOrganizationSyncTaskConfigurationEditorPanel
 import SalesforceBulkMigrationTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
 import GitToGitMergeConflictResolutionTaskConfigurationEditorPanel
-  from "components/tasks/details/tasks/merge-conflict-resolution/git-to-git/GitToGitMergeConflictResolutionTaskConfigurationEditorPanel";
+  from "components/tasks/details/tasks/merge-sync-task/git-to-git/GitToGitMergeConflictResolutionTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -49,13 +49,29 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksConfigurationData={taskConfigurationModel}
           />
-        ); 
+        );
+      // case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      //   return (
+      //     <GitToGitMergeConflictResolutionTaskConfigurationEditorPanel
+      //       taskConfigurationModel={taskConfigurationModel}
+      //       setTaskConfigurationModel={setTaskConfigurationModel}
+      //       taskModel={taskModel}
+      //     />
+      //   );
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
           <GitToGitSyncTaskConfigurationEditorPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
+          />
+        );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeConflictResolutionTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -89,14 +105,6 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
             />
-        );
-      case TASK_TYPES.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION:
-        return (
-          <GitToGitMergeConflictResolutionTaskConfigurationEditorPanel
-            taskConfigurationModel={taskConfigurationModel}
-            setTaskConfigurationModel={setTaskConfigurationModel}
-            taskModel={taskModel}
-          />
         );
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;

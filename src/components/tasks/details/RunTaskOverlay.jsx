@@ -87,8 +87,8 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
 
   const getButtonContainer = () => {
     return (
-      <Row className="mx-0 p-3 d-flex">
-        <div className="ml-auto d-flex">
+      <Row className={"mx-0 p-3 d-flex"}>
+        <div className={"ml-auto d-flex"}>
           <TriggerTaskRunButton
             gitTasksData={taskModel}
             setGitTasksData={setTaskModel}
