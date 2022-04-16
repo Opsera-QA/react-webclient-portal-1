@@ -7,7 +7,7 @@ function ServiceNowTotalResolvedIncidentsDataBlock({ data }) {
     return (
         <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
-                className={"p-3"}
+                className={"p-1"}
                 score={data}
                 subtitle={"Total Resolved"}
             />
