@@ -21,8 +21,8 @@ function GithubDeployKeysTable({ toolData, githubDeployKeys, loadData, onRowSele
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "userName")),
       getTableTextColumn(getField(fields, "sshUrl")),
+      getTableTextColumn(getField(fields, "deployKey")),
     ],
     []
   );

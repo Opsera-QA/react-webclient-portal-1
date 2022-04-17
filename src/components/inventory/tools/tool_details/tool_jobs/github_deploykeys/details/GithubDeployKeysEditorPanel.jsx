@@ -8,10 +8,8 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 
 function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -52,10 +50,7 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
   };
 
   const createRepository = async () => {
-    let newConfiguration = githubDeployKeyModel.getPersistData();
-    const deployKeyVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-    newConfiguration.deployKey = await toolsActions.saveKeyPasswordToVault(githubDeployKeyModel, "deployKey", newConfiguration.deployKey, deployKeyVaultKey, getAccessToken, toolData.getData("_id"));
-    return await githubDeployKeysActions.createGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    return await githubDeployKeysActions.createGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, githubDeployKeyModel);
   };
 
   const updateRepository = async () => {
@@ -64,7 +59,7 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
 
   const deleteRepository = async () => {
     await githubDeployKeysActions.deleteGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, repoId);
-    await handleClose();
+    handleClose();
   };
 
   if (isLoading || githubDeployKeyModel == null) {
@@ -100,20 +95,12 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
             <TextInputBase
               setDataObject={setGithubDeployKeyModel}
               dataObject={githubDeployKeyModel}
-              fieldName={"userName"}
-              disabled={!githubDeployKeyData?.isNew()}
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              setDataObject={setGithubDeployKeyModel}
-              dataObject={githubDeployKeyModel}
               fieldName={"sshUrl"}
               disabled={!githubDeployKeyData?.isNew()}
             />
           </Col>
           <Col lg={12}>
-            <VaultTextAreaInput
+            <TextInputBase
               setDataObject={setGithubDeployKeyModel}
               dataObject={githubDeployKeyModel}
               fieldName={"deployKey"}
