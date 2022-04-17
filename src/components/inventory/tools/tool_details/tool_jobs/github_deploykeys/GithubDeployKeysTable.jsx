@@ -22,7 +22,6 @@ function GithubDeployKeysTable({ toolData, githubDeployKeys, loadData, onRowSele
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "sshUrl")),
-      getTableTextColumn(getField(fields, "deployKey")),
     ],
     []
   );
