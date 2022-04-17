@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function GitToGitMergeConflictResolutionTaskTargetBranchSelectInput({
+function GitToGitMergeSyncTaskTargetBranchSelectInput({
   model,
   setModel,
   disabled,
@@ -29,9 +29,9 @@ function GitToGitMergeConflictResolutionTaskTargetBranchSelectInput({
     <GitBranchInput
       fieldName={"targetBranch"}
       service={model?.getData("service")}
-      gitToolId={model?.getData("gitToolId")}
+      gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}
-      repoId={model?.getData("projectId")}
+      repoId={model?.getData("repository")}
       dataObject={model}
       setDataFunction={setDataFunction}
       setDataObject={setModel}
@@ -40,11 +40,11 @@ function GitToGitMergeConflictResolutionTaskTargetBranchSelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskTargetBranchSelectInput.propTypes = {
+GitToGitMergeSyncTaskTargetBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   sourceBranch: PropTypes.string,
 };
 
-export default GitToGitMergeConflictResolutionTaskTargetBranchSelectInput;
+export default GitToGitMergeSyncTaskTargetBranchSelectInput;

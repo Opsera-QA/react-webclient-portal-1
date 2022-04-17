@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
-function GitToGitMergeConflictResolutionTaskBitbucketWorkspaceSelectInput({
+function GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput({
   model,
   setModel,
   disabled,
@@ -48,10 +48,10 @@ function GitToGitMergeConflictResolutionTaskBitbucketWorkspaceSelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskBitbucketWorkspaceSelectInput.propTypes = {
+GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default GitToGitMergeConflictResolutionTaskBitbucketWorkspaceSelectInput;
+export default GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput;
