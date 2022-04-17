@@ -1,4 +1,4 @@
-export const gitToGitMergeConflictResolutionTaskConfigurationMetadata = {
+export const gitToGitMergeSyncTaskConfigurationMetadata = {
   type: "Branch to Branch Merge Conflict Resolution Task Configuration",
   fields: [
     {
@@ -15,11 +15,6 @@ export const gitToGitMergeConflictResolutionTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },        
     {
-      id: "projectId",
-      maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-    },
-    {
       label: "Git Repository URL",
       id: "gitUrl",
     },
@@ -31,10 +26,18 @@ export const gitToGitMergeConflictResolutionTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      maxLength: 255,
+    },
+    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "bitbucket";
+      },
     },
     {
       label: "Source Branch",
@@ -73,6 +76,7 @@ export const gitToGitMergeConflictResolutionTaskConfigurationMetadata = {
     service: "",
     workspace: "",
     repository: "",
+    repositoryName: "", // TODO: Remove
     targetBranch: "",
     sourceBranch: "",
     upstreamBranch: "",

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 
-function GitToGitMergeConflictResolutionTaskSourceControlToolSelectInput({
+function GitToGitMergeSyncTaskSourceControlToolSelectInput({
   model,
   setModel,
   disabled,
@@ -50,11 +50,11 @@ function GitToGitMergeConflictResolutionTaskSourceControlToolSelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskSourceControlToolSelectInput.propTypes = {
+GitToGitMergeSyncTaskSourceControlToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   toolIdentifier: PropTypes.string,
 };
 
-export default GitToGitMergeConflictResolutionTaskSourceControlToolSelectInput;
+export default GitToGitMergeSyncTaskSourceControlToolSelectInput;

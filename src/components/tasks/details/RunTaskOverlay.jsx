@@ -31,6 +31,9 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import {
+  mergeSyncTaskConfigurationMetadata
+} from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -65,6 +68,10 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         configurationData = modelHelpers.parseObjectIntoModel(configuration, salesforceBulkMigrationTaskConfigurationMetadata);
         break;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, mergeSyncTaskConfigurationMetadata);
+        break;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         configurationData = modelHelpers.parseObjectIntoModel(configuration, branchToBranchGitTaskConfigurationMetadata);
         break;
@@ -87,8 +94,8 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
 
   const getButtonContainer = () => {
     return (
-      <Row className="mx-0 p-3 d-flex">
-        <div className="ml-auto d-flex">
+      <Row className={"mx-0 p-3 d-flex"}>
+        <div className={"ml-auto d-flex"}>
           <TriggerTaskRunButton
             gitTasksData={taskModel}
             setGitTasksData={setTaskModel}
@@ -110,7 +117,10 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const getRunView = () => {
     const type = taskModel?.getData("type");
 
-    if (canEdit && [TASK_TYPES.SYNC_SALESFORCE_REPO, TASK_TYPES.SALESFORCE_BULK_MIGRATION].includes(type)) {
+    if (canEdit && [
+      TASK_TYPES.SYNC_SALESFORCE_REPO,
+      TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+    ].includes(type)) {
       if (taskConfigurationModel?.getData("isNewBranch") === true) {
         return (
           <div>

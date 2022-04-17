@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
-function GitToGitMergeConflictResolutionTaskRepositorySelectInput({
+function GitToGitMergeSyncTaskRepositorySelectInput({
   model,
   setModel,
   disabled,
@@ -12,6 +12,7 @@ function GitToGitMergeConflictResolutionTaskRepositorySelectInput({
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     newModel.setData("repository", repoId);
+    newModel.setData("repositoryName", selectedOption?.name);
     newModel.setData("gitUrl", gitUrl);
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
@@ -33,7 +34,7 @@ function GitToGitMergeConflictResolutionTaskRepositorySelectInput({
 
   return (
     <RepositorySelectInput
-      fieldName={"repository"}
+      fieldName={"repositoryName"}
       service={model?.getData("service")}
       gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}
@@ -46,10 +47,10 @@ function GitToGitMergeConflictResolutionTaskRepositorySelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskRepositorySelectInput.propTypes = {
+GitToGitMergeSyncTaskRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default GitToGitMergeConflictResolutionTaskRepositorySelectInput;
+export default GitToGitMergeSyncTaskRepositorySelectInput;

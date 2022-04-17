@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchSourceControlManagementToolIdentifierSelectInput from "components/common/list_of_values_input/tools/source_control/GitBranchSourceControlManagementToolIdentifierSelectInput";
 
-function GitToGitMergeConflictResolutionTaskSourceControlTypeSelectInput({
+function GitToGitMergeSyncTaskSourceControlTypeSelectInput({
   model,
   setModel,
   disabled,
@@ -47,10 +47,10 @@ function GitToGitMergeConflictResolutionTaskSourceControlTypeSelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskSourceControlTypeSelectInput.propTypes = {
+GitToGitMergeSyncTaskSourceControlTypeSelectInput.propTypes = {
     model: PropTypes.object,
     setModel: PropTypes.func,
     disabled: PropTypes.bool,
 };
 
-export default GitToGitMergeConflictResolutionTaskSourceControlTypeSelectInput;
+export default GitToGitMergeSyncTaskSourceControlTypeSelectInput;

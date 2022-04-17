@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function GitToGitMergeConflictResolutionTaskSourceBranchSelectInput({
+function GitToGitMergeSyncTaskSourceBranchSelectInput({
   model,
   setModel,
   disabled,
@@ -40,11 +40,11 @@ function GitToGitMergeConflictResolutionTaskSourceBranchSelectInput({
   );
 }
 
-GitToGitMergeConflictResolutionTaskSourceBranchSelectInput.propTypes = {
+GitToGitMergeSyncTaskSourceBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   targetBranch: PropTypes.string,
 };
 
-export default GitToGitMergeConflictResolutionTaskSourceBranchSelectInput;
+export default GitToGitMergeSyncTaskSourceBranchSelectInput;
