@@ -2,10 +2,10 @@ import baseActions from "utils/actionsBase";
 
 const githubDeployKeysActions = {};
 
-githubDeployKeysActions.createGithubDeployKey = async (getAccessToken, cancelTokenSource, toolId, githubDeployKeyModel) => {
+githubDeployKeysActions.createGithubDeployKey = async (getAccessToken, cancelTokenSource, toolId, newConfiguration) => {
   const apiUrl = `/tools/${toolId}/github/repo/create`;
   const postBody = {
-    ...githubDeployKeyModel.getPersistData(),
+    ...newConfiguration,
   };
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
