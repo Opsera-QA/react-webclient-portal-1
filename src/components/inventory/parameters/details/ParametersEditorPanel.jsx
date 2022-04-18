@@ -8,8 +8,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
-import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import ParameterValueTextAreaInput from "components/inventory/parameters/details/ParameterValueTextAreaInput";
 
 function ParametersEditorPanel({ parameterModel, setParameterModel, parameterModelId, handleClose }) {
   const isMounted = useRef(false);
@@ -31,33 +30,21 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
   }, [parameterModelId]);
 
   const getValueInput = () => {
-    if (parameterModel?.getData("vaultEnabled") === true) {
-
-      if (parameterModel?.isNew()) {
-        return (
-          <TogglePasswordTextAreaInput
-            model={parameterModel}
-            setModel={setParameterModel}
-            fieldName={"value"}
-          />
-        );
-      }
-
+    if (parameterModel?.getData("vaultEnabled") === true && parameterModel?.isNew() !== true) {
       return (
-        <ParameterValueTextInput
+        <ParameterValueTextAreaInput
           disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
           setModel={setParameterModel}
           model={parameterModel}
           fieldName={"value"}
-          parameterId={parameterModel?.getData("_id")}
         />
       );
     }
 
     return (
-      <TextAreaInput
-        dataObject={parameterModel}
-        setDataObject={setParameterModel}
+      <TogglePasswordTextAreaInput
+        model={parameterModel}
+        setModel={setParameterModel}
         fieldName={"value"}
         disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
       />

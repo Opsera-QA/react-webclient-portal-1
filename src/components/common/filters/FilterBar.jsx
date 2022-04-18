@@ -7,6 +7,9 @@ import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import ExportDataButton from "components/common/buttons/data/export/ExportDataButton";
+import ImportDataButton from "components/common/buttons/data/import/ImportDataButton";
+import SearchFilter from "components/common/filters/search/SearchFilter";
 
 function FilterBar(
   {
@@ -24,6 +27,8 @@ function FilterBar(
     exportButton,
     type,
     metadata,
+    handleExportFunction,
+    handleImportFunction,
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -39,6 +44,45 @@ function FilterBar(
     }
   };
 
+  // TODO: Remove or combine the duplicate search filters
+  const getSearchBar = () => {
+    if (supportClientSideSearching === true) {
+      return (
+        <InlineClientSideSearchFilter
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          isLoading={isLoading}
+          supportClientSideSearching={supportClientSideSearching}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        />
+      );
+    }
+
+    if (typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true) {
+      return (
+        <SearchFilter
+          isLoading={isLoading}
+          paginationModel={filterModel}
+          loadData={loadData}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          metadata={metadata}
+        />
+      );
+    }
+
+    return (
+      <InlineSearchFilter
+        isLoading={isLoading}
+        supportSearch={supportSearch}
+        filterDto={filterModel}
+        setFilterDto={setFilterModel}
+        loadData={loadData}
+        className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        metadata={metadata}
+      />
+    );
+  };
+
   return (
     <div className="my-1 inline-filter-input">
       <div className="d-flex my-auto">
@@ -50,23 +94,18 @@ function FilterBar(
             isLoading={isLoading}
             variant={"success"}
           />
+          <ImportDataButton
+            className={"mr-2"}
+            importDataFunction={handleImportFunction}
+            isLoading={isLoading}
+          />
+          <ExportDataButton
+            className={"mr-2"}
+            exportDataFunction={handleExportFunction}
+            isLoading={isLoading}
+          />
           <span className="d-none d-xl-inline">{inlineFilters}</span>
-          <InlineSearchFilter
-            isLoading={isLoading}
-            supportSearch={supportSearch}
-            filterDto={filterModel}
-            setFilterDto={setFilterModel}
-            loadData={loadData}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-            metadata={metadata}
-          />
-          <InlineClientSideSearchFilter
-            filterModel={filterModel}
-            setFilterModel={setFilterModel}
-            isLoading={isLoading}
-            supportClientSideSearching={supportClientSideSearching}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
-          />
+          {getSearchBar()}
           <ViewToggle
             supportViewToggle={supportViewToggle}
             filterModel={filterModel}
@@ -109,6 +148,8 @@ FilterBar.propTypes = {
   type: PropTypes.string,
   metadata: PropTypes.object,
   exportButton: PropTypes.any,
+  handleExportFunction: PropTypes.func,
+  handleImportFunction: PropTypes.func,
 };
 
 export default FilterBar;

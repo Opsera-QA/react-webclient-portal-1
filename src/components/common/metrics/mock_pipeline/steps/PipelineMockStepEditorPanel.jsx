@@ -15,6 +15,7 @@ import PipelineMappingEnvironmentInput
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
 import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
+import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 
 function PipelineMockStepEditorPanel(
   { 
@@ -85,12 +86,13 @@ function PipelineMockStepEditorPanel(
             />
           </Col>
           <Col xs={12}>
-            <TagManager
+            {/* <TagManager
               fieldName={"tags"}
               model={stepModel}
               setModel={setDataFunction}
               type={"environment"}
-            />
+            /> */}
+            <TagMultiSelectInput fieldName={"tags"} dataObject={stepModel} setDataObject={setDataFunction} />
           </Col>
           <Col xs={12}>
             <TextInputBase

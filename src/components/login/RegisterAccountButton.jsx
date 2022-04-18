@@ -27,6 +27,11 @@ function RegisterAccountButton() {
   const getButton = () => {
     const tenant = process.env.REACT_APP_OPSERA_TENANT;
 
+    console.log("environment tenant: " + tenant);
+    console.log("DEFAULT_TENANT: " + DEFAULT_TENANT);
+    console.log("typeof tenant === \"string\": " + typeof tenant === "string");
+    console.log("tenant !== DEFAULT_TENANT: " + tenant !== DEFAULT_TENANT);
+
     if (typeof tenant === "string" && tenant.length > 0 && tenant !== DEFAULT_TENANT) {
       return (
         <Button variant="primary" className="btn-lg w-100 mb-3" onClick={() => goToLdapSignupForm()}>Add User To Account</Button>

@@ -19,7 +19,7 @@ function EndpointRequestFieldIsSensitiveDataToggleInput(
       fieldId={`${index}-request-isSensitiveData`}
       fieldLabel={model.getLabel("isSensitiveData")}
       checkedValue={model?.getData("isSensitiveData")}
-      disabled={disabled}
+      disabled={disabled || model?.getData("type") !== "string"}
       className={"my-auto"}
     />
   );
@@ -29,7 +29,7 @@ EndpointRequestFieldIsSensitiveDataToggleInput.propTypes = {
   model: PropTypes.object,
   updateMainModelFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  index: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 export default EndpointRequestFieldIsSensitiveDataToggleInput;

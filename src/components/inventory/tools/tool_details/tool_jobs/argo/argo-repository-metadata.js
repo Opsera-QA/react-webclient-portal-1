@@ -51,6 +51,11 @@ const argoRepositoryMetadata = {
       id: "repositoryType",
       isRequired: true
     },
+    {
+      label: "Project Name",
+      id: "projectName",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     name: "",
@@ -61,6 +66,7 @@ const argoRepositoryMetadata = {
     workspace: "",
     repositoryName: "",
     repositoryType: "git",
+    projectName: "",
   }
 };
 

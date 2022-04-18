@@ -53,7 +53,7 @@ function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
 }
 
 DataBlock.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.any,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
   clickAction: PropTypes.func,

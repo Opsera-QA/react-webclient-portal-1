@@ -1,21 +1,19 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import IconBase from "components/common/icons/IconBase";
 import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import EndpointRequestFieldTypeStandaloneSelectInput
-  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeStandaloneSelectInput";
-import StandaloneTextInputBase from "components/common/inputs/text/standalone/StandaloneTextInputBase";
+import EndpointRequestFieldTypeSelectInput
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeSelectInput";
 import EndpointRequestFieldIsRequiredToggleInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
 import EndpointRequestFieldIsSensitiveDataToggleInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import EndpointRequestFieldNameTextInput
+  from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -24,7 +22,6 @@ function EndpointRequestBodyFieldInputRow(
     deleteFieldFunction,
     endpointBodyField,
     index,
-    parentFieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -34,17 +31,12 @@ function EndpointRequestBodyFieldInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
-    updateFieldFunction({...endpointFieldModel?.getPersistData()});
+    return updateModelFunction(endpointFieldModel);
   };
-  
-  const getDeletePropertyButton = () => {
-    if (disabled !== true) {
-      return (
-        <Button variant="link" onClick={deleteFieldFunction}>
-          <span><IconBase className={"danger-red"} icon={faTimes}/></span>
-        </Button>
-      );
-    }
+
+  const updateModelFunction = (newModel) => {
+    updateFieldFunction({...newModel?.getPersistData()});
+    return newModel;
   };
 
   if (endpointFieldModel == null) {
@@ -52,46 +44,62 @@ function EndpointRequestBodyFieldInputRow(
   }
 
   return (
-    <div className={"d-flex py-2"}>
-      <Col sm={11}>
-        <Row className={"pl-2"}>
-          <Col sm={4} className={"pl-0 pr-1"}>
-            <StandaloneTextInputBase
-              model={endpointFieldModel}
-              setDataFunction={(newValue) => updateMainModelFunction("fieldName", newValue)}
-              value={endpointFieldModel?.getData("fieldName")}
-              disabled={disabled}
-            />
-          </Col>
-          <Col sm={4} className={"pl-0 pr-1"}>
-            <EndpointRequestFieldTypeStandaloneSelectInput
-              model={endpointFieldModel}
-              updateMainModelFunction={updateMainModelFunction}
-              disabled={disabled}
-            />
-          </Col>
-          <Col sm={2} className={"pl-1 pr-0"}>
-            <EndpointRequestFieldIsRequiredToggleInput
-              model={endpointFieldModel}
-              updateMainModelFunction={updateMainModelFunction}
-              index={index}
-              disabled={disabled}
-              parentFieldName={parentFieldName}
-            />
-          </Col>
-          <Col sm={2} className={"pl-1 pr-0 my-auto"}>
-            <EndpointRequestFieldIsSensitiveDataToggleInput
-              model={endpointFieldModel}
-              updateMainModelFunction={updateMainModelFunction}
-              index={index}
-              disabled={disabled}
-            />
-          </Col>
-        </Row>
-      </Col>
-      <Col sm={1} className={"px-0 ml-auto mr-auto delete-button"}>
-        {getDeletePropertyButton()}
-      </Col>
+    <div className={"mx-3 mb-3 mt-1 h-100"}>
+      <Row>
+        <Col xs={12}>
+          <EndpointRequestFieldNameTextInput
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
+            disabled={disabled}
+            updateMainModelFunction={updateMainModelFunction}
+          />
+        </Col>
+        <Col xs={12}>
+          <EndpointRequestFieldTypeSelectInput
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
+            fieldName={"type"}
+            updateModelFunction={updateModelFunction}
+            disabled={disabled}
+          />
+        </Col>
+        <Col xs={6}>
+          <EndpointRequestFieldIsRequiredToggleInput
+            model={endpointFieldModel}
+            updateMainModelFunction={updateMainModelFunction}
+            index={index}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
+          />
+        </Col>
+        <Col xs={6}>
+          <EndpointRequestFieldIsSensitiveDataToggleInput
+            model={endpointFieldModel}
+            updateMainModelFunction={updateMainModelFunction}
+            index={index}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
+          />
+        </Col>
+        {/*TODO: Add default value and hardcoded value inputs*/}
+        {/*<Col xs={6}>*/}
+        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        {/*<Col xs={6}>*/}
+        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
+        {/*    model={endpointFieldModel}*/}
+        {/*    updateMainModelFunction={updateMainModelFunction}*/}
+        {/*    index={index}*/}
+        {/*    disabled={disabled}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+      </Row>
+      <ButtonContainerBase className={"mt-2"}>
+        <DeleteButton dataObject={endpointFieldModel} deleteRecord={deleteFieldFunction} />
+      </ButtonContainerBase>
     </div>
   );
 }
@@ -102,7 +110,6 @@ EndpointRequestBodyFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   index: PropTypes.number,
-  parentFieldName: PropTypes.string,
 };
 
 export default EndpointRequestBodyFieldInputRow;

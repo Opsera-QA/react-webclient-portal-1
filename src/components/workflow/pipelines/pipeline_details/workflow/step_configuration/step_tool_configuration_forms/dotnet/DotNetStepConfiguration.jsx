@@ -122,8 +122,8 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       />
       <ScriptLibrarySelectInput
         fieldName={"scriptId"}
-        dataObject={dotNetStepConfigurationDto}
-        setDataObject={setDotNetStepConfigurationDataDto}
+        model={dotNetStepConfigurationDto}
+        setModel={setDotNetStepConfigurationDataDto}
         busy={isLoading}
         disabled={isLoading}
       />

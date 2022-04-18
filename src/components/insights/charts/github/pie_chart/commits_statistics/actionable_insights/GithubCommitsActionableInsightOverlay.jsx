@@ -1,141 +1,63 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-// import { Col, Row } from "react-bootstrap";
-import Model from "core/data_model/model";
-import { AuthContext } from "contexts/AuthContext";
-import { faTable } from "@fortawesome/pro-light-svg-icons";
-import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import chartsActions from "components/insights/charts/charts-actions";
-import { useHistory } from "react-router-dom";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-
-import GithubCommitsActionableInsightTable from "./GithubCommitsActionableInsightTable";
+import { faTable, faCodeCommit, faBook, faCodeMerge } from "@fortawesome/pro-light-svg-icons";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import GithubCommitsActionableInsightOpenTab from "./GithubCommitsActionableInsightOpenTab";
+import GithubCommitsActionableInsightClosedTab from "./GithubCommitsActionableInsightClosedTab";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import GithubCommitsActionableInsightMergedTab from "./GithubCommitsActionableInsightMergedTab";
+import GithubCommitsActionableInsightContributorsTab from "./GithubCommitsActionableInsightContributorsTab";
 
-function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
+function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData, highestMergesMetric }) {
   const toastContext = useContext(DialogToastContext);
-  const history = useHistory();
   const [activeTab, setActiveTab] = useState("opened");
-  const { getAccessToken } = useContext(AuthContext);
-  const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
-
-  const [closedMetrics, setClosedMetrics] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [filterModel, setFilterModel] = useState(
-    new Model(
-      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-      actionableInsightsGenericChartFilterMetadata,
-      false
-    )
-  );
-  const [closedFilterModel, setClosedFilterModel] = useState(
-    new Model(
-      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-      actionableInsightsGenericChartFilterMetadata,
-      false
-    )
-  );
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(dashboardData)]);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await loadOpenData();
-      await loadClosedData();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-      setIsLoading(true);
-      let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
-      const response = await chartsActions.getGithubPullRequestsMetrics(
-        kpiConfiguration,
-        getAccessToken,
-        cancelSource,
-        dashboardTags,
-        dashboardOrgs,
-        filterDto,
-        "opened"
-      );
-      let dataObject = response?.data ? response?.data?.pull_requests?.data[0]?.data : [];
-      let dataCount = response?.data ? response?.data?.pull_requests?.data[0]?.count[0]?.count : 0;
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataCount);
-      setFilterModel({ ...newFilterDto });
-      if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
-      }
-  };
-
-  const loadClosedData = async (cancelSource = cancelTokenSource, filterDto = closedFilterModel) => {
-      let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
-      const response = await chartsActions.getGithubPullRequestsMetrics(
-        kpiConfiguration,
-        getAccessToken,
-        cancelSource,
-        dashboardTags,
-        dashboardOrgs,
-        filterDto,
-        "closed"
-      );
-      let dataObject = response?.data ? response?.data?.pull_requests?.data[0]?.data : [];
-      let dataCount = response?.data ? response?.data?.pull_requests?.data[0]?.count[0]?.count : 0;
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataCount);
-      setClosedFilterModel({ ...newFilterDto });
-      if (isMounted?.current === true && dataObject) {
-        setClosedMetrics(dataObject);
-      }
-  };
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getBody = () => {
+    if (activeTab == "opened") {
+      return (
+        <GithubCommitsActionableInsightOpenTab
+          highestMergesMetric={highestMergesMetric}
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faCodeCommit}
+        />
+      );
+    } else if (activeTab == "closed") {
+      return (
+        <GithubCommitsActionableInsightClosedTab
+          highestMergesMetric={highestMergesMetric}
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faCodeMerge}
+        />
+      );
+    } else if (activeTab == "merged") {
+      return (
+        <GithubCommitsActionableInsightMergedTab
+          highestMergesMetric={highestMergesMetric}
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faTable}
+        />
+      );
+    } else if (activeTab == "contributors") {
+      return (
+        <GithubCommitsActionableInsightContributorsTab
+          highestMergesMetric={highestMergesMetric}
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faTable}
+        />
+      );
+    }
   };
 
   const handleTabClick = (tabSelection) => (e) => {
@@ -146,51 +68,46 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Open"} handleTabClick={handleTabClick} tabName={"opened"} />
-        <CustomTab activeTab={activeTab} tabText={"Closed"} handleTabClick={handleTabClick} tabName={"closed"} />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Open Pull Requests"}
+          handleTabClick={handleTabClick}
+          tabName={"opened"}
+          icon={faCodeCommit}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Closed Pull Requests"}
+          handleTabClick={handleTabClick}
+          tabName={"closed"}
+          icon={faCodeMerge}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Merged Pull Requests"}
+          handleTabClick={handleTabClick}
+          tabName={"merged"}
+          icon={faTable}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Contributors"}
+          handleTabClick={handleTabClick}
+          tabName={"contributors"}
+          icon={faTable}
+        />
       </CustomTabContainer>
     );
-  };
-
-  const getBody = () => {
-    if (activeTab == "opened") {
-      return (
-        <div className="p-2">
-          <GithubCommitsActionableInsightTable
-            data={metrics}
-            isLoading={isLoading}
-            loadData={loadData}
-            filterModel={filterModel}
-            setFilterModel={setFilterModel}
-            title={"Open Commits"}
-          />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className="p-2">
-          <GithubCommitsActionableInsightTable
-              data={closedMetrics}
-              isLoading={isLoading}
-              loadData={loadData}
-              filterModel={closedFilterModel}
-              setFilterModel={setClosedFilterModel}
-              title={"Closed Commits"}
-            />
-        </div>
-      );
-    }
   };
 
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={"Github Total commits"}
+      titleText={"Github Total Commits"}
       showToasts={true}
       titleIcon={faTable}
-      isLoading={isLoading}
+      // isLoading={isLoading}
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
@@ -203,6 +120,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
 GithubCommitsActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  highestMergesMetric: PropTypes.array,
 };
 
 export default GithubCommitsActionableInsightOverlay;

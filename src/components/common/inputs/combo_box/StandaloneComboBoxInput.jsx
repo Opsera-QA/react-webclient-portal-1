@@ -23,7 +23,6 @@ function StandaloneComboBoxInput(
       groupBy={groupBy}
       value={value}
       filter={"contains"}
-      suggest={true}
       busy={busy}
       placeholder={placeholderText}
       onChange={(newValue) => setDataFunction(newValue)}

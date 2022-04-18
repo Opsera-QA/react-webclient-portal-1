@@ -93,6 +93,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+      case TASK_TYPES.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;

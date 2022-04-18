@@ -13,6 +13,9 @@ import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
+import GitToGitMergeSyncTaskWizardOverlay
+  from "components/tasks/details/tasks/merge-sync-task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -39,8 +42,9 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
 
   const checkValidity = () => {
     if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
-      const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      if(gitTasksConfigurationDataDto && gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
+      const configuration = gitTasksConfigurationDataDto?.getPersistData();
+
+      if(gitTasksConfigurationDataDto?.checkCurrentValidity() && configuration?.isNewBranch === true && hasStringValue(configuration?.upstreamBranch) === true) {
         return true;
       } else {
         return !gitTasksConfigurationDataDto?.checkCurrentValidity();
@@ -66,10 +70,34 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         );
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
-        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
+    }
+    else if (gitTasksData?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
+      try{
+        setIsLoading(true);
+        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        gitTasksData.setData("configuration", configuration);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <GitToGitMergeSyncTaskWizardOverlay
+            taskModel={gitTasksData}
+          />
+        );
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
+      toastContext.showOverlayPanel(
+        <GitToGitMergeSyncTaskWizardOverlay
+          taskModel={gitTasksData}
+        />
+      );
     }
     else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
        try {
@@ -125,10 +153,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       // call to trigger merge request
       try{
         setIsLoading(true);
-        let postBody = {
-          "taskId":gitTasksData.getData("_id")
-        };
-        let result = await taskActions.createECSCluster(postBody, getAccessToken);
+        await taskActions.createEcsClusterWithTaskIdV2(getAccessToken, cancelTokenSource, gitTasksData?.getMongoDbId());
         toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);

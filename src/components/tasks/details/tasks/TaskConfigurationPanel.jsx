@@ -13,6 +13,8 @@ import SalesforceOrganizationSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 import SalesforceBulkMigrationTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
+import GitToGitMergeSyncTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/merge-sync-task/git-to-git/GitToGitMergeSyncTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -48,13 +50,29 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksConfigurationData={taskConfigurationModel}
           />
-        ); 
+        );
+      // case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      //   return (
+      //     <GitToGitMergeSyncTaskConfigurationEditorPanel
+      //       taskConfigurationModel={taskConfigurationModel}
+      //       setTaskConfigurationModel={setTaskConfigurationModel}
+      //       taskModel={taskModel}
+      //     />
+      //   );
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
           <GitToGitSyncTaskConfigurationEditorPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
+          />
+        );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeSyncTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -89,7 +107,6 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksDataDto={taskModel}
             />
         );
-      case "":
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;
     }

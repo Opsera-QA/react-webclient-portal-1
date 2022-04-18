@@ -192,6 +192,21 @@ pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) =>
   return response;
 };
 
+pipelineActions.getPipelineStepById = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  stepId,
+) => {
+  const apiUrl = `/pipelines/v2/${pipelineId}/step/${stepId}/`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+
 pipelineActions.updatePipelineStepByIdV2 = async (
   getAccessToken,
   cancelTokenSource,
@@ -445,6 +460,11 @@ pipelineActions.createMongodbRealmJob = async (toolId, postBody, getAccessToken)
 
 pipelineActions.createMongodbRealmJobV2 = async (getAccessToken, cancelTokenSource, toolId, postBody) => {
   const apiUrl = `/registry/action/${toolId}/createMongodbRealmJob`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+pipelineActions.createTerraformPipelineV2 = async (getAccessToken, cancelTokenSource, postBody) => {  
+  const apiUrl = `/pipelines/terraform-cloud/createPipeline`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

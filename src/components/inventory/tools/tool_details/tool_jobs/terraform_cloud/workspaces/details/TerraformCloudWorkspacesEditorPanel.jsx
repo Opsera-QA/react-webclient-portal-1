@@ -28,7 +28,7 @@ function TerraformCloudWorkspacesEditorPanel({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [ isLoading, setIsLoading ] = useState(false);
   const toastContext = useContext(DialogToastContext);
-  const [workspaceConfiguration, setWorkspaceConfiguration] = useState("Workspace configuration not found. Please try again.");
+  const [workspaceConfiguration, setWorkspaceConfiguration] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -74,8 +74,8 @@ function TerraformCloudWorkspacesEditorPanel({
   };
 
   const createTerraformCloudWorkspace = async () => {
-    const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();
-    return await terraformCloudWorkspacesActions.createTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName);
+    const {organizationName} = terraformCloudWorkspacesModel.getPersistData();
+    return await terraformCloudWorkspacesActions.createTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, terraformCloudWorkspacesModel);
   };
 
   const deleteTerraformCloudWorkspace = async () => {
@@ -95,15 +95,17 @@ function TerraformCloudWorkspacesEditorPanel({
     }
   };
 
-  const getWorkspaceConfigurationFields = () => {    
-    return (
-      <TextAreaClipboardField
-        allowResize={false}
-        rows={10}
-        textAreaValue={workspaceConfiguration}
-        description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
-      />
-    );
+  const getWorkspaceConfigurationFields = () => {
+    if (workspaceConfiguration) {
+      return (
+        <TextAreaClipboardField
+          allowResize={false}
+          rows={10}
+          textAreaValue={workspaceConfiguration}
+          description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
+        />
+      );
+    }
   };
 
   const getOrganizationNameField = () => {
@@ -140,8 +142,8 @@ function TerraformCloudWorkspacesEditorPanel({
   const getAdditionalFields = () => {
     if (terraformCloudWorkspacesModel.getData("organizationName") !== null && 
           terraformCloudWorkspacesModel.getData("organizationName") !== "" && 
-          terraformCloudWorkspacesModel.getData("workflowType") !== null && 
-          terraformCloudWorkspacesModel.getData("workflowType") !== "" ) {
+          terraformCloudWorkspacesModel.getData("workFlowType") !== null && 
+          terraformCloudWorkspacesModel.getData("workFlowType") !== "" ) {
       return (
         <>
           { getWorkspaceNameField() }
@@ -157,7 +159,7 @@ function TerraformCloudWorkspacesEditorPanel({
   };
 
   const getVcsFields = () => {    
-    if (terraformCloudWorkspacesModel.getData("workflowType") === "VCS") {
+    if (terraformCloudWorkspacesModel.getData("workFlowType") === "VCS") {
       return (        
         <TerraformVcsWorkspaceSubform            
           terraformCloudWorkspacesModel={terraformCloudWorkspacesModel} 

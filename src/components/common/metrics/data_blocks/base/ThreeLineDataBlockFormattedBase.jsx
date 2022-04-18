@@ -4,6 +4,7 @@ import IconBase from "components/common/icons/IconBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataPointInfoOverlayIcon from "components/common/icons/metric/info/DataPointInfoOverlayIcon";
+import OverlayIconBase from "../../../icons/OverlayIconBase";
 
 function ThreeLineDataBlockFormattedBase(
   {
@@ -13,30 +14,36 @@ function ThreeLineDataBlockFormattedBase(
     className,
     icon,
     dataPoint,
+    iconOverlayTitle,
+    iconOverlayBody,
   }) {
-    const getLeftDataBlockIcon = () => {
-      if (icon) {
-        return (
-          <div>
-              <IconBase icon={icon}  />
-          </div>
-        );
-      }
-    };
-
-    const getInfoOverlayIcon = () => {
+  const getLeftDataBlockIcon = () => {
+    if (icon) {
       return (
-        <DataPointInfoOverlayIcon
-          dataPoint={dataPoint}
-        />
+        <div>
+          <OverlayIconBase
+            icon={icon}
+            overlayTitle={iconOverlayTitle}
+            overlayBody={iconOverlayBody}
+          />
+        </div>
       );
-    };
+    }
+  };
+
+  const getInfoOverlayIcon = () => {
+    return (
+      <DataPointInfoOverlayIcon
+        dataPoint={dataPoint}
+      />
+    );
+  };
 
 
     const getTopText = () => {
       if (topText) {
         return (
-          <div className={"font-inter-light-400 metric-block-content-text dark-gray-text-primary"}>
+          <div className={"dark-gray-text-primary font-inter-light-400 metric-block-header-text"}>
             {topText}
           </div>
         );
@@ -47,7 +54,7 @@ function ThreeLineDataBlockFormattedBase(
     const getMiddleText = () => {
       if (middleText) {
         return (
-          <div className={"font-inter-light-400 metric-block-header-text dark-gray-text-primary"}>
+          <div className={"dark-gray-text-primary font-inter-light-500"}>
             {middleText}
           </div>
         );
@@ -57,7 +64,7 @@ function ThreeLineDataBlockFormattedBase(
     const getSubtitle = () => {
       if (bottomText) {
         return (
-          <div className={"light-gray-text-secondary font-inter-light-400 metric-block-footer-text"}>
+          <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
             {bottomText}
           </div>
         );
@@ -90,6 +97,9 @@ ThreeLineDataBlockFormattedBase.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
+  iconOverlayTitle: PropTypes.string,
+  iconOverlayBody: PropTypes.any,
+
 };
 
 export default ThreeLineDataBlockFormattedBase;

@@ -59,7 +59,7 @@ function ParametersInventory() {
   };
 
   const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
+    const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto?.getData("search"));
     const parameters = response?.data?.data;
     const userRoleAccess = await getAccessRoleData();
 

@@ -71,7 +71,7 @@ TerraformWorkflowSelectInput.propTypes = {
 TerraformWorkflowSelectInput.defaultProps = {
   valueField: "value",
   textField: "text",
-  fieldName: "workflowType",
+  fieldName: "workFlowType",
   disabled: false
 };
 

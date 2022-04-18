@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {
@@ -14,14 +12,11 @@ import ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import ExternalApiIntegrationStepRunEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepRunEndpointSelectInput";
-import ExternalApiIntegrationStepStatusEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepStatusEndpointSelectInput";
-import ExternalApiIntegrationStepRunEndpointRequestInputBase
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
-import EndpointResponseEvaluationRulesInputBase
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
+import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 
@@ -61,7 +56,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.configuration, externalRestApiIntegrationStepMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(pipelineStep?.tool?.configuration, externalRestApiIntegrationStepMetadata);
       setExternalRestApiIntegrationModel(parsedModel);
       const thresholdModel = modelHelpers.parseObjectIntoModel(pipelineStep?.threshold, thresholdMetadata);
       setThresholdModel(thresholdModel);
@@ -74,9 +69,9 @@ function ExternalRestApiIntegrationStepEditorPanel(
     }
   };
 
-  const callbackFunction = async () => {
+  const saveRecord = async () => {
     const newPipelineStep = pipelineStep;
-    newPipelineStep.configuration = {...externalRestApiIntegrationModel.getPersistData()};
+    newPipelineStep.tool.configuration = {...externalRestApiIntegrationModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
 
     return await pipelineActions.updatePipelineStepByIdV2(
@@ -85,6 +80,22 @@ function ExternalRestApiIntegrationStepEditorPanel(
       pipelineId,
       pipelineStep?._id,
       newPipelineStep,
+    );
+  };
+
+  const getWarningMessage = () => {
+    return (
+      <div className={"ml-2 mb-auto d-flex"}>
+        <IconBase icon={faExclamationTriangle} className={"mr-2"} />
+        <div className={"my-auto"}>
+          {`
+          Successful Completion Evaluation Rules take precedence over In Progress Evaluation Rules. 
+          If the response does not match either the Successful Completion or In Progress Evaluation Rule, it will be considered a failure. 
+          The Pipeline will continue running while it meets the In Progress Evaluation Rules until it meets the criteria 
+          for Successful Completion or until the Pipeline Run timeout is reached.
+        `}
+        </div>
+      </div>
     );
   };
 
@@ -97,55 +108,25 @@ function ExternalRestApiIntegrationStepEditorPanel(
   }
 
   return (
-    <PipelineStepEditorPanelContainer
+    <EditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={externalRestApiIntegrationModel}
-      persistRecord={callbackFunction}
+      createRecord={saveRecord}
+      updateRecord={saveRecord}
+      lenient={true}
       isLoading={isLoading}
+      extraButtons={getWarningMessage()}
+      className={"m-0"}
     >
       <ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiIntegrationStepRunEndpointSelectInput
-        fieldName={"runEndpointId"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
+      <ExternalApiRestIntegrationStepEndpointVerticalTabContainer
+        externalRestApiIntegrationModel={externalRestApiIntegrationModel}
+        setExternalRestApiIntegrationModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiIntegrationStepRunEndpointRequestInputBase
-        fieldName={"runEndpointRequestParameters"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-      <EndpointResponseEvaluationRulesInputBase
-        fieldName={"runEndpointResponseEvaluationRules"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-      <ExternalApiIntegrationStepStatusEndpointSelectInput
-        fieldName={"statusEndpointId"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-      />
-      <ExternalApiIntegrationStepRunEndpointRequestInputBase
-        fieldName={"statusEndpointRequestParameters"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-      />
-      <EndpointResponseEvaluationRulesInputBase
-        fieldName={"statusEndpointResponseEvaluationRules"}
-        model={externalRestApiIntegrationModel}
-        setModel={setExternalRestApiIntegrationModel}
-        toolId={externalRestApiIntegrationModel?.getData("toolId")}
-        endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      />
-    </PipelineStepEditorPanelContainer>
+    </EditorPanelContainer>
   );
 }
 

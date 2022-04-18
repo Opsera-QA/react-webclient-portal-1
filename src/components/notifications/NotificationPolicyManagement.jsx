@@ -8,6 +8,8 @@ import notificationsActions from "components/notifications/notifications-actions
 import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
 import NotificationsTable from "components/notifications/NotificationsTable";
 import axios from "axios";
+import NotificationManagementHelpDocumentation
+  from "../common/help/documentation/notifications/NotificationManagementHelpDocumentation";
 
 function NotificationPolicyManagement() {
   const { getAccessToken } = useContext(AuthContext);
@@ -64,9 +66,14 @@ function NotificationPolicyManagement() {
     }
   };
 
+  const getHelpComponent = () => {
+    return (<NotificationManagementHelpDocumentation/>);
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"notificationManagement"}
+      helpComponent={getHelpComponent()}
       pageDescription={`
         Create Notification Policies to tailor activity logging to your needs.
       `}

@@ -41,6 +41,8 @@ import teamcityStepConfigurationMetadata
 import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
+import TerraformVcsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfigurationSummaryPanel";
+import TerraformVcsStepFormMetadata from "./step_tool_configuration_forms/terraform_vcs/terraform-vcs-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
   from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
 import {parallelProcessorStepMetadata}
@@ -177,7 +179,13 @@ import PackerPipelineStepConfigurationSummaryPanel from "components/workflow/pip
 import PackerStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/packer/packer-stepForm-metadata";
 import BuildkiteStepSummary from "./step_tool_configuration_forms/buildkite/BuildkiteStepSummary";
 import buildkiteMetadata from "./step_tool_configuration_forms/buildkite/buildkite-metadata";
+import AzureScriptsStepSummaryPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepSummaryPanel";
+import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
+import GitScraperSummaryPanel from "./step_tool_configuration_forms/gitscraper/GitScraperSummaryPanel";
+import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscraper/gitscraper-step-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationStepSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -189,6 +197,19 @@ function PipelineStepConfigurationSummary({
   // TODO: Pass in already wrapped data object?
   const getStepConfigurationSummary = () => {
     switch (pipelineData?.tool?.tool_identifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationStepSummaryPanel
+            pipelineData={pipelineData}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+        return (
+          <AzureScriptsStepSummaryPanel
+            pipelineData={pipelineData}
+            azureScriptsStepModel={getModelWrappedObject(azureScriptsStepMetadata)}
+          />
+        );
       case "anchore-integrator":
         return (
           <AnchoreIntegratorStepConfigurationSummaryPanel
@@ -336,6 +357,13 @@ function PipelineStepConfigurationSummary({
             terraformPipelineDataObject={getModelWrappedObject(TerraformStepFormMetadata)}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
+        return (
+          <TerraformVcsStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
+          />
+        );  
       case "xunit":
         return (
           <XUnitPipelineStepConfigurationSummaryPanel
@@ -558,6 +586,13 @@ function PipelineStepConfigurationSummary({
           <BuildkiteStepSummary
             pipelineData={pipelineData}
             buildkiteStepConfigurationData={getModelWrappedObject(buildkiteMetadata)}
+          />
+        );
+      case "gitscraper":
+        return (
+          <GitScraperSummaryPanel
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
           />
         );
       default:

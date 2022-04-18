@@ -9,6 +9,7 @@ import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function ScreenContainer(
   {
@@ -57,7 +58,7 @@ function ScreenContainer(
   const getPageDescription = () => {
     const breadcrumbPageDescription = breadcrumb?.pageDescription;
 
-    if (typeof pageDescription === "string" && pageDescription?.length > 0) {
+    if (hasStringValue(pageDescription) === true) {
       return (
         <div className="page-description px-3 py-2">
           {pageDescription}
@@ -65,7 +66,7 @@ function ScreenContainer(
       );
     }
 
-    if (typeof breadcrumbPageDescription === "string" && breadcrumbPageDescription?.length > 0) {
+    if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
         <div className="page-description px-3 py-2">
           {breadcrumbPageDescription}
@@ -124,8 +125,8 @@ function ScreenContainer(
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar
-            titleIcon={breadcrumb.icon}
-            title={breadcrumb.title}
+            titleIcon={breadcrumb?.icon}
+            title={breadcrumb?.title}
             isLoading={isLoading}
             titleActionBar={titleActionBar}
             helpComponent={helpComponent}

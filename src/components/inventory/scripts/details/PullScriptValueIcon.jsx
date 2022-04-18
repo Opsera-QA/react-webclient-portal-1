@@ -3,11 +3,20 @@ import PropTypes from "prop-types";
 import PullDataIcon from "components/common/icons/general/PullDataIcon";
 import {processError} from "utils/helpers";
 
-function PullScriptValueIcon({ scriptModel, setErrorMessage, setIsLoading, className }) {
+function PullScriptValueIcon(
+  {
+    setErrorMessage,
+    setIsLoading,
+    loadScriptFunction,
+    className,
+  }) {
   const pullScriptData = async () => {
     try {
       setIsLoading(true);
-      await scriptModel.pullScriptFromDb();
+
+      if (loadScriptFunction) {
+        await loadScriptFunction();
+      }
     }
     catch (error) {
       const parsedError = processError(error);
@@ -20,7 +29,7 @@ function PullScriptValueIcon({ scriptModel, setErrorMessage, setIsLoading, class
     }
   };
 
-  if (scriptModel == null || scriptModel?.isNew()) {
+  if (loadScriptFunction == null) {
     return null;
   }
 
@@ -34,9 +43,9 @@ function PullScriptValueIcon({ scriptModel, setErrorMessage, setIsLoading, class
 }
 
 PullScriptValueIcon.propTypes = {
-  scriptModel: PropTypes.object,
   setErrorMessage: PropTypes.func,
   setIsLoading: PropTypes.func,
+  loadScriptFunction: PropTypes.func,
   className: PropTypes.string,
 };
 
