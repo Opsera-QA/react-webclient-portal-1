@@ -29,7 +29,11 @@ function DeleteDashboardMetricButton(
     );
   };
 
-  if (metricModel == null || dashboardModel == null) {
+  if (
+    metricModel == null
+    || dashboardModel == null
+    // || dashboardModel?.canDeleteDashboardMetric() !== true
+  ) {
     return null;
   }
 

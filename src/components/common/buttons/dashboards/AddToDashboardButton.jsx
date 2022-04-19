@@ -9,6 +9,7 @@ import dashboardMetadata from "components/insights/dashboards/dashboard-metadata
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
+import { dashboardMetricActions } from "components/insights/dashboards/metrics/dashboardMetric.actions";
 
 function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePanel, className }) {
   const isMounted = useRef(false);
@@ -68,6 +69,34 @@ function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePa
     }
   };
 
+  const addChartToDashboardV2 = async () => {
+    try {
+      setIsSaving(true);
+
+      const newDashboard = new Model(
+        selectedDashboardData.getData("dashboard"),
+        dashboardMetadata,
+        false,
+      );
+      await dashboardMetricActions.addMetricToDashboardV2(
+        getAccessToken,
+        cancelTokenSource,
+        newDashboard?.getMongoDbId(),
+        kpiData?._id,
+      );
+      toastContext.showFormSuccessToast(`${kpiData.name} successfully added to the Dashboard, "${newDashboard?.getData("name")}"!`);
+      closePanel();
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error, `Error Adding Metric to Dashboard`);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
+    }
+  };
+
   const getLabel = () => {
     if (isSaving) {
       return (<span><IconBase isLoading={true} className={"mr-2"}/>Adding To Dashboard</span>);
@@ -82,6 +111,7 @@ function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePa
         size={"sm"}
         disabled={disable || isSaving || selectedDashboardData?.getData("dashboard")?.configuration == null || selectedDashboardData?.getData("dashboard")?.configuration.length >= 10}
         onClick={() => addChartToDashboard()}>
+        {/*onClick={() => addChartToDashboardV2()}>*/}
         {getLabel()}
       </Button>
     </div>

@@ -70,6 +70,18 @@ export class DashboardModel extends ModelBase {
     );
   };
 
+  canAddDashboardMetric = () => {
+    return this.canPerformAction("add_dashboard_metric");
+  }
+
+  canDeleteDashboardMetric = () => {
+    return this.canPerformAction("delete_dashboard_metric");
+  }
+
+  canUpdateDashboardMetric = () => {
+    return this.canPerformAction("update_dashboard_metric");
+  }
+
   canPerformAction = (action) => {
     return isActionAllowed(
       this.customerAccessRules,
