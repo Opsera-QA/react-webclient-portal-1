@@ -14,10 +14,8 @@ import {
 } from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardFileSelectionSourceCommitListTable
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
-import MergeSyncTaskWizardSubmitSelectedFilesButton
-  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
 
-const MergeSyncTaskWizardFileSelector = ({
+const MergeSyncTaskWizardCommitSelector = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -26,7 +24,9 @@ const MergeSyncTaskWizardFileSelector = ({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [sourceCommitList, setSourceCommitList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [sourceFileList, setSourceFileList] = useState([]);
+  const [diffFileList, setDiffFileList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -40,7 +40,8 @@ const MergeSyncTaskWizardFileSelector = ({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    setSourceCommitList([]);
+    setSourceFileList([]);
+    setDiffFileList([]);
 
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -60,6 +61,7 @@ const MergeSyncTaskWizardFileSelector = ({
   ) => {
     try {
       setIsLoading(true);
+      setErrorMessage("");
       await handleFilePolling(cancelSource);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
@@ -78,7 +80,7 @@ const MergeSyncTaskWizardFileSelector = ({
       return;
     }
 
-    const newFileList = await getSourceCommitList(cancelSource);
+    const newFileList = await getDiffFileList(cancelSource);
 
     if (
       !Array.isArray(newFileList) &&
@@ -96,28 +98,33 @@ const MergeSyncTaskWizardFileSelector = ({
     }
   };
 
-  const getSourceCommitList = async (
+  const getDiffFileList = async (
     cancelSource = cancelTokenSource,
   ) => {
-    const response = await mergeSyncTaskWizardActions.pullSourceFileListV2(
+    const response = await mergeSyncTaskWizardActions.pullDiffFileListV2(
       getAccessToken,
       cancelSource,
       wizardModel?.getData("recordId"),
     );
+    // const response2 = await mergeSyncTaskWizardActions.pullSourceFileListV2(
+    //   getAccessToken,
+    //   cancelSource,
+    //   wizardModel?.getData("recordId"),
+    // );
     const errorMessage = response?.data?.data?.errorMessage;
-    const newFileList = response?.data?.data?.sourceCommitList;
-    console.log("response: " + JSON.stringify(response));
+    const newFileList = response?.data?.data?.diffFileList;
 
     if (isMounted?.current === true) {
       if (errorMessage) {
         const parsedError = parseError(errorMessage);
         toastContext.showInlineErrorMessage(
-          `Service Error Fetching Source File List: ${parsedError}`,
+          `Service Error Fetching Diff File List: ${parsedError}`,
         );
       }
 
+      console.log("newFileList: " + JSON.stringify(newFileList));
       if (Array.isArray(newFileList)) {
-        setSourceCommitList(newFileList);
+        setDiffFileList(newFileList);
         setIsLoading(false);
         setFilePullCompleted(true);
       }
@@ -131,7 +138,7 @@ const MergeSyncTaskWizardFileSelector = ({
       <MergeSyncTaskWizardFileSelectionSourceCommitListTable
         handleClose={handleClose}
         setCurrentScreen={setCurrentScreen}
-        sourceCommitList={sourceCommitList}
+        diffFileList={diffFileList}
         setWizardModel={setWizardModel}
         wizardModel={wizardModel}
         isLoading={isLoading || filePullCompleted !== true}
@@ -144,13 +151,11 @@ const MergeSyncTaskWizardFileSelector = ({
             setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN);
           }}
         />
-        <MergeSyncTaskWizardSubmitSelectedFilesButton
-          taskWizardModel={wizardModel}
-          filteredFileCount={sourceCommitList?.length}
-          setCurrentScreen={setCurrentScreen}
-          wizardModel={wizardModel}
-          isLoading={isLoading}
-        />
+        {/*<MergeSyncTaskWizardSubmitSelectedFilesButton*/}
+        {/*  setCurrentScreen={setCurrentScreen}*/}
+        {/*  wizardModel={wizardModel}*/}
+        {/*  isLoading={isLoading}*/}
+        {/*/>*/}
         <CancelButton
           size={"sm"}
           className={"ml-2"}
@@ -161,11 +166,11 @@ const MergeSyncTaskWizardFileSelector = ({
   );
 };
 
-MergeSyncTaskWizardFileSelector.propTypes = {
+MergeSyncTaskWizardCommitSelector.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
 };
 
-export default MergeSyncTaskWizardFileSelector;
+export default MergeSyncTaskWizardCommitSelector;

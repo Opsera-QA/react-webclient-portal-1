@@ -10,7 +10,7 @@ import mergeSyncTaskWizardActions
 import MergeSyncTaskWizardFileSelector
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelector";
 
-const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
+const GitToGitMergeSyncTaskWizardCommitSelectionScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -21,6 +21,7 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [triggeredSourceFilePull, setTriggeredSourceFilePull] = useState(false);
+  const [triggeredComparisonFileListPull, setTriggeredComparisonFileListPull] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
     try {
       setIsLoading(true);
       await triggerGitToGitSourceFilePull(cancelSource);
+      await triggerComparisonFilePull(cancelSource);
     } catch (error) {
       console.error(error);
       console.log("error: " + JSON.stringify(error));
@@ -72,24 +74,63 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
         cancelSource,
         wizardModel,
       );
-    console.log("response: " + JSON.stringify(response));
+
+    if (response?.data?.status === 500) {
+      toastContext.showInlineErrorMessage(
+        response,
+        "Service Error Triggering Source File List Pull: ",
+      );
+    } else {
       setTriggeredSourceFilePull(true);
+    }
+  };
+
+  const triggerComparisonFilePull = async (
+    cancelSource = cancelTokenSource,
+  ) => {
+    const response = await mergeSyncTaskWizardActions.triggerComparisonFilePull(
+      getAccessToken,
+      cancelSource,
+      wizardModel,
+    );
+
+    if (response?.data?.status === 500) {
+      const message = response?.data?.message;
+      toastContext.showInlineErrorMessage(
+        "Service Error Triggering Comparison File List Pull: " + message,
+      );
+    } else {
+      setTriggeredComparisonFileListPull(true);
+    }
   };
 
   const getBody = () => {
-    if (isLoading && triggeredSourceFilePull !== true) {
-      return (
-        <LoadingDialog
-          size={"sm"}
-          message={"Triggering Source Commit File Pull"}
-        />
-      );
+    if (isLoading) {
+      if (triggeredSourceFilePull !== true) {
+        return (
+          <LoadingDialog
+            size={"sm"}
+            message={"Triggering Source Commit File Pull"}
+          />
+        );
+      }
+
+      if (triggeredComparisonFileListPull !== true) {
+        return (
+          <LoadingDialog
+            size={"sm"}
+            message={"Triggering Comparison File Pull"}
+          />
+        );
+      }
     }
 
     if (triggeredSourceFilePull !== true) {
-      return (
-        <ErrorDialog error={"Service Error Triggering Source File List Pull"} />
-      );
+      return <ErrorDialog error={"Service Error Triggering Source File List Pull"} />;
+    }
+
+    if (triggeredComparisonFileListPull !== true) {
+      return <ErrorDialog error={"Service Error Triggering Comparison File List Pull"} />;
     }
 
     return (
@@ -115,11 +156,11 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
   );
 };
 
-GitToGitMergeSyncTaskWizardFileSelectionScreen.propTypes = {
+GitToGitMergeSyncTaskWizardCommitSelectionScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func
 };
 
-export default GitToGitMergeSyncTaskWizardFileSelectionScreen;
+export default GitToGitMergeSyncTaskWizardCommitSelectionScreen;
