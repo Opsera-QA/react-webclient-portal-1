@@ -6,9 +6,13 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import ToolModel from "components/inventory/tools/tool.model";
 import GithubDeployKeysTable from "./GithubDeployKeysTable";
 import PropTypes from "prop-types";
+import GithubDeployKeysEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/details/GithubDeployKeysEditorPanel";
 import GithubDeployKeyOverlay
   from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeployKeyOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import githubDeployKeyMetadata from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/github-deploykeys-metadata";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function GithubDeploykeysToolConfigurationPanel({ toolData }) {
   const toastContext = useContext(DialogToastContext);
@@ -16,8 +20,9 @@ function GithubDeploykeysToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  
-  const [deploykeysData, setDeployKeysData] = useState(undefined);
+  const [deploykeysDataDto, setDeployKeysDataDto] = useState(undefined);
+  const [githubDeployKeyData, setGithubDeployKeyData] = useState(undefined);
+  const [selectedDeployKeysData, setSelectedDeployKeysData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [githubDeployKeys, setGithubDeployKeys] = useState(undefined);
@@ -43,6 +48,24 @@ function GithubDeploykeysToolConfigurationPanel({ toolData }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    initializeModel();
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [selectedDeployKeysData]);
+  
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -67,7 +90,7 @@ function GithubDeploykeysToolConfigurationPanel({ toolData }) {
       const userRecord = await getUserRecord();
       const customerAccessRules = await setAccessRoles(userRecord);
       const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData, customerAccessRules, roleDefinitions);
-      setDeployKeysData(toolModel);
+      setDeployKeysDataDto(toolModel);
       unpackRepos(toolModel.getPersistData()?.repositories);
     }
   };
@@ -86,16 +109,38 @@ function GithubDeploykeysToolConfigurationPanel({ toolData }) {
   };
 
   const onRowSelect = (grid, row) => {
-    let selectedRow = deploykeysData?.getArrayData("repositories")[row?.index];
-    toastContext.showOverlayPanel(
-      <GithubDeployKeyOverlay
-        deployKeyDataObject={selectedRow?.configuration}
-        repoId={selectedRow?._id}
+    // console.log("on row clicked ", row?.index);
+    let selectedRow = deploykeysDataDto?.getArrayData("repositories")[row?.index];
+    setSelectedDeployKeysData(selectedRow);
+  };
+
+  const initializeModel = () => {
+    let parsedModel = modelHelpers.parseObjectIntoModel(selectedDeployKeysData?.configuration, githubDeployKeyMetadata);
+
+    if (parsedModel?.isNew()) {
+      parsedModel.setData("toolId", toolData?.getData("_id"));
+    }
+
+    setGithubDeployKeyData({...parsedModel});
+  };
+
+  const closePanelFunction = async () => {
+    await loadData();
+    setSelectedDeployKeysData(null);
+  };
+
+  if(selectedDeployKeysData != null) {
+    return (
+      <GithubDeployKeysEditorPanel
+        githubDeployKeyData={githubDeployKeyData}
         toolData={toolData}
         loadData={loadData}
+        handleClose={closePanelFunction}
+        repoId={selectedDeployKeysData?._id}
+        loadDeployKeys={loadData}
       />
     );
-  };
+  }
 
   return (
     <GithubDeployKeysTable

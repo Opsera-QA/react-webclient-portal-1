@@ -11,6 +11,15 @@ const githubDeployKeyMetadata = {
       maxLength: 63
     },
     {
+      label: "User Name",
+      id: "userName",
+      isRequired: true,
+      lowercase: true,
+      spacesAllowed: false,
+      formText: "Name cannot contain spaces.",
+      maxLength: 63
+    },
+    {
       label: "SSH URL",
       id: "sshUrl",
       isRequired: true
@@ -25,6 +34,7 @@ const githubDeployKeyMetadata = {
   ],
   newObjectFields: {
     name: "",
+    userName: "",
     sshUrl: "",
     deployKey: "",
   }
