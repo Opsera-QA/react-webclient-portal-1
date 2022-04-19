@@ -22,8 +22,8 @@ export class DashboardModel extends ModelBase {
     this.setStateFunction = setStateFunction;
     this.customerAccessRules = customerAccessRules;
     this.roleDefinitions = roleDefinitions;
-    this.updateAllowed = this.canPerformAction("update_tool");
-    this.deleteAllowed = this.canPerformAction("delete_tool");
+    this.updateAllowed = this.canPerformAction("update_dashboard");
+    this.deleteAllowed = this.canPerformAction("delete_dashboard");
     this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles");
   }
 
@@ -69,6 +69,18 @@ export class DashboardModel extends ModelBase {
       this.setStateFunction,
     );
   };
+
+  canAddDashboardMetric = () => {
+    return this.canPerformAction("add_dashboard_metric");
+  }
+
+  canDeleteDashboardMetric = () => {
+    return this.canPerformAction("delete_dashboard_metric");
+  }
+
+  canUpdateDashboardMetric = () => {
+    return this.canPerformAction("update_dashboard_metric");
+  }
 
   canPerformAction = (action) => {
     return isActionAllowed(

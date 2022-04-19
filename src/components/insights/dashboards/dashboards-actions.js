@@ -58,14 +58,13 @@ dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSourc
 };
 
 dashboardsActions.createDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = "/analytics/dashboard/create";
+  const apiUrl = "/analytics/dashboards/create";
   const postData = {
     ...dashboardModel.getPersistData()
   };
 
-  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+  return baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
-
 
 dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
   const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}/update`;
