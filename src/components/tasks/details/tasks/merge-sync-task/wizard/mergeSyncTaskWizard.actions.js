@@ -105,13 +105,8 @@ mergeSyncTaskWizardActions.triggerComparisonFilePull = async (
   )}/comparison-files`;
   const queryParams = {
     params: {
-      pipelineStorageRecordId: taskWizardModel?.getData("recordId"),
       taskId: taskWizardModel?.getData("taskId"),
       runCount: taskWizardModel?.getData("runCount"),
-      lastCommitFromTimeStamp: taskWizardModel?.getData(
-        "lastCommitFromTimeStamp",
-      ),
-      lastCommitToTimeStamp: taskWizardModel?.getData("lastCommitToTimeStamp"),
     },
   };
 
@@ -120,6 +115,34 @@ mergeSyncTaskWizardActions.triggerComparisonFilePull = async (
     cancelTokenSource,
     apiUrl,
     queryParams,
+  );
+};
+
+mergeSyncTaskWizardActions.pullDiffFileListV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineStorageRecordId,
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/diff-file-list`;
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+mergeSyncTaskWizardActions.pullSourceFileListV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineStorageRecordId,
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/source-file-list`;
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
   );
 };
 

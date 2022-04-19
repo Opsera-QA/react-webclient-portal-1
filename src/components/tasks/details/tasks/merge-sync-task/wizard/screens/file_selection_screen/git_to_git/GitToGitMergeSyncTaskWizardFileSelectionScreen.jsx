@@ -52,9 +52,10 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
       await triggerComparisonFilePull(cancelSource);
     } catch (error) {
       console.error(error);
+      console.log("error: " + JSON.stringify(error));
       if (isMounted?.current === true) {
         const prependMessage =
-          "Service Error Triggering Source File List Pull:";
+          "Service Error Triggering File List Pulls:";
         toastContext.showInlineErrorMessage(error, prependMessage);
       }
     } finally {
@@ -99,7 +100,7 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
         "Service Error Triggering Comparison File List Pull: " + message,
       );
     } else {
-      setTriggeredSourceFilePull(true);
+      setTriggeredComparisonFileListPull(true);
     }
   };
 
@@ -125,11 +126,11 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
     }
 
     if (triggeredSourceFilePull !== true) {
-      return <ErrorDialog message={"Service Error Pulling Source File List"} />;
+      return <ErrorDialog error={"Service Error Triggering Source File List Pull"} />;
     }
 
     if (triggeredComparisonFileListPull !== true) {
-      return <ErrorDialog message={"Service Error Pulling Comparison File List"} />;
+      return <ErrorDialog error={"Service Error Triggering Comparison File List Pull"} />;
     }
 
     return (

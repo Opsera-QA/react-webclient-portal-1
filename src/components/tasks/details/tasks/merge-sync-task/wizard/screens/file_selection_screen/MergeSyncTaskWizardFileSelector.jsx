@@ -12,6 +12,12 @@ import {parseError} from "components/common/helpers/error-helpers";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.actions";
 import BackButton from "components/common/buttons/back/BackButton";
+import {
+  MERGE_SYNC_WIZARD_SCREENS
+} from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 const MergeSyncTaskWizardFileSelector = ({
   wizardModel,
@@ -79,10 +85,10 @@ const MergeSyncTaskWizardFileSelector = ({
       return;
     }
 
-    const sfdcCommitList = await getModifiedFiles(cancelSource);
+    const diffFileList = await getDiffFileList(cancelSource);
 
     if (
-      !Array.isArray(sfdcCommitList) &&
+      !Array.isArray(diffFileList) &&
       count <= 5 &&
       filePullCompleted === false
     ) {
@@ -97,27 +103,39 @@ const MergeSyncTaskWizardFileSelector = ({
     }
   };
 
-  const getModifiedFiles = async (
+  const getDiffFileList = async (
     cancelSource = cancelTokenSource,
   ) => {
-    const response = await mergeSyncTaskWizardActions.triggerComparisonFilePull(
+    console.log("polling diff file list");
+    const response = await mergeSyncTaskWizardActions.pullDiffFileListV2(
       getAccessToken,
       cancelSource,
-      wizardModel,
+      wizardModel?.getData("recordId"),
+    );
+    console.log("response: " + JSON.stringify(response));
+    const response2 = await mergeSyncTaskWizardActions.pullSourceFileListV2(
+      getAccessToken,
+      cancelSource,
+      wizardModel?.getData("recordId"),
     );
     const data = response?.data;
+    const diffFileList = data?.data?.diffFileList;
+    console.log("response2: " + JSON.stringify(response2));
 
     if (isMounted?.current === true && data) {
-      const files = data.data;
+      const errorMessage = data?.errorMessage;
 
-      if (data?.error) {
-        const parsedError = parseError(data?.error);
+      console.log("errorMessage: " + JSON.stringify(errorMessage));
+      console.log("errorMessage2: " + JSON.stringify(response2?.data?.errorMessage));
+      if (errorMessage) {
+        const parsedError = parseError(errorMessage);
         toastContext.showInlineErrorMessage(
-          `Service Error Fetching File List: ${parsedError}`,
+          `Service Error Fetching Diff File List: ${parsedError}`,
         );
       }
 
-      if (Array.isArray(files)) {
+      if (Array.isArray(diffFileList)) {
+        setDiffFileList(diffFileList);
         setTotalFileCount(data.count);
         setWizardModel({ ...wizardModel });
         setIsLoading(false);
@@ -125,11 +143,25 @@ const MergeSyncTaskWizardFileSelector = ({
       }
     }
 
-    return data?.data;
+    return diffFileList;
   };
 
   return (
     <div>
+      <Row>
+        <Col xs={6}>
+          <StandaloneJsonField
+           titleText={"Source Files"}
+           json={sourceFileList}
+          />
+        </Col>
+        <Col xs={6}>
+          <StandaloneJsonField
+            titleText={"Diff Files"}
+            json={diffFileList}
+          />
+        </Col>
+      </Row>
       {/*<SfdcPipelineWizardSfdcFilesTable*/}
       {/*  sfdcFiles={sfdcFiles}*/}
       {/*  wizardModel={wizardModel}*/}
@@ -145,7 +177,7 @@ const MergeSyncTaskWizardFileSelector = ({
         <BackButton
           className={"mr-2"}
           backButtonFunction={() => {
-            setCurrentScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
+            setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN);
           }}
         />
         <SfdcPipelineWizardSubmitSfdcFilesButton
