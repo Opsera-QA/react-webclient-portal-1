@@ -11,8 +11,9 @@ function GitToGitMergeSyncTaskRepositorySelectInput({
     const newModel = { ...model };
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
-    newModel.setData("repository", repoId);
-    newModel.setData("repositoryName", selectedOption?.name);
+    newModel.setData("projectId", repoId);
+    newModel.setData("repoId", repoId);
+    newModel.setData("repository", selectedOption?.name);
     newModel.setData("gitUrl", gitUrl);
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
@@ -34,7 +35,7 @@ function GitToGitMergeSyncTaskRepositorySelectInput({
 
   return (
     <RepositorySelectInput
-      fieldName={"repositoryName"}
+      fieldName={"repository"}
       service={model?.getData("service")}
       gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}

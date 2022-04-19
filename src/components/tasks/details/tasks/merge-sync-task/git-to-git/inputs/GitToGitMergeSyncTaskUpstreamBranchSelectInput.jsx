@@ -13,7 +13,7 @@ function GitToGitMergeSyncTaskUpstreamBranchSelectInput({
       service={model?.getData("service")}
       gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}
-      repoId={model?.getData("repository")}
+      repoId={model?.getData("repoId")}
       dataObject={model}
       setDataObject={setModel}
       disabled={disabled}
