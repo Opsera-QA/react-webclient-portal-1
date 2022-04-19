@@ -10,18 +10,20 @@ export const leadTimeAndReleaseTraceabilityMetadata = {
       id: "date",
     },
     {
-      label: "Application",
-      id: "amex-application",
-    },
-    {
-      label: "Director",
-      id: "amex-director",
+      label: "",
+      id: "amex-filters",
     },
   ],
   newObjectFields: {
     tags: [],
     date: undefined,
-    "amex-application": [],
-    "amex-director": [],
+    amexFilters: {
+      application: [],
+      director: [],
+      vp1: [],
+      vp2: [],
+      svp: [],
+      action: [],
+    },
   },
 };

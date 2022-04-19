@@ -316,6 +316,18 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
   return null;
 }
 
+export function getAmexFiltersFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amexFilters")]
+      ?.value
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "amexFilters")
+    ].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

@@ -24,6 +24,7 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
+  getAmexFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
@@ -287,7 +288,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-
+  let amexFilters = getAmexFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
@@ -338,7 +339,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     actionableInsightsQueryData: actionableInsightsQueryData,
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
-    headCommitSha: headCommitSha
+    headCommitSha: headCommitSha,
+    amexFilters: useKpiTags ? amexFilters : null
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
