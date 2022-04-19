@@ -64,7 +64,7 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
 
   const deleteRepository = async () => {
     await githubDeployKeysActions.deleteGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, repoId);
-    handleClose();
+    await handleClose();
   };
 
   if (isLoading || githubDeployKeyModel == null) {
@@ -93,6 +93,14 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
               setDataObject={setGithubDeployKeyModel}
               dataObject={githubDeployKeyModel}
               fieldName={"name"}
+              disabled={!githubDeployKeyData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setGithubDeployKeyModel}
+              dataObject={githubDeployKeyModel}
+              fieldName={"userName"}
               disabled={!githubDeployKeyData?.isNew()}
             />
           </Col>
