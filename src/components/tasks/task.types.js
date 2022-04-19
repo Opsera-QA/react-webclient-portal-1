@@ -11,6 +11,7 @@ export const TASK_TYPES = {
   //Git
   SYNC_GIT_BRANCHES: "sync-git-branches",
   GIT_TO_GIT_MERGE_SYNC: "GIT_VS_GIT_SYNC",
+  GITSCRAPER: "gitscraper",
 
   //AWS
   AWS_CREATE_ECS_CLUSTER: "ecs_cluster_creation",
@@ -33,6 +34,7 @@ export const TASK_TYPE_LABELS = {
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",
   GIT_TO_GIT_MERGE_SYNC: "Git to Git Merge Sync",
+  GITSCRAPER: "Gitscraper Scan",
 
   // AWS
   AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",
@@ -64,6 +66,8 @@ export const getTaskTypeLabel = (taskType) => {
       return TASK_TYPE_LABELS.SYNC_GIT_BRANCHES;
     case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
       return TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC;
+    case TASK_TYPES.GITSCRAPER:
+      return TASK_TYPE_LABELS.GITSCRAPER;
 
     // AWS
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:

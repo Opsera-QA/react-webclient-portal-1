@@ -32,6 +32,8 @@ import SalesforceBulkMigrationTaskTypeSummaryCard
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskTypeSummaryCard
     from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskTypeSummaryCard";
+import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -134,6 +136,15 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
               salesforceOrganizationSyncTaskConfigurationMetadata,
             )}
             tasksData={taskModel}
+            />
+            );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitscraperSummaryPanel
+            gitTaskConfigurationData={
+              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), gitscraperTaskConfigurationMetadata)
+            }
+            gitTasksData={taskModel}
           />
         );
       default:
