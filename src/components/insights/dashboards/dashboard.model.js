@@ -82,6 +82,18 @@ export class DashboardModel extends ModelBase {
     return this.canPerformAction("update_dashboard_metric");
   }
 
+  canUpdateDashboardFilters = () => {
+    return this.canPerformAction("update_dashboard_filters");
+  }
+
+  canPublishDashboardToPrivateCatalog = () => {
+    return this.canPerformAction("publish_dashboard_to_private_catalog");
+  }
+
+  canTransferDashboardOwnershipToNewUser = () => {
+    return this.canPerformAction("transfer_dashboard_ownership_to_new_user");
+  }
+
   canPerformAction = (action) => {
     return isActionAllowed(
       this.customerAccessRules,

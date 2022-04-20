@@ -81,6 +81,14 @@ const dashboardMetadata = {
       label: "Roles",
       id: "roles"
     },
+    {
+      label: "Owner",
+      id: "owner"
+    },
+    {
+      label: "Owner",
+      id: "owner_name"
+    },
   ],
   newObjectFields: {
     name: "",
@@ -94,6 +102,8 @@ const dashboardMetadata = {
     attributes: {},
     filters: [],
     roles: [],
+    owner: "",
+    owner_name: "",
   }
 };
 

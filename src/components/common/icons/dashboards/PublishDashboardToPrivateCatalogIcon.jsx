@@ -4,10 +4,14 @@ import PublishDashboardIconBase
   from "components/common/icons/dashboards/PublishDashboardIconBase";
 import {faShareSquare} from "@fortawesome/pro-light-svg-icons";
 
-function PublishDashboardToPrivateCatalogIcon({dashboardData, className}) {
+function PublishDashboardToPrivateCatalogIcon({dashboardModel, className}) {
+  if (dashboardModel?.canPublishDashboardToPrivateCatalog() !== true) {
+    return null;
+  }
+
   return (
     <PublishDashboardIconBase
-      dashboardData={dashboardData}
+      dashboardId={dashboardModel?.getMongoDbId()}
       catalog={"private"}
       popoverText={`Publish this Dashboard to your Organization's Private Catalog`}
       icon={faShareSquare}
@@ -17,7 +21,7 @@ function PublishDashboardToPrivateCatalogIcon({dashboardData, className}) {
 }
 
 PublishDashboardToPrivateCatalogIcon.propTypes = {
-  dashboardData: PropTypes.object,
+  dashboardModel: PropTypes.object,
   className: PropTypes.string
 };
 

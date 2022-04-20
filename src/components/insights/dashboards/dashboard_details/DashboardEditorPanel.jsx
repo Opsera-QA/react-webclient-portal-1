@@ -18,7 +18,6 @@ import {dashboardAttributesMetadata} from "components/insights/dashboards/dashbo
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
@@ -71,7 +70,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
   };
 
   const getRolesInput = () => {
-    if (isSassUser() === false) {
+    if (isSassUser() === false && dashboardData?.canEditAccessRoles() === true) {
       return (
         <Col md={12}>
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
@@ -90,6 +89,10 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
       );
     }
   };
+
+  if (dashboardData == null || dashboardData?.canUpdate() !== true) {
+    return null;
+  }
 
   return (
     <EditorPanelContainer

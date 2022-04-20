@@ -13,8 +13,6 @@ function TransferOwnershipButton({ isTransferringOwnership, className, transferO
     return "Transfer Ownership";
   };
 
-  console.log("isTransferring ownership: " + JSON.stringify(isTransferringOwnership));
-
   return (
     <div className={className}>
       <Button
