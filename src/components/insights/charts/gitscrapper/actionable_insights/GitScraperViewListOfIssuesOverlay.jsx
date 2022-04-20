@@ -6,21 +6,22 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import chartsActions from "components/insights/charts/charts-actions";
-import { useHistory } from "react-router-dom";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import FilterContainer from "components/common/table/FilterContainer";
-import GitScrapperCardView from "./card/GitScrapperCardView";
-
+import GitScraperActionableInsightsCardView from "./card/GitScraperActionableInsightsCardView";
 import gitScrapperPipelineFilterMetadata from "../git-scrapper-pipeline-filter-metadata";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
+import { Row, Col } from "react-bootstrap";
 
-
-function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfiguration, dashboardData }) {
+function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [dataScorecardMetrics, setDataScorecardMetrics] = useState([]);
+  const [actionableInsightsData, setActionableInsightsData] = useState([]);
+  const [actionableInsightsMetadata, setActionableInsightsMetadata] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -47,7 +48,7 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
@@ -57,36 +58,29 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
 
-      let responseRepoScorecardBlockValues;
+      const {repository, branch} = dataObject.getPersistData();
 
-      if (gitScrapperType === 'totalNumberofIssues') {
-        responseRepoScorecardBlockValues = await chartsActions.getGitScraperIssues(
-          kpiConfiguration,
-          getAccessToken,
-          cancelSource,
-          dashboardTags,
-          dashboardOrgs
-        );
-      } else {
-        responseRepoScorecardBlockValues = await chartsActions.getGitScraperCleanRepos(
-          kpiConfiguration,
-          getAccessToken,
-          cancelSource,
-          dashboardTags,
-          dashboardOrgs
-        );
-      }
+      const response = await chartsActions.getGitScraperIssuesActionableInsights(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs,
+        null, 
+        repository, 
+        branch
+      );
 
-      const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data && responseRepoScorecardBlockValues?.status === 200 ? 
-                                                  responseRepoScorecardBlockValues?.data?.data?.data : [];
+      const dataBlocks = response?.data && response?.status === 200 ? 
+                                                  response?.data?.data?.data : [];      
 
-      if (isMounted?.current === true && dataObjectRepoScorecardDataBlocks) {
-        setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);
-
+      if (isMounted?.current === true && dataBlocks) {
+        setActionableInsightsData(dataBlocks[0].data);
+        setActionableInsightsMetadata(dataBlocks[0].metadata);
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          responseRepoScorecardBlockValues?.data?.data[0]?.data?.length
+          dataBlocks[0].count[0].count
         );
         setTableFilterDto({ ...newFilterDto });
       }
@@ -104,15 +98,13 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
 
   const getCardView = () => {
     return (
-      <GitScrapperCardView
-        gitScrapperDataFilterDto={tableFilterDto}
-        setGitScrapperDataFilterDto={setTableFilterDto}
+      <GitScraperActionableInsightsCardView
+        gitScraperDataFilterDto={tableFilterDto}
+        setGitScraperDataFilterDto={setTableFilterDto}
         isLoading={isLoading}
-        data={dataScorecardMetrics}
+        data={actionableInsightsData}
+        metadata={actionableInsightsMetadata}
         loadData={loadData}
-        type={gitScrapperType}
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
       />
     );
   };
@@ -141,11 +133,44 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
     return <MetricDateRangeBadge startDate={date?.startDate} endDate={date?.endDate} />;
   };
 
+  const getMetadata = () => {
+    if(actionableInsightsMetadata && actionableInsightsMetadata.length > 0) {
+      return (
+        <Row className="p-2 gray">
+          <Col md={4}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock                
+                score={actionableInsightsMetadata[0].repository}
+                subtitle={"Repository"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+          <Col md={4}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock                
+                score={actionableInsightsMetadata[0].branch}
+                subtitle={"Branch"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+          <Col md={4}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock                
+                score={actionableInsightsMetadata[0].library}
+                subtitle={"Library"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+        </Row>      
+      );
+    }    
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={title}
+      titleText={"Git Scraper Issues"}
       showToasts={true}
       titleIcon={faTable}
       isLoading={isLoading}
@@ -153,18 +178,17 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
     >
       <div className={"p-3"}>
         {getDateRange()}
-        {getFilterContainer()}
+        {getMetadata()}
+        {getFilterContainer()}        
       </div>
     </FullScreenCenterOverlayContainer>
   );
 }
 
-GitScrapperActionableInsightOverlay.propTypes = {
-  title: PropTypes.string,
-  gitScrapperSeverity: PropTypes.string,
+GitScraperViewListOfIssuesOverlay.propTypes = {  
+  dataObject: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  gitScrapperType: PropTypes.string
 };
 
-export default GitScrapperActionableInsightOverlay;
+export default GitScraperViewListOfIssuesOverlay;
