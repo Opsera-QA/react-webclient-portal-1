@@ -69,7 +69,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
   };
 
   const getRolesInput = () => {
-    if (isSassUser() === false && dashboardData?.canEditAccessRoles() === true) {
+    if (isSassUser() === false) {
       return (
         <Col md={12}>
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
