@@ -14,6 +14,8 @@ import SalesforceBulkMigrationTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
 import GitToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge-sync-task/git-to-git/GitToGitMergeSyncTaskConfigurationEditorPanel";
+import SalesforceQuickDeployTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -58,6 +60,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
       //       taskModel={taskModel}
       //     />
       //   );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return (
+            <SalesforceQuickDeployTaskConfigurationEditorPanel
+                taskModel={taskModel}
+                setTaskConfigurationModel={setTaskConfigurationModel}
+                taskConfigurationModel={taskConfigurationModel}
+            />
+        );
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
           <GitToGitSyncTaskConfigurationEditorPanel
