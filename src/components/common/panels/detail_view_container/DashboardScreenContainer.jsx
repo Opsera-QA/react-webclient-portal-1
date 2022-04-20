@@ -98,17 +98,13 @@ function DashboardScreenContainer(
           />
           <PublishDashboardToPublicMarketplaceIcon
             dashboardData={dashboardModel}
-            className={"mr-3"}
-          />
-          <ToggleSettingsIcon
-            className={"mr-3"}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            className={"ml-3"}
           />
           <EditDashboardFiltersIcon
             dashboardModel={dashboardModel}
             setDashboardModel={setDashboardModel}
             loadData={loadData}
+            className={"ml-3"}
           />
           {getSettingsIcon()}
         </TitleActionBarContainer>
