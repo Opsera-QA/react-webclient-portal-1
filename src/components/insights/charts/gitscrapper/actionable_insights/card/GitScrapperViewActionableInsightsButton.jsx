@@ -2,13 +2,21 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
-import { useHistory } from "react-router-dom";
+import GitScraperViewListOfIssuesOverlay from "../GitScraperViewListOfIssuesOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
-function GitScrapperViewActionableInsightsButton({ dataObject }) {
-  const history = useHistory();
+function GitScrapperViewActionableInsightsButton({ dataObject, kpiConfiguration, dashboardData }) {
 
-  const getActionableInsights = () => {    
-    // history.push(`/blueprint/${dataObject.getData("pipelineId")}/${dataObject.getData("run_count")}`);
+  const toastContext = useContext(DialogToastContext);
+
+  const getActionableInsights = () => {
+    toastContext.showOverlayPanel(
+      <GitScraperViewListOfIssuesOverlay
+        dataObject={dataObject}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   return (
@@ -23,7 +31,9 @@ function GitScrapperViewActionableInsightsButton({ dataObject }) {
 }
 
 GitScrapperViewActionableInsightsButton.propTypes = {
-  dataObject: PropTypes.object
+  dataObject: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default GitScrapperViewActionableInsightsButton;
