@@ -7,34 +7,50 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import GitScraperReposOverlay from "./GitScraperReposOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
-import VanityTable from "components/common/table/VanityTable";
+import CustomTable from "../../../../../common/table/CustomTable";
 
-function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, onRowSelect, isLoading,parentDataObject }) {
+function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, isLoading,parentDataObject }) {
   const toastContext = useContext(DialogToastContext);
   let fields = gitScraperReposMetadata.fields;
 
   const createGitScraperRepos = () => {
-    toastContext.showOverlayPanel(<GitScraperReposOverlay setParentDataObject={setParentDataObject} loadData={loadData} parentDataObject={parentDataObject} />);
+    toastContext.showOverlayPanel(<GitScraperReposOverlay setParentDataObject={setParentDataObject} loadData={loadData} parentDataObject={parentDataObject} gitScraperRepos={gitScraperRepos}/>);
   };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "service")),
-      getTableTextColumn(getField(fields, "repository")),
-      getTableTextColumn(getField(fields, "gitBranch")),
-      getTableBooleanIconColumn(getField(fields, "excludeFiles"))
+      { Header: "Source Code Management Tool Type", accessor: "service", class: undefined },
+      { Header: "Repository", accessor: "repository", class: undefined },
+      { Header: "Branch", accessor: "gitBranch", class: undefined },
     ],
     []
   );
 
+  const noDataMessage = "No Repositories configured for the scan";
+
+  const onRowSelect = (rowData) => {
+    let selectedRow = gitScraperRepos[rowData?.index];
+    toastContext.showOverlayPanel(
+      <GitScraperReposOverlay
+        gitscraperDataObject={selectedRow}
+        applicationId={rowData?.index}
+        setParentDataObject={setParentDataObject}
+        parentDataObject={parentDataObject}
+        loadData={loadData}
+        gitScraperRepos={gitScraperRepos}
+      />
+    );
+  };
+
   const getTable = () => {
     return (
-      <VanityTable
-        columns={columns}
-        data={gitScraperRepos}
-        onRowSelect={onRowSelect}
-        isLoading={isLoading}
-      />
+    <CustomTable
+      columns={columns}
+      data={gitScraperRepos}
+      onRowSelect={onRowSelect}
+      isLoading={isLoading}
+      noDataMessage={noDataMessage}
+    />
     );
   };
 
@@ -48,6 +64,7 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, 
       addRecordFunction={createGitScraperRepos}
       body={getTable()}
       showBorder={false}
+      metadata={gitScraperReposMetadata}
     />
   );
 }
@@ -56,9 +73,8 @@ GitScraperReposTable.propTypes = {
   setParentDataObject: PropTypes.object,
   parentDataObject: PropTypes.object,
   loadData: PropTypes.func,
-  onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  gitScraperRepos: PropTypes.array
+  gitScraperRepos: PropTypes.array,
 };
 
 export default GitScraperReposTable;

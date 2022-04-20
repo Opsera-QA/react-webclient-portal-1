@@ -26,8 +26,9 @@ import GitScraperScmToolSelectInput from "../../inputs/GitScraperScmToolSelectIn
 import taskActions from "../../../../../task.actions";
 import GitIgnoreToggleInput
   from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/gitscraper/inputs/GitIgnoreToggleInput";
+import { temporaryObjectProperties } from "../../../../../../../core/data_model/model.base";
 
-function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, applicationId, handleClose, parentDataObject }) {
+function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, applicationId, handleClose, parentDataObject, gitScraperRepos }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitScraperReposModel, setGitScraperReposModel] = useState(undefined);
@@ -35,7 +36,6 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  console.log(gitScraperReposData);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -82,14 +82,19 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
   const updateApplication = async () => {
     setIsLoading(true);
     let newConfiguration = gitScraperReposModel.getPersistData();
-    let currentRepos = parentDataObject?.getData("reposToScan");
-    if (applicationId && currentRepos[applicationId]) {
-      currentRepos[applicationId] = newConfiguration;
+    if (applicationId && gitScraperRepos[applicationId]) {
+      gitScraperRepos[applicationId] = newConfiguration;
     } else {
-      currentRepos = [newConfiguration];
+      let currentRepos = gitScraperRepos;
+      gitScraperRepos = [...currentRepos, newConfiguration];
+    }
+    for (let repo in gitScraperRepos) {
+      ["$height"].forEach((key) => {
+        delete gitScraperRepos[repo][key];
+      });
     }
     let gitTaskConfig = parentDataObject.getPersistData();
-    gitTaskConfig.configuration.reposToScan = currentRepos;
+    gitTaskConfig.configuration.reposToScan = gitScraperRepos;
     parentDataObject?.setData("configuration", gitTaskConfig.configuration);
     await taskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), parentDataObject);
     setIsLoading(false);
@@ -161,11 +166,12 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
 
 GitScraperReposEditorPanel.propTypes = {
   gitScraperReposData: PropTypes.object,
-  setParentDataObject: PropTypes.object,
+  setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
   loadData: PropTypes.func,
   applicationId: PropTypes.string,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  gitScraperRepos: PropTypes.array
 };
 
 export default GitScraperReposEditorPanel;

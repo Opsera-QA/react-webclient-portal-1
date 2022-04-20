@@ -3,30 +3,16 @@ import GitScraperReposTable from "./GitScraperReposTable";
 import PropTypes from "prop-types";
 import GitScraperReposOverlay from "./GitScraperReposOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import modelHelpers from "../../../../../common/model/modelHelpers";
+import gitScraperReposMetadata from "./gitscraper-repos-metadata";
 
 function GitScraperRepos({ setParentDataObject, loadData, isLoading, toolApplications, parentDataObject }) {
   const toastContext = useContext(DialogToastContext);
   const [gitScraperRepos, setGitScraperRepos] = useState([]);
-  console.log(toolApplications);
 
   useEffect(() => {
     setGitScraperRepos(toolApplications);
   }, [toolApplications]);
-
-  const onRowSelect = (grid, row) => {
-    console.log(toolApplications);
-    let selectedRow = toolApplications[row?.index];
-    console.log(selectedRow);
-    toastContext.showOverlayPanel(
-      <GitScraperReposOverlay
-        gitscraperDataObject={selectedRow}
-        applicationId={row?.index}
-        setParentDataObject={setParentDataObject}
-        parentDataObject={parentDataObject}
-        loadData={loadData}
-      />
-    );
-  };
 
   return (
     <GitScraperReposTable
@@ -34,14 +20,13 @@ function GitScraperRepos({ setParentDataObject, loadData, isLoading, toolApplica
       setParentDataObject={setParentDataObject}
       parentDataObject={parentDataObject}
       loadData={loadData}
-      onRowSelect={onRowSelect}
       gitScraperRepos={gitScraperRepos}
     />
   );
 }
 
 GitScraperRepos.propTypes = {
-  setParentDataObject: PropTypes.object,
+  setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
