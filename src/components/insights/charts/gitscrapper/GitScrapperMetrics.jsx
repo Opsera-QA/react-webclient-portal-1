@@ -6,19 +6,26 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import Model from "core/data_model/model";
-
+import {
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
+//import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GitScrapperActionableInsightOverlay from "./actionable_insights/GitScrapperActionableInsightOverlay";
-
 import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/overall_scanned_repositories_trend/GitScrapperOverallScannedRepositoriesTrendDataBlock";
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
+// import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
 
-import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
-
-function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitScrapperMetrics({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -49,25 +56,32 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
     };
   }, [JSON.stringify(dashboardData)]);
 
-
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
 
       const response = await chartsActions.getGitScraperMetrics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
         dashboardTags,
-        dashboardOrgs
+        dashboardOrgs,
       );
 
-      const dataObject = response?.data && response?.status === 200 ? response?.data?.data?.data : [];
+      const dataObject =
+        response?.data && response?.status === 200
+          ? response?.data?.data?.data
+          : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -91,7 +105,7 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         dashboardData={dashboardData}
         title={data?.label}
         gitScrapperType={data?.type}
-      />
+      />,
     );
   };
 
@@ -146,20 +160,22 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
         return "Neutral: This project's issues have experienced no change";
     }
   };
-  
-  
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
+      <div
+        className="new-chart mb-3"
+        style={{ minHeight: "300px" }}
+      >
         <Container>
           <Row className="p-2 gray">
-            <Col md={4} className={"px-1"}>
+            <Col md={4}>
               <GitScrapperOverallScannedRepositoriesTrendDataBlock
-                score={metrics[0]?.current?.count || 0 }
+                score={metrics[0]?.current?.count || 0}
                 icon={getIcon(metrics[0]?.trend?.count)}
                 className={getIconColor(metrics[0]?.trend?.count)}
                 // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
@@ -167,22 +183,34 @@ function GitScrapperMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
                 iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
             </Col>
-            <Col md={4} className={"px-1"}>
+            <Col md={4}>
               <GitScrapperOverallCleanRepositoriesTrendDataBlock
-                score={metrics[0]?.current?.cleanRepoCount || 0 }
+                score={metrics[0]?.current?.cleanRepoCount || 0}
                 icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
                 className={getIconColor(metrics[0]?.trend?.cleanRepoCount)}
-                onSelect={() => onRowSelect({type: 'totalCleanRepositories', label: "Total Clean Repositories"})}
+                onSelect={() =>
+                  onRowSelect({
+                    type: "totalCleanRepositories",
+                    label: "Total Clean Repositories",
+                  })
+                }
                 lastScore={metrics[0]?.previous?.cleanRepoCount}
-                iconOverlayBody={getDescription(metrics[0]?.trend?.cleanRepoCount)}
+                iconOverlayBody={getDescription(
+                  metrics[0]?.trend?.cleanRepoCount,
+                )}
               />
             </Col>
-            <Col md={4} className={"px-1"}>
+            <Col md={4}>
               <GitScrapperOverallIssuesTrendDataBlock
-                score={metrics[0]?.current?.issueCount || 0 }
+                score={metrics[0]?.current?.issueCount || 0}
                 icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
                 className={getIconColor(metrics[0]?.trend?.issueCount)}
-                onSelect={() => onRowSelect({type: 'totalNumberofIssues', label: "Total Number of Issues"})}
+                onSelect={() =>
+                  onRowSelect({
+                    type: "totalNumberofIssues",
+                    label: "Total Number of Issues",
+                  })
+                }
                 lastScore={metrics[0]?.previous?.issueCount}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
               />
