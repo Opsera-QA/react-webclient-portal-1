@@ -25,7 +25,7 @@ export class DashboardModel extends ModelBase {
     this.roleDefinitions = roleDefinitions;
     this.updateAllowed = this.canPerformAction("update_dashboard") || newModel === true;
     this.deleteAllowed = this.canPerformAction("delete_dashboard");
-    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles");
+    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles") || newModel === true;
   }
 
   createModel = async () => {
@@ -94,6 +94,7 @@ export class DashboardModel extends ModelBase {
   canTransferDashboardOwnershipToNewUser = () => {
     return this.canPerformAction("transfer_dashboard_ownership_to_new_user");
   }
+
 
   canPerformAction = (action) => {
     return isActionAllowed(
