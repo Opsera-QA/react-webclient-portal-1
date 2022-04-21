@@ -28,7 +28,7 @@ export class ModelBase {
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
-    this.editAccssRolesAllowed = false;
+    this.editAccessRolesAllowed = false;
     this.roleDefinitions = {};
   }
 
@@ -511,7 +511,7 @@ export class ModelBase {
   // };
 
   canEditAccessRoles = () => {
-    return this.canUpdate() === true && this.editAccssRolesAllowed === true;
+    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
 
   canPerformAction = () => {

@@ -21,7 +21,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
-  const [dashboardDataDto, setDashboardDataDto] = useState({});
+  const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +78,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
                 fieldName={"roles"}
                 setDataObject={setDashboardDataDto}
                 dataObject={dashboardDataDto}
-                disabled={dashboardData?.canEditAccessRoles() !== true}
+                disabled={dashboardDataDto?.canEditAccessRoles() !== true}
               />
             </div>
           </div>
@@ -87,7 +87,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
     }
   };
 
-  if (dashboardData == null || dashboardData?.canUpdate() !== true) {
+  if (dashboardData == null || dashboardDataDto == null || dashboardData?.canUpdate() !== true) {
     return null;
   }
 
