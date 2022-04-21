@@ -78,7 +78,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
                 fieldName={"roles"}
                 setDataObject={setDashboardDataDto}
                 dataObject={dashboardDataDto}
-                disabled={dashboardData?.canEditAccessRoles() !== true && dashboardData?.isNew() === false}
+                disabled={dashboardData?.canEditAccessRoles() !== true}
               />
             </div>
           </div>
