@@ -1,39 +1,35 @@
-import React, {useEffect, useContext, useState, useRef} from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
-import azureActions from "../../../../../../inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
-import toolsActions from "../../../../../../inventory/tools/tools-actions";
-import DeleteButtonWithInlineConfirmation
-  from "../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import GitScraperBitbucketWorkspaceSelectInput
-  from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/gitscraper/inputs/GitScraperBitbucketWorkspaceSelectInput";
-import GitScraperGitRepositorySelectInput
-  from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/gitscraper/inputs/GitScraperGitRepositorySelectInput";
-import GitScraperGitBranchSelectInput
-  from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/gitscraper/inputs/GitScraperGitBranchSelectInput";
+import DeleteButtonWithInlineConfirmation from "../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import GitScraperBitbucketWorkspaceSelectInput from "../../inputs/GitScraperBitbucketWorkspaceSelectInput";
+import GitScraperGitRepositorySelectInput from "../../inputs/GitScraperGitRepositorySelectInput";
+import GitScraperGitBranchSelectInput from "../../inputs/GitScraperGitBranchSelectInput";
 import modelHelpers from "../../../../../../common/model/modelHelpers";
 import gitScraperReposMetadata from "../gitscraper-repos-metadata";
 import GitScraperScmToolTypeSelectInput from "../../inputs/GitScraperScmToolTypeSelectInput";
 import GitScraperScmToolSelectInput from "../../inputs/GitScraperScmToolSelectInput";
 import taskActions from "../../../../../task.actions";
-import GitIgnoreToggleInput
-  from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/gitscraper/inputs/GitIgnoreToggleInput";
-import { temporaryObjectProperties } from "../../../../../../../core/data_model/model.base";
+import GitIgnoreToggleInput from "../../inputs/GitIgnoreToggleInput";
 
-function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, applicationId, handleClose, parentDataObject, gitScraperRepos }) {
+function GitScraperReposEditorPanel({
+  gitScraperReposData,
+  setParentDataObject,
+  applicationId,
+  handleClose,
+  parentDataObject,
+  gitScraperRepos,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitScraperReposModel, setGitScraperReposModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -46,7 +42,7 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if(gitScraperReposData) {
+    if (gitScraperReposData) {
       loadData();
     }
 
@@ -95,20 +91,63 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
     }
     let gitTaskConfig = parentDataObject.getPersistData();
     gitTaskConfig.configuration.reposToScan = gitScraperRepos;
+    console.log(gitTaskConfig);
     parentDataObject?.setData("configuration", gitTaskConfig.configuration);
-    await taskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), parentDataObject);
+    await taskActions.updateGitTaskV2(
+      getAccessToken,
+      axios.CancelToken.source(),
+      parentDataObject,
+    );
+    // setParentDataObject(gitScraperRepos);
+    // await loadData();
     setIsLoading(false);
     handleClose();
   };
 
   const deleteApplication = async () => {
-    await azureActions.deleteAzureCredential(getAccessToken, cancelTokenSource, setParentDataObject?._id, applicationId);
+    setIsLoading(true);
+    if (applicationId && gitScraperRepos[applicationId]) {
+      gitScraperRepos = gitScraperRepos.splice(applicationId, 1);
+    }
+    for (let repo in gitScraperRepos) {
+      ["$height"].forEach((key) => {
+        if (gitScraperRepos[repo][key]) {
+          delete gitScraperRepos[repo][key];
+        }
+      });
+    }
+    let gitTaskConfig = parentDataObject.getPersistData();
+    gitTaskConfig.configuration.reposToScan = gitScraperRepos;
+    parentDataObject?.setData("configuration", gitTaskConfig.configuration);
+    await taskActions.updateGitTaskV2(
+      getAccessToken,
+      axios.CancelToken.source(),
+      parentDataObject,
+    );
+    setIsLoading(false);
+    // await loadData();
     handleClose();
   };
 
   if (isLoading || gitScraperReposModel == null) {
-    return <LoadingDialog size="sm" message={"Loading Data"} />;
+    return (
+      <LoadingDialog
+        size="sm"
+        message={"Loading Data"}
+      />
+    );
   }
+
+  const getExtraButtons = () => {
+    if (gitScraperReposModel?.isNew() === false && applicationId) {
+      return (
+        <DeleteButtonWithInlineConfirmation
+          dataObject={gitScraperReposModel}
+          deleteRecord={deleteApplication}
+        />
+      );
+    }
+  };
 
   return (
     <EditorPanelContainer
@@ -118,6 +157,7 @@ function GitScraperReposEditorPanel({ gitScraperReposData, setParentDataObject, 
       setRecordDto={setGitScraperReposModel}
       isLoading={isLoading}
       handleClose={handleClose}
+      extraButtons={getExtraButtons()}
     >
       <div className="scroll-y hide-x-overflow">
         <Row>
@@ -171,7 +211,7 @@ GitScraperReposEditorPanel.propTypes = {
   loadData: PropTypes.func,
   applicationId: PropTypes.string,
   handleClose: PropTypes.func,
-  gitScraperRepos: PropTypes.array
+  gitScraperRepos: PropTypes.array,
 };
 
 export default GitScraperReposEditorPanel;

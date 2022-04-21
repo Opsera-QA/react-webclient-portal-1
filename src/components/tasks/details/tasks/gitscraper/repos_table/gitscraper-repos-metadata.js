@@ -1,6 +1,6 @@
 
 const gitScraperReposMetadata = {
-  type: "GitScraper Repositories",
+  type: "GitScraper Repository",
   fields: [
     {
       label: "Repository",

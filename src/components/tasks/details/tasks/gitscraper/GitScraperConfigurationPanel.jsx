@@ -58,7 +58,6 @@ function GitScraperConfigurationPanel({
           isLoading={false}
           setParentDataObject={setGitTasksConfigurationData}
           parentDataObject={gitTasksDataDto}
-          loadData={loadData}
           />
       </Col>
     </Row>

@@ -1,25 +1,33 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import GitScraperReposTable from "./GitScraperReposTable";
 import PropTypes from "prop-types";
-import GitScraperReposOverlay from "./GitScraperReposOverlay";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import modelHelpers from "../../../../../common/model/modelHelpers";
-import gitScraperReposMetadata from "./gitscraper-repos-metadata";
+import { Button, Card } from "react-bootstrap";
 
-function GitScraperRepos({ setParentDataObject, loadData, isLoading, toolApplications, parentDataObject }) {
-  const toastContext = useContext(DialogToastContext);
+function GitScraperRepos({ setParentDataObject, isLoading, toolApplications, parentDataObject }) {
   const [gitScraperRepos, setGitScraperRepos] = useState([]);
 
   useEffect(() => {
     setGitScraperRepos(toolApplications);
   }, [toolApplications]);
 
+  if (parentDataObject?.isNew()) {
+    return (
+      <Card className={"mt-3 mb-1"}>
+        <Card.Header as="h6">Configure Repositories</Card.Header>
+        <Card.Body>
+          <Card.Text>
+            Repositories for the scan can be configured by clicking on the settings icon once the task has been created.
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    );
+  }
+
   return (
     <GitScraperReposTable
       isLoading={isLoading}
-      setParentDataObject={setParentDataObject}
+      setParentDataObject={setGitScraperRepos}
       parentDataObject={parentDataObject}
-      loadData={loadData}
       gitScraperRepos={gitScraperRepos}
     />
   );
@@ -28,7 +36,6 @@ function GitScraperRepos({ setParentDataObject, loadData, isLoading, toolApplica
 GitScraperRepos.propTypes = {
   setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
-  loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   toolApplications: PropTypes.array
 };

@@ -1,17 +1,24 @@
-import React, {useContext, useMemo} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import gitScraperReposMetadata from "./gitscraper-repos-metadata";
-import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import GitScraperReposOverlay from "./GitScraperReposOverlay";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import CustomTable from "../../../../../common/table/CustomTable";
 
-function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, isLoading,parentDataObject }) {
+function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,parentDataObject }) {
   const toastContext = useContext(DialogToastContext);
   let fields = gitScraperReposMetadata.fields;
+  let [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    setTableData(gitScraperRepos);
+  }, [JSON.stringify(gitScraperRepos)]);
+
+  const loadData = async () => {
+    setTableData(gitScraperRepos);
+  };
 
   const createGitScraperRepos = () => {
     toastContext.showOverlayPanel(<GitScraperReposOverlay setParentDataObject={setParentDataObject} loadData={loadData} parentDataObject={parentDataObject} gitScraperRepos={gitScraperRepos}/>);
@@ -46,7 +53,7 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, 
     return (
     <CustomTable
       columns={columns}
-      data={gitScraperRepos}
+      data={tableData}
       onRowSelect={onRowSelect}
       isLoading={isLoading}
       noDataMessage={noDataMessage}
@@ -72,7 +79,6 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, loadData, 
 GitScraperReposTable.propTypes = {
   setParentDataObject: PropTypes.object,
   parentDataObject: PropTypes.object,
-  loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   gitScraperRepos: PropTypes.array,
 };
