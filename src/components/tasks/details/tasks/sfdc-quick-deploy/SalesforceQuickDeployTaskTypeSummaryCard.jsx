@@ -5,19 +5,19 @@ import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummary
 import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function SalesforceQuickDeployTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
+function SalesforceQuickDeployTaskTypeSummaryCard({ tasksData, taskConfigurationData, isLoading }) {
   if (isLoading) {
     return <TaskSummaryCardContainer isLoading={isLoading} />;
   }
 
   return (
-    <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
+    <TaskSummaryCardContainer gitTasksDataDto={tasksData} isLoading={isLoading}>
       <Row className="mx-0 mb-2">
         <Col xs={12} sm={6} md={4}>
-          <ToolNameField model={gitTaskConfigurationData} fieldName={"sfdcToolId"} />
+          <ToolNameField model={taskConfigurationData} fieldName={"sfdcToolId"} />
         </Col>
         <Col xs={12} sm={6} md={4}>
-          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"deployKey"} />
+          <TextFieldBase dataObject={taskConfigurationData} fieldName={"deployKey"} />
         </Col>
       </Row>
     </TaskSummaryCardContainer>
@@ -25,8 +25,8 @@ function SalesforceQuickDeployTaskTypeSummaryCard({ gitTasksData, gitTaskConfigu
 }
 
 SalesforceQuickDeployTaskTypeSummaryCard.propTypes = {
-  gitTasksData: PropTypes.object,
-  gitTaskConfigurationData: PropTypes.object,
+  tasksData: PropTypes.object,
+  taskConfigurationData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
 

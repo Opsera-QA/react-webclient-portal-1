@@ -30,6 +30,8 @@ import SalesforceOrganizationSyncTaskTypeSummaryCard
 import SalesforceBulkMigrationTaskTypeSummaryCard
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskTypeSummaryCard";
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import SalesforceQuickDeployTaskTypeSummaryCard
+    from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskTypeSummaryCard";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -37,86 +39,105 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return (
           <SalesforceOrganizationSyncTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceOrganizationSyncTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         return (
           <SFDCBranchStructuringTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              sfdcGitBranchTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         return (
           <SalesforceBulkMigrationTaskTypeSummaryCard
-            taskConfigurationModel={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata)
-            }
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceBulkMigrationTaskConfigurationMetadata,
+            )}
             taskModel={taskModel}
           />
         );
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
           <GitToGitSyncTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              branchToBranchGitTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         return (
           <SFDXCertGenTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), sfdxCertGenTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              sfdxCertGenTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return (
           <ECSCreationTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), ec2ClusterCreationTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              ec2ClusterCreationTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         return (
           <ECSServiceCreationTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), ec2ServiceCreationTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              ec2ServiceCreationTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return (
           <AwsLambdaTaskTypeSummaryCard
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), awsLambdaFunctionTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              awsLambdaFunctionTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return (
           <AzureClusterSummaryPanel
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), azureAksClusterTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              azureAksClusterTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return (
+          <SalesforceQuickDeployTaskTypeSummaryCard
+            taskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceOrganizationSyncTaskConfigurationMetadata,
+            )}
+            tasksData={taskModel}
+          />
+        );
       default:
-        return (<div>No type associated with this Task</div>);
+        return <div>No type associated with this Task</div>;
     }
   };
 

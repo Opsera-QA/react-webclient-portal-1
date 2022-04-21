@@ -22,20 +22,6 @@ function SalesforceQuickDeployTaskConfigurationEditorPanel({ taskModel, taskConf
     return (<LoadingDialog size="sm"/>);
   }
 
-  const getDynamicFields = () => {
-    if(taskConfigurationModel.getData("autoScaleEnable") === true){
-      return (
-        <Col lg={12}>
-          {/*<AgentLabelsSelectInput*/}
-          {/*  dataObject={taskConfigurationModel}*/}
-          {/*  setDataObject={setTaskConfigurationModel}*/}
-          {/*  fieldName={"agentLabels"}*/}
-          {/*/>*/}
-        </Col>
-      );
-    }
-  };
-
   return (
     <Row>
       <Col lg={12}>
@@ -51,7 +37,6 @@ function SalesforceQuickDeployTaskConfigurationEditorPanel({ taskModel, taskConf
           fieldName={"deployKey"}
         />
       </Col>
-      {getDynamicFields()}
     </Row>
   );
 }

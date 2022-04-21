@@ -170,4 +170,13 @@ taskActions.stopTask = async (getAccessToken, cancelTokenSource, taskModel) => {
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO : wire up api to validate the deployment id used for quick deploy task
+taskActions.validateDeployId = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+  const apiUrl = `/tasks/validateDeployKey`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default taskActions;

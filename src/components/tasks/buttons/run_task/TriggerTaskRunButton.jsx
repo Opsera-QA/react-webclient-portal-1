@@ -41,17 +41,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   }, []);
 
   const checkValidity = () => {
-    if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
-      const configuration = gitTasksConfigurationDataDto?.getPersistData();
-
-      if(gitTasksConfigurationDataDto?.checkCurrentValidity() && configuration?.isNewBranch === true && hasStringValue(configuration?.upstreamBranch) === true) {
-        return true;
-      } else {
-        return !gitTasksConfigurationDataDto?.checkCurrentValidity();
-      }
-    } else {
-      return !gitTasksConfigurationDataDto?.checkCurrentValidity();
-    }
+    return !gitTasksConfigurationDataDto?.checkCurrentValidity();
   };
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
