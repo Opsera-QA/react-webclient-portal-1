@@ -71,7 +71,7 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
         setPlaceholderText("Organization information is missing or unavailable!");
       }
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 
