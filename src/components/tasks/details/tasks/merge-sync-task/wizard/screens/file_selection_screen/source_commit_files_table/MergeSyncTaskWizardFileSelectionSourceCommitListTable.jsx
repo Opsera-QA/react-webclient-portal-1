@@ -5,7 +5,6 @@ import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "compon
 import FilterContainer from "components/common/table/FilterContainer";
 import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
-import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import {
   sourceCommitFileMetadata
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/sourceCommitFile.metadata";

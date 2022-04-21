@@ -15,6 +15,7 @@ function InfoContainer(
     className,
     minimumHeight,
     maximumHeight,
+    loadDataFunction,
   }) {
   const getBodyStyling = () => {
     if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
@@ -35,6 +36,7 @@ function InfoContainer(
         isLoading={isLoading}
         className={titleClassName}
         rightSideButton={titleRightSideButton}
+        loadDataFunction={loadDataFunction}
       />
       <div
         className={"content-container"}
@@ -57,6 +59,7 @@ InfoContainer.propTypes = {
   titleRightSideButton: PropTypes.object,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };
 
 export default InfoContainer;

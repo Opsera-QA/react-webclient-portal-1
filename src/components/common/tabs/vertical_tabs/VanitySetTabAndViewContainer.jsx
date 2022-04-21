@@ -19,6 +19,7 @@ function VanitySetTabAndViewContainer(
     maximumHeight,
     isLoading,
     titleRightSideButton,
+    loadDataFunction,
   }) {
   const getTabColumnSize = () => {
     if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
@@ -58,6 +59,7 @@ function VanitySetTabAndViewContainer(
       titleIcon={icon}
       className={className}
       isLoading={isLoading}
+      loadDataFunction={loadDataFunction}
       titleRightSideButton={titleRightSideButton}
     >
       <Tab.Container defaultActiveKey={defaultActiveKey}>
@@ -98,6 +100,7 @@ VanitySetTabAndViewContainer.propTypes = {
   maximumHeight: PropTypes.string,
   isLoading: PropTypes.bool,
   titleRightSideButton: PropTypes.object,
+  loadDataFunction: PropTypes.func,
 };
 
 VanitySetTabAndViewContainer.defaultProps = {
