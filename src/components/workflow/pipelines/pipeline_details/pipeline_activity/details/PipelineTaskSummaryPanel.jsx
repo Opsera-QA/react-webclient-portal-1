@@ -16,6 +16,9 @@ import childPipelineTaskMetadata
   from "components/workflow/plan/step/child/child-pipeline-task-metadata";
 import PipelineSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ExternalRestApiIntegrationTaskSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationTaskSummaryPanel";
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -62,6 +65,12 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
         return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
       case "child-pipeline":
         return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationTaskSummaryPanel
+            externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+          />
+        );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }
