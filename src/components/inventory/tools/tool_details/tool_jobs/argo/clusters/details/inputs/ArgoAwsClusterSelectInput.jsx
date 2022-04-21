@@ -64,17 +64,26 @@ function ArgoAwsClusterSelectInput({
   };
 
   const loadAwsClusters = async (cancelSource) => {
-    setClusters([]);
-    const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
-    if (res && res.status === 200) {
-      if (res.data.length === 0) {
-        setPlaceholder("No Clusters Found");
+    try {
+      setClusters([]);
+      const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
+      if (res && res.status === 200) {
+        if (res.data.length === 0) {
+          setPlaceholder("No Clusters Found");
+          return;
+        }
+        setPlaceholder("Select a Cluster");
+        const clusterNames = clusterData.map(c => c.name.trim());                
+        const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
+        setClusters(tempClusters);
         return;
       }
-      setPlaceholder("Select a Cluster");
-      const clusterNames = clusterData.map(c => c.name.trim());
-      const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
-      setClusters(tempClusters);
+      setPlaceholder("No Clusters Found");
+      setClusters([]);
+    } catch (error) {
+      setPlaceholder("No Clusters Found");
+      console.error(error);
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 
