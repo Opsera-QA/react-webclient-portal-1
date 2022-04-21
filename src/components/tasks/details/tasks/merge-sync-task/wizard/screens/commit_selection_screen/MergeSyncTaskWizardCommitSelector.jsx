@@ -13,7 +13,7 @@ import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardFileSelectionSourceCommitListTable
-  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
 
 const MergeSyncTaskWizardCommitSelector = ({
   wizardModel,

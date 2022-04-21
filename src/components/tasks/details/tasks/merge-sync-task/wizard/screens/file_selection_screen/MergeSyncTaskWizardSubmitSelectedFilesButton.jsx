@@ -6,8 +6,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import { PIPELINE_WIZARD_SCREENS } from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.actions";
 import {

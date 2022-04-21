@@ -13,7 +13,7 @@ import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardFileSelectionSourceCommitListTable
-  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskWizardSubmitSelectedFilesButton
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
 
@@ -53,6 +53,16 @@ const MergeSyncTaskWizardFileSelector = ({
       isMounted.current = false;
       stopPolling();
     };
+  }, []);
+
+  useEffect(() => {
+    if (filePullCompleted === true) {
+      getSourceCommitList().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, []);
 
   const loadData = async (
@@ -129,12 +139,9 @@ const MergeSyncTaskWizardFileSelector = ({
   return (
     <div>
       <MergeSyncTaskWizardFileSelectionSourceCommitListTable
-        handleClose={handleClose}
-        setCurrentScreen={setCurrentScreen}
+        filePullCompleted={filePullCompleted}
         sourceCommitList={sourceCommitList}
-        setWizardModel={setWizardModel}
-        wizardModel={wizardModel}
-        isLoading={isLoading || filePullCompleted !== true}
+        isLoading={isLoading}
         loadData={loadData}
       />
       <SaveButtonContainer>
