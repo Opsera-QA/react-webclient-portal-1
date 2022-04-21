@@ -47,7 +47,7 @@ function TestDeployIdButton({ taskModel, report, setReport, disabled }) {
         const message = JSON.stringify(response?.data?.message);
         const status = response?.status;
 
-      setReport(response?.data?.message?.deployResult);
+        setReport(response?.data?.message?.deployResult);
         setSuccessfulValidation(true);
       }
       else {
