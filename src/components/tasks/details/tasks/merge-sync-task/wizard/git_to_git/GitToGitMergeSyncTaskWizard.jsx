@@ -20,6 +20,8 @@ import {
 } from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
 import GitToGitMergeSyncTaskWizardFileSelectionScreen
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
+import MergeSyncTaskWizardCommitSelectionScreen
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 
 const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const [error, setError] = useState("");
@@ -97,6 +99,15 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
+        return (
+          <MergeSyncTaskWizardCommitSelectionScreen
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
+            setWizardModel={setWizardModel}
+            wizardModel={wizardModel}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:

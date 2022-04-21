@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.actions";
-import MergeSyncTaskWizardFileSelector
-  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelector";
+import MergeSyncTaskWizardCommitSelector
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelector";
 
 const MergeSyncTaskWizardCommitSelectionScreen = ({
   wizardModel,
@@ -64,20 +64,12 @@ const MergeSyncTaskWizardCommitSelectionScreen = ({
   const triggerComparisonFilePull = async (
     cancelSource = cancelTokenSource,
   ) => {
-    const response = await mergeSyncTaskWizardActions.triggerComparisonFilePull(
+    await mergeSyncTaskWizardActions.triggerComparisonFilePull(
       getAccessToken,
       cancelSource,
       wizardModel,
     );
-
-    if (response?.data?.status === 500) {
-      const message = response?.data?.message;
-      toastContext.showInlineErrorMessage(
-        "Service Error Triggering Comparison File List Pull: " + message,
-      );
-    } else {
-      setTriggeredComparisonFileListPull(true);
-    }
+    setTriggeredComparisonFileListPull(true);
   };
 
   const getBody = () => {
@@ -95,7 +87,7 @@ const MergeSyncTaskWizardCommitSelectionScreen = ({
     }
 
     return (
-      <MergeSyncTaskWizardFileSelector
+      <MergeSyncTaskWizardCommitSelector
         wizardModel={wizardModel}
         setWizardModel={setWizardModel}
         setCurrentScreen={setCurrentScreen}
