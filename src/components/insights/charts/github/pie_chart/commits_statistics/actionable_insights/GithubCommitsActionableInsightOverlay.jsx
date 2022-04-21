@@ -94,7 +94,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           tabText={"Contributors"}
           handleTabClick={handleTabClick}
           tabName={"contributors"}
-          icon={faPersonArrowUpFromLine}
+          icon={faCodeMerge}
         />
       </CustomTabContainer>
     );
