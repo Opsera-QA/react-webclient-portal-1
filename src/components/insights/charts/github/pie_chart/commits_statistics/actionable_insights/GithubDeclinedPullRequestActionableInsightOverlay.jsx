@@ -17,7 +17,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={"Github Total Commits"}
+      titleText={"Github Declined Pull Requests"}
       showToasts={true}
       titleIcon={faTable}
       // isLoading={isLoading}
