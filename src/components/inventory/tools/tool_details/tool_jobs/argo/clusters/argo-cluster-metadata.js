@@ -54,6 +54,10 @@ const argoClusterMetadata = {
       label: "IAM Role Name",
       id: "roleSessionName"
     },
+    {
+      label: "Enable Argo Rollouts for Blue/Green Deployment",
+      id: "argoRolloutsEnabled"
+    },
   ],
   newObjectFields: {
     clusterName: "",
@@ -68,7 +72,8 @@ const argoClusterMetadata = {
     iamRoleFlag: false,
     roleArn: "",
     roleSessionName: "",
-    clusterType: ""
+    clusterType: "",
+    argoRolloutsEnabled: false
   }
 };
 
