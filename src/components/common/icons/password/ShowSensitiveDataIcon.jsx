@@ -38,7 +38,7 @@ ShowSensitiveDataIcon.propTypes = {
   hideDataFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  valueShown: PropTypes.string,
+  valueShown: PropTypes.bool,
   disabled: PropTypes.bool
 };
 

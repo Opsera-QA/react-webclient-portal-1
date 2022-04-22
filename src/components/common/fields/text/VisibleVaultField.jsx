@@ -4,6 +4,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 import ShowSensitiveDataIcon from "components/common/icons/password/ShowSensitiveDataIcon";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function VisibleVaultField({model, fieldName, className, showClipboardButton, pullVaultDataFunction, isStoredInVault}) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -11,15 +12,13 @@ function VisibleVaultField({model, fieldName, className, showClipboardButton, pu
   const [valueShown, setValueShown] = useState(false);
 
   const getText = () => {
-    if (valueShown && vaultValue && vaultValue !== "") {
+    if (valueShown && hasStringValue(vaultValue) === true) {
       return <span>{vaultValue}</span>;
     }
 
     if (isStoredInVault === true) {
       return <span>This credential is securely stored in the vault</span>;
     }
-
-    return <span>This credential has not been saved to the vault</span>;
   };
 
   const getClipboardButton = () => {
