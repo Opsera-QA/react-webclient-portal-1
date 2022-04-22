@@ -25,6 +25,8 @@ function JsonFieldBase(
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}
+        quotesOnKeys={false}
+        indentWidth={2}
       />
     </div>
   );
