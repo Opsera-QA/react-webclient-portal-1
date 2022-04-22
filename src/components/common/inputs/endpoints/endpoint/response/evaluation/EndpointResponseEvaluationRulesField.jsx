@@ -13,6 +13,7 @@ function EndpointResponseEvaluationRulesField(
     fieldName,
     inProgressRuleType,
     successRuleType,
+    showContainer,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
 
@@ -27,24 +28,44 @@ function EndpointResponseEvaluationRulesField(
     }
   };
 
+  const getEndpointRuleFields = () => {
+    return (
+      <div>
+        <EndpointResponseEvaluationRuleField
+          ruleType={successRuleType}
+          responseEvaluationRule={model?.getData(fieldName)?.success_rule}
+          titleIcon={faCheckCircle}
+        />
+        {getInProgressEvaluationRuleField()}
+      </div>
+    );
+  };
+
+  const getBody = () => {
+    if (showContainer === true) {
+      return (
+        <InfoContainer
+          titleText={field?.label}
+        >
+          <div className={"m-2"}>
+            {getEndpointRuleFields()}
+          </div>
+        </InfoContainer>
+      );
+    }
+
+    return (
+      getEndpointRuleFields()
+    );
+  };
+
   if (field == null) {
     return null;
   }
 
   return (
     <FieldContainer>
-      <InfoContainer
-        titleText={field?.label}
-      >
-        <div className={"m-2"}>
-          <EndpointResponseEvaluationRuleField
-            ruleType={successRuleType}
-            responseEvaluationRule={model?.getData(fieldName)?.success_rule}
-            titleIcon={faCheckCircle}
-          />
-          {getInProgressEvaluationRuleField()}
-        </div>
-      </InfoContainer>
+      {getBody()}
     </FieldContainer>
   );
 }
@@ -54,6 +75,7 @@ EndpointResponseEvaluationRulesField.propTypes = {
   model: PropTypes.object,
   inProgressRuleType: PropTypes.string,
   successRuleType: PropTypes.string,
+  showContainer: PropTypes.bool,
 };
 
 export default EndpointResponseEvaluationRulesField;
