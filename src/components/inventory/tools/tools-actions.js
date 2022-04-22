@@ -292,4 +292,9 @@ toolsActions.getToolCounts = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+toolsActions.getPipelinesUsingNotificationTool = async (getAccessToken, cancelTokenSource,toolId) => {
+  const apiUrl = `/reports/${toolId}/notifications`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default toolsActions;
