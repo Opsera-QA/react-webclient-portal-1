@@ -6,7 +6,7 @@ import PipelineTaskSummaryPanelBase
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import { objectHelpers } from "components/common/helpers/object/object.helpers";
 import ExternalRestApiIntegrationStepSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepSummaryPanel";
+  from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
 import InfoContainer from "components/common/containers/InfoContainer";
 
 // TODO: Make fully fleshed out report.
