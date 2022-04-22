@@ -6,10 +6,12 @@ import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
-import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import JsonField from "components/common/fields/json/JsonField";
 import modelHelpers from "components/common/model/modelHelpers";
+import EndpointField from "components/common/fields/inventory/tools/endpoints/EndpointField";
+import EndpointResponseEvaluationRulesField
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
 
 function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab }) {
   const [externalRestApiIntegrationModel, setExternalRestApiIntegrationModel] = useState(undefined);
@@ -17,7 +19,6 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
   useEffect(() => {
     setExternalRestApiIntegrationModel(undefined);
 
-    console.log(JSON.stringify(pipelineData?.tool));
     if (pipelineData) {
       setExternalRestApiIntegrationModel(modelHelpers.parseObjectIntoModel(pipelineData?.tool?.configuration, externalRestApiIntegrationStepMetadata));
     }
@@ -45,10 +46,12 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
             fieldName={"useConnectionCheck"}
           />
         </Col>
-        <Col lg={6}>
-          <SmartIdField
+        <Col lg={12}>
+          <EndpointField
             model={externalRestApiIntegrationModel}
             fieldName={"connectionCheckEndpointId"}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
           />
         </Col>
         <Col xs={12}>
@@ -58,15 +61,18 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
           />
         </Col>
         <Col xs={12}>
-          <JsonField
-            dataObject={externalRestApiIntegrationModel}
+          <EndpointResponseEvaluationRulesField
+            model={externalRestApiIntegrationModel}
             fieldName={"connectionCheckResponseEvaluationRules"}
+            successRuleType={"Successful Connection Check"}
           />
         </Col>
         <Col lg={12}>
-          <SmartIdField
+          <EndpointField
             model={externalRestApiIntegrationModel}
             fieldName={"runEndpointId"}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
           />
         </Col>
         <Col xs={12}>
@@ -76,15 +82,19 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
           />
         </Col>
         <Col xs={12}>
-          <JsonField
-            dataObject={externalRestApiIntegrationModel}
+          <EndpointResponseEvaluationRulesField
+            model={externalRestApiIntegrationModel}
             fieldName={"runEndpointResponseEvaluationRules"}
+            successRuleType={"Successful Run Trigger"}
+            inProgressRuleType={"In Progress Run Trigger"}
           />
         </Col>
         <Col lg={6}>
-          <SmartIdField
+          <EndpointField
             model={externalRestApiIntegrationModel}
             fieldName={"statusEndpointId"}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
           />
         </Col>
         <Col xs={12}>
@@ -94,9 +104,11 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
           />
         </Col>
         <Col xs={12}>
-          <JsonField
-            dataObject={externalRestApiIntegrationModel}
+          <EndpointResponseEvaluationRulesField
+            model={externalRestApiIntegrationModel}
             fieldName={"statusEndpointResponseEvaluationRules"}
+            successRuleType={"Successful Completion"}
+            inProgressRuleType={"In Progress"}
           />
         </Col>
       </Row>
