@@ -26,10 +26,9 @@ import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import ServiceNowAverageTimeToResolveDataBlock from "../../data_blocks/ServiceNowAverageTimeToResolveDataBlock";
 import ServiceNowMinMTTRDataBlock from "../../data_blocks/ServiceNowMinMTTRDataBlock";
 import ServiceNowMaxMTTRDataBlock from "../../data_blocks/ServiceNowMaxMTTRDataBlock";
-import GithubCommitsActionableInsightOverlay
-  from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -69,6 +68,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const [priorityFour, setPriorityFour] = useState(0);
   const [priorityFive, setPriorityFive] = useState(0);
   const toastContext = useContext(DialogToastContext);
+  const mttrDataPointConstant = "mttr-in-hours-chart-data-point";
+  const numberOfIncidentsConstant = "number-of-incidents-charts-data-point";
+  const averageMTTRDataBlockConstant = "average-mttr-data-block-data-point";
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -218,6 +220,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
+    console.log(metrics);
+    console.log(sevMetrics);
+
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, mttrDataPointConstant);
+    const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, numberOfIncidentsConstant);
+    const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, averageMTTRDataBlockConstant);
     
     return (
         <>
@@ -234,7 +243,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
                   </Col>
                   <Col md={12} >
-                    <ServiceNowAverageTimeToResolveDataBlock data={overallMean} />
+                    <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
                   </Col>
                   <Col md={12} >
                     <ServiceNowMinMTTRDataBlock data={minMTTR} />
@@ -243,46 +252,26 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     <ServiceNowMaxMTTRDataBlock data={maxMTTR} />
                   </Col>
               </Row>
-              <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
-              <div className="px-1 font-inter-light-400 dark-gray-text-primary" style={{ float: "right", fontSize: "10px" }}>
-                  Average MTTR <b>({overallMean} Hours)</b> <IconBase icon={faMinus} iconColor={neutralColor} iconSize={"lg"} />
-                  <br></br>
-                  Goal<b> ({goalsData?.mttrAvgMeanTimeGoal} Hours)</b>{" "}
-                  <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
-                  <br></br>
-                  MTTR{" "}
-                  <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-                </div>
-              <ResponsiveBar
-                  data={metrics}
-                  {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                  {...adjustBarWidth(metrics)}
-                  // onClick={(data) => onRowSelect(data)}
-                  tooltip={({ indexValue, value, data, color }) => (
-                    <ChartTooltip
-                      titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
-                      values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
-                      style={false}
-                      // color={color}
-                    />
-                  )}
-                  markers={[
-                    {
-                      axis: "y",
-                      value: overallMean ? overallMean : 0,
-                      lineStyle: { stroke: neutralColor, strokeWidth: 2 },
-                      legend: "",
-                    },
-                    {
-                      axis: "y",
-                      value: goalsData?.mttrAvgMeanTimeGoal ? goalsData?.mttrAvgMeanTimeGoal : 0,
-                      lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                      legend: "",
-                    },
-                  ]}
-                />
-                </Col>
+              {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) &&
+                <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+                  <ResponsiveBar
+                    data={metrics}
+                    {...defaultConfig("Mean Time to Resolution (in hours)", "Date", false, false, "wholeNumbers", "monthDate2")}
+                    {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                    {...adjustBarWidth(metrics)}
+                    // onClick={(data) => onRowSelect(data)}
+                    tooltip={({indexValue, value, data, color}) => (
+                      <ChartTooltip
+                        titles={["Date", "Mean Time to Resolution", "Number of Incidents"]}
+                        values={[new Date(indexValue).toDateString(), `${value} hours`, data.Count]}
+                        style={false}
+                        // color={color}
+                      />
+                    )}
+                    markers={[]}
+                  />
+                </Col>}
+              {dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint) &&
                 <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
                 <ResponsiveBar
                   data={sevMetrics}
@@ -299,7 +288,7 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     />
                   )}
                 />
-                </Col>
+                </Col>}
                 </Row>
           </div>
           <div className="ml-2 p-0">
