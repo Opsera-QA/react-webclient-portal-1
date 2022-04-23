@@ -1,35 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
-import {
-  externalRestApiIntegrationStepMetadata
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
-import modelHelpers from "components/common/model/modelHelpers";
 import ExternalApiRestIntegrationStepSummaryVerticalTabContainer
   from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalApiRestIntegrationStepSummaryVerticalTabContainer";
 
-function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab }) {
-  const [externalRestApiIntegrationModel, setExternalRestApiIntegrationModel] = useState(undefined);
-
-  useEffect(() => {
-    setExternalRestApiIntegrationModel(undefined);
-
-    if (pipelineData) {
-      setExternalRestApiIntegrationModel(modelHelpers.parseObjectIntoModel(pipelineData?.tool?.configuration, externalRestApiIntegrationStepMetadata));
-    }
-  }, [pipelineData]);
-
-  if (externalRestApiIntegrationModel == null) {
-    return null;
-  }
-
-  return (
-    <PipelineStepSummaryPanelContainer
-      setActiveTab={setActiveTab}
-      pipelineData={pipelineData}
-    >
+function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, externalRestApiIntegrationModel, setActiveTab }) {
+  const getBody = () => {
+    return (
       <Row>
         <Col lg={12}>
           <ToolNameField
@@ -43,11 +22,31 @@ function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, setActiveTab
           />
         </Col>
       </Row>
+    );
+  };
+
+  if (externalRestApiIntegrationModel == null) {
+    return null;
+  }
+
+  if (pipelineData == null) {
+    return (
+      getBody()
+    );
+  }
+
+  return (
+    <PipelineStepSummaryPanelContainer
+      setActiveTab={setActiveTab}
+      pipelineData={externalRestApiIntegrationModel}
+    >
+      {getBody()}
     </PipelineStepSummaryPanelContainer>
   );
 }
 
 ExternalRestApiIntegrationStepSummaryPanel.propTypes = {
+  externalRestApiIntegrationModel: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
