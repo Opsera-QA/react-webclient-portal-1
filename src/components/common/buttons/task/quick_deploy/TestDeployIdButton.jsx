@@ -127,6 +127,9 @@ function TestDeployIdButton({ taskModel, report, setReport, disabled }) {
 
   return (
     <div className="py-lg-5">
+      <TooltipWrapper
+        innerText={`Check if the provided Deployment Job Id is a valid Salesforce Job Id. This doesn't necessarily imply that it would be eligible for Quick Deploy.`}
+      >
         <Button
           size="sm"
           variant={getVariant()}
@@ -135,6 +138,7 @@ function TestDeployIdButton({ taskModel, report, setReport, disabled }) {
         >
           {getLabel()}
         </Button>
+      </TooltipWrapper>
     </div>
   );
 }
