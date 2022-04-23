@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
+import { objectHelpers } from "components/common/helpers/object/object.helpers";
 
 function JsonFieldBase(
   {
@@ -11,11 +12,7 @@ function JsonFieldBase(
     displayDataTypes,
   }) {
   const getJsonBody = () => {
-    if (json && typeof json === "object") {
-      return json;
-    }
-
-    return {};
+    return objectHelpers.parseJson(json);
   };
 
   return (

@@ -10,6 +10,8 @@ import {
 import MergeSyncTaskWizardCommitViewer
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
 import axios from "axios";
+import InfoContainer from "components/common/containers/InfoContainer";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -23,6 +25,8 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   const [activeTab, setActiveTab] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const noDataFilesPulledMessage = "The Comparison Files pull has been completed. There is no data for the selected criteria.";
+  const noDataFilesNotPulledMessage = "The Comparison Files list has not been received. Please click the table's refresh button to resume polling for the files.";
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -85,6 +89,36 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
       );
     }
   };
+
+  const getLoadingBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+        />
+      );
+    }
+
+    if (filePullCompleted === true) {
+      return noDataFilesPulledMessage;
+    }
+
+    return noDataFilesNotPulledMessage;
+  };
+
+  if (!Array.isArray(diffFileList) || diffFileList.length === 0) {
+    return (
+      <InfoContainer
+        titleText={`Merge Change Selection`}
+        titleIcon={faBracketsCurly}
+        loadDataFunction={loadDataFunction}
+        isLoading={isLoading}
+      >
+        <div className={"m-3"}>
+          {getLoadingBody()}
+        </div>
+      </InfoContainer>
+    );
+  }
 
   // TODO: Set height to what makes sense
   return (
