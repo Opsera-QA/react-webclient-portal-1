@@ -38,6 +38,8 @@ import FlywayDatabaseToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionEditorPanel";
 import ExternalApiIntegratorToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionEditorPanel";
+import ApigeeToolConnectionEditorPanel
+  from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
 
 function ToolConnectionPanel({ toolData, setToolData }) {
   const getConnectionPanel = () => {
@@ -120,6 +122,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <GcpToolConfiguration toolData={toolData} />;
       case "buildkite":
         return <BuildkiteToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return <ApigeeToolConnectionEditorPanel toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
