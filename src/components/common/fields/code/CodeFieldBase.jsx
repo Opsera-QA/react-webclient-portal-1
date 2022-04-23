@@ -10,6 +10,7 @@ function CodeFieldBase(
     className,
     isLoading,
     height,
+    theme,
   }) {
   return (
     <CodeInput
@@ -20,6 +21,7 @@ function CodeFieldBase(
       fieldName={fieldName}
       className={className}
       height={height}
+      theme={theme}
     />
   );
 }
@@ -31,6 +33,7 @@ CodeFieldBase.propTypes = {
   mode: PropTypes.string,
   isLoading: PropTypes.bool,
   height: PropTypes.string,
+  theme: PropTypes.string,
 };
 
 export default CodeFieldBase;

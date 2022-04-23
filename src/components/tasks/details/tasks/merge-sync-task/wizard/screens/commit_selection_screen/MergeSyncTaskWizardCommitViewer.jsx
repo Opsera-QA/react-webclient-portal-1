@@ -3,20 +3,21 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import CancelButton from "components/common/buttons/CancelButton";
-import {parseError} from "components/common/helpers/error-helpers";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.actions";
-import BackButton from "components/common/buttons/back/BackButton";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
-import MergeSyncTaskWizardCommitSelectorVerticalTabContainer
-  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectorVerticalTabContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
+import {
+  comparisonFileMetadata
+} from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/comparisonFile.metadata";
+import modelHelpers from "components/common/model/modelHelpers";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import CodeFieldBase from "components/common/fields/code/CodeFieldBase";
+import { CODE_THEME_TYPES } from "components/common/inputs/code/CodeInput";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -28,7 +29,7 @@ const MergeSyncTaskWizardCommitViewer = ({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [response, setResponse] = useState(undefined);
+  const [comparisonFileModel, setComparisonFileModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -40,8 +41,7 @@ const MergeSyncTaskWizardCommitViewer = ({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    setResponse(undefined);
-
+    setComparisonFileModel(undefined);
 
     if (hasStringValue(diffFile?.committedFile)) {
       loadData(source).catch((error) => {
@@ -82,7 +82,12 @@ const MergeSyncTaskWizardCommitViewer = ({
       wizardModel?.getData("runCount"),
       diffFile?.committedFile,
     );
-    setResponse(response?.data);
+    const newFileMetadata = response?.data?.message;
+
+    if (isMounted?.current === true && newFileMetadata) {
+      const comparisonFileModel = modelHelpers.parseObjectIntoModel(newFileMetadata, comparisonFileMetadata);
+      setComparisonFileModel(comparisonFileModel);
+    }
   };
 
   if (isLoading === true) {
@@ -90,11 +95,31 @@ const MergeSyncTaskWizardCommitViewer = ({
   }
 
   return (
-    <div>
-      <StandaloneJsonField
-        titleText={"temp tilte"}
-        json={response}
-      />
+    <div className={"m-3"}>
+      <Row>
+        <Col xs={12}>
+          <TextFieldBase
+            dataObject={comparisonFileModel}
+            fieldName={"fullName"}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <CodeFieldBase
+            fieldName={"sourceContent"}
+            model={comparisonFileModel}
+            isLoading={isLoading}
+            theme={CODE_THEME_TYPES.DARK}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <CodeFieldBase
+            fieldName={"destinationContent"}
+            model={comparisonFileModel}
+            isLoading={isLoading}
+            theme={CODE_THEME_TYPES.DARK}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };

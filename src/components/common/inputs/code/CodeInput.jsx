@@ -32,10 +32,11 @@ function CodeInput(
     dataPullError,
     height,
     customTitleText,
+    theme,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  const [theme, setTheme] = useState(CODE_THEME_TYPES.LIGHT);
+  const [internalTheme, setInternalTheme] = useState(theme === CODE_THEME_TYPES?.DARK ? CODE_THEME_TYPES?.DARK : CODE_THEME_TYPES.LIGHT);
 
   const validateAndSetData = (value) => {
     let newModel = model;
@@ -55,8 +56,8 @@ function CodeInput(
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === CODE_THEME_TYPES.DARK ? CODE_THEME_TYPES.LIGHT : CODE_THEME_TYPES.DARK;
-    setTheme(newTheme);
+    const newTheme = internalTheme === CODE_THEME_TYPES.DARK ? CODE_THEME_TYPES.LIGHT : CODE_THEME_TYPES.DARK;
+    setInternalTheme(newTheme);
   };
 
   const getTitleBarActionButtons = () => {
@@ -65,7 +66,7 @@ function CodeInput(
         <div className={"mr-2"}>
           {titleBarActionButtons}
         </div>
-        <ToggleThemeIcon theme={theme} toggleTheme={toggleTheme} />
+        <ToggleThemeIcon theme={internalTheme} toggleTheme={toggleTheme} />
       </div>
     );
   };
@@ -95,7 +96,7 @@ function CodeInput(
     return (
       <CodeInputBase
         mode={mode}
-        theme={theme}
+        theme={internalTheme}
         isLoading={isLoading}
         setDataFunction={validateAndSetData}
         inputId={`${model?.getData("_id")}-${fieldName}`}
@@ -153,6 +154,7 @@ CodeInput.propTypes = {
   dataPullError: PropTypes.string,
   height: PropTypes.string,
   customTitleText: PropTypes.string,
+  theme: PropTypes.string,
 };
 
 CodeInput.defaultProps = {
