@@ -6,6 +6,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   ANCHORE_SCAN: "anchore-scan",
   ANSIBLE: "ansible",
   APPROVAL: "approval",
+  APIGEE: "apigee",
   ARGO: "argo",
   AWS_ACCOUNT: "aws_account",
   AWS_LAMDA: "aws_lambda",
