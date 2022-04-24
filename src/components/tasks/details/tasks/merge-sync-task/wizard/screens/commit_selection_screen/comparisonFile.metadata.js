@@ -26,7 +26,7 @@ export const comparisonFileMetadata = {
       id: "sourceContent",
     },
     {
-      label: "Latest Version",
+      label: "Latest Version on Destination Branch",
       id: "destinationContent",
     },
   ],
