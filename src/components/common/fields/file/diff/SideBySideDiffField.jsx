@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { faCode } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import StandaloneDiffField, { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
+import InfoContainer from "components/common/containers/InfoContainer";
+import StandaloneDiffFieldBase from "components/common/fields/file/diff/StandaloneDiffFieldBase";
+import { faCode } from "@fortawesome/pro-light-svg-icons";
 
 function SideBySideDiffField(
   {
@@ -26,35 +28,41 @@ function SideBySideDiffField(
 
   return (
     <div className={className}>
-      <Row>
-        <Col xs={12} md={6} className={"pr-2"}>
-          <StandaloneDiffField
-            isLoading={isLoading}
-            minimumHeight={minimumHeight}
-            maximumHeight={maximumHeight}
-            titleText={originalCodeField?.label}
-            titleIcon={faCode}
-            loadDataFunction={loadDataFunction}
-            changedCode={model?.getData(changedCodeFieldName)}
-            originalCode={model?.getData(originalCodeFieldName)}
-            language={language}
-            visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
-          />
-        </Col>
-        <Col xs={12} md={6} className={"pl-2"}>
-          <StandaloneDiffField
-            isLoading={isLoading}
-            minimumHeight={minimumHeight}
-            maximumHeight={maximumHeight}
-            titleText={changedCodeField?.label}
-            titleIcon={faCode}
-            loadDataFunction={loadDataFunction}
-            changedCode={model?.getData(changedCodeFieldName)}
-            originalCode={model?.getData(originalCodeFieldName)}
-            language={language}
-          />
-        </Col>
-      </Row>
+      <InfoContainer
+        titleText={`Diff Viewer`}
+        titleIcon={faCode}
+        minimumHeight={minimumHeight}
+        maximumHeight={maximumHeight}
+        loadDataFunction={loadDataFunction}
+      >
+        <div style={{overflowX: "hidden"}} className={"m-2"}>
+          <Row>
+            <Col xs={12} md={6} className={"pr-1"}>
+              <StandaloneDiffField
+                isLoading={isLoading}
+                titleText={originalCodeField?.label}
+                titleIcon={faCode}
+                changedCode={model?.getData(changedCodeFieldName)}
+                originalCode={model?.getData(originalCodeFieldName)}
+                language={language}
+                visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
+                className={"m-0"}
+              />
+            </Col>
+            <Col xs={12} md={6} className={"pl-1"}>
+              <StandaloneDiffField
+                isLoading={isLoading}
+                titleText={changedCodeField?.label}
+                titleIcon={faCode}
+                changedCode={model?.getData(changedCodeFieldName)}
+                originalCode={model?.getData(originalCodeFieldName)}
+                language={language}
+                className={"m-0"}
+              />
+            </Col>
+          </Row>
+        </div>
+      </InfoContainer>
     </div>
   );
 }

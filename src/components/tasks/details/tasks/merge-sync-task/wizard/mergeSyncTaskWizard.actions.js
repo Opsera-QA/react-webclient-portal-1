@@ -178,12 +178,33 @@ mergeSyncTaskWizardActions.updateSelectedFileContent = async (
   fileName,
   fileContent,
 ) => {
-  const apiUrl = `/tasks/merge-sync-task/wizard/${taskId}/file/update`;
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/update`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
     fileName: fileName,
     fileContent: fileContent,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+mergeSyncTaskWizardActions.updateSelectedFileContentByOption = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineStorageRecordId,
+  fileName,
+  option,
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/file/update`;
+  const postBody = {
+    option: option,
+    fileName: fileName,
   };
 
   return await baseActions.apiPostCallV2(

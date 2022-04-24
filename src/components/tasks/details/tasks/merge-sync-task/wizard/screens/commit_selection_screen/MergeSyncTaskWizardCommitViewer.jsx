@@ -18,6 +18,9 @@ import SideBySideDiffField from "components/common/fields/file/diff/SideBySideDi
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import MergeSyncTaskWizardSelectFileVersionButton
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardSelectFileVersionButton";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -95,7 +98,7 @@ const MergeSyncTaskWizardCommitViewer = ({
   }
 
   return (
-    <div className={"m-3"}>
+    <div className={"mt-1 mx-3"} style={{overflowX: "hidden"}}>
       <Row>
         <Col xs={12}>
           <TextFieldBase
@@ -115,6 +118,27 @@ const MergeSyncTaskWizardCommitViewer = ({
           />
         </Col>
       </Row>
+      <SaveButtonContainer
+        extraButtons={
+          <MergeSyncTaskWizardSelectFileVersionButton
+            fileName={diffFile?.committedFile}
+            wizardModel={wizardModel}
+            isLoading={isLoading}
+            comparisonFileModel={comparisonFileModel}
+            fileContent={comparisonFileModel?.getData("destinationContent")}
+            type={"Destination Branch"}
+          />
+        }
+      >
+        <MergeSyncTaskWizardSelectFileVersionButton
+          fileName={diffFile?.committedFile}
+          wizardModel={wizardModel}
+          isLoading={isLoading}
+          comparisonFileModel={comparisonFileModel}
+          fileContent={comparisonFileModel?.getData("sourceContent")}
+          type={"Source Branch"}
+        />
+      </SaveButtonContainer>
     </div>
   );
 };

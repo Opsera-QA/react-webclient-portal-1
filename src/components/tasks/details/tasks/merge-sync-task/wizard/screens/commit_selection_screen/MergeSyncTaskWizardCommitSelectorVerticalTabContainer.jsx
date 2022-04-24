@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly, faCode } from "@fortawesome/pro-light-svg-icons";
 import MergeSyncTaskWizardCommitViewer
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
 import axios from "axios";
@@ -12,6 +12,11 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import StandaloneDiffField, { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
+import { temp } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/temp";
+import StandaloneDiffFieldBase from "components/common/fields/file/diff/StandaloneDiffFieldBase";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -92,33 +97,38 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getLoadingBody = () => {
     // return (
-    //   <Row>
-    //     <Col xs={12} md={6}>
-    //       <StandaloneDiffField
-    //         // isLoading={isLoading}
-    //         // minimumHeight={minimumHeight}
-    //         // maximumHeight={maximumHeight}
-    //         titleText={"Destination Content"}
-    //         titleIcon={faCode}
-    //         loadDataFunction={loadDataFunction}
-    //         changedCode={temp.changedCode}
-    //         originalCode={temp.originalCode}
-    //         visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
-    //       />
-    //     </Col>
-    //     <Col xs={12} md={6}>
-    //       <StandaloneDiffField
-    //         // isLoading={isLoading}
-    //         // minimumHeight={minimumHeight}
-    //         // maximumHeight={maximumHeight}
-    //         titleText={"File on Source"}
-    //         titleIcon={faCode}
-    //         loadDataFunction={loadDataFunction}
-    //         changedCode={temp.changedCode}
-    //         originalCode={temp.originalCode}
-    //       />
-    //     </Col>
-    //   </Row>
+    //   <InfoContainer
+    //     titleText={"Diff Viewer"}
+    //     minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+    //     maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+    //     loadDataFunction={loadDataFunction}
+    //   >
+    //     <div>
+    //       <Row className={"mx-0"}>
+    //         <Col xs={12} md={6} className={"pl-0 pr-2"}>
+    //           <StandaloneDiffFieldBase
+    //             // isLoading={isLoading}
+    //             titleText={"Destination Content"}
+    //             titleIcon={faCode}
+    //             loadDataFunction={loadDataFunction}
+    //             changedCode={temp.changedCode}
+    //             originalCode={temp.originalCode}
+    //             visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
+    //           />
+    //         </Col>
+    //         <Col xs={12} md={6} className={"pl-2 pr-0"}>
+    //           <StandaloneDiffFieldBase
+    //             // isLoading={isLoading}
+    //             titleText={"File on Source"}
+    //             titleIcon={faCode}
+    //             loadDataFunction={loadDataFunction}
+    //             changedCode={temp.changedCode}
+    //             originalCode={temp.originalCode}
+    //           />
+    //         </Col>
+    //       </Row>
+    //     </div>
+    //   </InfoContainer>
     // );
 
     // eslint-disable-next-line no-unreachable
