@@ -22,11 +22,11 @@ export const comparisonFileMetadata = {
       id: "fullName",
     },
     {
-      label: "Source Content",
+      label: "Source Branch Content",
       id: "sourceContent",
     },
     {
-      label: "Destination Content",
+      label: "Latest Version",
       id: "destinationContent",
     },
   ],

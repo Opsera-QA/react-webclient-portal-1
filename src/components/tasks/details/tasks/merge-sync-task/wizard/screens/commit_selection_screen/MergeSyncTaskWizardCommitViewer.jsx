@@ -6,18 +6,18 @@ import {AuthContext} from "contexts/AuthContext";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import {
   comparisonFileMetadata
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/comparisonFile.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import CodeFieldBase from "components/common/fields/code/CodeFieldBase";
-import { CODE_THEME_TYPES } from "components/common/inputs/code/CodeInput";
+import SideBySideDiffField from "components/common/fields/file/diff/SideBySideDiffField";
+import {
+  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
+} from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -103,20 +103,15 @@ const MergeSyncTaskWizardCommitViewer = ({
             fieldName={"fullName"}
           />
         </Col>
-        <Col xs={12} md={6}>
-          <CodeFieldBase
-            fieldName={"sourceContent"}
+        <Col xs={12}>
+          <SideBySideDiffField
             model={comparisonFileModel}
+            loadDataFunction={loadData}
             isLoading={isLoading}
-            theme={CODE_THEME_TYPES.DARK}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <CodeFieldBase
-            fieldName={"destinationContent"}
-            model={comparisonFileModel}
-            isLoading={isLoading}
-            theme={CODE_THEME_TYPES.DARK}
+            originalCodeFieldName={"destinationContent"}
+            changedCodeFieldName={"sourceContent"}
+            maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+            minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
           />
         </Col>
       </Row>

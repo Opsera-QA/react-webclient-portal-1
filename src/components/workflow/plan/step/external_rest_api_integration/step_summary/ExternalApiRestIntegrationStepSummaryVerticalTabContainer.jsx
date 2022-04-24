@@ -2,14 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import ExternalApiIntegrationStepRunTriggerEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/run_trigger/ExternalApiIntegrationStepRunTriggerEndpointSelectInput";
-import ExternalApiIntegrationStepRunEndpointRequestInputBase
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
-import EndpointResponseEvaluationRulesInputBase
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
-import ExternalApiIntegrationStepStatusCheckEndpointSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/status_check/ExternalApiIntegrationStepStatusCheckEndpointSelectInput";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {
