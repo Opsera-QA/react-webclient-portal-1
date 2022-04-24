@@ -22,7 +22,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
-        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>);
+        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
     }
   };
 

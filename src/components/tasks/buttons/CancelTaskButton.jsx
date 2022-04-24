@@ -17,6 +17,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
   TASK_TYPES.SYNC_SALESFORCE_REPO,
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+  TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
 ];
 
 // TODO: This should be broken into two buttons, one for cancel and one for logs
@@ -47,11 +48,12 @@ function CancelTaskButton({taskModel, disable, className, actionAllowed, taskTyp
   const handleCancelRunTask = async () => {
     setIsCanceling(true);
     // TODO: call cancel job api to jenkins integrator
-    await taskActions.stopTask(getAccessToken, cancelTokenSource, taskModel);
+    await taskActions.stopTaskv2(getAccessToken, cancelTokenSource, taskModel);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
     history.push(`/task`);
   };
+
   const getButtonText = () => {
     if (isCanceling === true) {
       return ("Canceling Task");
