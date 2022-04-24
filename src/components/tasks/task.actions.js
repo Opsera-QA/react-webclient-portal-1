@@ -1,4 +1,5 @@
 import baseActions from "utils/actionsBase";
+import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 const taskActions = {};
 
@@ -181,6 +182,36 @@ taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, g
   let postBody = {
     taskId: gitTasksDataDto.getData("_id"),
   };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+// TODO : wire up api to validate the deployment id used for quick deploy task
+taskActions.validateDeployId = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+  const apiUrl = `/tasks/validateDeployKey`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+// TODO : Generic task trigger function
+taskActions.triggerTask = async (getAccessToken, cancelTokenSource, taskData) => {
+  const postBody = {
+    taskId: taskData.getData("_id"),
+    ...taskData.getData("configuration")
+  };
+
+  const apiUrl = `/tasks/${taskData.getData("_id")}/run`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.stopTaskv2 = async (getAccessToken, cancelTokenSource, taskData) => {
+  const postBody = {
+    taskId: taskData.getData("_id"),
+    ...taskData.getData("configuration")
+  };
+
+  const apiUrl = `/tasks/${taskData.getData("_id")}/stop`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
