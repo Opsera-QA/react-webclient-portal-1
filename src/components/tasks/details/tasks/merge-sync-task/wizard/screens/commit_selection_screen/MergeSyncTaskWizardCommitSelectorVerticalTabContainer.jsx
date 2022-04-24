@@ -4,14 +4,14 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
-import {
-  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
-} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 import MergeSyncTaskWizardCommitViewer
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
 import axios from "axios";
 import InfoContainer from "components/common/containers/InfoContainer";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import {
+  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
+} from "components/tasks/details/tasks/merge-sync-task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -91,6 +91,37 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   };
 
   const getLoadingBody = () => {
+    // return (
+    //   <Row>
+    //     <Col xs={12} md={6}>
+    //       <StandaloneDiffField
+    //         // isLoading={isLoading}
+    //         // minimumHeight={minimumHeight}
+    //         // maximumHeight={maximumHeight}
+    //         titleText={"Destination Content"}
+    //         titleIcon={faCode}
+    //         loadDataFunction={loadDataFunction}
+    //         changedCode={temp.changedCode}
+    //         originalCode={temp.originalCode}
+    //         visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
+    //       />
+    //     </Col>
+    //     <Col xs={12} md={6}>
+    //       <StandaloneDiffField
+    //         // isLoading={isLoading}
+    //         // minimumHeight={minimumHeight}
+    //         // maximumHeight={maximumHeight}
+    //         titleText={"File on Source"}
+    //         titleIcon={faCode}
+    //         loadDataFunction={loadDataFunction}
+    //         changedCode={temp.changedCode}
+    //         originalCode={temp.originalCode}
+    //       />
+    //     </Col>
+    //   </Row>
+    // );
+
+    // eslint-disable-next-line no-unreachable
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
@@ -112,6 +143,8 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
         titleIcon={faBracketsCurly}
         loadDataFunction={loadDataFunction}
         isLoading={isLoading}
+        minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+        maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
       >
         <div className={"m-3"}>
           {getLoadingBody()}
@@ -120,7 +153,6 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     );
   }
 
-  // TODO: Set height to what makes sense
   return (
     <VanitySetTabAndViewContainer
       icon={faBracketsCurly}
@@ -130,12 +162,8 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
       currentView={getCurrentView()}
       isLoading={isLoading}
       loadDataFunction={loadDataFunction}
-      minimumHeight={
-        EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT
-      }
-      maximumHeight={
-        EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT
-      }
+      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
     />
   );
 };

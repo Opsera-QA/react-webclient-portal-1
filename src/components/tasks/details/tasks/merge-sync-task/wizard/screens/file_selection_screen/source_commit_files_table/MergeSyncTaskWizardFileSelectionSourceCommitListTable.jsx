@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { faFileCode } from "@fortawesome/pro-light-svg-icons";
-import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 import FilterContainer from "components/common/table/FilterContainer";
 import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
@@ -9,6 +8,7 @@ import {
   sourceCommitFileMetadata
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/sourceCommitFile.metadata";
 
+const height = "calc(100vh - 292px)";
 const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   sourceCommitList,
   isLoading,
@@ -51,12 +51,8 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
       title={`Source File Selection`}
       loadData={loadData}
       isLoading={isLoading}
-      minimumHeight={
-        EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT
-      }
-      maximumHeight={
-        EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETERS_CONTAINER_HEIGHT
-      }
+      minimumHeight={height}
+      maximumHeight={height}
       body={getFilesTable()}
     />
   );
