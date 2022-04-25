@@ -19,12 +19,12 @@ function HorizontalDataBlocksContainer(
   }
 
   return (
-    <TooltipWrapper innerText={tooltipText}>
-      <div className={className}>
-        <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"}>
+    <TooltipWrapper innerText={tooltipText} className={"h-100"}>
+      <div className={className}  style={{display:"flex", flexDirection:"column" , height: "100%"}}>
+        <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"} style={{ flex: "0 0 auto"}}>
           {title}
         </div>
-        <div className={`${onClick ? "pointer " : ""}data-block-container m-1`} onClick={onClick}>
+        <div className={`${onClick ? "pointer " : ""}data-block-container m-1`} onClick={onClick} style={{ flex: "1 1 auto"}}>
           <Row className={"m-1 py-2"}>
             {children}
           </Row>
