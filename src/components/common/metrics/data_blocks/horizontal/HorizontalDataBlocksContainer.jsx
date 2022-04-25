@@ -19,7 +19,7 @@ function HorizontalDataBlocksContainer(
   }
 
   return (
-    <TooltipWrapper innerText={tooltipText} className={"h-100"}>
+    <TooltipWrapper innerText={tooltipText}>
       <div className={className}  style={{display:"flex", flexDirection:"column" , height: "100%"}}>
         <div className={"mx-1 light-gray-text-secondary font-inter-light-400 metric-block-header-text"} style={{ flex: "0 0 auto"}}>
           {title}
