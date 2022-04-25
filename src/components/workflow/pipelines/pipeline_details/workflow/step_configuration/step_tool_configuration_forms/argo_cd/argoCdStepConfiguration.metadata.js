@@ -94,7 +94,7 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
-      label: "Is Blue Green Deployment?",
+      label: "Blue Green Deployment Enabled",
       id: "isBlueGreenDeployment"
     }
   ],
