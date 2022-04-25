@@ -36,6 +36,10 @@ export const mergeSyncTaskWizardMetadata = {
       id: "recordId",
     },
     {
+      label: "File Selection Rules",
+      id: "fileSelectionRules",
+    },
+    {
       label: "Task ID",
       id: "taskId",
     },
@@ -51,6 +55,7 @@ export const mergeSyncTaskWizardMetadata = {
     sourceCommitFiles: [],
     selectedFileList: [],
     diffFileList: [],
+    fileSelectionRules: [],
     taskId: "",
     recordId: "",
     runCount: 1,

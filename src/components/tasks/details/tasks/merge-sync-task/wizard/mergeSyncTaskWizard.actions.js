@@ -136,8 +136,30 @@ mergeSyncTaskWizardActions.pullSourceFileListV2 = async (
   getAccessToken,
   cancelTokenSource,
   pipelineStorageRecordId,
+  fileSelectionRules,
 ) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/source-file-list`;
+  const queryParams = {
+    params: {
+      rules: fileSelectionRules,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParams,
+  );
+};
+
+mergeSyncTaskWizardActions.pullSourceFileRuleValuesV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineStorageRecordId,
+  fieldName,
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/source/files/values/${fieldName}`;
 
   return await baseActions.apiGetCallV2(
     getAccessToken,

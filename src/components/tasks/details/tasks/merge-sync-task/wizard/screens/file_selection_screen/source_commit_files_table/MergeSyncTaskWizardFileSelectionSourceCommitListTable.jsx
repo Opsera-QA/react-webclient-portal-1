@@ -7,8 +7,10 @@ import VanityTable from "components/common/table/VanityTable";
 import {
   sourceCommitFileMetadata
 } from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/sourceCommitFile.metadata";
+import {
+  MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS
+} from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/mergeSyncTaskWizardFileSelectorContainer.heights";
 
-const height = "calc(100vh - 292px)";
 const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   sourceCommitList,
   isLoading,
@@ -51,8 +53,8 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
       title={`Source File Selection`}
       loadData={loadData}
       isLoading={isLoading}
-      minimumHeight={height}
-      maximumHeight={height}
+      minimumHeight={MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT}
+      maximumHeight={MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT}
       body={getFilesTable()}
     />
   );

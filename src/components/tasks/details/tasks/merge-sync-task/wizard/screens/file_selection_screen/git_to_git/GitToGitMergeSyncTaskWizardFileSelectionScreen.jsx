@@ -49,8 +49,6 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
       setIsLoading(true);
       await triggerGitToGitSourceFilePull(cancelSource);
     } catch (error) {
-      console.error(error);
-      console.log("error: " + JSON.stringify(error));
       if (isMounted?.current === true) {
         const prependMessage =
           "Service Error Triggering File List Pulls:";
@@ -72,7 +70,6 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
         cancelSource,
         wizardModel,
       );
-    console.log("response: " + JSON.stringify(response));
       setTriggeredSourceFilePull(true);
   };
 
@@ -98,6 +95,7 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
         setWizardModel={setWizardModel}
         setCurrentScreen={setCurrentScreen}
         handleClose={handleClose}
+        fileSelectionRulesString={JSON.stringify(wizardModel?.getArrayData("fileSelectionRules"))}
       />
     );
   };

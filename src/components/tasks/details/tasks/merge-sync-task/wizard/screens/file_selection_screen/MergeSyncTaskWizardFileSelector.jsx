@@ -16,10 +16,13 @@ import MergeSyncTaskWizardFileSelectionSourceCommitListTable
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/source_commit_files_table/MergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskWizardSubmitSelectedFilesButton
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
+import MergeSyncTaskFileSelectionRulesInputContainer
+  from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/rules/MergeSyncTaskFileSelectionRulesInputContainer";
 
 const MergeSyncTaskWizardFileSelector = ({
   wizardModel,
   setWizardModel,
+  fileSelectionRulesString,
   setCurrentScreen,
   handleClose,
 }) => {
@@ -63,7 +66,7 @@ const MergeSyncTaskWizardFileSelector = ({
         }
       });
     }
-  }, []);
+  }, [fileSelectionRulesString]);
 
   const loadData = async (
     cancelSource = cancelTokenSource,
@@ -113,10 +116,10 @@ const MergeSyncTaskWizardFileSelector = ({
       getAccessToken,
       cancelSource,
       wizardModel?.getData("recordId"),
+      wizardModel?.getArrayData("fileSelectionRules"),
     );
     const errorMessage = response?.data?.data?.errorMessage;
     const newFileList = response?.data?.data?.sourceCommitList;
-    console.log("response: " + JSON.stringify(response));
 
     if (isMounted?.current === true) {
       if (errorMessage) {
@@ -138,6 +141,16 @@ const MergeSyncTaskWizardFileSelector = ({
 
   return (
     <div>
+      <div className={"mb-2"}>
+        <MergeSyncTaskFileSelectionRulesInputContainer
+          isLoading={isLoading}
+          filePullCompleted={filePullCompleted}
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          fieldName={"fileSelectionRules"}
+          fileList={sourceCommitList}
+        />
+      </div>
       <MergeSyncTaskWizardFileSelectionSourceCommitListTable
         filePullCompleted={filePullCompleted}
         sourceCommitList={sourceCommitList}
@@ -173,6 +186,7 @@ MergeSyncTaskWizardFileSelector.propTypes = {
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
+  fileSelectionRulesString: PropTypes.string,
 };
 
 export default MergeSyncTaskWizardFileSelector;
