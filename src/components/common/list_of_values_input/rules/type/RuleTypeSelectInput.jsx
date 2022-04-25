@@ -7,17 +7,27 @@ export const ruleTypes = [
   {value: "exclude", text: "Exclude"},
 ];
 
-function RuleTypeSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
+function RuleTypeSelectInput(
+  {
+    fieldName,
+    className,
+    model,
+    setModel,
+    disabled,
+    showLabel,
+    setDataFunction,
+  }) {
   return (
     <SelectInputBase
       className={className}
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       selectOptions={ruleTypes}
       valueField={"value"}
       textField={"text"}
       placeholderText={"Select a Rule Type"}
+      setDataFunction={setDataFunction}
       disabled={disabled}
       showLabel={showLabel}
     />
@@ -26,11 +36,12 @@ function RuleTypeSelectInput({fieldName, className, dataObject, setDataObject, d
 
 RuleTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
 
 RuleTypeSelectInput.defaultProps = {
