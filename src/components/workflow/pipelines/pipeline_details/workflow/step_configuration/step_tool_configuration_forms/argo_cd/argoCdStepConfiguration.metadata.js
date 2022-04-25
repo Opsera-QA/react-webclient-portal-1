@@ -93,6 +93,10 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "repositoryTag",
       // isRequired: true,
     },
+    {
+      label: "Is Blue Green Deployment?",
+      id: "isBlueGreenDeployment"
+    }
   ],
   newObjectFields: {
     existingContent: "image",
@@ -112,5 +116,6 @@ export const ArgoCdStepConfigurationMetadata = {
     gitRepositoryID: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
+    isBlueGreenDeployment: false
   },
 };
