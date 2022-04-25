@@ -8,11 +8,6 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import CoverityIssuesOverallLowTrendDataBlock from "./data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
-import CoverityIssuesOverallMediumTrendDataBlock from "./data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
-import CoverityIssuesOverallHighTrendDataBlock from "./data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-import HorizontalDataBlocksContainer from "../../../../common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import IconBase from "components/common/icons/IconBase";
 import TotalComponentsDeployed from "./data_blocks/TotalComponentsDeployed";
 import AvgComponentsDeployedPerExecution from "./data_blocks/AvgComponentsDeployedPerExecution";
 import TotalSalesforcePipelineExecutions from "./data_blocks/TotalSalesforcePipelineExecutions";
@@ -162,32 +157,6 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
     }
   };
 
-  const getFooterLine = () => {
-    const topThreeDocs = metrics[0]?.docs?.length > 0 ? metrics[0].docs.slice(0, 3) : [];
-    return (
-      <HorizontalDataBlocksContainer title={"Highest Issue Projects"}>
-        {topThreeDocs.map((doc, index) => (
-          <>
-            <span style={{ paddingLeft: "11px" }}></span>
-            <Row className="p-1" key={index}>
-              <Col lg={12}>
-                {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") != null && (
-                  <IconBase
-                    icon={getIcon(doc?.projectTotalIssuesTrend)}
-                    iconColor={getIconColor(doc?.projectTotalIssuesTrend)}
-                    iconTitle={getIconTitle(doc?.projectTotalIssuesTrend)}
-                  />
-                )}
-                <span style={{ paddingLeft: "2px" }}></span>
-                {doc?.coverityStreamName}
-              </Col>
-            </Row>
-          </>
-        ))}
-      </HorizontalDataBlocksContainer>
-    );
-  };
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0 || dataMetrics.length === 0) {
       return null;
@@ -196,7 +165,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Container>
-          <Row className="p-1 gray">
+          <Row className="p-2 gray">
             <Col>
               <TotalComponentsDeployed
                 score={
@@ -237,7 +206,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
               />
             </Col>
           </Row>
-          <Row className="p-1 gray">
+          <Row className="p-2 gray">
             <Col>
               <TotalPipelineExecutionDeployment
                 score={
@@ -278,7 +247,6 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
               />
             </Col>
           </Row>
-          <div className={"mt-5"}>{getFooterLine()}</div>
         </Container>
       </div>
     );

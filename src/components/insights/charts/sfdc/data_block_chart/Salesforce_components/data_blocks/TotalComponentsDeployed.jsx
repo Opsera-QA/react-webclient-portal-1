@@ -7,10 +7,10 @@ function TotalComponentsDeployed({ score, icon, className, onSelect, lastScore, 
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-3`}
         score={score}
-        topText={"Total Number of Components Deployed"}
-        bottomText={"Last Scan: " + lastScore}
+        topText={"Total Components Deployed"}
+        bottomText={"Previous Result: " + lastScore}
         icon={icon}
         iconOverlayBody = {iconOverlayBody}
 

@@ -7,10 +7,10 @@ function AvgComponentsDeployedPerExecution({ score, icon, className, onSelect, l
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-3`}
         score={score}
-        topText={"Average Components Deployed Per Execution"}
-        bottomText={"Last Scan: " + lastScore}
+        topText={"Average Components Deployed"}
+        bottomText={"Previous Result: " + lastScore}
         icon={icon}
         iconOverlayBody = {iconOverlayBody}
 

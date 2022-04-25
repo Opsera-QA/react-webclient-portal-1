@@ -7,10 +7,10 @@ function TotalSalesforcePipelineExecutions({ score, icon, className, onSelect, l
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-3`}
         score={score}
-        topText={"Total Number of Salesforce Pipeline Executions"}
-        bottomText={"Last Scan: " + lastScore}
+        topText={"Total Pipeline Executions"}
+        bottomText={"Previous Result: " + lastScore}
         icon={icon}
         iconOverlayBody = {iconOverlayBody}
 
