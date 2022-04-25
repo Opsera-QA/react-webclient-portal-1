@@ -71,6 +71,9 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const mttrDataPointConstant = "mttr-in-hours-chart-data-point";
   const numberOfIncidentsConstant = "number-of-incidents-charts-data-point";
   const averageMTTRDataBlockConstant = "average-mttr-data-block-data-point";
+  const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, mttrDataPointConstant);
+  const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, numberOfIncidentsConstant);
+  const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, averageMTTRDataBlockConstant);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -220,13 +223,8 @@ function ServiceNowMeanTimeToResolutionBarChart({
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    console.log(metrics);
-    console.log(sevMetrics);
 
     const dataPoints = kpiConfiguration?.dataPoints;
-    const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, mttrDataPointConstant);
-    const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, numberOfIncidentsConstant);
-    const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, averageMTTRDataBlockConstant);
     
     return (
         <>
