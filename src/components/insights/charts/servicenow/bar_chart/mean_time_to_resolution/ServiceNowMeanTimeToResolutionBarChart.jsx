@@ -222,13 +222,13 @@ function ServiceNowMeanTimeToResolutionBarChart({
     const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT);
     const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.NUMBER_OF_INCIDENTS_DATA_POINT);
     const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.AVERAGE_MTTR_DATA_BLOCK_DATA_POINT);
-    
+    const isOneChartVisible = dataPointHelpers.isDataPointVisible(mttrChartDataPoint) || dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
     return (
         <>
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
-          <div className="new-chart m-3 p-0" style={{ minHeight: "450px", display: "flex" }}>
+          <div className="new-chart m-3 p-0" style={isOneChartVisible ? { minHeight: "450px", display: "flex" } : { display: "flex" }}>
             <Row>
               <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
                   <Col md={12} >
