@@ -13,6 +13,7 @@ import ArgoAwsClusterEditorForm from "./sub-forms/ArgoAwsClusterEditorForm";
 import ArgoAzureClusterEditorForm from "./sub-forms/ArgoAzureClusterEditorForm";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function ArgoClusterEditorPanel(
   {
@@ -137,6 +138,16 @@ function ArgoClusterEditorPanel(
             clusterData={clusterData}
             disabled={argoClusterData ? !argoClusterData?.isNew() : false}
           />
+        }
+        {argoClusterModel.getData("platform") && 
+          <Col lg={12}>
+            <BooleanToggleInput
+              dataObject={argoClusterModel}
+              setDataObject={setArgoClusterModel}
+              fieldName={"argoRolloutsEnabled"}
+              disabled={argoClusterData ? !argoClusterData?.isNew() : false}
+            />
+          </Col>
         }
       </Row>
     );

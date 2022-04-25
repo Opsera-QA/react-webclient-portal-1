@@ -174,6 +174,11 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
       />
       {getRollbackInputs()}
       {getDynamicFields()}
+      <BooleanToggleInput
+        fieldName={"isBlueGreenDeployment"}
+        dataObject={argoCdModel}
+        setDataObject={setArgoCdModel}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
