@@ -25,13 +25,15 @@ import azureAksClusterTaskConfigurationMetadata from "components/tasks/details/t
 import SalesforceOrganizationSyncTaskGitBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import { mergeSyncTaskConfigurationMetadata } from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
 import salesforceQuickDeployTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskSalesforceToolSelectInput from "./tasks/sfdc-quick-deploy/inputs/SalesforceQuickDeployTaskSalesforceToolSelectInput";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
 import TestDeployIdButton from "../../common/buttons/task/quick_deploy/TestDeployIdButton";
 import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {
+  mergeSyncTaskConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
