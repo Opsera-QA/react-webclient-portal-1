@@ -84,7 +84,7 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
-      label: "Rollback Enabled",
+      label: "Rollback",
       id: "rollbackEnabled",
       // isRequired: true,
     },
@@ -94,7 +94,7 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
-      label: "Blue Green Deployment Enabled",
+      label: "Blue Green Deployment",
       id: "isBlueGreenDeployment"
     }
   ],
