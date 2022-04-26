@@ -68,6 +68,7 @@ function FilterContainer(
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "auto",
+      overflowX: "hidden",
     });
   };
 

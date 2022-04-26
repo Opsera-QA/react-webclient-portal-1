@@ -117,6 +117,7 @@ function ExternalRestApiIntegrationStepEditorPanel(
       isLoading={isLoading}
       extraButtons={getWarningMessage()}
       className={"m-0"}
+      addAnotherOption={false}
     >
       <ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
         model={externalRestApiIntegrationModel}
