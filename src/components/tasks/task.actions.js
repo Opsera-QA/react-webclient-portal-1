@@ -206,7 +206,7 @@ taskActions.startGitscraperScan = async (getAccessToken, cancelTokenSource, task
 };
 
 taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const apiUrl = `/tasks/gitscraper/scan/cancel`;
+  const apiUrl = `/tasks/${gitTasksDataDto.getData("_id")}/stop`;
 
   let postBody = {
     taskId: gitTasksDataDto.getData("_id"),
