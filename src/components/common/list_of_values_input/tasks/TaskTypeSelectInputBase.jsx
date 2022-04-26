@@ -19,6 +19,8 @@ export const productionTaskTypes = [
   // Salesforce
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE, value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION, value: TASK_TYPES.SALESFORCE_BULK_MIGRATION, category: "Salesforce"},
+  {text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce"},
 ];
 
 export const nonProductionTaskTypes = [
