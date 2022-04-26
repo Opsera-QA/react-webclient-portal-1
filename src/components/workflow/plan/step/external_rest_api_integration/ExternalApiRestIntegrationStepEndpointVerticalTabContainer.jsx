@@ -26,13 +26,14 @@ const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
   CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION: "connection-check-successful-evaluation-rules-configuration",
   RUN_TRIGGER_API_CONFIGURATION: "run-trigger-api-configuration",
-  RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION: "run-trigger-in-progress-evaluation-rules-configuration",
+  // RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION: "run-trigger-in-progress-evaluation-rules-configuration",
   RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION: "run-trigger-successful-trigger-evaluation-rules-configuration",
   STATUS_CHECK_API_CONFIGURATION: "status-check-api-configuration",
   STATUS_CHECK_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION: "status-check-in-progress-evaluation-rules-configuration",
   STATUS_CHECK_SUCCESSFUL_COMPLETION_EVALUATION_RULES_CONFIGURATION: "status-check-successful-completion-evaluation-rules-configuration",
 };
 
+// TODO: Remove all Run Trigger in progress based code once verified OR in next update to API Integrator
 function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   {
     externalRestApiIntegrationModel,
@@ -77,12 +78,12 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
-          <VanitySetVerticalTab
-            tabText={"In Progress Evaluation Rules"}
-            tabName={EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-          />
+          {/*<VanitySetVerticalTab*/}
+          {/*  tabText={"In Progress Evaluation Rules"}*/}
+          {/*  tabName={EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION}*/}
+          {/*  handleTabClick={handleTabClick}*/}
+          {/*  activeTab={activeTab}*/}
+          {/*/>*/}
           <VanitySetVerticalTab
             tabText={"Successful Trigger Evaluation Rules"}
             tabName={EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION}
@@ -177,18 +178,18 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
             />
           </div>
         );
-      case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
-        return (
-          <EndpointResponseEvaluationRulesInputBase
-            fieldName={"runEndpointResponseEvaluationRules"}
-            evaluationRuleFieldName={"running_rule"}
-            model={externalRestApiIntegrationModel}
-            setModel={setExternalRestApiIntegrationModel}
-            toolId={externalRestApiIntegrationModel?.getData("toolId")}
-            endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-            disabled={disabled}
-          />
-        );
+      // case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
+      //   return (
+      //     <EndpointResponseEvaluationRulesInputBase
+      //       fieldName={"runEndpointResponseEvaluationRules"}
+      //       evaluationRuleFieldName={"running_rule"}
+      //       model={externalRestApiIntegrationModel}
+      //       setModel={setExternalRestApiIntegrationModel}
+      //       toolId={externalRestApiIntegrationModel?.getData("toolId")}
+      //       endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+      //       disabled={disabled}
+      //     />
+      //   );
       case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION:
         return (
           <EndpointResponseEvaluationRulesInputBase
