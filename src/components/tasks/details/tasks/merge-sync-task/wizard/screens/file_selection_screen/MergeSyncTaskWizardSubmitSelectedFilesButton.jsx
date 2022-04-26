@@ -13,7 +13,7 @@ import {
 } from "components/tasks/details/tasks/merge-sync-task/wizard/mergeSyncTaskWizard.constants";
 
 function MergeSyncTaskWizardSubmitSelectedFilesButton({
-  taskWizardModel,
+  wizardModel,
   setCurrentScreen,
   filteredFileCount,
   size,
@@ -49,12 +49,14 @@ function MergeSyncTaskWizardSubmitSelectedFilesButton({
       await mergeSyncTaskWizardActions.setSelectedFileListV2(
         getAccessToken,
         cancelTokenSource,
-        taskWizardModel,
+        wizardModel?.getData("recordId"),
+        wizardModel?.getArrayData("fileSelectionRules"),
       );
       setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN);
     } catch (error) {
-      console.error(error);
-      toastContext.showInlineErrorMessage(error);
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error);
+      }
     } finally {
       if (isMounted?.current === true) {
         setIsSaving(false);
@@ -62,7 +64,7 @@ function MergeSyncTaskWizardSubmitSelectedFilesButton({
     }
   };
 
-  if (taskWizardModel == null) {
+  if (wizardModel == null) {
     return null;
   }
 
@@ -99,7 +101,7 @@ function MergeSyncTaskWizardSubmitSelectedFilesButton({
 }
 
 MergeSyncTaskWizardSubmitSelectedFilesButton.propTypes = {
-  taskWizardModel: PropTypes.object,
+  wizardModel: PropTypes.object,
   setCurrentScreen: PropTypes.func,
   filteredFileCount: PropTypes.number,
   icon: PropTypes.object,

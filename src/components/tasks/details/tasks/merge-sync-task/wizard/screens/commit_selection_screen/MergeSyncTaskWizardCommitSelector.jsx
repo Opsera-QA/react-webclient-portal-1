@@ -113,8 +113,6 @@ const MergeSyncTaskWizardCommitSelector = ({
         );
       }
 
-      console.log("response: " + JSON.stringify(response?.data));
-      console.log("newFileList: " + JSON.stringify(newFileList));
       if (Array.isArray(newFileList)) {
         setDiffFileList([...newFileList]);
         setFilePullCompleted(true);
