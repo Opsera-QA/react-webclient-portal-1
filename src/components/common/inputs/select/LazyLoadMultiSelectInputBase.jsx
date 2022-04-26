@@ -6,31 +6,31 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
-function LazyLoadMultiSelectInputBase(
-  {
-    fieldName,
-    dataObject,
-    setDataObject,
-    groupBy,
-    disabled,
-    selectOptions,
-    valueField,
-    textField,
-    placeholderText,
-    setDataFunction,
-    busy,
-    showClearValueButton,
-    clearDataFunction,
-    className,
-    showLabel,
-    requireClearDataConfirmation,
-    clearDataDetails,
-    linkTooltipText,
-    detailViewLink,
-    infoOverlay,
-    onToggleFunction,
-    onSearchFunction,
-    useToggle,
+function LazyLoadMultiSelectInputBase({
+  fieldName,
+  dataObject,
+  setDataObject,
+  groupBy,
+  disabled,
+  selectOptions,
+  valueField,
+  textField,
+  placeholderText,
+  setDataFunction,
+  busy,
+  showClearValueButton,
+  clearDataFunction,
+  className,
+  showLabel,
+  requireClearDataConfirmation,
+  clearDataDetails,
+  linkTooltipText,
+  detailViewLink,
+  infoOverlay,
+  inputHelpOverlay,
+  onToggleFunction,
+  onSearchFunction,
+  useToggle,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -111,6 +111,7 @@ function LazyLoadMultiSelectInputBase(
         detailViewLink={detailViewLink}
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -167,6 +168,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
+  inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,

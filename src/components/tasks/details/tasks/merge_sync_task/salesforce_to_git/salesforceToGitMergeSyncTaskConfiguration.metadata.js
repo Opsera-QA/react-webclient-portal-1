@@ -1,85 +1,21 @@
 export const salesforceToGitMergeSyncTaskConfigurationMetadata = {
-  type: "Branch to Branch Merge Conflict Resolution Task Configuration",
+  type: "Salesforce to Git Merge Sync Task Configuration",
   fields: [
     {
-      label: "Source Control Management Type",
-      id: "service",
+      label: "Salesforce Source Branch Tool",
+      id: "sourceToolId",
       isRequired: true,
-      lowercase: true,
+      formText: "Salesforce Source Branch Tool cannot match Salesforce Target Branch Tool.",
     },
     {
-      label: "Account",
-      id: "toolId",
+      label: "Salesforce Target Branch Tool",
+      id: "targetToolId",
       isRequired: true,
-      maxLength: 24,
-      regexDefinitionName: "mongoId",
-    },        
-    {
-      label: "Git Repository URL",
-      id: "gitUrl",
-    },
-    {
-      label: "Repository",
-      id: "repository",
-      isRequired: true,
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-    },
-    {
-      label: "Repository",
-      id: "repositoryName",
-      maxLength: 255,
-    },
-    {
-      label: "Workspace",
-      id: "workspace",
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-      isRequiredFunction: (model) => {
-        return model?.getData("service") === "bitbucket";
-      },
-    },
-    {
-      label: "Source Branch",
-      id: "sourceBranch",
-      isRequired: true,
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-      formText: "Source Branch cannot match Target Branch.",
-    },
-    {
-      label: "Target Branch",
-      id: "targetBranch",
-      isRequired: true,
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-      formText: "Target Branch cannot match Source Branch.",
+      formText: "Salesforce Target Branch Tool cannot match Salesforce Source Branch Tool.",
     },    
-    {
-      label: "Create New Target Branch",
-      id: "isNewBranch",
-    },
-    {
-      label: "Upstream Branch",
-      id: "upstreamBranch",
-      maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
-      formText: "Target Branch cannot match Source Branch.",
-      isRequiredFunction: (model) => {
-        return model?.getData("isNewBranch") === true;
-      },
-    },
   ],
   newObjectFields: {
-    toolId: "",
-    gitUrl: "",
-    service: "",
-    workspace: "",
-    repository: "",
-    repositoryName: "", // TODO: Remove
-    targetBranch: "",
-    sourceBranch: "",
-    upstreamBranch: "",
-    isNewBranch: false,
+    sourceToolId: "",
+    targetToolId: "",
   }
 };

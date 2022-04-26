@@ -34,6 +34,7 @@ function LazyLoadSelectInputBase(
     ellipsisTooltipText,
     lenientClearValueButton,
     onToggleFunction,
+    inputHelpOverlay,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -99,6 +100,7 @@ function LazyLoadSelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}
@@ -161,6 +163,7 @@ LazyLoadSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
+  inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,

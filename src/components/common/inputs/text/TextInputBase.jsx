@@ -25,6 +25,7 @@ function TextInputBase(
     error,
     rightSideInputButton,
     inputButtons,
+    inputHelpOverlay,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -135,6 +136,7 @@ function TextInputBase(
         linkTooltipText={linkTooltipText}
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       {getInput()}
       <InfoText
@@ -159,6 +161,7 @@ TextInputBase.propTypes = {
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
   setDataFunction: PropTypes.func,
   name: PropTypes.string,
   style: PropTypes.object,
