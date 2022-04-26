@@ -42,21 +42,24 @@ function GitScraperActionableInsightsSummaryCard({ gitScraperData }) {
     <InsightsCardContainerBase titleBar={getTitleBar()}>
       <div className={"m-2"}>
         <Row className="d-flex align-items-center">            
-          <Col sm={12} md={5} lg={3}>                
+          <Col sm={12} md={12} lg={3} className={"md-hide"}>                
               <InsightHighlightFieldWithTrendIcon 
                   dataObject={gitScraperActionableInsightsDto} 
                   fieldName={"lineNumber"}                  
               />
           </Col>
-          <Col sm={12} md={7} lg={9}>
+          <Col sm={12} md={12} lg={9}>
               <Row>
+                  <Col sm={12} md={6} lg={6} className={"md-show"}>
+                    <TextFieldBase dataObject={gitScraperActionableInsightsDto} fieldName={"lineNumber"} className="insight-detail-label my-2" />
+                  </Col>
                   <Col sm={12} md={6} lg={6}>
                     <TextFieldBase dataObject={gitScraperActionableInsightsDto} fieldName={"reason"} className="insight-detail-label my-2" />
-                  </Col>                  
+                  </Col>
                   <Col sm={12} md={6} lg={6}>
                     <DateTimeField dataObject={gitScraperActionableInsightsDto} fieldName={"commitDate"} className="insight-detail-label my-2" />
                   </Col>
-                  <Col sm={12} md={12} lg={12}>
+                  <Col sm={12} md={6} lg={6}>
                     <TextFieldBase dataObject={gitScraperActionableInsightsDto} fieldName={"commit"} className="insight-detail-label my-2" />
                   </Col>
               </Row>

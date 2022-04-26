@@ -12,9 +12,8 @@ import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDa
 import FilterContainer from "components/common/table/FilterContainer";
 import GitScraperActionableInsightsCardView from "./card/GitScraperActionableInsightsCardView";
 import gitScrapperPipelineFilterMetadata from "../git-scrapper-pipeline-filter-metadata";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
-import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import { Row, Col } from "react-bootstrap";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
 function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -137,29 +136,14 @@ function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashb
     if(actionableInsightsMetadata && actionableInsightsMetadata.length > 0) {
       return (
         <Row className="p-2 gray">
-          <Col md={4}>
-            <DataBlockBoxContainer showBorder={true}>
-              <TwoLineScoreDataBlock                
-                score={actionableInsightsMetadata[0].repository}
-                subtitle={"Repository"}
-              />
-            </DataBlockBoxContainer>
+          <Col md={4}>            
+            <StandaloneTextFieldBase label={"Repository"} text={actionableInsightsMetadata[0].repository} />
+          </Col>
+          <Col md={4}>            
+            <StandaloneTextFieldBase label={"Branch"} text={actionableInsightsMetadata[0].branch} />
           </Col>
           <Col md={4}>
-            <DataBlockBoxContainer showBorder={true}>
-              <TwoLineScoreDataBlock                
-                score={actionableInsightsMetadata[0].branch}
-                subtitle={"Branch"}
-              />
-            </DataBlockBoxContainer>
-          </Col>
-          <Col md={4}>
-            <DataBlockBoxContainer showBorder={true}>
-              <TwoLineScoreDataBlock                
-                score={actionableInsightsMetadata[0].library}
-                subtitle={"Library"}
-              />
-            </DataBlockBoxContainer>
+            <StandaloneTextFieldBase label={"Library"} text={actionableInsightsMetadata[0].library} />            
           </Col>
         </Row>      
       );
