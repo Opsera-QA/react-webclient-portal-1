@@ -102,16 +102,7 @@ function SonarReports() {
     }
 
     if (areAnalyticsToolsEnabled === true) {
-      return (
-        <DashboardsTable
-          data={dashboardsList}
-          loadData={loadData}
-          isLoading={isLoading}
-          dashboardFilterDto={dashboardFilterDto}
-          setDashboardFilterDto={setDashboardFilterDto}
-          dashboardsActions={dashboardsActions}
-        />
-      );
+      return null;
     }
 
     return (

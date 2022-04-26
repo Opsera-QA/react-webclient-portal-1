@@ -81,7 +81,7 @@ function SonarRatingCodeCoverageActionableInsightTable(
   );
 
   const onRowSelect = (rowData) => {
-    history.push(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`);
+    window.open(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`);
   };
 
   const getTable = () => {
