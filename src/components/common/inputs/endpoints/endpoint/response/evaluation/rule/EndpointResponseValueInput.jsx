@@ -53,8 +53,7 @@ function EndpointResponseEvaluationInput(
             <Col xs={4}>
               <BooleanSelectInput
                 model={evaluationRuleModel}
-                setModel={setEvaluationRuleModel}
-                setDataFunction={updateMainModelFunction}
+                setModel={updateModelFunction}
                 fieldName={"value"}
                 disabled={disabled}
               />
