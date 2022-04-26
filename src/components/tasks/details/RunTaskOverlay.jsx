@@ -33,7 +33,7 @@ import ConfirmationOverlay from "components/common/overlays/center/ConfirmationO
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 import {
   mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
+} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
