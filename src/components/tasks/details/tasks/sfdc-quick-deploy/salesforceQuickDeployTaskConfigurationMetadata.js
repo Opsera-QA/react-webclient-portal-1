@@ -20,7 +20,7 @@ const salesforceQuickDeployTaskConfigurationMetadata = {
       id: "deployKey",
       isRequired: true,
       maxLength: 18,
-      minLength: 16,
+      minLength: 15,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
   ],
