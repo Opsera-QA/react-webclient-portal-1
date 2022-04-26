@@ -30,6 +30,7 @@ import { DialogToastContext } from "../../../../../../contexts/DialogToastContex
 import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {SERVICE_NOW_MEAN_TIME_TO_RESOLUTION_CONSTANTS as dataPointConstants} from "./ServiceNowMeanTimeToResolution_datapoint_identifiers";
+import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -237,9 +238,11 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   <Col md={12} >
                     <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
                   </Col>
+                <DataPointVisibilityWrapper dataPoint={averageMTTRDataBlockDataPoint} >
                   <Col md={12} >
                     <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
                   </Col>
+                </DataPointVisibilityWrapper>
                   <Col md={12} >
                     <ServiceNowMinMTTRDataBlock data={minMTTR} />
                   </Col>
