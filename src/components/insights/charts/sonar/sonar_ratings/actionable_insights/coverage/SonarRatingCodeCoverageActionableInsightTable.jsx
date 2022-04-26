@@ -81,9 +81,7 @@ function SonarRatingCodeCoverageActionableInsightTable(
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount}/>
-    );
+    history.push(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`);
   };
 
   const getTable = () => {

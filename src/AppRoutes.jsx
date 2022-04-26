@@ -126,6 +126,7 @@ import Faq from "components/about/faq/Faq";
 import CustomEnvironmentVariableManagement
   from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
+import SonarReports from "./components/insights/reports/SonarReports";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -247,6 +248,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
+          <SecureRoute path="/insights/reports/scans/:pipelineId/:stepId/:runCount" component={SonarReports} />
+
 
 
           <SecureRoute path="/task" exact component={TaskManagement} />
