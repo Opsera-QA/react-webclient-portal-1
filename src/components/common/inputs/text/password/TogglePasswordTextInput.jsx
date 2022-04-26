@@ -6,7 +6,7 @@ import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiv
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 
-function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
+function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHelpOverlay, infoOverlay,}) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [valueShown, setValueShown] = useState(false);
@@ -74,7 +74,12 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled}) {
 
   return (
     <InputContainer>
-      <InputLabel model={model} field={field}/>
+      <InputLabel
+        model={model}
+        field={field}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       <div>
         <input
           type={valueShown === false ? "password" : undefined}
@@ -102,6 +107,8 @@ TogglePasswordTextInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default TogglePasswordTextInput;

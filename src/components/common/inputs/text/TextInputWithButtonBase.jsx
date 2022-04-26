@@ -21,7 +21,9 @@ function TextInputWithButtonBase({
   btnClickHandler,
   btnToolTipText,
   errorMsg,
-  successMsg
+  successMsg,
+  inputHelpOverlay,
+  infoOverlay,
 }) {  
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState(errorMsg);
@@ -78,7 +80,13 @@ function TextInputWithButtonBase({
 
   return (
     <InputContainer>
-      <InputLabel model={dataObject} field={field} extraActionButtons={extraActionButtons} />
+      <InputLabel
+        model={dataObject}
+        field={field}
+        extraActionButtons={extraActionButtons}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       <Row>
         <Col lg={8}>
           <input
@@ -120,6 +128,8 @@ TextInputWithButtonBase.propTypes = {
   btnToolTipText: PropTypes.string,
   errorMsg: PropTypes.string,
   successMsg: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default TextInputWithButtonBase;

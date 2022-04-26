@@ -23,6 +23,8 @@ function DateTimeInputBase(
     defaultToNull,
     showClearValueButton,
     className,
+    inputHelpOverlay,
+    infoOverlay,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -80,6 +82,8 @@ function DateTimeInputBase(
         field={field}
         model={dataObject}
         clearDataFunction={getClearDataFunction()}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
       />
       <StandaloneDatePickerInput
         minDate={minDate}
@@ -115,6 +119,8 @@ DateTimeInputBase.propTypes = {
   dropUp: PropTypes.bool,
   defaultToNull: PropTypes.bool,
   className: PropTypes.string,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
 };
 
 DateTimeInputBase.defaultProps = {

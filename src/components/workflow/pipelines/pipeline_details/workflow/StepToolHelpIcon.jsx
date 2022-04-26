@@ -106,7 +106,13 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
     return (getToolHelpPanel());
   };
 
-  return (<LaunchHelpIcon iconClassName={iconClassName} className={className} helpComponent={getHelpComponent()} />);
+  return (
+    <LaunchHelpIcon
+      iconClassName={iconClassName}
+      className={className}
+      helpComponent={getHelpComponent()}
+    />
+  );
 }
 
 StepToolHelpIcon.propTypes = {

@@ -23,6 +23,7 @@ function ArgoAwsClusterSelectInput({
   const [placeholder, setPlaceholder] = useState("Select a Cluster");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -53,8 +54,7 @@ function ArgoAwsClusterSelectInput({
       await loadAwsClusters(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setError(error);        
       }
     } finally {
       if (isMounted?.current === true) {
@@ -83,7 +83,7 @@ function ArgoAwsClusterSelectInput({
     } catch (error) {
       setPlaceholder("No Clusters Found");
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 
@@ -95,6 +95,7 @@ function ArgoAwsClusterSelectInput({
       selectOptions={clusters}
       textField={textField}
       valueField={valueField}
+      error={error}
       busy={isLoading}
       placeholderText={placeholder}
       disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}

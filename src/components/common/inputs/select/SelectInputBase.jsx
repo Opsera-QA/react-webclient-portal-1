@@ -40,6 +40,7 @@ function SelectInputBase(
     pluralTopic,
     visible,
     customInfoTextMessage,
+    inputHelpOverlay,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -143,6 +144,7 @@ function SelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <StandaloneSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}
@@ -201,6 +203,7 @@ SelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
+  inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,

@@ -84,7 +84,7 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
-      label: "Rollback Enabled",
+      label: "Rollback",
       id: "rollbackEnabled",
       // isRequired: true,
     },
@@ -93,6 +93,10 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "repositoryTag",
       // isRequired: true,
     },
+    {
+      label: "Blue Green Deployment",
+      id: "isBlueGreenDeployment"
+    }
   ],
   newObjectFields: {
     existingContent: "image",
@@ -112,5 +116,6 @@ export const ArgoCdStepConfigurationMetadata = {
     gitRepositoryID: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
+    isBlueGreenDeployment: false
   },
 };

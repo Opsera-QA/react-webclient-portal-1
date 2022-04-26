@@ -9,6 +9,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_SALESFORCE_REPO,
+  // TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
   // TASK_TYPES.SALESFORCE_BULK_MIGRATION,
 ];
 

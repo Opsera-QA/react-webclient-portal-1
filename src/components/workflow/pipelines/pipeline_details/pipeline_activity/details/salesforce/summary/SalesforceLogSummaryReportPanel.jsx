@@ -43,8 +43,9 @@ function SalesforceLogSummaryReportPanel({ pipelineTaskData }) {
 
   const initializeData = async () => {
     try {
-      const jobDetails = pipelineTaskData?.api_response?.sfdcJobDetails;
-      const deployResult = Array.isArray(jobDetails) && jobDetails?.length > 0 ? jobDetails[0].deployResult : undefined;
+      // const jobDetails = pipelineTaskData?.api_response?.sfdcJobDetails;
+      // const deployResult = Array.isArray(jobDetails) && jobDetails?.length > 0 ? jobDetails[0].deployResult : undefined;
+      const deployResult = pipelineTaskData;
 
       if (deployResult != null) {
         setSalesforceDeployResultsModel(new Model(deployResult, salesforceSummaryLogDeployResultMetadata, false));

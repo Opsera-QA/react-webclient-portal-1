@@ -87,6 +87,11 @@ function InputTitleBar(
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
+        <RefreshButton
+          isLoading={isLoading}
+          loadData={loadDataFunction}
+          className={"ml-2"}
+        />
         {getRightSideButton()}
       </div>
     </div>

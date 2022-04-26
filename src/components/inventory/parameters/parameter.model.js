@@ -9,7 +9,7 @@ export class ParameterModel extends ModelBase {
     this.loadData = loadData;
     this.updateAllowed = canUpdate;
     this.deleteAllowed = canDelete;
-    this.editAccssRolesAllowed = canEditAccessRoles;
+    this.editAccessRolesAllowed = canEditAccessRoles;
     this.setStateFunction = setStateFunction;
   }
 

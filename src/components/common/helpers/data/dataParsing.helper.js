@@ -62,5 +62,7 @@ dataParsingHelper.parseObjectValue = (type, value) => {
       return dataParsingHelper.parseArray(value, []);
     case "date":
       return dataParsingHelper.parseDate(value, undefined);
+    case "boolean":
+      return dataParsingHelper.parseBoolean(value, false);
   }
 };

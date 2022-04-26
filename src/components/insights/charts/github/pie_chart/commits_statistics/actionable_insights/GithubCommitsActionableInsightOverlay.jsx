@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faTable, faCodeCommit, faBook, faCodeMerge } from "@fortawesome/pro-light-svg-icons";
+import { faTable, faCodeMerge, faCodePullRequest, faCodePullRequestClosed} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -27,7 +27,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
-          icon={faCodeCommit}
+          icon={faCodePullRequest}
         />
       );
     } else if (activeTab == "closed") {
@@ -36,7 +36,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
-          icon={faCodeMerge}
+          icon={faCodePullRequestClosed}
         />
       );
     } else if (activeTab == "merged") {
@@ -45,7 +45,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
-          icon={faTable}
+          icon={faCodeMerge}
         />
       );
     } else if (activeTab == "contributors") {
@@ -54,7 +54,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
-          icon={faTable}
+          icon={faCodeMerge}
         />
       );
     }
@@ -73,28 +73,28 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           tabText={"Open Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"opened"}
-          icon={faCodeCommit}
+          icon={faCodePullRequest}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Closed Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"closed"}
-          icon={faCodeMerge}
+          icon={faCodePullRequestClosed}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Merged Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"merged"}
-          icon={faTable}
+          icon={faCodeMerge}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Contributors"}
           handleTabClick={handleTabClick}
           tabName={"contributors"}
-          icon={faTable}
+          icon={faCodeMerge}
         />
       </CustomTabContainer>
     );

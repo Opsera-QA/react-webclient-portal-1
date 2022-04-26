@@ -4,8 +4,8 @@ import Col from "react-bootstrap/Col";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanSelectInput from "components/common/list_of_values_input/boolean/BooleanSelectInput";
 
 function EndpointResponseEvaluationInput(
   {
@@ -24,35 +24,41 @@ function EndpointResponseEvaluationInput(
       switch (responseBodyType) {
         case "string":
           return (
-            <TextInputBase
-              dataObject={evaluationRuleModel}
-              setDataObject={setEvaluationRuleModel}
-              fieldName={"value"}
-              setDataFunction={updateMainModelFunction}
-              disabled={disabled}
-            />
+            <Col xs={12}>
+              <TextInputBase
+                dataObject={evaluationRuleModel}
+                setDataObject={setEvaluationRuleModel}
+                fieldName={"value"}
+                setDataFunction={updateMainModelFunction}
+                disabled={disabled}
+              />
+            </Col>
           );
         case "array":
           return (
-            <MultiTextListInputBase
-              model={evaluationRuleModel}
-              setModel={setEvaluationRuleModel}
-              fieldName={"value"}
-              setDataFunction={updateMainModelFunction}
-              disabled={disabled}
-              singularTopic={"Value"}
-              pluralTopic={"Values"}
-            />
+            <Col xs={12}>
+              <MultiTextListInputBase
+                model={evaluationRuleModel}
+                setModel={setEvaluationRuleModel}
+                fieldName={"value"}
+                setDataFunction={updateMainModelFunction}
+                disabled={disabled}
+                singularTopic={"Value"}
+                pluralTopic={"Values"}
+              />
+            </Col>
           );
         case "boolean":
           return (
-            <BooleanToggleInput
-              dataObject={evaluationRuleModel}
-              setDataObject={setEvaluationRuleModel}
-              setDataFunction={updateModelFunction}
-              fieldName={"value"}
-              disabled={disabled}
-            />
+            <Col xs={4}>
+              <BooleanSelectInput
+                model={evaluationRuleModel}
+                setModel={setEvaluationRuleModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </Col>
           );
       }
     }
@@ -64,7 +70,7 @@ function EndpointResponseEvaluationInput(
 
   return (
     <>
-      <Col xs={8}>
+      <Col xs={responseBodyType === "boolean" ? 4 : 8}>
         <ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
           model={evaluationRuleModel}
           setModel={setEvaluationRuleModel}
@@ -73,9 +79,7 @@ function EndpointResponseEvaluationInput(
           updateMainModelFunction={updateModelFunction}
         />
       </Col>
-      <Col xs={12}>
-        {getValueInput()}
-      </Col>
+      {getValueInput()}
     </>
   );
 }
