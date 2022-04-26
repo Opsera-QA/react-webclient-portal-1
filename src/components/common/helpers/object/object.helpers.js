@@ -8,6 +8,10 @@ objectHelpers.isObject = (potentialObject) => {
 
 objectHelpers.parseJson = (json, defaultValue = {}) => {
   try {
+    if (typeof json === "object") {
+      return json;
+    }
+
     return JSON.parse(json);
   } catch (error) {
     return defaultValue;

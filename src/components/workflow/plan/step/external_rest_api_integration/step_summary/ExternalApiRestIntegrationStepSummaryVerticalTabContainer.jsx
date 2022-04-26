@@ -167,7 +167,6 @@ function ExternalApiRestIntegrationStepSummaryVerticalTabContainer(
                   model={externalRestApiIntegrationModel}
                   fieldName={"runEndpointResponseEvaluationRules"}
                   successRuleType={"Successful Run Trigger"}
-                  inProgressRuleType={"In Progress Run Trigger"}
                 />
               </Col>
             </Row>

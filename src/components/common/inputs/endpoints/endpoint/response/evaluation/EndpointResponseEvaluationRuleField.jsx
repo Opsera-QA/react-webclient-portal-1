@@ -115,7 +115,6 @@ function EndpointResponseEvaluationRuleField(
   const getConstructedText = () => {
     const option = responseEvaluationRule?.option;
 
-    // TODO: Finish options
     switch (option) {
       case "status":
         return formatTextForStatusRule(responseEvaluationRule);
