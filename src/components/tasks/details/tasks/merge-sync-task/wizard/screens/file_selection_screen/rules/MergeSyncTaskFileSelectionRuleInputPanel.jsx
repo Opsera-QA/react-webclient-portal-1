@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
 import Model from "core/data_model/model";
-import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import MergeSyncTaskFileSelectionFieldSelectInput
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/rules/MergeSyncTaskFileSelectionFieldSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -15,6 +14,9 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
   from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
+import {
+  mergeSyncTaskFileSelectionRuleMetadata
+} from "components/tasks/details/tasks/merge-sync-task/wizard/screens/file_selection_screen/rules/mergeSyncTaskFileSelectionRule.metadata";
 
 function MergeSyncTaskFileSelectionRuleInputPanel(
   {
@@ -39,7 +41,7 @@ function MergeSyncTaskFileSelectionRuleInputPanel(
   }, [index, ruleData]);
 
   const loadData = () => {
-    const newModel = new Model({...ruleData}, sfdcRuleMetadata, false);
+    const newModel = new Model({...ruleData}, mergeSyncTaskFileSelectionRuleMetadata, false);
     setRuleModel({...newModel});
   };
 

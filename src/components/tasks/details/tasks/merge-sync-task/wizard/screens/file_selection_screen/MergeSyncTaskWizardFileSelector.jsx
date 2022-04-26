@@ -75,7 +75,9 @@ const MergeSyncTaskWizardFileSelector = ({
       setIsLoading(true);
       await handleFilePolling(cancelSource);
     } catch (error) {
-      toastContext.showInlineErrorMessage(error);
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error);
+      }
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
@@ -112,6 +114,7 @@ const MergeSyncTaskWizardFileSelector = ({
   const getSourceCommitList = async (
     cancelSource = cancelTokenSource,
   ) => {
+    setIsLoading(true);
     const response = await mergeSyncTaskWizardActions.pullSourceFileListV2(
       getAccessToken,
       cancelSource,
@@ -165,7 +168,6 @@ const MergeSyncTaskWizardFileSelector = ({
           }}
         />
         <MergeSyncTaskWizardSubmitSelectedFilesButton
-          taskWizardModel={wizardModel}
           filteredFileCount={sourceCommitList?.length}
           setCurrentScreen={setCurrentScreen}
           wizardModel={wizardModel}

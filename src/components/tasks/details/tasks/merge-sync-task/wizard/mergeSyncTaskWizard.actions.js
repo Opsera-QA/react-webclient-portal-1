@@ -33,10 +33,10 @@ mergeSyncTaskWizardActions.updatePipelineStorageRecordV2 = async (getAccessToken
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-mergeSyncTaskWizardActions.setSelectedFileListV2 = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
-  const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData("recordId")}/selected-file-list`;
+mergeSyncTaskWizardActions.setSelectedFileListV2 = async (getAccessToken, cancelTokenSource, pipelineStorageRecordId, fileSelectionRules) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${pipelineStorageRecordId}/selected-file-list`;
   const postBody = {
-    selectedFileList: taskWizardModel?.getArrayData("selectedComponentTypes"),
+    rules: fileSelectionRules,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
