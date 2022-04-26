@@ -27,6 +27,7 @@ function LazyLoadMultiSelectInputBase({
   linkTooltipText,
   detailViewLink,
   infoOverlay,
+  inputHelpOverlay,
   onToggleFunction,
   onSearchFunction,
   useToggle,
@@ -110,6 +111,7 @@ function LazyLoadMultiSelectInputBase({
         detailViewLink={detailViewLink}
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -166,7 +168,8 @@ LazyLoadMultiSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
-  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.object,
+  infoOverlay: PropTypes.object,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
   useToggle: PropTypes.bool,

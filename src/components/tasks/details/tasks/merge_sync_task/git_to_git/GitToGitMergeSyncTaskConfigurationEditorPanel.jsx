@@ -40,12 +40,12 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
       taskModel?.getData("configuration"),
       mergeSyncTaskConfigurationMetadata,
     );
+    configurationData?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     setTaskConfigurationModel({ ...configurationData });
     const newGitModel = modelHelpers.getToolConfigurationModel(
       configurationData?.getData("git"),
       gitToGitMergeSyncTaskConfigurationMetadata,
     );
-    newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     setGitConfigurationModel({...newGitModel});
   };
 

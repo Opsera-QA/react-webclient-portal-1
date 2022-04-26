@@ -11,6 +11,8 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import {
   salesforceToGitMergeSyncTaskConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/salesforceToGitMergeSyncTaskConfiguration.metadata";
+import SalesforceMergeSyncTaskSalesforceToolSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
   taskModel,
@@ -28,18 +30,19 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
       taskModel?.getData("configuration"),
       mergeSyncTaskConfigurationMetadata,
     );
+    configurationData?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setTaskConfigurationModel({ ...configurationData });
-    const newGitModel = modelHelpers.getToolConfigurationModel(
-      configurationData?.getData("git"),
+    const newSalesforceToGitSyncModel = modelHelpers.getToolConfigurationModel(
+      configurationData?.getData("salesforce"),
       salesforceToGitMergeSyncTaskConfigurationMetadata,
     );
-    newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
-    setSalesforceConfigurationModel({...newGitModel});
+    setSalesforceConfigurationModel({...newSalesforceToGitSyncModel});
   };
 
   const setModelFunction = (newModel) => {
     setSalesforceConfigurationModel({...newModel});
-    taskConfigurationModel?.setData("git", salesforceConfigurationModel?.getPersistData());
+    // taskConfigurationModel?.setData("git", {});
+    taskConfigurationModel?.setData("salesforce", salesforceConfigurationModel?.getPersistData());
     setTaskConfigurationModel({...taskConfigurationModel});
   };
 
@@ -50,8 +53,18 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
   return (
     <Row>
       <Col lg={12}>
+        <SalesforceMergeSyncTaskSalesforceToolSelectInput
+          model={salesforceConfigurationModel}
+          setModel={setModelFunction}
+          fieldName={"sourceToolId"}
+        />
       </Col>
       <Col lg={12}>
+        <SalesforceMergeSyncTaskSalesforceToolSelectInput
+          model={salesforceConfigurationModel}
+          setModel={setModelFunction}
+          fieldName={"targetToolId"}
+        />
       </Col>
     </Row>
   );

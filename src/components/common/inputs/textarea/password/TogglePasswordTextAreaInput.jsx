@@ -12,6 +12,8 @@ function TogglePasswordTextAreaInput(
     model,
     setModel,
     disabled,
+    inputHelpOverlay,
+    infoOverlay,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -92,6 +94,8 @@ function TogglePasswordTextAreaInput(
       <InputLabel
         model={model}
         field={field}
+        infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <div className={"d-flex"}>
         <textarea
@@ -118,6 +122,8 @@ TogglePasswordTextAreaInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default TogglePasswordTextAreaInput;

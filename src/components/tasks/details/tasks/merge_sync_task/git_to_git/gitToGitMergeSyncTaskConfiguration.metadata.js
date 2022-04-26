@@ -1,5 +1,5 @@
 export const gitToGitMergeSyncTaskConfigurationMetadata = {
-  type: "Branch to Branch Merge Conflict Resolution Task Configuration",
+  type: "Git to Git Merge Sync Task Configuration",
   fields: [
     {
       label: "Source Control Management Type",
