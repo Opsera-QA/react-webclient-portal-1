@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import RuleFilterTypeSelectInput
+  from "components/common/list_of_values_input/rules/filter_type/RuleFilterTypeSelectInput";
 
-export const ruleFieldFilters = [
-  {value: "equals", text: "Equals"},
-  {value: "startsWith", text: "Starts With"},
-  {value: "endsWith", text: "Ends With"},
-  {value: "contains", text: "Contains"},
-];
-
+// TODO: Refactor
 function SfdcPipelineWizardRuleFieldFilterSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {
   const setDataFunction = (fieldName, newValue) => {
     let newDataObject = {...model};
@@ -18,18 +13,14 @@ function SfdcPipelineWizardRuleFieldFilterSelectInput({fieldName, className, mod
   };
 
   return (
-    <SelectInputBase
-      className={className}
+    <RuleFilterTypeSelectInput
       fieldName={fieldName}
-      dataObject={model}
-      setDataObject={setModel}
-      setDataFunction={setDataFunction}
-      selectOptions={ruleFieldFilters}
-      placeholderText={"Select a Filter"}
-      valueField={"value"}
-      textField={"text"}
+      className={className}
       disabled={disabled}
       showLabel={showLabel}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
     />
   );
 }

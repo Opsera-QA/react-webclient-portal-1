@@ -360,6 +360,56 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
 };
 
+export const isFeatureActionAllowed = (customerAccessRules, roleDefinition) => {
+  if (customerAccessRules == null || roleDefinition == null) {
+    return false;
+  }
+
+  const allowedRoles = roleDefinition?.allowedRoles;
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules?.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.OpseraAdministrator === true && allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.Administrator === true && allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.SassPowerUser === true && allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
+    return true;
+  }
+
+  if (customerAccessRules.FreeTrialUser === true && allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
+    return true;
+  }
+
+  return false;
+};
+
 //compares the user email to the objectRoles data to see if the user has a specific role
 // (either directly or through group membership)
 export const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {

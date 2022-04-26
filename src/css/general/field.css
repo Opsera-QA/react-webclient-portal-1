@@ -53,6 +53,23 @@
 
 /* End Item Field */
 
+/* Diff Field Styling */
+.codeMarker {
+    background-color: rgb(178, 219, 255, .5);
+    position: absolute;
+    z-index: 20;
+}
+
+.ace-text-layer {
+    z-index: 30;
+}
+
+pre {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+/* End Diff Field Styling */
+
 
 /* Role Access Input Styling */
 .role-access .group-badge {

@@ -14,7 +14,7 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
 import GitToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge-sync-task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
+  from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: THis should be separated into multiple buttons based on task.

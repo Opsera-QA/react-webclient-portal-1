@@ -26,6 +26,8 @@ function FilterContainer(
     bodyClassName,
     handleExportFunction,
     handleImportFunction,
+    minimumHeight,
+    maximumHeight,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -53,11 +55,29 @@ function FilterContainer(
     );
   };
 
+  const getContainerStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "hidden",
+    });
+  };
+
+  const getBodyStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "auto",
+    });
+  };
+
   return (
     <div className={className}>
-      <div className="filter-container container-border">
-        <div className="filter-title-bar w-100">
-          <div className="px-2 d-flex content-block-header">
+      <div
+        className={"filter-container container-border"}
+      >
+        <div className={"filter-title-bar w-100"}>
+          <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
@@ -68,9 +88,16 @@ function FilterContainer(
               addRecordFunction={addRecordFunction}
             />
           </div>
-          <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
+          <ActiveFilterDisplayer
+            filterDto={filterDto}
+            setFilterDto={setFilterDto}
+            loadData={loadData}
+          />
         </div>
-        <div className={bodyClassName}>
+        <div
+          className={bodyClassName}
+          style={getBodyStylingObject()}
+        >
           {body}
         </div>
       </div>
@@ -100,6 +127,8 @@ FilterContainer.propTypes = {
   bodyClassName: PropTypes.bool,
   handleExportFunction: PropTypes.func,
   handleImportFunction: PropTypes.func,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };
 
 export default FilterContainer;

@@ -182,7 +182,10 @@ import GitScraperSummaryPanel from "./step_tool_configuration_forms/gitscraper/G
 import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscraper/gitscraper-step-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationStepSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepSummaryPanel";
+  from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
+import {
+  externalRestApiIntegrationStepMetadata
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -198,6 +201,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ExternalRestApiIntegrationStepSummaryPanel
             pipelineData={pipelineData}
+            externalRestApiIntegrationModel={getModelWrappedObject(externalRestApiIntegrationStepMetadata)}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import IconBase from "components/common/icons/IconBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 function ToggleSettingsIcon({ activeTab, setActiveTab, className, visible }) {
   const toggleSettings = () => {
@@ -14,15 +13,12 @@ function ToggleSettingsIcon({ activeTab, setActiveTab, className, visible }) {
   }
 
   return (
-    <div className={className}>
-      <TooltipWrapper innerText={"Toggle Settings"}>
-        <IconBase
-          onClickFunction={() => {toggleSettings();}}
-          icon={faCogs}
-          className={"pointer"}
-        />
-      </TooltipWrapper>
-    </div>
+    <OverlayIconBase
+      className={className}
+      overlayBody={"Toggle Settings"}
+      icon={faCogs}
+      onClickFunction={toggleSettings}
+    />
   );
 }
 
