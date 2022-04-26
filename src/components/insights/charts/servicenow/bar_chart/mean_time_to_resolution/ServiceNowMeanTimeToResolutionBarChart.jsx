@@ -237,9 +237,10 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   <Col md={12} >
                     <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
                   </Col>
+                {dataPointHelpers.isDataPointVisible(averageMTTRDataBlockDataPoint) &&
                   <Col md={12} >
                     <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
-                  </Col>
+                  </Col> }
                   <Col md={12} >
                     <ServiceNowMinMTTRDataBlock data={minMTTR} />
                   </Col>
