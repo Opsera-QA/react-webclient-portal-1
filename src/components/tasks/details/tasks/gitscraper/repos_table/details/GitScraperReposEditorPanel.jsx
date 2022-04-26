@@ -98,7 +98,7 @@ function GitScraperReposEditorPanel({
       axios.CancelToken.source(),
       parentDataObject,
     );
-    // setParentDataObject(gitScraperRepos);
+    setParentDataObject(gitScraperRepos);
     // await loadData();
     setIsLoading(false);
     handleClose();

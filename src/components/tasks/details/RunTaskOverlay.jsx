@@ -33,7 +33,9 @@ import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipel
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {
   mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
+} from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
@@ -124,6 +126,9 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
           configuration,
           azureAksClusterTaskConfigurationMetadata,
         );
+        break;
+      case TASK_TYPES.GITSCRAPER:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
         break;
       default:
         setTaskConfigurationModel(null);
