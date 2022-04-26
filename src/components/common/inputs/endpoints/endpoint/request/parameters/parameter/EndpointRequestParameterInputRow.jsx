@@ -17,6 +17,7 @@ import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import BooleanSelectInput from "components/common/list_of_values_input/boolean/BooleanSelectInput";
 
 function EndpointRequestParameterInputRow(
   {
@@ -135,6 +136,18 @@ function EndpointRequestParameterInputRow(
               defaultToNull={true}
               disabled={disabled}
               clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          </div>
+        );
+      case "boolean":
+        return (
+          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+            <BooleanSelectInput
+              model={endpointFieldModel}
+              setModel={setEndpointFieldModel}
+              fieldName={"value"}
+              setDataFunction={(fieldName, selectedOption) => updateMainModelFunction(fieldName, selectedOption?.value)}
+              disabled={disabled}
             />
           </div>
         );
