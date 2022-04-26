@@ -19,7 +19,7 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 
   const getSummaryPanel = () => {
 
-    if(taskActivityLogModel.getPersistData()?.log_type === "report") {
+    if(taskActivityLogModel.getPersistData()?.type === "sfdc_quick_deploy" && taskActivityLogModel.getPersistData()?.log_type === "report") {
       return (
           <SalesforceLogSummaryReportPanel pipelineTaskData={taskActivityLogModel.getPersistData()?.api_response?.sfdcJobDetails[0]?.deployResult}/>
       );
