@@ -15,15 +15,23 @@ function InfoContainer(
     className,
     minimumHeight,
     maximumHeight,
+    loadDataFunction,
+    backgroundColor,
   }) {
   const getBodyStyling = () => {
-    if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
-      return ({
-        minHeight: minimumHeight,
-        maxHeight: maximumHeight,
-        overflowY: "auto",
-      });
+    const styling = {};
+
+    if (hasStringValue(backgroundColor) === true) {
+      styling.backgroundColor = backgroundColor;
     }
+
+    if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
+      styling.minHeight = minimumHeight;
+      styling.maxHeight = maximumHeight;
+      styling.overflowY = "auto";
+    }
+
+    return styling;
   };
 
   return (
@@ -35,6 +43,7 @@ function InfoContainer(
         isLoading={isLoading}
         className={titleClassName}
         rightSideButton={titleRightSideButton}
+        loadDataFunction={loadDataFunction}
       />
       <div
         className={"content-container"}
@@ -57,6 +66,8 @@ InfoContainer.propTypes = {
   titleRightSideButton: PropTypes.object,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  loadDataFunction: PropTypes.func,
+  backgroundColor: PropTypes.string,
 };
 
 export default InfoContainer;

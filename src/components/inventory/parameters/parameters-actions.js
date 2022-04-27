@@ -15,6 +15,11 @@ parametersActions.getParameters = async (getAccessToken, cancelTokenSource, sear
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+parametersActions.getParameterByIdV2 = async (getAccessToken, cancelTokenSource, parameterId) => {
+  const apiUrl = `/registry/parameters/${parameterId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 parametersActions.createParameterV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
   const apiUrl = "/registry/parameter/create";
   const postBody = {

@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import RuleTypeSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/RuleTypeSelectInput";
+import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
 import RuleValueMultiSelectInput
   from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
 import SfdcRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleFieldSelectInput";
@@ -107,7 +107,11 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
       <Col sm={12} className={"px-0"}>
         <Row className={"mx-0"}>
           <Col xs={1} className={"pr-1 pl-0"}>
-            <RuleTypeSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />
+            <RuleTypeSelectInput
+              model={ruleModel}
+              setModel={updateData}
+              showLabel={false}
+            />
           </Col>
           <Col xs={3} className={"px-0"}>
             <SfdcRuleComponentTypeMultiSelectInput

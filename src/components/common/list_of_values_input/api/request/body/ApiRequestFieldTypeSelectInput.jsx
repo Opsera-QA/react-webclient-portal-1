@@ -19,6 +19,10 @@ const SUPPORTED_FIELD_TYPES = [
     text: "String",
     value: "string",
   },
+  {
+    text: "Boolean",
+    value: "boolean",
+  },
 ];
 
 function ApiRequestFieldTypeSelectInput(
