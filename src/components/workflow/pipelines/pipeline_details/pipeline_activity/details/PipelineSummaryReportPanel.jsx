@@ -5,6 +5,8 @@ import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
 import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
+import pipelineTaskMetadata from "./pipeline-task-metadata";
+import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -12,6 +14,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
   };
 
   const getSummaryReportPanel = () => {
+    console.log(pipelineTaskData);
     switch(pipelineTaskData?.api_response?.stepIdentifier) {
       case "informatica":
         return (
@@ -21,8 +24,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         return (
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
-      default:
+      case "jenkins":
         return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+      default:
+        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }
   };
 
