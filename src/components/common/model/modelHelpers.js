@@ -1,7 +1,7 @@
 import Model from "core/data_model/model";
 import ModelBase from "core/data_model/model.base";
 import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import _ from "lodash";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const modelHelpers = {};
 
@@ -11,7 +11,7 @@ modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
     return null;
   }
 
-  const clonedMetadata = _.cloneDeep(metaData);
+  const clonedMetadata = dataParsingHelper.cloneDeep(metaData);
 
   if (toolConfiguration == null || Object.entries(toolConfiguration).length === 0) {
     return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, true);
@@ -25,7 +25,7 @@ modelHelpers.parseObjectIntoModel = (object, metaData) => {
     return null;
   }
 
-  const clonedMetadata = _.cloneDeep(metaData);
+  const clonedMetadata = dataParsingHelper.cloneDeep(metaData);
 
   if (object == null || Object.entries(object).length === 0) {
     return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, true);
@@ -39,7 +39,7 @@ modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
     return null;
   }
 
-  const clonedMetadata = _.cloneDeep(metaData);
+  const clonedMetadata =dataParsingHelper.cloneDeep(metaData);
 
   if (object == null || Object.entries(object).length === 0) {
     return new ModelBase({...clonedMetadata.newObjectFields}, clonedMetadata, true);

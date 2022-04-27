@@ -11,18 +11,19 @@ import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel }) {
   const getStepConfigurationData = () => {
     const data = externalRestApiIntegrationStepTaskModel?.getPersistData();
-    const stepConfigurationData = data?.api_response?.stepConfiguration ? data?.api_response?.stepConfiguration : data?.step_configuration?.tool?.configuration;
+    const stepConfigurationData = pipelineHelpers.parseSummaryLogApiResponseValue(data, "stepConfiguration");
     return modelHelpers.parseObjectIntoModel(stepConfigurationData, externalRestApiIntegrationStepMetadata);
   };
 
   const getEndpointFields = () => {
     const data = externalRestApiIntegrationStepTaskModel?.getPersistData();
-    const endpoint = data?.api_response?.endpoint;
+    const endpoint = pipelineHelpers.parseSummaryLogApiResponseValue(data, "endpoint");
 
     if (endpoint) {
      return (
