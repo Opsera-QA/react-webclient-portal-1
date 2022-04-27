@@ -50,17 +50,17 @@ function SonarReports() {
     }
 ];
 
-  const getHelpDocumentation = () => {
-    if (isLoading !== true) {
-      return (
-        <InsightsHelpDocumentation dashboardRoleDefinitions={dashboardRoleDefinitions}/>
-      );
-    }
-  };
+  // const getHelpDocumentation = () => {
+  //   if (isLoading !== true) {
+  //     return (
+  //       <InsightsHelpDocumentation dashboardRoleDefinitions={dashboardRoleDefinitions}/>
+  //     );
+  //   }
+  // };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm" message="Loading Insights"/>);
-  }
+  // if (!accessRoleData) {
+  //   return (<LoadingDialog size="sm" message="Loading Insights"/>);
+  // }
 
   return (
     <ScreenContainer
@@ -71,8 +71,8 @@ function SonarReports() {
       {getInsightsView()}
       <SonarScanReportTable
       data={placeholderData}
-      isLoading={isLoading}
-      loadData={loadData}
+      // isLoading={isLoading}
+      // loadData={loadData}
       />
     </ScreenContainer>
   );
