@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import terraformCloudOrganizationsActions
   from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/organizations/terraformCloudOrganizations.actions";
 
-function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
+function TerraformVcsCloudOrganizationsSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);
   const [organizations, setOrganizations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,35 +75,19 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
     }
   };
 
-  const setDataFunction = ( fieldName, selectedOption ) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, selectedOption.organizationName);
-    newDataObject.setData("workspaceName", "");
-    newDataObject.setData("description", "");
-    newDataObject.setData("workingDirectory", "");
-    newDataObject.setData("version", "");
-    newDataObject.setData("service", "");
-    newDataObject.setData("branch", "");
-    newDataObject.setData("provider", "");
-    newDataObject.setData("providerId", "");
-    newDataObject.setData("oauthToken", "");
-    newDataObject.setData("repository", "");
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, selectedOption?.organizationName);
+    newDataObject.setDefaultValue("workspaceName");
+    newDataObject.setDefaultValue("workspaceId");
     setDataObject({...newDataObject});
   };
 
-  const clearDataFunction = ( fieldName ) => {    
-    let newDataObject = {...dataObject};
-    newDataObject.setData("organizationName", "");
-    newDataObject.setData("workspaceName", "");
-    newDataObject.setData("description", "");
-    newDataObject.setData("workingDirectory", "");
-    newDataObject.setData("version", "");
-    newDataObject.setData("service", "");
-    newDataObject.setData("branch", "");
-    newDataObject.setData("provider", "");
-    newDataObject.setData("providerId", "");
-    newDataObject.setData("oauthToken", "");
-    newDataObject.setData("repository", "");
+  const clearDataFunction = (fieldName) => {
+    let newDataObject = dataObject;
+    newDataObject.setDefaultValue("organizationName");
+    newDataObject.setDefaultValue("workspaceName");
+    newDataObject.setDefaultValue("workspaceId");
     setDataObject({...newDataObject});
   };
 
@@ -124,7 +108,7 @@ function TerraformCloudOrganizationsSelectInput({ fieldName, dataObject, setData
   );
 }
 
-TerraformCloudOrganizationsSelectInput.propTypes = {
+TerraformVcsCloudOrganizationsSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -134,11 +118,11 @@ TerraformCloudOrganizationsSelectInput.propTypes = {
   toolId: PropTypes.string
 };
 
-TerraformCloudOrganizationsSelectInput.defaultProps = {
+TerraformVcsCloudOrganizationsSelectInput.defaultProps = {
   valueField: "organizationName",
   textField: "organizationName",
   fieldName: "organizationName",
   disabled: false
 };
 
-export default TerraformCloudOrganizationsSelectInput;
+export default TerraformVcsCloudOrganizationsSelectInput;

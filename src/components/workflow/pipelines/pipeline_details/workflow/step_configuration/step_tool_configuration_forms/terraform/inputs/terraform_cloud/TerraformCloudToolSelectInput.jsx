@@ -28,7 +28,7 @@ function TerraformCloudToolSelectInput({ fieldName, model, setModel, disabled, t
       toolFriendlyName={"Terraform Cloud"}
       fieldName={fieldName}
       configurationRequired={true}
-      placeholderText={"Select Terraform Cloud Tool"}
+      placeholderText={"Select Terraform Tool"}
       model={model}
       textField={textField}
       setModel={setModel}
