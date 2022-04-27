@@ -13,7 +13,9 @@ import SalesforceOrganizationSyncTaskConfigurationEditorPanel
 import SalesforceBulkMigrationTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
 import GitToGitMergeSyncTaskConfigurationEditorPanel
-  from "components/tasks/details/tasks/merge-sync-task/git-to-git/GitToGitMergeSyncTaskConfigurationEditorPanel";
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
+import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
 import SalesforceQuickDeployTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 
@@ -54,7 +56,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
         );
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return (
-          <GitToGitMergeSyncTaskConfigurationEditorPanel
+          <SalesforceToGitMergeSyncTaskConfigurationEditorPanel
             taskConfigurationModel={taskConfigurationModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskModel={taskModel}
