@@ -1,16 +1,10 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import InsightsHelpDocumentation from "../../common/help/documentation/insights/InsightsHelpDocumentation";
 import SonarScanReportTable from "./SonarScanReportTable";
 
 
 function SonarReports() {
-
-
-  const getInsightsView = () => {
-    return null;
-  };
 
   const placeholderData = [
     {
@@ -68,7 +62,6 @@ function SonarReports() {
       pageDescription={`Downloadable Report for Sonar Scan`}
       breadcrumbDestination={"sonarReports"}
     >
-      {getInsightsView()}
       <SonarScanReportTable
       data={placeholderData}
       // isLoading={isLoading}
