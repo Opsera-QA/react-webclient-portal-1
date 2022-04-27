@@ -16,6 +16,7 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   isLoading,
   loadData,
   filePullCompleted,
+  ruleCount,
 }) => {
   const fields = sourceCommitFileMetadata.fields;
   const noDataFilesPulledMessage = "The Source Commit Files pull has been completed. There is no data for the selected criteria.";
@@ -40,10 +41,19 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
         isLoading={isLoading}
         loadData={loadData}
         noDataMessage={filePullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}
+        tableHeight={getHeight()}
         // paginationModel={paginationModel}
         // setPaginationModel={setPaginationModel}
       />
     );
+  };
+
+  const getHeight = () => {
+    if (ruleCount > 0) {
+      return MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT_WITH_RULES;
+    }
+
+    return MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT_WITHOUT_RULES;
   };
 
   // TODO: Set height to what makes sense
@@ -53,8 +63,8 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
       title={`Source File Selection`}
       loadData={loadData}
       isLoading={isLoading}
-      minimumHeight={MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT}
-      maximumHeight={MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT}
+      minimumHeight={getHeight()}
+      maximumHeight={getHeight()}
       body={getFilesTable()}
     />
   );
@@ -65,6 +75,7 @@ MergeSyncTaskWizardFileSelectionSourceCommitListTable.propTypes = {
   filePullCompleted: PropTypes.bool,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
+  ruleCount: PropTypes.number,
 };
 
 export default MergeSyncTaskWizardFileSelectionSourceCommitListTable;
