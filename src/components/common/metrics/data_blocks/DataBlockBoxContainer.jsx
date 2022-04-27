@@ -14,7 +14,7 @@ function DataBlockBoxContainer(
     let className = "";
 
     if (showBorder === true) {
-      className = "data-block-box";
+      className = "data-block-box h-100";
     }
 
     if (onClickFunction != null) {
