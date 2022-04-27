@@ -5,13 +5,23 @@ import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
 import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
+import pipelineTaskMetadata from "./pipeline-task-metadata";
+import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
     return new Model(pipelineTaskData, metaData, false);
   };
 
+  const getJenkinsReport = () => {
+    if(pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult) {
+      return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+    }
+    return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+  };
+
   const getSummaryReportPanel = () => {
+    console.log(pipelineTaskData);
     switch(pipelineTaskData?.api_response?.stepIdentifier) {
       case "informatica":
         return (
@@ -21,8 +31,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         return (
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
+      case "jenkins":
+        return getJenkinsReport();
       default:
-        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }
   };
 
