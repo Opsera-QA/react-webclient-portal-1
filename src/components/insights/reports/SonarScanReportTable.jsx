@@ -14,8 +14,12 @@ function SonarScanReportTable({ data, isLoading, loadData }) {
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "project";})),
       getTableTextColumn(fields.find(field => { return field.id === "severity";})),
+      getTableTextColumn(fields.find(field => { return field.id === "type";})),
       getTableTextColumn(fields.find(field => { return field.id === "line";})),
+      getTableTextColumn(fields.find(field => { return field.id === "status";})),
+      getTableTextColumn(fields.find(field => { return field.id === "author";})),
       getTableTextColumn(fields.find(field => { return field.id === "message";})),
+      getTableTextColumn(fields.find(field => { return field.id === "component";})),
     ],
     []
   );

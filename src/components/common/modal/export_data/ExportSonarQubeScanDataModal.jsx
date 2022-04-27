@@ -16,8 +16,8 @@ function ExportSonarQubeScanDataModal({ showModal, closeModal, formattedData, ra
       showHead: "firstPage",
       headStyles:{fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84]},
       margin: { left: 2, right: 2 },
-      head:[["Project", "Severity", "Line", "Message"]],
-      body: formattedData.map(item => [item.project, item.severity, item.line, item.message])
+      head:[["Project", "Severity", "Type", "Line", "Status","Author", "Component", "Message"]],
+      body: formattedData.map(item => [item.project, item.severity, item.type, item.line, item.status, item.author, item?.component.substring(item.component.lastIndexOf('/') + 1), item.message])
     });
 
     return pdfExporter;

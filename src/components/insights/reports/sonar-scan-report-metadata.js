@@ -11,8 +11,24 @@ const sonarScanReportMetadata = {
       id: "severity",
     },
     {
+      label: "Type",
+      id: "type",
+    },
+    {
       label: "Line Number",
       id: "line",
+    },
+    {
+      label: "Status",
+      id: "status",
+    },
+    {
+      label: "Author",
+      id: "author",
+    },
+    {
+      label: "Component",
+      id: "component",
     },
     {
       label: "Message",
