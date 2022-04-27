@@ -4,7 +4,20 @@ import {Col, Row} from "react-bootstrap";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
+// TODO: Rework
 function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, children }) {
+  if (pipelineData == null) {
+    return null;
+  }
+
+  if (pipelineData?.name == null && pipelineData?.tool?.tool_identifier == null) {
+    return (
+      <SummaryPanelContainer setActiveTab={setActiveTab}>
+        {children}
+      </SummaryPanelContainer>
+    );
+  }
+
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>

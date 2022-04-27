@@ -33,10 +33,10 @@ function EndpointResponseEvaluationRuleField(
     }
 
     const filterText = filter === "equals" ? "equals" : "does not equal";
-    const responseBodyTypeText = responseBodyType === "array" ? "an array" : `a ${responseBodyType}`;
+    const aOrAn = responseBodyType === "array" ? "an" : `a`;
     const valueText = responseBodyType === "string" ? `"${value}"` : value;
 
-    return <span>{`The API Response will meet the requirements for ${ruleType} evaluation if the `}<b>Response Body</b>{` returned is ${responseBodyTypeText} that ${filterText} `}<b>{valueText}</b>.</span>;
+    return <span>{`The API Response will meet the requirements for ${ruleType} evaluation if the `}<b>Response Body</b>{` returned is ${aOrAn} `}<b>{responseBodyType}</b>{` that ${filterText} `}<b>{String(valueText)}</b>.</span>;
   };
 
   const getFormattedFieldRuleText = (field, index) => {

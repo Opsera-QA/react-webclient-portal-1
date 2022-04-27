@@ -23,7 +23,6 @@ import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
-import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import "./step_configuration/helpers/step-validation-helper";
@@ -36,6 +35,8 @@ import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
+import PipelineStepDetailsOverviewOverlay
+  from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -68,7 +69,6 @@ const PipelineWorkflowItem = (
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isToolSet, setIsToolSet] = useState(false);
-  const [showSummaryModal, setShowSummaryModal] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
 
   const authorizedAction = (action, owner) => {
@@ -145,7 +145,9 @@ const PipelineWorkflowItem = (
     };*/
 
   const handleSummaryViewClick = () => {
-    setShowSummaryModal(true);
+    toastContext.showOverlayPanel(
+      <PipelineStepDetailsOverviewOverlay pipelineStepData={item} />
+    );
   };
 
   const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
@@ -539,13 +541,6 @@ const PipelineWorkflowItem = (
                                  button="Confirm"
                                  handleCancelModal={() => setShowDeleteModal(false)}
                                  handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex, modalDeleteObj)} />}
-
-
-      <PipelineStepConfigurationSummaryModal
-        pipelineStepData={item}
-        setShowModal={setShowSummaryModal}
-        showModal={showSummaryModal}
-      />
 
 
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
