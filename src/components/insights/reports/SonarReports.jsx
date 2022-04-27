@@ -2,10 +2,11 @@ import React, {useEffect, useState, useContext, useRef} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SonarScanReportTable from "./SonarScanReportTable";
+import {useParams} from "react-router-dom";
 
 
 function SonarReports() {
-
+  const {pipelineId, stepId, runCount} = useParams();
   const placeholderData = [
     {
         "severity": "MAJOR",
