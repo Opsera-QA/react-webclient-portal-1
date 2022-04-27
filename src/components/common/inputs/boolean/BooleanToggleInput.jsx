@@ -52,7 +52,7 @@ function BooleanToggleInput(
   };
 
   const getLabelClassNames = () => {
-    let classNames = "toggle-label-alignment d-flex";
+    let classNames = "d-flex";
 
     if (disabled === true) {
       classNames += " not-allowed-cursor";
@@ -83,7 +83,7 @@ function BooleanToggleInput(
     if (inputHelpOverlay != null) {
       return (
         <LaunchHelpIcon
-          className={"ml-1"}
+          className={"ml-2 mt-auto"}
           helpComponent={inputHelpOverlay}
         />
       );
@@ -96,7 +96,7 @@ function BooleanToggleInput(
         <HelpInfoOverlayIcon
           infoOverlay={fieldHelpTooltipText}
           title={`${field?.label} Help`}
-          className={"ml-1"}
+          className={"ml-2 mt-auto"}
           overlayPlacement={"top"}
         />
       );
@@ -110,18 +110,27 @@ function BooleanToggleInput(
   return (
     <div className={className}>
       <InputContainer>
-        <div className={"d-flex toggle-alignment"}>
+        <div className={"d-flex"}>
           <Form.Check
             type={"switch"}
             className={getClassNames()}
             id={getUniqueId()}
             checked={!!dataObject.getData(fieldName)}
             disabled={disabled}
-            label={<div className={getLabelClassNames()}>{field?.label}{getInputHelpIcon()}</div>}
+            label={<span className={getLabelClassNames()}> </span>}
             onChange={() => {
               updateValue(!dataObject.getData(fieldName));
             }}
           />
+          <div className={"d-flex my-auto"}>
+            <span
+              className={getLabelClassNames()}
+              onClick={() => {updateValue(!dataObject.getData(fieldName));}}
+            >
+              {field?.label}
+            </span>
+            {getInputHelpIcon()}
+          </div>
         </div>
         <InfoText
           field={field}
