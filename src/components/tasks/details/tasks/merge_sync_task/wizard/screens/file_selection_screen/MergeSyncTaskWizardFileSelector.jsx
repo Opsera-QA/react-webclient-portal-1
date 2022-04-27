@@ -159,6 +159,7 @@ const MergeSyncTaskWizardFileSelector = ({
         sourceCommitList={sourceCommitList}
         isLoading={isLoading}
         loadData={loadData}
+        ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
       />
       <SaveButtonContainer>
         <BackButton
