@@ -16,6 +16,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
 import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
+import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
 function SonarRatingsMaintainabilityActionableInsightTable(
@@ -29,6 +30,7 @@ function SonarRatingsMaintainabilityActionableInsightTable(
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Sonar Code Smell report is currently unavailable at this time";
   const fields = SonarPipelineTableMetadata.fields;
+  let history = useHistory();
 
   // TODO: Handle colors with rules after written
   const getKpiSonarPipelineTableTextColumn = (field, block) => {
@@ -112,7 +114,9 @@ function SonarRatingsMaintainabilityActionableInsightTable(
   );
 
   const onRowSelect = (rowData) => {
-    window.open(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`);
+    toastContext.showOverlayPanel(
+      history.push(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`)
+    );
   };
 
   const getTable = () => {

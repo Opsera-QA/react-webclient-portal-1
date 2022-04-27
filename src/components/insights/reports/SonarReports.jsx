@@ -66,7 +66,7 @@ function SonarReports() {
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"reports"} />}
       pageDescription={`Downloadable Report for Sonar Scan`}
-      breadcrumbDestination={"insights"}
+      breadcrumbDestination={"sonarReports"}
     >
       {getInsightsView()}
       <SonarScanReportTable
