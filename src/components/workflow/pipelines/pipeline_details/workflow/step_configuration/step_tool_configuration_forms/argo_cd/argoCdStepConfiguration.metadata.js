@@ -86,6 +86,7 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Rollback",
       id: "rollbackEnabled",
+      helpTooltipText: "Rollback option can be used to revoke the newly deployed builds and rollback to a previous version in case of failure."
       // isRequired: true,
     },
     {
