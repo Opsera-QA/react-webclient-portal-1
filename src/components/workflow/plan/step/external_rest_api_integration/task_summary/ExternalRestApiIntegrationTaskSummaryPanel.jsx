@@ -17,7 +17,7 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel }) {
   const getStepConfigurationData = () => {
     const data = externalRestApiIntegrationStepTaskModel?.getPersistData();
-    const stepConfigurationData = pipelineHelpers.parseSummaryLogApiResponseValue(data, "stepConfiguration");
+    const stepConfigurationData = pipelineHelpers.parseSummaryLogStepConfiguration(data);
     return modelHelpers.parseObjectIntoModel(stepConfigurationData, externalRestApiIntegrationStepMetadata);
   };
 

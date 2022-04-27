@@ -221,9 +221,36 @@ pipelineHelpers.parseSummaryLogApiResponseValue = (pipelineLogData, fieldName) =
       return undefined;
     }
 
-    const apiResponse = pipelineLogData?.api_response?.apiResponse ? pipelineLogData?.api_response?.apiResponse : pipelineLogData?.api_response;
+    const apiResponse = dataParsingHelper.parseObject(pipelineLogData?.api_response);
+    const innerApiResponse = dataParsingHelper.parseObject(pipelineLogData?.api_response?.apiResponse);
+
+    if (innerApiResponse && innerApiResponse[fieldName]) {
+      return innerApiResponse[fieldName];
+    }
 
     return apiResponse[fieldName];
+  }
+  catch (error) {
+    return undefined;
+  }
+};
+
+// TODO: Rework logs to store in a consistent manner for all flows
+pipelineHelpers.parseSummaryLogStepConfiguration = (pipelineLogData) => {
+  try {
+    const parsedLogData = dataParsingHelper.parseObject(pipelineLogData, false);
+
+    if (!parsedLogData) {
+      return undefined;
+    }
+
+    const internalStepConfiguration = pipelineHelpers.parseSummaryLogApiResponseValue(parsedLogData, "stepConfiguration");
+
+    if (internalStepConfiguration) {
+      return internalStepConfiguration;
+    }
+
+    return parsedLogData?.step_configuration?.tool?.configuration;
   }
   catch (error) {
     return undefined;
