@@ -16,8 +16,8 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
-import ExternalApiIntegrationEndpointParameterField
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiIntegrationEndpointParameterField";
+import ExternalRestApiIntegrationEndpointParameterField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointParameterField";
 
 function EndpointRequestParametersInputBase(
   {
@@ -194,7 +194,7 @@ function EndpointRequestParametersInputBase(
 
   const getConstructedParameterContainer = () => {
     return (
-      <ExternalApiIntegrationEndpointParameterField
+      <ExternalRestApiIntegrationEndpointParameterField
         model={model}
         fieldName={fieldName}
         height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}

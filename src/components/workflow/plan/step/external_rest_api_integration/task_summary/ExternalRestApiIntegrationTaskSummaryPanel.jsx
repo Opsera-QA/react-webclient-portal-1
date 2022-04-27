@@ -12,6 +12,12 @@ import {
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import Row from "react-bootstrap/Row";
+import ExternalRestApiIntegrationEndpointResponseField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointResponseField";
+import ExternalRestApiIntegrationEndpointRequestField
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointRequestField";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel }) {
@@ -27,22 +33,18 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
 
     if (endpoint) {
      return (
-       <>
-         <Col xs={12}>
-           <StandaloneJsonField
-             className={"my-2"}
-             titleText={"External API Request"}
-             json={endpoint}
+       <Row>
+         <Col xs={6}>
+           <ExternalRestApiIntegrationEndpointRequestField
+            endpointObject={endpoint}
            />
          </Col>
-         <Col xs={12}>
-           <StandaloneJsonField
-             className={"my-2"}
-             titleText={"External API Response"}
-             json={endpoint?.response}
+         <Col xs={6}>
+           <ExternalRestApiIntegrationEndpointResponseField
+              responseObject={endpoint?.response}
            />
          </Col>
-       </>
+       </Row>
      );
     }
   };
@@ -53,17 +55,21 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
 
   return (
     <PipelineTaskSummaryPanelBase pipelineTaskData={externalRestApiIntegrationStepTaskModel}>
-      {getEndpointFields()}
       <Col xs={12}>
-        <InfoContainer
-          titleText={"External Rest API Integration Step Configuration"}
-        >
-          <div className={"mx-3"}>
-            <ExternalRestApiIntegrationStepSummaryPanel
-              externalRestApiIntegrationModel={getStepConfigurationData()}
-            />
-          </div>
-        </InfoContainer>
+        {getEndpointFields()}
+      </Col>
+      <Col xs={12}>
+        <FieldContainer>
+          <InfoContainer
+            titleText={"External Rest API Integration Step Configuration"}
+          >
+            <div className={"mx-3"}>
+              <ExternalRestApiIntegrationStepSummaryPanel
+                externalRestApiIntegrationModel={getStepConfigurationData()}
+              />
+            </div>
+          </InfoContainer>
+        </FieldContainer>
       </Col>
     </PipelineTaskSummaryPanelBase>
   );

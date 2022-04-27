@@ -35,7 +35,7 @@ const EXTERNAL_API_REST_INTEGRATION_TABS = {
 };
 
 // TODO: Remove all Run Trigger in progress based code once verified OR in next update to API Integrator
-function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
+function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
   {
     externalRestApiIntegrationModel,
     setExternalRestApiIntegrationModel,
@@ -269,10 +269,10 @@ function ExternalApiRestIntegrationStepEndpointVerticalTabContainer(
   );
 }
 
-ExternalApiRestIntegrationStepEndpointVerticalTabContainer.propTypes = {
+ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer.propTypes = {
   externalRestApiIntegrationModel: PropTypes.object,
   setExternalRestApiIntegrationModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default ExternalApiRestIntegrationStepEndpointVerticalTabContainer;
+export default ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer;

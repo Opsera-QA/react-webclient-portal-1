@@ -5,7 +5,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import EndpointResponseEvaluationRuleField
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRuleField";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faRotate } from "@fortawesome/pro-light-svg-icons";
 
 function EndpointResponseEvaluationRulesField(
   {
@@ -22,6 +22,7 @@ function EndpointResponseEvaluationRulesField(
       return (
         <EndpointResponseEvaluationRuleField
           ruleType={inProgressRuleType}
+          titleIcon={faRotate}
           responseEvaluationRule={model?.getData(fieldName)?.running_rule}
         />
       );
