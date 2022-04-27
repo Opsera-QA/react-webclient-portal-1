@@ -7,7 +7,7 @@ function GitScrapperOverallCleanRepositoriesTrendDataBlock({ score, icon, classN
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-2 h-100`}
         score={score}
         topText={"Clean Repositories"}
         bottomText={"Last Scan: " + lastScore}

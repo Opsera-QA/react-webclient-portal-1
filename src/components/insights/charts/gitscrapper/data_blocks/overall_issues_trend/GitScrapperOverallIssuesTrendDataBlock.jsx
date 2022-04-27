@@ -8,7 +8,7 @@ function GitScrapperOverallIssuesTrendDataBlock({ score, icon, className, onSele
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-2 h-100`}
         score={score}
         topText={"Total Number of Issues"}
         bottomText={"Last Scan: " + lastScore}
