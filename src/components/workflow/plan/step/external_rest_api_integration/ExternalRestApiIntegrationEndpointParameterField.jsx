@@ -6,7 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
 
 //TODO: We should probably make a better displayer
-function ExternalApiIntegrationEndpointParameterField({
+function ExternalRestApiIntegrationEndpointParameterField({
   fieldName,
   model,
   height,
@@ -45,11 +45,11 @@ function ExternalApiIntegrationEndpointParameterField({
   );
 }
 
-ExternalApiIntegrationEndpointParameterField.propTypes = {
+ExternalRestApiIntegrationEndpointParameterField.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   height: PropTypes.string,
   titleRightSideButton: PropTypes.object,
 };
 
-export default ExternalApiIntegrationEndpointParameterField;
+export default ExternalRestApiIntegrationEndpointParameterField;
