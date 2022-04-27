@@ -11,6 +11,9 @@ import TerraformCloudOrganizationsSelectInput from "./inputs/TerraformCloudOrgan
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
 import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import TerraformWorkflowSelectInput from "./inputs/TerraformWorkflowSelectInput";
+import TerraformVcsWorkspaceSubform from "./subforms/TerraformVcsWorkspaceSubform";
 
 function TerraformCloudWorkspacesEditorPanel({ 
   terraformCloudWorkspacesModel, 
@@ -19,12 +22,13 @@ function TerraformCloudWorkspacesEditorPanel({
   handleClose, 
   editMode 
 }) {
+
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [ isLoading, setIsLoading ] = useState(false);
   const toastContext = useContext(DialogToastContext);
-  const [workspaceConfiguration, setWorkspaceConfiguration] = useState("Workspace configuration not found. Please try again.");
+  const [workspaceConfiguration, setWorkspaceConfiguration] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -70,8 +74,8 @@ function TerraformCloudWorkspacesEditorPanel({
   };
 
   const createTerraformCloudWorkspace = async () => {
-    const {organizationName, workspaceName} = terraformCloudWorkspacesModel.getPersistData();
-    return await terraformCloudWorkspacesActions.createTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName);
+    const {organizationName} = terraformCloudWorkspacesModel.getPersistData();
+    return await terraformCloudWorkspacesActions.createTerraformCloudWorkspace(getAccessToken, cancelTokenSource, toolId, organizationName, terraformCloudWorkspacesModel);
   };
 
   const deleteTerraformCloudWorkspace = async () => {
@@ -92,20 +96,98 @@ function TerraformCloudWorkspacesEditorPanel({
   };
 
   const getWorkspaceConfigurationFields = () => {
-    if (editMode) {
+    if (workspaceConfiguration) {
       return (
-        <Row>
-          <Col lg={12}>
-            <TextAreaClipboardField            
-              allowResize={false}
-              rows={10}
-              textAreaValue={workspaceConfiguration}
-              description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
-            />
-          </Col>
-        </Row>
+        <TextAreaClipboardField
+          allowResize={false}
+          rows={10}
+          textAreaValue={workspaceConfiguration}
+          description={`You can add this configuration block to any .tf file in the directory where you run Terraform.`}
+        />
       );
     }
+  };
+
+  const getOrganizationNameField = () => {
+    return (      
+      <TerraformCloudOrganizationsSelectInput 
+        dataObject={terraformCloudWorkspacesModel} 
+        setDataObject={setTerraformCloudWorkspacesModel} 
+        toolId={toolId}
+        disabled={editMode}
+      />        
+    );
+  };
+
+  const getWorkflowField = () => {
+    return (
+      <TerraformWorkflowSelectInput 
+        dataObject={terraformCloudWorkspacesModel}
+        setDataObject={setTerraformCloudWorkspacesModel}
+      />
+    );
+  };
+
+  const getWorkspaceNameField = () => {
+    return (      
+      <TextInputBase
+        dataObject={terraformCloudWorkspacesModel}
+        setDataObject={setTerraformCloudWorkspacesModel}            
+        fieldName={"workspaceName"}
+        disabled={editMode}
+      />        
+    );
+  };
+
+  const getAdditionalFields = () => {
+    if (terraformCloudWorkspacesModel.getData("organizationName") !== null && 
+          terraformCloudWorkspacesModel.getData("organizationName") !== "" && 
+          terraformCloudWorkspacesModel.getData("workFlowType") !== null && 
+          terraformCloudWorkspacesModel.getData("workFlowType") !== "" ) {
+      return (
+        <>
+          { getWorkspaceNameField() }
+          <TextAreaInput
+            fieldName={"description"}
+            dataObject={terraformCloudWorkspacesModel}
+            setDataObject={setTerraformCloudWorkspacesModel}
+          />
+          { getVcsFields() }
+        </>
+      );
+    }
+  };
+
+  const getVcsFields = () => {    
+    if (terraformCloudWorkspacesModel.getData("workFlowType") === "VCS") {
+      return (        
+        <TerraformVcsWorkspaceSubform            
+          terraformCloudWorkspacesModel={terraformCloudWorkspacesModel} 
+          setTerraformCloudWorkspacesModel={setTerraformCloudWorkspacesModel}
+          toolId={toolId}
+        />
+      );
+    }
+  };
+
+  const getFormFields = () => {
+    if (editMode) {
+      return (
+        <>
+          { getOrganizationNameField() }
+          { getWorkspaceNameField() }
+          { getWorkspaceConfigurationFields() }
+        </>
+      );
+    }
+
+    return (
+      <>
+        { getOrganizationNameField() }
+        { getWorkflowField() }
+        { getAdditionalFields() }
+      </>
+    );
   };
 
   if (isLoading) {
@@ -122,27 +204,7 @@ function TerraformCloudWorkspacesEditorPanel({
       lenient={false}
       disable={terraformCloudWorkspacesModel?.checkCurrentValidity() !== true || editMode}
     >
-      <Row>      
-        <Col lg={12}>
-          <TerraformCloudOrganizationsSelectInput 
-            dataObject={terraformCloudWorkspacesModel} 
-            setDataObject={setTerraformCloudWorkspacesModel} 
-            toolId={toolId}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={12}>
-          <TextInputBase
-            dataObject={terraformCloudWorkspacesModel}
-            setDataObject={setTerraformCloudWorkspacesModel}            
-            fieldName={"workspaceName"}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
-      { getWorkspaceConfigurationFields() }      
+      { getFormFields() }      
     </EditorPanelContainer>
   );
 }
