@@ -65,6 +65,19 @@ function InputTitleBar(
     }
   };
 
+  const getLoadDataButton = () => {
+    if (loadDataFunction) {
+      return (
+        <RefreshButton
+          loadDataFunction={loadDataFunction}
+          isLoading={isLoading}
+          className={"ml-2 my-auto"}
+        />
+      );
+    }
+  };
+
+
   return (
     <div className={`${className} px-2 d-flex justify-content-between`}>
       {getFormattedLabel()}
@@ -73,11 +86,7 @@ function InputTitleBar(
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
-        <RefreshButton
-          isLoading={isLoading}
-          loadData={loadDataFunction}
-          className={"ml-2"}
-        />
+        {getLoadDataButton()}
         {getRightSideButton()}
       </div>
     </div>
