@@ -52,14 +52,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksConfigurationData={taskConfigurationModel}
           />
         );
-      // case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      //   return (
-      //     <GitToGitMergeSyncTaskConfigurationEditorPanel
-      //       taskConfigurationModel={taskConfigurationModel}
-      //       setTaskConfigurationModel={setTaskConfigurationModel}
-      //       taskModel={taskModel}
-      //     />
-      //   );
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeSyncTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
+          />
+        );
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return (
             <SalesforceQuickDeployTaskConfigurationEditorPanel

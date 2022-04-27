@@ -18,14 +18,21 @@ import { AuthContext } from "contexts/AuthContext";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import workflowAuthorizedActions from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import { TASK_TYPES } from "components/tasks/task.types";
-import SfdcOrgSyncPrerunHelpDocumentation from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
-import SfdcBulkMigrationPrerunHelpDocumentation from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
-import azureAksClusterTaskConfigurationMetadata from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
-import SalesforceOrganizationSyncTaskGitBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
-import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
-import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import { mergeSyncTaskConfigurationMetadata } from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
+import {TASK_TYPES} from "components/tasks/task.types";
+import SfdcOrgSyncPrerunHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
+import SfdcBulkMigrationPrerunHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
+import azureAksClusterTaskConfigurationMetadata
+  from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
+import SalesforceOrganizationSyncTaskGitBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import {
+  mergeSyncTaskConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import salesforceQuickDeployTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskSalesforceToolSelectInput from "./tasks/sfdc-quick-deploy/inputs/SalesforceQuickDeployTaskSalesforceToolSelectInput";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
