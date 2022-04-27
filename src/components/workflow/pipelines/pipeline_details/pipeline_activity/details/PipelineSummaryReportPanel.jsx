@@ -13,6 +13,13 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
     return new Model(pipelineTaskData, metaData, false);
   };
 
+  const getJenkinsReport = () => {
+    if(pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult) {
+      return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+    }
+    return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+  };
+
   const getSummaryReportPanel = () => {
     console.log(pipelineTaskData);
     switch(pipelineTaskData?.api_response?.stepIdentifier) {
@@ -25,7 +32,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       case "jenkins":
-        return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+        return getJenkinsReport();
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }
