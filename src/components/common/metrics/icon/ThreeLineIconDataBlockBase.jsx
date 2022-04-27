@@ -47,7 +47,7 @@ function ThreeLineIconDataBlockBase(
   return (
     <div className={className}>
       <Row className={"w-100 h-100 mx-auto text-center"}>
-        <Col xs={12} className={"my-auto text-center"}>
+        <Col xs={12} className={"my-auto text-center mx-0"}>
           {getTopIcon()}
         </Col>
         <Col xs={12} className={"my-auto text-center"}>
