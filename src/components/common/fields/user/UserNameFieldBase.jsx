@@ -63,7 +63,7 @@ function UserNameFieldBase({ userId, label, className, showLabel }) {
     );
     const userData = response?.data?.data;
 
-    if (userData) {
+    if (isMounted?.current === true && userData) {
       setUserData(userData);
     }
   };

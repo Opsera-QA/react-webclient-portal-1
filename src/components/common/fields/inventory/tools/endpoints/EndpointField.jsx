@@ -68,7 +68,7 @@ function EndpointField({ model, fieldName, endpointId, toolId, className }) {
     );
     const endpoint = response?.data?.data;
 
-    if (endpoint) {
+    if (isMounted?.current === true && endpoint) {
       const newEndpointModel = modelHelpers.parseObjectIntoModel(endpoint, externalApiIntegratorEndpointMetadata);
       setEndpointModel(newEndpointModel);
     }

@@ -5,6 +5,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import FieldContainer from "components/common/fields/FieldContainer";
+import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 
 function ExternalRestApiIntegrationEndpointResponseField({
   responseObject,
@@ -25,7 +26,7 @@ function ExternalRestApiIntegrationEndpointResponseField({
     return (
       <StandaloneTextFieldBase
         text={String(response)}
-        label={"Response Body"}
+        label={`Response Body (${capitalizeFirstLetter(typeof response)})`}
       />
     );
   };
@@ -44,7 +45,7 @@ function ExternalRestApiIntegrationEndpointResponseField({
       >
         <div className={"m-3"}>
           <StandaloneTextFieldBase
-            text={responseObject?.status}
+            text={String(responseObject?.status)}
             label={"Status Code"}
           />
           {getResponseBodyField()}
