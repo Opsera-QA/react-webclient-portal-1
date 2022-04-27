@@ -95,9 +95,9 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
     }
 
     switch (pipelineTaskData.tool_identifier) {
-      case "parallel-processor":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
         return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
-      case "child-pipeline":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
         return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
