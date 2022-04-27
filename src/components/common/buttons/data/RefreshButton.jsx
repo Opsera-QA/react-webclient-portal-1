@@ -4,14 +4,21 @@ import {Button} from "react-bootstrap";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-function RefreshButton({ isLoading, loadData, variant, size, className }) {
-  if (!loadData) {
+function RefreshButton(
+  {
+    isLoading,
+    loadDataFunction,
+    variant,
+    size,
+    className,
+  }) {
+  if (!loadDataFunction) {
     return null;
   }
 
   return (
     <div className={className}>
-      <Button variant={variant} size={size} disabled={isLoading} onClick={() => {loadData();}}>
+      <Button variant={variant} size={size} disabled={isLoading} onClick={loadDataFunction}>
         <span><IconBase spinIcon={isLoading} icon={faSync}/></span>
       </Button>
     </div>
@@ -19,7 +26,7 @@ function RefreshButton({ isLoading, loadData, variant, size, className }) {
 }
 
 RefreshButton.propTypes = {
-  loadData: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   variant: PropTypes.string,
   size: PropTypes.string,

@@ -116,7 +116,7 @@ function FilterBar(
           />
           <RefreshButton
             isLoading={isLoading}
-            loadData={loadData}
+            loadDataFunction={loadData}
             className={dropdownFilters != null ? "mr-2" : null}
           />
           <FilterButtons
