@@ -23,8 +23,6 @@ import AutomationPercentageMetricEditorPanel
   from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
 import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
-import LeadTimeAndReleaseTracebilityEditorPanel
-  from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 
@@ -150,24 +148,6 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
           <SonarRatingMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.ALL_GITHUB_ACTIONS_DATA_BLOCK:
-        return (
-          <AllGithubActionsDataBlockEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.LEAD_TIME_AND_RELEASE_TRACEABILITY:
-        return (
-          <LeadTimeAndReleaseTracebilityEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
