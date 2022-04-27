@@ -18,12 +18,10 @@ import {dashboardAttributesMetadata} from "components/insights/dashboards/dashbo
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
-import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
-  const [dashboardDataDto, setDashboardDataDto] = useState({});
+  const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -80,16 +78,18 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
                 fieldName={"roles"}
                 setDataObject={setDashboardDataDto}
                 dataObject={dashboardDataDto}
+                disabled={dashboardDataDto?.canEditAccessRoles() !== true}
               />
-            </div>
-            <div className={"p-2 d-flex"}>
-              <InlineWarning className={"mx-auto"} warningMessage={"Please Note: Access Roles only affect visibility at this time"} />
             </div>
           </div>
         </Col>
       );
     }
   };
+
+  if (dashboardData == null || dashboardDataDto == null || dashboardData?.canUpdate() !== true) {
+    return null;
+  }
 
   return (
     <EditorPanelContainer

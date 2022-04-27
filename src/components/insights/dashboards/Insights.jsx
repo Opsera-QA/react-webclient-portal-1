@@ -21,6 +21,7 @@ function Insights() {
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
   const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
+  const [dashboardRoleDefinitions, setDashboardRoleDefinitions] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -86,6 +87,7 @@ function Insights() {
     const dashboards = response?.data?.data;
 
     if (isMounted.current === true && dashboards) {
+      setDashboardRoleDefinitions(response?.data?.roles);
       setDashboardsList(dashboards);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response?.data?.count);
@@ -119,6 +121,14 @@ function Insights() {
     );
   };
 
+  const getHelpDocumentation = () => {
+    if (isLoading !== true) {
+      return (
+        <InsightsHelpDocumentation dashboardRoleDefinitions={dashboardRoleDefinitions}/>
+      );
+    }
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm" message="Loading Insights"/>);
   }
@@ -133,7 +143,7 @@ function Insights() {
       `}
       breadcrumbDestination={"insights"}
       helpComponent={
-        <InsightsHelpDocumentation/>
+        getHelpDocumentation()
       }
     >
       {getInsightsView()}

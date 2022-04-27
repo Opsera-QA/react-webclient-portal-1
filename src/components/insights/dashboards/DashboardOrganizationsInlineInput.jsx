@@ -53,7 +53,7 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
   return (
     <OrganizationsInlineInputBase
       tagLocation={"Dashboard"}
-      disabled={disabled}
+      disabled={disabled || model?.canUpdateDashboardFilters() !== true}
       visible={visible}
       model={temporaryModel}
       fieldName={"organizations"}

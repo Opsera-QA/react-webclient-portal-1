@@ -2,6 +2,7 @@ import ModelBase from "core/data_model/model.base";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 
 export class DashboardModel extends ModelBase {
   constructor(
@@ -22,9 +23,9 @@ export class DashboardModel extends ModelBase {
     this.setStateFunction = setStateFunction;
     this.customerAccessRules = customerAccessRules;
     this.roleDefinitions = roleDefinitions;
-    this.updateAllowed = this.canPerformAction("update_dashboard");
+    this.updateAllowed = this.canPerformAction("update_dashboard") || newModel === true;
     this.deleteAllowed = this.canPerformAction("delete_dashboard");
-    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles");
+    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles") || newModel === true;
   }
 
   createModel = async () => {
@@ -53,7 +54,7 @@ export class DashboardModel extends ModelBase {
   };
 
   getDetailViewTitle = () => {
-    return `${this?.getOriginalValue("name")}`;
+    return `${capitalizeFirstLetter(this?.getOriginalValue("name"))}`;
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
@@ -81,6 +82,19 @@ export class DashboardModel extends ModelBase {
   canUpdateDashboardMetric = () => {
     return this.canPerformAction("update_dashboard_metric");
   }
+
+  canUpdateDashboardFilters = () => {
+    return this.canPerformAction("update_dashboard_filters");
+  }
+
+  canPublishDashboardToPrivateCatalog = () => {
+    return this.canPerformAction("publish_dashboard_to_private_catalog");
+  }
+
+  canTransferDashboardOwnershipToNewUser = () => {
+    return this.canPerformAction("transfer_dashboard_ownership_to_new_user");
+  }
+
 
   canPerformAction = (action) => {
     return isActionAllowed(

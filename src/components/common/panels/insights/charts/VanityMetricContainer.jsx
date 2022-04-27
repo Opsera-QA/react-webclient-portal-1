@@ -97,7 +97,7 @@ function VanityMetricContainer(
       return (
         <ToggleSettingsIcon
           className={"ml-3 my-auto"}
-          visible={!helpIsShown}
+          visible={!helpIsShown && dashboardData?.canUpdateDashboardMetric() === true}
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
         />

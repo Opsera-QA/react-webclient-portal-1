@@ -10,7 +10,7 @@ export class ScriptModel extends ModelBase {
     this.scriptPulled = false;
     this.updateAllowed = canUpdate;
     this.deleteAllowed = canDelete;
-    this.editAccssRolesAllowed = canEditAccessRoles;
+    this.editAccessRolesAllowed = canEditAccessRoles;
     this.setStateFunction = setStateFunction;
   }
 

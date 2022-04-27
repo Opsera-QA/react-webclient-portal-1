@@ -67,7 +67,7 @@ dashboardsActions.createDashboardV2 = async(getAccessToken, cancelTokenSource, d
 };
 
 dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}/update`;
+  const apiUrl = `/analytics/dashboards/${dashboardModel?.getData('_id')}/update`;
   const postData = {
     ...dashboardModel?.getPersistData()
   };
@@ -75,8 +75,17 @@ dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, d
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
+dashboardsActions.transferOwnershipToNewUserV2 = async(getAccessToken, cancelTokenSource, dashboardId, newOwnerId) => {
+  const apiUrl = `/analytics/dashboards/${dashboardId}/transfer`;
+  const postData = {
+    newOwnerId: newOwnerId,
+  };
+
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}`;
+  const apiUrl = `/analytics/dashboards/${dashboardModel?.getData('_id')}`;
   return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

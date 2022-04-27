@@ -5,7 +5,7 @@ import PublishDashboardIconBase
 import {AuthContext} from "contexts/AuthContext";
 import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 
-function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
+function PublishDashboardToPublicMarketplaceIcon({dashboardModel, className}) {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const isMounted = useRef(false);
@@ -42,7 +42,7 @@ function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
   return (
     <PublishDashboardIconBase
       className={className}
-      dashboardData={dashboardData}
+      dashboardId={dashboardModel?.getMongoDbId()}
       catalog={"public"}
       icon={faShareAll}
       popoverText={`Publish this Dashboard to the Public Marketplace.`}
@@ -51,7 +51,7 @@ function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
 }
 
 PublishDashboardToPublicMarketplaceIcon.propTypes = {
-  dashboardData: PropTypes.object,
+  dashboardModel: PropTypes.object,
   className: PropTypes.string
 };
 

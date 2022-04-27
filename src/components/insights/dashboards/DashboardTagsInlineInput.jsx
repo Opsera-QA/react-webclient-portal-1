@@ -55,7 +55,7 @@ function DashboardTagsInlineInput(
   return (
     <TagsInlineInputBase
       tagLocation={"Dashboard"}
-      disabled={disabled}
+      disabled={disabled || model?.canUpdateDashboardFilters() !== true}
       visible={visible}
       model={temporaryModel}
       fieldName={"tags"}

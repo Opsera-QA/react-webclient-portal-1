@@ -21,6 +21,8 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
+import TransferDashboardOwnershipButton
+  from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 
 function DashboardScreenContainer(
   {
@@ -57,30 +59,47 @@ function DashboardScreenContainer(
   };
 
   const handleDelete = async () => {
-    return await dashboardsActions.deleteDashboardV2(getAccessToken, cancelTokenSource, dashboardModel);
+    return await dashboardsActions.deleteDashboardV2(
+      getAccessToken,
+      cancelTokenSource,
+      dashboardModel,
+    );
+  };
+
+  const getSettingsIcon = () => {
+    if (dashboardModel?.canUpdate() === true) {
+      return (
+        <ToggleSettingsIcon
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          className={"ml-3"}
+        />
+      );
+    }
   };
 
   const getTitleActionBar = () => {
     if (activeTab !== "settings") {
       return (
         <TitleActionBarContainer>
+          <TransferDashboardOwnershipButton
+            className={"ml-3"}
+            dashboardModel={dashboardModel}
+          />
           <AddKpiIcon
-            className={"mr-3"}
+            className={"ml-3"}
             dashboardModel={dashboardModel}
             kpis={dashboardModel?.getData("configuration")}
           />
           <PublishDashboardToPrivateCatalogIcon
-            dashboardData={dashboardModel}
-            className={"mr-3"}
+            dashboardModel={dashboardModel}
+            className={"ml-3"}
           />
           <PublishDashboardToPublicMarketplaceIcon
-            dashboardData={dashboardModel}
-            className={"mr-3"}
+            dashboardModel={dashboardModel}
+            className={"ml-3"}
           />
-          <ToggleSettingsIcon
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
+          {getSettingsIcon()}
         </TitleActionBarContainer>
       );
     }
@@ -93,11 +112,17 @@ function DashboardScreenContainer(
           <ActionBarContainer>
             <div/>
             <div className="d-inline-flex float-right">
-              <FavoriteInput dataObject={dashboardModel} setDataObject={setDashboardModel} fieldName={"isFavorite"}/>
+              <FavoriteInput
+                dataObject={dashboardModel}
+                setDataObject={setDashboardModel}
+                fieldName={"isFavorite"}
+                visible={dashboardModel?.canUpdate() === true}
+              />
               <ActionBarDeleteButton2
                 relocationPath={"/insights"}
                 dataObject={dashboardModel}
                 handleDelete={handleDelete}
+                visible={dashboardModel?.canDelete() === true}
               />
             </div>
           </ActionBarContainer>
