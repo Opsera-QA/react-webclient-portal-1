@@ -28,6 +28,8 @@ import ArgoCdStepPipelineStepSelectInput
 import ArgoCdRepositoryTagSelectInput
   from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import ArgoBlueGreenDeploymentHelpDocumentation 
+  from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -178,6 +180,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         fieldName={"isBlueGreenDeployment"}
         dataObject={argoCdModel}
         setDataObject={setArgoCdModel}
+        inputHelpOverlay={<ArgoBlueGreenDeploymentHelpDocumentation/>}
       />
     </PipelineStepEditorPanelContainer>
   );
