@@ -12,6 +12,7 @@ import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -19,7 +20,7 @@ const SAMPLE_DATA = {
   ]
 };
 
-// TODO: Refactor further.
+// TODO: Replace with new Parameter Input OR refactor
 function ParameterMappingInputBase({
   dataObject,
   setDataObject,
@@ -304,42 +305,22 @@ function ParameterMappingInputBase({
     );
   };
 
-  const getHelpText = () => {
+  const getOverlayBody = () => {
     return (
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={
-          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Response Parameter Mapping</Popover.Title>
-
-            <Popover.Content>
-              <div className="text-muted mb-2">
-                This functionality helps users map Opsera Global Parameters to output data from a Terraform script. Select a created parameter from the dropdown list and enter the exact name of the output key from your terraform script in order to set up a mapping.<br/><br/>
-                For instance for the following sample Terraform output that displays a list of subnet ID&apos;s the Output Key would be <strong>subnet_list</strong>. Upon execution of the script, the data from the Output Key would be stored in the Vault under the specified parameter.
-                {
-                  <div className={"mt-2"}>
-                    Sample:
-                    <ReactJson
-                      className={"mt-1 py-1"}
-                      src={SAMPLE_DATA}
-                      displayDataTypes={false}
-                    />
-                  </div>
-                }
-              </div>
-
-            </Popover.Content>
-          </Popover>
+      <div className="text-muted mb-2">
+        This functionality helps users map Opsera Global Parameters to output data from a Terraform script. Select a created parameter from the dropdown list and enter the exact name of the output key from your terraform script in order to set up a mapping.<br/><br/>
+        For instance for the following sample Terraform output that displays a list of subnet ID&apos;s the Output Key would be <strong>subnet_list</strong>. Upon execution of the script, the data from the Output Key would be stored in the Vault under the specified parameter.
+        {
+          <div className={"mt-2"}>
+            Sample:
+            <ReactJson
+              className={"mt-1 py-1"}
+              src={SAMPLE_DATA}
+              displayDataTypes={false}
+            />
+          </div>
         }
-      >
-        <IconBase
-          icon={faInfoCircle}
-          className="fa-pull-right pointer pr-2 mt-1 pl-0"
-          onClickFunction={() => document.body.click()}
-        />
-      </OverlayTrigger>
+      </div>
     );
   };
 
@@ -350,7 +331,16 @@ function ParameterMappingInputBase({
           <IconBase icon={titleIcon} className={"mr-2"} />
           {titleText}
         </div>
-        {getHelpText()}
+        <div>
+          <OverlayIconBase
+            overlayPlacement={"left"}
+            icon={faInfoCircle}
+            className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
+            overlayTitle={"Response Parameter Mapping"}
+            onClickFunction={() => document.body.click()}
+            overlayBody={getOverlayBody()}
+          />
+        </div>
       </div>
     );
   };
