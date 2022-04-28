@@ -84,8 +84,9 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
-      label: "Rollback Enabled",
+      label: "Rollback",
       id: "rollbackEnabled",
+      helpTooltipText: "Rollback option can be used to revoke the newly deployed builds and rollback to a previous version in case of failure."
       // isRequired: true,
     },
     {
@@ -93,6 +94,10 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "repositoryTag",
       // isRequired: true,
     },
+    {
+      label: "Blue Green Deployment",
+      id: "isBlueGreenDeployment"
+    }
   ],
   newObjectFields: {
     existingContent: "image",
@@ -114,5 +119,6 @@ export const ArgoCdStepConfigurationMetadata = {
     bitbucketWorkspaceName: "",
     rollbackEnabled: false,
     repositoryTag: "",
+    isBlueGreenDeployment: false,
   },
 };
