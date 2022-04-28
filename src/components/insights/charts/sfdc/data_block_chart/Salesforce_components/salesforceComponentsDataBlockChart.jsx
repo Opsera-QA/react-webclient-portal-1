@@ -186,7 +186,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
                 }
                 icon={getIcon(metrics[0]?.trends?.totalComponentsDeployed)}
                 className={getIconColor(metrics[0]?.trends?.totalComponentsDeployed)}
-                lastScore={metrics?.previousResults?.totalComponentsDeployed}
+                lastScore={metrics[0]?.previousResults?.totalComponentsDeployed}
                 iconOverlayBody={getDescription(metrics[0]?.trends?.totalComponentsDeployed)}
                 dataPoint={totalComponentsDataPoint}
               />
