@@ -35,7 +35,7 @@ function InsightsSubNavigationBar({currentTab}) {
         history.push(`/insights/release360`);
         return;
       case "reports":
-        history.push(`/insights/reports/scans/:pipelineId/:stepId/:runCount`);
+        // history.push(`/insights/reports`);
         return;
     }
   };
@@ -52,14 +52,14 @@ function InsightsSubNavigationBar({currentTab}) {
             tabText={"Dashboard Viewer"}
           />
         );
-      case "reports":
+      case "reportsViewer":
         return (
           <NavigationTab
             icon={faUserChart}
-            tabName={"reports"}
+            tabName={"reportsViewer"}
             handleTabClick={handleTabClick}
-            activeTab={"reports"}
-            tabText={"Reports"}
+            activeTab={"reportsViewer"}
+            tabText={"Reports Viewer"}
           />
         );
       default:

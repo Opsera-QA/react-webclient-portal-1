@@ -114,9 +114,12 @@ function SonarRatingsReliabilityActionableInsightTable(
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      history.push(`/insights/reports/scans/${rowData?.original?.pipelineId}/${rowData?.original?.stepId}/${rowData?.original?.runCount}"`)
-    );
+    const row = rowData?.original;
+    const pipelineId = row?.pipelineId;
+    const stepId = row?.stepId;
+    const runCount = row?.runCount;
+
+    history.push(`/insights/reports/scans/sonar/${pipelineId}/${stepId}/${runCount}"`);
   };
 
   const getTable = () => {

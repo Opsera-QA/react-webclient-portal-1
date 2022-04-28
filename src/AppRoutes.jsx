@@ -248,7 +248,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
-          <SecureRoute path="/insights/reports/scans/:pipelineId/:stepId/:runCount" component={SonarReports} />
+
+          {/*Insights Reports*/}
+          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount" component={SonarReports} />
 
 
 
