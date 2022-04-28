@@ -54,8 +54,8 @@ function SonarPipelineScanReport() {
         pipelineId,
         stepId,
         runCount,
-        filterModel?.getData("currentPage"),
-        filterModel?.getData("pageSize"),
+        newFilterModel?.getData("currentPage"),
+        newFilterModel?.getData("pageSize"),
       );
 
       if (Array.isArray(sonarPageIssuesArray)) {
