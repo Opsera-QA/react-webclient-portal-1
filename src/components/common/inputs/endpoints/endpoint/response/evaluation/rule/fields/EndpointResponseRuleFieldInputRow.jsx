@@ -58,7 +58,7 @@ function EndpointResponseRuleFieldInputRow(
         case "string":
           if (isSensitiveData === true) {
             return (
-              <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+              <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
                 <CustomParameterSelectInput
                   model={endpointFieldModel}
                   setModel={setEndpointFieldModel}
@@ -73,7 +73,7 @@ function EndpointResponseRuleFieldInputRow(
           }
 
           return (
-            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
               <CustomParameterComboBoxInput
                 model={endpointFieldModel}
                 setModel={setEndpointFieldModel}
@@ -101,7 +101,7 @@ function EndpointResponseRuleFieldInputRow(
           );
         case "date":
           return (
-            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}}>
+            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
               <DateTimeInput
                 dataObject={endpointFieldModel}
                 setDataObject={setEndpointFieldModel}
