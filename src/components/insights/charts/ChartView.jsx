@@ -138,6 +138,8 @@ import SalesforceBackupsAndRollbacksMetrics from "components/insights/charts/sfd
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
+import SalesforceComponentsDataBlockChart
+  from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 
 // Service Now KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
@@ -1461,6 +1463,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={12} md={12} className="p-2">
             <SdlcDurationByStageMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "salesforce-components-chart":
+        return (
+          <Col md={12} className="p-2">
+            <SalesforceComponentsDataBlockChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
