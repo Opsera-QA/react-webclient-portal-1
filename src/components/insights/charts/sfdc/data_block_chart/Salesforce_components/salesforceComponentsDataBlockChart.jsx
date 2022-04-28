@@ -14,17 +14,24 @@ import TotalSalesforcePipelineExecutions from "./data_blocks/TotalSalesforcePipe
 import TotalPipelineExecutionDeployment from "./data_blocks/TotalPipelineExecutionDeployment";
 import TotalPipelineExecutionValidation from "./data_blocks/TotalPipelineExecutionValidation";
 import TotalPipelinesExecutionsUnitTests from "./data_blocks/TotalPipelinesExecutionsUnitTests";
+import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import { SALESFORCE_COMPONENTS_METRIC_CONSTANTS as dataPointConstants} from "./Salesforce-components-datapoints";
 
 function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [dataMetrics, setDataMetrics] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [totalComponentsDataPoint, setTotalComponentsDatapoint] = useState(undefined);
+  const [averageDataPoint, setAverageDatapoint] = useState(undefined);
+  const [totalSalesforceDataPoint, setTotalSalesforceDatapoint] = useState(undefined);
+  const [deploymentDataPoint, setDeploymentDatapoint] = useState(undefined);
+  const [validationDataPoint, setValidationDatapoint] = useState(undefined);
+  const [unitTestsDataPoint, setUnitTestsDatapoint] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -51,44 +58,32 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+          ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-          getAccessToken,
-          cancelSource,
-          "overallCoverityIssuesTrend",
-          kpiConfiguration,
-          dashboardTags,
-          null,
-          null,
-          dashboardOrgs
-        ),
-        responseBaseKPIBlockValues = await chartsActions.parseConfigurationAndGetChartMetrics(
-          getAccessToken,
-          cancelSource,
-          "coverityBaseKPIDataBlocks",
-          kpiConfiguration,
-          dashboardTags,
-          null,
-          null,
-          dashboardOrgs
-        );
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+          ]?.value;
 
-      const dataObject = response?.data ? response?.data?.data[0]?.overallCoverityIssuesTrend?.data : [],
-        dataObjectBaseKPIDataBlocks = responseBaseKPIBlockValues?.data
-          ? responseBaseKPIBlockValues?.data?.data[0]?.coverityBaseKPIDataBlocks?.data
+      const response = await chartsActions.getSfdcMetrics(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs,
+      );
+
+     console.log("response", response);
+      const dataObject =
+        response?.data && response?.status === 200
+          ? response?.data?.data?.data[0]
           : [];
 
-      if (isMounted?.current === true && dataObject && dataObjectBaseKPIDataBlocks) {
-        dataObject[0]?.docs?.sort((a, b) =>
-          a.currentTotalIssues < b.currentTotalIssues ? 1 : b.currentTotalIssues < a.currentTotalIssues ? -1 : 0
-        );
-        dataObject[0]?.docs?.slice(0, 2);
-
+      if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setDataMetrics(dataObjectBaseKPIDataBlocks);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -102,12 +97,27 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
     }
   };
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const salesforceTotalComponentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_TOTAL_COMPONENTS_DATA_POINT);
+    setTotalComponentsDatapoint(salesforceTotalComponentsDataPoint);
+    const salesforceAverageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_AVERAGE_DATA_POINT);
+    setAverageDatapoint(salesforceAverageDataPoint);
+    const totalExecutionsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_TOTAL_EXECUTIONS_DATA_POINT);
+    setTotalSalesforceDatapoint(totalExecutionsDataPoint);
+    const salesforceDeploymentDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_DEPLOYMENTS_DATA_POINT);
+    setDeploymentDatapoint(salesforceDeploymentDataPoint);
+    const salesforceValidationDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_VALIDATION_DATA_POINT);
+    setValidationDatapoint(salesforceValidationDataPoint);
+    const salesforceUnitTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.SALESFORCE_UNIT_TESTS_DATA_POINT);
+    setUnitTestsDatapoint(salesforceUnitTestsDataPoint);
+  };
 
   const getIcon = (severity) => {
     switch (severity) {
-      case "Red":
-        return faArrowCircleUp;
       case "Green":
+        return faArrowCircleUp;
+      case "Red":
         return faArrowCircleDown;
       case "Neutral":
         return faMinusCircle;
@@ -156,96 +166,108 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
         return "Neutral: This project's issues have experienced no change";
     }
   };
-
+  console.log(metrics, "metrics");
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0 || dataMetrics.length === 0) {
-      return null;
-    }
+   //  if (!Array.isArray(metrics) || metrics.length === 0) {
+   //   return null;
+   // }
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Container>
           <Row className="p-2 gray">
-            <Col>
+            {dataPointHelpers.isDataPointVisible(totalComponentsDataPoint) &&
+            <Col className={"mr-5"}>
               <TotalComponentsDeployed
                 score={
-                  dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.totalComponentsDeployed
+                    ? metrics?.currentResults?.totalComponentsDeployed
                     : 0
                 }
-                icon={getIcon(metrics[0].overallLowTrend)}
-                className={getIconColor(metrics[0].overallLowTrend)}
-                lastScore={metrics[0].previousTotalLow}
-                iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
+                icon={getIcon(metrics?.trends?.totalComponentsDeployed)}
+                className={getIconColor(metrics?.trends?.totalComponentsDeployed)}
+                lastScore={metrics?.previousResults?.totalComponentsDeployed}
+                iconOverlayBody={getDescription(metrics[0]?.overallLowTrend)}
+                dataPoint={totalComponentsDataPoint}
               />
-            </Col>
+            </Col>}
+            {dataPointHelpers.isDataPointVisible(averageDataPoint) &&
             <Col>
               <AvgComponentsDeployedPerExecution
                 score={
-                  dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.averageComponentsDeployedPerExecution
+                    ? metrics?.currentResults?.averageComponentsDeployedPerExecution
                     : 0
                 }
-                icon={getIcon(metrics[0].overallMediumTrend)}
-                className={getIconColor(metrics[0].overallMediumTrend)}
-                lastScore={metrics[0].previousTotalMedium}
-                iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
+                icon={getIcon(metrics?.trends?.averageComponentsDeployedPerExecution)}
+                className={getIconColor(metrics?.trends?.averageComponentsDeployedPerExecution)}
+                lastScore={metrics?.previousResults?.averageComponentsDeployedPerExecution}
+                iconOverlayBody={getDescription(metrics[0]?.overallMediumTrend)}
+                dataPoint={averageDataPoint}
               />
-            </Col>
-            <Col>
+            </Col >}
+            {dataPointHelpers.isDataPointVisible(totalSalesforceDataPoint) &&
+            <Col className={"ml-5"}>
               <TotalSalesforcePipelineExecutions
                 score={
-                  dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.totalSalesforcePipelineExecutions
+                    ? metrics?.currentResults?.totalSalesforcePipelineExecutions
                     : 0
                 }
-                icon={getIcon(metrics[0].overallHighTrend)}
-                className={getIconColor(metrics[0].overallHighTrend)}
-                lastScore={metrics[0].previousTotalHigh}
-                iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
+                icon={getIcon(metrics?.trends?.totalSalesforcePipelineExecutions)}
+                className={getIconColor(metrics?.trends?.totalSalesforcePipelineExecutions)}
+                lastScore={metrics?.previousResults?.totalSalesforcePipelineExecutions}
+                iconOverlayBody={getDescription(metrics[0]?.overallHighTrend)}
+                dataPoint={totalSalesforceDataPoint}
               />
-            </Col>
+            </Col>}
           </Row>
           <Row className="p-2 gray">
-            <Col>
+            {dataPointHelpers.isDataPointVisible(deploymentDataPoint) &&
+            <Col className={"mr-5"}>
               <TotalPipelineExecutionDeployment
                 score={
-                  dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.totalPipelineExecutionsWithDeployment
+                    ? metrics?.currentResults?.totalPipelineExecutionsWithDeployment
                     : 0
                 }
-                icon={getIcon(metrics[0].overallLowTrend)}
-                className={getIconColor(metrics[0].overallLowTrend)}
-                lastScore={metrics[0].previousTotalLow}
-                iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
+                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithDeployment)}
+                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithDeployment)}
+                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithDeployment}
+                iconOverlayBody={getDescription(metrics[0]?.overallLowTrend)}
+                dataPoint={deploymentDataPoint}
               />
-            </Col>
-            <Col>
+            </Col>}
+            {dataPointHelpers.isDataPointVisible(validationDataPoint) &&
+            <Col >
               <TotalPipelineExecutionValidation
                 score={
-                  dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.totalPipelineExecutionsWithValidation
+                    ? metrics?.currentResults?.totalPipelineExecutionsWithValidation
                     : 0
                 }
-                icon={getIcon(metrics[0].overallMediumTrend)}
-                className={getIconColor(metrics[0].overallMediumTrend)}
-                lastScore={metrics[0].previousTotalMedium}
-                iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
+                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithValidation)}
+                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithValidation)}
+                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithValidation}
+                iconOverlayBody={getDescription(metrics[0]?.overallMediumTrend)}
+                dataPoint={validationDataPoint}
               />
-            </Col>
-            <Col>
+            </Col>}
+            {dataPointHelpers.isDataPointVisible(unitTestsDataPoint) &&
+            <Col className={"ml-5"}>
               <TotalPipelinesExecutionsUnitTests
                 score={
-                  dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
+                  metrics?.currentResults?.totalPipelineExecutionsWithUnitTests
+                    ? metrics?.currentResults?.totalPipelineExecutionsWithUnitTests
                     : 0
                 }
-                icon={getIcon(metrics[0].overallHighTrend)}
-                className={getIconColor(metrics[0].overallHighTrend)}
-                lastScore={metrics[0].previousTotalHigh}
-                iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
+                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithUnitTests)}
+                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithUnitTests)}
+                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithUnitTests}
+                iconOverlayBody={getDescription(metrics[0]?.overallHighTrend)}
+                dataPoint={unitTestsDataPoint}
               />
-            </Col>
+            </Col>}
           </Row>
         </Container>
       </div>

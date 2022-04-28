@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "../../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
-function TotalComponentsDeployed({ score, icon, className, onSelect, lastScore, iconOverlayBody}) {
+function TotalComponentsDeployed({ score, icon, className, dataPoint, onSelect, lastScore, iconOverlayBody}) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock
@@ -13,6 +13,7 @@ function TotalComponentsDeployed({ score, icon, className, onSelect, lastScore, 
         bottomText={"Previous Result: " + lastScore}
         icon={icon}
         iconOverlayBody = {iconOverlayBody}
+        dataPoint={dataPoint}
 
       />
     </DataBlockBoxContainer>
@@ -26,6 +27,7 @@ TotalComponentsDeployed.propTypes = {
   onSelect: PropTypes.func,
   lastScore: PropTypes.number,
   iconOverlayBody: PropTypes.any,
+  dataPoint: PropTypes.object,
 };
 
 export default TotalComponentsDeployed;
