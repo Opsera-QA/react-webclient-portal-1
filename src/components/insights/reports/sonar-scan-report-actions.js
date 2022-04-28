@@ -14,7 +14,7 @@ sonarScanReportActions.getAllSonarScanIssues = async(getAccessToken, cancelToken
 };
 
 sonarScanReportActions.getSonarScanIssuesByPage = async(getAccessToken, cancelTokenSource, pipelineId, runCount, stepId, pageCount, pageSize) => {
-  const apiUrl = `reports/scans/sonar/all-issues/pipelineId`;
+  const apiUrl = `reports/scans/sonar/issues-by-page/pipelineId`;
   const postData = {
     pipelineId: pipelineId, 
     runCount: runCount, 
