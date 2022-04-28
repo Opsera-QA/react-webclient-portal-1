@@ -21,6 +21,7 @@ function VanitySetTabAndViewContainer(
     titleRightSideButton,
     loadDataFunction,
     overflowYBodyStyle,
+    overflowXBodyStyle,
     overflowYContainerStyle,
   }) {
   const getTabColumnSize = () => {
@@ -52,6 +53,7 @@ function VanitySetTabAndViewContainer(
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: overflowYBodyStyle,
+      overflowX: overflowXBodyStyle,
     });
   };
 
@@ -104,6 +106,7 @@ VanitySetTabAndViewContainer.propTypes = {
   titleRightSideButton: PropTypes.object,
   loadDataFunction: PropTypes.func,
   overflowYBodyStyle: PropTypes.string,
+  overflowXBodyStyle: PropTypes.string,
   overflowYContainerStyle: PropTypes.string,
 };
 

@@ -30,7 +30,7 @@ function ExternalRestApiIntegrationEndpointRequestField({
     if (requestBody) {
       return (
         <StandaloneJsonField
-          titleText={"Query Parameters"}
+          titleText={"Request Body"}
           json={requestBody}
         />
       );
