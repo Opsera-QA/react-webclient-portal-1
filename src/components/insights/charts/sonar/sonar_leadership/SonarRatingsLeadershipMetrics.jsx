@@ -181,12 +181,12 @@ function SonarRatingLeadershipMetrics({ kpiConfiguration, setKpiConfiguration, d
                 iconOverlayBody={getDescription(sonarRatingsMetric?.coverage_trend)}
               />
             </Col>
-            <Col className={"px-0 my-3"} xl={12} lg={12}>
+            {/* <Col className={"px-0 my-3"} xl={12} lg={12}>
               <SonarCoverageActionableTable
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
               />
-            </Col>
+            </Col> */}
           </Row>
         </div>
         <BadgeBase className={"mx-2"} badgeText={"Please note, scan data used by these metrics is only available from Nov 25 2021 onward.  Any date selection prior to that will not return data."} />
