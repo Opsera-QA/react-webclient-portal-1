@@ -7,7 +7,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
 import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportSonarQubeScanDetailsButton";
 
-function SonarScanReportTable({ data, isLoading, loadData }) {
+function SonarScanReportTable({ data, isLoading, loadData, filterModel,
+                                setFilterModel, }) {
+
   let fields = sonarScanReportMetadata.fields;
 
   const columns = useMemo(
@@ -35,6 +37,8 @@ function SonarScanReportTable({ data, isLoading, loadData }) {
         data={data}
         rowStyling={rowStyling}
         isLoading={isLoading}
+        // paginationDto={filterModel}
+        // setPaginationDto={setFilterModel}
       />
     );
   };
@@ -56,7 +60,9 @@ function SonarScanReportTable({ data, isLoading, loadData }) {
 SonarScanReportTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
 };
 
 export default SonarScanReportTable;
