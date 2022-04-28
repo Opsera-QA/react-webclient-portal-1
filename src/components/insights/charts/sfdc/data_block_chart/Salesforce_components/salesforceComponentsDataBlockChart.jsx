@@ -57,6 +57,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
@@ -76,10 +77,9 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
         dashboardOrgs,
       );
 
-     console.log("response", response);
       const dataObject =
         response?.data && response?.status === 200
-          ? response?.data?.data?.data[0]
+          ? response?.data?.data?.data
           : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -158,19 +158,19 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
 
   const getDescription = (severity) => {
     switch (severity) {
-      case "Red":
-        return "This project's issues are trending upward";
       case "Green":
+        return "This project's issues are trending upward";
+      case "Red":
         return "This project's issues are trending downward";
       case "Neutral":
         return "Neutral: This project's issues have experienced no change";
     }
   };
-  console.log(metrics, "metrics");
+
   const getChartBody = () => {
-   //  if (!Array.isArray(metrics) || metrics.length === 0) {
-   //   return null;
-   // }
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+     return null;
+   }
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
@@ -180,14 +180,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"mr-5"}>
               <TotalComponentsDeployed
                 score={
-                  metrics?.currentResults?.totalComponentsDeployed
-                    ? metrics?.currentResults?.totalComponentsDeployed
+                  metrics[0]?.currentResults?.totalComponentsDeployed
+                    ? metrics[0]?.currentResults?.totalComponentsDeployed
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.totalComponentsDeployed)}
-                className={getIconColor(metrics?.trends?.totalComponentsDeployed)}
+                icon={getIcon(metrics[0]?.trends?.totalComponentsDeployed)}
+                className={getIconColor(metrics[0]?.trends?.totalComponentsDeployed)}
                 lastScore={metrics?.previousResults?.totalComponentsDeployed}
-                iconOverlayBody={getDescription(metrics[0]?.overallLowTrend)}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.totalComponentsDeployed)}
                 dataPoint={totalComponentsDataPoint}
               />
             </Col>}
@@ -195,14 +195,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col>
               <AvgComponentsDeployedPerExecution
                 score={
-                  metrics?.currentResults?.averageComponentsDeployedPerExecution
-                    ? metrics?.currentResults?.averageComponentsDeployedPerExecution
+                  metrics[0]?.currentResults?.averageComponentsDeployedPerExecution
+                    ? metrics[0]?.currentResults?.averageComponentsDeployedPerExecution
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.averageComponentsDeployedPerExecution)}
-                className={getIconColor(metrics?.trends?.averageComponentsDeployedPerExecution)}
-                lastScore={metrics?.previousResults?.averageComponentsDeployedPerExecution}
-                iconOverlayBody={getDescription(metrics[0]?.overallMediumTrend)}
+                icon={getIcon(metrics[0]?.trends?.averageComponentsDeployedPerExecution)}
+                className={getIconColor(metrics[0]?.trends?.averageComponentsDeployedPerExecution)}
+                lastScore={metrics[0]?.previousResults?.averageComponentsDeployedPerExecution}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.averageComponentsDeployedPerExecution)}
                 dataPoint={averageDataPoint}
               />
             </Col >}
@@ -210,14 +210,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"ml-5"}>
               <TotalSalesforcePipelineExecutions
                 score={
-                  metrics?.currentResults?.totalSalesforcePipelineExecutions
-                    ? metrics?.currentResults?.totalSalesforcePipelineExecutions
+                  metrics[0]?.currentResults?.totalSalesforcePipelineExecutions
+                    ? metrics[0]?.currentResults?.totalSalesforcePipelineExecutions
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.totalSalesforcePipelineExecutions)}
-                className={getIconColor(metrics?.trends?.totalSalesforcePipelineExecutions)}
-                lastScore={metrics?.previousResults?.totalSalesforcePipelineExecutions}
-                iconOverlayBody={getDescription(metrics[0]?.overallHighTrend)}
+                icon={getIcon(metrics[0]?.trends?.totalSalesforcePipelineExecutions)}
+                className={getIconColor(metrics[0]?.trends?.totalSalesforcePipelineExecutions)}
+                lastScore={metrics[0]?.previousResults?.totalSalesforcePipelineExecutions}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.totalSalesforcePipelineExecutions)}
                 dataPoint={totalSalesforceDataPoint}
               />
             </Col>}
@@ -227,14 +227,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"mr-5"}>
               <TotalPipelineExecutionDeployment
                 score={
-                  metrics?.currentResults?.totalPipelineExecutionsWithDeployment
-                    ? metrics?.currentResults?.totalPipelineExecutionsWithDeployment
+                  metrics[0]?.currentResults?.totalPipelineExecutionsWithDeployment
+                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithDeployment
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithDeployment)}
-                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithDeployment)}
-                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithDeployment}
-                iconOverlayBody={getDescription(metrics[0]?.overallLowTrend)}
+                icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithDeployment)}
+                className={getIconColor(metrics[0]?.trends?.totalPipelineExecutionsWithDeployment)}
+                lastScore={metrics[0]?.previousResults?.totalPipelineExecutionsWithDeployment}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.totalPipelineExecutionsWithDeployment)}
                 dataPoint={deploymentDataPoint}
               />
             </Col>}
@@ -242,14 +242,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col >
               <TotalPipelineExecutionValidation
                 score={
-                  metrics?.currentResults?.totalPipelineExecutionsWithValidation
-                    ? metrics?.currentResults?.totalPipelineExecutionsWithValidation
+                  metrics[0]?.currentResults?.totalPipelineExecutionsWithValidation
+                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithValidation
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithValidation)}
-                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithValidation)}
-                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithValidation}
-                iconOverlayBody={getDescription(metrics[0]?.overallMediumTrend)}
+                icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithValidation)}
+                className={getIconColor(metrics[0]?.trends?.totalPipelineExecutionsWithValidation)}
+                lastScore={metrics[0]?.previousResults?.totalPipelineExecutionsWithValidation}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.totalPipelineExecutionsWithValidation)}
                 dataPoint={validationDataPoint}
               />
             </Col>}
@@ -257,14 +257,14 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"ml-5"}>
               <TotalPipelinesExecutionsUnitTests
                 score={
-                  metrics?.currentResults?.totalPipelineExecutionsWithUnitTests
-                    ? metrics?.currentResults?.totalPipelineExecutionsWithUnitTests
+                  metrics[0]?.currentResults?.totalPipelineExecutionsWithUnitTests
+                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithUnitTests
                     : 0
                 }
-                icon={getIcon(metrics?.trends?.totalPipelineExecutionsWithUnitTests)}
-                className={getIconColor(metrics?.trends?.totalPipelineExecutionsWithUnitTests)}
-                lastScore={metrics?.previousResults?.totalPipelineExecutionsWithUnitTests}
-                iconOverlayBody={getDescription(metrics[0]?.overallHighTrend)}
+                icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithUnitTests)}
+                className={getIconColor(metrics[0]?.trends?.totalPipelineExecutionsWithUnitTests)}
+                lastScore={metrics[0]?.previousResults?.totalPipelineExecutionsWithUnitTests}
+                iconOverlayBody={getDescription(metrics[0]?.trends?.totalPipelineExecutionsWithUnitTests)}
                 dataPoint={unitTestsDataPoint}
               />
             </Col>}
