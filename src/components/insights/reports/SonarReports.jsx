@@ -3,10 +3,63 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SonarScanReportTable from "./SonarScanReportTable";
 import {useParams} from "react-router-dom";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import sonarScanReportActions from "components/insights/reports/sonar-scan-report-actions";
 
-
-function SonarReports() {
+function SonarReports() { 
   const {pipelineId, stepId, runCount} = useParams();
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [sonarIssues, setSonarIssues] = useState([]);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      setSonarIssues([]);
+
+      const sonarIssuesArray = sonarScanReportActions.getAllSonarScanIssues(getAccessToken, cancelTokenSource, pipelineId, runCount, stepId);
+
+      if (Array.isArray(sonarIssuesArray)) {
+        setSonarIssues(sonarIssuesArray);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+
   const placeholderData = [
     {
         "severity": "MAJOR",
@@ -65,8 +118,9 @@ function SonarReports() {
     >
       <SonarScanReportTable
       data={placeholderData}
-      // isLoading={isLoading}
-      // loadData={loadData}
+      allSonarIssues={sonarIssues}
+      isLoading={isLoading}
+      loadData={loadData}
       />
     </ScreenContainer>
   );

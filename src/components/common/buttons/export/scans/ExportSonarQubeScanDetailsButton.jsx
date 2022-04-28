@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ExportSonarQubeScanDataModal from "components/common/modal/export_data/ExportSonarQubeScanDataModal";
 import IconBase from "components/common/icons/IconBase";
 
-function ExportSonarQubeScanDetailsButton({isLoading, scanData, className}) {
+function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allSonarIssues}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const closeModal = () => {
@@ -15,11 +15,11 @@ function ExportSonarQubeScanDetailsButton({isLoading, scanData, className}) {
   };
 
   const rawDataResults = () =>{
-    return scanData ? scanData.map(item => JSON.stringify(item)) : "export failure";
+    return allSonarIssues ? allSonarIssues.map(item => JSON.stringify(item)) : "export failure";
    };
 
   const formattedData = () => {
-    let formattedData = scanData;
+    let formattedData = allSonarIssues;
 
     //any data formatting goes here
 
@@ -54,6 +54,7 @@ function ExportSonarQubeScanDetailsButton({isLoading, scanData, className}) {
 
 ExportSonarQubeScanDetailsButton.propTypes = {
   scanData: PropTypes.array,
+  allSonarIssues: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
