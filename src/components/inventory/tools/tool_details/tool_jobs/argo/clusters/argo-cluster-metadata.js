@@ -54,6 +54,11 @@ const argoClusterMetadata = {
       label: "IAM Role Name",
       id: "roleSessionName"
     },
+    {
+      label: "Enable Argo Rollouts for Blue/Green Deployment",
+      id: "argoRolloutsEnabled",
+      helpTooltipText: "Please use this toggle button to enable/disable installation of Argo Rollouts plugin during cluster creation. The Argo Rollouts plugin, enables us to perform Blue Green deployment in the kubernetes cluster, through Argo CD."
+    },
   ],
   newObjectFields: {
     clusterName: "",
@@ -68,7 +73,8 @@ const argoClusterMetadata = {
     iamRoleFlag: false,
     roleArn: "",
     roleSessionName: "",
-    clusterType: "",    
+    clusterType: "",
+    argoRolloutsEnabled: false,
   }
 };
 
