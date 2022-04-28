@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const pipelineHelpers = {};
 
@@ -208,6 +209,52 @@ pipelineHelpers.formatStepOptions = (plan, stepId) => {
   );
   // console.log(STEP_OPTIONS);
   return STEP_OPTIONS;
+};
+
+// TODO: Rework logs to store in a consistent manner for all flows
+// Status and run api responses work a little differently. For status, there is a nested response inside api_response.
+pipelineHelpers.parseSummaryLogApiResponseValue = (pipelineLogData, fieldName) => {
+  try {
+    const parsedLogData = dataParsingHelper.parseObject(pipelineLogData, false);
+
+    if (!parsedLogData) {
+      return undefined;
+    }
+
+    const apiResponse = dataParsingHelper.parseObject(pipelineLogData?.api_response);
+    const innerApiResponse = dataParsingHelper.parseObject(pipelineLogData?.api_response?.apiResponse);
+
+    if (innerApiResponse && innerApiResponse[fieldName]) {
+      return innerApiResponse[fieldName];
+    }
+
+    return apiResponse[fieldName];
+  }
+  catch (error) {
+    return undefined;
+  }
+};
+
+// TODO: Rework logs to store in a consistent manner for all flows
+pipelineHelpers.parseSummaryLogStepConfiguration = (pipelineLogData) => {
+  try {
+    const parsedLogData = dataParsingHelper.parseObject(pipelineLogData, false);
+
+    if (!parsedLogData) {
+      return undefined;
+    }
+
+    const internalStepConfiguration = pipelineHelpers.parseSummaryLogApiResponseValue(parsedLogData, "stepConfiguration");
+
+    if (internalStepConfiguration) {
+      return internalStepConfiguration;
+    }
+
+    return parsedLogData?.step_configuration?.tool?.configuration;
+  }
+  catch (error) {
+    return undefined;
+  }
 };
 
 export default pipelineHelpers;

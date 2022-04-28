@@ -69,7 +69,7 @@ function InputTitleBar(
     if (loadDataFunction) {
       return (
         <RefreshButton
-          loadData={loadDataFunction}
+          loadDataFunction={loadDataFunction}
           isLoading={isLoading}
           className={"ml-2 my-auto"}
         />
@@ -83,15 +83,10 @@ function InputTitleBar(
       {getFormattedLabel()}
       <div className={"d-flex"}>
         {getSearchBar()}
-        {getLoadDataButton()}
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
-        <RefreshButton
-          isLoading={isLoading}
-          loadData={loadDataFunction}
-          className={"ml-2"}
-        />
+        {getLoadDataButton()}
         {getRightSideButton()}
       </div>
     </div>

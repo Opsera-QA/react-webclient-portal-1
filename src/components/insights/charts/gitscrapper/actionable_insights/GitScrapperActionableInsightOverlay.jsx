@@ -111,6 +111,8 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
         data={dataScorecardMetrics}
         loadData={loadData}
         type={gitScrapperType}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
       />
     );
   };

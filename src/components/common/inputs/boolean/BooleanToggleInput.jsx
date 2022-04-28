@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import AzureDevopsPipelineStepConfigurationHelpDocumentation
+  from "components/common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 
 function BooleanToggleInput(
   {
@@ -13,6 +18,8 @@ function BooleanToggleInput(
     disabled,
     className,
     id,
+    infoOverlay,
+    inputHelpOverlay,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -45,7 +52,7 @@ function BooleanToggleInput(
   };
 
   const getLabelClassNames = () => {
-    let classNames = "toggle-label-alignment";
+    let classNames = "d-flex";
 
     if (disabled === true) {
       classNames += " not-allowed-cursor";
@@ -72,6 +79,30 @@ function BooleanToggleInput(
     return constructedId;
   };
 
+  const getInputHelpIcon = () => {
+    if (inputHelpOverlay != null) {
+      return (
+        <LaunchHelpIcon
+          className={"ml-2 mt-auto"}
+          helpComponent={inputHelpOverlay}
+        />
+      );
+    }
+
+    const fieldHelpTooltipText = field?.helpTooltipText;
+
+    if (hasStringValue(fieldHelpTooltipText) === true) {
+      return (
+        <HelpInfoOverlayIcon
+          infoOverlay={fieldHelpTooltipText}
+          title={`${field?.label} Help`}
+          className={"ml-2 mt-auto"}
+          overlayPlacement={"top"}
+        />
+      );
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -79,18 +110,27 @@ function BooleanToggleInput(
   return (
     <div className={className}>
       <InputContainer>
-        <div className={"d-flex toggle-alignment"}>
+        <div className={"d-flex"}>
           <Form.Check
             type={"switch"}
             className={getClassNames()}
             id={getUniqueId()}
             checked={!!dataObject.getData(fieldName)}
             disabled={disabled}
-            label={<div className={getLabelClassNames()}>{field?.label}</div>}
+            label={<span className={getLabelClassNames()}> </span>}
             onChange={() => {
               updateValue(!dataObject.getData(fieldName));
             }}
           />
+          <div className={"d-flex my-auto"}>
+            <span
+              className={getLabelClassNames()}
+              onClick={() => {updateValue(!dataObject.getData(fieldName));}}
+            >
+              {field?.label}
+            </span>
+            {getInputHelpIcon()}
+          </div>
         </div>
         <InfoText
           field={field}
@@ -110,6 +150,8 @@ BooleanToggleInput.propTypes = {
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
   id: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default BooleanToggleInput;

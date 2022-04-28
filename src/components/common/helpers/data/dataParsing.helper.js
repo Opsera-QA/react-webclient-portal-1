@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 // TODO: Clean up and figure out how we want to use this on React end
 export const dataParsingHelper = {};
 
@@ -62,5 +64,16 @@ dataParsingHelper.parseObjectValue = (type, value) => {
       return dataParsingHelper.parseArray(value, []);
     case "date":
       return dataParsingHelper.parseDate(value, undefined);
+    case "boolean":
+      return dataParsingHelper.parseBoolean(value, false);
   }
+};
+
+// TODO: Should we move these to a lodash helper?
+dataParsingHelper.cloneDeep = (objectToClone) => {
+  return _.cloneDeep(objectToClone);
+};
+
+dataParsingHelper.isEmpty = (objectToClone) => {
+  return _.isEmpty(objectToClone);
 };

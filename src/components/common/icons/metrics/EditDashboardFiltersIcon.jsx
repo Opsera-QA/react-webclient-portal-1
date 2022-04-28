@@ -10,7 +10,6 @@ import FiltersMultiSelectOverlay from "components/common/inputs/tags/inline/moda
 import modelHelpers from "components/common/model/modelHelpers";
 
 function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData, className }) {
-
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -34,6 +33,10 @@ function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData,
       />
     );
   };
+
+  if (dashboardModel?.canUpdateDashboardFilters() !== true) {
+    return null;
+  }
 
   return (
     <div className={className}>

@@ -5,7 +5,8 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import VanityTextInputBase from "components/common/inputs/text/VanityTextInputBase";
 
-function VanityTextInput({fieldName, className, dataObject, setDataObject, setDataFunction, showLabel, disabled  }) {
+// TODO: Rewrite? Combine with TextInputBase?
+function VanityTextInput({fieldName, className, dataObject, setDataObject, setDataFunction, showLabel, disabled, inputHelpOverlay, infoOverlay }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -47,7 +48,13 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
 
   return (
     <InputContainer className={className}>
-      <InputLabel model={dataObject} showLabel={showLabel} field={field}/>
+      <InputLabel
+        model={dataObject}
+        showLabel={showLabel}
+        field={field}
+        infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
+      />
       <VanityTextInputBase
         setDataFunction={updateValue}
         data={dataObject?.getData(fieldName)}
@@ -71,7 +78,9 @@ VanityTextInput.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default VanityTextInput;

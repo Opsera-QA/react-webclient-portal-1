@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import DockerSecretsInput from "../DockerSecretsInput";
-import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
 import ReactJson from "react-json-view";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
@@ -94,7 +94,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType})
         dataObject={model}
         deleteDockerSecrets={deleteDockerSecrets}
         setDeleteDockerSecrets={setDeleteDockerSecrets}
-        addSecret={deleteDockerSecrets || _.isEmpty(model.data.dockerBuildPathJson)}
+        addSecret={deleteDockerSecrets || dataParsingHelper.isEmpty(model?.data?.dockerBuildPathJson)}
       />
     </div>
   );

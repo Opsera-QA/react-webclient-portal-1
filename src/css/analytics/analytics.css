@@ -73,3 +73,19 @@
 }
 
 /* End Insights Card Styling */
+
+/* Hide element when not large device - Start */
+@media only screen and (max-width: 992px) {
+    .md-hide {
+        display: none;
+    }
+}
+/* Hide element when not large device - End */
+
+/* Show element when not large device - Start */
+@media only screen and (min-width: 992px) {
+    .md-show {    
+        display: none;
+    }
+}
+/* Show element when not large device - End */

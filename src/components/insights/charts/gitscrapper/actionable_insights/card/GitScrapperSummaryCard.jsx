@@ -13,7 +13,7 @@ import IconBase from "components/common/icons/IconBase";
 import GitScrapperMetricIssuesScorecardMetaData from "components/insights/charts/gitscrapper/gitScrapperMetricIssuesScorecardMetaData";
 import GitScrapperMetricCleanRepoScorecardMetaData from "components/insights/charts/gitscrapper/gitScrapperMetricCleanRepoScorecardMetaData";
 
-function GitScrapperSummaryCard({ gitScrapperData, type}) {
+function GitScrapperSummaryCard({ gitScrapperData, type, kpiConfiguration, dashboardData}) {
 
   const [gitScrapperMetricScorecardDto, setGitScrapperMetricScorecardDto] = useState(undefined);
 
@@ -41,7 +41,10 @@ function GitScrapperSummaryCard({ gitScrapperData, type}) {
     return (
       <div className="d-flex justify-content-between w-100">
         <div><IconBase icon={faFileCode} className={"mr-1"}/>{gitScrapperMetricScorecardDto.getData("repository")}</div>
-        {(type === 'totalNumberofIssues') && <div><GitScrapperViewActionableInsightsButton dataObject={gitScrapperMetricScorecardDto}/></div>}
+        {(type === 'totalNumberofIssues') && 
+          (<div>
+            <GitScrapperViewActionableInsightsButton dataObject={gitScrapperMetricScorecardDto} kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+          </div>)}
       </div>
     );
   };
@@ -87,7 +90,9 @@ function GitScrapperSummaryCard({ gitScrapperData, type}) {
 
 GitScrapperSummaryCard.propTypes = {
   gitScrapperData: PropTypes.object,
-  type: PropTypes.string
+  type: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default GitScrapperSummaryCard;

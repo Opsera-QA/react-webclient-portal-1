@@ -17,6 +17,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
+  TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
 ];
 
 // TODO: This should be broken into two buttons and this should be renamed as the container

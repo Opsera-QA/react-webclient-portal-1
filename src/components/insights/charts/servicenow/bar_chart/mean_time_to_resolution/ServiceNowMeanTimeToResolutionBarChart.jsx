@@ -29,6 +29,8 @@ import ServiceNowMaxMTTRDataBlock from "../../data_blocks/ServiceNowMaxMTTRDataB
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {SERVICE_NOW_MEAN_TIME_TO_RESOLUTION_CONSTANTS as dataPointConstants} from "./ServiceNowMeanTimeToResolution_datapoint_identifiers";
+import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/serviceNowMeanTimeToResolutionSummaryPanelMetadata";
 // import Model from "../../../../../../core/data_model/model";
@@ -68,10 +70,6 @@ function ServiceNowMeanTimeToResolutionBarChart({
   const [priorityFour, setPriorityFour] = useState(0);
   const [priorityFive, setPriorityFive] = useState(0);
   const toastContext = useContext(DialogToastContext);
-  const mttrDataPointConstant = "mttr-in-hours-chart-data-point";
-  const numberOfIncidentsConstant = "number-of-incidents-charts-data-point";
-  const averageMTTRDataBlockConstant = "average-mttr-data-block-data-point";
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -220,20 +218,18 @@ function ServiceNowMeanTimeToResolutionBarChart({
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    console.log(metrics);
-    console.log(sevMetrics);
 
     const dataPoints = kpiConfiguration?.dataPoints;
-    const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, mttrDataPointConstant);
-    const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, numberOfIncidentsConstant);
-    const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, averageMTTRDataBlockConstant);
-    
+    const mttrChartDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT);
+    const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.NUMBER_OF_INCIDENTS_DATA_POINT);
+    const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.AVERAGE_MTTR_DATA_BLOCK_DATA_POINT);
+    const isOneChartVisible = dataPointHelpers.isDataPointVisible(mttrChartDataPoint) || dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
     return (
         <>
           <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
             <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
           </div>
-          <div className="new-chart m-3 p-0" style={{ minHeight: "450px", display: "flex" }}>
+          <div className="new-chart m-3 p-0" style={isOneChartVisible ? { minHeight: "450px", display: "flex" } : { display: "flex" }}>
             <Row>
               <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
                   <Col md={12} >
@@ -242,9 +238,11 @@ function ServiceNowMeanTimeToResolutionBarChart({
                   <Col md={12} >
                     <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
                   </Col>
+                <DataPointVisibilityWrapper dataPoint={averageMTTRDataBlockDataPoint} >
                   <Col md={12} >
                     <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
                   </Col>
+                </DataPointVisibilityWrapper>
                   <Col md={12} >
                     <ServiceNowMinMTTRDataBlock data={minMTTR} />
                   </Col>

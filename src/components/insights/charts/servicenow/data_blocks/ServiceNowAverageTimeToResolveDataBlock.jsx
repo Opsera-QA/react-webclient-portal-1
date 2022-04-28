@@ -7,7 +7,7 @@ function ServiceNowAverageTimeToResolveDataBlock({ data, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
       <TwoLineScoreDataBlock
-        className={"p-2"}
+        className={"p-1"}
         score={data}
         subtitle={"Average MTTR (Hours)"}
         dataPoint={dataPoint}

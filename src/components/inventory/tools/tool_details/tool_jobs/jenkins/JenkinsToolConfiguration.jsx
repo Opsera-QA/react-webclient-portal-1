@@ -13,6 +13,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import RotateJenkinsKeyButton from "components/common/buttons/inventory/RotateJenkinsKeyButton";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function JenkinsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,6 +42,12 @@ function JenkinsToolConfiguration({ toolData }) {
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
+  const getRotateJenkinsKeyButton = () => {
+    if (hasStringValue(jenkinsConfigurationDto.getData("tokenUuid"))){
+      return <RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>;
+    }
+  };
+
   const getDynamicFields = () => {
     if (jenkinsConfigurationDto.getData("proxyEnable") === true) {
       return (
@@ -57,7 +64,7 @@ function JenkinsToolConfiguration({ toolData }) {
         dataObject={jenkinsConfigurationDto} 
         setDataObject={setJenkinsConfigurationDto} 
         fieldName={"jAuthToken"} 
-        rightSideInputButton={<RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>}
+        rightSideInputButton={getRotateJenkinsKeyButton()}
         />
     );
   };
