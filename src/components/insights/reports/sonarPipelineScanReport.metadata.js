@@ -1,4 +1,4 @@
-const sonarScanReportMetadata = {
+const sonarPipelineScanReportMetadata = {
   idProperty: "_id",
   type: "Sonar Scan",
   fields: [
@@ -43,4 +43,4 @@ const sonarScanReportMetadata = {
   }
 };
 
-export default sonarScanReportMetadata;
+export default sonarPipelineScanReportMetadata;

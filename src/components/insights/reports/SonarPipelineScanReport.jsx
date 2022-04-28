@@ -1,18 +1,17 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SonarScanReportTable from "./SonarScanReportTable";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import sonarScanReportActions from "components/insights/reports/sonar-scan-report-actions";
-import Model from "../../../core/data_model/model";
-import actionableInsightsGenericChartFilterMetadata
-  from "../charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import modelHelpers from "components/common/model/modelHelpers";
+import { sonarPipelineScanReportActions } from "components/insights/reports/sonarPipelineScanReport.actions";
+import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 
-function SonarReports() { 
-  const {pipelineId, stepId, runCount} = useParams();
+function SonarPipelineScanReport() {
+  const { pipelineId, stepId, runCount } = useParams();
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,13 +19,7 @@ function SonarReports() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [sonarIssues, setSonarIssues] = useState([]);
   const [sonarPageIssues, setSonarPageIssues] = useState([]);
-  // const [filterModel, setFilterModel] = useState(
-  //   new Model(
-  //     { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-  //     actionableInsightsGenericChartFilterMetadata,
-  //     false
-  //   )
-  // );
+  const [filterModel, setFilterModel] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,8 +29,10 @@ function SonarReports() {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setSonarIssues([]);
+    const newFilterModel = modelHelpers.parseFilterModel(filterMetadata);
 
-    loadData().catch((error) => {
+    loadData(newFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -49,12 +44,47 @@ function SonarReports() {
     };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (newFilterModel = filterModel) => {
+    try {
+      setIsLoading(true);
+
+      const sonarPageIssuesArray = await sonarPipelineScanReportActions.getSonarScanIssuesByPage(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        stepId,
+        runCount,
+        filterModel?.getData("currentPage"),
+        filterModel?.getData("pageSize"),
+      );
+
+      if (Array.isArray(sonarPageIssuesArray)) {
+        setSonarPageIssues(sonarPageIssuesArray);
+        setFilterModel(newFilterModel);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getAllSonarMetrics = async () => {
     try {
       setIsLoading(true);
       setSonarIssues([]);
 
-      const sonarIssuesArray = sonarScanReportActions.getAllSonarScanIssues(getAccessToken, cancelTokenSource, pipelineId, runCount, stepId);
+      const sonarIssuesArray = await sonarPipelineScanReportActions.getAllSonarScanIssues(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        stepId,
+        runCount,
+        );
 
       if (Array.isArray(sonarIssuesArray)) {
         setSonarIssues(sonarIssuesArray);
@@ -69,29 +99,6 @@ function SonarReports() {
       }
     }
   };
-
-  const loadData2 = async () => {
-    try {
-      setIsLoading(true);
-      setSonarIssues([]);
-
-      const sonarPageIssuesArray = sonarScanReportActions.getSonarScanIssuesByPage(getAccessToken, cancelTokenSource, pipelineId, runCount, stepId, 1,50);
-
-      if (Array.isArray(sonarPageIssuesArray)) {
-        setSonarPageIssues(sonarPageIssuesArray);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-
 
 
 //   const placeholderData = [
@@ -134,15 +141,17 @@ function SonarReports() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={<InsightsSubNavigationBar currentTab={"reports"} />}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"reportsViewer"} />}
       pageDescription={`Downloadable Report for Sonar Scan`}
       breadcrumbDestination={"sonarReports"}
     >
       <SonarScanReportTable
-      data={sonarPageIssues}
-      allSonarIssues={sonarIssues}
-      isLoading={isLoading}
-      loadData={loadData2}
+        data={sonarPageIssues}
+        allSonarIssues={sonarIssues}
+        isLoading={isLoading}
+        loadData={loadData}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
       />
     </ScreenContainer>
   );
@@ -150,4 +159,4 @@ function SonarReports() {
 }
 
 
-export default SonarReports;
+export default SonarPipelineScanReport;

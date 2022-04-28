@@ -1,16 +1,21 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import sonarScanReportMetadata from "components/insights/reports/sonar-scan-report-metadata";
+import sonarPipelineScanReportMetadata from "components/insights/reports/sonarPipelineScanReport.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
 import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportSonarQubeScanDetailsButton";
 
-function SonarScanReportTable({ data, isLoading, loadData, filterModel,
-                                setFilterModel, }) {
-
-  let fields = sonarScanReportMetadata.fields;
+function SonarScanReportTable(
+  {
+    data,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+  }) {
+  const fields = sonarPipelineScanReportMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -26,23 +31,17 @@ function SonarScanReportTable({ data, isLoading, loadData, filterModel,
     []
   );
 
-  const rowStyling = (row) => {
-    return row["count"] === 0 ? " inactive-row" : "";
-  };
-
   const getSonarQubeScanReportTable = () => {
     return (
       <CustomTable
         columns={columns}
         data={data}
-        rowStyling={rowStyling}
         isLoading={isLoading}
-        // paginationDto={filterModel}
-        // setPaginationDto={setFilterModel}
+        paginationDto={filterModel}
+        setPaginationDto={setFilterModel}
       />
     );
   };
-  
 
   return (
     <FilterContainer
