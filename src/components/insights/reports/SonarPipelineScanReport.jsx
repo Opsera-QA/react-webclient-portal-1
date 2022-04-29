@@ -44,25 +44,25 @@ function SonarPipelineScanReport() {
     };
   }, []);
 
-  const loadData = async (newFilterModel = filterModel) => {
+  const loadData = async (cancelSource = cancelTokenSource, newFilterModel = filterModel) => {
     try {
       setIsLoading(true);
 
       const sonarPageIssuesArray = await sonarPipelineScanReportActions.getSonarScanIssuesByPage(
         getAccessToken,
-        cancelTokenSource,
+        cancelSource,
         pipelineId,
         stepId,
         runCount,
-        newFilterModel?.getData("currentPage"),
-        newFilterModel?.getData("pageSize"),
+        1,
+        50,
       );
 
-      if (Array.isArray(sonarPageIssuesArray?.message)) {
-        setSonarPageIssues(sonarPageIssuesArray?.message);
+      if (Array.isArray(sonarPageIssuesArray?.data?.message)) {
+        setSonarPageIssues(sonarPageIssuesArray?.data?.message);
         setFilterModel(newFilterModel);
       }
-      await getAllSonarMetrics();
+      await getAllSonarMetrics(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -74,21 +74,21 @@ function SonarPipelineScanReport() {
     }
   };
 
-  const getAllSonarMetrics = async () => {
+  const getAllSonarMetrics = async (cancelSource) => {
     try {
       setIsLoading(true);
       setSonarIssues([]);
 
       const sonarIssuesArray = await sonarPipelineScanReportActions.getAllSonarScanIssues(
         getAccessToken,
-        cancelTokenSource,
+        cancelSource,
         pipelineId,
         stepId,
         runCount,
         );
-
-      if (Array.isArray(sonarIssuesArray?.message)) {
-        setSonarIssues(sonarIssuesArray?.message);
+      console.log(sonarIssuesArray);
+      if (Array.isArray(sonarIssuesArray?.data?.message)) {
+        setSonarIssues(sonarIssuesArray?.data?.message);
       }
     } catch (error) {
       if (isMounted?.current === true) {
