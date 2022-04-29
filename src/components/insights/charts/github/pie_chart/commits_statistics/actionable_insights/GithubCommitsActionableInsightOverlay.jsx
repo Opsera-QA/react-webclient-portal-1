@@ -27,7 +27,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
-         
+          icon={faCodePullRequest}
         />
       );
     } else if (activeTab == "closed") {
@@ -36,6 +36,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faCodePullRequestClosed}
         />
       );
     } else if (activeTab == "merged") {
@@ -44,6 +45,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faCodeMerge}
         />
       );
     } else if (activeTab == "contributors") {
@@ -52,6 +54,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           highestMergesMetric={highestMergesMetric}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
+          icon={faCodeMerge}
         />
       );
     }
@@ -70,24 +73,28 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
           tabText={"Open Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"opened"}
+          icon={faCodePullRequest}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Closed Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"closed"}
+          icon={faCodePullRequestClosed}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Merged Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"merged"}
+          icon={faCodeMerge}
         />
         <CustomTab
           activeTab={activeTab}
           tabText={"Contributors"}
           handleTabClick={handleTabClick}
           tabName={"contributors"}
+          icon={faCodeMerge}
         />
       </CustomTabContainer>
     );
