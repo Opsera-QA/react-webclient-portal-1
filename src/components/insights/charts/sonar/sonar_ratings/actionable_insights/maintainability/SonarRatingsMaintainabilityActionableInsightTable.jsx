@@ -119,7 +119,8 @@ function SonarRatingsMaintainabilityActionableInsightTable(
     const stepId = row?.stepId;
     const runCount = row?.runCount;
 
-    window.open(`/insights/reports/scans/sonar/${pipelineId}/${stepId}/${runCount}`);
+    toastContext.clearOverlayPanel();
+    history.push(`/insights/reports/scans/sonar/${pipelineId}/${stepId}/${runCount}`);
   };
 
   const getTable = () => {
