@@ -34,6 +34,15 @@ modelHelpers.parseObjectIntoModel = (object, metaData) => {
   return new Model(object, clonedMetadata, false);
 };
 
+modelHelpers.parseFilterModel = (metaData) => {
+  if (metaData == null) {
+    return null;
+  }
+
+  const clonedMetadata = _.cloneDeep(metaData);
+  return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, false);
+};
+
 modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
   if (metaData == null) {
     return null;
