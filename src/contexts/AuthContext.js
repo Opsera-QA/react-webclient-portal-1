@@ -131,11 +131,11 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   };
 
   const featureFlagHideItemInProd = () => {
-    return process.env.REACT_APP_ENVIRONMENT === "production";
+    return String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
   };
 
   const featureFlagHideItemInTest = () => {
-    return process.env.REACT_APP_ENVIRONMENT === "test";
+    return String(process.env.REACT_APP_ENVIRONMENT) === "test";
   };
 
   const setAccessRoles = async (user) => {

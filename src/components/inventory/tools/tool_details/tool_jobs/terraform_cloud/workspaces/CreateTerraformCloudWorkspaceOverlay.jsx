@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
@@ -6,9 +6,15 @@ import Model from "core/data_model/model";
 import {terraformCloudWorkspacesMetadata} from "./terraformCloudWorkspaces.metadata";
 import TerraformCloudWorkspacesEditorPanel from "./details/TerraformCloudWorkspacesEditorPanel";
 
-function CreateTerraformCloudWorkspaceOverlay({ loadData, toolId, isMounted }) {
+function CreateTerraformCloudWorkspaceOverlay({ loadData, toolId, isMounted, organizationName }) {
   const toastContext = useContext(DialogToastContext);
   const [terraformCloudWorkspacesModel, setTerraformCloudWorkspacesModel] = useState(new Model({...terraformCloudWorkspacesMetadata.newObjectFields}, terraformCloudWorkspacesMetadata, true));
+
+  useEffect (() => {
+    let newDataObject = {...terraformCloudWorkspacesModel};    
+    newDataObject.setData("organizationName", organizationName);
+    setTerraformCloudWorkspacesModel({...newDataObject});
+  }, []);
 
   const handleClose = () => {
     if (isMounted?.current === true) {
@@ -42,11 +48,9 @@ function CreateTerraformCloudWorkspaceOverlay({ loadData, toolId, isMounted }) {
 
 CreateTerraformCloudWorkspaceOverlay.propTypes = {
   toolId: PropTypes.string,
-  editRowData: PropTypes.object,
   loadData: PropTypes.func,
-  editMode: PropTypes.bool,
   isMounted: PropTypes.object,
-  toolData: PropTypes.object
+  organizationName: PropTypes.string,
 };
 
 export default CreateTerraformCloudWorkspaceOverlay;

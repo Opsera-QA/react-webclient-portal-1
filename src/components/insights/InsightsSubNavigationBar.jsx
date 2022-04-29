@@ -87,14 +87,14 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Marketplace"}
       />
       {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
-      <NavigationTab
+      {/* <NavigationTab
         icon={faRadar}
         tabName={"synopsis"}
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Synopsis"}
-      />
-      {getRelease360Tab()}
+      /> */}
+      {/* {getRelease360Tab()} */}
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
