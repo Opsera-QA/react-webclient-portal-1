@@ -308,4 +308,5 @@ SalesforceComponentsDataBlockChart.propTypes = {
   setKpis: PropTypes.func,
 };
 
+
 export default SalesforceComponentsDataBlockChart;
