@@ -120,4 +120,5 @@ function SonarPipelineScanReport() {
 
 }
 
+
 export default SonarPipelineScanReport;
