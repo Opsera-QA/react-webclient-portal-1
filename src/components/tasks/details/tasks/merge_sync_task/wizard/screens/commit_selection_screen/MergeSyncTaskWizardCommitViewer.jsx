@@ -21,12 +21,11 @@ import {
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MergeSyncTaskWizardSelectFileVersionButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardSelectFileVersionButton";
+import { faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
   setWizardModel,
-  setCurrentScreen,
-  handleClose,
   diffFile,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -93,6 +92,11 @@ const MergeSyncTaskWizardCommitViewer = ({
     }
   };
 
+  const getUpdatedFileFieldName = () => {
+    const updatedFileList = wizardModel.getArrayData("updatedFileList");
+    return updatedFileList?.find((updatedFile) => updatedFile?.fileName === diffFile?.committedFile)?.fieldName;
+  };
+
   if (isLoading === true) {
     return (<LoadingDialog size={"sm"} message={"Loading Selected File Changes"} />);
   }
@@ -109,12 +113,15 @@ const MergeSyncTaskWizardCommitViewer = ({
         <Col xs={12}>
           <SideBySideDiffField
             model={comparisonFileModel}
+            wizardModel={wizardModel}
             loadDataFunction={loadData}
             isLoading={isLoading}
             originalCodeFieldName={"destinationContent"}
             changedCodeFieldName={"sourceContent"}
             maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
             minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+            leftSideTitleIcon={getUpdatedFileFieldName() === "destinationContent" ? faCheckCircle : getUpdatedFileFieldName() === "sourceContent" ? faTrash : undefined}
+            rightSideTitleIcon={getUpdatedFileFieldName() === "sourceContent" ? faCheckCircle : getUpdatedFileFieldName() === "destinationContent" ? faTrash : undefined}
           />
         </Col>
       </Row>
@@ -123,20 +130,26 @@ const MergeSyncTaskWizardCommitViewer = ({
           <MergeSyncTaskWizardSelectFileVersionButton
             fileName={diffFile?.committedFile}
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             isLoading={isLoading}
             comparisonFileModel={comparisonFileModel}
+            fieldName={"destinationContent"}
             fileContent={comparisonFileModel?.getData("destinationContent")}
             type={"Destination Branch"}
+            selected={getUpdatedFileFieldName() === "destinationContent"}
           />
         }
       >
         <MergeSyncTaskWizardSelectFileVersionButton
           fileName={diffFile?.committedFile}
           wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
           isLoading={isLoading}
           comparisonFileModel={comparisonFileModel}
+          fieldName={"sourceContent"}
           fileContent={comparisonFileModel?.getData("sourceContent")}
           type={"Source Branch"}
+          selected={getUpdatedFileFieldName() === "sourceContent"}
         />
       </SaveButtonContainer>
     </div>
@@ -146,8 +159,6 @@ const MergeSyncTaskWizardCommitViewer = ({
 MergeSyncTaskWizardCommitViewer.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setCurrentScreen: PropTypes.func,
-  handleClose: PropTypes.func,
   diffFile: PropTypes.object,
 };
 
