@@ -58,10 +58,11 @@ function SonarPipelineScanReport() {
         newFilterModel?.getData("pageSize"),
       );
 
-      if (Array.isArray(sonarPageIssuesArray)) {
-        setSonarPageIssues(sonarPageIssuesArray);
+      if (Array.isArray(sonarPageIssuesArray?.message)) {
+        setSonarPageIssues(sonarPageIssuesArray?.message);
         setFilterModel(newFilterModel);
       }
+      await getAllSonarMetrics();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -86,8 +87,8 @@ function SonarPipelineScanReport() {
         runCount,
         );
 
-      if (Array.isArray(sonarIssuesArray)) {
-        setSonarIssues(sonarIssuesArray);
+      if (Array.isArray(sonarIssuesArray?.message)) {
+        setSonarIssues(sonarIssuesArray?.message);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -99,45 +100,6 @@ function SonarPipelineScanReport() {
       }
     }
   };
-
-
-//   const placeholderData = [
-//     {
-//         "severity": "MAJOR",
-//         "component": "Log-Accumulator:src/main/webapp/index.jsp",
-//         "project": "Log-Accumulator",
-//         "line": 1,
-//         "status": "OPEN",
-//         "message": "Insert a <!DOCTYPE> declaration to before this <html> tag.",
-//         "effort": "5min",
-//         "debt": "5min",
-//         "author": "faseeh@opsera.io",
-//         "tags": [
-//             "user-experience"
-//         ],
-//         "type": "BUG",
-//         "creationDate": "2021-08-03T11:20:15+0000",
-//         "updateDate": "2021-08-12T22:40:25+0000"
-//     },
-//     {
-//         "severity": "MAJOR",
-//         "component": "Log-Accumulator:src/main/webapp/index.jsp",
-//         "project": "Log-Accumulator",
-//         "line": 1,
-//         "status": "OPEN",
-//         "message": "Add \"lang\" and/or \"xml:lang\" attributes to this \"<html>\" element",
-//         "effort": null,
-//         "debt": null,
-//         "author": "faseeh@opsera.io",
-//         "tags": [
-//             "accessibility",
-//             "wcag2-a"
-//         ],
-//         "type": "BUG",
-//         "creationDate": "2021-08-03T11:20:15+0000",
-//         "updateDate": "2021-08-12T22:40:25+0000"
-//     }
-// ];
 
   return (
     <ScreenContainer
