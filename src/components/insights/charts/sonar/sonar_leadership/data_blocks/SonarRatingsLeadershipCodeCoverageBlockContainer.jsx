@@ -48,7 +48,7 @@ function SonarRatingsLeadershipCodeCoverageBlockContainer(
   };
 
   return (
-    <HorizontalDataBlocksContainer title={"Sonar Ratings: Code Coverage"}>
+    <HorizontalDataBlocksContainer title={"Sonar Ratings: Line Coverage"}>
       <Col sm={4}>{getLeftDataBlock()}</Col>
       <Col className={"my-4"} sm={4}>{getMiddleDataBlock()}</Col>
       <Col className={"my-4"} sm={4}>{getRightDataBlock()}</Col>

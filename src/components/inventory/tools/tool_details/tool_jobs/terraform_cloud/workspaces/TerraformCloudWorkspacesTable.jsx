@@ -74,6 +74,7 @@ function TerraformCloudWorkspacesTable({
         toolId={toolId} 
         loadData={loadData} 
         isMounted={isMounted} 
+        organizationName={organizationName}
       />);
   };
 
