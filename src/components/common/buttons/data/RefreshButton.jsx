@@ -18,7 +18,7 @@ function RefreshButton(
 
   return (
     <div className={className}>
-      <Button variant={variant} size={size} disabled={isLoading} onClick={loadDataFunction}>
+      <Button variant={variant} size={size} disabled={isLoading} onClick={()=>{loadDataFunction();}}>
         <span><IconBase spinIcon={isLoading} icon={faSync}/></span>
       </Button>
     </div>
