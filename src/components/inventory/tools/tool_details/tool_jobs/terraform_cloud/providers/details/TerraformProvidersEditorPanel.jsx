@@ -89,24 +89,26 @@ function TerraformProvidersEditorPanel({
           />
         </Col>
       </Row>
-      <Row>
-        <Col lg={12}>
-          <TerraformProviderServiceSelectInput 
-            model={terraformProvidersModel}
-            setModel={setTerraformProvidersModel}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={12}>
-          <TerraformScmToolSelectInput 
-            model={terraformProvidersModel}
-            setModel={setTerraformProvidersModel}
-            disabled={editMode}
-          />
-        </Col>
-      </Row>
+      {!editMode && <>
+        <Row>
+          <Col lg={12}>
+            <TerraformProviderServiceSelectInput
+              model={terraformProvidersModel}
+              setModel={setTerraformProvidersModel}
+              disabled={editMode}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={12}>
+            <TerraformScmToolSelectInput
+              model={terraformProvidersModel}
+              setModel={setTerraformProvidersModel}
+              disabled={editMode}
+            />
+          </Col>
+        </Row>
+      </>}
     </EditorPanelContainer>
   );
 }
