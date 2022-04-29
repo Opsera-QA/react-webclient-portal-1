@@ -10,6 +10,7 @@ import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/s
 function SonarScanReportTable(
   {
     data,
+    allSonarIssues,
     isLoading,
     loadData,
     filterModel,
@@ -51,13 +52,14 @@ function SonarScanReportTable(
       titleIcon={faTally}
       title={"SonarQube Scan"}
       className={"px-2 pb-2"}
-      exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} />}
+      exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allSonarIssues={allSonarIssues} />}
     />
   );
 }
 
 SonarScanReportTable.propTypes = {
   data: PropTypes.array,
+  allSonarIssues: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
