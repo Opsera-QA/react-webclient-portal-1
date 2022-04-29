@@ -75,6 +75,7 @@ function TerraformProvidersTable({
         toolId={toolId} 
         loadData={loadData} 
         isMounted={isMounted} 
+        organizationName={organizationName}
       />);
   };
 
