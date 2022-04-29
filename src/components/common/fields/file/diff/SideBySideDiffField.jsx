@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import StandaloneDiffField, { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
 import InfoContainer from "components/common/containers/InfoContainer";
-import StandaloneDiffFieldBase from "components/common/fields/file/diff/StandaloneDiffFieldBase";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
 
 function SideBySideDiffField(
@@ -18,6 +17,8 @@ function SideBySideDiffField(
     className,
     loadDataFunction,
     language,
+    leftSideTitleIcon,
+    rightSideTitleIcon,
   }) {
   const [originalCodeField] = useState(model?.getFieldById(originalCodeFieldName));
   const [changedCodeField] = useState(model?.getFieldById(changedCodeFieldName));
@@ -41,7 +42,7 @@ function SideBySideDiffField(
               <StandaloneDiffField
                 isLoading={isLoading}
                 titleText={originalCodeField?.label}
-                titleIcon={faCode}
+                titleIcon={leftSideTitleIcon}
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
                 language={language}
@@ -53,7 +54,7 @@ function SideBySideDiffField(
               <StandaloneDiffField
                 isLoading={isLoading}
                 titleText={changedCodeField?.label}
-                titleIcon={faCode}
+                titleIcon={rightSideTitleIcon}
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
                 language={language}
@@ -77,6 +78,13 @@ SideBySideDiffField.propTypes = {
   minimumHeight: PropTypes.string,
   loadDataFunction: PropTypes.func,
   language: PropTypes.string,
+  leftSideTitleIcon: PropTypes.object,
+  rightSideTitleIcon: PropTypes.object,
+};
+
+SideBySideDiffField.defaultProps = {
+  leftSideTitleIcon: faCode,
+  rightSideTitleIcon: faCode,
 };
 
 export default SideBySideDiffField;

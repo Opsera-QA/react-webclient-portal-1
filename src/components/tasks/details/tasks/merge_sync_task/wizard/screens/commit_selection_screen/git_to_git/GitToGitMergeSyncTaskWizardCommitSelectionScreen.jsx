@@ -51,8 +51,6 @@ const GitToGitMergeSyncTaskWizardCommitSelectionScreen = ({
       await triggerGitToGitSourceFilePull(cancelSource);
       await triggerComparisonFilePull(cancelSource);
     } catch (error) {
-      console.error(error);
-      console.log("error: " + JSON.stringify(error));
       if (isMounted?.current === true) {
         const prependMessage =
           "Service Error Triggering File List Pulls:";
