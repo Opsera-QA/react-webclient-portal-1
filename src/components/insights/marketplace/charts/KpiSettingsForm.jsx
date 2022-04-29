@@ -330,7 +330,8 @@ function KpiSettingsForm({
     "sonar-ratings-v2",
     "sonar-unit-testing",
     "sonar-ratings-leadership",
-    "git-scraper"
+    "git-scraper",
+    "salesforce-components-chart"
   ];
 
   const getKpiFilters = (filter) => {
