@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { faCheckSquare } from "@fortawesome/pro-light-svg-icons";
+import { faCheckSquare, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
@@ -12,6 +12,7 @@ import mergeSyncTaskWizardActions
 function MergeSyncTaskWizardSelectFileVersionButton(
   {
     wizardModel,
+    setWizardModel,
     comparisonFileModel,
     fileName,
     fileContent,
@@ -21,6 +22,8 @@ function MergeSyncTaskWizardSelectFileVersionButton(
     className,
     icon,
     isLoading,
+    fieldName,
+    selected,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -56,7 +59,23 @@ function MergeSyncTaskWizardSelectFileVersionButton(
         fileContent,
       );
 
-      console.log("response: " + JSON.stringify(response));
+      if (isMounted?.current === true && response) {
+        const newUpdatedFileList = wizardModel?.getArrayData("updatedFileList");
+        const currentIndex = newUpdatedFileList?.findIndex((updatedFile) => updatedFile?.fileName === fileName);
+        const newFileData = {
+          fileName: fileName,
+          fieldName: fieldName,
+        };
+
+        if (currentIndex === -1) {
+          newUpdatedFileList.push(newFileData);
+        }
+        else {
+          newUpdatedFileList[currentIndex] = newFileData;
+        }
+        wizardModel.setData("updatedFileList", newUpdatedFileList);
+        setWizardModel({...wizardModel});
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error);
@@ -74,6 +93,10 @@ function MergeSyncTaskWizardSelectFileVersionButton(
   }
 
   const getLabel = () => {
+    if (selected) {
+      return (`${type} File Changes Selected for Merge Sync`);
+    }
+
     if (isSaving) {
       return (`Saving ${type} File Changes`);
     }
@@ -84,8 +107,20 @@ function MergeSyncTaskWizardSelectFileVersionButton(
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button size={size} variant={"primary"} disabled={disabled || isSaving || isLoading} onClick={submitSelectedFile}>
-          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2" />{getLabel()}</span>
+        <Button
+          size={size}
+          variant={selected === true ? "success" : "primary"}
+          disabled={disabled === true || isSaving === true || isLoading === true || selected === true}
+          onClick={submitSelectedFile}
+        >
+          <span>
+            <IconBase
+              isLoading={isSaving}
+              icon={selected === true ? faCheckSquare : icon}
+              className={"mr-2"}
+            />
+            {getLabel()}
+          </span>
         </Button>
       </div>
     </div>
@@ -94,7 +129,8 @@ function MergeSyncTaskWizardSelectFileVersionButton(
 
 MergeSyncTaskWizardSelectFileVersionButton.propTypes = {
   wizardModel: PropTypes.object,
-  comparisonFileModel: PropTypes.func,
+  setWizardModel: PropTypes.func,
+  comparisonFileModel: PropTypes.object,
   fileName: PropTypes.string,
   fileContent: PropTypes.string,
   type: PropTypes.string,
@@ -103,11 +139,13 @@ MergeSyncTaskWizardSelectFileVersionButton.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
+  fieldName: PropTypes.string,
+  selected: PropTypes.bool,
 };
 
 MergeSyncTaskWizardSelectFileVersionButton.defaultProps = {
   size: "sm",
-  icon: faCheckSquare,
+  icon: faQuestionCircle,
 };
 
 export default MergeSyncTaskWizardSelectFileVersionButton;

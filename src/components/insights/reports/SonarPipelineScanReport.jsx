@@ -65,7 +65,7 @@ function SonarPipelineScanReport() {
       await getAllSonarMetrics(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showLoadingErrorDialog("Unable to generate report. Please ensure Sonarqube instance is running");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -86,13 +86,13 @@ function SonarPipelineScanReport() {
         stepId,
         runCount,
         );
-      console.log(sonarIssuesArray);
+
       if (Array.isArray(sonarIssuesArray?.data?.message)) {
         setSonarIssues(sonarIssuesArray?.data?.message);
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showLoadingErrorDialog("Unable to generate report. Please ensure Sonarqube instance is running");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -119,6 +119,5 @@ function SonarPipelineScanReport() {
   );
 
 }
-
 
 export default SonarPipelineScanReport;
