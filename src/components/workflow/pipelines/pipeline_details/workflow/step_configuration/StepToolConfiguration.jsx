@@ -86,6 +86,7 @@ import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scr
 import axios from "axios";
 import GitScraperStepFormConfiguration
   from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
+import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1239,6 +1240,17 @@ function StepToolConfiguration({
             callbackSaveToVault={saveToVault}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <ApigeeStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
         );
