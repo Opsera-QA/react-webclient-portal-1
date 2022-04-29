@@ -74,8 +74,8 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
       case "import":
         return (
           <ApigeeExportStepIdSelectInput 
-            dataObject={informaticaStepConfigurationDto}
-            setDataObject={setInformaticaStepConfigurationDataDto}
+            dataObject={apigeeStepConfigurationDto}
+            setDataObject={setApigeeStepConfigurationDataDto}
             plan={plan}
             stepId={stepId}
           />
@@ -84,12 +84,12 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
         return (
           <>
             <ApigeeEnvironmentSelectInput 
-              dataObject={informaticaStepConfigurationDto}
-              setDataObject={setInformaticaStepConfigurationDataDto}
+              dataObject={apigeeStepConfigurationDto}
+              setDataObject={setApigeeStepConfigurationDataDto}
             />
             <TextInputBase
-              dataObject={informaticaStepConfigurationDto}
-              setDataObject={setInformaticaStepConfigurationDataDto}
+              dataObject={apigeeStepConfigurationDto}
+              setDataObject={setApigeeStepConfigurationDataDto}
               fieldName={"delayTime"}
             />
             <BooleanToggleInput
