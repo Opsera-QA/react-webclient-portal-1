@@ -10,14 +10,10 @@ import CustomTable from "../../../../../common/table/CustomTable";
 function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,parentDataObject }) {
   const toastContext = useContext(DialogToastContext);
   let fields = gitScraperReposMetadata.fields;
-  let [tableData, setTableData] = useState([]);
-
-  useEffect(() => {
-    setTableData(gitScraperRepos);
-  }, [JSON.stringify(gitScraperRepos)]);
+  console.log(parentDataObject);
 
   const loadData = async () => {
-    setTableData(gitScraperRepos);
+    console.log(gitScraperRepos, parentDataObject);
   };
 
   const createGitScraperRepos = () => {
@@ -26,7 +22,6 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,
 
   const columns = useMemo(
     () => [
-      { Header: "Source Code Management Tool Type", accessor: "service", class: undefined },
       { Header: "Repository", accessor: "repository", class: undefined },
       { Header: "Branch", accessor: "gitBranch", class: undefined },
     ],
@@ -53,7 +48,7 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,
     return (
     <CustomTable
       columns={columns}
-      data={tableData}
+      data={parentDataObject?.data?.configuration?.reposToScan}
       onRowSelect={onRowSelect}
       isLoading={isLoading}
       noDataMessage={noDataMessage}
@@ -77,7 +72,7 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,
 }
 
 GitScraperReposTable.propTypes = {
-  setParentDataObject: PropTypes.object,
+  setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
   isLoading: PropTypes.bool,
   gitScraperRepos: PropTypes.array,

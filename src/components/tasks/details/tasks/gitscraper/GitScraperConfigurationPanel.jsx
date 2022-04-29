@@ -43,22 +43,41 @@ function GitScraperConfigurationPanel({
           disabled={false}
           fieldName={"type"}
         />
+      </Col>
+      <Col lg={12}>
+        <GitScraperScmToolTypeSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+        />
+      </Col>
+
+      <Col lg={12}>
+        <GitScraperScmToolSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+        />
+      </Col>
+      <Col lg={12}>
         <NumberPickerInputBase
           fieldName={"threshold"}
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
         />
+      </Col>
+      <Col lg={12}>
         <GitIgnoreToggleInput
           model={gitTasksConfigurationData}
           setModel={setGitTasksConfigurationData}
           fieldName={"secretsException"}
         />
+      </Col>
+      <Col lg={12}>
         <GitScraperRepos
           toolApplications={gitTasksConfigurationData?.getData("reposToScan")}
           isLoading={false}
           setParentDataObject={setGitTasksConfigurationData}
           parentDataObject={gitTasksDataDto}
-          />
+        />
       </Col>
     </Row>
   );

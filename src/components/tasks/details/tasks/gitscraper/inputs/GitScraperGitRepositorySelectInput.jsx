@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
-function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
+function GitScraperGitRepositorySelectInput({model, setModel, disabled, service, gitToolId}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
@@ -18,8 +18,8 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
   return (
      <RepositorySelectInput
        fieldName={"repository"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
+       service={service}
+       gitToolId={gitToolId}
        workspace={model?.getData("workspace")}
        dataObject={model}
        setDataObject={setModel}
@@ -33,6 +33,8 @@ GitScraperGitRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string
 };
 
 export default GitScraperGitRepositorySelectInput;

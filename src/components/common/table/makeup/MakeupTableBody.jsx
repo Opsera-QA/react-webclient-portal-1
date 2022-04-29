@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MakeupTableRow from "components/common/table/makeup/MakeupTableRow";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
@@ -14,9 +14,18 @@ function MakeupTableBody(
     rowStyling,
     isLoading,
   }) {
+  const [tableRows, setTableRows] = useState([]);
+
+  useEffect(() => {
+    setTableRows(rows);
+  }, []);
+
+  useEffect(() => {
+    setTableRows(rows);
+  }, [rows]);
 
   const getTableRows = () => {
-    if (isLoading && (!Array.isArray(rows) || rows.length === 0)) {
+    if (isLoading && (!Array.isArray(tableRows) || tableRows.length === 0)) {
       return (
         <tr>
           <td colSpan="100%">
@@ -28,7 +37,7 @@ function MakeupTableBody(
       );
     }
 
-    if (!isLoading && (!Array.isArray(rows) || rows.length === 0)) {
+    if (!isLoading && (!Array.isArray(tableRows) || tableRows.length === 0)) {
       return (
         <tr>
           <td
@@ -42,7 +51,7 @@ function MakeupTableBody(
     }
 
     return (
-      rows.map((row, i) => {
+      tableRows.map((row, i) => {
         return (
           <MakeupTableRow
             row={row}

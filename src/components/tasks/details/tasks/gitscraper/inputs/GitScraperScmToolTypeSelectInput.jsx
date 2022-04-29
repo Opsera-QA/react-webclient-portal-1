@@ -21,7 +21,6 @@ function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}
   const setDataFunction = async (fieldName, selectedOption) => {
     let newModel = {...model};
     await newModel.setData(fieldName, selectedOption?.value);
-    newModel.setData("reposToScan", []);
     setModel({...newModel});
   };
 

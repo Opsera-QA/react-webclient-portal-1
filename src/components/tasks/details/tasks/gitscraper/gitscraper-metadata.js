@@ -24,7 +24,17 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Exclude Certain Secrets from Scan",
       id: "secretsException",
-    }
+    },
+    {
+      label: "Source Code Management Tool Type",
+      id: "service",
+      isRequired: true,
+    },
+    {
+      label: "Source Code Management Tool",
+      id: "gitToolId",
+      isRequired: true,
+    },
   ],
   newObjectFields:
     {
@@ -34,7 +44,8 @@ const gitscraperTaskConfigurationMetadata = {
       threshold:0,
       excludeSecrets:[],
       secretsException:false,
-      gitToolId:"",
+      service: "",
+      gitToolId: ""
     }
 };
 

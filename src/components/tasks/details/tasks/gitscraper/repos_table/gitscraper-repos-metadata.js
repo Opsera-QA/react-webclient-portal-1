@@ -39,21 +39,11 @@ const gitScraperReposMetadata = {
     {
       label: "Exclude Certain Project Files from Scan",
       id: "filesException",
-    },
-    {
-      label: "Source Code Management Tool Type",
-      id: "service",
-      isRequired: true,
-    },
-    {
-      label: "Source Code Management Tool",
-      id: "gitToolId",
-      isRequired: true,
-    },
+    }
   ],
   newObjectFields: {
     repository: "",
-    gitBranch: "",
+    gitBranch: [],
     repoId: "",
     sshUrl: "",
     gitUrl: "",
@@ -61,8 +51,6 @@ const gitScraperReposMetadata = {
     bitbucketWorkspaceName: "",
     excludeFiles: [],
     filesException: false,
-    service: "",
-    gitToolId: ""
   }
 };
 

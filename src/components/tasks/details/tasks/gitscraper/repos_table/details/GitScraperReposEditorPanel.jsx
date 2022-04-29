@@ -91,7 +91,6 @@ function GitScraperReposEditorPanel({
     }
     let gitTaskConfig = parentDataObject.getPersistData();
     gitTaskConfig.configuration.reposToScan = gitScraperRepos;
-    console.log(gitTaskConfig);
     parentDataObject?.setData("configuration", gitTaskConfig.configuration);
     await taskActions.updateGitTaskV2(
       getAccessToken,
@@ -99,7 +98,7 @@ function GitScraperReposEditorPanel({
       parentDataObject,
     );
     setParentDataObject(gitScraperRepos);
-    // await loadData();
+    await loadData();
     setIsLoading(false);
     handleClose();
   };
@@ -107,7 +106,7 @@ function GitScraperReposEditorPanel({
   const deleteApplication = async () => {
     setIsLoading(true);
     if (applicationId && gitScraperRepos[applicationId]) {
-      gitScraperRepos = gitScraperRepos.splice(applicationId, 1);
+      gitScraperRepos.splice(applicationId, 1);
     }
     for (let repo in gitScraperRepos) {
       ["$height"].forEach((key) => {
@@ -125,7 +124,7 @@ function GitScraperReposEditorPanel({
       parentDataObject,
     );
     setIsLoading(false);
-    // await loadData();
+    await loadData();
     handleClose();
   };
 
@@ -162,33 +161,27 @@ function GitScraperReposEditorPanel({
       <div className="scroll-y hide-x-overflow">
         <Row>
           <Col lg={12}>
-            <GitScraperScmToolTypeSelectInput
-              model={gitScraperReposModel}
-              setModel={setGitScraperReposModel}
-            />
-          </Col>
-          <Col lg={12}>
-            <GitScraperScmToolSelectInput
-              model={gitScraperReposModel}
-              setModel={setGitScraperReposModel}
-            />
-          </Col>
-          <Col lg={12}>
             <GitScraperBitbucketWorkspaceSelectInput
               model={gitScraperReposModel}
               setModel={setGitScraperReposModel}
+              service={parentDataObject?.data?.configuration?.service}
+              gitToolId={parentDataObject?.data?.configuration?.gitToolId}
             />
           </Col>
           <Col lg={12}>
             <GitScraperGitRepositorySelectInput
               model={gitScraperReposModel}
               setModel={setGitScraperReposModel}
+              service={parentDataObject?.data?.configuration?.service}
+              gitToolId={parentDataObject?.data?.configuration?.gitToolId}
             />
           </Col>
           <Col lg={12}>
             <GitScraperGitBranchSelectInput
               model={gitScraperReposModel}
               setModel={setGitScraperReposModel}
+              service={parentDataObject?.data?.configuration?.service}
+              gitToolId={parentDataObject?.data?.configuration?.gitToolId}
             />
           </Col>
           <Col lg={12}>
@@ -209,7 +202,7 @@ GitScraperReposEditorPanel.propTypes = {
   setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
   loadData: PropTypes.func,
-  applicationId: PropTypes.string,
+  applicationId: PropTypes.number,
   handleClose: PropTypes.func,
   gitScraperRepos: PropTypes.array,
 };

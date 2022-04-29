@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 
 function BitbucketRepositorySelectInput(
   {
@@ -18,6 +19,7 @@ function BitbucketRepositorySelectInput(
     clearDataFunction,
     workspace,
     repositoryId,
+    multi
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,6 +76,25 @@ function BitbucketRepositorySelectInput(
     }
   };
 
+  if (multi) {
+    return (
+      <MultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={model}
+        setDataObject={setModel}
+        selectOptions={bitbucketBranches}
+        busy={isLoading}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled}
+        placeholderText={placeholderText}
+        errorMessage={errorMessage}
+      />
+    );
+  }
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -102,6 +123,7 @@ BitbucketRepositorySelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   workspace: PropTypes.string,
   repositoryId: PropTypes.string,
+  multi: PropTypes.bool
 };
 
 export default BitbucketRepositorySelectInput;

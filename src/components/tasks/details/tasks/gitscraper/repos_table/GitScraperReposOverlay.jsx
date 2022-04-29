@@ -63,7 +63,7 @@ GitScraperReposOverlay.propTypes = {
   parentDataObject: PropTypes.object,
   gitscraperDataObject: PropTypes.object,
   loadData: PropTypes.func,
-  applicationId: PropTypes.string,
+  applicationId: PropTypes.number,
   gitScraperRepos: PropTypes.array
 };
 
