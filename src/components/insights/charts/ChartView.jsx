@@ -1441,7 +1441,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-        );  
+        );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (

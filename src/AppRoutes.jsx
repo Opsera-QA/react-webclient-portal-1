@@ -128,6 +128,7 @@ import CustomEnvironmentVariableManagement
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
+import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -247,6 +248,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
+          {/*Insights Reports*/}
+          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount" component={SonarPipelineScanReport} />
+
 
 
           <SecureRoute path="/task" exact component={TaskManagement} />
