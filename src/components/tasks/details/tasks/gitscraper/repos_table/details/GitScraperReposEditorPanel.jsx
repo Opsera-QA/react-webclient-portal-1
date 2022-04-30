@@ -13,8 +13,6 @@ import GitScraperGitRepositorySelectInput from "../../inputs/GitScraperGitReposi
 import GitScraperGitBranchSelectInput from "../../inputs/GitScraperGitBranchSelectInput";
 import modelHelpers from "../../../../../../common/model/modelHelpers";
 import gitScraperReposMetadata from "../gitscraper-repos-metadata";
-import GitScraperScmToolTypeSelectInput from "../../inputs/GitScraperScmToolTypeSelectInput";
-import GitScraperScmToolSelectInput from "../../inputs/GitScraperScmToolSelectInput";
 import taskActions from "../../../../../task.actions";
 import GitIgnoreToggleInput from "../../inputs/GitIgnoreToggleInput";
 
@@ -78,7 +76,7 @@ function GitScraperReposEditorPanel({
   const updateApplication = async () => {
     setIsLoading(true);
     let newConfiguration = gitScraperReposModel.getPersistData();
-    if (applicationId && gitScraperRepos[applicationId]) {
+    if (applicationId?.toString() && gitScraperRepos[applicationId]) {
       gitScraperRepos[applicationId] = newConfiguration;
     } else {
       let currentRepos = gitScraperRepos;
@@ -105,7 +103,7 @@ function GitScraperReposEditorPanel({
 
   const deleteApplication = async () => {
     setIsLoading(true);
-    if (applicationId && gitScraperRepos[applicationId]) {
+    if (applicationId?.toString() && gitScraperRepos[applicationId]) {
       gitScraperRepos.splice(applicationId, 1);
     }
     for (let repo in gitScraperRepos) {
@@ -123,6 +121,7 @@ function GitScraperReposEditorPanel({
       axios.CancelToken.source(),
       parentDataObject,
     );
+    setParentDataObject(gitScraperRepos);
     setIsLoading(false);
     await loadData();
     handleClose();
@@ -138,7 +137,7 @@ function GitScraperReposEditorPanel({
   }
 
   const getExtraButtons = () => {
-    if (gitScraperReposModel?.isNew() === false && applicationId) {
+    if (!gitScraperReposModel?.isNew() && applicationId?.toString()) {
       return (
         <DeleteButtonWithInlineConfirmation
           dataObject={gitScraperReposModel}

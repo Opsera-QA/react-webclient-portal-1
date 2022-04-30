@@ -2,30 +2,49 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import gitScraperReposMetadata from "./gitscraper-repos-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faBrowser} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { faBrowser } from "@fortawesome/pro-light-svg-icons";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import GitScraperReposOverlay from "./GitScraperReposOverlay";
 import CustomTable from "../../../../../common/table/CustomTable";
 
-function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,parentDataObject }) {
+function GitScraperReposTable({
+  setParentDataObject,
+  gitScraperRepos,
+  isLoading,
+  parentDataObject,
+}) {
   const toastContext = useContext(DialogToastContext);
   let fields = gitScraperReposMetadata.fields;
-  console.log(parentDataObject);
+  let [tableData, setTableData] = useState(parentDataObject?.data?.configuration?.reposToScan);
 
   const loadData = async () => {
-    console.log(gitScraperRepos, parentDataObject);
+    setTableData(parentDataObject?.data?.configuration?.reposToScan);
   };
 
   const createGitScraperRepos = () => {
-    toastContext.showOverlayPanel(<GitScraperReposOverlay setParentDataObject={setParentDataObject} loadData={loadData} parentDataObject={parentDataObject} gitScraperRepos={gitScraperRepos}/>);
+    toastContext.showOverlayPanel(
+      <GitScraperReposOverlay
+        setParentDataObject={setParentDataObject}
+        loadData={loadData}
+        parentDataObject={parentDataObject}
+        gitScraperRepos={gitScraperRepos}
+      />,
+    );
   };
 
   const columns = useMemo(
     () => [
       { Header: "Repository", accessor: "repository", class: undefined },
-      { Header: "Branch", accessor: "gitBranch", class: undefined },
+      {
+        Header: "Branch",
+        accessor: "gitBranch",
+        class: undefined,
+        Cell: function stringifyArray(row) {
+          return JSON.stringify(row?.value, null,2);
+        },
+      },
     ],
-    []
+    [],
   );
 
   const noDataMessage = "No Repositories configured for the scan";
@@ -46,13 +65,13 @@ function GitScraperReposTable({ setParentDataObject, gitScraperRepos, isLoading,
 
   const getTable = () => {
     return (
-    <CustomTable
-      columns={columns}
-      data={parentDataObject?.data?.configuration?.reposToScan}
-      onRowSelect={onRowSelect}
-      isLoading={isLoading}
-      noDataMessage={noDataMessage}
-    />
+      <CustomTable
+        columns={columns}
+        data={tableData}
+        onRowSelect={onRowSelect}
+        isLoading={isLoading}
+        noDataMessage={noDataMessage}
+      />
     );
   };
 
