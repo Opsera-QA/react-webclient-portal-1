@@ -5,6 +5,13 @@ const terraformCloudWorkspacesActions = {};
 terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, dataObject) => {
   const apiUrl = `/tools/${toolId}/terraform-cloud-workspaces/${organizationName}`;
   const postBody = dataObject.getPersistData();
+
+  if (postBody.repository === "Others"){
+    postBody.repository = postBody.repositoryText;
+  }
+
+  delete postBody["repositoryText"];
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
