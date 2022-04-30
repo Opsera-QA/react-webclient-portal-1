@@ -18,13 +18,30 @@ const TerraformVcsWorkspaceSubform = ({terraformCloudWorkspacesModel, setTerrafo
             dataObject={terraformCloudWorkspacesModel}
             setDataObject={setTerraformCloudWorkspacesModel}
             toolId={toolId}
-          />      
+          />
+          {getRepositoryTextInput()}
           <TextInputBase
             dataObject={terraformCloudWorkspacesModel}
             setDataObject={setTerraformCloudWorkspacesModel}
             fieldName={"branch"}
           />
         </>
+      );
+    }
+  };
+
+  const getRepositoryTextInput = () => {
+    if (terraformCloudWorkspacesModel.getData("repository") !== null && 
+        terraformCloudWorkspacesModel.getData("repository") !== "" && 
+        terraformCloudWorkspacesModel.getData("repository") === "Others"
+      ) 
+    {      
+      return (
+        <TextInputBase
+          dataObject={terraformCloudWorkspacesModel}
+          setDataObject={setTerraformCloudWorkspacesModel}
+          fieldName={"repositoryText"}
+        />
       );
     }
   };
