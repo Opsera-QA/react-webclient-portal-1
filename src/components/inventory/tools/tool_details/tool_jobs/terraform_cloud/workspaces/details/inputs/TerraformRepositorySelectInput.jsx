@@ -60,8 +60,10 @@ const TerraformRepositorySelectInput = ({
     try {
       const {oauthToken} = dataObject.getPersistData();
       const response = await terraformWorkspaceStepActions.getVcsProviderRepositories(getAccessToken, cancelTokenSource, toolId, oauthToken);
-      if(response?.data?.status === 200 && Array.isArray(response?.data?.data)){        
-        setTerraformRepos(response.data.data);
+      if(response?.data?.status === 200 && Array.isArray(response?.data?.data)){
+        const repoData = response.data.data;
+        repoData.push("Others");
+        setTerraformRepos(repoData);
       }
 
     } catch (error) {

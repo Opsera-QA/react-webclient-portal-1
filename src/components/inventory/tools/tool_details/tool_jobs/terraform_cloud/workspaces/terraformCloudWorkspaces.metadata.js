@@ -58,6 +58,11 @@ export const terraformCloudWorkspacesMetadata = {
         isRequiredFunction: (model) => {
           return model?.getData("workFlowType") === "VCS";
         },
+        formText: "If you cannot find your Repository in the list, please choose 'Others' option and enter the Repoitory Name",
+      },
+      {
+        label: "Repository Name",
+        id: "repositoryText",
       },
       {
         label: "Branch",
@@ -81,5 +86,6 @@ export const terraformCloudWorkspacesMetadata = {
       repository: "",
       branch: "",
       type: "workspaces",
+      repositoryText: "",
     }
   };
