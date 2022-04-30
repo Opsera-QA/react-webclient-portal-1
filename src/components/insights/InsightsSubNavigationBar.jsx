@@ -49,6 +49,16 @@ function InsightsSubNavigationBar({currentTab}) {
             tabText={"Dashboard Viewer"}
           />
         );
+      case "reportsViewer":
+        return (
+          <NavigationTab
+            icon={faUserChart}
+            tabName={"reportsViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={"reportsViewer"}
+            tabText={"Reports Viewer"}
+          />
+        );
       default:
         return null;
     }

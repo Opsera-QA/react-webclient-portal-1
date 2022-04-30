@@ -620,6 +620,14 @@ const breadcrumbs = {
     linkText: "Tool Reports",
     icon: faTools
   },
+  sonarReports: {
+    parent: undefined,
+    name: "sonarReports",
+    path: paths.sonarReports,
+    title: "Sonar Reports",
+    linkText: "Sonar Reports",
+    icon: faAnalytics
+  },
   toolsUsedInPipelineReport: {
     parent: "toolReports",
     name: "toolsUsedInPipelineReport",
