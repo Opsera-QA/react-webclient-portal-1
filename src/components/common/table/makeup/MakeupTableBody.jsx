@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MakeupTableRow from "components/common/table/makeup/MakeupTableRow";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import LoadingDialog from "../../status_notifications/loading";
 
 function MakeupTableBody(
   {
@@ -66,6 +67,18 @@ function MakeupTableBody(
       })
     );
   };
+
+  if (isLoading) {
+    return (
+      <tr>
+        <td colSpan="100%">
+          <div style={{height: "500px"}}>
+            <CenterLoadingIndicator />
+          </div>
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <tbody

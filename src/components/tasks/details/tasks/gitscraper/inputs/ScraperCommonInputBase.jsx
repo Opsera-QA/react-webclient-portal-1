@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { faBracketsCurly, faPlus, faSave, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -67,10 +67,10 @@ function ScraperCommonInputBase({
 
   const getInputRow = () => {
     return (
-      <div className="my-2">
-        <Row>
-          <Col sm={9} className={"ml-3"}>
-            <input
+      <div className="my-2 px-3 pt-1">
+        <InputGroup className="mb-3">
+          <>
+            <FormControl
               className="form-control"
               type={"text"}
               placeholder={`Add ${subtitleText}`}
@@ -81,8 +81,7 @@ function ScraperCommonInputBase({
             <small className="red form-text">
               <div>{errorMessage}</div>
             </small>
-          </Col>
-          <Col sm={2} className={"my-1 ml-2"}>
+          </>
             <Button
               size="sm"
               variant="primary"
@@ -90,11 +89,11 @@ function ScraperCommonInputBase({
               onClick={() => {
                 addProperty();
               }}
+              className={"ml-2"}
             >
               <IconBase icon={faPlus} fixedWidth /> Add
             </Button>
-          </Col>
-        </Row>
+        </InputGroup>
       </div>
     );
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
-import { Col, Button } from "react-bootstrap";
+import { Col, Button, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -73,6 +73,16 @@ function GitScraperReposEditorPanel({
     return true;
   };
 
+  const _validateData = async (gitScraperRepos) => {
+    for (let repo in gitScraperRepos) {
+      ["$height"].forEach((key) => {
+        if (gitScraperRepos[repo][key]) {
+          delete gitScraperRepos[repo][key];
+        }
+      });
+    }
+  };
+
   const updateApplication = async () => {
     setIsLoading(true);
     let newConfiguration = gitScraperReposModel.getPersistData();
@@ -82,11 +92,7 @@ function GitScraperReposEditorPanel({
       let currentRepos = gitScraperRepos;
       gitScraperRepos = [...currentRepos, newConfiguration];
     }
-    for (let repo in gitScraperRepos) {
-      ["$height"].forEach((key) => {
-        delete gitScraperRepos[repo][key];
-      });
-    }
+    await _validateData(gitScraperRepos);
     let gitTaskConfig = parentDataObject.getPersistData();
     gitTaskConfig.configuration.reposToScan = gitScraperRepos;
     parentDataObject?.setData("configuration", gitTaskConfig.configuration);
@@ -106,13 +112,7 @@ function GitScraperReposEditorPanel({
     if (applicationId?.toString() && gitScraperRepos[applicationId]) {
       gitScraperRepos.splice(applicationId, 1);
     }
-    for (let repo in gitScraperRepos) {
-      ["$height"].forEach((key) => {
-        if (gitScraperRepos[repo][key]) {
-          delete gitScraperRepos[repo][key];
-        }
-      });
-    }
+    await _validateData(gitScraperRepos);
     let gitTaskConfig = parentDataObject.getPersistData();
     gitTaskConfig.configuration.reposToScan = gitScraperRepos;
     parentDataObject?.setData("configuration", gitTaskConfig.configuration);
@@ -146,6 +146,22 @@ function GitScraperReposEditorPanel({
       );
     }
   };
+
+  if (gitScraperRepos?.length >= 15) {
+    return (
+      <div className={"p-3"}>
+        <Card className={"mt-3 mb-1"}>
+          <Card.Header as="h6">Configure Repositories</Card.Header>
+          <Card.Body>
+            <Card.Text>
+              Maximum repository limit of 15 reached. You must delete an
+              existing repository in order to add a new one.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <EditorPanelContainer

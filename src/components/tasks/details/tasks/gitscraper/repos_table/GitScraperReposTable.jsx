@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import gitScraperReposMetadata from "./gitscraper-repos-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -6,6 +6,8 @@ import { faBrowser } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GitScraperReposOverlay from "./GitScraperReposOverlay";
 import CustomTable from "../../../../../common/table/CustomTable";
+import taskActions from "../../../../task.actions";
+import { AuthContext } from "../../../../../../contexts/AuthContext";
 
 function GitScraperReposTable({
   setParentDataObject,
@@ -14,11 +16,36 @@ function GitScraperReposTable({
   parentDataObject,
 }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = gitScraperReposMetadata.fields;
   let [tableData, setTableData] = useState(parentDataObject?.data?.configuration?.reposToScan);
+  const { getAccessToken } = useContext(AuthContext);
+  const [isTableLoading, setIsTableLoading] = useState(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const loadData = async () => {
-    setTableData(parentDataObject?.data?.configuration?.reposToScan);
+    try {
+      setIsTableLoading(true);
+      await getTaskData();
+    }
+    catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    }
+    finally {
+      setIsTableLoading(false);
+    }
+  };
+
+  const getTaskData = async (cancelSource = cancelTokenSource) => {
+    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, parentDataObject.getData("_id"));
+    const taskData = response?.data?.data;
+    const taskConfiguration = taskData?.configuration;
+    const repos = taskConfiguration?.reposToScan;
+    if (repos) {
+      setTableData(repos);
+    }
   };
 
   const createGitScraperRepos = () => {
@@ -69,7 +96,9 @@ function GitScraperReposTable({
         columns={columns}
         data={tableData}
         onRowSelect={onRowSelect}
-        isLoading={isLoading}
+        loadData={loadData}
+        disabled={true}
+        isLoading={isTableLoading}
         noDataMessage={noDataMessage}
       />
     );
