@@ -33,7 +33,7 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       source.cancel();
       isMounted.current = false;
     };
-  }, [model]);
+  }, []);
 
   const updateDashboardOrganizations = async (newDataModel) => {
     const newModel = modelHelpers.setDashboardFilterModelField(
