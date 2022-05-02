@@ -33,7 +33,7 @@ import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipel
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {
   mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge-sync-task/mergeSyncTaskConfiguration.metadata";
+} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 
 
