@@ -14,6 +14,8 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardCommitSelectorVerticalTabContainer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectorVerticalTabContainer";
+import MergeSyncTaskWizardConfirmationButton
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardConfirmationButton";
 
 const MergeSyncTaskWizardCommitSelector = ({
   wizardModel,
@@ -141,11 +143,10 @@ const MergeSyncTaskWizardCommitSelector = ({
             setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN);
           }}
         />
-        {/*<MergeSyncTaskWizardSubmitSelectedFilesButton*/}
-        {/*  setCurrentScreen={setCurrentScreen}*/}
-        {/*  wizardModel={wizardModel}*/}
-        {/*  isLoading={isLoading}*/}
-        {/*/>*/}
+        <MergeSyncTaskWizardConfirmationButton
+          setCurrentScreen={setCurrentScreen}
+          wizardModel={wizardModel}
+        />
         <CancelButton
           size={"sm"}
           className={"ml-2"}

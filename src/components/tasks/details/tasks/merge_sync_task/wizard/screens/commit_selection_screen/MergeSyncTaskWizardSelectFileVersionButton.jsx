@@ -24,6 +24,9 @@ function MergeSyncTaskWizardSelectFileVersionButton(
     isLoading,
     fieldName,
     selected,
+    buttonText,
+    savingButtonText,
+    savedButtonText,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -94,14 +97,14 @@ function MergeSyncTaskWizardSelectFileVersionButton(
 
   const getLabel = () => {
     if (selected) {
-      return (`${type} File Changes Selected for Merge Sync`);
+      return (savedButtonText);
     }
 
     if (isSaving) {
-      return (`Saving ${type} File Changes`);
+      return (savingButtonText);
     }
 
-    return (`Select ${type} File Changes`);
+    return (buttonText);
   };
 
   return (
@@ -141,6 +144,9 @@ MergeSyncTaskWizardSelectFileVersionButton.propTypes = {
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
   selected: PropTypes.bool,
+  buttonText: PropTypes.string,
+  savingButtonText: PropTypes.string,
+  savedButtonText: PropTypes.string,
 };
 
 MergeSyncTaskWizardSelectFileVersionButton.defaultProps = {

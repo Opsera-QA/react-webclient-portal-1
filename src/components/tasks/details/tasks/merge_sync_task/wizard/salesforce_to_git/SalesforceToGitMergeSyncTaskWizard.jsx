@@ -10,8 +10,6 @@ import {
 import modelHelpers from "components/common/model/modelHelpers";
 import MergeSyncTaskWizardInitializationScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardInitializationScreen";
-import GitToGitMergeSyncTaskWizardConfigurationScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/git_to_git/GitToGitMergeSyncTaskWizardConfigurationScreen";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import MergeSyncTaskWizardConfirmationScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/MergeSyncTaskWizardConfirmationScreen";
@@ -22,8 +20,13 @@ import GitToGitMergeSyncTaskWizardFileSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
 import MergeSyncTaskWizardCommitSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
+import SalesforceToGitMergeSyncTaskWizardConfigurationScreen
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardConfigurationScreen";
+import SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionScreen";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
-const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
+const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const [error, setError] = useState("");
   const [currentScreen, setCurrentScreen] = useState(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
@@ -58,6 +61,14 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setDefaultValue("errorMessage");
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
 
+    const configuration = taskModel?.getData("configuration");
+    const sfdc = configuration?.sfdc;
+
+    console.log("configuration: " + JSON.stringify(configuration));
+    if (dataParsingHelper.parseObject(sfdc)) {
+      newWizardModel?.setData("sfdcToolId", sfdc?.sourceToolId);
+    }
+
     const runCount = taskModel?.getData("run_count");
 
     if (runCount != null) {
@@ -78,13 +89,13 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            mergeSyncType={"Git to Git"}
+            mergeSyncType={"Salesforce to Git"}
             setError={setError}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
         return (
-          <GitToGitMergeSyncTaskWizardConfigurationScreen
+          <SalesforceToGitMergeSyncTaskWizardConfigurationScreen
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
@@ -94,7 +105,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
         );
       case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
         return (
-          <GitToGitMergeSyncTaskWizardFileSelectionScreen
+          <SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
@@ -137,7 +148,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   if (wizardModel == null) {
     return (
       <LoadingDialog
-        message={"Initializing Git to Git Merge Sync Wizard"}
+        message={"Initializing Salesforce to Git Merge Sync Wizard"}
         size={"sm"}
       />
     );
@@ -158,9 +169,9 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   );
 };
 
-GitToGitMergeSyncTaskWizard.propTypes = {
+SalesforceToGitMergeSyncTaskWizard.propTypes = {
   handleClose: PropTypes.func,
   taskModel: PropTypes.object,
 };
 
-export default GitToGitMergeSyncTaskWizard;
+export default SalesforceToGitMergeSyncTaskWizard;

@@ -83,7 +83,7 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
       );
     }
 
-    if (triggeredSourceFilePull !== true) {
+    if (isMounted?.current === true && triggeredSourceFilePull !== true) {
       return (
         <ErrorDialog error={"Service Error Triggering Source File List Pull"} />
       );

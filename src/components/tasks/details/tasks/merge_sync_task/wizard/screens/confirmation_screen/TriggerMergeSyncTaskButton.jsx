@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
-import salesforceBulkMigrationWizardActions
-  from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+import mergeSyncTaskWizardActions
+  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 
-const TriggerMergeSyncTaskButton = ({pipelineWizardModel, handleClose, setError}) => {
+const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isTriggeringTask, setIsTriggeringTask] = useState(false);
-  const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -32,16 +30,16 @@ const TriggerMergeSyncTaskButton = ({pipelineWizardModel, handleClose, setError}
   }, []);
 
   const triggerTask = async () => {
-    let createJobResponse;
     try {
       setIsTriggeringTask(true);
-      createJobResponse = await salesforceBulkMigrationWizardActions.triggerTaskV2(getAccessToken, cancelTokenSource, pipelineWizardModel.getData("gitTaskId"));
+      const response = await mergeSyncTaskWizardActions.runMergeSyncTask(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+      );
 
-      if (createJobResponse?.data?.message?.status === "EXECUTED") {
-        toastContext.showInformationToast("A request to start this Task has been submitted. It will begin shortly if it passes all checks.", 20);
+      if (isMounted?.current === true && handleClose) {
         handleClose();
-      } else {
-        setError(createJobResponse?.data?.message);
       }
     } catch (error) {
       setError(error);
@@ -51,6 +49,14 @@ const TriggerMergeSyncTaskButton = ({pipelineWizardModel, handleClose, setError}
         setIsTriggeringTask(false);
       }
     }
+  };
+
+  const getButtonLabel = () => {
+    if (isTriggeringTask) {
+      return ("Triggering Merge Sync Task");
+    }
+
+    return ("Trigger Merge Sync Task");
   };
 
   return (
@@ -65,20 +71,16 @@ const TriggerMergeSyncTaskButton = ({pipelineWizardModel, handleClose, setError}
         isLoading={isTriggeringTask}
         icon={faCheck}
       />
-      Proceed
+      {getButtonLabel()}
     </Button>
   );
 };
 
 
 TriggerMergeSyncTaskButton.propTypes = {
-  pipelineWizardModel: PropTypes.object,
-  setPipelineWizardModel: PropTypes.func,
-  setPipelineWizardScreen: PropTypes.func,
+  wizardModel: PropTypes.object,
   handleClose: PropTypes.func,
   setError: PropTypes.func,
-  refreshPipelineActivityData: PropTypes.func,
-  handlePipelineWizardRequest: PropTypes.func
 };
 
 export default TriggerMergeSyncTaskButton;

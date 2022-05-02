@@ -50,7 +50,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
   const getMainView = () => {
     return (
       <div>
-        <div className={"h5"}>Git to Git Merge Sync: Initialization</div>
+        <div className={"h5"}>{`${mergeSyncType} Merge Sync: Initialization`}</div>
         <div className={"my-3"}>{getBody()}</div>
       </div>
     );

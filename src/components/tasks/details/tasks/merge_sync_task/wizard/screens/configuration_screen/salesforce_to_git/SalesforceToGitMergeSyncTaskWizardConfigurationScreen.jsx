@@ -11,6 +11,8 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardUpdateConfigurationButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
+import SfdcComponentListInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 
 const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
   wizardModel,
@@ -41,6 +43,13 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
             dataObject={wizardModel}
             setDataObject={setWizardModel}
             fieldName={"toDate"}
+          />
+        </Col>
+        <Col xs={12}>
+          <SfdcComponentListInput
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            selectedComponents={[...wizardModel.getArrayData("selectedComponentTypes")]}
           />
         </Col>
       </Row>

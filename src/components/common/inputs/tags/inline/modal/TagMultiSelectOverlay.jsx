@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ModalSaveButtonBase from "components/common/buttons/saving/ModalSaveButtonBase";
 import CancelButton from "components/common/buttons/CancelButton";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
@@ -10,21 +9,54 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import {faTags} from "@fortawesome/pro-light-svg-icons/faTags";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
+import axios from "axios";
 
-function TagMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
+function TagMultiSelectOverlay(
+  {
+    dataObject,
+    fieldName,
+    saveDataFunction,
+    type,
+    loadData,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
     toastContext.removeInlineMessage();
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
-  }, [showModal]);
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleSave = async () => {
-    dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
-    const response = await saveDataFunction(dataObject);
-    closePanel();
-    return response;
+    try {
+      dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
+      const response = await saveDataFunction(cancelTokenSource, dataObject);
+      console.log("response: " + JSON.stringify(response));
+
+      if (response) {
+        closePanel();
+        return response;
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showSaveFailureToast("Tag", error);
+      }
+    }
   };
 
   const getTagInput = () => {
@@ -68,6 +100,11 @@ function TagMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFuncti
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
+
+    if (loadData) {
+      loadData();
+    }
+
     toastContext.clearOverlayPanel();
   };
 
@@ -95,11 +132,11 @@ function TagMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFuncti
 }
 
 TagMultiSelectOverlay.propTypes = {
-  showModal: PropTypes.bool,
   saveDataFunction: PropTypes.func,
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 export default TagMultiSelectOverlay;
