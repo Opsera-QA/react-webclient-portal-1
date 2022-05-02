@@ -82,7 +82,7 @@ const MergeSyncTaskWizardCommitSelectionScreen = ({
       );
     }
 
-    if (triggeredComparisonFileListPull !== true) {
+    if (isMounted?.current === true && triggeredComparisonFileListPull !== true) {
       return <ErrorDialog error={"Service Error Triggering Comparison File List Pull"} />;
     }
 

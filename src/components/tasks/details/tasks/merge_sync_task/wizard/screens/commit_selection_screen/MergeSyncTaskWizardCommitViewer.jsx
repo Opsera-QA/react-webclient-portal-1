@@ -137,6 +137,9 @@ const MergeSyncTaskWizardCommitViewer = ({
             fileContent={comparisonFileModel?.getData("destinationContent")}
             type={"Destination Branch"}
             selected={getUpdatedFileFieldName() === "destinationContent"}
+            buttonText={"Keep Existing Changes on Destination Branch"}
+            savingButtonText={"Saving Commit Selection"}
+            savedButtonText={"Keeping Original Changes on Destination Branch"}
           />
         }
       >
@@ -150,6 +153,9 @@ const MergeSyncTaskWizardCommitViewer = ({
           fileContent={comparisonFileModel?.getData("sourceContent")}
           type={"Source Branch"}
           selected={getUpdatedFileFieldName() === "sourceContent"}
+          buttonText={"Merge In Changes from Source Branch"}
+          savingButtonText={"Saving Commit Selection"}
+          savedButtonText={"Merging in Changes from Source Branch"}
         />
       </SaveButtonContainer>
     </div>

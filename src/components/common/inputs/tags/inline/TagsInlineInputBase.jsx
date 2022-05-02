@@ -15,6 +15,7 @@ function TagsInlineInputBase(
     visible,
     type,
     tagLocation,
+    loadData,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -26,6 +27,7 @@ function TagsInlineInputBase(
         fieldName={fieldName}
         saveDataFunction={saveDataFunction}
         showModal={true}
+        loadData={loadData}
       />
     );
   };
@@ -67,6 +69,7 @@ TagsInlineInputBase.propTypes = {
   saveDataFunction: PropTypes.func,
   type: PropTypes.string,
   badgeClassName: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 TagsInlineInputBase.defaultProps = {

@@ -1,4 +1,5 @@
 import baseActions from "utils/actionsBase";
+import taskActions from "components/tasks/task.actions";
 
 const mergeSyncTaskWizardActions = {};
 
@@ -76,12 +77,12 @@ mergeSyncTaskWizardActions.triggerSalesforceToGitSourceFilePull = async (
     "recordId",
   )}/salesforce-to-git/source-files`;
   const postBody = {
-    selectedComponentTypes: taskWizardModel?.getArrayData(
+    componentTypes: taskWizardModel?.getArrayData(
       "selectedComponentTypes",
     ),
     taskId: taskWizardModel?.getData("taskId"),
     runCount: taskWizardModel?.getData("runCount"),
-    lastCommitFromTimeStamp: taskWizardModel?.getData(
+    lastCommitFromTimestamp: taskWizardModel?.getData(
       "fromDate",
     ),
     lastCommitToTimestamp: taskWizardModel?.getData("toDate"),
@@ -240,6 +241,20 @@ mergeSyncTaskWizardActions.updateSelectedFileContentByOption = async (
 mergeSyncTaskWizardActions.triggerTaskV2 = async (getAccessToken, cancelTokenSource, gitTaskId) => {
   const apiUrl = `/tasks/wizard/salesforce/bulk-migration/${gitTaskId}/trigger-task`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+mergeSyncTaskWizardActions.runMergeSyncTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const postBody = {
+    runCount: wizardModel?.getData("runCount"),
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+  };
+
+  return await taskActions.runTaskV3(
+    getAccessToken,
+    cancelTokenSource,
+    wizardModel?.getData("taskId"),
+    postBody,
+  );
 };
 
 export default mergeSyncTaskWizardActions;

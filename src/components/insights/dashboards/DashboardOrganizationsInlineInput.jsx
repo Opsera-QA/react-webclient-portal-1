@@ -41,7 +41,12 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       "organizations",
       newDataModel?.getData("organizations")
     );
-    const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
+    const response = await dashboardsActions.updateDashboardFiltersV2(
+      getAccessToken,
+      cancelTokenSource,
+      newModel?.getMongoDbId(),
+      newModel?.getData("filters"),
+      );
     loadData();
     return response;
   };

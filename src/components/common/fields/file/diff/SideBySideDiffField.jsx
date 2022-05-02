@@ -69,7 +69,7 @@ function SideBySideDiffField(
 }
 
 SideBySideDiffField.propTypes = {
-  model: PropTypes.string,
+  model: PropTypes.object,
   originalCodeFieldName: PropTypes.string,
   changedCodeFieldName: PropTypes.string,
   className: PropTypes.string,

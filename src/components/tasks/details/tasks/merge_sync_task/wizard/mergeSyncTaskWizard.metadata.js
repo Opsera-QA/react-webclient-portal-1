@@ -1,6 +1,6 @@
 export const mergeSyncTaskWizardMetadata = {
   idProperty: "_id",
-  type: "Sfdc Pipeline Wizard Metadata",
+  type: "Merge Sync Task Wizard Metadata",
   activeField: "active",
   fields: [
     {
@@ -18,6 +18,10 @@ export const mergeSyncTaskWizardMetadata = {
     {
       label: "Source Commit List",
       id: "sourceCommitFiles",
+    },
+    {
+      label: "Salesforce Source Tool ID",
+      id: "sfdcToolId",
     },
     {
       label: "Selected File List",
@@ -62,6 +66,7 @@ export const mergeSyncTaskWizardMetadata = {
     updatedFileList: [],
     taskId: "",
     recordId: "",
+    sfdcToolId: "",
     runCount: 1,
   }
 };

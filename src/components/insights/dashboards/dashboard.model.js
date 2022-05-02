@@ -37,7 +37,7 @@ export class DashboardModel extends ModelBase {
   };
 
   saveModel = async () => {
-    return await toolsActions.updateDashboardV2(
+    return await dashboardsActions.updateDashboardV2(
       this.getAccessToken,
       this.cancelTokenSource,
       this,
