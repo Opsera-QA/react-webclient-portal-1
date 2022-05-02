@@ -16,7 +16,7 @@ function GitScraperReposTable({
   parentDataObject,
 }) {
   const toastContext = useContext(DialogToastContext);
-  let [tableData, setTableData] = useState(parentDataObject?.data?.configuration?.reposToScan);
+  const [tableData, setTableData] = useState([]);
   const { getAccessToken } = useContext(AuthContext);
   const [isTableLoading, setIsTableLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
