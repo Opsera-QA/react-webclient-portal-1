@@ -98,7 +98,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.successPercentage}
+              score={responseData?.successPercentage + "%"}
               subtitle={'Success%'}
             />
           </DataBlockBoxContainer>
@@ -107,8 +107,8 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.failurePercentage}
-              subtitle={'Failed'}
+              score={responseData?.failurePercentage + "%"}
+              subtitle={'Failed%'}
             />
           </DataBlockBoxContainer>
         </Col>
