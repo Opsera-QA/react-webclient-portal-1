@@ -92,7 +92,6 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
         kpiConfiguration,
         dashboardTags,
         filterDto[0],
-        null,
         dashboardFilters,
         dashboardOrgs
       );
@@ -103,7 +102,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
         if(!newFilterDto[i]) {
           newFilterDto.push(new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false));
         }
-        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.docs.length : 0;
+        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.count : 0;
       }
       setTableFilterDto(newFilterDto);
       setResponseData(data);
@@ -145,7 +144,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
         {getSuccessSummaryBlocks()}
         <VanitySetTabAndViewContainer
           className={"mb-3"}
-          title={`Success Executions`}
+          title={`List of Successful Workflow Steps by Application`}
           defaultActiveKey={actionInsightsTraceabilityTable?.[0]?.applicationName}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getTable()}

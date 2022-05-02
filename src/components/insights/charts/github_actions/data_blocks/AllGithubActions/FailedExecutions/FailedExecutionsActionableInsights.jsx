@@ -109,7 +109,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         kpiConfiguration,
         dashboardTags,
         filterDto[0],
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       const data = response?.data?.data[0];
@@ -119,7 +119,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         if(!newFilterDto[i]) {
           newFilterDto.push(new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false));
         }
-        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.docs.length : 0;
+        newFilterDto[i]['totalCount'] = actionableInsightsTableData[i]?.docs ? actionableInsightsTableData[i]?.count : 0;
       }
       setTableFilterDto(newFilterDto);
       setResponseData(data);
@@ -149,7 +149,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
         {getFailedSummaryBlocks()}
         <VanitySetTabAndViewContainer
           className={"mb-3"}
-          title={`Failed Executions`}
+          title={`List of Failed Workflow Steps by Application`}
           defaultActiveKey={actionInsightsTraceabilityTable?.[0]?.applicationName}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getTable()}
