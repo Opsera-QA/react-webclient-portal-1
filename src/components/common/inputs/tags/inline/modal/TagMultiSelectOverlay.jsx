@@ -44,7 +44,7 @@ function TagMultiSelectOverlay(
   const handleSave = async () => {
     try {
       dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
-      const response = await saveDataFunction(cancelTokenSource, dataObject);
+      const response = await saveDataFunction(dataObject);
       console.log("response: " + JSON.stringify(response));
 
       if (response) {
