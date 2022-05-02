@@ -20,6 +20,7 @@ function GitScraperReposTable({
   const { getAccessToken } = useContext(AuthContext);
   const [isTableLoading, setIsTableLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [noDataMessage, setNoDataMessage] = useState("No Repositories configured for the scan");
 
   useEffect(() => {
     loadData();
@@ -39,12 +40,17 @@ function GitScraperReposTable({
   };
 
   const getTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, parentDataObject.getData("_id"));
-    const taskData = response?.data?.data;
-    const taskConfiguration = taskData?.configuration;
-    const repos = taskConfiguration?.reposToScan;
-    if (repos) {
-      setTableData(repos);
+    try {
+      const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, parentDataObject.getData("_id"));
+      const taskData = response?.data?.data;
+      const taskConfiguration = taskData?.configuration;
+      const repos = taskConfiguration?.reposToScan;
+      if (repos) {
+        setTableData(repos);
+      }
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+      setNoDataMessage("Error in fetching configured repositories");
     }
   };
 
@@ -74,7 +80,6 @@ function GitScraperReposTable({
     [],
   );
 
-  const noDataMessage = "No Repositories configured for the scan";
 
   const onRowSelect = (rowData) => {
     let selectedRow = gitScraperRepos[rowData?.index];
