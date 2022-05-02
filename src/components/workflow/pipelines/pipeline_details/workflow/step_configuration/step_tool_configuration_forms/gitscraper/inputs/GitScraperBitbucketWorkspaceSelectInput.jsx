@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
 function GitScraperBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
-  console.log(model?.getData("filesException"));
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("workspace", selectedOption?.key);
