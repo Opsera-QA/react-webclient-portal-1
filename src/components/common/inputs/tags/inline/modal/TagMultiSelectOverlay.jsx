@@ -13,7 +13,7 @@ import axios from "axios";
 
 function TagMultiSelectOverlay(
   {
-    dataObject,
+    model,
     fieldName,
     saveDataFunction,
     type,
@@ -33,7 +33,7 @@ function TagMultiSelectOverlay(
     setCancelTokenSource(source);
     isMounted.current = true;
     toastContext.removeInlineMessage();
-    setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
+    setTemporaryDataObject(new Model({...model?.getPersistData()}, model?.getMetaData(), false));
 
     return () => {
       source.cancel();
@@ -42,21 +42,15 @@ function TagMultiSelectOverlay(
   }, []);
 
   const handleSave = async () => {
-    try {
-      dataObject.setData(fieldName, temporaryDataObject.getArrayData("tags"));
-      const response = await saveDataFunction(dataObject);
-      console.log("response: " + JSON.stringify(response));
+    const newModel = { ...model };
+    newModel.setData(fieldName, temporaryDataObject?.getArrayData("tags"));
+    const response = await saveDataFunction(newModel);
 
-      if (response) {
-        closePanel();
-        return response;
-      }
+    if (isMounted?.current === true) {
+      closePanel();
     }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showSaveFailureToast("Tag", error);
-      }
-    }
+
+    return response;
   };
 
   const getTagInput = () => {
@@ -133,7 +127,7 @@ function TagMultiSelectOverlay(
 
 TagMultiSelectOverlay.propTypes = {
   saveDataFunction: PropTypes.func,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
   type: PropTypes.string,
   loadData: PropTypes.func,

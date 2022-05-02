@@ -1,28 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import ModalSaveButtonBase from "components/common/buttons/saving/ModalSaveButtonBase";
 import CancelButton from "components/common/buttons/CancelButton";
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import { faSitemap } from "@fortawesome/pro-light-svg-icons/faSitemap";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
+import axios from "axios";
 
-function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, saveDataFunction, type }) {
+function OrganizationMultiSelectOverlay({ model, fieldName, saveDataFunction, loadData, }) {
   const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
     toastContext.removeInlineMessage();
-    setTemporaryDataObject(new Model({ ...dataObject?.getPersistData() }, dataObject?.getMetaData(), false));
-  }, [showModal]);
+    setTemporaryDataObject(new Model({...model?.getPersistData()}, model?.getMetaData(), false));
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleSave = async () => {
-    dataObject.setData(fieldName, temporaryDataObject.getArrayData("organizations"));
-    const response = await saveDataFunction(dataObject);
-    closePanel();
+    const newModel = { ...model };
+    newModel.setData(fieldName, temporaryDataObject?.getArrayData("organizations"));
+    const response = await saveDataFunction(newModel);
+
+    if (isMounted?.current === true) {
+      closePanel();
+    }
+
     return response;
   };
 
@@ -49,6 +68,11 @@ function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, save
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
+
+    if (loadData) {
+      loadData();
+    }
+
     toastContext.clearOverlayPanel();
   };
 
@@ -76,9 +100,9 @@ function OrganizationMultiSelectOverlay({ showModal, dataObject, fieldName, save
 OrganizationMultiSelectOverlay.propTypes = {
   showModal: PropTypes.bool,
   saveDataFunction: PropTypes.func,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
-  type: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 export default OrganizationMultiSelectOverlay;

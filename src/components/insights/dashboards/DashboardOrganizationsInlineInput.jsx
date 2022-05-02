@@ -41,14 +41,12 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       "organizations",
       newDataModel?.getData("organizations")
     );
-    const response = await dashboardsActions.updateDashboardFiltersV2(
+    return await dashboardsActions.updateDashboardFiltersV2(
       getAccessToken,
       cancelTokenSource,
       newModel?.getMongoDbId(),
       newModel?.getData("filters"),
       );
-    loadData();
-    return response;
   };
 
   if (model == null) {
@@ -63,6 +61,7 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       model={temporaryModel}
       fieldName={"organizations"}
       saveDataFunction={updateDashboardOrganizations}
+      loadData={loadData}
     />
   );
 }
