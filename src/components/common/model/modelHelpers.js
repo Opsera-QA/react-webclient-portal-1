@@ -89,7 +89,8 @@ modelHelpers.getDashboardFilterModel = (kpiConfiguration, type, dashboardFilterM
 };
 
 modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) => {
-  let dashboardFilters = kpiConfiguration.getArrayData("filters");
+  const newModel = {...kpiConfiguration};
+  let dashboardFilters = newModel.getArrayData("filters");
   let index = dashboardFilters?.findIndex((filter) => filter.type === type);
 
   if (index == null || index === -1) {
@@ -99,9 +100,9 @@ modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) =
     dashboardFilters[index].value = newValue;
   }
 
-  kpiConfiguration.setData("filters", dashboardFilters);
+  newModel.setData("filters", dashboardFilters);
 
-  return kpiConfiguration;
+  return newModel;
 };
 
 modelHelpers.getDashboardSettingsModel = (kpiConfiguration, metadata = kpiSettingsMetadata) => {
