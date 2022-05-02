@@ -23,10 +23,9 @@ function TagsInlineInputBase(
     toastContext.showOverlayPanel(
       <TagMultiSelectOverlay
         type={type}
-        dataObject={model}
+        model={model}
         fieldName={fieldName}
         saveDataFunction={saveDataFunction}
-        showModal={true}
         loadData={loadData}
       />
     );
