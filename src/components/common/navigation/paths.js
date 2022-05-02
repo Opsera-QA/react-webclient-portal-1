@@ -63,6 +63,7 @@ paths.dashboardDetails = "analytics";
 paths.marketplace = paths.insights + "/marketplace";
 paths.release360 = paths.insights + "/release360";
 paths.insightsSummary = "insights/summary";
+paths.connectedAssets = "insights/insightsConnectedAssets";
 
 // Settings Paths
 paths.accountSettings = "settings";
