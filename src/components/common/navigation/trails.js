@@ -602,7 +602,14 @@ const breadcrumbs = {
     linkText: "Synopsis",
     icon: faRadar
   },
-
+  insightsConnectedAssets: {
+      parent: "insights",
+      name: "connectedAssets",
+      path: paths.insightsConnectedAssets,
+      title: "Connected Assets",
+      linkText: "Connected Assets",
+      icon: faChartNetwork
+    },
   //Reports
   reports: {
     parent: undefined,

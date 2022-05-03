@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
@@ -10,10 +10,22 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
+import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
+import axios from "axios";
 
 function InsightsSubNavigationBar({currentTab}) {
+  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const history = useHistory();
+
+  useEffect(async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  }, []);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -36,6 +48,9 @@ function InsightsSubNavigationBar({currentTab}) {
         return;
       case "reports":
         // history.push(`/insights/reports`);
+        return;
+      case "connectedAssets":
+        history.push(`/insights/connectedAssets`);
         return;
     }
   };
@@ -108,13 +123,20 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Synopsis"}
       />
       {getRelease360Tab()} */}
+      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
+        icon={faChartArea}
+        tabName={"connectedAssets"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Connected Assets"}
+      /> }
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
 InsightsSubNavigationBar.propTypes = {
-  currentTab: PropTypes.string,
+  currentTab: PropTypes.string
 };
 
 export default InsightsSubNavigationBar;
