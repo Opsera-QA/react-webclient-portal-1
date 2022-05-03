@@ -58,7 +58,7 @@ function PipelineSummaryAndWebhookOverviewDetailPanel({ pipeline }) {
           tabName={"webhook"}
           disabled={pipeline?.workflow?.source?.trigger_active !== true}
         />
-        <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        {/*<JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );
   };
