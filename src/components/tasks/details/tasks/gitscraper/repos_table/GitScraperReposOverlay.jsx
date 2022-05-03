@@ -7,7 +7,7 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function GitScraperReposOverlay({ loadData, setParentDataObject, gitscraperDataObject, applicationId, parentDataObject,gitScraperRepos }) {
+function GitScraperReposOverlay({ loadData, setParentDataObject, gitscraperDataObject, applicationId, parentDataObject,gitScraperRepos, setGitscraperList, model }) {
   const toastContext = useContext(DialogToastContext);
   const [gitScraperReposData, setGitScraperReposData] = useState(undefined);
   const isMounted = useRef(false);
@@ -48,11 +48,13 @@ function GitScraperReposOverlay({ loadData, setParentDataObject, gitscraperDataO
       <GitScraperReposEditorPanel
         gitScraperReposData={gitScraperReposData}
         setParentDataObject={setParentDataObject}
+        setGitscraperList={setGitscraperList}
         parentDataObject={parentDataObject}
         loadData={loadData}
         handleClose={closePanel}
         applicationId={applicationId}
         gitScraperRepos={gitScraperRepos}
+        model={model}
       />
     </CreateCenterPanel>
   );
@@ -60,8 +62,10 @@ function GitScraperReposOverlay({ loadData, setParentDataObject, gitscraperDataO
 
 GitScraperReposOverlay.propTypes = {
   setParentDataObject: PropTypes.func,
+  setGitscraperList: PropTypes.func,
   parentDataObject: PropTypes.object,
   gitscraperDataObject: PropTypes.object,
+  model: PropTypes.object,
   loadData: PropTypes.func,
   applicationId: PropTypes.number,
   gitScraperRepos: PropTypes.array

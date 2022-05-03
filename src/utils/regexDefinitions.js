@@ -225,4 +225,10 @@ regexDefinitions.informaticaLocationRules = {
   errorFormText: "Only letters, numbers, forward slashes, and spaces are allowed",
 };
 
+regexDefinitions.numbersOnly = {
+  regex: /[0-9]\d*$/,
+  formText: "Whole positive numbers are allowed",
+  errorFormText: "Only whole positive numbers are allowed",
+};
+
 export default regexDefinitions;
