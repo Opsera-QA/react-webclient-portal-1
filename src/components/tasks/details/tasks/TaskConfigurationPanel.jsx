@@ -18,6 +18,7 @@ import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
 import GitToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
+import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -117,6 +118,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
             />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperConfigurationPanel
+            gitTasksConfigurationData={taskConfigurationModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksDataDto={taskModel}
+          />
         );
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;

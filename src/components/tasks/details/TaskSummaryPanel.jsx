@@ -18,6 +18,7 @@ import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButt
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 import {TASK_TYPES} from "components/tasks/task.types";
+import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,6 +76,13 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return (
           <TasksEcsActionButtons
+            gitTasksData={gitTasksData}
+            status={gitTasksData?.getData("status")}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperActionButton
             gitTasksData={gitTasksData}
             status={gitTasksData?.getData("status")}
           />
