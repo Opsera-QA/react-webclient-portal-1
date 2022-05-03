@@ -58,7 +58,7 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <NumberPickerInputBase
+        <TextInputBase
           fieldName={"threshold"}
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
@@ -76,6 +76,7 @@ function GitScraperConfigurationPanel({
           toolApplications={gitTasksConfigurationData?.getData("reposToScan")}
           isLoading={false}
           setParentDataObject={setGitTasksConfigurationData}
+          model={gitTasksConfigurationData}
           parentDataObject={gitTasksDataDto}
         />
       </Col>

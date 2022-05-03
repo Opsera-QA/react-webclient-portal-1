@@ -16,6 +16,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Maximum Allows Secrets Threshold",
       id: "threshold",
+      regexDefinitionName: "numbersOnly"
     },
     {
       label: "Permitted Secret Keys",

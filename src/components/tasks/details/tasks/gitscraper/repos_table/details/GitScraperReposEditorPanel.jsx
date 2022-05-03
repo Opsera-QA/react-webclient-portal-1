@@ -23,6 +23,8 @@ function GitScraperReposEditorPanel({
   handleClose,
   parentDataObject,
   gitScraperRepos,
+  setGitscraperList,
+  model
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -41,7 +43,7 @@ function GitScraperReposEditorPanel({
     isMounted.current = true;
 
     if (gitScraperReposData) {
-      loadData();
+      fetchData();
     }
 
     return () => {
@@ -50,7 +52,7 @@ function GitScraperReposEditorPanel({
     };
   }, [gitScraperReposData]);
 
-  const loadData = () => {
+  const fetchData = () => {
     try {
       setIsLoading(true);
       const configurationData = modelHelpers.getToolConfigurationModel(
@@ -101,8 +103,10 @@ function GitScraperReposEditorPanel({
       axios.CancelToken.source(),
       parentDataObject,
     );
-    setParentDataObject(gitScraperRepos);
-    await loadData();
+    setGitscraperList(gitScraperRepos);
+    let newModel = {...model};
+    newModel?.setData("reposToScan", gitScraperRepos);
+    setParentDataObject({...newModel});
     setIsLoading(false);
     handleClose();
   };
@@ -121,9 +125,11 @@ function GitScraperReposEditorPanel({
       axios.CancelToken.source(),
       parentDataObject,
     );
-    setParentDataObject(gitScraperRepos);
+    setGitscraperList(gitScraperRepos);
+    let newModel = {...model};
+    newModel?.setData("reposToScan", gitScraperRepos);
+    setParentDataObject({...newModel});
     setIsLoading(false);
-    await loadData();
     handleClose();
   };
 
@@ -216,10 +222,12 @@ GitScraperReposEditorPanel.propTypes = {
   gitScraperReposData: PropTypes.object,
   setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
+  model: PropTypes.object,
   loadData: PropTypes.func,
   applicationId: PropTypes.number,
   handleClose: PropTypes.func,
   gitScraperRepos: PropTypes.array,
+  setGitscraperList: PropTypes.func,
 };
 
 export default GitScraperReposEditorPanel;

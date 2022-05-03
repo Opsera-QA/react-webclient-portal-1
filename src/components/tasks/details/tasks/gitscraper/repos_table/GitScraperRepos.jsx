@@ -3,7 +3,7 @@ import GitScraperReposTable from "./GitScraperReposTable";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 
-function GitScraperRepos({ setParentDataObject, isLoading, toolApplications, parentDataObject }) {
+function GitScraperRepos({ setParentDataObject, isLoading, toolApplications, parentDataObject, model }) {
   const [gitScraperRepos, setGitScraperRepos] = useState([]);
 
   useEffect(() => {
@@ -26,9 +26,11 @@ function GitScraperRepos({ setParentDataObject, isLoading, toolApplications, par
   return (
     <GitScraperReposTable
       isLoading={isLoading}
-      setParentDataObject={setGitScraperRepos}
+      setParentDataObject={setParentDataObject}
+      setGitscraperList={setGitScraperRepos}
       parentDataObject={parentDataObject}
       gitScraperRepos={gitScraperRepos}
+      model={model}
     />
   );
 }
@@ -36,6 +38,7 @@ function GitScraperRepos({ setParentDataObject, isLoading, toolApplications, par
 GitScraperRepos.propTypes = {
   setParentDataObject: PropTypes.func,
   parentDataObject: PropTypes.object,
+  model: PropTypes.object,
   isLoading: PropTypes.bool,
   toolApplications: PropTypes.array
 };

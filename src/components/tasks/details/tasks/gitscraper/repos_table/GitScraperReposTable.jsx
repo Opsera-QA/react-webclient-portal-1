@@ -14,6 +14,8 @@ function GitScraperReposTable({
   gitScraperRepos,
   isLoading,
   parentDataObject,
+  setGitscraperList,
+  model
 }) {
   const toastContext = useContext(DialogToastContext);
   const [tableData, setTableData] = useState([]);
@@ -58,9 +60,11 @@ function GitScraperReposTable({
     toastContext.showOverlayPanel(
       <GitScraperReposOverlay
         setParentDataObject={setParentDataObject}
+        setGitscraperList={setGitscraperList}
         loadData={loadData}
         parentDataObject={parentDataObject}
         gitScraperRepos={gitScraperRepos}
+        model={model}
       />,
     );
   };
@@ -88,9 +92,11 @@ function GitScraperReposTable({
         gitscraperDataObject={selectedRow}
         applicationId={rowData?.index}
         setParentDataObject={setParentDataObject}
+        setGitscraperList={setGitscraperList}
         parentDataObject={parentDataObject}
         loadData={loadData}
         gitScraperRepos={gitScraperRepos}
+        model={model}
       />
     );
   };
@@ -126,7 +132,9 @@ function GitScraperReposTable({
 
 GitScraperReposTable.propTypes = {
   setParentDataObject: PropTypes.func,
+  setGitscraperList: PropTypes.func,
   parentDataObject: PropTypes.object,
+  model: PropTypes.object,
   isLoading: PropTypes.bool,
   gitScraperRepos: PropTypes.array,
 };
