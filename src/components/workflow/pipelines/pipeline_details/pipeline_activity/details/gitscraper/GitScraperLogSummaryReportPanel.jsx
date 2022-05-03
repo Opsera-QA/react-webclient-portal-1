@@ -63,7 +63,7 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
     return (
       <VanitySetTabViewContainer>
         <VanitySetTabView tabKey={"summary"}>
-          <SummaryPanelContainer className={"step-configuration-summary mx-3 mt-3"}>
+          <SummaryPanelContainer className={"mx-3 mt-3"}>
             <GitScraperReportSummaryOverview
               gitScraperResultsModel={gitScraperReportModel}
             />

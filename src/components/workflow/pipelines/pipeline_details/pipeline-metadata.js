@@ -27,7 +27,7 @@ const pipelineMetadata = {
       id: "last_run",
     },
     {
-      label: "Account",
+      label: "Organization Account",
       id: "account",
     },
     {
@@ -78,6 +78,10 @@ const pipelineMetadata = {
     {
       label: "Organization",
       id: "organization",
+    },
+    {
+      label: "Organization",
+      id: "organizationName",
     },
     {
       label: "External Reference",
