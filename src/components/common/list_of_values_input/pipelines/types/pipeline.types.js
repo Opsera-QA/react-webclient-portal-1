@@ -1,11 +1,13 @@
 export const PIPELINE_TYPES = {
+  APIGEE: "apigee",
   INFORMATICA: "informatica",
   MACHINE_LEARNING: "ai-ml",
   SALESFORCE: "sfdc",
-  SOFTWARE_DEVELOPMENT: "sdlc",
+  SOFTWARE_DEVELOPMENT: "sdlc",  
 };
 
 export const PIPELINE_TYPE_LABELS = {
+  APIGEE: "Apigee",
   INFORMATICA: "Informatica",
   MACHINE_LEARNING: "Machine Learning (AI)",
   SALESFORCE: "Salesforce",
@@ -14,6 +16,8 @@ export const PIPELINE_TYPE_LABELS = {
 
 export const getPipelineTypeLabel = (pipelineType) => {
   switch (pipelineType) {
+    case PIPELINE_TYPES.APIGEE:
+      return PIPELINE_TYPE_LABELS.APIGEE;
     case PIPELINE_TYPES.INFORMATICA:
       return PIPELINE_TYPE_LABELS.INFORMATICA;
     case PIPELINE_TYPES.MACHINE_LEARNING:
@@ -28,6 +32,10 @@ export const getPipelineTypeLabel = (pipelineType) => {
 };
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [
+  {
+    text: PIPELINE_TYPE_LABELS.APIGEE,
+    value: PIPELINE_TYPES.APIGEE,
+  },
   {
     text: PIPELINE_TYPE_LABELS.INFORMATICA,
     value: PIPELINE_TYPES.INFORMATICA,
