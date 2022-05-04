@@ -23,7 +23,7 @@ function EBSCreateDomainToggleInput({dataObject, setDataObject, fieldName, disab
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

@@ -23,7 +23,7 @@ function TagMultiSelectInput(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         field={field}
         showLabel={showLabel}

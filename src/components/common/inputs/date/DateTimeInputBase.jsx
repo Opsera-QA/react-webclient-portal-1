@@ -77,7 +77,7 @@ function DateTimeInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         field={field}
         model={dataObject}

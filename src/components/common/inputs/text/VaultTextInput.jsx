@@ -66,7 +66,7 @@ function VaultTextInput(
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel
         field={field}
         model={dataObject}
