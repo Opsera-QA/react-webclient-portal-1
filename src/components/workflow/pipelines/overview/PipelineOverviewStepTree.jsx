@@ -25,7 +25,7 @@ function PipelineOverviewStepTree({ pipelineSteps }) {
       title={`Pipeline Steps`}
     >
       <VanitySetVerticalTab
-        tabText={"Pipeline Settings"}
+        tabText={"Overview"}
         tabName={0}
       />
       {getPipelineStepTabs()}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import PipelineOverviewStepTree from "components/workflow/pipelines/overview/PipelineOverviewStepTree";
-import PipelineSourceRepositoryOverview from "components/workflow/pipelines/overview/PipelineSourceRepositoryOverview";
+import PipelineSummaryAndWebhookOverviewDetailPanel from "components/workflow/pipelines/overview/PipelineSummaryAndWebhookOverviewDetailPanel";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
@@ -37,7 +37,7 @@ function PipelineOverviewContainer({ pipeline }) {
     return (
       <VanitySetTabViewContainer>
         <VanitySetTabView tabKey={0}>
-          <PipelineSourceRepositoryOverview pipeline={pipeline} />
+          <PipelineSummaryAndWebhookOverviewDetailPanel pipeline={pipeline} />
         </VanitySetTabView>
         {getPipelineStepTabPanes()}
       </VanitySetTabViewContainer>

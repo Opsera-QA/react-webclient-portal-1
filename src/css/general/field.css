@@ -339,10 +339,6 @@ input[disabled] {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.step-configuration-summary {
-    color: #334152;
-}
-
 .vertical-tab-text {
     font-size: 1.25em;
 }

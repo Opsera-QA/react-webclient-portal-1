@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function H4FieldSubHeader({ subheaderText }) {
   return (
-    <h4 className={"mb-2"}>
+    <h4 className={"mb-2 text-color"}>
       {subheaderText}
     </h4>
   );

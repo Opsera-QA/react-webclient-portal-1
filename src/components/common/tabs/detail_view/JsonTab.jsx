@@ -7,7 +7,7 @@ function JsonTab({activeTab, handleTabClick}) {
   return (
     <CustomTab
       activeTab={activeTab}
-      tabText={"JSON View"}
+      tabText={"Object View"}
       tabName={"json"}
       handleTabClick={handleTabClick}
       icon={faCode}

@@ -67,7 +67,7 @@ function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
     return (
       <VanitySetTabViewContainer>
         <VanitySetTabView tabKey={"summary"}>
-          <SummaryPanelContainer className={"step-configuration-summary mx-3 mt-3"}>
+          <SummaryPanelContainer className={"mx-3 mt-3"}>
             <InformaticaReportSummaryOverview
               informaticaResultsModel={informaticaResultsModel}
             />
