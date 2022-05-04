@@ -24,6 +24,7 @@ function StandaloneRoleAccessTypeInput({ accessRole, updateRoleType, disabled })
 
   return (
     <StandaloneSelectInput
+      className="input-for-selectRoleType"
       selectOptions={ACCESS_ROLE_TYPE_SELECT_OPTIONS}
       valueField={"value"}
       textField={"text"}
