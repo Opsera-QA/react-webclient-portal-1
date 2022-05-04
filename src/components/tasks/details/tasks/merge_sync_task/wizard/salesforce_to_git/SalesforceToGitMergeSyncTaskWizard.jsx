@@ -16,8 +16,6 @@ import MergeSyncTaskWizardConfirmationScreen
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
-import GitToGitMergeSyncTaskWizardFileSelectionScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
 import MergeSyncTaskWizardCommitSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 import SalesforceToGitMergeSyncTaskWizardConfigurationScreen
@@ -64,7 +62,6 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     const configuration = taskModel?.getData("configuration");
     const sfdc = configuration?.sfdc;
 
-    console.log("configuration: " + JSON.stringify(configuration));
     if (dataParsingHelper.parseObject(sfdc)) {
       newWizardModel?.setData("sfdcToolId", sfdc?.sourceToolId);
     }

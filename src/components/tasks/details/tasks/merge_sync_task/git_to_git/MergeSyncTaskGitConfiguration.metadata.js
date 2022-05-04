@@ -1,4 +1,4 @@
-export const gitToGitMergeSyncTaskConfigurationMetadata = {
+export const mergeSyncTaskGitConfigurationMetadata = {
   type: "Git to Git Merge Sync Task Configuration",
   fields: [
     {

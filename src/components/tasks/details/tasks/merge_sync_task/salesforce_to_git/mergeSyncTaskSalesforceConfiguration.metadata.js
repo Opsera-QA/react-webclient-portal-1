@@ -1,5 +1,5 @@
-export const salesforceToGitMergeSyncTaskConfigurationMetadata = {
-  type: "Salesforce to Git Merge Sync Task Configuration",
+export const mergeSyncTaskSalesforceConfigurationMetadata = {
+  type: "Merge Sync Task Salesforce Configuration",
   fields: [
     {
       label: "Salesforce Source Branch Tool",
@@ -10,7 +10,6 @@ export const salesforceToGitMergeSyncTaskConfigurationMetadata = {
     {
       label: "Salesforce Target Branch Tool",
       id: "targetToolId",
-      isRequired: true,
       formText: "Salesforce Target Branch Tool cannot match Salesforce Source Branch Tool.",
     },    
   ],
