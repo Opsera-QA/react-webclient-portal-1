@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
@@ -23,9 +23,10 @@ import SalesforceToGitMergeSyncTaskWizardConfigurationScreen
 import SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionScreen";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
-  const [error, setError] = useState("");
+  const toastContext = useContext(DialogToastContext);
   const [currentScreen, setCurrentScreen] = useState(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -36,6 +37,7 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       cancelTokenSource.cancel();
     }
 
+    toastContext.removeInlineMessage();
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
@@ -87,7 +89,6 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
             mergeSyncType={"Salesforce to Git"}
-            setError={setError}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
@@ -97,7 +98,6 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            setError={setError}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
@@ -124,7 +124,6 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             wizardModel={wizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            setError={setError}
           />
         );
     }
@@ -156,9 +155,7 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
-      <div>
-        <ErrorDialog error={error} />
-      </div>
+      {toastContext?.getInlineBanner()}
       <div className={"m-3"}>
         {getBody()}
       </div>

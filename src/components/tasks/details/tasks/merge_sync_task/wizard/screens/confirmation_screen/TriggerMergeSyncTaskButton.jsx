@@ -7,8 +7,10 @@ import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
-const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose, setError }) => {
+const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isTriggeringTask, setIsTriggeringTask] = useState(false);
   const isMounted = useRef(false);
@@ -42,7 +44,7 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose, setError }) => {
         handleClose();
       }
     } catch (error) {
-      setError(error);
+      toastContext.showInlineErrorMessage(error, "Could not trigger Merge Sync:");
     }
     finally {
       if (isMounted?.current === true) {
@@ -80,7 +82,6 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose, setError }) => {
 TriggerMergeSyncTaskButton.propTypes = {
   wizardModel: PropTypes.object,
   handleClose: PropTypes.func,
-  setError: PropTypes.func,
 };
 
 export default TriggerMergeSyncTaskButton;

@@ -9,16 +9,17 @@ import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_syn
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function MergeSyncTaskWizardUpdateConfigurationButton({
   wizardModel,
   setCurrentScreen,
-  setError,
   size,
   className,
   disabled,
   icon,
 }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
@@ -54,8 +55,7 @@ function MergeSyncTaskWizardUpdateConfigurationButton({
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setError("Could not update wizard record");
+        toastContext.showInlineErrorMessage(error, "Could not update wizard record configuration:");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -100,7 +100,6 @@ function MergeSyncTaskWizardUpdateConfigurationButton({
 MergeSyncTaskWizardUpdateConfigurationButton.propTypes = {
   wizardModel: PropTypes.object,
   setCurrentScreen: PropTypes.func,
-  setError: PropTypes.func,
   disabled: PropTypes.bool,
   icon: PropTypes.object,
   size: PropTypes.string,

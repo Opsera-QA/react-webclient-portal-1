@@ -16,7 +16,6 @@ const MergeSyncTaskWizardConfirmationScreen = (
     wizardModel,
     setCurrentScreen,
     handleClose,
-    setError,
   }) => {
   if (wizardModel == null) {
     return null;
@@ -39,7 +38,6 @@ const MergeSyncTaskWizardConfirmationScreen = (
         <TriggerMergeSyncTaskButton
           wizardModel={wizardModel}
           handleClose={handleClose}
-          setError={setError}
         />
         <CancelButton
           className={"ml-2"}
@@ -55,7 +53,6 @@ MergeSyncTaskWizardConfirmationScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
-  setError: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardConfirmationScreen;
