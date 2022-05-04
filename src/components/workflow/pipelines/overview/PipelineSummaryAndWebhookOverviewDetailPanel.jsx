@@ -68,14 +68,10 @@ function PipelineSummaryAndWebhookOverviewDetailPanel({ pipeline }) {
   }
 
   return (
-    <PipelineStepDetailsContainer title={`Overview`}>
-      <div className={"pt-2 pl-2"}>
-        <GeneralTabPanelContainer
-          currentView={getCurrentView()}
-          tabContainer={getTabContainer()}
-        />
-      </div>
-    </PipelineStepDetailsContainer>
+    <GeneralTabPanelContainer
+      currentView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
   );
 }
 

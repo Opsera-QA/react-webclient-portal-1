@@ -7,6 +7,7 @@ import PipelineSummaryAndWebhookOverviewDetailPanel from "components/workflow/pi
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
+import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
 
 function PipelineOverviewContainer({ pipeline }) {
   const [pipelineSteps, setPipelineSteps] = useState([]);
@@ -37,7 +38,11 @@ function PipelineOverviewContainer({ pipeline }) {
     return (
       <VanitySetTabViewContainer>
         <VanitySetTabView tabKey={0}>
-          <PipelineSummaryAndWebhookOverviewDetailPanel pipeline={pipeline} />
+          <PipelineStepDetailsContainer title={`Overview`}>
+            <div className={"pt-2 pl-2"}>
+              <PipelineSummaryAndWebhookOverviewDetailPanel pipeline={pipeline} />
+            </div>
+          </PipelineStepDetailsContainer>
         </VanitySetTabView>
         {getPipelineStepTabPanes()}
       </VanitySetTabViewContainer>
