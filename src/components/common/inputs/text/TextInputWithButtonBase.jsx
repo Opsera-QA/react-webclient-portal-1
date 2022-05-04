@@ -79,7 +79,7 @@ function TextInputWithButtonBase({
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         field={field}

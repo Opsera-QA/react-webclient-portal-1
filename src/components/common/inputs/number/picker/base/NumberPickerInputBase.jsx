@@ -45,7 +45,7 @@ function NumberPickerInputBase(
   }
 
   return (
-    <InputContainer className={className ? className : "custom-number-input my-2"}>
+    <InputContainer className={className ? className : "custom-number-input my-2"} fieldName={fieldName}>
       <InputLabel
         field={field}
         showLabel={showLabel}

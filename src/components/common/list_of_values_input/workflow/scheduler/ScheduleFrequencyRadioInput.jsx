@@ -7,7 +7,7 @@ import {faSync} from "@fortawesome/pro-light-svg-icons";
 
 function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
-    <InputContainer className={"custom-radio-button-input my-2 h-100"}>
+    <InputContainer className={"custom-radio-button-input my-2 h-100"} fieldName={fieldName}>
       <div className={"content-container h-100"}>
         <InputTitleBar icon={faSync} field={dataObject.getFieldById(fieldName)}/>
         <div className={"p-3"}>

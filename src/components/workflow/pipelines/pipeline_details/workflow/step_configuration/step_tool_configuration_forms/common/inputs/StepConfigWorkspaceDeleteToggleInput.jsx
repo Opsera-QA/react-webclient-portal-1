@@ -15,7 +15,7 @@ function StepConfigWorkspaceDeleteToggleInput({dataObject, setDataObject, fieldN
 
   return (
     <>
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

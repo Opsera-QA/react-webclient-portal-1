@@ -80,7 +80,7 @@ function ComboBoxInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         showLabel={showLabel}
         field={field}

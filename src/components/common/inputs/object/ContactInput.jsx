@@ -236,7 +236,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <PropertyInputContainer
         titleIcon={titleIcon}
         field={field}
