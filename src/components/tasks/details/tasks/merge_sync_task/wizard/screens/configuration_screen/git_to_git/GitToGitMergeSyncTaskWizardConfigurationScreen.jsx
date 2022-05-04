@@ -17,7 +17,6 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
   setWizardModel,
   setCurrentScreen,
   handleClose,
-  setError,
 }) => {
   if (wizardModel == null) {
     return null;
@@ -60,7 +59,6 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
         <MergeSyncTaskWizardUpdateConfigurationButton
           wizardModel={wizardModel}
           setCurrentScreen={setCurrentScreen}
-          setError={setError}
         />
         <CancelButton
           className={"ml-2"}
@@ -77,7 +75,6 @@ GitToGitMergeSyncTaskWizardConfigurationScreen.propTypes = {
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setError: PropTypes.func,
 };
 
 export default GitToGitMergeSyncTaskWizardConfigurationScreen;

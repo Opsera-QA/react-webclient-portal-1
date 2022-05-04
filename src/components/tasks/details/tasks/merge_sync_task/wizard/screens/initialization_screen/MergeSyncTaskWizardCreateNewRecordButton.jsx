@@ -10,17 +10,18 @@ import mergeSyncTaskWizardActions
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function MergeSyncTaskWizardCreateNewRecordButton({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
-  setError,
   size,
   className,
   disabled,
   icon,
 }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [creatingNewRecord, setCreatingNewRecord] = useState(false);
   const isMounted = useRef(false);
@@ -61,8 +62,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setError("Could not create new wizard record");
+        toastContext.showInlineErrorMessage(error, "Could not create new wizard record:");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -108,7 +108,6 @@ MergeSyncTaskWizardCreateNewRecordButton.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  setError: PropTypes.func,
   disabled: PropTypes.bool,
   icon: PropTypes.object,
   size: PropTypes.string,
