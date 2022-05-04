@@ -143,7 +143,9 @@ function VisibleVaultTextAreaInput(
   }
 
   return (
-    <InputContainer>
+    <InputContainer
+      fieldName={fieldName}
+    >
       <InputLabel
         field={field}
         model={model}

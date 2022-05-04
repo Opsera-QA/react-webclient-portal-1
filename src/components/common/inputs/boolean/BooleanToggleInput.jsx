@@ -109,7 +109,7 @@ function BooleanToggleInput(
 
   return (
     <div className={className}>
-      <InputContainer>
+      <InputContainer fieldName={fieldName}>
         <div className={"d-flex"}>
           <Form.Check
             type={"switch"}

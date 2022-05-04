@@ -100,7 +100,7 @@ function LazyLoadMultiSelectInputBase({
   }
 
   return (
-    <InputContainer className={className ? className : undefined}>
+    <InputContainer className={className ? className : undefined} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         showLabel={showLabel}

@@ -73,7 +73,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHel
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel
         model={model}
         field={field}

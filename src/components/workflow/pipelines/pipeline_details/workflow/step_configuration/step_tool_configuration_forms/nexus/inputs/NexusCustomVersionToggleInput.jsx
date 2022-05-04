@@ -15,7 +15,7 @@ function NexusCustomVersionToggleInput({dataObject, setDataObject, fieldName, di
 
   return (
     <>
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

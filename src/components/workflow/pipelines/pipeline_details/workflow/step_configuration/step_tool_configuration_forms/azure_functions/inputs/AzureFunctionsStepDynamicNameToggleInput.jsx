@@ -64,7 +64,7 @@ function AzureFunctionsStepDynamicNameToggleInput({ model, setModel, fieldName, 
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

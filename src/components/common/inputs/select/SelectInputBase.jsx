@@ -131,7 +131,7 @@ function SelectInputBase(
   }
 
   return (
-    <InputContainer className={className + " input-for-" + fieldName}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         showLabel={showLabel}

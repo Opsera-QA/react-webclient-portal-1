@@ -42,7 +42,7 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <TooltipWrapper
         placement={"left"}
         innerText={`Toggle this record as ${dataObject?.getData(fieldName) === true ? "inactive" : "active"}`}

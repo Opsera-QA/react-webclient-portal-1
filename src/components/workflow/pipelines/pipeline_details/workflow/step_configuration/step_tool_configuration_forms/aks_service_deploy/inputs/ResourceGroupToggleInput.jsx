@@ -19,7 +19,7 @@ function ResourceGroupToggleInput({ dataObject, setDataObject, fieldName, disabl
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

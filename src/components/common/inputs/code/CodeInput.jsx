@@ -120,7 +120,7 @@ function CodeInput(
   }
 
   return (
-    <InputContainer className={className + " input-for-" + fieldName}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InfoContainer
       titleIcon={faFileCode}
       titleText={getTitleText()}

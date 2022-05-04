@@ -90,7 +90,7 @@ function TogglePasswordTextAreaInput(
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel
         model={model}
         field={field}

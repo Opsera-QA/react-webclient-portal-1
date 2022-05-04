@@ -13,7 +13,7 @@ function StandaloneBooleanToggleInput(
     className,
   }) {
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldId}>
       <Form.Check
         type={"switch"}
         className={className ? className : "toggle-alignment"}
