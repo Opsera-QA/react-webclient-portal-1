@@ -20,7 +20,7 @@ function EndpointResponseEvaluationRuleField(
 
     const filterText = filter === "equals" ? "equals" : "does not equal";
 
-    return <span>{`The API Response will meet the requirements for ${ruleType} evaluation if the `}<b>Status Code</b>{` returned ${filterText} `}<b>{value}</b>.</span>;
+    return <span>The API Response will meet the requirements for {ruleType} evaluation if the <b>Status Code</b> returned {filterText} <b>{value}</b>.</span>;
   };
 
   const formatTextForResponseEvaluationRule = (responseEvaluationRule) => {
@@ -28,7 +28,16 @@ function EndpointResponseEvaluationRuleField(
     const value = responseEvaluationRule?.value;
     const responseBodyType = responseEvaluationRule?.responseBodyType;
 
-    if (responseEvaluationRule == null || hasStringValue(filter) !== true || value == null || hasStringValue(responseBodyType) !== true) {
+    if (responseEvaluationRule == null || hasStringValue(filter) !== true  || hasStringValue(responseBodyType) !== true) {
+      return "Incomplete Rule";
+    }
+
+    if (filter === "is_not_null" || filter === "is_null") {
+      const filterText = filter === "is_not_null" ? "Not Null" : "Null";
+      return <span>The API Response will meet the requirements for {ruleType} evaluation if the <b>Response Body</b> is <b>{filterText}</b>.</span>;
+    }
+
+    if (value == null) {
       return "Incomplete Rule";
     }
 
@@ -36,7 +45,7 @@ function EndpointResponseEvaluationRuleField(
     const aOrAn = responseBodyType === "array" ? "an" : `a`;
     const valueText = responseBodyType === "string" ? `"${value}"` : value;
 
-    return <span>{`The API Response will meet the requirements for ${ruleType} evaluation if the `}<b>Response Body</b>{` returned is ${aOrAn} `}<b>{responseBodyType}</b>{` that ${filterText} `}<b>{String(valueText)}</b>.</span>;
+    return <span>The API Response will meet the requirements for {ruleType} evaluation if the <b>Response Body</b> returned is {aOrAn} <b>{responseBodyType}</b> that {filterText} <b>{String(valueText)}</b>.</span>;
   };
 
   const getFormattedFieldRuleText = (field, index) => {
@@ -60,16 +69,6 @@ function EndpointResponseEvaluationRuleField(
       );
     }
 
-    const value = field?.value;
-
-    if (!value && value !== 0) {
-      return (
-        <li key={index}>
-          <span>A value was not included for <b>{fieldName}</b> and cannot be evaluated.</span>
-        </li>
-      );
-    }
-
     const type = field?.type;
 
     if (hasStringValue(type) !== true) {
@@ -80,8 +79,24 @@ function EndpointResponseEvaluationRuleField(
       );
     }
 
-    const filterText = filter === "equals" ? "equals" : "does not equal";
     const typeText = type === "array" ? "an array" : `a ${type}`;
+
+    if (filter === "is_not_null" || filter === "is_null") {
+      const filterText = filter === "is_not_null" ? "Not Null" : "Null";
+      return <span>The field <b>{fieldName}</b> is {typeText} that is {filterText}.</span>;
+    }
+
+    const value = field?.value;
+
+    if (!value && value !== 0) {
+      return (
+        <li key={index}>
+          <span>A value was not included for <b>{fieldName}</b> and cannot be evaluated.</span>
+        </li>
+      );
+    }
+
+    const filterText = filter === "equals" ? "equals" : "does not equal";
 
     return (
       <li key={index}>
@@ -98,7 +113,7 @@ function EndpointResponseEvaluationRuleField(
       return "Incomplete Rule";
     }
 
-    const filterText = <span>{`The API Response will meet the requirements for ${ruleType} evaluation if the response body fields meet `}<b>{filter}</b>{` of the following rules:`}</span>;
+    const filterText = <span>The API Response will meet the requirements for {ruleType} evaluation if the response body fields meet <b>{filter}</b> of the following rules:</span>;
 
     return (
       <div>
