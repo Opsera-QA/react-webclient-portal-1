@@ -128,7 +128,7 @@ function TextInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className + " input-for-" + fieldName}>
       <InputLabel
         model={dataObject}
         showLabel={showLabel}

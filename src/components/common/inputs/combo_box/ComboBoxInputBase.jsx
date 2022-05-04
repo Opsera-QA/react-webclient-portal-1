@@ -80,7 +80,7 @@ function ComboBoxInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={"custom-select-input my-2" + " input-for-" + fieldName}>
       <InputLabel
         showLabel={showLabel}
         field={field}

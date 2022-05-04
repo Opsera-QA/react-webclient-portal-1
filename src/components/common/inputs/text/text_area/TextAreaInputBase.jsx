@@ -68,7 +68,7 @@ function TextAreaInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className + " input-for-" + fieldName}>
       <InfoContainer
         titleText={getTitleText()}
         titleIcon={titleIcon}

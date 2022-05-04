@@ -156,7 +156,7 @@ function VisibleVaultTextAreaInput(
           disabled={disabled || pullingValueFromVault}
           value={getCurrentValue()}
           onChange={(event) => updateValue(event.target.value)}
-          className={"form-control"}
+          className={"form-control" + " input-for-" + fieldName}
           placeholder={getPlaceholderText()}
           rows={5}
         />
