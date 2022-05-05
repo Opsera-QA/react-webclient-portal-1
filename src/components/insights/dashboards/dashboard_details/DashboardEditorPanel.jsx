@@ -19,7 +19,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
-function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
+function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose, isCreateDashboard }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
@@ -73,7 +73,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
       return (
         <Col md={12}>
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
-            <div className={"p-2"}>
+            <div>
               <RoleAccessInput
                 fieldName={"roles"}
                 setDataObject={setDashboardDataDto}
@@ -122,9 +122,11 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={6}>
             <TagManager type={"dashboard"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
-          <Col md={6}>
+          {!isCreateDashboard &&
+            <Col md={6}>
             <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
-          </Col>
+            </Col>
+          }
         </Row>
       </div>
       <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
@@ -135,7 +137,8 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
 DashboardEditorPanel.propTypes = {
   dashboardData: PropTypes.object,
   setDashboardData: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  isCreateDashboard: PropTypes.bool
 };
 
 export default DashboardEditorPanel;
