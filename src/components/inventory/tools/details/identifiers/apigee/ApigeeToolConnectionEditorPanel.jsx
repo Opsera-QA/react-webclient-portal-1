@@ -83,17 +83,17 @@ function ApigeeToolConnectionEditorPanel({ toolData }) {
           <TextInputBase
             dataObject={apigeeConfigurationModel}
             setDataObject={setApigeeConfigurationModel}
-            fieldName={"zone"}
+            fieldName={"zoneId"}
           />
           <TextInputBase
             dataObject={apigeeConfigurationModel}
             setDataObject={setApigeeConfigurationModel}
-            fieldName={"userName"}
+            fieldName={"accountUsername"}
           />
           <VaultTextInput
             dataObject={apigeeConfigurationModel}
             setDataObject={setApigeeConfigurationModel}
-            fieldName={"password"}
+            fieldName={"accountPassword"}
           />
         </Col>
       </Row>

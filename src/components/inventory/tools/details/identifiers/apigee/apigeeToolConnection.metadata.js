@@ -9,26 +9,26 @@ export const apigeeToolConnectionMetadata = {
     },
     {
       label: "Zone",
-      id: "zone",
+      id: "zoneId",
       isRequired: true,
       maxLength: 2048,
     },
     {
       label: "Username",
-      id: "userName",
+      id: "accountUsername",
       isRequired: true,
       maxLength: 2048,
     },
     {
       label: "Password",
-      id: "password",
+      id: "accountPassword",
       isRequired: true,
       maxLength: 2048,
     },
   ],
   newObjectFields: {
     version: "edge",
-    zone: "",
+    zoneId: "",
     userName: "",
     password: "",
   }
