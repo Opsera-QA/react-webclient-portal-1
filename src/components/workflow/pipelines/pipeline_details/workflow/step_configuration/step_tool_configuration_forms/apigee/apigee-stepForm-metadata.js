@@ -29,7 +29,7 @@ const ApigeeStepFormMetadata = {
     },
     {
       label: "Target Environment",
-      id: "targetEnvironment",
+      id: "environmentName",
       isRequiredFunction: (model) => {
         return model?.getData("type") === APIGEE_TYPES.DEPLOY;
       },
@@ -44,7 +44,7 @@ const ApigeeStepFormMetadata = {
     },
     {
       label: "Override Version",
-      id: "overrideVersion",      
+      id: "ovverride",      
     },    
   ],
   newObjectFields: {
@@ -52,9 +52,9 @@ const ApigeeStepFormMetadata = {
     type: "transfer",
     includeDependencies: false,
     targetToolConfigId: "",
-    targetEnvironment: "",
+    environmentName: "",
     delayTime : 0,
-    overrideVersion: false,
+    ovverride: false,
   }
 };
 
