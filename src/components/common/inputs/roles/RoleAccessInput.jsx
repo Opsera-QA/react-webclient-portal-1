@@ -454,7 +454,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 
   return (
     <div className={"bg-white"} style={{minWidth: "575px"}}>
-      <div className={"mx-2"}>
+      <div className={"mx-2 m-2"}>
         <InfoText customMessage={getRolesMessage()} />
       </div>
       <PropertyInputContainer
