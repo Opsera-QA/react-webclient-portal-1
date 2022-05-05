@@ -72,6 +72,7 @@ primary analytics font*/
     font-weight: 100;
     font-size: small;
     text-transform: capitalize;
+    overflow: hidden;
     color: #8798ad;
     overflow: scroll;
 }
