@@ -63,7 +63,7 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
       toolConfigId
     );
 
-    const result = response?.data?.data;
+    const result = response?.data?.status === 200 ? response?.data?.message : [];
 
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
@@ -79,7 +79,7 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
 
   return (
     <SelectInputBase
-      fieldName={"targetEnvironment"}
+      fieldName={"environmentName"}
       dataObject={dataObject}
       setDataObject={setDataObject}
       placeholderText={placeholderText}

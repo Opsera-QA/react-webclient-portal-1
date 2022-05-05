@@ -87,7 +87,7 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
               fieldName={"delayTime"}
             />
             <BooleanToggleInput
-              fieldName={"overrideVersion"}
+              fieldName={"ovverride"}
               dataObject={apigeeStepConfigurationDto}
               setDataObject={setApigeeStepConfigurationDataDto}
             />
