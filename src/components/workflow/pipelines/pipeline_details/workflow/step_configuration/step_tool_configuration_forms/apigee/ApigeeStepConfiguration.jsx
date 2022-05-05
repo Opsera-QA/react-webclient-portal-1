@@ -6,14 +6,13 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import ApigeeTypeSelectInput from "./inputs/ApigeeTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApigeeEnvironmentSelectInput from "./inputs/ApigeeEnvironmentSelectInput";
-import ApigeeExportStepIdSelectInput from "./inputs/ApigeeExportStepIdSelectInput";
+import ApigeeExportOrgSelectInput from "./inputs/ApigeeExportOrgSelectInput";
+import ApigeeToolSelectInput from "./inputs/ApigeeToolSelectInput";
 
 function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,25 +60,20 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
 
   const getDynamicFields = () => {
     switch (apigeeStepConfigurationDto.getData("type")) {
-      case "export":
+      case "transfer":
         return (
-          <div>
+          <>
             <BooleanToggleInput
-              fieldName={"includeDependantKvm"}
+              fieldName={"includeDependencies"}
               dataObject={apigeeStepConfigurationDto}
               setDataObject={setApigeeStepConfigurationDataDto}
             />
-          </div>
-        );
-      case "import":
-        return (
-          <ApigeeExportStepIdSelectInput 
-            dataObject={apigeeStepConfigurationDto}
-            setDataObject={setApigeeStepConfigurationDataDto}
-            plan={plan}
-            stepId={stepId}
-          />
-        );
+            <ApigeeExportOrgSelectInput 
+              model={apigeeStepConfigurationDto}
+              setModel={setApigeeStepConfigurationDataDto}
+            />
+          </>
+        );      
       case "deploy":
         return (
           <>
@@ -117,13 +111,9 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
-      <RoleRestrictedToolByIdentifierInputBase
-        toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
-        toolFriendlyName={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
-        fieldName={"toolConfigId"}
+      <ApigeeToolSelectInput 
         model={apigeeStepConfigurationDto}
         setModel={setApigeeStepConfigurationDataDto}
-        placeholderText={"Select Source Apigee Tool"}
       />
       <ApigeeTypeSelectInput
         model={apigeeStepConfigurationDto}

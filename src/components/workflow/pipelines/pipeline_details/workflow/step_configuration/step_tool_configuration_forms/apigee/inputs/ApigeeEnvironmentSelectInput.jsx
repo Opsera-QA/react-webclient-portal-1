@@ -55,12 +55,12 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
 
   const fetchApigeeEnvironments = async (cancelSource = cancelTokenSource, acrStep, azureTool) => {
 
-    const { toolId } = dataObject.getPersistData();
+    const { toolConfigId } = dataObject.getPersistData();
 
-    const response = await apigeeActions.getEnvironments(
+    const response = await apigeeActions.getApigeeEnvironments(
       getAccessToken,
       cancelSource,
-      toolId
+      toolConfigId
     );
 
     const result = response?.data?.data;

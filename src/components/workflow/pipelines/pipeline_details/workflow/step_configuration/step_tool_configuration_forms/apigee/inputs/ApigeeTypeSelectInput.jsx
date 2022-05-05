@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const STEP_TYPE = [
-  { value: "export", text: "Export" },
-  { value: "import", text: "Import" },
+  { value: "transfer", text: "Transfer" },
   { value: "deploy", text: "Deploy" },
 ];
 

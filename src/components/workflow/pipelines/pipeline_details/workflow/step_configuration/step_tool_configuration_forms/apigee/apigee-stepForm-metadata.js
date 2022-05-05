@@ -1,6 +1,5 @@
 const APIGEE_TYPES = {
-  EXPORT: "export",
-  IMPORT: "import",
+  TRANSFER: "transfer",
   DEPLOY: "deploy"
 };
 
@@ -8,19 +7,24 @@ const ApigeeStepFormMetadata = {
   type: "Apigee Step Configuration",
   fields: [
     {
+      label: "Tool",
+      id: "toolConfigId",
+      isRequired: true,
+    },
+    {
       label: "Type",
       id: "type",
       isRequired: true
     },
     {
-      label: "Include Dependant KVM?",
-      id: "includeDependantKvm",      
+      label: "Include Dependant KVM",
+      id: "includeDependencies",      
     },
     {
-      label: "Export Step Id",
-      id: "exportStepId",
+      label: "Export Org",
+      id: "targetToolConfigId",
       isRequiredFunction: (model) => {
-        return model?.getData("type") === APIGEE_TYPES.IMPORT;
+        return model?.getData("type") === APIGEE_TYPES.TRANSFER;
       },
     },
     {
@@ -44,9 +48,10 @@ const ApigeeStepFormMetadata = {
     },    
   ],
   newObjectFields: {
-    type: "export",
-    includeDependantKvm: false,
-    exportStepId: "",
+    toolConfigId: "",
+    type: "transfer",
+    includeDependencies: false,
+    targetToolConfigId: "",
     targetEnvironment: "",
     delayTime : 0,
     overrideVersion: false,
