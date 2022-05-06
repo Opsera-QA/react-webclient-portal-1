@@ -35,6 +35,7 @@ function ListInputBase(
     noDataMessage,
     customTitle,
     loadDataFunction,
+    callbackFunction
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -153,6 +154,9 @@ function ListInputBase(
     }
     else {
       validateAndSetData(field?.id, newArray);
+    }
+    if (callbackFunction) {
+      callbackFunction();
     }
   };
 
@@ -353,6 +357,7 @@ ListInputBase.propTypes = {
   noDataMessage: PropTypes.string,
   customTitle: PropTypes.string,
   loadDataFunction: PropTypes.func,
+  callbackFunction: PropTypes.func,
 };
 
 ListInputBase.defaultProps = {

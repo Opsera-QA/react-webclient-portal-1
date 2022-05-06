@@ -20,7 +20,7 @@ function GitscraperSummaryPanel({ gitTasksData, gitTaskConfigurationData, isLoad
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"secretsException"} />
         <JsonField dataObject={gitTaskConfigurationData} fieldName={"excludeSecrets"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"threshold"} />
-        <JsonField dataObject={gitTaskConfigurationData} fieldName={"reposToScan"} />
+        <JsonField dataObject={gitTaskConfigurationData} fieldName={"repositories"} />
       </div>
     </TaskSummaryCardContainer>
   );
