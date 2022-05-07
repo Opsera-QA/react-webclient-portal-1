@@ -6,9 +6,9 @@ import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineSc
 
 function GitScrapperOverallIssuesTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody}) {
   return (
-    <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
+    <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect} className={'h-100'}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${className} p-2 h-100`}
         score={score}
         topText={"Total Number of Issues"}
         bottomText={"Last Scan: " + lastScore}
