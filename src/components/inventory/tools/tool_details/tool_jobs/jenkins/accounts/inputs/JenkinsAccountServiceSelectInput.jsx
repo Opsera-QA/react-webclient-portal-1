@@ -7,6 +7,7 @@ const TOOL_TYPES = [
   { value: "bitbucket", label: "Bitbucket" },
   { value: "coverity", label: "Coverity"},
   { value: "github", label: "Github" },
+  { value: "github-deploykey", label: "Github Deploy Key" },
   { value: "gitlab", label: "Gitlab" },
 ];
 
@@ -20,6 +21,8 @@ function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject
     newDataObject.setData("gitUserName", "");
     newDataObject.setData("accountUserName", "");
     newDataObject.setData("toolId", "");
+    newDataObject.setData("repositoryId", "");
+    newDataObject.setData("repositories", "");
     setDataObject({...newDataObject});
   };
 
