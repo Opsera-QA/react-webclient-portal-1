@@ -15,7 +15,7 @@ import salesforceQuickDeployTaskConfigurationMetadata
   from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import branchToBranchGitTaskConfigurationMetadata
   from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
-import gitscraperTaskConfigurationMetadata from "components/tasks/details/tasks/gitscraper/gitscraper-metadata";
+// import gitscraperTaskConfigurationMetadata from "components/tasks/details/tasks/gitscraper/gitscraper-metadata";
 import ec2ClusterCreationTaskConfigurationMetadata
   from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import awsLambdaFunctionTaskConfigurationMetadata
@@ -131,8 +131,8 @@ export const getTaskConfigurationMetadataForTaskType = (taskType) => {
     // Git
     case TASK_TYPES.SYNC_GIT_BRANCHES:
       return branchToBranchGitTaskConfigurationMetadata;
-    case TASK_TYPES.GITSCRAPER:
-      return gitscraperTaskConfigurationMetadata;
+    // case TASK_TYPES.GITSCRAPER:
+    //   return gitscraperTaskConfigurationMetadata;
 
     // AWS
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
