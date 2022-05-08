@@ -59,7 +59,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
 
   const loadData = async () => {
     if (isMounted?.current === true) {
-      setTaskModel(taskData);
+      setTaskModel({...taskData});
     }
   };
 
@@ -89,11 +89,15 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case  TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+        break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      case TASK_TYPES.GIT_TO_GIT_MERGE_CONFLICT_RESOLUTION:
+        break;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        break;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
@@ -152,7 +156,6 @@ function TaskEditorPanel({ taskData, handleClose }) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  // TODO: Refactor to VanityEditorPanelContainer in a future enhancement
   return (
     <div>
       <EditorPanelContainer
@@ -162,12 +165,9 @@ function TaskEditorPanel({ taskData, handleClose }) {
         updateRecord={updateGitTask}
         setRecordDto={setTaskModel}
         getHelpComponent={getHelpDocumentation}
+        isIncomplete={taskModel.checkCurrentValidity() !== true || taskConfigurationModel == null || taskConfigurationModel.checkCurrentValidity() !== true}
         lenient={true}
-        disable={
-          !taskModel.checkCurrentValidity()
-          || (taskConfigurationModel == null || !taskConfigurationModel.checkCurrentValidity()) ||
-          taskModel?.getData("status") === "running"
-        }
+        disable={taskModel.checkCurrentValidity() !== true || taskModel?.getData("status") === "running"}
       >
         {getBody()}
       </EditorPanelContainer>

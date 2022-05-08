@@ -1,23 +1,42 @@
 import Model from "core/data_model/model";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-export async function persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
+export async function persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, createRecord, lenient, history, isIncomplete) {
+  const response = await persistNewRecord(
+    model,
+    toastContext,
+    showSuccessToasts,
+    createRecord,
+    lenient,
+    true,
+    isIncomplete,
+    );
 
-  if (response != null && response !== false && recordDto.getDetailViewLink != null && history != null) {
-    let updatedDto = new Model(response?.data, recordDto.getMetaData(), false);
+  if (response != null && response !== false && history != null) {
+    const updatedDto = model.getNewInstance(response?.data, false);
     let link = updatedDto.getDetailViewLink();
 
-    toastContext.clearOverlayPanel();
-    if (link != null) {
-      history.push(link);
+    if (hasStringValue(link) === true) {
+      toastContext.clearOverlayPanel();
+      if (link != null) {
+        history.push(link);
+      }
     }
   }
 
   return response;
 }
 
-export async function persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
+export async function persistNewRecordAndClose(model, toastContext, showSuccessToasts, createRecord, lenient, handleClose, isIncomplete) {
+  const response = await persistNewRecord(
+    model,
+    toastContext,
+    showSuccessToasts,
+    createRecord,
+    lenient,
+    true,
+    isIncomplete,
+  );
 
   if (response != null && response !== false && handleClose) {
     toastContext.clearOverlayPanel();
@@ -27,20 +46,28 @@ export async function persistNewRecordAndClose(recordDto, toastContext, showSucc
   return response;
 }
 
-export async function persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
+export async function persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto, isIncomplete) {
+  const response = await persistNewRecord(
+    model,
+    toastContext,
+    showSuccessToasts,
+    createRecord,
+    lenient,
+    true,
+    isIncomplete,
+  );
 
   if (response != null && response !== false && setRecordDto) {
-    let newModel = new Model({...recordDto.getNewObjectFields()}, recordDto.getMetaData(), true);
+    let newModel = new Model({...model.getNewObjectFields()}, model.getMetaData(), true);
     await setRecordDto(newModel);
   }
 }
 
-export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, showErrorToastsInline = true) {
+export async function persistNewRecord(model, toastContext, showSuccessToasts, createRecord, lenient, showErrorToastsInline = true, isIncomplete) {
   try {
-    let isModelValid = recordDto.isModelValid();
+    const isModelValid = model.isModelValid();
     if (!isModelValid && !lenient) {
-      let errors = recordDto.getErrors();
+      const errors = model.getErrors();
       console.error(JSON.stringify(errors));
 
       if (showErrorToastsInline) {
@@ -55,10 +82,10 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
     let response = await createRecord();
 
     if (showSuccessToasts) {
-      if (lenient && !isModelValid) {
-        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
+      if (isIncomplete === true || (lenient && !isModelValid)) {
+        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
       } else {
-        toastContext.showCreateSuccessResultDialog(recordDto.getType());
+        toastContext.showCreateSuccessResultDialog(model.getType());
       }
     }
     return response;
@@ -66,21 +93,25 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
     console.error(error);
 
     if (showErrorToastsInline) {
-      toastContext.showInlineCreateFailureResultDialog(recordDto.getType(), error);
+      toastContext.showInlineCreateFailureResultDialog(model.getType(), error);
     }
     else {
-      toastContext.showCreateFailureResultDialog(recordDto.getType(), error);
+      toastContext.showCreateFailureResultDialog(model.getType(), error);
     }
 
     return false;
   }
 }
 
-export async function persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel) {
+export async function persistUpdatedRecord(model, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel, isIncomplete) {
   try {
-    let isModelValid = recordDto.isModelValid();
-    if(!isModelValid && !lenient) {
-      let errors = recordDto.getErrors();
+    if (model == null) {
+      return false;
+    }
+
+    const isModelValid = model?.isModelValid();
+    if (isModelValid !== true && lenient !== true) {
+      const errors = model.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -89,31 +120,35 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
     let response = await updateRecord();
 
     if (showSuccessToasts) {
-      if (lenient && !isModelValid && showIncompleteDataMessage !== false) {
-        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
+      if ((isIncomplete === true || (lenient && !isModelValid)) && showIncompleteDataMessage !== false) {
+        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
       } else {
-        toastContext.showUpdateSuccessResultDialog(recordDto.getType());
+        toastContext.showUpdateSuccessResultDialog(model.getType());
       }
     }
-    recordDto.clearChangeMap();
+    model.clearChangeMap();
 
     if (setModel) {
-      setModel({...recordDto});
+      setModel({...model});
     }
 
     return response;
   }
   catch (error) {
     console.error(error);
-    toastContext.showUpdateFailureResultDialog(recordDto.getType(), error);
+    toastContext.showUpdateFailureResultDialog(model?.getType(), error);
   }
 }
 
-export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose) {
+export async function modalPersistUpdatedRecord(model, toastContext, showSuccessToasts, updateRecord, lenient, handleClose) {
   try {
-    let isModelValid = recordDto.isModelValid();
+    if (model == null) {
+      return false;
+    }
+
+    let isModelValid = model.isModelValid();
     if(!isModelValid && !lenient) {
-      let errors = recordDto.getErrors();
+      let errors = model.getErrors();
       console.error(JSON.stringify(errors));
       toastContext.showInlineFormValidationError(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -123,18 +158,18 @@ export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuc
 
     if (showSuccessToasts) {
       if (lenient && !isModelValid) {
-        toastContext.showSavingIncompleteObjectSuccessResultToast(recordDto.getType());
+        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
       } else {
-        toastContext.showUpdateSuccessResultDialog(recordDto.getType());
+        toastContext.showUpdateSuccessResultDialog(model.getType());
       }
     }
-    recordDto.clearChangeMap();
+    model.clearChangeMap();
     handleClose();
     return response;
   }
   catch (error) {
     console.error(error);
-    toastContext.showInlineUpdateFailureMessage(recordDto.getType(), error);
+    toastContext.showInlineUpdateFailureMessage(model.getType(), error);
   }
 }
 

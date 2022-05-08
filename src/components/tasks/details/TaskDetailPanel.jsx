@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-
 import PropTypes from "prop-types";
 import TaskEditorPanel from "components/tasks/details/TaskEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
-import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./tasks/sfdx-cert-gen/CertManagementPanel";
 import TaskSummaryPanel

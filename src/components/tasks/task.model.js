@@ -2,7 +2,17 @@ import ModelBase from "core/data_model/model.base";
 import taskActions from "components/tasks/task.actions";
 
 export class TaskModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, setStateFunction) {
+  constructor(
+    data,
+    metaData,
+    newModel,
+    getAccessToken,
+    cancelTokenSource,
+    loadData,
+    canUpdate = false,
+    canDelete = false,
+    setStateFunction,
+    ) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
@@ -24,13 +34,26 @@ export class TaskModel extends ModelBase {
     return await taskActions.deleteGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new TaskModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed);
+  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
+    return new TaskModel(
+      {...newData},
+      this.metaData,
+      isNew,
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.loadData,
+      this.updateAllowed,
+      this.deleteAllowed,
+    );
   };
 
   getDetailViewTitle = () => {
     return `${this.getData("name")} Task Details`;
   };
+
+  getDetailViewLink = () => {
+    return `/task/details/${this.getMongoDbId()}`;
+  }
 }
 
 export default TaskModel;
