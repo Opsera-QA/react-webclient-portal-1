@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import { mergeSyncTaskGitConfigurationMetadata2 } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata2";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import GitToGitMergeSyncTaskSourceControlTypeSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlTypeSelectInput";
 import GitToGitMergeSyncTaskSourceControlToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
@@ -44,7 +44,7 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
     setTaskConfigurationModel({ ...configurationData });
     const newGitModel = modelHelpers.getToolConfigurationModel(
       configurationData?.getData("git"),
-      mergeSyncTaskGitConfigurationMetadata2,
+      mergeSyncTaskGitConfigurationMetadata,
     );
     newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     setGitConfigurationModel({...newGitModel});

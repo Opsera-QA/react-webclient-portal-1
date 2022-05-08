@@ -1,6 +1,6 @@
 import { TASK_TYPES } from "components/tasks/task.types";
 
-export const mergeSyncTaskGitConfigurationMetadata2 = {
+export const mergeSyncTaskGitConfigurationMetadata = {
   type: "Git to Git Merge Sync Task Configuration",
   fields: [
     {

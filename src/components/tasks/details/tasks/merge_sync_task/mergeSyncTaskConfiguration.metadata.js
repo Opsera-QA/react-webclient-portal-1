@@ -1,7 +1,7 @@
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import {
-  mergeSyncTaskGitConfigurationMetadata2
-} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata2";
+  mergeSyncTaskGitConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   mergeSyncTaskSalesforceConfigurationMetadata
@@ -25,7 +25,7 @@ export const mergeSyncTaskConfigurationMetadata = {
         }
 
         const git = dataParsingHelper.parseObject(model?.getData("git"));
-        const mergeSyncTaskGitConfigurationModel = modelHelpers.parseObjectIntoModel(git, mergeSyncTaskGitConfigurationMetadata2);
+        const mergeSyncTaskGitConfigurationModel = modelHelpers.parseObjectIntoModel(git, mergeSyncTaskGitConfigurationMetadata);
         return mergeSyncTaskGitConfigurationModel?.getErrors();
       },
     },
