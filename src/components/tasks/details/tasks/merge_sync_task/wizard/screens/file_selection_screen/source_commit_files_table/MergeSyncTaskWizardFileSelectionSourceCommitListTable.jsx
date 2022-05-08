@@ -22,6 +22,10 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   const noDataFilesPulledMessage = "The Source Commit Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Source Commit Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
 
+  const getDynamicColumn = () => {
+
+  };
+
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "committedFile";})),
