@@ -97,6 +97,7 @@ function MergeSyncTaskFileSelectionRuleInputPanel(
           <MergeSyncTaskFileSelectionFieldSelectInput
             model={ruleModel}
             setModel={setRuleModel}
+            taskType={wizardModel?.getData("taskType")}
           />
         </Col>
         <Col xs={4}>

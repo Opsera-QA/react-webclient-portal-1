@@ -4,7 +4,6 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import MergeSyncTaskWizardCommitSelector
@@ -82,18 +81,16 @@ const MergeSyncTaskWizardCommitSelectionScreen = ({
       );
     }
 
-    if (isMounted?.current === true && triggeredComparisonFileListPull !== true) {
-      return <ErrorDialog error={"Service Error Triggering Comparison File List Pull"} />;
+    if (triggeredComparisonFileListPull === true) {
+      return (
+        <MergeSyncTaskWizardCommitSelector
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
     }
-
-    return (
-      <MergeSyncTaskWizardCommitSelector
-        wizardModel={wizardModel}
-        setWizardModel={setWizardModel}
-        setCurrentScreen={setCurrentScreen}
-        handleClose={handleClose}
-      />
-    );
   };
 
   return (

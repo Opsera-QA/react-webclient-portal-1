@@ -6,8 +6,8 @@ import GitToGitMergeSyncTaskFileSelectionFieldSelectInput
 import SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/file_selection/SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput";
 
-function MergeSyncTaskFileSelectionFieldSelectInput({model, setModel}) {
-  switch (model?.getData("taskType")) {
+function MergeSyncTaskFileSelectionFieldSelectInput({taskType, model, setModel}) {
+  switch (taskType) {
     case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
       return (
         <GitToGitMergeSyncTaskFileSelectionFieldSelectInput
@@ -30,6 +30,7 @@ function MergeSyncTaskFileSelectionFieldSelectInput({model, setModel}) {
 MergeSyncTaskFileSelectionFieldSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  taskType: PropTypes.string,
 };
 
 export default MergeSyncTaskFileSelectionFieldSelectInput;
