@@ -13,14 +13,6 @@ import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
-import GitToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import modelHelpers from "../../../common/model/modelHelpers";
-import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "../../details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
-import SalesforceToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -61,42 +53,6 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceBulkMigrationTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
-      try{
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-        handleClose();
-        toastContext.showOverlayPanel(
-          <GitToGitMergeSyncTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
-      try{
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-        handleClose();
-        toastContext.showOverlayPanel(
-          <SalesforceToGitMergeSyncTaskWizardOverlay
             taskModel={gitTasksData}
           />
         );

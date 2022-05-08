@@ -7,10 +7,10 @@ export const ruleFields = [
   {value: "commitAction", text: "Commit Action"},
   // {value: "committedTime", text: "Commit Time"},
   {value: "committedBy", text: "Committed By"},
-  {value: "committedFile", text: "File Name"},
+  {value: "componentName", text: "Component Name"},
 ];
 
-function MergeSyncTaskFileSelectionFieldSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {
+function SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {
   const setDataFunction = (fieldName, newValue) => {
     const newModel = {...model};
     newModel.setData(fieldName, newValue?.value);
@@ -35,7 +35,7 @@ function MergeSyncTaskFileSelectionFieldSelectInput({fieldName, className, model
   );
 }
 
-MergeSyncTaskFileSelectionFieldSelectInput.propTypes = {
+SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -44,8 +44,8 @@ MergeSyncTaskFileSelectionFieldSelectInput.propTypes = {
   showLabel: PropTypes.bool
 };
 
-MergeSyncTaskFileSelectionFieldSelectInput.defaultProps = {
+SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput.defaultProps = {
   fieldName: "field",
 };
 
-export default MergeSyncTaskFileSelectionFieldSelectInput;
+export default SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput;
