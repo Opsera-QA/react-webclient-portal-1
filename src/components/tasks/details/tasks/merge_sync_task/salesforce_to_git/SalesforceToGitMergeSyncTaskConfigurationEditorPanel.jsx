@@ -13,35 +13,29 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 import SalesforceMergeSyncTaskSalesforceToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
-import GitToGitMergeSyncTaskTargetBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskTargetBranchSelectInput";
 import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
-import GitToGitMergeSyncTaskSourceControlTypeSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlTypeSelectInput";
-import GitToGitMergeSyncTaskSourceControlToolSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
-import GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
-import GitToGitMergeSyncTaskRepositorySelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskRepositorySelectInput";
 import SalesforceToGitMergeSyncTaskSourceControlTypeSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskSourceControlTypeSelectInput";
 import {
   mergeSyncTaskGitConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/git_to_git/MergeSyncTaskGitConfiguration.metadata";
+} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import SalesforceToGitMergeSyncTaskSourceControlToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskSourceControlToolSelectInput";
 import SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
 import SalesforceToGitMergeSyncTaskRepositorySelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskRepositorySelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import SalesforceToGitMergeSyncTaskUpstreamBranchTextInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchTextInput";
 
-function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
-                                                                taskModel,
-                                                                taskConfigurationModel,
-                                                                setTaskConfigurationModel,
-                                                              }) {
+function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
+  {
+    taskModel,
+    taskConfigurationModel,
+    setTaskConfigurationModel,
+  }) {
   const [salesforceConfigurationModel, setSalesforceConfigurationModel] = useState(undefined);
   const [gitConfigurationModel, setGitConfigurationModel] = useState(undefined);
 
@@ -60,11 +54,13 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
       configurationData?.getData("sfdc"),
       mergeSyncTaskSalesforceConfigurationMetadata,
     );
+    newSalesforceSyncModel?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setSalesforceConfigurationModel({...newSalesforceSyncModel});
     const newGitSyncModel = modelHelpers.getToolConfigurationModel(
       configurationData?.getData("git"),
       mergeSyncTaskGitConfigurationMetadata,
     );
+    newGitSyncModel?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setGitConfigurationModel({...newGitSyncModel});
   };
 
@@ -115,6 +111,19 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel({
       </Col>
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+        />
+      </Col>
+      <Col lg={12}>
+        <BooleanToggleInput
+          dataObject={gitConfigurationModel}
+          setDataObject={setModelFunction}
+          fieldName={"isNewBranch"}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceToGitMergeSyncTaskUpstreamBranchTextInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />

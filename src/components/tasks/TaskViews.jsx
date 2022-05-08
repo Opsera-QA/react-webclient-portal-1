@@ -20,7 +20,13 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const toastContext = useContext(DialogToastContext);
 
   const createNewTask = () => {
-    toastContext.showOverlayPanel(<NewTaskOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewTaskOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+        taskMetadata={taskMetadata}
+      />
+    );
   };
 
   const getDropdownFilters = () => {

@@ -4,7 +4,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
-  let errors = [];
+  const errors = [];
 
   for (const field of data.getFields()) {
     let fieldErrors = validateField(data, field);
@@ -14,7 +14,7 @@ export const validateData = (data) => {
     }
   }
 
-  if (errors.length < 1) {
+  if (errors.length === 0) {
     return true;
   }
 
@@ -66,6 +66,17 @@ export const fieldValidation = (value, model, field) => {
         || value === {}
       ) {
       errorMessages.push(field.label + " is required.");
+    }
+  }
+
+  if (field.getFieldErrorsFunction) {
+    const fieldErrors = field?.getFieldErrorsFunction(model);
+    if (Array.isArray(fieldErrors) && fieldErrors?.length > 0) {
+      const firstError = fieldErrors[0];
+
+      if (hasStringValue(firstError) === true) {
+        errorMessages.push(`${field.label} is invalid: ${firstError}`);
+      }
     }
   }
 

@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/MergeSyncTaskGitConfiguration.metadata";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import GitToGitMergeSyncTaskSourceControlTypeSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlTypeSelectInput";
 import GitToGitMergeSyncTaskSourceControlToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
@@ -17,8 +17,8 @@ import GitToGitMergeSyncTaskSourceBranchSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceBranchSelectInput";
 import GitToGitMergeSyncTaskTargetBranchSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskTargetBranchSelectInput";
-import GitToGitMergeSyncTaskUpstreamBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskUpstreamBranchSelectInput";
+import GitToGitMergeSyncTaskUpstreamBranchTextInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskUpstreamBranchTextInput";
 import {
   mergeSyncTaskConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
@@ -46,6 +46,7 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
       configurationData?.getData("git"),
       mergeSyncTaskGitConfigurationMetadata,
     );
+    newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     setGitConfigurationModel({...newGitModel});
   };
 
@@ -108,7 +109,7 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
         />
       </Col>
       <Col lg={12}>
-        <GitToGitMergeSyncTaskUpstreamBranchSelectInput
+        <GitToGitMergeSyncTaskUpstreamBranchTextInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />
