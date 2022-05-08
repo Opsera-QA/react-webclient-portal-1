@@ -10,6 +10,9 @@ import {
 import {
   MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/mergeSyncTaskWizardFileSelectorContainer.heights";
+import { TASK_TYPES } from "components/tasks/task.types";
+import { getField } from "components/common/metadata/metadata-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   sourceCommitList,
@@ -17,22 +20,32 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   loadData,
   filePullCompleted,
   ruleCount,
+  taskType,
 }) => {
   const fields = sourceCommitFileMetadata.fields;
   const noDataFilesPulledMessage = "The Source Commit Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Source Commit Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
 
   const getDynamicColumn = () => {
-
+    switch (taskType) {
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      return (
+        getTableTextColumn(getField(fields, "componentName"))
+      );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          getTableTextColumn(getField(fields, "committedFile"))
+        );
+    }
   };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile";})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
-      getTableTextColumn(fields.find(field => { return field.id === "commitAction";})),
-      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
-      getTableTextColumn(fields.find(field => { return field.id === "commitID";})),
+      getDynamicColumn(),
+      getTableTextColumn(getField(fields, "committedBy")),
+      getTableTextColumn(getField(fields, "commitAction")),
+      getTableDateTimeColumn(getField(fields,  "committedTime")),
+      getTableTextColumn(getField(fields, "commitID")),
     ],
     [],
   );
@@ -60,7 +73,10 @@ const MergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
     return MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT_WITHOUT_RULES;
   };
 
-  // TODO: Set height to what makes sense
+  if (hasStringValue(taskType) !== true) {
+    return null;
+  }
+
   return (
     <FilterContainer
       icon={faFileCode}
@@ -80,6 +96,7 @@ MergeSyncTaskWizardFileSelectionSourceCommitListTable.propTypes = {
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   ruleCount: PropTypes.number,
+  taskType: PropTypes.string,
 };
 
 export default MergeSyncTaskWizardFileSelectionSourceCommitListTable;

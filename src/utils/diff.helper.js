@@ -10,7 +10,7 @@ const DIFF_MATCH_LINE_CATEGORIES = {
 export const diffHelper = {};
 
 diffHelper.getDiffFromStrings = (text1, text2) => {
-  if (hasStringValue(text1) !== true || hasStringValue(text2) !== true) {
+  if (hasStringValue(text1, false) !== true || hasStringValue(text2, false) !== true) {
     return [];
   }
 
@@ -56,7 +56,7 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
       const diffType = diff[0];
       const text = diff[1];
 
-      if (hasStringValue(text) !== true) {
+      if (hasStringValue(text, false) !== true) {
         return;
       }
 
@@ -92,10 +92,6 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           // If the deletion does not include a newline, highlight the same line on the right
           if (linesToHighlight === 0) {
             separatedResults.secondString.deletedLineNumbers.push(cursor.right);
-            // diffedLines.right.push({
-            //   startLine: cursor.right,
-            //   endLine: cursor.right
-            // });
           }
 
           // If the last character is a newline, we don't want to highlight that line
@@ -106,11 +102,6 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           for (let i = cursor.left; i <= cursor.left + linesToHighlight; i++) {
             separatedResults.firstString.deletedLineNumbers.push(i);
           }
-
-          // diffedLines.left.push({
-          //   startLine: cursor.left,
-          //   endLine: cursor.left + linesToHighlight
-          // });
 
           cursor.left += lineCount;
           break;
@@ -126,10 +117,6 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           // If the insertion does not include a newline, highlight the same line on the left
           if (linesToHighlight === 0) {
             separatedResults.firstString.insertedLineNumbers.push(cursor.left);
-            // diffedLines.left.push({
-            //   startLine: cursor.left,
-            //   endLine: cursor.left
-            // });
           }
 
           // If the last character is a newline, we don't want to highlight that line
@@ -140,10 +127,6 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           for (let i = cursor.right; i <= cursor.right + linesToHighlight; i++) {
             separatedResults.secondString.insertedLineNumbers.push(i);
           }
-          // diffedLines.right.push({
-          //   startLine: cursor.right,
-          //   endLine: cursor.right + linesToHighlight
-          // });
 
           cursor.right += lineCount;
           break;
