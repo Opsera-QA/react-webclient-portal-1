@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-// TODO: Make constants
-const APIGEE_VERSIONS = [
-  {
-    name: "Edge",
-    value: "edge"
-  },
-];
+import { APIGEE_VERSIONS } from "./apigee.constants";
 
 function ApigeeVersionSelectInput(
   {
