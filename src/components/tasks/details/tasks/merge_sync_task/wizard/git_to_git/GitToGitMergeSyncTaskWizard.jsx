@@ -148,7 +148,6 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
-      {toastContext?.getInlineBanner()}
       <div className={"m-3"}>
         {getBody()}
       </div>
