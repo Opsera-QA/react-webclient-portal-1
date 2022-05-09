@@ -607,7 +607,7 @@ const breadcrumbs = {
       path: paths.insightsConnectedAssets,
       title: "Connected Assets",
       linkText: "Connected Assets",
-      icon: faChartNetwork
+      icon: faLink
     },
   //Reports
   reports: {
