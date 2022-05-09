@@ -31,6 +31,7 @@ sonarPipelineScanReportActions.getSonarScanIssuesByPage = async (
   runCount,
   pageNumber,
   pageSize,
+  issueType,
 ) => {
   const apiUrl = `reports/scans/sonar/issues-by-page/${pipelineId}`;
   const postData = {
@@ -38,6 +39,7 @@ sonarPipelineScanReportActions.getSonarScanIssuesByPage = async (
     stepId: stepId,
     pageNumber: pageNumber,
     pageSize: pageSize,
+    issueType: issueType,
   };
 
   return baseActions.apiPostCallV2(
