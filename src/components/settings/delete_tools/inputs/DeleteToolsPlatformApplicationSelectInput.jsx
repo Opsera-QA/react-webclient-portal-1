@@ -4,7 +4,6 @@ import PlatformApplicationSelectInput from "components/common/list_of_values_inp
 
 function DeleteToolsPlatformApplicationSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    console.log(selectedOption);
     let newDataObject = {...model};
     newDataObject.setData("applicationId", selectedOption?._id, "");
     newDataObject.setData("toolsList", selectedOption?.tools, []);
