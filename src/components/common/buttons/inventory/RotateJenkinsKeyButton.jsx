@@ -9,7 +9,7 @@ import axios from "axios";
 import jenkinsAccountActions
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
-function RotateJenkinsKeyButton ({toolId, toolModel}){
+function RotateJenkinsKeyButton ({toolId}){
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isRotatingKey, setIsRotatingKey] = useState(false);
