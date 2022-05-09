@@ -21,7 +21,7 @@ function StandaloneDiffFieldBase(
     visibleCodeOption,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const [unpackingDiff, setUnpackingDiff] = useState(true);
+  const [unpackingDiff, setUnpackingDiff] = useState(false);
   const separatedDiffLineNumbers = useRef(undefined);
   const isMounted = useRef(false);
 
@@ -29,7 +29,7 @@ function StandaloneDiffFieldBase(
     separatedDiffLineNumbers.current = undefined;
     isMounted.current = true;
 
-    if (hasStringValue(originalCode) === true && hasStringValue(changedCode) === true) {
+    if (hasStringValue(originalCode, false) === true && hasStringValue(changedCode, false) === true) {
       calculateDiffLineNumbers().catch((error) => {
         console.error(error);
       });

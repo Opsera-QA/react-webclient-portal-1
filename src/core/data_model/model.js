@@ -419,6 +419,10 @@ export class Model {
   clone = () => {
     return dataParsingHelper.cloneDeep(this);
   };
+
+  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
+    return new Model({...newData}, this.metaData, isNew);
+  };
 }
 
 export default Model;

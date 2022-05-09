@@ -15,7 +15,7 @@ function MetricSettingsInputPanel(
     setMetricModel,
     metricSettings,
   }) {
-  const [kpiSettingsModel, setKpiSettingsModel] = useState(modelHelpers.getDashboardSettingsModel(metricSettings));
+  const [kpiSettingsModel, setKpiSettingsModel] = useState(modelHelpers.getDashboardSettingsModel(metricModel?.data));
 
   const updateParentModel = (updatedModel) => {
     const newModel = {...metricModel};

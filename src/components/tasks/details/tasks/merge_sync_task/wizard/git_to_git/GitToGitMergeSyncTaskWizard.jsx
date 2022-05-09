@@ -22,6 +22,7 @@ import GitToGitMergeSyncTaskWizardFileSelectionScreen
 import MergeSyncTaskWizardCommitSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import { TASK_TYPES } from "components/tasks/task.types";
 
 const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -57,6 +58,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setDefaultValue("selectedFileList");
     newWizardModel.setDefaultValue("diffFileList");
     newWizardModel.setDefaultValue("errorMessage");
+    newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
 
     const runCount = taskModel?.getData("run_count");
@@ -146,7 +148,6 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
-      {toastContext?.getInlineBanner()}
       <div className={"m-3"}>
         {getBody()}
       </div>

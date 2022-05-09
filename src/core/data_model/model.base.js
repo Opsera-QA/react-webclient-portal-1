@@ -493,8 +493,8 @@ export class ModelBase {
     return dataParsingHelper.cloneDeep(this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ModelBase({...newData}, this.metaData, this.newModel);
+  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
+    return new ModelBase({...newData}, this.metaData, isNew);
   };
 
   canUpdate = () => {

@@ -188,7 +188,7 @@ export const roleAllowed = (accessRoles, roleLevel) => {
 export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
   let accessRoleRows = [];
 
-  if (roleDefinitions == null) {
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
     return [];
   }
 
@@ -198,8 +198,12 @@ export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
     if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
       roleDefinitionKeys.forEach((roleDefinitionKey) => {
         const roleDefinition = roleDefinitions[roleDefinitionKey];
-        const accessRoles = roleDefinition.allowedRoles;
 
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition?.allowedRoles;
         const tableRow = {
           id: roleDefinition.id,
           description: roleDefinition.description,
@@ -225,7 +229,7 @@ export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
 export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
   let accessRoleRows = [];
 
-  if (roleDefinitions == null) {
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
     return [];
   }
 
@@ -235,8 +239,12 @@ export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
     if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
       roleDefinitionKeys.forEach((roleDefinitionKey) => {
         const roleDefinition = roleDefinitions[roleDefinitionKey];
-        const accessRoles = roleDefinition.allowedRoles;
 
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition.allowedRoles;
         const tableRow = {
           id: roleDefinition.id,
           description: roleDefinition.description,

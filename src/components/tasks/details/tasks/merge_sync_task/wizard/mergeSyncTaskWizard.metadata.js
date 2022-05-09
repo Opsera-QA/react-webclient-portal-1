@@ -51,6 +51,10 @@ export const mergeSyncTaskWizardMetadata = {
       id: "taskId",
     },
     {
+      label: "Task Type",
+      id: "taskType",
+    },
+    {
       label: "Run Count",
       id: "runCount",
     },
@@ -68,5 +72,6 @@ export const mergeSyncTaskWizardMetadata = {
     recordId: "",
     sfdcToolId: "",
     runCount: 1,
+    type: "",
   }
 };

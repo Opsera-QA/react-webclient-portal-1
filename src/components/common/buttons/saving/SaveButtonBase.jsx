@@ -19,6 +19,7 @@ function SaveButtonBase(
     customLabel,
     showTypeOnLabel,
     showIncompleteDataMessage,
+    isIncomplete,
   }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -35,7 +36,16 @@ function SaveButtonBase(
 
   const persistRecord = async () => {
     setIsSaving(true);
-    await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel);
+    await persistUpdatedRecord(
+      recordDto,
+      toastContext,
+      showSuccessToasts,
+      updateRecord,
+      lenient,
+      showIncompleteDataMessage,
+      setModel,
+      isIncomplete,
+      );
 
     if (isMounted.current === true) {
       setIsSaving(false);
@@ -79,6 +89,7 @@ SaveButtonBase.propTypes = {
   showTypeOnLabel: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
   setModel: PropTypes.func,
+  isIncomplete: PropTypes.bool,
 };
 
 SaveButtonBase.defaultProps = {

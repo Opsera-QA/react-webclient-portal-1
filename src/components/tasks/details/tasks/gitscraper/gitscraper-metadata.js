@@ -2,8 +2,12 @@ const gitscraperTaskConfigurationMetadata = {
   type: "Gitscraper Configuration",
   fields: [
     {
-      label: "Repositories To Scan",
+      label: "Repositories Available to Scan",
       id: "reposToScan",
+    },
+    {
+      label: "Repositories Available to Scan",
+      id: "repositories",
     },
     {
       label: "Scraper Module",
@@ -36,9 +40,18 @@ const gitscraperTaskConfigurationMetadata = {
       id: "gitToolId",
       isRequired: true,
     },
+    {
+      label: "BitBucket Workspace",
+      id: "workspace",
+    },
+    {
+      label: "BitBucket Workspace/Project",
+      id: "bitbucketWorkspaceName",
+    },
   ],
   newObjectFields:
     {
+      repositories:[],
       reposToScan:[],
       type:"",
       commits:"",
@@ -46,7 +59,9 @@ const gitscraperTaskConfigurationMetadata = {
       excludeSecrets:[],
       secretsException:false,
       service: "",
-      gitToolId: ""
+      gitToolId: "",
+      workspace: "",
+      bitbucketWorkspace: ""
     }
 };
 

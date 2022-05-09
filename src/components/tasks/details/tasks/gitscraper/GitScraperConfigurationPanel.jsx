@@ -9,15 +9,16 @@ import gitscraperTaskConfigurationMetadata from "./gitscraper-metadata";
 import GitScraperLibrarySelectInput from "./inputs/GitScraperLibrarySelectInput";
 import GitScraperScmToolTypeSelectInput from "./inputs/GitScraperScmToolTypeSelectInput";
 import GitScraperScmToolSelectInput from "./inputs/GitScraperScmToolSelectInput";
-import NumberPickerInputBase from "../../../../common/inputs/number/picker/base/NumberPickerInputBase";
 import GitIgnoreToggleInput from "./inputs/GitIgnoreToggleInput";
-import GitScraperRepos from "./repos_table/GitScraperRepos";
+import RepoSelectionView from "./inputs/RepoSelectionView";
+import GitScraperBitbucketWorkspaceSelectInput from "./inputs/GitScraperBitbucketWorkspaceSelectInput";
 
 function GitScraperConfigurationPanel({
   gitTasksDataDto,
   gitTasksConfigurationData,
   setGitTasksConfigurationData,
 }) {
+
   useEffect(() => {
     loadData();
   }, []);
@@ -58,9 +59,17 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
+        <GitScraperBitbucketWorkspaceSelectInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          service={gitTasksConfigurationData?.getData("service")}
+          gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
+        />
+      </Col>
+      <Col lg={12}>
         <TextInputBase
           fieldName={"threshold"}
-          dataObject={gitTasksConfigurationData}
+            dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
         />
       </Col>
@@ -72,12 +81,16 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <GitScraperRepos
-          toolApplications={gitTasksConfigurationData?.getData("reposToScan")}
-          isLoading={false}
-          setParentDataObject={setGitTasksConfigurationData}
-          model={gitTasksConfigurationData}
-          parentDataObject={gitTasksDataDto}
+        <RepoSelectionView
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          service={gitTasksConfigurationData?.getData("service")}
+          gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
+          workspace={gitTasksConfigurationData?.getData("workspace")}
+          disabled={
+            gitTasksConfigurationData?.getData("service")?.length === 0 ||
+            gitTasksConfigurationData?.getData("gitToolId")?.length === 0
+          }
         />
       </Col>
     </Row>
