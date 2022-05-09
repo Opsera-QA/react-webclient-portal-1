@@ -76,7 +76,7 @@ function PlatformApplicationSelectInput(
         });
         setApplications(filteredApps);
       } else {
-        setApplications(applications);
+        setApplications(newApplicationsList);
       }
     }
   };
