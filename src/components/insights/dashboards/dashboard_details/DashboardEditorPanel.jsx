@@ -19,7 +19,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
-function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose, isCreateDashboard }) {
+function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
@@ -66,6 +66,16 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose, is
     const attributes = dashboardAttributesDataDto ? dashboardAttributesDataDto.getPersistData() : {};
     dashboardDataDto.setData("attributes", attributes);
     return await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardDataDto);
+  };
+
+  const getActivityToggleInput = () => {
+    if (dashboardDataDto?.isNew() === false) {
+      return (
+        <Col md={6}>
+          <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+        </Col>
+      );
+    }
   };
 
   const getRolesInput = () => {
@@ -122,11 +132,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose, is
           <Col md={6}>
             <TagManager type={"dashboard"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
-          {!isCreateDashboard &&
-            <Col md={6}>
-            <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
-            </Col>
-          }
+          {getActivityToggleInput()}
         </Row>
       </div>
       <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
@@ -137,8 +143,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose, is
 DashboardEditorPanel.propTypes = {
   dashboardData: PropTypes.object,
   setDashboardData: PropTypes.func,
-  handleClose: PropTypes.func,
-  isCreateDashboard: PropTypes.bool
+  handleClose: PropTypes.func
 };
 
 export default DashboardEditorPanel;

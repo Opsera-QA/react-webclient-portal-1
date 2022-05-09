@@ -77,7 +77,6 @@ function NewDashboardModal({ loadData, isMounted }) {
         setDashboardData={setDashboardData}
         handleClose={closePanel}
         dashboardData={dashboardData}
-        isCreateDashboard={true}
       />
     </CreateCenterPanel>
   );
