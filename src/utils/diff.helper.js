@@ -56,7 +56,7 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
       const diffType = diff[0];
       const text = diff[1];
 
-      if (hasStringValue(text, false) !== true) {
+      if (hasStringValue(text) !== true) {
         return;
       }
 
