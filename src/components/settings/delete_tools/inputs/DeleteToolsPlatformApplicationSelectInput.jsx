@@ -4,6 +4,7 @@ import PlatformApplicationSelectInput from "components/common/list_of_values_inp
 
 function DeleteToolsPlatformApplicationSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
+    console.log(selectedOption);
     let newDataObject = {...model};
     newDataObject.setData("applicationId", selectedOption?._id, "");
     newDataObject.setData("toolsList", selectedOption?.tools, []);
@@ -20,7 +21,6 @@ function DeleteToolsPlatformApplicationSelectInput({model, setModel, disabled}) 
   return (
     <PlatformApplicationSelectInput
       fieldName={"applicationId"}
-      requireConfiguration={true}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
@@ -34,6 +34,10 @@ DeleteToolsPlatformApplicationSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+};
+
+DeleteToolsPlatformApplicationSelectInput.defaultProps = {
+  disabled: "false",
 };
 
 export default DeleteToolsPlatformApplicationSelectInput;
