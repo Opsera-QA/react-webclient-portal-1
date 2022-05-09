@@ -90,7 +90,6 @@ function JenkinsAccountEditorPanel(
     if(jenkinsAccountData?.getData("service") === "github-deploykey" && jenkinsAccountData?.getData("repositories")) {
       return (
           <Col lg={12}>
-            sdfdv
             <JenkinsAccountRepositorySelectInput
                 model={jenkinsAccountData}
                 setModel={setJenkinsAccountData}
@@ -105,6 +104,8 @@ function JenkinsAccountEditorPanel(
   if (jenkinsAccountData == null) {
     return <LoadingDialog size="sm"/>;
   }
+
+  console.log(jenkinsAccountData.getPersistData());
 
   return (
     <EditorPanelContainer

@@ -35,7 +35,7 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
   const clearDataFunction = () => {
     let newModel = { ...model };
     newModel.setData(fieldName, "");
-    newModel.setData("credentailsToolId", "");
+    newModel.setData("credentialsToolId", "");
     newModel.setData("gitCredential", "");
     newModel.setData("gitUserName", "");
     newModel.setData("accountUserName", "");
