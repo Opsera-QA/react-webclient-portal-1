@@ -185,6 +185,7 @@ function DashboardMetricOverlayContainer(
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
             unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
           />
         );
     }
