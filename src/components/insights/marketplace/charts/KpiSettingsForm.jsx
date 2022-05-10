@@ -612,8 +612,8 @@ function KpiSettingsForm({
               fieldName={"value"}
               valueField={"value"}
               textField={"text"}
-              setDataObject={setKpiServiceNowPrioritiesFilter}
-              dataObject={kpiServiceNowPrioritiesFilter}
+              setModel={setKpiServiceNowPrioritiesFilter}
+              model={kpiServiceNowPrioritiesFilter}
             />
           </div>
         );
