@@ -9,9 +9,14 @@ export const serviceNowMeanTimeToResolutionMetadata = {
       label: "Date Range",
       id: "date",
     },
+    {
+      label: "Service Now Priorities",
+      id: "servicenow-priorities",
+    },
   ],
   newObjectFields: {
     tags: [],
     date: undefined,
+    "servicenow-priorities": "",
   }
 };
