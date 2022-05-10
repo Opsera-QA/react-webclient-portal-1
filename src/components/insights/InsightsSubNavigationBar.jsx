@@ -48,7 +48,7 @@ function InsightsSubNavigationBar({currentTab}) {
         history.push(`/insights/release360`);
         return;
       case "connectedAssets":
-        history.push(`/insights/connectedAssets`);
+        history.push(`/insights/connected-assets`);
         return;
     }
   };
