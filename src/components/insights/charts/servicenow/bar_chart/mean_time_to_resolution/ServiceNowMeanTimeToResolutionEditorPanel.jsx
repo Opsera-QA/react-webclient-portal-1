@@ -4,10 +4,6 @@ import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/M
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import {serviceNowMeanTimeToResolutionMetadata} from "./serviceNowMeanTimeToResolution.metadata";
-import ServiceNowPrioritiesMultiSelectInput
-  from "../../../../../common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
-import ServiceNowToolsSelectInput
-  from "../../../../../common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
 import ServiceNowAssignmentGroupSelectInput
   from "../../../../../common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
 import ServiceNowServiceOfferingsSelectInput
@@ -22,13 +18,14 @@ import kpiConfigurationMetadata, {
   kpiServiceNowAssignmentGroupsFilterMetadata,
   kpiServiceNowBusinessServicesFilterMetadata,
   kpiServiceNowConfigurationItemsFilterMetadata,
-  kpiServiceNowPrioritiesFilterMetadata,
   kpiServiceNowServiceOfferingsFilterMetadata,
   kpiServiceNowToolsFilterMetadata
 } from "../../../../marketplace/charts/kpi-configuration-metadata";
 import Model from "../../../../../../core/data_model/model";
 import MetricServiceNowPrioritiesMultiSelectFilter
   from "components/common/inputs/metric/filters/service_now/MetricServiceNowPrioritiesMultiSelectFilter";
+import ServiceNowToolsSelectInput
+  from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
 
 function ServiceNowMeanTimeToResolutionEditorPanel(
   {
@@ -106,14 +103,9 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
       <div>
         <ServiceNowToolsSelectInput
           placeholderText={"Select Tools"}
-          type={"kpi_filter"}
-          fieldName={"value"}
-          valueField={"_id"}
-          textField={"name"}
-          setDataObject={setKpiServiceNowToolsFilter}
-          dataObject={kpiServiceNowToolsFilter}
-          groupsDataObject={kpiServiceNowAssignmentGroupsFilter}
-          groupsSetDataObject={setKpiServiceNowAssignmentGroupsFilter}
+          fieldName={"servicenow-tools"}
+          setModel={setKpiServiceNowToolsFilter}
+          model={kpiServiceNowToolsFilter}
         />
       </div>
       <div>

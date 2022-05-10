@@ -57,7 +57,7 @@ import SonarProjectsMultiSelectInput from "components/common/list_of_values_inpu
 
 // Service Now
 import ServiceNowPrioritiesMultiSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
-import ServiceNowToolsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
+import ServiceNowToolsSelectInputLegacy from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInputLegacy";
 import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
 import ServiceNowServiceOfferingsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowServiceOfferingsSelectInput";
 import ServiceNowConfigurationItemsSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowConfigurationItemsSelectInput";
@@ -620,7 +620,7 @@ function KpiSettingsForm({
       case "servicenow-tools":
         return (
           <div>
-            <ServiceNowToolsSelectInput
+            <ServiceNowToolsSelectInputLegacy
               placeholderText={"Select Tools"}
               type={"kpi_filter"}
               fieldName={"value"}
