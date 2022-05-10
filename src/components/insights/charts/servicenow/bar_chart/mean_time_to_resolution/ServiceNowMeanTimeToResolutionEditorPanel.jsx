@@ -24,8 +24,8 @@ import kpiConfigurationMetadata, {
 import Model from "../../../../../../core/data_model/model";
 import MetricServiceNowPrioritiesMultiSelectFilter
   from "components/common/inputs/metric/filters/service_now/MetricServiceNowPrioritiesMultiSelectFilter";
-import ServiceNowToolsSelectInput
-  from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInput";
+import ServiceNowToolSelectInput
+  from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolSelectInput";
 
 function ServiceNowMeanTimeToResolutionEditorPanel(
   {
@@ -101,7 +101,7 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
         metricModel={metricModel}
       />
       <div>
-        <ServiceNowToolsSelectInput
+        <ServiceNowToolSelectInput
           placeholderText={"Select Tools"}
           fieldName={"servicenow-tools"}
           setModel={setMetricFilterModel}
