@@ -22,8 +22,8 @@ function MetricServiceNowPrioritiesMultiSelectFilter(
         fieldName={fieldName}
         valueField={"value"}
         textField={"text"}
-        dataObject={metricFilterModel}
-        setDataObject={setMetricFilterModel}
+        model={metricFilterModel}
+        setModel={setMetricFilterModel}
       />
     </SupportedMetricFilterInputContainer>
   );
