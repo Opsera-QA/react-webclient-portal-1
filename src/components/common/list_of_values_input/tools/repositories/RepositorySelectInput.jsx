@@ -8,6 +8,7 @@ import GithubRepositorySelectInput
   from "components/common/list_of_values_input/tools/github/repositories/GithubRepositorySelectInput";
 import GitlabRepositorySelectInput
   from "components/common/list_of_values_input/tools/gitlab/repositories/GitlabRepositorySelectInput";
+import GithubMonoRepositorySelectInput from "../github/repositories/GithubMonoRepositorySelectInput";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
@@ -83,6 +84,20 @@ function RepositorySelectInput(
         disabled={disabled}
         clearDataFunction={clearDataFunction}
       />
+    );
+  }
+  
+  if (service === "github-deploykey") {
+    return (
+        <GithubMonoRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+        />
     );
   }
 
