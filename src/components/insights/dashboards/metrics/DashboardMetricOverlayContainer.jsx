@@ -33,7 +33,7 @@ import ServiceNowMeanTimeToResolutionEditorPanel
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
-    {
+  {
     kpiConfiguration,
     setKpiConfiguration,
     dashboardData,
@@ -90,7 +90,6 @@ function DashboardMetricOverlayContainer(
   const saveKpiSettings = async () => {
     const packedFilters = metricHelpers.packFilterData(metricFilterModel?.getPersistData());
     metricModel?.setData("filters", packedFilters);
-    setKpiConfiguration(metricModel?.data);
     await dashboardMetricActions.updateDashboardKpiV2(
       getAccessToken,
       cancelTokenSource,
