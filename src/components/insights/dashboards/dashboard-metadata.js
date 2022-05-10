@@ -54,7 +54,11 @@ const dashboardMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, slashes, dashes, colons, underscores, and periods"
+
     },
     {
       label: "Description",
