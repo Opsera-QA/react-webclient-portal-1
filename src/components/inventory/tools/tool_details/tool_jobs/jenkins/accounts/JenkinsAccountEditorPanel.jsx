@@ -105,8 +105,6 @@ function JenkinsAccountEditorPanel(
     return <LoadingDialog size="sm"/>;
   }
 
-  console.log(jenkinsAccountData.getPersistData());
-
   return (
     <EditorPanelContainer
       handleClose={closePanelFunction}

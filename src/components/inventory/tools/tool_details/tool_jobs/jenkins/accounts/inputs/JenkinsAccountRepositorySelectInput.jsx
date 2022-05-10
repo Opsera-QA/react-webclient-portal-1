@@ -3,11 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
 
 function JenkinsAccountRepositorySelectInput({ visible, model, setModel, disabled, fieldName, repos }) {
-
-    if(!repos) {
-        return null;
-    }
-
     const setDataFunction = (fieldName, selectedOption) => {
         let newModel = { ...model };
         newModel.setData(fieldName, selectedOption?._id || "");
