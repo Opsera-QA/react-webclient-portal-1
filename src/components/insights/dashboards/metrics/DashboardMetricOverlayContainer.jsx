@@ -80,7 +80,7 @@ function DashboardMetricOverlayContainer(
     setUnpackedFilterData(metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters));
   };
 
-  const closeSettingsPanel = async () => {
+  const closeSettingsPanel = () => {
     if (closePanel) {
       closePanel();
     }
@@ -184,6 +184,7 @@ function DashboardMetricOverlayContainer(
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
             unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
           />
         );
     }
