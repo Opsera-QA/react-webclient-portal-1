@@ -104,8 +104,8 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
         <ServiceNowToolsSelectInput
           placeholderText={"Select Tools"}
           fieldName={"servicenow-tools"}
-          setModel={setKpiServiceNowToolsFilter}
-          model={kpiServiceNowToolsFilter}
+          setModel={setMetricFilterModel}
+          model={metricFilterModel}
         />
       </div>
       <div>
