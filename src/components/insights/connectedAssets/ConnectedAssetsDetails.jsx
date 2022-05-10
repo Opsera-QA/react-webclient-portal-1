@@ -7,8 +7,9 @@ import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBox
 import { faDatabase, faCodeBranch, faBox, faStopwatch, faUsers, faListCheck, faCompressArrowsAlt, faDiagramSuccessor } from "@fortawesome/free-solid-svg-icons";
 import {AuthContext} from "../../../contexts/AuthContext";
 import axios from "axios";
-import chartsActions from "../charts/charts-actions";
 import LoadingDialog from "../../common/status_notifications/loading";
+import connectedAssetsActions from "./connectedAssets.actions";
+import {parseError} from "../../common/helpers/error-helpers";
 
 
 function ConnectedAssetsDetails({ dashboardData }) {
@@ -48,18 +49,12 @@ function ConnectedAssetsDetails({ dashboardData }) {
           (obj) => obj.type === "date"
         )
         ]?.value;
-      let response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      let response = await connectedAssetsActions.getConnectedAssetsData(
         getAccessToken,
         cancelSource,
         "connectedAssets",
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        dateRange
+        dateRange?.startDate ? dateRange?.startDate : null,
+        dateRange?.endDate? dateRange?.endDate : null
       );
       let responseData = response?.data?.data;
 
@@ -81,6 +76,16 @@ function ConnectedAssetsDetails({ dashboardData }) {
   const getBody = () => {
     if (isLoading) {
       return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
+    }
+
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
     }
 
     return (
