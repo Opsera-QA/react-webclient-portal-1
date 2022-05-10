@@ -54,9 +54,9 @@ function SonarPipelineScanReport() {
         pipelineId,
         stepId,
         runCount,
-        issueType,
         1,
         50,
+        issueType,
       );
 
       if (Array.isArray(sonarPageIssuesArray?.data?.message)) {
