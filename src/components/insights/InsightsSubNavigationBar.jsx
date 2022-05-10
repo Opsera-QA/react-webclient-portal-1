@@ -51,7 +51,7 @@ function InsightsSubNavigationBar({currentTab}) {
         // history.push(`/insights/reports`);
         return;
       case "connectedAssets":
-        history.push(`/insights/connectedAssets`);
+        history.push(`/insights/connected-assets`);
         return;
     }
   };
