@@ -12,7 +12,7 @@ const githubDeployKeyMetadata = {
     },
     {
       label: "User Name",
-      id: "userName",
+      id: "accountUsername",
       isRequired: true,
       lowercase: true,
       spacesAllowed: false,
@@ -34,7 +34,7 @@ const githubDeployKeyMetadata = {
   ],
   newObjectFields: {
     name: "",
-    userName: "",
+    accountUsername: "",
     sshUrl: "",
     deployKey: "",
   }

@@ -100,7 +100,7 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
             <TextInputBase
               setDataObject={setGithubDeployKeyModel}
               dataObject={githubDeployKeyModel}
-              fieldName={"userName"}
+              fieldName={"accountUsername"}
               disabled={!githubDeployKeyData?.isNew()}
             />
           </Col>
