@@ -241,17 +241,17 @@ function CoverityIssuesByCategory({
     if (issueType === "High") {
       topThreeIssues =
         metrics[0]?.highIssues?.length > 0
-          ? metrics[0]?.highIssues?.slice(0, 3)
+          ? metrics[0]?.highIssues?.slice(0, 1)
           : [];
     } else if (issueType === "Medium") {
       topThreeIssues =
         metrics[0]?.mediumIssues?.length > 0
-          ? metrics[0]?.mediumIssues?.slice(0, 3)
+          ? metrics[0]?.mediumIssues?.slice(0, 1)
           : [];
     } else {
       topThreeIssues =
         metrics[0]?.lowIssues?.length > 0
-          ? metrics[0]?.lowIssues?.slice(0, 3)
+          ? metrics[0]?.lowIssues?.slice(0, 1)
           : [];
     }
 
@@ -261,7 +261,7 @@ function CoverityIssuesByCategory({
 
     return (
       <HorizontalDataBlocksContainer
-        title={"Highest " + issueType + " Issue Projects"}
+        title={"Top Project with " + issueType + " Issues"}
       >
         {topThreeIssues.map((doc, index) => (
           <>
