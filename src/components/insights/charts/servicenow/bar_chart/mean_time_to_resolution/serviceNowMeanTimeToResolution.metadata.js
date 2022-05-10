@@ -1,3 +1,4 @@
+// TODO: We should really rework the way the ids are for these at some point
 export const serviceNowMeanTimeToResolutionMetadata = {
   type: "Service Now Mean Time To Resolution",
   fields: [
@@ -13,10 +14,15 @@ export const serviceNowMeanTimeToResolutionMetadata = {
       label: "Service Now Priorities",
       id: "servicenow-priorities",
     },
+    {
+      label: "Service Now Tool",
+      id: "servicenow-tools",
+    }
   ],
   newObjectFields: {
     tags: [],
     date: undefined,
     "servicenow-priorities": [],
+    "servicenow-tools": "",
   }
 };
