@@ -118,7 +118,7 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
           textField={"name"}
           setDataObject={setKpiServiceNowAssignmentGroupsFilter}
           dataObject={kpiServiceNowAssignmentGroupsFilter}
-          serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          serviceNowToolId={metricFilterModel.getData("servicenow-tools")}
         />
       </div>
       <div>
@@ -131,7 +131,7 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
           textField={"name"}
           setDataObject={setKpiServiceNowServiceOfferingsFilter}
           dataObject={kpiServiceNowServiceOfferingsFilter}
-          serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          serviceNowToolId={metricFilterModel.getData("servicenow-tools")}
         />
       </div>
       <div>
@@ -144,7 +144,7 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
           textField={"name"}
           setDataObject={setKpiServiceNowConfigurationItemsFilter}
           dataObject={kpiServiceNowConfigurationItemsFilter}
-          serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          serviceNowToolId={metricFilterModel.getData("servicenow-tools")}
         />
       </div>
       <div>
@@ -157,7 +157,7 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
           textField={"name"}
           setDataObject={setKpiServiceNowBusinessServicesFilter}
           dataObject={kpiServiceNowBusinessServicesFilter}
-          serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          serviceNowToolId={metricFilterModel.getData("servicenow-tools")}
         />
       </div>
       <div>
