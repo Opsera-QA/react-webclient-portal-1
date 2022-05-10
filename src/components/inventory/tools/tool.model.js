@@ -2,6 +2,8 @@ import ModelBase from "core/data_model/model.base";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
 import vaultActions from "components/vault/vault.actions";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export class ToolModel extends ModelBase {
   constructor(
@@ -47,6 +49,19 @@ export class ToolModel extends ModelBase {
     // toastContext.showDeleteSuccessResultDialog("Tool");
     // setShowDeleteModal(false);
     history.push("/inventory/tools");
+  };
+
+  canRotateToken = () => {
+    const data = this.data;
+    const toolIdentifier = data?.tool_identifier;
+    const canRotateToken = this.canPerformAction("rotate_token");
+
+    switch (toolIdentifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+        return canRotateToken === true && hasStringValue(data?.configuration?.tokenUuid) === true;
+      default:
+        return false;
+    }
   };
 
   getDetailViewLink = () => {
