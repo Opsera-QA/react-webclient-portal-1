@@ -239,7 +239,7 @@ function ConnectedAssets() {
       pageDescription={``}
       breadcrumbDestination={"insightsConnectedAssets"}
     >
-      {getConnectedAssetsActionBar()}
+      {/*{getConnectedAssetsActionBar()}*/}
       <ConnectedAssetsDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
     </ScreenContainer>
   );
