@@ -27,6 +27,8 @@ import kpiConfigurationMetadata, {
   kpiServiceNowToolsFilterMetadata
 } from "../../../../marketplace/charts/kpi-configuration-metadata";
 import Model from "../../../../../../core/data_model/model";
+import MetricServiceNowPrioritiesMultiSelectFilter
+  from "components/common/inputs/metric/filters/service_now/MetricServiceNowPrioritiesMultiSelectFilter";
 
 function ServiceNowMeanTimeToResolutionEditorPanel(
   {
@@ -37,13 +39,6 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
     kpiConfiguration
   }) {
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
-  const [kpiServiceNowPrioritiesFilter, setKpiServiceNowPrioritiesFilter] = useState(
-    modelHelpers.getDashboardFilterModel(
-      kpiConfiguration,
-      "servicenow-priorities",
-      kpiServiceNowPrioritiesFilterMetadata
-    )
-  );
   const [kpiServiceNowToolsFilter, setKpiServiceNowToolsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "servicenow-tools", kpiServiceNowToolsFilterMetadata)
   );
@@ -103,17 +98,11 @@ function ServiceNowMeanTimeToResolutionEditorPanel(
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
       />
-      <div>
-        <ServiceNowPrioritiesMultiSelectInput
-          placeholderText={"Select Priorities"}
-          type={"kpi_filter"}
-          fieldName={"value"}
-          valueField={"value"}
-          textField={"text"}
-          setDataObject={setKpiServiceNowPrioritiesFilter}
-          dataObject={kpiServiceNowPrioritiesFilter}
-        />
-      </div>
+      <MetricServiceNowPrioritiesMultiSelectFilter
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+      />
       <div>
         <ServiceNowToolsSelectInput
           placeholderText={"Select Tools"}
