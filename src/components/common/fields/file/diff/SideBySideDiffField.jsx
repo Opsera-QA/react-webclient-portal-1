@@ -57,6 +57,7 @@ function SideBySideDiffField(
                 titleIcon={rightSideTitleIcon}
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
+                visibleCodeOption={VISIBLE_CODE_OPTIONS.CHANGED}
                 language={language}
                 className={"m-0"}
               />

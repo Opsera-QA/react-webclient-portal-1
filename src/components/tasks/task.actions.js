@@ -242,5 +242,17 @@ taskActions.triggerTask = async (getAccessToken, cancelTokenSource, taskData) =>
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.getTaskAuditLogsByTaskId = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+) => {
+  const apiUrl = `/audit-logs/task/${taskId}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
 
 export default taskActions;
