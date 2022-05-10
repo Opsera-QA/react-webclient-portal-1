@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedServiceNowToolSelectInput
   from "components/common/list_of_values_input/tools/service_now/RoleRestrictedServiceNowToolSelectInput";
 
-function ServiceNowToolsSelectInput(
+function ServiceNowToolSelectInput(
   {
     valueField,
     textField,
@@ -28,7 +28,7 @@ function ServiceNowToolsSelectInput(
   );
 }
 
-ServiceNowToolsSelectInput.propTypes = {
+ServiceNowToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
@@ -40,9 +40,9 @@ ServiceNowToolsSelectInput.propTypes = {
   visible: PropTypes.bool,
 };
 
-ServiceNowToolsSelectInput.defaultProps = {
+ServiceNowToolSelectInput.defaultProps = {
   textField: "name",
   valueField: "_id",
 };
 
-export default ServiceNowToolsSelectInput;
+export default ServiceNowToolSelectInput;
