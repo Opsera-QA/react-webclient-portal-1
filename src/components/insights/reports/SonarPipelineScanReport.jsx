@@ -11,7 +11,7 @@ import { sonarPipelineScanReportActions } from "components/insights/reports/sona
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 
 function SonarPipelineScanReport() {
-  const { pipelineId, stepId, runCount } = useParams();
+  const { pipelineId, stepId, runCount, issueType } = useParams();
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +54,7 @@ function SonarPipelineScanReport() {
         pipelineId,
         stepId,
         runCount,
+        issueType,
         1,
         50,
       );

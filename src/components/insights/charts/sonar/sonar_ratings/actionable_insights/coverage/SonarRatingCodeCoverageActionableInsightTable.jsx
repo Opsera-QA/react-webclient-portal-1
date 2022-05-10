@@ -80,10 +80,21 @@ function SonarRatingCodeCoverageActionableInsightTable(
     []
   );
 
+  // const onRowSelect = (rowData) => {
+  //   toastContext.showOverlayPanel(
+  //     <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount}/>
+  //   );
+  // };
+
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount}/>
-    );
+    const row = rowData?.original;
+    const pipelineId = row?.pipelineId;
+    const stepId = row?.stepId;
+    const runCount = row?.runCount;
+    const issueType = row?.issueType;
+
+    toastContext.clearOverlayPanel();
+    history.push(`/insights/reports/scans/sonar/${pipelineId}/${stepId}/${runCount}/${issueType}`);
   };
 
   const getTable = () => {
