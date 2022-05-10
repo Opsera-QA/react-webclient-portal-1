@@ -277,6 +277,56 @@ chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, ge
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+chartsActions.getDevelopmentAnalysis=async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/opserapipelines/v1/getDevelopmnetAnalytisMetrics";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs
+  };
+ const result = {
+    "data": {
+      "data": [
+        {
+          results: {
+            "totalArtifactsPublished": 490,
+            "artifactsScanned": 16.9,
+            "artifactsDeployedWithFailedSecurity": 47,
+            "artifactsSuccessfulDeployments": 10,
+          },
+          trends: {
+            totalArtifactsPublished: "Green",
+            artifactsScanned: "Green",
+            artifactsDeployedWithFailedSecurity:"Green",
+            artifactsSuccessfulDeployments:"Green"
+
+
+          }
+
+        }
+      ],
+      "length": 1,
+      "status": 200,
+      "status_text": "OK"
+    }
+  };
+return result;
+  // return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 chartsActions.getSfdcMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
