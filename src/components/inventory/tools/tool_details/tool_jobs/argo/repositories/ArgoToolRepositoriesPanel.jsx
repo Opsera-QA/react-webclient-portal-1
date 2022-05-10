@@ -16,7 +16,6 @@ function ArgoToolRepositoriesPanel({ toolData, loadData, isLoading, toolActions 
   const unpackRepos = (toolActions) => {
     const newRepoList = [];
 
-    console.log(toolActions);
     if (Array.isArray(toolActions)) {
       toolActions.forEach((toolAction, index) => {
         let repo = toolAction?.configuration;
