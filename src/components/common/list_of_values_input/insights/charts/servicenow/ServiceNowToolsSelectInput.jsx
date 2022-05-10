@@ -5,17 +5,19 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function ServiceNowToolsSelectInput({
-  placeholderText,
-  valueField,
-  textField,
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  groupsDataObject,
-  groupsSetDataObject,
-}) {
+function ServiceNowToolsSelectInput(
+  {
+    placeholderText,
+    valueField,
+    textField,
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    setDataFunction,
+    groupsDataObject,
+    groupsSetDataObject,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [tools, setTools] = useState([]);
@@ -67,21 +69,18 @@ function ServiceNowToolsSelectInput({
     }
   };
 
-  const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = { ...dataObject };
-    newModel.setData(fieldName, selectedOption?._id);
-    setDataObject({ ...newModel });
-  };
-
   const clearDataFunction = () => {
     let newModel = { ...dataObject };
     // newModel.setData(fieldName, "");
     newModel.setData("value", "");
     setDataObject({ ...newModel });
 
-    let newGroupsModel = { ...groupsDataObject };
-    newGroupsModel.setData("value", "");
-    groupsSetDataObject({ ...newGroupsModel });
+    // TODO: Why is this in here? It should be in a clear data function passed in);
+    if (groupsDataObject && groupsSetDataObject) {
+      let newGroupsModel = { ...groupsDataObject };
+      newGroupsModel.setData("value", "");
+      groupsSetDataObject({ ...newGroupsModel });
+    }
   };
 
   return (
