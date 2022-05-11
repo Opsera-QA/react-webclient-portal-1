@@ -21,8 +21,8 @@ const history = useHistory();
 const { getAccessToken } = useContext(AuthContext);
 const [error, setError] = useState(undefined);
 const [metrics, setMetrics] = useState([]);
+const [allCoverityIssues, setAllCoverityIssues] = useState([]);
 const [isLoading, setIsLoading] = useState(false);
-const [showModal, setShowModal] = useState(false);
 const isMounted = useRef(false);
 const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 const [filterModel, setFilterModel] = useState(
@@ -32,10 +32,6 @@ const [filterModel, setFilterModel] = useState(
     false
   )
 );
-  console.log("severity",coveritySeverity);
-  console.log("proj", projectName);
-  console.log("pipeline" ,pipelineId);
-  console.log( "run",runCount);
 
 useEffect(() => {
   if (cancelTokenSource) {
@@ -57,62 +53,104 @@ useEffect(() => {
     isMounted.current = false;
   };
 }, [JSON.stringify(dashboardData)]);
-const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-  try {
-    setIsLoading(true);
-    let dashboardTags =
-      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-    let dashboardOrgs =
-      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-        ?.value;
-    let request = "coverityReportsTable";
-    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-      getAccessToken,
-      cancelSource,
-      request,
-      kpiConfiguration,
-      dashboardTags,
-      filterDto,
-      null,
-      dashboardOrgs,
-      null,
-      null,
-      null,
-      null,
-      coveritySeverity,
-      null,
-      null,
-      projectName,
-      runCount,
-      pipelineId
-    );
-    let dataObject = response?.data ? response?.data?.data[0]?.coverityReportsTable?.data[0]?.data : [];
-    let dataCount = response?.data
-      ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
-      : [];
-    dataObject = dataObject.map((bd, index) => ({
-      ...bd,
-      _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-    }));
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "coverityReportsTable",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        undefined,
+        dashboardOrgs,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        coveritySeverity,
+        null,
+        null,
+        projectName,
+        runCount,
+        pipelineId
+      );
 
-    let newFilterDto = filterDto;
-    newFilterDto.setData("totalCount", dataCount);
-    setFilterModel({ ...newFilterDto });
-    if (isMounted?.current === true && dataObject) {
-      setMetrics(dataObject);
-    }
-  } catch (error) {
-    if (isMounted?.current === true) {
-      console.error(error);
-      setError(error);
-    }
-  } finally {
-    if (isMounted?.current === true) {
-      setIsLoading(false);
-    }
-  }
-};
+      const dataObject = response?.data.data[0].coverityReportsTable.data[0].tableData;
 
+      if (isMounted?.current === true && Array.isArray(dataObject)) {
+        setMetrics(dataObject);
+
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.coverityReportsTable?.data[0]?.count[0]?.count);
+        setFilterModel({ ...newFilterDto });
+      }
+      await loadData2(cancelSource);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+
+  const loadData2 = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "getAllCoverityReportsIssues",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        undefined,
+        dashboardOrgs,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        coveritySeverity,
+        null,
+        null,
+        projectName,
+        runCount,
+        pipelineId
+      );
+
+      const dataObject = response?.data.data[0].getAllCoverityReportsIssues.data[0].tableData;
+
+      if (isMounted?.current === true && Array.isArray(dataObject)) {
+        setAllCoverityIssues(dataObject);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+  console.log("allCoverityIssues", allCoverityIssues);
 
   return (
     <ScreenContainer
@@ -122,7 +160,7 @@ const loadData = async (cancelSource = cancelTokenSource, filterDto = filterMode
     >
       <CoverityScanReportTable
         data={metrics}
-        //allSonarIssues={sonarIssues}
+        allCoverityIssues={allCoverityIssues}
         isLoading={isLoading}
         loadData={loadData}
         filterModel={filterModel}

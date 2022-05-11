@@ -35,8 +35,8 @@ const coverityScanReportMetadata = {
       id: "file",
     },
     {
-      label: "Message",
-      id: "message",
+      label: "Issue Type",
+      id: "issue_type",
     },
   ],
   newObjectFields: {
