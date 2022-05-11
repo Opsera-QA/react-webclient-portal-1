@@ -20,7 +20,7 @@ deltaDiffHelper.addDeltaContextLines = (position, originalArray, totalLineString
         arrayCopy.unshift(line);
       }
 
-      for (let i = endPosition + 1; i < lines.length && i <= endPosition + 5; i++) {
+      for (let i = endPosition; i < lines.length && i <= endPosition + 5; i++) {
         const line = hasStringValue(lines[i]) === true ? lines[i] : "";
         arrayCopy.push(line);
       }

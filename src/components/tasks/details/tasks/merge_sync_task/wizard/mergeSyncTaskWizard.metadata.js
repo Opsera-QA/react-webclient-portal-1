@@ -26,9 +26,14 @@ export const mergeSyncTaskWizardMetadata = {
     {
       label: "Selected File List",
       id: "selectedFileList",
-    },{
+    },
+    {
       label: "Updated File List",
       id: "updatedFileList",
+    },
+    {
+      label: "Updated File Change Delta List",
+      id: "updatedFileDeltas",
     },
     {
       label: "Diff Files List",
@@ -68,6 +73,7 @@ export const mergeSyncTaskWizardMetadata = {
     diffFileList: [],
     fileSelectionRules: [],
     updatedFileList: [],
+    updatedFileDeltas: [],
     taskId: "",
     recordId: "",
     sfdcToolId: "",
