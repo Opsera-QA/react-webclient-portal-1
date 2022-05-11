@@ -42,6 +42,7 @@ function CoverityScanReportTable(
         isLoading={isLoading}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        loadData={loadData}
       />
     );
   };
