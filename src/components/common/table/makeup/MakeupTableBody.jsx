@@ -58,18 +58,6 @@ function MakeupTableBody(
     );
   };
 
-  if (isLoading) {
-    return (
-      <tr>
-        <td colSpan="100%">
-          <div style={{height: "500px"}}>
-            <CenterLoadingIndicator />
-          </div>
-        </td>
-      </tr>
-    );
-  }
-
   return (
     <tbody
       {...getTableBodyProps()}
