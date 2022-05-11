@@ -83,8 +83,8 @@ const loadData = async (cancelSource = cancelTokenSource, filterDto = filterMode
       null,
       null,
       projectName,
-      pipelineId,
-      runCount
+      runCount,
+      pipelineId
     );
     let dataObject = response?.data ? response?.data?.data[0]?.coverityReportsTable?.data[0]?.data : [];
     let dataCount = response?.data
