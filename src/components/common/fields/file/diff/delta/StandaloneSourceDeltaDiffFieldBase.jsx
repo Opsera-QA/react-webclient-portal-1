@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
+import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
 
 function StandaloneSourceDeltaDiffFieldBase(
   {
@@ -10,8 +11,8 @@ function StandaloneSourceDeltaDiffFieldBase(
     delta,
     language,
     sourceCode,
-    destinationCode,
   }) {
+  const [beginningAddedLineCount, setBeginningAddedLineCount] = useState(0);
   const [sourceLines, setSourceLines] = useState(undefined);
   const [unpackingDelta, setUnpackingDelta] = useState(false);
   const isMounted = useRef(false);
@@ -35,9 +36,13 @@ function StandaloneSourceDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const sourceLinesArray = delta?.source?.lines;
+    const originalArray = delta?.source?.lines;
+    const position = delta?.source?.position;
+    const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, sourceCode);
+    const sourceLinesArray = deltaDiffResponse?.array;
 
     if (Array.isArray(sourceLinesArray)) {
+      setBeginningAddedLineCount(deltaDiffResponse?.beginningAddedLines);
       let unpackedString = "";
 
       sourceLinesArray.forEach((line) => {
@@ -50,6 +55,7 @@ function StandaloneSourceDeltaDiffFieldBase(
 
       setSourceLines(unpackedString);
     }
+
     setUnpackingDelta(false);
   };
 
@@ -59,18 +65,18 @@ function StandaloneSourceDeltaDiffFieldBase(
       fontSize: "12px",
     };
 
-    const type = delta?.type;
-    const position = delta?.source?.position;
+    const changeLength = delta?.source?.lines?.length;
+    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
+      const type = delta?.type;
 
-    // TODO: Should change be blue?
-    // if (type === "CHANGE") {
-    //   style.backgroundColor = "rgba(51,51,255,0.1)";
-    // } else
-
-    if (type === "INSERT" || type === "CHANGE") {
-      style.backgroundColor = "rgba(51,255,51,0.1)";
-    } else if (type === "DELETE") {
-      style.backgroundColor = "rgba(255,51,51,0.2)";
+      // TODO: Should change be blue?
+      if (type === "CHANGE") {
+        style.backgroundColor = "rgba(51,51,255,0.5)";
+      } else if (type === "INSERT") {
+        style.backgroundColor = "rgba(51,255,51,0.1)";
+      } else if (type === "DELETE") {
+        style.backgroundColor = "rgba(255,51,51,0.2)";
+      }
     }
 
     return { style };
@@ -108,12 +114,10 @@ StandaloneSourceDeltaDiffFieldBase.propTypes = {
   isLoading: PropTypes.bool,
   language: PropTypes.string,
   sourceCode: PropTypes.string,
-  destinationCode: PropTypes.string,
 };
 
 StandaloneSourceDeltaDiffFieldBase.defaultProps = {
   language: "javascript",
-  visibleCodeOption: "changed",
 };
 
 export default StandaloneSourceDeltaDiffFieldBase;

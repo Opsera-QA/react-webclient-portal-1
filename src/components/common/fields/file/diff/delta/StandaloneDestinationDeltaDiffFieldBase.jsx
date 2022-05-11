@@ -3,18 +3,16 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
 
 function StandaloneDestinationDeltaDiffFieldBase(
   {
     isLoading,
     delta,
     language,
-    sourceCode,
     destinationCode,
   }) {
   const [beginningAddedLineCount, setBeginningAddedLineCount] = useState(0);
-  const [endAddedLineCount, setEndAddedLineCount] = useState(0);
   const [destinationLines, setDestinationLines] = useState(undefined);
   const [unpackingDelta, setUnpackingDelta] = useState(false);
   const isMounted = useRef(false);
@@ -36,39 +34,15 @@ function StandaloneDestinationDeltaDiffFieldBase(
     };
   }, [delta]);
 
-  console.log("sourceCode: " + JSON.stringify(sourceCode));
-
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const destinationLinesArray = delta?.target?.lines;
+    const originalArray = delta?.target?.lines;
     const position = delta?.target?.position;
-    const endPosition = position + destinationLinesArray?.length;
-    console.log("endPosition: " + endPosition);
-
-    const lines =
-      hasStringValue(destinationCode, false)
-        ? destinationCode.split("\n")
-        : undefined;
+    const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, destinationCode);
+    const destinationLinesArray = deltaDiffResponse?.array;
 
     if (Array.isArray(destinationLinesArray)) {
-      if (Array.isArray(lines) && position >= 1) {
-        let beginningAddedLines = 0;
-        for (let i = position - 1; i >= 0 && i >= position - 5 && i < lines.length; i--) {
-          const line = hasStringValue(lines[i]) === true ? lines[i] : "";
-          beginningAddedLines++;
-          destinationLinesArray.unshift(line);
-        }
-        setBeginningAddedLineCount(beginningAddedLines);
-
-        let endAddedLines = 0;
-        for (let i = endPosition + 1; i < lines.length && i <= endPosition + 5; i++) {
-          const line = hasStringValue(lines[i]) === true ? lines[i] : "";
-            endAddedLines++;
-            destinationLinesArray.push(line);
-        }
-        setEndAddedLineCount(endAddedLines);
-      }
-
+      setBeginningAddedLineCount(deltaDiffResponse?.beginningAddedLines);
       let unpackedString = "";
 
       destinationLinesArray.forEach((line) => {
@@ -81,6 +55,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
 
       setDestinationLines(unpackedString);
     }
+
     setUnpackingDelta(false);
   };
 
@@ -91,12 +66,12 @@ function StandaloneDestinationDeltaDiffFieldBase(
     };
 
     const changeLength = delta?.target?.lines?.length;
-    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength) {
+    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
       const type = delta?.type;
 
       // TODO: Should change be blue?
       if (type === "CHANGE") {
-        style.backgroundColor = "rgba(51,51,255,0.1)";
+        style.backgroundColor = "rgba(51,51,255,0.5)";
       } else if (type === "INSERT") {
         style.backgroundColor = "rgba(51,255,51,0.1)";
       } else if (type === "DELETE") {
@@ -138,14 +113,11 @@ StandaloneDestinationDeltaDiffFieldBase.propTypes = {
   delta: PropTypes.object,
   isLoading: PropTypes.bool,
   language: PropTypes.string,
-  visibleCodeOption: PropTypes.string,
-  sourceCode: PropTypes.string,
   destinationCode: PropTypes.string,
 };
 
 StandaloneDestinationDeltaDiffFieldBase.defaultProps = {
   language: "javascript",
-  visibleCodeOption: "changed",
 };
 
 export default StandaloneDestinationDeltaDiffFieldBase;
