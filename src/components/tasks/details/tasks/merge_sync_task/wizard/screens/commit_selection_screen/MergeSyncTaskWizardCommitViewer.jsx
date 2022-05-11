@@ -7,22 +7,18 @@ import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import {
   comparisonFileMetadata
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/comparisonFile.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import SideBySideDiffField from "components/common/fields/file/diff/SideBySideDiffField";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import MergeSyncTaskWizardSelectFileVersionButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardSelectFileVersionButton";
-import { faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
-import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/SideBySideDeltaDiffField";
+import MergeSyncTaskWizardDiffSelectorVerticalTabContainer
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardDiffSelectorVerticalTabContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import MergeSyncTaskWizardSelectDeltaVersionButton
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
+import MergeSyncTaskWizardCommitFileDiffSelectionsButton
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardCommitFileDiffSelectionsButton";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -101,29 +97,26 @@ const MergeSyncTaskWizardCommitViewer = ({
     }
 
     return (
-      deltas.map((delta, index) => {
-        return (
-          <Col xs={12} key={index}>
-            <SideBySideDeltaDiffField
-              delta={delta}
-              loadDataFunction={loadData}
-              isLoading={isLoading}
-              maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
-              minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
-              leftSideTitleIcon={delta?.ignoreIncoming === false ? faCheckCircle : faTrash}
-              rightSideTitleIcon={delta?.ignoreIncoming === true ? faCheckCircle : faTrash}
-              sourceCode={comparisonFileModel?.getData("sourceContent")}
-              destinationCode={comparisonFileModel?.getData("destinationContent")}
-            />
-          </Col>
-        );
-      })
+      <MergeSyncTaskWizardDiffSelectorVerticalTabContainer
+        deltaList={deltas}
+        isLoading={isLoading}
+        loadDataFunction={loadData}
+        selectDeltaFunction={selectDeltaFunction}
+        destinationContent={comparisonFileModel?.getData("destinationContent")}
+        sourceContent={comparisonFileModel?.getData("sourceContent")}
+      />
     );
   };
 
-  const getUpdatedFileFieldName = () => {
-    const updatedFileList = wizardModel.getArrayData("updatedFileList");
-    return updatedFileList?.find((updatedFile) => updatedFile?.fileName === diffFile?.committedFile)?.fieldName;
+  const selectDeltaFunction = (index, ignoreIncoming) => {
+    const deltas = comparisonFileModel?.getArrayData("deltas");
+    if (Array.isArray(deltas) && deltas.length > index) {
+      const delta = deltas[index];
+      delta.ignoreIncoming = ignoreIncoming;
+      deltas[index] = delta;
+      comparisonFileModel.setData("deltas", [...deltas]);
+      setComparisonFileModel({...comparisonFileModel});
+    }
   };
 
   if (isLoading === true) {
@@ -131,49 +124,20 @@ const MergeSyncTaskWizardCommitViewer = ({
   }
 
   return (
-    <div className={"mt-1 mx-3"} style={{overflowX: "hidden"}}>
-      <Row>
-        <Col xs={12}>
-          <TextFieldBase
-            dataObject={comparisonFileModel}
-            fieldName={"file"}
-          />
-        </Col>
-        {getDiffOptions()}
-      </Row>
-      <SaveButtonContainer
-        extraButtons={
-          <MergeSyncTaskWizardSelectFileVersionButton
-            fileName={diffFile?.committedFile}
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            isLoading={isLoading}
-            comparisonFileModel={comparisonFileModel}
-            fieldName={"destinationContent"}
-            fileContent={comparisonFileModel?.getData("destinationContent")}
-            type={"Destination Branch"}
-            selected={getUpdatedFileFieldName() === "destinationContent"}
-            buttonText={"Keep Existing Changes on Destination Branch"}
-            savingButtonText={"Saving Commit Selection"}
-            savedButtonText={"Keeping Original Changes on Destination Branch"}
-          />
-        }
-      >
-        <MergeSyncTaskWizardSelectFileVersionButton
-          fileName={diffFile?.committedFile}
+    <div className={"mt-1 mx-3"} style={{ overflowX: "hidden" }}>
+      <TextFieldBase
+        dataObject={comparisonFileModel}
+        fieldName={"file"}
+      />
+      {getDiffOptions()}
+      <ButtonContainerBase className={"mt-2"}>
+        <MergeSyncTaskWizardCommitFileDiffSelectionsButton
           wizardModel={wizardModel}
           setWizardModel={setWizardModel}
           isLoading={isLoading}
           comparisonFileModel={comparisonFileModel}
-          fieldName={"sourceContent"}
-          fileContent={comparisonFileModel?.getData("sourceContent")}
-          type={"Source Branch"}
-          selected={getUpdatedFileFieldName() === "sourceContent"}
-          buttonText={"Merge In Changes from Source Branch"}
-          savingButtonText={"Saving Commit Selection"}
-          savedButtonText={"Merging in Changes from Source Branch"}
         />
-      </SaveButtonContainer>
+      </ButtonContainerBase>
     </div>
   );
 };

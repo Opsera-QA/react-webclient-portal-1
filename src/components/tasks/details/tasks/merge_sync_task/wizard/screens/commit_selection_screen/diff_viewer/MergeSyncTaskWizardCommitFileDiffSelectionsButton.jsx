@@ -9,24 +9,16 @@ import axios from "axios";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 
-function MergeSyncTaskWizardSelectDeltaVersionButton(
+function MergeSyncTaskWizardCommitFileDiffSelectionsButton(
   {
     wizardModel,
     setWizardModel,
     comparisonFileModel,
-    fileName,
-    fileContent,
-    type,
     disabled,
     size,
     className,
     icon,
     isLoading,
-    fieldName,
-    selected,
-    buttonText,
-    savingButtonText,
-    savedButtonText,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -50,24 +42,26 @@ function MergeSyncTaskWizardSelectDeltaVersionButton(
     };
   }, []);
 
-  const submitSelectedFile = async () => {
+  const submitDiffSelections = async () => {
     try {
       setIsSaving(true);
-      const response = await mergeSyncTaskWizardActions.updateSelectedFileContent(
+      const fileName = comparisonFileModel?.getData("file");
+      const response = await mergeSyncTaskWizardActions.confirmFileDiffSelections(
         getAccessToken,
         cancelTokenSource,
         wizardModel?.getData("taskId"),
         wizardModel?.getData("runCount"),
         fileName,
-        fileContent,
+        comparisonFileModel?.getData("deltas"),
       );
 
+      console.log("response: " + JSON.stringify(response));
       if (isMounted?.current === true && response) {
-        const newUpdatedFileList = wizardModel?.getArrayData("updatedFileList");
+        const newUpdatedFileList = wizardModel?.getArrayData("updatedFileDeltas");
         const currentIndex = newUpdatedFileList?.findIndex((updatedFile) => updatedFile?.fileName === fileName);
         const newFileData = {
           fileName: fileName,
-          fieldName: fieldName,
+          deltas: comparisonFileModel?.getArrayData("deltas"),
         };
 
         if (currentIndex === -1) {
@@ -76,7 +70,7 @@ function MergeSyncTaskWizardSelectDeltaVersionButton(
         else {
           newUpdatedFileList[currentIndex] = newFileData;
         }
-        wizardModel.setData("updatedFileList", newUpdatedFileList);
+        wizardModel.setData("updatedFileDeltas", newUpdatedFileList);
         setWizardModel({...wizardModel});
       }
     } catch (error) {
@@ -96,15 +90,22 @@ function MergeSyncTaskWizardSelectDeltaVersionButton(
   }
 
   const getLabel = () => {
-    if (selected) {
-      return (savedButtonText);
-    }
-
     if (isSaving) {
-      return (savingButtonText);
+      return ("Saving File Change Selections");
     }
 
-    return (buttonText);
+    if (areSelectionsSaved() === true) {
+      return ("File Change Selections Confirmed");
+    }
+
+    return ("Confirm File Change Selections");
+  };
+
+  const areSelectionsSaved = () => {
+    const newUpdatedFileList = wizardModel?.getArrayData("updatedFileDeltas");
+    const fileName = comparisonFileModel?.getData("file");
+    const currentIndex = newUpdatedFileList?.findIndex((updatedFile) => updatedFile?.fileName === fileName);
+    return currentIndex !== -1;
   };
 
   return (
@@ -112,14 +113,14 @@ function MergeSyncTaskWizardSelectDeltaVersionButton(
       <div className={"d-flex"}>
         <Button
           size={size}
-          variant={selected === true ? "success" : "primary"}
-          disabled={disabled === true || isSaving === true || isLoading === true || selected === true}
-          onClick={submitSelectedFile}
+          variant={areSelectionsSaved() === true ? "success" : "primary"}
+          disabled={disabled === true || isSaving === true || isLoading === true}
+          onClick={submitDiffSelections}
         >
           <span>
             <IconBase
               isLoading={isSaving}
-              icon={selected === true ? faCheckSquare : icon}
+              icon={areSelectionsSaved() === true ? faCheckSquare : icon}
               className={"mr-2"}
             />
             {getLabel()}
@@ -130,28 +131,21 @@ function MergeSyncTaskWizardSelectDeltaVersionButton(
   );
 }
 
-MergeSyncTaskWizardSelectDeltaVersionButton.propTypes = {
+MergeSyncTaskWizardCommitFileDiffSelectionsButton.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   comparisonFileModel: PropTypes.object,
-  fileName: PropTypes.string,
-  fileContent: PropTypes.string,
-  type: PropTypes.string,
   icon: PropTypes.object,
   size: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
-  fieldName: PropTypes.string,
   selected: PropTypes.bool,
-  buttonText: PropTypes.string,
-  savingButtonText: PropTypes.string,
-  savedButtonText: PropTypes.string,
 };
 
-MergeSyncTaskWizardSelectDeltaVersionButton.defaultProps = {
+MergeSyncTaskWizardCommitFileDiffSelectionsButton.defaultProps = {
   size: "sm",
   icon: faQuestionCircle,
 };
 
-export default MergeSyncTaskWizardSelectDeltaVersionButton;
+export default MergeSyncTaskWizardCommitFileDiffSelectionsButton;
