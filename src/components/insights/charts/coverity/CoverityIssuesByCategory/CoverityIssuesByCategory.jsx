@@ -262,6 +262,7 @@ function CoverityIssuesByCategory({
     return (
       <HorizontalDataBlocksContainer
         title={"Top Project with " + issueType + " Issues"}
+        borderColor={issueType}
       >
         {topThreeIssues.map((doc, index) => (
           <>
