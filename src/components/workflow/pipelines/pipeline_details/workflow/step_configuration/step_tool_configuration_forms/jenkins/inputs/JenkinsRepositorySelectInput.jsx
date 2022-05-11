@@ -13,13 +13,14 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled, gitT
 
   const setDataFunction = (fieldName, selectedOption) => {
     const newDataObject = { ...dataObject };
-    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
     newDataObject.setData("repository", selectedOption?.name);
     newDataObject.setData("repoId", repoId);
-    newDataObject.setData("projectId", selectedOption?.id);
+    newDataObject.setData("projectId", repoId);
     newDataObject.setData("gitUrl", gitUrl);
-    newDataObject.setData("sshUrl", selectedOption?.sshUrl || "");
+    newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
