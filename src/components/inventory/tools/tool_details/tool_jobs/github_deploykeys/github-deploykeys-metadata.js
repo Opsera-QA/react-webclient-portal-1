@@ -28,8 +28,6 @@ const githubDeployKeyMetadata = {
       label: "Deploy Key",
       id: "deployKey",
       isRequired: true,
-      maxLength: 255,
-      regexDefinitionName: "customParameterValueRegex",
     }
   ],
   newObjectFields: {
