@@ -64,13 +64,24 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
     []
   );
 
+  // const onRowSelect = (rowData) => {
+  //   toastContext.showOverlayPanel(
+  //     <BlueprintLogOverlay
+  //       pipelineId={rowData?.original?.pipeline}
+  //       runCount={rowData?.original?.run}
+  //     />
+  //   );
+  // };
+
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay
-        pipelineId={rowData?.original?.pipeline}
-        runCount={rowData?.original?.run}
-      />
-    );
+    const row = rowData?.original;
+    const pipelineId = row?.pipelineId;
+    const projectName = row?.project;
+    const runCount = row?.runCount;
+    const coveritySeverity = row?.coveritySeverity;
+
+    toastContext.clearOverlayPanel();
+    history.push(`/insights/reports/scans/sonar/${pipelineId}/${projectName}/${runCount}/${coveritySeverity}`);
   };
 
   const getTable = () => {
