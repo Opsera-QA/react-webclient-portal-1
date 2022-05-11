@@ -22,6 +22,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import MergeSyncTaskWizardSelectFileVersionButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardSelectFileVersionButton";
 import { faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
+import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/SideBySideDeltaDiffField";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -84,12 +85,40 @@ const MergeSyncTaskWizardCommitViewer = ({
       wizardModel?.getData("runCount"),
       diffFile?.committedFile,
     );
-    const newFileMetadata = response?.data?.message;
+    const newFileMetadata = response?.data?.data;
 
     if (isMounted?.current === true && newFileMetadata) {
-      const comparisonFileModel = modelHelpers.parseObjectIntoModel(newFileMetadata, comparisonFileMetadata);
-      setComparisonFileModel(comparisonFileModel);
+      const newComparisonFileModel = modelHelpers.parseObjectIntoModel(newFileMetadata, comparisonFileMetadata);
+      setComparisonFileModel(newComparisonFileModel);
     }
+  };
+
+  const getDiffOptions = () => {
+    const deltas = comparisonFileModel?.getArrayData("deltas");
+
+    if (!Array.isArray(deltas) || deltas.length === 0) {
+      return "No changes returned from the service";
+    }
+
+    return (
+      deltas.map((delta, index) => {
+        return (
+          <Col xs={12} key={index}>
+            <SideBySideDeltaDiffField
+              delta={delta}
+              loadDataFunction={loadData}
+              isLoading={isLoading}
+              maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+              minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+              leftSideTitleIcon={delta?.ignoreIncoming === false ? faCheckCircle : faTrash}
+              rightSideTitleIcon={delta?.ignoreIncoming === true ? faCheckCircle : faTrash}
+              sourceCode={comparisonFileModel?.getData("sourceContent")}
+              destinationCode={comparisonFileModel?.getData("destinationContent")}
+            />
+          </Col>
+        );
+      })
+    );
   };
 
   const getUpdatedFileFieldName = () => {
@@ -107,23 +136,10 @@ const MergeSyncTaskWizardCommitViewer = ({
         <Col xs={12}>
           <TextFieldBase
             dataObject={comparisonFileModel}
-            fieldName={"fullName"}
+            fieldName={"file"}
           />
         </Col>
-        <Col xs={12}>
-          <SideBySideDiffField
-            model={comparisonFileModel}
-            wizardModel={wizardModel}
-            loadDataFunction={loadData}
-            isLoading={isLoading}
-            originalCodeFieldName={"destinationContent"}
-            changedCodeFieldName={"sourceContent"}
-            maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
-            minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
-            leftSideTitleIcon={getUpdatedFileFieldName() === "destinationContent" ? faCheckCircle : getUpdatedFileFieldName() === "sourceContent" ? faTrash : undefined}
-            rightSideTitleIcon={getUpdatedFileFieldName() === "sourceContent" ? faCheckCircle : getUpdatedFileFieldName() === "destinationContent" ? faTrash : undefined}
-          />
-        </Col>
+        {getDiffOptions()}
       </Row>
       <SaveButtonContainer
         extraButtons={
