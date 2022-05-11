@@ -34,10 +34,8 @@ function StandaloneDeltaDiffField(
           titleText={titleText}
           titleIcon={titleIcon}
           sourceCode={sourceCode}
-          destinationCode={destinationCode}
           delta={delta}
           language={language}
-          visibleCodeOption={visibleCodeOption}
           className={"m-0"}
         />
       );
@@ -49,10 +47,8 @@ function StandaloneDeltaDiffField(
         titleText={titleText}
         titleIcon={titleIcon}
         delta={delta}
-        sourceCode={sourceCode}
         destinationCode={destinationCode}
         language={language}
-        visibleCodeOption={visibleCodeOption}
         className={"m-0"}
       />
     );
