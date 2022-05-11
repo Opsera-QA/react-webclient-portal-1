@@ -8,7 +8,6 @@ import { faGit } from "@fortawesome/free-brands-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import salesforceBulkMigrationWizardActions from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 import { bitbucketActions } from "../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import { hasStringValue } from "../../../../../common/helpers/string-helpers";
 import { githubActions } from "../../../../../inventory/tools/tool_details/tool_jobs/github/github.actions";
@@ -187,13 +186,12 @@ const RepoSelectionView = ({
   };
 
   const searchFunction = (item, searchTerm) => {
-    return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return item?.repository?.toLowerCase()?.includes(searchTerm?.toLowerCase());
   };
 
   const getSelectedOptions = () => {
     let selectedArray = [];
     let selectedOptions = dataObject.getData("repositories");
-    console.log(selectedOptions);
     if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
       selectedOptions.forEach((selectedOptionName) => {
         let componentType = repositories.find(
@@ -214,6 +212,7 @@ const RepoSelectionView = ({
     dataObject.setData(fieldName, valueArray);
     setDataObject({ ...newModel });
     setRepositories([...repositories]);
+    callbackFunction();
   };
 
   const callbackFunction = () => {
