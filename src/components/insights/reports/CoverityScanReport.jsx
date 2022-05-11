@@ -6,12 +6,9 @@ import actionableInsightsGenericChartFilterMetadata
   from "../charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import axios from "axios";
 import chartsActions from "../charts/charts-actions";
-import IconBase from "../../common/icons/IconBase";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "../InsightsSubNavigationBar";
-import SonarScanReportTable from "./SonarScanReportTable";
 import CoverityScanReportTable from "./CoverityScanReportTable";
 
 
@@ -150,7 +147,6 @@ useEffect(() => {
       }
     }
   };
-  console.log("allCoverityIssues", allCoverityIssues);
 
   return (
     <ScreenContainer
