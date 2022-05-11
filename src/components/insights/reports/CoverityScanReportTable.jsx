@@ -7,7 +7,7 @@ import {faTally} from "@fortawesome/pro-light-svg-icons";
 import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportSonarQubeScanDetailsButton";
 import coverityScanReportMetadata from "./coverityScanReportTable.metadata";
 
-function SonarScanReportTable(
+function CoverityScanReportTable(
   {
     data,
     allSonarIssues,
@@ -51,14 +51,14 @@ function SonarScanReportTable(
       isLoading={isLoading}
       body={getCoverityScanReportTable()}
       titleIcon={faTally}
-      title={"SonarQube Scan"}
+      title={"Coverity Scan"}
       className={"px-2 pb-2"}
       exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allSonarIssues={data} />}
     />
   );
 }
 
-SonarScanReportTable.propTypes = {
+CoverityScanReportTable.propTypes = {
   data: PropTypes.array,
   allSonarIssues: PropTypes.array,
   isLoading: PropTypes.bool,
@@ -67,4 +67,4 @@ SonarScanReportTable.propTypes = {
   setFilterModel: PropTypes.func,
 };
 
-export default SonarScanReportTable;
+export default CoverityScanReportTable;

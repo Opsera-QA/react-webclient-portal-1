@@ -13,6 +13,7 @@ import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { getFormattedTimestamp } from "../../../../../common/fields/date/DateFieldBase";
+import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
 function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
@@ -20,6 +21,7 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const fields = CoverityActionableMetadata.fields;
   const tableTitle = "Coverity " + title + " Report";
   const noDataMessage = "Coverity " + title + " report is currently unavailable at this time";
+  let history = useHistory();
 
   const getCoverityTableTextColumn = (field, block) => {
     return {
@@ -75,13 +77,13 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
 
   const onRowSelect = (rowData) => {
     const row = rowData?.original;
-    const pipelineId = row?.pipelineId;
+    const pipelineId = row?.pipeline;
     const projectName = row?.project;
-    const runCount = row?.runCount;
+    const runCount = row?.run;
     const coveritySeverity = row?.coveritySeverity;
 
     toastContext.clearOverlayPanel();
-    history.push(`/insights/reports/scans/sonar/${pipelineId}/${projectName}/${runCount}/${coveritySeverity}`);
+    history.push(`/insights/reports/scans/coverity/${pipelineId}/${projectName}/${runCount}/${coveritySeverity}`);
   };
 
   const getTable = () => {

@@ -12,9 +12,10 @@ import PropTypes from "prop-types";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "../InsightsSubNavigationBar";
 import SonarScanReportTable from "./SonarScanReportTable";
+import CoverityScanReportTable from "./CoverityScanReportTable";
 
 
-function CoverityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
+function CoverityScanReport({ kpiConfiguration, dashboardData }) {
   const { pipelineId, projectName, runCount, coveritySeverity } = useParams();
 const history = useHistory();
 const { getAccessToken } = useContext(AuthContext);
@@ -31,6 +32,10 @@ const [filterModel, setFilterModel] = useState(
     false
   )
 );
+  console.log("severity",coveritySeverity);
+  console.log("proj", projectName);
+  console.log("pipeline" ,pipelineId);
+  console.log( "run",runCount);
 
 useEffect(() => {
   if (cancelTokenSource) {
@@ -112,10 +117,10 @@ const loadData = async (cancelSource = cancelTokenSource, filterDto = filterMode
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"reportsViewer"} />}
-      pageDescription={`Downloadable Report for Sonar Scan`}
-      breadcrumbDestination={"sonarReports"}
+      pageDescription={`Downloadable Report for Coverity`}
+      breadcrumbDestination={"coverityReports"}
     >
-      <SonarScanReportTable
+      <CoverityScanReportTable
         data={metrics}
         //allSonarIssues={sonarIssues}
         isLoading={isLoading}
@@ -127,11 +132,11 @@ const loadData = async (cancelSource = cancelTokenSource, filterDto = filterMode
   );
 }
 
-CoverityActionableInsightOverlay.propTypes = {
+CoverityScanReport.propTypes = {
   title: PropTypes.string,
   coveritySeverity: PropTypes.string,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default CoverityActionableInsightOverlay;
+export default CoverityScanReport;
