@@ -58,7 +58,7 @@ export class ToolModel extends ModelBase {
 
     switch (toolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
-        return canRotateToken === true && hasStringValue(data?.configuration?.tokenUuid) === true;
+        return canRotateToken === true;
       default:
         return false;
     }

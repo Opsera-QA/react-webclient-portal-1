@@ -23,7 +23,7 @@ function MergeSyncTaskWizardConfirmationButton(
   };
 
   const getLabel = () => {
-    const updatedFileListLength = wizardModel?.getArrayData("updatedFileList")?.length;
+    const updatedFileListLength = wizardModel?.getArrayData("updatedFileDeltas")?.length;
     const fileOrFiles = updatedFileListLength === 1 || updatedFileListLength === -1 ? "File" : "Files";
     return (`Confirm Merge Sync for ${updatedFileListLength} ${fileOrFiles}`);
   };
@@ -40,7 +40,7 @@ function MergeSyncTaskWizardConfirmationButton(
           variant={"success"}
           disabled={
             disabled === true
-            || wizardModel?.getArrayData("updatedFileList")?.length === 0
+            || wizardModel?.getArrayData("updatedFileDeltas")?.length === 0
           }
           onClick={relocateToConfirmationScreen}
         >

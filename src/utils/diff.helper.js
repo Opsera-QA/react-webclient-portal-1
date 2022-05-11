@@ -90,7 +90,7 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           // If the deletion does not include a newline, highlight the same line on the right
           if (linesToHighlight === 0) {
             separatedResults.secondString.deletedLineNumbers.push(cursor.right);
-            separatedResults.secondString.changedLines(cursor.right);
+            separatedResults.secondString.changedLines.push(cursor.right);
           }
 
           // If the last character is a newline, we don't want to highlight that line
@@ -100,7 +100,7 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
 
           for (let i = cursor.left; i <= cursor.left + linesToHighlight; i++) {
             separatedResults.firstString.deletedLineNumbers.push(i);
-            separatedResults.firstString.changedLines(i);
+            separatedResults.firstString.changedLines.push(i);
           }
 
           cursor.left += lineCount;
@@ -117,7 +117,7 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
           // If the insertion does not include a newline, highlight the same line on the left
           if (linesToHighlight === 0) {
             separatedResults.firstString.insertedLineNumbers.push(cursor.left);
-            separatedResults.firstString.changedLines(cursor.left);
+            separatedResults.firstString.changedLines.push(cursor.left);
           }
 
           // If the last character is a newline, we don't want to highlight that line

@@ -15,7 +15,7 @@ export const comparisonFileMetadata = {
     },
     {
       label: "File Name",
-      id: "fileName",
+      id: "file",
     },
     {
       label: "Full File Name",
@@ -34,7 +34,7 @@ export const comparisonFileMetadata = {
     customerId: "",
     taskId: "",
     runCount: 0,
-    fileName: "",
+    file: "",
     fullName: "",
     sourceContent: "",
     destinationContent: "",
