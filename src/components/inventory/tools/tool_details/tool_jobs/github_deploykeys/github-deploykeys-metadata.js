@@ -25,7 +25,7 @@ const githubDeployKeyMetadata = {
       isRequired: true
     },
     {
-      label: "Deploy Key",
+      label: "Deploy Key (Private Key)",
       id: "deployKey",
       isRequired: true,
     }
