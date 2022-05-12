@@ -1,5 +1,5 @@
 export const mergeSyncTaskWizardSelectedCommitMetadata = {
-  type: "Sfdc Pipeline Wizard Selected Commit",
+  type: "Merge Sync Task Wizard Selected Commit",
   fields: [
     {
       label: "File Name",

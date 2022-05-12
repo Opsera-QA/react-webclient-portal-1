@@ -146,6 +146,7 @@ const MergeSyncTaskWizardCommitSelector = ({
         <MergeSyncTaskWizardConfirmationButton
           setCurrentScreen={setCurrentScreen}
           wizardModel={wizardModel}
+          diffFileList={diffFileList}
         />
         <CancelButton
           size={"sm"}

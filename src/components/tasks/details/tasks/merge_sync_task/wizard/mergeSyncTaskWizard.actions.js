@@ -269,7 +269,6 @@ mergeSyncTaskWizardActions.triggerTaskV2 = async (getAccessToken, cancelTokenSou
 
 mergeSyncTaskWizardActions.runMergeSyncTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
   const postBody = {
-    runCount: wizardModel?.getData("runCount"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
   };
 

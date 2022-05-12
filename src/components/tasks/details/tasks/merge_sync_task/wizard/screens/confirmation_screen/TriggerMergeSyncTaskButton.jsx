@@ -41,7 +41,6 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
         wizardModel,
       );
 
-      console.log("response: " + JSON.stringify(response));
       if (isMounted?.current === true) {
         const message = response?.data;
 

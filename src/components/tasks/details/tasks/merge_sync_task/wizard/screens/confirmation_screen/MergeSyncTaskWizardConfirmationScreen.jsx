@@ -10,6 +10,9 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardSelectedCommitTable
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_commits_table/MergeSyncTaskWizardSelectedCommitTable";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
+import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
 
 const MergeSyncTaskWizardConfirmationScreen = (
   {
@@ -21,14 +24,36 @@ const MergeSyncTaskWizardConfirmationScreen = (
     return null;
   }
 
+  const getFileSelectionTable = () => {
+    if (wizardModel?.getArrayData("updatedFileList")?.length > 0) {
+      return (
+        <MergeSyncTaskWizardSelectedCommitTable
+          sourceCommitList={wizardModel?.getArrayData("updatedFileList")}
+        />
+      );
+    }
+
+    const updatedFileDeltas = wizardModel?.getArrayData("updatedFileDeltas");
+    if (updatedFileDeltas.length > 0) {
+      return (
+        <MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
+            updatedFileDeltas={updatedFileDeltas}
+        />
+      );
+    }
+  };
+
   return (
     <div>
       <div className="h5">Merge Sync Task Wizard: Confirmation Screen</div>
       <div className="text-muted">Would you like to trigger the Merge Sync for these files?</div>
       <div className={"my-3"}>
-        <MergeSyncTaskWizardSelectedCommitTable
-          sourceCommitList={wizardModel?.getArrayData("updatedFileList")}
+        <InlineWarning warningMessage={`
+          Please Note: All files will merge in the incoming changes from the Source Branch unless otherwise selected. 
+          The summary below only contains the manually selected changes.
+       `}
         />
+        {getFileSelectionTable()}
       </div>
       <SaveButtonContainer>
         <BackButton
