@@ -58,7 +58,7 @@ function TimeInput({ fieldName, dataObject, setDataObject, disabled, setDataFunc
   }
 
   return (
-    <InputContainer className={"h-100 my-2"}>
+    <InputContainer className={"h-100 my-2"} fieldName={fieldName}>
       <div className={"content-container h-100"}>
         <InputTitleBar icon={faClock} field={field} customTitle={customTitle} />
         <TimeInputBase

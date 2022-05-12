@@ -6,7 +6,11 @@ export const sourceCommitFileMetadata = {
       id: "committedFile",
     },
     {
-      label: "Commit Time",
+      label: "Component Name",
+      id: "componentName",
+    },
+    {
+      label: "Last Modified Date",
       id: "committedTime",
     },
     {
@@ -14,16 +18,17 @@ export const sourceCommitFileMetadata = {
       id: "commitAction",
     },
     {
-      label: "Committed By",
+      label: "Last Modified By",
       id: "committedBy",
     },
     {
-      label: "Commit ID",
+      label: "Latest Commit ID",
       id: "commitID",
     },
   ],
   newObjectFields: {
     committedFile: "",
+    componentName: "",
     committedTime: "",
     commitAction: "",
     committedBy: "",

@@ -12,8 +12,12 @@ import sourceRepositoryConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-configuration-metadata";
 import PipelineSourceRepositorySummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySummaryPanel";
+import CustomTab from "components/common/tabs/CustomTab";
+import { faCloudDownload } from "@fortawesome/pro-light-svg-icons";
+import PipelineSummaryPanelLite from "components/workflow/pipelines/summary/PipelineSummaryPanelLite";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
-function PipelineSourceRepositoryOverview({ pipeline }) {
+function PipelineSummaryAndWebhookOverviewDetailPanel({ pipeline }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -24,6 +28,12 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
+        return (
+          <PipelineSummaryPanelLite
+            pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
+          />
+        );
+      case "webhook":
         return (
           <PipelineSourceRepositorySummaryPanel
             sourceRepositoryModel={modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata)}
@@ -40,7 +50,15 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab
+          tabText={"Webhook"}
+          icon={faCloudDownload}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabName={"webhook"}
+          disabled={pipeline?.workflow?.source?.trigger_active !== true}
+        />
+        {/*<JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );
   };
@@ -50,19 +68,15 @@ function PipelineSourceRepositoryOverview({ pipeline }) {
   }
 
   return (
-    <PipelineStepDetailsContainer title={`Pipeline Settings`}>
-      <div className={"pt-2 pl-2"}>
-        <GeneralTabPanelContainer
-          currentView={getCurrentView()}
-          tabContainer={getTabContainer()}
-        />
-      </div>
-    </PipelineStepDetailsContainer>
+    <GeneralTabPanelContainer
+      currentView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
   );
 }
 
-PipelineSourceRepositoryOverview.propTypes = {
+PipelineSummaryAndWebhookOverviewDetailPanel.propTypes = {
   pipeline: PropTypes.object,
 };
 
-export default PipelineSourceRepositoryOverview;
+export default PipelineSummaryAndWebhookOverviewDetailPanel;

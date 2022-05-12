@@ -30,7 +30,7 @@ function CalendarInput({ fieldName, dataObject, setDataObject, disabled, setData
   }
 
   return (
-    <InputContainer className={"h-100 my-2"}>
+    <InputContainer className={"h-100 my-2"} fieldName={fieldName}>
       <div
         className={"content-container h-100"}
         style={{width: width + 2}}

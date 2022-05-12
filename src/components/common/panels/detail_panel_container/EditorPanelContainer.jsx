@@ -26,6 +26,7 @@ function EditorPanelContainer(
     getHelpComponent,
     booleanToggleDisabled,
     className,
+    isIncomplete,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -48,6 +49,7 @@ function EditorPanelContainer(
           addAnotherOption={addAnotherOption}
           disable={disable}
           lenient={lenient}
+          isIncomplete={isIncomplete}
         />
       );
     }
@@ -156,6 +158,7 @@ EditorPanelContainer.propTypes = {
   getHelpComponent: PropTypes.func,
   booleanToggleDisabled: PropTypes.bool,
   className: PropTypes.string,
+  isIncomplete: PropTypes.bool,
 };
 
 EditorPanelContainer.defaultProps = {

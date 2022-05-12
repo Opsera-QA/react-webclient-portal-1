@@ -5,12 +5,13 @@ import RepositorySelectInput from "components/common/list_of_values_input/tools/
 function StepConfigGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("projectId", repoId);
-    newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
+    newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
     newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");

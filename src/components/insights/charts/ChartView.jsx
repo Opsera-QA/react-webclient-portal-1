@@ -159,8 +159,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
-import SalesforceComponentsDataBlockChart
-  from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1436,18 +1434,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={12} md={12} className="p-2">
             <SdlcDurationByStageMetrics
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "salesforce-components-chart":
-        return (
-          <Col md={12} className="p-2">
-            <SalesforceComponentsDataBlockChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

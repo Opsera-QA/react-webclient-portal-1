@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
@@ -22,9 +21,11 @@ import GitToGitMergeSyncTaskWizardFileSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
 import MergeSyncTaskWizardCommitSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { TASK_TYPES } from "components/tasks/task.types";
 
 const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
-  const [error, setError] = useState("");
+  const toastContext = useContext(DialogToastContext);
   const [currentScreen, setCurrentScreen] = useState(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -35,6 +36,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       cancelTokenSource.cancel();
     }
 
+    toastContext.removeInlineMessage();
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
@@ -56,6 +58,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setDefaultValue("selectedFileList");
     newWizardModel.setDefaultValue("diffFileList");
     newWizardModel.setDefaultValue("errorMessage");
+    newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
 
     const runCount = taskModel?.getData("run_count");
@@ -79,7 +82,6 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
             mergeSyncType={"Git to Git"}
-            setError={setError}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
@@ -89,7 +91,6 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            setError={setError}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
@@ -113,11 +114,9 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
         return (
           <MergeSyncTaskWizardConfirmationScreen
-            pipelineWizardModel={wizardModel}
-            setPipelineWizardModel={setWizardModel}
-            setPipelineWizardScreen={setCurrentScreen}
+            wizardModel={wizardModel}
+            setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            setError={setError}
           />
         );
     }
@@ -149,9 +148,6 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
-      <div>
-        <ErrorDialog error={error} />
-      </div>
       <div className={"m-3"}>
         {getBody()}
       </div>

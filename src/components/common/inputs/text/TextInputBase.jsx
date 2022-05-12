@@ -26,6 +26,7 @@ function TextInputBase(
     rightSideInputButton,
     inputButtons,
     inputHelpOverlay,
+    visible,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -123,12 +124,12 @@ function TextInputBase(
     );
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         showLabel={showLabel}
@@ -172,6 +173,7 @@ TextInputBase.propTypes = {
   ]),
   rightSideInputButton: PropTypes.object,
   inputButtons: PropTypes.any,
+  visible: PropTypes.bool,
 };
 
 export default TextInputBase;

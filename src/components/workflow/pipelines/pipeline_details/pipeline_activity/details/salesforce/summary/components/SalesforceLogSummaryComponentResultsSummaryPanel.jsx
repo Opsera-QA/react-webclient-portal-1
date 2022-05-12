@@ -26,7 +26,7 @@ function SalesforceLogSummaryComponentResultsSummaryPanel({ salesforceDeployResu
   };
 
   return (
-    <SummaryPanelContainer className={"step-configuration-summary mt-3 mx-3"}>
+    <SummaryPanelContainer className={"mt-3 mx-3"}>
       <Row>
         <Col lg={12}>
           <H4FieldSubHeader subheaderText={"Component Details"} />

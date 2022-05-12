@@ -21,15 +21,15 @@ function StandaloneDiffFieldBase(
     visibleCodeOption,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const [unpackingDiff, setUnpackingDiff] = useState(true);
-  const separatedDiffLineNumbers = useRef(undefined);
+  const [unpackingDiff, setUnpackingDiff] = useState(false);
+  const [diffLineNumbers, setDiffLineNumbers] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
-    separatedDiffLineNumbers.current = undefined;
     isMounted.current = true;
+    setDiffLineNumbers(undefined);
 
-    if (hasStringValue(originalCode) === true && hasStringValue(changedCode) === true) {
+    if (hasStringValue(originalCode, false) === true && hasStringValue(changedCode, false) === true) {
       calculateDiffLineNumbers().catch((error) => {
         console.error(error);
       });
@@ -43,7 +43,7 @@ function StandaloneDiffFieldBase(
   const calculateDiffLineNumbers = async () => {
     try {
       setUnpackingDiff(true);
-      separatedDiffLineNumbers.current = diffHelper.getSeparatedDiffLineNumbers(originalCode, changedCode);
+      setDiffLineNumbers(diffHelper.getSeparatedDiffLineNumbers(originalCode, changedCode));
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     } finally {
@@ -57,7 +57,7 @@ function StandaloneDiffFieldBase(
     const style = {
       display: "block",
     };
-    const diffObject = visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? separatedDiffLineNumbers?.current?.firstString : separatedDiffLineNumbers?.current?.secondString;
+    const diffObject = visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? diffLineNumbers?.firstString : diffLineNumbers?.secondString;
     const insertedLineNumbers = diffObject?.insertedLineNumbers;
     const deletedLineNumbers = diffObject?.deletedLineNumbers;
 

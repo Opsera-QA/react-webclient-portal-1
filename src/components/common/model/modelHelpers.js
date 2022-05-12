@@ -2,6 +2,7 @@ import Model from "core/data_model/model";
 import ModelBase from "core/data_model/model.base";
 import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import _ from "lodash";
 
 const modelHelpers = {};
 
@@ -32,6 +33,15 @@ modelHelpers.parseObjectIntoModel = (object, metaData) => {
   }
 
   return new Model(object, clonedMetadata, false);
+};
+
+modelHelpers.parseFilterModel = (metaData) => {
+  if (metaData == null) {
+    return null;
+  }
+
+  const clonedMetadata = _.cloneDeep(metaData);
+  return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, false);
 };
 
 modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
@@ -79,7 +89,8 @@ modelHelpers.getDashboardFilterModel = (kpiConfiguration, type, dashboardFilterM
 };
 
 modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) => {
-  let dashboardFilters = kpiConfiguration.getArrayData("filters");
+  const newModel = {...kpiConfiguration};
+  let dashboardFilters = newModel.getArrayData("filters");
   let index = dashboardFilters?.findIndex((filter) => filter.type === type);
 
   if (index == null || index === -1) {
@@ -89,9 +100,9 @@ modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) =
     dashboardFilters[index].value = newValue;
   }
 
-  kpiConfiguration.setData("filters", dashboardFilters);
+  newModel.setData("filters", dashboardFilters);
 
-  return kpiConfiguration;
+  return newModel;
 };
 
 modelHelpers.getDashboardSettingsModel = (kpiConfiguration, metadata = kpiSettingsMetadata) => {

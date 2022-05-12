@@ -4,8 +4,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
 import Model from "core/data_model/model";
-import MergeSyncTaskFileSelectionFieldSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskFileSelectionFieldSelectInput";
+import GitToGitMergeSyncTaskFileSelectionFieldSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/file_selection/GitToGitMergeSyncTaskFileSelectionFieldSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import RuleFilterTypeSelectInput
@@ -17,6 +17,11 @@ import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
 import {
   mergeSyncTaskFileSelectionRuleMetadata
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/mergeSyncTaskFileSelectionRule.metadata";
+import { TASK_TYPES } from "components/tasks/task.types";
+import SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/file_selection/SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput";
+import MergeSyncTaskFileSelectionFieldSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/file_selection/MergeSyncTaskFileSelectionFieldSelectInput";
 
 function MergeSyncTaskFileSelectionRuleInputPanel(
   {
@@ -92,6 +97,7 @@ function MergeSyncTaskFileSelectionRuleInputPanel(
           <MergeSyncTaskFileSelectionFieldSelectInput
             model={ruleModel}
             setModel={setRuleModel}
+            taskType={wizardModel?.getData("taskType")}
           />
         </Col>
         <Col xs={4}>

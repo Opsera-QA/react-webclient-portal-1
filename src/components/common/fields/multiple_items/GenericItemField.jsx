@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
-// TODO: Final styling when implementing
+// TODO: Finalize styling
 function GenericItemField({dataObject, fieldName, className}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const getItems = () => {
-    if (dataObject?.getData(fieldName) == null || dataObject?.getData(fieldName)?.length === 0) {
+    const items = dataObject?.getArrayData(fieldName);
+    if (items == null || items?.length === 0) {
       return <span>No Items Applied</span>;
     }
 
     return (
-      dataObject.getData(fieldName).map((item, i) => {
+      items.map((item, i) => {
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light generic-badge">
             {item}
@@ -22,6 +23,10 @@ function GenericItemField({dataObject, fieldName, className}) {
       })
     );
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>

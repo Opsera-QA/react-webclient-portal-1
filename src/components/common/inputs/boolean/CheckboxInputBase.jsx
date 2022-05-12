@@ -27,7 +27,7 @@ function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disable
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="checkbox"
         id={field?.id}

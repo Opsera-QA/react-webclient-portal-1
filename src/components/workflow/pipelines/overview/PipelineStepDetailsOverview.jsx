@@ -54,7 +54,7 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
     if (featureFlagHideItemInProd() === false) {
       return (
         <CustomTab
-          tabText={"YAML View"}
+          tabText={"Configuration (YAML)"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabName={"yaml"}

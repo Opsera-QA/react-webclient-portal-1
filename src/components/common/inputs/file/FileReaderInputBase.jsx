@@ -104,7 +104,7 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel field={field} model={model} />
       <div className={"d-flex"}>
         <FileSelectButton

@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
@@ -6,14 +6,27 @@ import {
   faChartArea,
   faChartNetwork, faCircle,
   faRadar,
-  faUserChart
+  faUserChart,
+  faLink
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
+import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
+import axios from "axios";
 
 function InsightsSubNavigationBar({currentTab}) {
+  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const history = useHistory();
+
+  useEffect(async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  }, []);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -34,6 +47,9 @@ function InsightsSubNavigationBar({currentTab}) {
       case "release360":
         history.push(`/insights/release360`);
         return;
+      case "connectedAssets":
+        history.push(`/insights/connected-assets`);
+        return;
     }
   };
 
@@ -47,6 +63,16 @@ function InsightsSubNavigationBar({currentTab}) {
             handleTabClick={handleTabClick}
             activeTab={"dashboardViewer"}
             tabText={"Dashboard Viewer"}
+          />
+        );
+      case "reportsViewer":
+        return (
+          <NavigationTab
+            icon={faUserChart}
+            tabName={"reportsViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={"reportsViewer"}
+            tabText={"Reports Viewer"}
           />
         );
       default:
@@ -95,13 +121,20 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Synopsis"}
       /> */}
       {/* {getRelease360Tab()} */}
+      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
+        icon={faLink}
+        tabName={"connectedAssets"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Connected Assets"}
+      /> }
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
 InsightsSubNavigationBar.propTypes = {
-  currentTab: PropTypes.string,
+  currentTab: PropTypes.string
 };
 
 export default InsightsSubNavigationBar;

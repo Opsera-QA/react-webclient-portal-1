@@ -14,6 +14,10 @@ function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSi
     return item + " results per page";
   };
 
+  if (loadData == null) {
+    return null;
+  }
+
   return (
     <FilterSelectInputBase
       selectOptions={pageSizeList}

@@ -41,6 +41,7 @@ primary analytics font*/
 .metric-block-header-text {
     font-size: 1rem;
     letter-spacing: 1px;
+    overflow-wrap: break-word;
 }
 
 .metric-block-content-text {

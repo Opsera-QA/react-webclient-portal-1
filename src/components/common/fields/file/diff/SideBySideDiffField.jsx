@@ -57,6 +57,7 @@ function SideBySideDiffField(
                 titleIcon={rightSideTitleIcon}
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
+                visibleCodeOption={VISIBLE_CODE_OPTIONS.CHANGED}
                 language={language}
                 className={"m-0"}
               />
@@ -69,7 +70,7 @@ function SideBySideDiffField(
 }
 
 SideBySideDiffField.propTypes = {
-  model: PropTypes.string,
+  model: PropTypes.object,
   originalCodeFieldName: PropTypes.string,
   changedCodeFieldName: PropTypes.string,
   className: PropTypes.string,

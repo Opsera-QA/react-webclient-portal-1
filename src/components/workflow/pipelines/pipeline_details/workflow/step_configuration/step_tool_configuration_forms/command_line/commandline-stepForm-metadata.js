@@ -161,6 +161,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Output Parameters",
+      id: "outputCustomParameters",
+      maxItems: 15,
+    },
+    {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
     },
@@ -357,6 +362,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Output Parameters",
+      id: "outputCustomParameters",
+      maxItems: 15,
+    },
+    {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
     },    
@@ -432,6 +442,7 @@ const commandLineStepFormMetadata = {
     commands: "",
     terraformStepId: "",
     customParameters: [],
+    outputCustomParameters: [],
     useTerraformOutput : false,
     sonarScanFlag: false,
     saveSonarParameters: false,

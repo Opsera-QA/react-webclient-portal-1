@@ -160,6 +160,7 @@ const MergeSyncTaskWizardFileSelector = ({
         isLoading={isLoading}
         loadData={loadData}
         ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
+        taskType={wizardModel?.getData("taskType")}
       />
       <SaveButtonContainer>
         <BackButton

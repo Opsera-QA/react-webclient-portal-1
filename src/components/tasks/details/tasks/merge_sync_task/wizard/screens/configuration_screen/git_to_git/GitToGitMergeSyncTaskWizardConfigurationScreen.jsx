@@ -17,7 +17,6 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
   setWizardModel,
   setCurrentScreen,
   handleClose,
-  setError,
 }) => {
   if (wizardModel == null) {
     return null;
@@ -29,20 +28,24 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
         Git to Git Merge Sync Task Wizard: Commit Configuration Selection
       </div>
       <Row className="my-3">
-        <Col xs={6}>
+        <Col xs={0} sm={3} />
+        <Col xs={12} sm={6} md={6}>
           <DateTimeInputBase
             dataObject={wizardModel}
             setDataObject={setWizardModel}
             fieldName={"fromDate"}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={0} sm={3} />
+        <Col xs={0} sm={3} />
+        <Col xs={12} sm={6}>
           <DateTimeInputBase
             dataObject={wizardModel}
             setDataObject={setWizardModel}
             fieldName={"toDate"}
           />
         </Col>
+        <Col xs={0} sm={3} />
       </Row>
       <SaveButtonContainer>
         <BackButton
@@ -56,7 +59,6 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
         <MergeSyncTaskWizardUpdateConfigurationButton
           wizardModel={wizardModel}
           setCurrentScreen={setCurrentScreen}
-          setError={setError}
         />
         <CancelButton
           className={"ml-2"}
@@ -73,7 +75,6 @@ GitToGitMergeSyncTaskWizardConfigurationScreen.propTypes = {
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setError: PropTypes.func,
 };
 
 export default GitToGitMergeSyncTaskWizardConfigurationScreen;

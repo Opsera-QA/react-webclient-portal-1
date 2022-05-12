@@ -23,9 +23,17 @@ function PipelineDetailsOverview({ pipeline }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <PipelineOverviewContainer pipeline={pipeline} />;
+        return (
+          <PipelineOverviewContainer
+            pipeline={pipeline}
+          />
+        );
       case "json":
-        return <PipelineStepJsonPanel pipelineStepData={pipeline} />;
+        return (
+          <PipelineStepJsonPanel
+            pipelineStepData={pipeline}
+          />
+        );
       case "yaml":
       default:
         return null;
@@ -36,7 +44,7 @@ function PipelineDetailsOverview({ pipeline }) {
     if (featureFlagHideItemInProd() === false) {
       return (
         <CustomTab
-          tabText={"YAML View"}
+          tabText={"Configuration (YAML)"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabName={"yaml"}

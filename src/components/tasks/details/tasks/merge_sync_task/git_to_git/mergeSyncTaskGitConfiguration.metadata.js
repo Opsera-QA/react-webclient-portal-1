@@ -1,4 +1,6 @@
-export const gitToGitMergeSyncTaskConfigurationMetadata = {
+import { TASK_TYPES } from "components/tasks/task.types";
+
+export const mergeSyncTaskGitConfigurationMetadata = {
   type: "Git to Git Merge Sync Task Configuration",
   fields: [
     {
@@ -42,7 +44,9 @@ export const gitToGitMergeSyncTaskConfigurationMetadata = {
     {
       label: "Source Branch",
       id: "sourceBranch",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC;
+      },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
       formText: "Source Branch cannot match Target Branch.",
@@ -63,7 +67,7 @@ export const gitToGitMergeSyncTaskConfigurationMetadata = {
       label: "Upstream Branch",
       id: "upstreamBranch",
       maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
+      regexDefinitionName: "gitBranchName",
       formText: "Target Branch cannot match Source Branch.",
       isRequiredFunction: (model) => {
         return model?.getData("isNewBranch") === true;
@@ -76,10 +80,11 @@ export const gitToGitMergeSyncTaskConfigurationMetadata = {
     service: "",
     workspace: "",
     repository: "",
-    repositoryName: "", // TODO: Remove
+    repositoryName: "",
     targetBranch: "",
     sourceBranch: "",
     upstreamBranch: "",
     isNewBranch: false,
+    jobType: "",
   }
 };

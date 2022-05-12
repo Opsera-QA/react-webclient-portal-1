@@ -9,6 +9,10 @@ import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {TASK_TYPES} from "components/tasks/task.types";
 import CancelTaskButton from "components/tasks/buttons/CancelTaskButton";
+import GitToGitMergeSyncTaskWizardOverlay
+  from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
+import SalesforceToGitMergeSyncTaskWizardOverlay
+  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -77,15 +81,61 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
     );
   };
 
-  const showTaskRunOverlay = () => {
-    toastContext.showOverlayPanel(
-      <RunTaskOverlay
-        handleClose={handleClose}
-        taskModel={taskModel}
-        setTaskModel={setTaskModel}
-        loadData={loadData}
-      />
-    );
+  const showTaskRunOverlay = async () => {
+    if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
+      try{
+        setTaskStarting(true);
+        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        // gitTasksData.setData("configuration", configuration);
+        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <GitToGitMergeSyncTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      } finally {
+        if (isMounted?.current === true) {
+          setTaskStarting(false);
+        }
+      }
+    }
+    else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
+      try{
+        setTaskStarting(true);
+        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        // gitTasksData.setData("configuration", configuration);
+        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceToGitMergeSyncTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      } finally {
+        if (isMounted?.current === true) {
+          setTaskStarting(false);
+        }
+      }
+    }
+    else {
+      toastContext.showOverlayPanel(
+        <RunTaskOverlay
+          handleClose={handleClose}
+          taskModel={taskModel}
+          setTaskModel={setTaskModel}
+          loadData={loadData}
+        />
+      );
+    }
   };
 
   if (!ALLOWED_TASK_TYPES.includes(taskType)) {

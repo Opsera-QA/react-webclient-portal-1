@@ -20,7 +20,6 @@ function DeleteToolsPlatformApplicationSelectInput({model, setModel, disabled}) 
   return (
     <PlatformApplicationSelectInput
       fieldName={"applicationId"}
-      requireConfiguration={true}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
@@ -34,6 +33,10 @@ DeleteToolsPlatformApplicationSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+};
+
+DeleteToolsPlatformApplicationSelectInput.defaultProps = {
+  disabled: "false",
 };
 
 export default DeleteToolsPlatformApplicationSelectInput;
