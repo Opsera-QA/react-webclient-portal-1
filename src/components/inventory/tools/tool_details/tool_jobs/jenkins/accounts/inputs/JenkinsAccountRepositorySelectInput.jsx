@@ -6,6 +6,7 @@ function JenkinsAccountRepositorySelectInput({ visible, model, setModel, disable
     const setDataFunction = (fieldName, selectedOption) => {
         let newModel = { ...model };
         newModel.setData(fieldName, selectedOption?._id || "");
+        newModel.setData("accountUserName", selectedOption?.configuration?.accountUsername || "");
         setModel({ ...newModel });
     };
 
