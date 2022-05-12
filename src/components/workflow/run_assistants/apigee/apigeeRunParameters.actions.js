@@ -51,3 +51,13 @@ apigeeRunParametersActions.getApigeeEnvironments = async (getAccessToken, cancel
   const apiUrl = `tools/${toolId}/apigee/getEnvironments`;
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+apigeeRunParametersActions.getMigrationObjectDependencies = async (getAccessToken, cancelTokenSource, toolId, dataObject) => {
+  const apiUrl = `/pipelines/apigee/run-parameters/migration-objects/dependencies`;
+  const postBody = {
+    toolId: toolId,
+    name: dataObject.name,
+    type: dataObject.type
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
