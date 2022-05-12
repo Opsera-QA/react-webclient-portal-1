@@ -14,7 +14,7 @@ function GitscraperSummaryPanel({ gitTasksData, gitTaskConfigurationData, isLoad
   return (
     <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"type"} />
+        {/*<TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"type"} />*/}
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         <ToolNameField dataObject={gitTaskConfigurationData} fieldName={"gitToolId"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"secretsException"} />

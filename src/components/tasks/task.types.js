@@ -60,7 +60,7 @@ export const TASK_TYPE_LABELS = {
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",
   GIT_TO_GIT_MERGE_SYNC: "Git to Git Merge Sync",
-  GITSCRAPER: "Gitscraper Scan",
+  GITSCRAPER: "Git Custodian",
 
   // AWS
   AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",

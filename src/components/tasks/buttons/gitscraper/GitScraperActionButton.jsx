@@ -99,7 +99,7 @@ function GitScraperActionButton(
   const handleRunTask = async () => {
     try {
       await taskActions.startGitscraperScan(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
-      toastContext.showSuccessDialog("Gitscraper Scan Triggered Successfully");
+      toastContext.showSuccessDialog("Git Custodian Triggered Successfully");
       setIsTaskRunning(true);
       await startTaskPolling();
     } catch (error) {
@@ -107,11 +107,11 @@ function GitScraperActionButton(
       isMounted.current = false;
       console.log(error);
       if (error?.error?.response?.data?.message) {
-        toastContext.showCreateFailureResultDialog("Gitscraper Scan", error.error.response.data.message);
+        toastContext.showCreateFailureResultDialog("Git Custodian Scan", error.error.response.data.message);
       } else {
         toastContext.showCreateFailureResultDialog(
-          "Gitscraper Scan",
-          "A service level error has occurred in creation of the Gitscraper Scan - check the Activity Logs for a complete error log."
+          "Git Custodian Scan",
+          "A service level error has occurred in creation of the Git Custodian Scan - check the Activity Logs for a complete error log."
         );
       }
     }

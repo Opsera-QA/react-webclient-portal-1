@@ -103,7 +103,7 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
   return (
     <VanitySetTabAndViewContainer
       icon={faSalesforce}
-      title={`Gitscraper Execution Summary`}
+      title={`Git Custodian Execution Summary`}
       defaultActiveKey={"summary"}
       verticalTabContainer={
         <VanitySetVerticalTabContainer>
