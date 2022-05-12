@@ -15,8 +15,6 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import MergeSyncTaskWizardDiffSelectorVerticalTabContainer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardDiffSelectorVerticalTabContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import MergeSyncTaskWizardSelectDeltaVersionButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
 import MergeSyncTaskWizardCommitFileDiffSelectionsButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardCommitFileDiffSelectionsButton";
 
