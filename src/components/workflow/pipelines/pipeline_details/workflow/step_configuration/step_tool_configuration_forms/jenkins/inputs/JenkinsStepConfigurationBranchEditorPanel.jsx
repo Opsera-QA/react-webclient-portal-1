@@ -134,7 +134,7 @@ JenkinsStepConfigurationBranchEditorPanel.propTypes = {
 };
 
 JenkinsStepConfigurationBranchEditorPanel.defaultProps = {
-  fieldName: "branch",
+  fieldName: "gitBranch",
 };
 
 export default JenkinsStepConfigurationBranchEditorPanel;
