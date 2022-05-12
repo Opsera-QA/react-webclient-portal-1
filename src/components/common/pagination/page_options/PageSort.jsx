@@ -11,7 +11,7 @@ function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
     loadData(paginationDto);
   };
 
-  if (paginationDto?.getFieldById("sortOption") == null || paginationDto?.getMetaData()?.sortOptions == null) {
+  if (paginationDto?.getFieldById("sortOption") == null || paginationDto?.getMetaData()?.sortOptions == null || loadData == null) {
     return null;
   }
 

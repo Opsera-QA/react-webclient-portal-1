@@ -82,7 +82,6 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
   };
 
   const showTaskRunOverlay = async () => {
-    console.log("in task run overlay");
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
         setTaskStarting(true);
