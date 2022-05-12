@@ -184,6 +184,19 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       {getSonarScannerInputFields()}
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
+      <ParameterSelectListInputBase
+        titleIcon={faHandshake}
+        dataObject={commandLineStepConfigurationDto}
+        setDataObject={setCommandLineStepConfigurationDataDto}
+        fieldName={"outputCustomParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Output Parameter Selection"}
+        plan={plan}
+        tool_prop={commandLineStepConfigurationDto?.getData("terraformStepId") && commandLineStepConfigurationDto?.getData("terraformStepId").length > 0 ?
+          commandLineStepConfigurationDto?.getData("terraformStepId") : ""}
+      />
       <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
     </PipelineStepEditorPanelContainer>
   );
