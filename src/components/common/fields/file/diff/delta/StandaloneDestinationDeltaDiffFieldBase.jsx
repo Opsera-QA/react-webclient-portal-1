@@ -34,6 +34,8 @@ function StandaloneDestinationDeltaDiffFieldBase(
     };
   }, [delta]);
 
+  console.log("delta: " + JSON.stringify(delta));
+
   const unpackDelta = async () => {
     setUnpackingDelta(true);
     const originalArray = delta?.target?.lines;
@@ -64,6 +66,8 @@ function StandaloneDestinationDeltaDiffFieldBase(
       display: "block",
       fontSize: "12px",
     };
+
+    console.log("lineNumber: " + JSON.stringify(lineNumber));
 
     const changeLength = delta?.target?.lines?.length;
     if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
@@ -101,7 +105,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
         wrapLines={true}
         wrapLongLines={true}
         showLineNumbers={true}
-        showInlineLineNumbers={true}
+        showInlineLineNumbers={false}
       >
         {destinationLines}
       </SyntaxHighlighter>

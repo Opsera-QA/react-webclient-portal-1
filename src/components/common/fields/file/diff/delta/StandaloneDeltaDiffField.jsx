@@ -6,9 +6,9 @@ import StandaloneSourceDeltaDiffFieldBase from "components/common/fields/file/di
 import StandaloneDestinationDeltaDiffFieldBase
   from "components/common/fields/file/diff/delta/StandaloneDestinationDeltaDiffFieldBase";
 
-export const VISIBLE_CODE_OPTIONS = {
-  ORIGINAL: "original",
-  CHANGED: "changed",
+export const VISIBLE_BRANCH_CODE_OPTIONS = {
+  SOURCE: "source",
+  DESTINATION: "destination",
 };
 
 function StandaloneDeltaDiffField(
@@ -27,7 +27,7 @@ function StandaloneDeltaDiffField(
     destinationCode,
   }) {
   const getDiffField = () => {
-    if (visibleCodeOption === VISIBLE_CODE_OPTIONS.CHANGED) {
+    if (visibleCodeOption === VISIBLE_BRANCH_CODE_OPTIONS.SOURCE) {
       return (
         <StandaloneSourceDeltaDiffFieldBase
           isLoading={isLoading}

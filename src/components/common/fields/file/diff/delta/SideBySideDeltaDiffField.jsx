@@ -5,7 +5,9 @@ import Col from "react-bootstrap/Col";
 import { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
-import StandaloneDeltaDiffField from "components/common/fields/file/diff/delta/StandaloneDeltaDiffField";
+import StandaloneDeltaDiffField, {
+  VISIBLE_BRANCH_CODE_OPTIONS,
+} from "components/common/fields/file/diff/delta/StandaloneDeltaDiffField";
 
 function SideBySideDeltaDiffField(
   {
@@ -43,7 +45,7 @@ function SideBySideDeltaDiffField(
                 titleIcon={leftSideTitleIcon}
                 delta={delta}
                 language={language}
-                visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
+                visibleCodeOption={VISIBLE_BRANCH_CODE_OPTIONS.DESTINATION}
                 sourceCode={sourceCode}
                 destinationCode={destinationCode}
                 className={"m-0"}
@@ -55,7 +57,7 @@ function SideBySideDeltaDiffField(
                 titleText={"Incoming Changes"}
                 titleIcon={rightSideTitleIcon}
                 delta={delta}
-                visibleCodeOption={VISIBLE_CODE_OPTIONS.CHANGED}
+                visibleCodeOption={VISIBLE_BRANCH_CODE_OPTIONS.SOURCE}
                 language={language}
                 sourceCode={sourceCode}
                 destinationCode={destinationCode}

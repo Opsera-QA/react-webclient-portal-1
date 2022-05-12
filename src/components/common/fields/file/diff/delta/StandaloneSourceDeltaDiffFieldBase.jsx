@@ -101,7 +101,7 @@ function StandaloneSourceDeltaDiffFieldBase(
         wrapLines={true}
         wrapLongLines={true}
         showLineNumbers={true}
-        showInlineLineNumbers={true}
+        showInlineLineNumbers={false}
       >
         {sourceLines}
       </SyntaxHighlighter>
