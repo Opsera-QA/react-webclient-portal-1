@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
-import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
@@ -8,7 +7,6 @@ import chartsActions from "components/insights/charts/charts-actions";
 
 import {
   getLimitedTableTextColumn,
-  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import deploymentAnalysisMetadata from "./development-analysis-metadata";
@@ -18,38 +16,51 @@ import genericChartFilterMetadata from "components/insights/charts/generic_filte
 import ModalLogs from "components/common/modal/modalLogs";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
+import DeploymentAnalysisTable from "./DeploymentAnalysisTable";
 
-function DeploymentAnalysis({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function DeploymentAnalysis({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const fields = deploymentAnalysisMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [activeTab,setActiveTab] =useState();
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false,
+    ),
   );
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(undefined);
-  const [metadataName, setMetadataName] = useState([]);
-  const [metadataInfo,setMetadataInfo] = useState([]);
+  const [metadataInfo, setMetadataInfo] = useState([]);
 
   const noDataMessage = "No Data is available for this chart at this time";
 
   const columns = useMemo(
     () => [
-      getLimitedTableTextColumn(getField(fields,"destination"),30),
-      getTableTextColumn(getField(fields,"namespace")),
-      getTableTextColumn(getField(fields,"pipelineId")),
-      getTableTextColumn(getField(fields,"runCount")),
-      getTableTextColumn(getField(fields,"status")),
-      getTableTextColumn(getField(fields,"metadataName")),
-      getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
-      getTableTextColumn(getField(fields,"pipelineName")),
-      getTableTextColumn(getField(fields,"version")),
+      getLimitedTableTextColumn(getField(fields, "destination"), 30),
+      getTableTextColumn(getField(fields, "namespace")),
+      getTableTextColumn(getField(fields, "pipelineId")),
+      getTableTextColumn(getField(fields, "runCount")),
+      getTableTextColumn(getField(fields, "status")),
+      getTableTextColumn(getField(fields, "metadataName")),
+      getLimitedTableTextColumn(getField(fields, "artifactoryName"), 20),
+      getTableTextColumn(getField(fields, "pipelineName")),
+      getTableTextColumn(getField(fields, "version")),
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -73,56 +84,23 @@ function DeploymentAnalysis({ kpiConfiguration, setKpiConfiguration, dashboardDa
     };
   }, [JSON.stringify(dashboardData)]);
 
-  // const loadMetadataInfo = async(cancelSource = cancelTokenSource, filterDto = tableFilterDto) =>{
-    
-  //   const response = await chartsActions.getMetadataInfo(
-  //           kpiConfiguration,
-  //           getAccessToken,
-  //           cancelSource,
-  //         );
-  //   setMetadataInfo(response);
-  // };
+  const loadMetadataInfo = async (cancelSource = cancelTokenSource) => {
+    const response = await chartsActions.getMetadataInfo(
+      kpiConfiguration,
+      getAccessToken,
+      cancelSource,
+    );
+    setMetadataInfo(response?.data?.data);
+    setActiveTab(response?.data?.data[0].metadataName);
+  };
 
-
-// const loadData =  async(cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
-//   try {
-//     setIsLoading(true);
-//     await loadMetadataInfo(cancelSource, filterDto);
-//   } catch (error) {
-//     if (isMounted?.current === true) {
-//         console.error(error);
-//         setError(error);
-//       }
-//   } finally {
-//       if (isMounted?.current === true) {
-//         setIsLoading(false);
-//       }
-//   }
-  
-// // };
-// const getTable = (test) => {
-//   return "ABC";
-// };
-
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.getDeploymentAnalysis(
-        kpiConfiguration,
-        getAccessToken,
-        cancelSource,
-        "test" // this is going to be the metadataname
-        // dashboardTags,
-        // dashboardOrgs,
-      );
-      let dataObject = response?.data[0]?.data;
-
-      if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data[0]?.count[0].count);
-        setTableFilterDto({ ...newFilterDto });
-      }
+      await loadMetadataInfo(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -134,68 +112,82 @@ function DeploymentAnalysis({ kpiConfiguration, setKpiConfiguration, dashboardDa
       }
     }
   };
-  const onRowSelect = (rowData) => {
-    setModalData(rowData.original);
-    setShowModal(true);
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
   };
 
-  const getChartTable = () => {
+
+  const getTable = () => {
+    if (!metadataInfo || metadataInfo.length === 0) {
+      return null;
+    }
     return (
-      <CustomTable
-        columns={columns}
-        data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
-        loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+      <VanitySetTabViewContainer>
+        {metadataInfo.map((item) => (
+          <VanitySetTabView
+            key={item.metadataName}
+            tabKey={item.metadataName}
+            
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+          >
+            <DeploymentAnalysisTable metadataName={item.metadataName} dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
+          </VanitySetTabView>
+        ))}
+      </VanitySetTabViewContainer>
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    if (!metadataInfo || metadataInfo.length === 0) {
+      return null;
+    }
+    const tabs = [];
+    if (Array.isArray(metadataInfo) && metadataInfo.length > 0) {
+      for (let i = 0; i <= metadataInfo.length - 1; i++) {
+        tabs.push(
+          <VanitySetVerticalTab
+            tabText={metadataInfo[i]?.metadataName}
+            tabName={metadataInfo[i]?.metadataName} 
+          />
+        );
+      }
+    }
+    return (
+      <div className={"h-100"}>
+        <div
+          style={{ backgroundColor: "#F3F3F1", border: "1px solid #e4e4e4" }}
+          className={"py-2 w-100 px-2"}
+        >
+          <div>Application Name</div>
+        </div>
+        <VanitySetVerticalTabContainer className={"h-100"}>
+          {tabs}
+        </VanitySetVerticalTabContainer>
+      </div>
+    );
+  };
+
+  const getData = () => {
+    return (
+      <VanitySetTabAndViewContainer
+        className={"mb-3"}
+        title={`List of Deployment Analysis`}
+        defaultActiveKey={metadataInfo[0]?.metadataName}
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getTable()}
       />
     );
   };
-  // const getVerticalTabContainer = () => {
-
-  //   if(!actionInsightsTraceabilityTable || actionInsightsTraceabilityTable.length === 0) {
-  //       return null;
-  //     }
-  //     const tabs = [];
-  //     if (Array.isArray(actionInsightsTraceabilityTable) && actionInsightsTraceabilityTable.length > 0) {
-  //       for(let i = 0; i <= actionInsightsTraceabilityTable.length - 1; i++) {
-  //         tabs.push(
-  //           <VanitySetVerticalTab
-  //             tabText={actionInsightsTraceabilityTable[i]?.applicationName}
-  //             tabName={actionInsightsTraceabilityTable[i]?.applicationName}
-  //           />
-  //         );
-  //       }
-  //     }
-  //     return (
-  //       <div className={"h-100"}>
-  //         <div style={{backgroundColor:"#F3F3F1",border:"1px solid #e4e4e4"}} className={"py-2 w-100 px-2"}>
-  //           <div>Application Name</div>
-  //         </div>
-  //         <VanitySetVerticalTabContainer className={"h-100"}>
-  //           {tabs}
-  //         </VanitySetVerticalTabContainer>
-  //       </div>
-  //     );
-
-  //   // return(<VanitySetTabAndViewContainer
-  //   //   className={"mb-3"}
-  //   //   title={`List of Successful Workflow Steps by Application`}
-  //   //   defaultActiveKey={metadataInfo[0]?.metadataName}
-  //   //   verticalTabContainer={getVerticalTabContainer()}
-  //   //   currentView={getTable()}
-  //   // />
-  //   // );
-  // };
 
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getData()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}

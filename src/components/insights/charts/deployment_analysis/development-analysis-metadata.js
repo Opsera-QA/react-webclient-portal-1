@@ -2,15 +2,17 @@ const deploymentAnalysisMetadata = {
     idProperty: "_id",
     type: "Deployment Analysis",
     fields:[
-      {label: "destination", id: "destination"},
-      {label: "namespace", id: "namespace"},
-      {label: "pipelineId", id: "pipelineId"},
-      {label: "runCount", id: "runCount"},
-      {label: "status", id: "status"},
-      {label: "metadataName", id: "metadataName"},
-      {label: "artifactoryName", id: "artifactoryName"},
-      {label: "pipelineName", id: "pipelineName"},
-      {label: "version", id: "version"},
+      {label: "Artifactory Name", id: "artifactoryName"},
+      {label: "Pipeline Name", id: "pipelineName"},
+      {label: "Run Count", id: "runCount"},
+      //{label: "Time Stamp", id: "timeStamp"},
+      {label: "Deployment Status", id: "status"},
+      {label: "Version", id: "version"},
+      
+      {label: "Environment", id: "destination"},
+      // {label: "Namespace", id: "namespace"},
+      // {label: "Pipeline Id", id: "pipelineId"},
+      // {label: "Metadata Name", id: "metadataName"},
     ],
     newObjectFields: {
     }

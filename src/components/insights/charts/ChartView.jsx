@@ -1485,19 +1485,21 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case "deployment-analytics":
+          return(
+            <Col md={12} className="p-2">
+              <DeploymentAnalysis
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
         case "development-analysis-chart":
           return (
-            <>
             <Col md={12} className="p-2">
-                <DeploymentAnalysis
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-                />
-              </Col>
-              <Col md={12} className="p-2">
                 <DevelopmentAnalysisDataBlockChart
                   kpiConfiguration={kpiConfig}
                   setKpiConfiguration={setKpiConfig}
@@ -1506,20 +1508,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                   index={index}
                 />
               </Col>
-            </>
             );
-
-          // return (
-          //   <Col md={12} className="p-2">
-          //     <DevelopmentAnalysisDataBlockChart
-          //       kpiConfiguration={kpiConfig}
-          //       setKpiConfiguration={setKpiConfig}
-          //       dashboardData={dashboardData}
-          //       setKpis={setKpis}
-          //       index={index}
-          //     />
-          //   </Col>
-          // );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (

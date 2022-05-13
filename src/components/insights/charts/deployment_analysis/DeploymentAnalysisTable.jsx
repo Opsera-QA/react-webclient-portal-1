@@ -1,23 +1,20 @@
 import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 
 import {
   getLimitedTableTextColumn,
-  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import deploymentAnalysisMetadata from "./development-analysis-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ModalLogs from "components/common/modal/modalLogs";
 
-function DeploymentAnalysisTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function DeploymentAnalysisTable({ kpiConfiguration, metadataName, dashboardData }) {
   const fields = deploymentAnalysisMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -35,15 +32,15 @@ function DeploymentAnalysisTable({ kpiConfiguration, setKpiConfiguration, dashbo
 
   const columns = useMemo(
     () => [
-      getLimitedTableTextColumn(getField(fields,"destination"),30),
-      getTableTextColumn(getField(fields,"namespace")),
-      getTableTextColumn(getField(fields,"pipelineId")),
-      getTableTextColumn(getField(fields,"runCount")),
-      getTableTextColumn(getField(fields,"status")),
-      getTableTextColumn(getField(fields,"metadataName")),
       getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
       getTableTextColumn(getField(fields,"pipelineName")),
+      getTableTextColumn(getField(fields,"runCount")),
+      getTableTextColumn(getField(fields,"status")),
       getTableTextColumn(getField(fields,"version")),
+      getLimitedTableTextColumn(getField(fields,"destination"),30),
+      // getTableTextColumn(getField(fields,"namespace")),
+      // getTableTextColumn(getField(fields,"pipelineId")),
+      // getTableTextColumn(getField(fields,"metadataName")),
     ],
     []
   );
@@ -76,16 +73,17 @@ function DeploymentAnalysisTable({ kpiConfiguration, setKpiConfiguration, dashbo
         kpiConfiguration,
         getAccessToken,
         cancelSource,
-        "test" // this is going to be the metadataname
+        metadataName, // this is going to be the metadataname
         // dashboardTags,
         // dashboardOrgs,
+        filterDto
       );
-      let dataObject = response?.data[0]?.data;
-
+      let dataObject = response?.data?.data[0]?.data;
+        console.log(response?.data?.data[0]?.data,'***Test table');
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data[0]?.count[0].count);
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.count[0].count);
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
@@ -104,53 +102,27 @@ function DeploymentAnalysisTable({ kpiConfiguration, setKpiConfiguration, dashbo
     setShowModal(true);
   };
 
-  const getChartTable = () => {
-    return (
-      <CustomTable
-        columns={columns}
-        data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
-        loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
-      />
-    );
-  };
+  
 
   return (
-    <div>
-      <ChartContainer
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
-        loadChart={loadData}
-        dashboardData={dashboardData}
-        index={index}
-        error={error}
-        setKpis={setKpis}
-        isLoading={isLoading}
-        tableChart={true}
-      />
-      <ModalLogs
-        header="Deployemnt Analysis"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
-      />
-    </div>
+    <CustomTable
+    columns={columns}
+    data={metrics}
+    noDataMessage={noDataMessage}
+    paginationDto={tableFilterDto}
+    setPaginationDto={setTableFilterDto}
+    loadData={loadData}
+    scrollOnLoad={false}
+    onRowSelect={onRowSelect}
+  />
   );
 }
 
 DeploymentAnalysisTable.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
+ metadataName:PropTypes.string.isRequired,
+ kpiConfiguration: PropTypes.object,
+ dashboardData: PropTypes.object,
+
 };
 
 export default DeploymentAnalysisTable;
