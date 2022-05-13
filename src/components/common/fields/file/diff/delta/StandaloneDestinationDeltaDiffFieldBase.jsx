@@ -41,6 +41,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
     setUnpackingDelta(true);
     const originalArray = dataParsingHelper.parseArray(delta?.source?.lines, []);
     const position = delta?.source?.position;
+    const endPosition = position + originalArray.length;
     const changedArray = dataParsingHelper.parseArray(delta?.target?.lines, []);
     const unpackedChangedLineCount = Array.isArray(changedArray) ? changedArray.length : 0;
     setChangedLineCount(unpackedChangedLineCount);
@@ -49,7 +50,12 @@ function StandaloneDestinationDeltaDiffFieldBase(
       originalArray.unshift(...changedArray);
     }
 
-    const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, destinationCode);
+    const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(
+      position,
+      originalArray,
+      destinationCode,
+      endPosition,
+    );
     const destinationLinesArray = deltaDiffResponse?.array;
 
     if (Array.isArray(destinationLinesArray)) {
@@ -57,11 +63,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
       let unpackedString = "";
 
       destinationLinesArray.forEach((line) => {
-        if (unpackedString.length > 0) {
-          unpackedString += `\n`;
-        }
-
-        unpackedString += line;
+        unpackedString += `${line}\n`;
       });
 
       setDestinationLines(unpackedString);
@@ -78,27 +80,27 @@ function StandaloneDestinationDeltaDiffFieldBase(
 
     const changeLength = delta?.source?.lines?.length;
 
-    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + 1) {
+    if (lineNumber > beginningAddedLineCount && lineNumber <= beginningAddedLineCount + changedLineCount) {
       style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
-    } else if (lineNumber > beginningAddedLineCount + changedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + changeLength + 1) {
+    } else if (lineNumber > beginningAddedLineCount + changedLineCount && lineNumber <= beginningAddedLineCount + changedLineCount + changeLength) {
       style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
     }
 
     return { style };
   };
 
-  if (delta == null) {
-    return null;
-  }
+  const getBody = () => {
+    if (delta == null) {
+      return null;
+    }
 
-  if (isLoading === true || unpackingDelta === true) {
+    if (isLoading === true || unpackingDelta === true) {
+      return (
+        <LoadingDialog size={"sm"} message={"Loading Data"} />
+      );
+    }
+
     return (
-      <LoadingDialog size={"sm"} message={"Loading Data"} />
-    );
-  }
-
-  return (
-    <div className={"p-1"}>
       <SyntaxHighlighter
         style={styling}
         lineProps={(lineNumber) => getLineNumberStyling(lineNumber)}
@@ -110,6 +112,12 @@ function StandaloneDestinationDeltaDiffFieldBase(
       >
         {destinationLines}
       </SyntaxHighlighter>
+    );
+  };
+
+  return (
+    <div className={"p-1"}>
+      {getBody()}
     </div>
   );
 }
