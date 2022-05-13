@@ -9,7 +9,7 @@ import {
   getLimitedTableTextColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import deploymentAnalysisMetadata from "./development-analysis-metadata";
+import DeploymentAnalyticsMetadata from "./development-analysis-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
@@ -19,16 +19,16 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import DeploymentAnalysisTable from "./DeploymentAnalysisTable";
+import DeploymentAnalyticsTable from "./DeploymentAnalyticsTable";
 
-function DeploymentAnalysis({
+function DeploymentAnalytics({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
   index,
   setKpis,
 }) {
-  const fields = deploymentAnalysisMetadata.fields;
+  const fields = DeploymentAnalyticsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -133,7 +133,7 @@ function DeploymentAnalysis({
         handleTabClick={handleTabClick}
         activeTab={activeTab}
           >
-            <DeploymentAnalysisTable metadataName={item.metadataName} dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
+            <DeploymentAnalyticsTable metadataName={item.metadataName} dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
           </VanitySetTabView>
         ))}
       </VanitySetTabViewContainer>
@@ -177,7 +177,6 @@ function DeploymentAnalysis({
     return (
       <VanitySetTabAndViewContainer
         className={"mb-3"}
-        title={`List of Deployment Analysis`}
         defaultActiveKey={metadataInfo[0]?.metadataName}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTable()}
@@ -211,7 +210,7 @@ function DeploymentAnalysis({
   );
 }
 
-DeploymentAnalysis.propTypes = {
+DeploymentAnalytics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -219,4 +218,4 @@ DeploymentAnalysis.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default DeploymentAnalysis;
+export default DeploymentAnalytics;

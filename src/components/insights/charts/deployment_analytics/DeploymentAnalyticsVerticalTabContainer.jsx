@@ -4,7 +4,7 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 
-function DeploymentAnalysisVerticalTabContainer({ highestMergesMetric }) {
+function DeploymentAnalyticsVerticalTabContainer({ highestMergesMetric }) {
   const [activeTab, setActiveTab] = useState();
   useEffect(() => {
     if (highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]) {
@@ -20,7 +20,7 @@ function DeploymentAnalysisVerticalTabContainer({ highestMergesMetric }) {
     </VanitySetVerticalTabContainer>
   );
 }
-DeploymentAnalysisVerticalTabContainer.propTypes = {
+DeploymentAnalyticsVerticalTabContainer.propTypes = {
   highestMergesMetric: PropTypes.array,
 };
-export default DeploymentAnalysisVerticalTabContainer;
+export default DeploymentAnalyticsVerticalTabContainer;

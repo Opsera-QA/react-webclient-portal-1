@@ -9,13 +9,13 @@ import {
   getLimitedTableTextColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import deploymentAnalysisMetadata from "./development-analysis-metadata";
+import DeploymentAnalyticsMetadata from "./development-analysis-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function DeploymentAnalysisTable({ kpiConfiguration, metadataName, dashboardData }) {
-  const fields = deploymentAnalysisMetadata.fields;
+function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardData }) {
+  const fields = DeploymentAnalyticsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +69,7 @@ function DeploymentAnalysisTable({ kpiConfiguration, metadataName, dashboardData
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.getDeploymentAnalysis(
+      const response = await chartsActions.getDeploymentAnalytics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
@@ -118,11 +118,11 @@ function DeploymentAnalysisTable({ kpiConfiguration, metadataName, dashboardData
   );
 }
 
-DeploymentAnalysisTable.propTypes = {
+DeploymentAnalyticsTable.propTypes = {
  metadataName:PropTypes.string.isRequired,
  kpiConfiguration: PropTypes.object,
  dashboardData: PropTypes.object,
 
 };
 
-export default DeploymentAnalysisTable;
+export default DeploymentAnalyticsTable;

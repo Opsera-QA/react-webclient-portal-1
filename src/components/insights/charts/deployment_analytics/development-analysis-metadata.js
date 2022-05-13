@@ -1,4 +1,4 @@
-const deploymentAnalysisMetadata = {
+const DeploymentAnalyticsMetadata = {
     idProperty: "_id",
     type: "Deployment Analysis",
     fields:[
@@ -18,4 +18,4 @@ const deploymentAnalysisMetadata = {
     }
   };
   
-  export default deploymentAnalysisMetadata;
+  export default DeploymentAnalyticsMetadata;
