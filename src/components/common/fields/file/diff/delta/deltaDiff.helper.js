@@ -2,9 +2,8 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const deltaDiffHelper = {};
 
-deltaDiffHelper.addDeltaContextLines = (position, originalArray, totalLineString) => {
+deltaDiffHelper.addDeltaContextLines = (position, originalArray, totalLineString, endPosition) => {
   if (Array.isArray(originalArray)) {
-    const endPosition = position + originalArray?.length;
     const arrayCopy = [...originalArray];
 
     const lines =
@@ -20,7 +19,7 @@ deltaDiffHelper.addDeltaContextLines = (position, originalArray, totalLineString
         arrayCopy.unshift(line);
       }
 
-      for (let i = endPosition; i < lines.length && i <= endPosition + 5; i++) {
+      for (let i = endPosition; i >= 0 && i < lines.length && i <= endPosition + 5; i++) {
         const line = hasStringValue(lines[i]) === true ? lines[i] : "";
         arrayCopy.push(line);
       }
