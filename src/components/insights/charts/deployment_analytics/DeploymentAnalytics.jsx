@@ -4,13 +4,6 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-
-import {
-  getLimitedTableTextColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
-import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
-import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ModalLogs from "components/common/modal/modalLogs";
@@ -28,7 +21,6 @@ function DeploymentAnalytics({
   index,
   setKpis,
 }) {
-  const fields = DeploymentAnalyticsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,21 +38,6 @@ function DeploymentAnalytics({
   const [modalData, setModalData] = useState(undefined);
   const [metadataInfo, setMetadataInfo] = useState([]);
 
-
-  const columns = useMemo(
-    () => [
-      getLimitedTableTextColumn(getField(fields, "destination"), 30),
-      getTableTextColumn(getField(fields, "namespace")),
-      getTableTextColumn(getField(fields, "pipelineId")),
-      getTableTextColumn(getField(fields, "runCount")),
-      getTableTextColumn(getField(fields, "status")),
-      getTableTextColumn(getField(fields, "metadataName")),
-      getLimitedTableTextColumn(getField(fields, "artifactoryName"), 20),
-      getTableTextColumn(getField(fields, "pipelineName")),
-      getTableTextColumn(getField(fields, "version")),
-    ],
-    [],
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -198,7 +175,7 @@ function DeploymentAnalytics({
         tableChart={true}
       />
       <ModalLogs
-        header="Deployemnt Analysis"
+        header="Deployemnt Analytics"
         size="lg"
         jsonMessage={modalData}
         dataType="bar"
