@@ -4,7 +4,7 @@ import _ from "lodash";
 export const dataParsingHelper = {};
 
 dataParsingHelper.parseArray = (array, defaultValue = false) => {
-  return Array.isArray(array) ? array : defaultValue;
+  return Array.isArray(array) ? [...array] : defaultValue;
 };
 
 dataParsingHelper.parseString = (string, defaultValue = false) => {

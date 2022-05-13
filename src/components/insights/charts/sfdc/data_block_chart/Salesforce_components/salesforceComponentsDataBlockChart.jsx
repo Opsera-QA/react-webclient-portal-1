@@ -186,7 +186,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
                 }
                 icon={getIcon(metrics[0]?.trends?.totalComponentsDeployed)}
                 className={getIconColor(metrics[0]?.trends?.totalComponentsDeployed)}
-                lastScore={metrics[0]?.previousResults?.totalComponentsDeployed}
+                lastScore={metrics?.previousResults?.totalComponentsDeployed}
                 iconOverlayBody={getDescription(metrics[0]?.trends?.totalComponentsDeployed)}
                 dataPoint={totalComponentsDataPoint}
               />
@@ -307,6 +307,5 @@ SalesforceComponentsDataBlockChart.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
 };
-
 
 export default SalesforceComponentsDataBlockChart;

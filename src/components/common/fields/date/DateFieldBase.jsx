@@ -15,7 +15,7 @@ export const getFormattedTimestamp = (date) => {
 function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
-  if (dataObject == null) {
+  if (dataObject == null || field == null) {
     return null;
   }
 

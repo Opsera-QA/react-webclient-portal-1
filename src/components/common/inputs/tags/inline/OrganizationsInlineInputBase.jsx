@@ -1,21 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import EditIcon from "components/common/icons/field/EditIcon";
 import OrganizationMultiSelectOverlay from "components/common/inputs/tags/inline/modal/OrganizationMultiSelectOverlay";
 import AppliedOrganizationsBadge from "components/common/badges/tag/AppliedOrganizationsBadge";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunction, visible, type, tagLocation }) {
+function OrganizationsInlineInputBase({ model, fieldName, disabled, saveDataFunction, visible, tagLocation, loadData, }) {
   const toastContext = useContext(DialogToastContext);
 
   const showEditor = () => {
     toastContext.showOverlayPanel(
       <OrganizationMultiSelectOverlay
-        type={type}
-        dataObject={model}
+        model={model}
         fieldName={fieldName}
         saveDataFunction={saveDataFunction}
-        showModal={true}
+        loadData={loadData}
       />
     );
   };
@@ -54,7 +53,7 @@ OrganizationsInlineInputBase.propTypes = {
   visible: PropTypes.bool,
   tagLocation: PropTypes.string,
   saveDataFunction: PropTypes.func,
-  type: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 OrganizationsInlineInputBase.defaultProps = {

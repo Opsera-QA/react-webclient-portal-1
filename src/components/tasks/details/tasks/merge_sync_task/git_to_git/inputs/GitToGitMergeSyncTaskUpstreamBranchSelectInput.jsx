@@ -1,12 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function GitToGitMergeSyncTaskUpstreamBranchSelectInput({
-  model,
-  setModel,
-  disabled,
-}) {
+function GitToGitMergeSyncTaskUpstreamBranchSelectInput(
+  {
+    model,
+    setModel,
+    setDataFunction,
+    sourceBranch,
+    disabled,
+  }) {
+  const getDisabledOptions = () => {
+    if (disabled === true) {
+      return true;
+    }
+
+    if (hasStringValue(sourceBranch) === true) {
+      return [sourceBranch];
+    }
+  };
+
   return (
     <GitBranchInput
       fieldName={"upstreamBranch"}
@@ -15,9 +29,9 @@ function GitToGitMergeSyncTaskUpstreamBranchSelectInput({
       workspace={model?.getData("workspace")}
       repoId={model?.getData("repoId")}
       dataObject={model}
+      setDataFunction={setDataFunction}
       setDataObject={setModel}
-      disabled={disabled}
-      visible={model?.getData("isNewBranch") === true}
+      disabled={getDisabledOptions()}
     />
   );
 }
@@ -25,6 +39,8 @@ function GitToGitMergeSyncTaskUpstreamBranchSelectInput({
 GitToGitMergeSyncTaskUpstreamBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  sourceBranch: PropTypes.string,
   disabled: PropTypes.bool,
 };
 

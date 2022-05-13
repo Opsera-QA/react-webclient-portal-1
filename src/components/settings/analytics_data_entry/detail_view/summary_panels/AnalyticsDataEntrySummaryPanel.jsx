@@ -82,7 +82,7 @@ function AnalyticsDataEntrySummary({ analyticsDataEntry, setActiveTab }) {
     }
   };
 
-  return <div className={"step-configuration-summary h-100"}>{getAnalyticsDataEntrySummary()}</div>;
+  return <div className={"h-100"}>{getAnalyticsDataEntrySummary()}</div>;
 }
 
 AnalyticsDataEntrySummary.propTypes = {

@@ -53,6 +53,25 @@ taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObje
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBody) => {
+  const apiUrl = `/tasks/${taskId}/run`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+    );
+};
+
+taskActions.stopTaskV3 = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tasks/${taskId}/stop`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, fields) => {
   const apiUrl = `/tasks`;
   const urlParams = {
@@ -191,14 +210,17 @@ taskActions.triggerTask = async (getAccessToken, cancelTokenSource, taskData) =>
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.stopTaskv2 = async (getAccessToken, cancelTokenSource, taskData) => {
-  const postBody = {
-    taskId: taskData.getData("_id"),
-    ...taskData.getData("configuration")
-  };
-
-  const apiUrl = `/tasks/${taskData.getData("_id")}/stop`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+taskActions.getTaskAuditLogsByTaskId = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+) => {
+  const apiUrl = `/audit-logs/task/${taskId}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
 
 export default taskActions;

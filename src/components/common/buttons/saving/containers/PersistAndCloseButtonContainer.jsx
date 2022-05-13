@@ -6,7 +6,19 @@ import CreateButton from "../CreateButton";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 
-function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable, lenient, extraButtons }) {
+function PersistAndCloseButtonContainer(
+  {
+    recordDto,
+    setRecordDto,
+    updateRecord,
+    createRecord,
+    handleClose,
+    addAnotherOption,
+    disable,
+    lenient,
+    extraButtons,
+    isIncomplete,
+  }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
       return (
@@ -18,15 +30,30 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
           addAnotherOption={addAnotherOption}
           disable={disable}
           lenient={lenient}
+          isIncomplete={isIncomplete}
         />
       );
     }
 
     if (lenient) {
-      return (<LenientSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);
+      return (
+        <LenientSaveButton
+          recordDto={recordDto}
+          updateRecord={updateRecord}
+          disable={disable}
+          isIncomplete={isIncomplete}
+        />
+      );
     }
 
-    return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);
+    return (
+      <StrictSaveButton
+        recordDto={recordDto}
+        updateRecord={updateRecord}
+        disable={disable}
+        isIncomplete={isIncomplete}
+      />
+    );
   };
 
   // Don't show close button when using create modal. At least for now
@@ -60,7 +87,8 @@ PersistAndCloseButtonContainer.propTypes = {
   disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
   lenient: PropTypes.bool,
-  extraButtons: PropTypes.any
+  extraButtons: PropTypes.any,
+  isIncomplete: PropTypes.bool,
 };
 
 PersistAndCloseButtonContainer.defaultProps = {

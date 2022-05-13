@@ -4,8 +4,6 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelpDocumentation
-  from "components/common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 
@@ -109,7 +107,7 @@ function BooleanToggleInput(
 
   return (
     <div className={className}>
-      <InputContainer>
+      <InputContainer fieldName={fieldName}>
         <div className={"d-flex"}>
           <Form.Check
             type={"switch"}

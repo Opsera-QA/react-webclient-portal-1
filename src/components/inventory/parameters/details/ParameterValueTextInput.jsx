@@ -75,7 +75,7 @@ function ParameterValueTextInput(
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel field={field} model={model}/>
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <textarea

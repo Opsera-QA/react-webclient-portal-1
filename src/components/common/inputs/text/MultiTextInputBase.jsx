@@ -83,7 +83,7 @@ function MultiTextInputBase(
   }
 
   return (
-    <InputContainer className={className ? className : undefined}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         field={field}

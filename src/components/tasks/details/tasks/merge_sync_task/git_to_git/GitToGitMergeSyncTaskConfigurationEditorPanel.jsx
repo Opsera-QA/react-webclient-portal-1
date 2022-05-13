@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import { gitToGitMergeSyncTaskConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/gitToGitMergeSyncTaskConfiguration.metadata";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import GitToGitMergeSyncTaskSourceControlTypeSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlTypeSelectInput";
 import GitToGitMergeSyncTaskSourceControlToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
@@ -23,6 +23,9 @@ import {
   mergeSyncTaskConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import { TASK_TYPES } from "components/tasks/task.types";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 
 function GitToGitMergeSyncTaskConfigurationEditorPanel({
   taskModel,
@@ -44,8 +47,9 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
     setTaskConfigurationModel({ ...configurationData });
     const newGitModel = modelHelpers.getToolConfigurationModel(
       configurationData?.getData("git"),
-      gitToGitMergeSyncTaskConfigurationMetadata,
+      mergeSyncTaskGitConfigurationMetadata,
     );
+    newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     setGitConfigurationModel({...newGitModel});
   };
 
@@ -53,6 +57,38 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
     setGitConfigurationModel({...newModel});
     taskConfigurationModel?.setData("git", gitConfigurationModel?.getPersistData());
     setTaskConfigurationModel({...taskConfigurationModel});
+  };
+
+  const getDestinationBranchInputs = () => {
+    if (gitConfigurationModel?.getData("isNewBranch") === true) {
+      return (
+        <>
+          <Col lg={12}>
+            <GitToGitMergeSyncTaskUpstreamBranchSelectInput
+              model={gitConfigurationModel}
+              setModel={setModelFunction}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={gitConfigurationModel}
+              setDataObject={setModelFunction}
+              fieldName={"targetBranch"}
+            />
+          </Col>
+        </>
+      );
+    }
+
+    return (
+      <Col lg={12}>
+        <GitToGitMergeSyncTaskTargetBranchSelectInput
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
+        />
+      </Col>
+    );
   };
 
   if (taskModel == null || taskConfigurationModel == null || gitConfigurationModel == null) {
@@ -94,25 +130,12 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
         />
       </Col>
       <Col lg={12}>
-        <GitToGitMergeSyncTaskTargetBranchSelectInput
-          model={gitConfigurationModel}
-          setModel={setModelFunction}
-          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
-        />
-      </Col>
-      <Col lg={12}>
-        <BooleanToggleInput
-          dataObject={gitConfigurationModel}
-          setDataObject={setModelFunction}
-          fieldName={"isNewBranch"}
-        />
-      </Col>
-      <Col lg={12}>
-        <GitToGitMergeSyncTaskUpstreamBranchSelectInput
+        <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />
       </Col>
+      {getDestinationBranchInputs()}
     </Row>
   );
 }

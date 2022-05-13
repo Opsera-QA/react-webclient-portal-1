@@ -11,7 +11,6 @@ const MergeSyncTaskWizardInitializationScreen = ({
   setWizardModel,
   setCurrentScreen,
   handleClose,
-  setError,
   mergeSyncType,
 }) => {
   const getBody = () => {
@@ -34,7 +33,6 @@ const MergeSyncTaskWizardInitializationScreen = ({
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
-            setError={setError}
             className={"mr-2"}
           />
           <CancelButton
@@ -50,7 +48,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
   const getMainView = () => {
     return (
       <div>
-        <div className={"h5"}>Git to Git Merge Sync: Initialization</div>
+        <div className={"h5"}>{`${mergeSyncType} Merge Sync: Initialization`}</div>
         <div className={"my-3"}>{getBody()}</div>
       </div>
     );
@@ -69,7 +67,6 @@ MergeSyncTaskWizardInitializationScreen.propTypes = {
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setError: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardInitializationScreen;

@@ -1,6 +1,6 @@
 export const mergeSyncTaskWizardMetadata = {
   idProperty: "_id",
-  type: "Sfdc Pipeline Wizard Metadata",
+  type: "Merge Sync Task Wizard Metadata",
   activeField: "active",
   fields: [
     {
@@ -20,11 +20,20 @@ export const mergeSyncTaskWizardMetadata = {
       id: "sourceCommitFiles",
     },
     {
+      label: "Salesforce Source Tool ID",
+      id: "sfdcToolId",
+    },
+    {
       label: "Selected File List",
       id: "selectedFileList",
-    },{
+    },
+    {
       label: "Updated File List",
       id: "updatedFileList",
+    },
+    {
+      label: "Updated File Change Delta List",
+      id: "updatedFileDeltas",
     },
     {
       label: "Diff Files List",
@@ -47,6 +56,10 @@ export const mergeSyncTaskWizardMetadata = {
       id: "taskId",
     },
     {
+      label: "Task Type",
+      id: "taskType",
+    },
+    {
       label: "Run Count",
       id: "runCount",
     },
@@ -60,8 +73,11 @@ export const mergeSyncTaskWizardMetadata = {
     diffFileList: [],
     fileSelectionRules: [],
     updatedFileList: [],
+    updatedFileDeltas: [],
     taskId: "",
     recordId: "",
+    sfdcToolId: "",
     runCount: 1,
+    type: "",
   }
 };

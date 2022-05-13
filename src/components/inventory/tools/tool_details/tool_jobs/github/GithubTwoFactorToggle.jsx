@@ -19,7 +19,7 @@ function GithubTwoFactorToggle({dataObject, setDataObject, fieldName, disabled})
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

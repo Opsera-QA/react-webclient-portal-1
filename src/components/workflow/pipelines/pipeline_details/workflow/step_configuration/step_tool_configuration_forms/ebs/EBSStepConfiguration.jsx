@@ -202,6 +202,11 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       <EBSCreateDomainToggleInput dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"createDomain"}/>
       {getDynamicDomainFields()}
       {getCustomDockerFields()}
+      <TextInputBase
+          setDataObject={setEBSStepConfigurationDataDto}
+          dataObject={ebsStepConfigurationDto}
+          fieldName={"delayTime"}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }

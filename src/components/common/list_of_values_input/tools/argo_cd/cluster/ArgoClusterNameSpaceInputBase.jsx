@@ -213,7 +213,7 @@ function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, di
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <PropertyInputContainer
         titleIcon={titleIcon}
         field={field}

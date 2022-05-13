@@ -28,11 +28,11 @@ sfdcTableConstants.fields = [
     id: "commitAction"
   },
   {
-    label: "SFDC Component Id",
+    label: "Salesforce Component ID",
     id: "committedFileId"
   },
   {
-    label: "Commit Id",
+    label: "Commit ID",
     id: "commitID"
   },
   {

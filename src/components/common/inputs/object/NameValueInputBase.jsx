@@ -210,7 +210,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <PropertyInputContainer
         titleIcon={titleIcon}
         field={field}

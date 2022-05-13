@@ -29,7 +29,7 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled, inp
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel
         field={field}
         model={dataObject}

@@ -83,21 +83,17 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
       );
     }
 
-    if (triggeredSourceFilePull !== true) {
+    if (triggeredSourceFilePull === true) {
       return (
-        <ErrorDialog error={"Service Error Triggering Source File List Pull"} />
+        <MergeSyncTaskWizardFileSelector
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+          fileSelectionRulesString={JSON.stringify(wizardModel?.getArrayData("fileSelectionRules"))}
+        />
       );
     }
-
-    return (
-      <MergeSyncTaskWizardFileSelector
-        wizardModel={wizardModel}
-        setWizardModel={setWizardModel}
-        setCurrentScreen={setCurrentScreen}
-        handleClose={handleClose}
-        fileSelectionRulesString={JSON.stringify(wizardModel?.getArrayData("fileSelectionRules"))}
-      />
-    );
   };
 
   return (

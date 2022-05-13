@@ -72,6 +72,7 @@ import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
+import ConnectedAssets from "./components/insights/connectedAssets/ConnectedAssets";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
@@ -128,6 +129,7 @@ import CustomEnvironmentVariableManagement
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
+import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -247,6 +249,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
+          <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
+
+          {/*Insights Reports*/}
+          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType" component={SonarPipelineScanReport} />
+
 
 
           <SecureRoute path="/task" exact component={TaskManagement} />

@@ -7,14 +7,9 @@ function GitToGitMergeSyncTaskTargetBranchSelectInput({
   model,
   setModel,
   disabled,
+  setDataFunction,
   sourceBranch,
 }) {
-  const setDataFunction = (fieldName, selectedOption) => {
-    const newModel = { ...model };
-    newModel.setData("targetBranch", selectedOption);
-    setModel({ ...newModel });
-  };
-
   const getDisabledOptions = () => {
     if (disabled === true) {
       return true;
@@ -45,6 +40,7 @@ GitToGitMergeSyncTaskTargetBranchSelectInput.propTypes = {
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   sourceBranch: PropTypes.string,
+  setDataFunction: PropTypes.func,
 };
 
 export default GitToGitMergeSyncTaskTargetBranchSelectInput;

@@ -88,7 +88,7 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
 
   //TODO: Make css classes for body after finalizing
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <div className="object-properties-input">
         <div className="content-container">
           <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} />
