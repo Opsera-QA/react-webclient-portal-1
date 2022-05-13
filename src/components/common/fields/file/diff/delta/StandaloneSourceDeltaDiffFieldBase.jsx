@@ -5,6 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
 import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
 import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 function StandaloneSourceDeltaDiffFieldBase(
   {
@@ -38,9 +39,9 @@ function StandaloneSourceDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const originalArray = [...delta?.target?.lines];
+    const originalArray = dataParsingHelper.parseArray(delta?.target?.lines, []);
     const position = delta?.target?.position;
-    const changedArray =  [...delta?.source?.lines];
+    const changedArray =  dataParsingHelper.parseArray(delta?.source?.lines, []);
     const unpackedChangedLineCount = Array.isArray(changedArray) ? changedArray.length : 0;
     setChangedLineCount(unpackedChangedLineCount);
 
