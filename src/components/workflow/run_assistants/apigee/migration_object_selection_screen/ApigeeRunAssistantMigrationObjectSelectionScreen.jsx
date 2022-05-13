@@ -79,6 +79,11 @@ const ApigeeRunAssistantMigrationObjectSelectionScreen = (
   };
 
   const getBody = () => {
+
+    if (isMounted?.current !== true) {
+      return null;
+    }
+
     if (isLoading === true) {
       return (
         <LoadingDialog message={"Triggering Migration Object List Pull from Apigee"} />
