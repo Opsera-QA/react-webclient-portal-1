@@ -236,7 +236,7 @@ function ConnectedAssets() {
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"connectedAssets"}/>}
-      pageDescription={``}
+      pageDescription={`An 'Admin Only' page that provides categorized number of assets that are connected and associated to Opsera through different sources.`}
       breadcrumbDestination={"insightsConnectedAssets"}
     >
       {getConnectedAssetsActionBar()}

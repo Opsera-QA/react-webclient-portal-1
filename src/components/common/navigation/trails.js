@@ -608,7 +608,7 @@ const breadcrumbs = {
       path: paths.insightsConnectedAssets,
       title: "Connected Assets",
       linkText: "Connected Assets",
-      icon: faChartNetwork
+      icon: faLink
     },
   //Reports
   reports: {
@@ -634,6 +634,14 @@ const breadcrumbs = {
     path: paths.sonarReports,
     title: "Sonar Reports",
     linkText: "Sonar Reports",
+    icon: faAnalytics
+  },
+  coverityReports: {
+    parent: undefined,
+    name: "coverityReports",
+    path: paths.coverityReports,
+    title: "Coverity Reports",
+    linkText: "Coverity Reports",
     icon: faAnalytics
   },
   toolsUsedInPipelineReport: {

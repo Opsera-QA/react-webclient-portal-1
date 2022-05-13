@@ -43,7 +43,7 @@ function JenkinsToolConfiguration({ toolData }) {
   };
 
   const getRotateJenkinsKeyButton = () => {
-    if (hasStringValue(jenkinsConfigurationDto.getData("tokenUuid"))){
+    if (toolData?.canRotateToken() === true){
       return <RotateJenkinsKeyButton toolId={toolData.getData("_id")}/>;
     }
   };

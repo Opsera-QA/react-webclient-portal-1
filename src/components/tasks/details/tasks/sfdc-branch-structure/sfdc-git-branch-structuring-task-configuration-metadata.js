@@ -1,5 +1,5 @@
 const sfdcGitBranchTaskConfigurationMetadata = {
-  type: "SFDC Git Branch Structuring Task Configuration",
+  type: "Salesforce Git Branch Structuring Task Configuration",
   fields: [
     {
       label: "Jenkins Tool",

@@ -4,11 +4,6 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import StandaloneDiffFieldBase from "components/common/fields/file/diff/StandaloneDiffFieldBase";
 
-export const VISIBLE_CODE_OPTIONS = {
-  ORIGINAL: "original",
-  CHANGED: "changed",
-};
-
 function StandaloneDiffField(
   {
     isLoading,

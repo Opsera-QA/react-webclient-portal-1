@@ -15,6 +15,7 @@ function MergeSyncTaskWizardConfirmationButton(
     size,
     className,
     icon,
+    diffFileList,
   }) {
   const relocateToConfirmationScreen = async () => {
     if (setCurrentScreen) {
@@ -23,7 +24,7 @@ function MergeSyncTaskWizardConfirmationButton(
   };
 
   const getLabel = () => {
-    const updatedFileListLength = wizardModel?.getArrayData("updatedFileList")?.length;
+    const updatedFileListLength = Array.isArray(diffFileList) ? diffFileList?.length : diffFileList;
     const fileOrFiles = updatedFileListLength === 1 || updatedFileListLength === -1 ? "File" : "Files";
     return (`Confirm Merge Sync for ${updatedFileListLength} ${fileOrFiles}`);
   };
@@ -40,7 +41,8 @@ function MergeSyncTaskWizardConfirmationButton(
           variant={"success"}
           disabled={
             disabled === true
-            || wizardModel?.getArrayData("updatedFileList")?.length === 0
+            || Array.isArray(diffFileList) !== true
+            || diffFileList?.length === 0
           }
           onClick={relocateToConfirmationScreen}
         >
@@ -64,11 +66,13 @@ MergeSyncTaskWizardConfirmationButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  diffFileList: PropTypes.array,
 };
 
 MergeSyncTaskWizardConfirmationButton.defaultProps = {
   size: "sm",
   icon: faCheckCircle,
+  diffFileList: [],
 };
 
 export default MergeSyncTaskWizardConfirmationButton;

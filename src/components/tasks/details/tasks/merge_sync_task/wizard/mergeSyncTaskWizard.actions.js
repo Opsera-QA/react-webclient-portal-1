@@ -217,6 +217,30 @@ mergeSyncTaskWizardActions.updateSelectedFileContent = async (
   );
 };
 
+mergeSyncTaskWizardActions.confirmFileDiffSelections = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  runCount,
+  fileName,
+  deltas,
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/deltas/update`;
+  const postBody = {
+    taskId: taskId,
+    runCount: runCount,
+    fileName: fileName,
+    deltas: deltas,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 mergeSyncTaskWizardActions.updateSelectedFileContentByOption = async (
   getAccessToken,
   cancelTokenSource,
@@ -245,7 +269,6 @@ mergeSyncTaskWizardActions.triggerTaskV2 = async (getAccessToken, cancelTokenSou
 
 mergeSyncTaskWizardActions.runMergeSyncTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
   const postBody = {
-    runCount: wizardModel?.getData("runCount"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
   };
 

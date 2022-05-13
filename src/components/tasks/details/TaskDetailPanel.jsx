@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import TaskEditorPanel from "components/tasks/details/TaskEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
+import {faTable, faKey, faComputerClassic} from "@fortawesome/pro-light-svg-icons";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./tasks/sfdx-cert-gen/CertManagementPanel";
 import TaskSummaryPanel
   from "components/tasks/details/TaskSummaryPanel";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
+import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
+import { AuthContext } from "contexts/AuthContext";
 
 function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
+  const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -41,12 +44,33 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
     }
   };
 
+  const getFeatureFlaggedTab = () => {
+    if (featureFlagHideItemInProd() === false) {
+      return (
+        <CustomTab
+          icon={faComputerClassic}
+          tabName={"audit-logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Audit Logs"}
+        />
+      );
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         {getDynamicTabs()}
-        <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Activity Logs"}/>
+        <CustomTab
+          icon={faTable}
+          tabName={"logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Activity Logs"}
+        />
+        {getFeatureFlaggedTab()}
       </CustomTabContainer>
     );
   };
@@ -86,7 +110,13 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
             setGitTasksData={setGitTasksData}
             loadData={loadData}
           />
-        );  
+        );
+      case "audit-logs":
+        return (
+          <TaskAuditLogPanel
+            taskId={gitTasksData?.getMongoDbId()}
+          />
+        );
       default:
         return null;
     }

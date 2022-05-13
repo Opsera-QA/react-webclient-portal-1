@@ -128,6 +128,7 @@ import CustomEnvironmentVariableManagement
   from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
+import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -249,10 +250,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
-          <SecureRoute path="/insights/connectedAssets" component={ConnectedAssets} />
+          <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
 
           {/*Insights Reports*/}
-          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount" component={SonarPipelineScanReport} />
+          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType" component={SonarPipelineScanReport} />
+          <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity" component={CoverityScanReport} />
 
 
 

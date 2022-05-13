@@ -16,8 +16,8 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 
 const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, loadData, sfdcFiles, isLoading, setPipelineWizardScreen, sfdcFilesPaginationModel, setSfdcFilesPaginationModel, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
-  const noDataFilesPulledMessage = "The SFDC Files pull has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The SFDC Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesPulledMessage = "The Salesforce Files pull has been completed. There is no data for the selected criteria.";
+  const noDataFilesNotPulledMessage = "The Salesforce Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 

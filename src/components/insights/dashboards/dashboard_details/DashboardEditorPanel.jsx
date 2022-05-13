@@ -68,12 +68,22 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
     return await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardDataDto);
   };
 
+  const getActivityToggleInput = () => {
+    if (dashboardDataDto?.isNew() === false) {
+      return (
+        <Col md={6}>
+          <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+        </Col>
+      );
+    }
+  };
+
   const getRolesInput = () => {
     if (isSassUser() === false) {
       return (
         <Col md={12}>
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
-            <div className={"p-2"}>
+            <div>
               <RoleAccessInput
                 fieldName={"roles"}
                 setDataObject={setDashboardDataDto}
@@ -122,9 +132,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={6}>
             <TagManager type={"dashboard"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
-          <Col md={6}>
-            <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
-          </Col>
+          {getActivityToggleInput()}
         </Row>
       </div>
       <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>

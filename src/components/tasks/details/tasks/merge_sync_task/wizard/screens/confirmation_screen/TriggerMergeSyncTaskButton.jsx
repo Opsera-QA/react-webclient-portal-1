@@ -8,6 +8,7 @@ import IconBase from "components/common/icons/IconBase";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
   const toastContext = useContext(DialogToastContext);
@@ -40,11 +41,21 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
         wizardModel,
       );
 
-      if (isMounted?.current === true && handleClose) {
-        handleClose();
+      if (isMounted?.current === true) {
+        const message = response?.data;
+
+        if (hasStringValue(message) === true) {
+          toastContext.showInformationToast(message, 20);
+        }
+
+        if (handleClose) {
+          handleClose();
+        }
       }
     } catch (error) {
-      toastContext.showInlineErrorMessage(error, "Could not trigger Merge Sync:");
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error, "Could not trigger Merge Sync:");
+      }
     }
     finally {
       if (isMounted?.current === true) {

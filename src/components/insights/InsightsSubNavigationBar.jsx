@@ -6,7 +6,8 @@ import {
   faChartArea,
   faChartNetwork, faCircle,
   faRadar,
-  faUserChart
+  faUserChart,
+  faLink
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
@@ -50,7 +51,7 @@ function InsightsSubNavigationBar({currentTab}) {
         // history.push(`/insights/reports`);
         return;
       case "connectedAssets":
-        history.push(`/insights/connectedAssets`);
+        history.push(`/insights/connected-assets`);
         return;
     }
   };
@@ -124,7 +125,7 @@ function InsightsSubNavigationBar({currentTab}) {
       />
       {getRelease360Tab()} */}
       {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
-        icon={faChartArea}
+        icon={faLink}
         tabName={"connectedAssets"}
         handleTabClick={handleTabClick}
         activeTab={currentTab}

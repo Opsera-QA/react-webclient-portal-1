@@ -16,6 +16,8 @@ import jenkinsToolAccountActions
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
+import JenkinsAccountRepositorySelectInput from "./inputs/JenkinsAccountRepositorySelectInput";
+
 
 function JenkinsAccountEditorPanel(
   {
@@ -85,6 +87,21 @@ function JenkinsAccountEditorPanel(
     }
   };
 
+  const getDynamicFields = () => {
+    if(jenkinsAccountData?.getData("service") === "github-deploykey" && jenkinsAccountData?.getData("repositories")) {
+      return (
+          <Col lg={12}>
+            <JenkinsAccountRepositorySelectInput
+                model={jenkinsAccountData}
+                setModel={setJenkinsAccountData}
+                repos={jenkinsAccountData?.getData("repositories")}
+                disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+            />
+          </Col>
+      );
+    }
+  };
+
   if (jenkinsAccountData == null) {
     return <LoadingDialog size="sm"/>;
   }
@@ -114,6 +131,7 @@ function JenkinsAccountEditorPanel(
             disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
           />
         </Col>
+        {getDynamicFields()}
         <Col lg={12}>
           <TextInputBase
             fieldName={"credentialsId"}

@@ -394,7 +394,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   actionableInsightsQueryData,
   coveritySeverity,
   priorityMTTR,
-  headCommitSha
+  headCommitSha,
+  projectName,
+  runCount,
+  pipelineId
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -473,7 +476,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
     headCommitSha: headCommitSha,
-    amexFilters: useKpiTags ? amexFilters : null
+    amexFilters: useKpiTags ? amexFilters : null,
+    projectName: projectName,
+    runCount: runCount,
+    pipelineId: pipelineId,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

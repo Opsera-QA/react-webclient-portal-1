@@ -6,6 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 export const VISIBLE_CODE_OPTIONS = {
   ORIGINAL: "original",
@@ -22,12 +23,12 @@ function StandaloneDiffFieldBase(
   }) {
   const toastContext = useContext(DialogToastContext);
   const [unpackingDiff, setUnpackingDiff] = useState(false);
-  const separatedDiffLineNumbers = useRef(undefined);
+  const [diffLineNumbers, setDiffLineNumbers] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
-    separatedDiffLineNumbers.current = undefined;
     isMounted.current = true;
+    setDiffLineNumbers(undefined);
 
     if (hasStringValue(originalCode, false) === true && hasStringValue(changedCode, false) === true) {
       calculateDiffLineNumbers().catch((error) => {
@@ -43,7 +44,7 @@ function StandaloneDiffFieldBase(
   const calculateDiffLineNumbers = async () => {
     try {
       setUnpackingDiff(true);
-      separatedDiffLineNumbers.current = diffHelper.getSeparatedDiffLineNumbers(originalCode, changedCode);
+      setDiffLineNumbers(diffHelper.getSeparatedDiffLineNumbers(originalCode, changedCode));
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     } finally {
@@ -57,14 +58,14 @@ function StandaloneDiffFieldBase(
     const style = {
       display: "block",
     };
-    const diffObject = visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? separatedDiffLineNumbers?.current?.firstString : separatedDiffLineNumbers?.current?.secondString;
+    const diffObject = visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? diffLineNumbers?.firstString : diffLineNumbers?.secondString;
     const insertedLineNumbers = diffObject?.insertedLineNumbers;
     const deletedLineNumbers = diffObject?.deletedLineNumbers;
 
     if (Array.isArray(insertedLineNumbers) && insertedLineNumbers.includes(lineNumber)) {
-      style.backgroundColor = "rgba(51,255,51,0.1)";
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
     } else if (Array.isArray(deletedLineNumbers) && deletedLineNumbers.includes(lineNumber)) {
-      style.backgroundColor = "rgba(255,51,51,0.2)";
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
     }
 
     return { style };

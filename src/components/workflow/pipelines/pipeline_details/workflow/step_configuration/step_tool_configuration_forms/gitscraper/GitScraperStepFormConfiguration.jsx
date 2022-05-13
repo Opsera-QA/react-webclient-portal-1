@@ -69,12 +69,12 @@ function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <GitScraperLibrarySelectInput
-        dataObject={gitscraperStepConfigurationModel}
-        setDataObject={setGitscraperStepConfigurationModel}
-        disabled={false}
-        fieldName={"type"}
-      />
+      {/*<GitScraperLibrarySelectInput*/}
+      {/*  dataObject={gitscraperStepConfigurationModel}*/}
+      {/*  setDataObject={setGitscraperStepConfigurationModel}*/}
+      {/*  disabled={false}*/}
+      {/*  fieldName={"type"}*/}
+      {/*/>*/}
       <GitScraperScmToolTypeSelectInput
         model={gitscraperStepConfigurationModel}
         setModel={setGitscraperStepConfigurationModel}

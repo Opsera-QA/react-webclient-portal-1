@@ -37,14 +37,14 @@ function GitScraperConfigurationPanel({
 
   return (
     <Row>
-      <Col lg={12}>
-        <GitScraperLibrarySelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={false}
-          fieldName={"type"}
-        />
-      </Col>
+      {/*<Col lg={12}>*/}
+      {/*  <GitScraperLibrarySelectInput*/}
+      {/*    dataObject={gitTasksConfigurationData}*/}
+      {/*    setDataObject={setGitTasksConfigurationData}*/}
+      {/*    disabled={false}*/}
+      {/*    fieldName={"type"}*/}
+      {/*  />*/}
+      {/*</Col>*/}
       <Col lg={12}>
         <GitScraperScmToolTypeSelectInput
           model={gitTasksConfigurationData}

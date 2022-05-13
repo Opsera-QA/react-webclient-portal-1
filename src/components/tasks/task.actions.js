@@ -71,13 +71,12 @@ taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBo
     );
 };
 
-taskActions.stopTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBody) => {
+taskActions.stopTaskV3 = async (getAccessToken, cancelTokenSource, taskId) => {
   const apiUrl = `/tasks/${taskId}/stop`;
   return await baseActions.apiPostCallV2(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
-    postBody,
   );
 };
 
@@ -243,15 +242,17 @@ taskActions.triggerTask = async (getAccessToken, cancelTokenSource, taskData) =>
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.stopTaskv2 = async (getAccessToken, cancelTokenSource, taskData) => {
-  const postBody = {
-    taskId: taskData.getData("_id"),
-    ...taskData.getData("configuration")
-  };
-
-  const apiUrl = `/tasks/${taskData.getData("_id")}/stop`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+taskActions.getTaskAuditLogsByTaskId = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+) => {
+  const apiUrl = `/audit-logs/task/${taskId}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
-
 
 export default taskActions;

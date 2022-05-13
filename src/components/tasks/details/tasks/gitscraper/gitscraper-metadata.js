@@ -1,5 +1,5 @@
 const gitscraperTaskConfigurationMetadata = {
-  type: "Gitscraper Configuration",
+  type: "Git Custodian Configuration",
   fields: [
     {
       label: "Repositories Available to Scan",
@@ -53,7 +53,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       repositories:[],
       reposToScan:[],
-      type:"",
+      type:"git_custodian",
       commits:"",
       threshold:0,
       excludeSecrets:[],

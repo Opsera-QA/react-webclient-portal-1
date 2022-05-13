@@ -9,6 +9,13 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
     newModel.setData(fieldName, selectedOption?._id || "");
     newModel.setData("credentailsToolId", selectedOption?._id || "");
     newModel.setData("gitCredential", "");
+    // special handling for github deploy keys
+    if (model?.getData("service") === "github-deploykey") {
+      newModel.setData("repositoryId", "");
+      newModel.setData("repositories", selectedOption?.repositories);
+      setModel({ ...newModel });
+      return;
+    }
     newModel.setData("gitUserName", selectedOption?.configuration?.accountUsername || "");
     newModel.setData("accountUserName", selectedOption?.configuration?.accountUsername || "");
 
@@ -24,11 +31,13 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
 
   const clearDataFunction = () => {
     let newModel = { ...model };
-    newModel.setData(fieldName, "");
-    newModel.setData("credentailsToolId", "");
+    newModel.setData(fieldName, "");    
+    newModel.setData("credentialsToolId", "");
     newModel.setData("gitCredential", "");
     newModel.setData("gitUserName", "");
     newModel.setData("accountUserName", "");
+    newModel.setData("repositoryId", "");
+    newModel.setData("repositories", "");
     setModel({ ...newModel });
   };
 
@@ -38,7 +47,7 @@ function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fie
       toolFriendlyName={"Tool"}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      configurationRequired={true}
+      configurationRequired={model?.getData("service") != "github-deploykey" ? true :  false}
       fieldName={fieldName}
       model={model}
       setModel={setModel}
