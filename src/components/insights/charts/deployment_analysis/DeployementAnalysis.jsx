@@ -171,6 +171,9 @@ function DeploymentAnalysis({
   };
 
   const getData = () => {
+    if (!metadataInfo || metadataInfo.length === 0) {
+      return null;
+    }
     return (
       <VanitySetTabAndViewContainer
         className={"mb-3"}
