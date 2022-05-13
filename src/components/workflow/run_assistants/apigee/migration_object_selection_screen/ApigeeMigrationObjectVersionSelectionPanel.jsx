@@ -87,7 +87,7 @@ const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, han
     }
 
     return (
-      <>
+      <div className='px-4 py-2'>
         <Row>
           <Col lg={12}>
             <TextFieldBase dataObject={migrationObject} fieldName={"name"}/>
@@ -121,24 +121,35 @@ const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, han
             />
           </Col>
         </Row>        
-      </>    
+        <SaveButtonContainer>
+          <BackButton
+            variant={"secondary"}
+            backButtonFunction={() => cancelHandler()}
+            isLoading={isLoading}
+            className={"mr-2"}
+          />
+          <Button size="sm" variant="success" disabled={isLoading} onClick={() => handler(migrationObject.getPersistData())}>
+            <span>Save</span>
+          </Button>
+        </SaveButtonContainer>
+      </div>    
     );
   };
 
   return (
-    <>
-      {getInputFields()}
-      <SaveButtonContainer>
-        <BackButton
-          variant={"secondary"}
-          backButtonFunction={() => cancelHandler()}
-          isLoading={isLoading}
-        />
-        <Button size="sm" variant="success" disabled={isLoading} onClick={() => handler(migrationObject.getPersistData())}>
-          <span>Save</span>
-        </Button>
-      </SaveButtonContainer>
-    </>
+    <div className="object-properties-input">
+      <div className="content-container">
+        <div className="property-header">
+          <h6 className="pl-2 pt-2">            
+            Select Version For Apigee Migration Object
+          </h6>
+        </div>
+        <div className="properties-body-alt">
+          {getInputFields()}
+        </div>
+      </div>
+    </div>
+    
   );
 };
 
