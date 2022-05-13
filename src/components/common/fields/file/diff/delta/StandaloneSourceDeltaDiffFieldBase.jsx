@@ -4,6 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
 import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 function StandaloneSourceDeltaDiffFieldBase(
   {
@@ -13,6 +14,7 @@ function StandaloneSourceDeltaDiffFieldBase(
     sourceCode,
   }) {
   const [beginningAddedLineCount, setBeginningAddedLineCount] = useState(0);
+  const [changedLineCount, setChangedLineCount] = useState(0);
   const [sourceLines, setSourceLines] = useState(undefined);
   const [unpackingDelta, setUnpackingDelta] = useState(false);
   const isMounted = useRef(false);
@@ -36,8 +38,16 @@ function StandaloneSourceDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const originalArray = delta?.target?.lines;
+    const originalArray = [...delta?.target?.lines];
     const position = delta?.target?.position;
+    const changedArray =  [...delta?.source?.lines];
+    const unpackedChangedLineCount = Array.isArray(changedArray) ? changedArray.length : 0;
+    setChangedLineCount(unpackedChangedLineCount);
+
+    if (unpackedChangedLineCount > 0) {
+      originalArray.unshift(...changedArray);
+    }
+
     const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, sourceCode);
     const sourceLinesArray = deltaDiffResponse?.array;
 
@@ -66,17 +76,11 @@ function StandaloneSourceDeltaDiffFieldBase(
     };
 
     const changeLength = delta?.target?.lines?.length;
-    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
-      const type = delta?.type;
 
-      // TODO: Should change be blue?
-      if (type === "CHANGE") {
-        style.backgroundColor = "rgba(51,51,255,0.5)";
-      } else if (type === "INSERT") {
-        style.backgroundColor = "rgba(51,255,51,0.1)";
-      } else if (type === "DELETE") {
-        style.backgroundColor = "rgba(255,51,51,0.2)";
-      }
+    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + 1) {
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
+    } else if (lineNumber > beginningAddedLineCount + changedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + changeLength + 1) {
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
     }
 
     return { style };

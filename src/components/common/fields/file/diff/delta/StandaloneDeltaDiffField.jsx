@@ -5,11 +5,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import StandaloneSourceDeltaDiffFieldBase from "components/common/fields/file/diff/delta/StandaloneSourceDeltaDiffFieldBase";
 import StandaloneDestinationDeltaDiffFieldBase
   from "components/common/fields/file/diff/delta/StandaloneDestinationDeltaDiffFieldBase";
-
-export const VISIBLE_BRANCH_CODE_OPTIONS = {
-  SOURCE: "source",
-  DESTINATION: "destination",
-};
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 function StandaloneDeltaDiffField(
   {
@@ -27,7 +23,7 @@ function StandaloneDeltaDiffField(
     destinationCode,
   }) {
   const getDiffField = () => {
-    if (visibleCodeOption === VISIBLE_BRANCH_CODE_OPTIONS.SOURCE) {
+    if (visibleCodeOption === commitDiffConstants.VISIBLE_BRANCH_CODE_OPTIONS.SOURCE) {
       return (
         <StandaloneSourceDeltaDiffFieldBase
           isLoading={isLoading}
