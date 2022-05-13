@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function GitToGitMergeSyncTaskTargetBranchSelectInput({
-  model,
-  setModel,
-  disabled,
-  setDataFunction,
-  sourceBranch,
-}) {
+function SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput(
+  {
+    model,
+    setModel,
+    setDataFunction,
+    sourceBranch,
+    disabled,
+  }) {
   const getDisabledOptions = () => {
     if (disabled === true) {
       return true;
@@ -22,7 +23,7 @@ function GitToGitMergeSyncTaskTargetBranchSelectInput({
 
   return (
     <GitBranchInput
-      fieldName={"targetBranch"}
+      fieldName={"upstreamBranch"}
       service={model?.getData("service")}
       gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}
@@ -35,12 +36,12 @@ function GitToGitMergeSyncTaskTargetBranchSelectInput({
   );
 }
 
-GitToGitMergeSyncTaskTargetBranchSelectInput.propTypes = {
+SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  disabled: PropTypes.bool,
-  sourceBranch: PropTypes.string,
   setDataFunction: PropTypes.func,
+  sourceBranch: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
-export default GitToGitMergeSyncTaskTargetBranchSelectInput;
+export default SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput;

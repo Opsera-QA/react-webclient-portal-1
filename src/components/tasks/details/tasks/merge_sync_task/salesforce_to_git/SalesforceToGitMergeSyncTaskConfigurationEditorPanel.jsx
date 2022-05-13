@@ -27,8 +27,11 @@ import SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput
 import SalesforceToGitMergeSyncTaskRepositorySelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskRepositorySelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import SalesforceToGitMergeSyncTaskUpstreamBranchTextInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchTextInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
+import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   {
@@ -71,6 +74,37 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
     setTaskConfigurationModel({...taskConfigurationModel});
   };
 
+  const getDestinationBranchInputs = () => {
+    if (gitConfigurationModel?.getData("isNewBranch") === true) {
+      return (
+        <>
+          <Col lg={12}>
+            <SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
+              model={gitConfigurationModel}
+              setModel={setModelFunction}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={gitConfigurationModel}
+              setDataObject={setModelFunction}
+              fieldName={"targetBranch"}
+            />
+          </Col>
+        </>
+      );
+    }
+
+    return (
+      <Col lg={12}>
+        <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+        />
+      </Col>
+    );
+  };
+
   if (taskModel == null || taskConfigurationModel == null || salesforceConfigurationModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -110,24 +144,12 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         />
       </Col>
       <Col lg={12}>
-        <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
+        <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />
       </Col>
-      <Col lg={12}>
-        <BooleanToggleInput
-          dataObject={gitConfigurationModel}
-          setDataObject={setModelFunction}
-          fieldName={"isNewBranch"}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceToGitMergeSyncTaskUpstreamBranchTextInput
-          model={gitConfigurationModel}
-          setModel={setModelFunction}
-        />
-      </Col>
+      {getDestinationBranchInputs()}
     </Row>
   );
 }
