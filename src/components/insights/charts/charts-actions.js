@@ -277,6 +277,68 @@ chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, ge
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+chartsActions.getMetadataInfo = async(kpiConfiguration, getAccessToken, cancelTokenSource)=>{
+  return [
+    {
+      id:'test',
+      metadataName:'test1'
+    },
+    {
+      id:'test2',
+      metadataName:'test2'
+    }
+  ];
+};
+chartsActions.getDeploymentAnalysis = async(kpiConfiguration, getAccessToken, cancelTokenSource, metadataName)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/opserapipelines/v1/getDeploymentAnalyticsMetrics";
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    metadataName: metadataName
+  };
+  const result = {
+    "data": [
+      {
+      "data": [
+        {
+        "_id": "627a9126bf46492fea393eca",
+        "destination": "https://D3AA91F34C8805FC929F72E1C92A4F09.gr7.us-east-2.eks.amazonaws.com",
+        "namespace": "argocd",
+        "pipelineId": "601d3e5d722555d677349068",
+        "runCount": 37,
+        "status": "Completed",
+        "metadataName": "awsbluegreenappln",
+        "artifactoryName": "440953937617.dkr.ecr.us-east-2.amazonaws.com/github-integrator:20220426-20220426102311-27",
+        "pipelineName": "New SFDC Pipeline",
+        "version": "20220426-20220426102311-27"
+        },
+        {
+        "_id": "627cdee03b970d073eeecd04",
+        "destination": "https://D3AA91F34C8805FC929F72E1C92A4F09.gr7.us-east-2.eks.amazonaws.com",
+        "namespace": "argocd",
+        "pipelineId": "6255c829b116d2006790141c",
+        "runCount": 37,
+        "status": "Completed",
+        "metadataName": "awsbluegreenappln",
+        "artifactoryName": "440953937617.dkr.ecr.us-east-2.amazonaws.com/github-integrator:20220426-20220426102311-27",
+        "version": "20220426-20220426102311-27"
+        }
+      ],
+      "count": [
+        {
+          "count": 2
+        }
+      ]
+      }
+    ]
+  };
+  return result;
+  // return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  
+};
+
 chartsActions.getDevelopmentAnalysis=async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/opserapipelines/v1/getDevelopmnetAnalytisMetrics";
@@ -453,5 +515,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+
 
 export default chartsActions;

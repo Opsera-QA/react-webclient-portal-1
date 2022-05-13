@@ -163,6 +163,7 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import DevelopmentAnalysisDataBlockChart from "./development_analysis/developmentAnalysisDataBlockChart";
+import DeploymentAnalysis from "./deployment_analysis/DeployementAnalysis";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1486,16 +1487,39 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
         case "development-analysis-chart":
           return (
+            <>
             <Col md={12} className="p-2">
-              <DevelopmentAnalysisDataBlockChart
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          );
+                <DeploymentAnalysis
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+                />
+              </Col>
+              <Col md={12} className="p-2">
+                <DevelopmentAnalysisDataBlockChart
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+                />
+              </Col>
+            </>
+            );
+
+          // return (
+          //   <Col md={12} className="p-2">
+          //     <DevelopmentAnalysisDataBlockChart
+          //       kpiConfiguration={kpiConfig}
+          //       setKpiConfiguration={setKpiConfig}
+          //       dashboardData={dashboardData}
+          //       setKpis={setKpis}
+          //       index={index}
+          //     />
+          //   </Col>
+          // );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
