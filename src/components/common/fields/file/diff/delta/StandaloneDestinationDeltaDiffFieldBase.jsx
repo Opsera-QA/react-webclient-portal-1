@@ -13,6 +13,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
     destinationCode,
   }) {
   const [beginningAddedLineCount, setBeginningAddedLineCount] = useState(0);
+  const [changedLineCount, setChangedLineCount] = useState(0);
   const [destinationLines, setDestinationLines] = useState(undefined);
   const [unpackingDelta, setUnpackingDelta] = useState(false);
   const isMounted = useRef(false);
@@ -36,8 +37,9 @@ function StandaloneDestinationDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const originalArray = delta?.target?.lines;
-    const position = delta?.target?.position;
+    const originalArray = delta?.source?.lines;
+    const position = delta?.source?.position;
+    const changedArray = delta?.target?.lines;
     const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, destinationCode);
     const destinationLinesArray = deltaDiffResponse?.array;
 
@@ -65,7 +67,7 @@ function StandaloneDestinationDeltaDiffFieldBase(
       fontSize: "12px",
     };
 
-    const changeLength = delta?.target?.lines?.length;
+    const changeLength = delta?.source?.lines?.length;
     if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
       const type = delta?.type;
 
