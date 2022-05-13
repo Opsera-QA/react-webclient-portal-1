@@ -9,7 +9,7 @@ import {
   getLimitedTableTextColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import DeploymentAnalyticsMetadata from "./development-analysis-metadata";
+import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
