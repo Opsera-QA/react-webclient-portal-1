@@ -55,7 +55,6 @@ function MergeSyncTaskWizardCommitFileDiffSelectionsButton(
         comparisonFileModel?.getData("deltas"),
       );
 
-      console.log("response: " + JSON.stringify(response));
       if (isMounted?.current === true && response) {
         const newUpdatedFileList = wizardModel?.getArrayData("updatedFileDeltas");
         const currentIndex = newUpdatedFileList?.findIndex((updatedFile) => updatedFile?.fileName === fileName);

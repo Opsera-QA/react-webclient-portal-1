@@ -32,6 +32,7 @@ function DiffField(
       className={className}
       changedCode={model?.getData(changedCodeFieldName)}
       originalCode={model?.getData(originalCodeFieldName)}
+      language={language}
     />
   );
 }

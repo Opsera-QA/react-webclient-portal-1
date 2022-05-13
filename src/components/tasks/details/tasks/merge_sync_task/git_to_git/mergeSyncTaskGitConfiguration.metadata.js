@@ -56,7 +56,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       id: "targetBranch",
       isRequired: true,
       maxLength: 255,
-      regexDefinitionName: "generalTextWithSpacesSlash",
+      regexDefinitionName: "gitBranchName",
       formText: "Target Branch cannot match Source Branch.",
     },    
     {
@@ -68,7 +68,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       id: "upstreamBranch",
       maxLength: 255,
       regexDefinitionName: "gitBranchName",
-      formText: "Target Branch cannot match Source Branch.",
+      formText: "Upstream Branch cannot match Source Branch.",
       isRequiredFunction: (model) => {
         return model?.getData("isNewBranch") === true;
       },
