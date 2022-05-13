@@ -162,7 +162,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
-import DevelopmentAnalysisDataBlockChart from "./development_analysis/developmentAnalysisDataBlockChart";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1497,18 +1496,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
           );
-        // case "development-analysis-chart":
-        //   return (
-        //     <Col md={12} className="p-2">
-        //         <DevelopmentAnalysisDataBlockChart
-        //           kpiConfiguration={kpiConfig}
-        //           setKpiConfiguration={setKpiConfig}
-        //           dashboardData={dashboardData}
-        //           setKpis={setKpis}
-        //           index={index}
-        //         />
-        //       </Col>
-        //     );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (

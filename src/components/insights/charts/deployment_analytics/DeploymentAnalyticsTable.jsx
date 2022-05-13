@@ -38,9 +38,6 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
       getTableTextColumn(getField(fields,"status")),
       getTableTextColumn(getField(fields,"version")),
       getLimitedTableTextColumn(getField(fields,"destination"),30),
-      // getTableTextColumn(getField(fields,"namespace")),
-      // getTableTextColumn(getField(fields,"pipelineId")),
-      // getTableTextColumn(getField(fields,"metadataName")),
     ],
     []
   );
@@ -73,9 +70,7 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
         kpiConfiguration,
         getAccessToken,
         cancelSource,
-        metadataName, // this is going to be the metadataname
-        // dashboardTags,
-        // dashboardOrgs,
+        metadataName,
         filterDto
       );
       let dataObject = response?.data?.data[0]?.data;

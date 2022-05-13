@@ -46,7 +46,7 @@ function DeploymentAnalytics({
   const [modalData, setModalData] = useState(undefined);
   const [metadataInfo, setMetadataInfo] = useState([]);
 
-  const noDataMessage = "No Data is available for this chart at this time";
+  // const noDataMessage = "No Data is available for this chart at this time";
 
   const columns = useMemo(
     () => [
