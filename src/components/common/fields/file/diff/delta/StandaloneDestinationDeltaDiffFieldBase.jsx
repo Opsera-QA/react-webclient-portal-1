@@ -4,6 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
 import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 function StandaloneDestinationDeltaDiffFieldBase(
   {
@@ -37,9 +38,16 @@ function StandaloneDestinationDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const originalArray = delta?.source?.lines;
+    const originalArray = [...delta?.source?.lines];
     const position = delta?.source?.position;
-    const changedArray = delta?.target?.lines;
+    const changedArray = [...delta?.target?.lines];
+    const unpackedChangedLineCount = Array.isArray(changedArray) ? changedArray.length : 0;
+    setChangedLineCount(unpackedChangedLineCount);
+
+    if (unpackedChangedLineCount > 0) {
+      originalArray.unshift(...changedArray);
+    }
+
     const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(position, originalArray, destinationCode);
     const destinationLinesArray = deltaDiffResponse?.array;
 
@@ -68,17 +76,11 @@ function StandaloneDestinationDeltaDiffFieldBase(
     };
 
     const changeLength = delta?.source?.lines?.length;
-    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changeLength + 1) {
-      const type = delta?.type;
 
-      // TODO: Should change be blue?
-      if (type === "CHANGE") {
-        style.backgroundColor = "rgba(51,51,255,0.5)";
-      } else if (type === "INSERT") {
-        style.backgroundColor = "rgba(51,255,51,0.1)";
-      } else if (type === "DELETE") {
-        style.backgroundColor = "rgba(255,51,51,0.2)";
-      }
+    if (lineNumber > beginningAddedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + 1) {
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
+    } else if (lineNumber > beginningAddedLineCount + changedLineCount && lineNumber < beginningAddedLineCount + changedLineCount + changeLength + 1) {
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
     }
 
     return { style };
