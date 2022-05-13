@@ -253,7 +253,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
 
           {/*Insights Reports*/}
-          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount" component={SonarPipelineScanReport} />
+          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType" component={SonarPipelineScanReport} />
           <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity" component={CoverityScanReport} />
 
 

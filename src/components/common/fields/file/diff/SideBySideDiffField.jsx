@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import StandaloneDiffField, { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
+import StandaloneDiffField from "components/common/fields/file/diff/StandaloneDiffField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 function SideBySideDiffField(
   {
@@ -46,7 +47,7 @@ function SideBySideDiffField(
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
                 language={language}
-                visibleCodeOption={VISIBLE_CODE_OPTIONS.ORIGINAL}
+                visibleCodeOption={commitDiffConstants.VISIBLE_BRANCH_CODE_OPTIONS.DESTINATION}
                 className={"m-0"}
               />
             </Col>
@@ -57,7 +58,7 @@ function SideBySideDiffField(
                 titleIcon={rightSideTitleIcon}
                 changedCode={model?.getData(changedCodeFieldName)}
                 originalCode={model?.getData(originalCodeFieldName)}
-                visibleCodeOption={VISIBLE_CODE_OPTIONS.CHANGED}
+                visibleCodeOption={commitDiffConstants.VISIBLE_BRANCH_CODE_OPTIONS.SOURCE}
                 language={language}
                 className={"m-0"}
               />

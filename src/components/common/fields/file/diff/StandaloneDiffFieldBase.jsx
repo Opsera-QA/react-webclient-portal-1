@@ -6,6 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
+import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 export const VISIBLE_CODE_OPTIONS = {
   ORIGINAL: "original",
@@ -62,9 +63,9 @@ function StandaloneDiffFieldBase(
     const deletedLineNumbers = diffObject?.deletedLineNumbers;
 
     if (Array.isArray(insertedLineNumbers) && insertedLineNumbers.includes(lineNumber)) {
-      style.backgroundColor = "rgba(51,255,51,0.1)";
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
     } else if (Array.isArray(deletedLineNumbers) && deletedLineNumbers.includes(lineNumber)) {
-      style.backgroundColor = "rgba(255,51,51,0.2)";
+      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
     }
 
     return { style };
