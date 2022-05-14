@@ -13,6 +13,7 @@ import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import { getFormattedTimestamp } from "../../../../../common/fields/date/DateFieldBase";
+import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
 function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
@@ -20,6 +21,7 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   const fields = CoverityActionableMetadata.fields;
   const tableTitle = "Coverity " + title + " Report";
   const noDataMessage = "Coverity " + title + " report is currently unavailable at this time";
+  let history = useHistory();
 
   const getCoverityTableTextColumn = (field, block) => {
     return {
