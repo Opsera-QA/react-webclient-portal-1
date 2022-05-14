@@ -1252,21 +1252,6 @@ div.data-blocks-ellipses {
     /*max-height: calc(100vh - 255px);*/
 }
 
-.screen-container-body {
-    min-height: calc(100vh - 255px);
-    /*max-height: calc(100vh - 255px);
-    overflow-y: auto;
-    overflow-x: hidden;*/
-}
-
-.wide-screen-container-body {
-    min-height: calc(100vh - 300px);
-    /*max-height: calc(100vh - 300px);
-    overflow-y: auto;
-    overflow-x: auto;*/
-}
-
-
 .modal-detail-view-body {
     min-height: 80vh;
     max-height: 80vh;

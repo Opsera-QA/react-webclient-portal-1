@@ -10,6 +10,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 function ScreenContainer(
   {
@@ -30,7 +31,7 @@ function ScreenContainer(
 
   useEffect(() => {
     toastContext.removeInlineMessage();
-    if (breadcrumb.name !== breadcrumbDestination) {
+    if (breadcrumb?.name !== breadcrumbDestination) {
       setBreadcrumb(getBreadcrumb(breadcrumbDestination));
     }
   }, [breadcrumbDestination]);
@@ -60,7 +61,7 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className="page-description px-3 py-2">
+        <div className={"page-description px-3 py-2"}>
           {pageDescription}
         </div>
       );
@@ -68,7 +69,7 @@ function ScreenContainer(
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className="page-description px-3 py-2">
+        <div className={"page-description px-3 py-2"}>
           {breadcrumbPageDescription}
         </div>
       );
@@ -96,11 +97,26 @@ function ScreenContainer(
   const getRoleRequirementField = () => {
     if (roleRequirement) {
       return (
-        <div className="content-block-footer-text-container pt-2">
+        <div className={"content-block-footer-text-container pt-2"}>
           <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
         </div>
       );
     }
+  };
+
+  const getBodyHeight = () => {
+    let bodyHeightString = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - ${screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT} - 22px`;
+
+    if (getPageDescription() !== null) {
+      bodyHeightString += ` - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT}`;
+    }
+
+    if (roleRequirement != null) {
+      bodyHeightString += ` - ${screenContainerHeights.ROLE_REQUIREMENT_FIELD_HEIGHT}`;
+    }
+
+    bodyHeightString += ")";
+    return bodyHeightString;
   };
 
   if (!isLoading && accessDenied) {
@@ -120,10 +136,13 @@ function ScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
-      <div className="content-container content-card-1 ">
-        <div className="pl-2 content-block-header title-text-header-1">
+      <div
+        className={"content-container content-card-1"}
+        style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
+      >
+        <div className={"pl-2 content-block-header title-text-header-1"}>
           <TitleBar
             titleIcon={breadcrumb?.icon}
             title={breadcrumb?.title}
@@ -132,11 +151,13 @@ function ScreenContainer(
             helpComponent={helpComponent}
           />
         </div>
-        <div className={"screen-container-body"}>
+        <div
+          style={{ minHeight: getBodyHeight()}}
+        >
           {getBody()}
         </div>
         {getRoleRequirementField()}
-        <div className="content-block-footer"/>
+        <div className={"content-block-footer"}/>
       </div>
     </div>
   );
