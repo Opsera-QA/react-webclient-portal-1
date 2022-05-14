@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import RefreshButton from "components/common/buttons/data/RefreshButton";
 
 function InputTitleBar(
   {
@@ -64,6 +65,19 @@ function InputTitleBar(
     }
   };
 
+  const getLoadDataButton = () => {
+    if (loadDataFunction) {
+      return (
+        <RefreshButton
+          loadDataFunction={loadDataFunction}
+          isLoading={isLoading}
+          className={"ml-2 my-auto"}
+        />
+      );
+    }
+  };
+
+
   return (
     <div className={`${className} px-2 d-flex justify-content-between`}>
       {getFormattedLabel()}
@@ -72,6 +86,7 @@ function InputTitleBar(
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
+        {getLoadDataButton()}
         {getRightSideButton()}
       </div>
     </div>

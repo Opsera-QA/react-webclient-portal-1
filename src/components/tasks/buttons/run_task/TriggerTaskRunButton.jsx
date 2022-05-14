@@ -13,8 +13,6 @@ import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
-import GitToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge-sync-task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -40,20 +38,12 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   }, []);
 
   const checkValidity = () => {
-    if (gitTasksData?.getData("type") === "sync-sfdc-repo") {
-      const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      if(gitTasksConfigurationDataDto && gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.isNewBranch && configuration?.upstreamBranch?.length < 1 ) {
-        return true;
-      } else {
-        return !gitTasksConfigurationDataDto?.checkCurrentValidity();
-      }
-    } else {
-      return !gitTasksConfigurationDataDto?.checkCurrentValidity();
-    }
+    return !gitTasksConfigurationDataDto?.checkCurrentValidity();
   };
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
+    // TODO: consolidate trigger calls
     if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
       try{
         setIsLoading(true);
@@ -63,42 +53,6 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceBulkMigrationTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
-      try{
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-        handleClose();
-        toastContext.showOverlayPanel(
-          <GitToGitMergeSyncTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
-      try{
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-        handleClose();
-        toastContext.showOverlayPanel(
-          <GitToGitMergeSyncTaskWizardOverlay
             taskModel={gitTasksData}
           />
         );
@@ -177,6 +131,21 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
             "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
           );
         }
+        setIsLoading(false);
+      } finally {
+        handleClose();
+        setIsLoading(false);
+      }
+    }
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_QUICK_DEPLOY) {
+      try {
+        setIsLoading(true);
+        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        gitTasksData.setData("configuration", configuration);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        await taskActions.triggerTask(getAccessToken, cancelTokenSource, gitTasksData);
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);
       } finally {
         handleClose();

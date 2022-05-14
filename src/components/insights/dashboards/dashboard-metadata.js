@@ -50,7 +50,11 @@ const dashboardMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, slashes, dashes, colons, underscores, and periods"
+
     },
     {
       label: "Description",
@@ -77,6 +81,14 @@ const dashboardMetadata = {
       label: "Roles",
       id: "roles"
     },
+    {
+      label: "Owner",
+      id: "owner"
+    },
+    {
+      label: "Owner",
+      id: "owner_name"
+    },
   ],
   newObjectFields: {
     name: "",
@@ -90,6 +102,8 @@ const dashboardMetadata = {
     attributes: {},
     filters: [],
     roles: [],
+    owner: "",
+    owner_name: "",
   }
 };
 

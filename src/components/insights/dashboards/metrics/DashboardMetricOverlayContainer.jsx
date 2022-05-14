@@ -23,6 +23,8 @@ import AutomationPercentageMetricEditorPanel
   from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
 import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import ServiceNowMeanTimeToResolutionEditorPanel
+  from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -73,7 +75,7 @@ function DashboardMetricOverlayContainer(
     setUnpackedFilterData(metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters));
   };
 
-  const closeSettingsPanel = async () => {
+  const closeSettingsPanel = () => {
     if (closePanel) {
       closePanel();
     }
@@ -150,6 +152,16 @@ function DashboardMetricOverlayContainer(
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
             unpackedFilterData={unpackedFilterData}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
+        return (
+          <ServiceNowMeanTimeToResolutionEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
           />
         );
     }

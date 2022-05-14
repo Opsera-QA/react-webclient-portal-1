@@ -4,7 +4,18 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import TagMultiSelectInputBase from "components/common/list_of_values_input/settings/tags/TagMultiSelectInputBase";
 
-function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showLabel, className}) {
+function TagMultiSelectInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    setDataFunction,
+    showLabel,
+    className,
+    infoOverlay,
+    inputHelpOverlay,
+  }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   if (field == null) {
@@ -12,8 +23,14 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
   }
 
   return (
-    <InputContainer className={className}>
-      <InputLabel field={field} showLabel={showLabel} model={dataObject}/>
+    <InputContainer className={className} fieldName={fieldName}>
+      <InputLabel
+        field={field}
+        showLabel={showLabel}
+        model={dataObject}
+        infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
+      />
       <TagMultiSelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -32,7 +49,9 @@ TagMultiSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 TagMultiSelectInput.defaultProps = {

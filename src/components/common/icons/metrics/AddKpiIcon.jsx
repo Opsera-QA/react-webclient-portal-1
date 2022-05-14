@@ -19,7 +19,14 @@ function AddKpiIcon(
     history.push(`/insights/marketplace/${dashboardModel?.getData("_id")}`);
   };
 
-  if (dashboardModel == null || isLoading || disabled === true || !Array.isArray(kpis) || kpis.length >= 10) {
+  if (
+    dashboardModel == null ||
+    isLoading ||
+    disabled === true ||
+    !Array.isArray(kpis) ||
+    kpis.length >= 10 ||
+    dashboardModel?.canAddDashboardMetric() !== true
+  ) {
     return null;
   }
 

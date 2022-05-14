@@ -65,12 +65,14 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay
-        pipelineId={rowData?.original?.pipeline}
-        runCount={rowData?.original?.run}
-      />
-    );
+    const row = rowData?.original;
+    const pipelineId = row?.pipeline;
+    const projectName = row?.project;
+    const runCount = row?.run;
+    const coveritySeverity = row?.coveritySeverity;
+
+    toastContext.clearOverlayPanel();
+    history.push(`/insights/reports/scans/coverity/${pipelineId}/${projectName}/${runCount}/${coveritySeverity}`);
   };
 
   const getTable = () => {

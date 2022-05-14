@@ -1,53 +1,68 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
-import IconBase from "components/common/icons/IconBase";
+import axios from "axios";
 
 function ServiceNowPrioritiesMultiSelectInput({
   placeholderText,
   valueField,
   textField,
   fieldName,
-  dataObject,
-  setDataObject,
+  model,
+  setModel,
   setDataFunction,
   disabled,
 }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
-  const toastContext = useContext(DialogToastContext);
+  const [field] = useState(model?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [priorities, setPriorities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-    setDataObject({ ...newDataObject });
-  };
+  const [error, setError] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadPriorities();
+      await loadPriorities(cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadPriorities = async () => {
+  const loadPriorities = async (cancelSource = cancelTokenSource) => {
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
-      undefined,
+      cancelSource,
       "getServiceNowTaskPriorities"
     );
 
@@ -56,28 +71,20 @@ function ServiceNowPrioritiesMultiSelectInput({
     }
   };
 
-  if (!isLoading && (priorities == null || priorities.length === 0)) {
-    return (
-      <div className="form-text text-muted p-2">
-        <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
-        No Priorities available.
-      </div>
-    );
-  }
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={priorities}
       busy={isLoading}
       valueField={valueField}
+      error={error}
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled || isLoading}
-      onChange={(newValue) => validateAndSetData(field.id, newValue)}
+      pluralTopic={"Priorities"}
     />
   );
 }
@@ -87,8 +94,8 @@ ServiceNowPrioritiesMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,

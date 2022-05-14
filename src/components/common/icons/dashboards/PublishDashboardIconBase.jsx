@@ -6,8 +6,15 @@ import axios from "axios";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PublishDashboardIconBase({dashboardData, catalog, popoverText, className, icon}) {
+function PublishDashboardIconBase({
+  dashboardId,
+  catalog,
+  popoverText,
+  className,
+  icon,
+}) {
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -28,10 +35,19 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
     };
   }, []);
 
-  const addDashboardToPrivateCatalog = async (cancelSource = cancelTokenSource) => {
+  const addDashboardToPrivateCatalog = async (
+    cancelSource = cancelTokenSource,
+  ) => {
     try {
-      await dashboardTemplatesActions.publishTemplateV2(getAccessToken, cancelSource, dashboardData.getData("_id"), catalog);
-      toastContext.showFormSuccessToast(`Added Dashboard to the ${catalog} Catalog`);
+      await dashboardTemplatesActions.publishTemplateV2(
+        getAccessToken,
+        cancelSource,
+        dashboardId,
+        catalog,
+      );
+      toastContext.showFormSuccessToast(
+        `Added Dashboard to the ${catalog} Catalog`,
+      );
     } catch (error) {
       if (isMounted?.current === true) {
         console.log(error);
@@ -40,12 +56,16 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
     }
   };
 
+  if (isMongoDbId(dashboardId) !== true) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <TooltipWrapper innerText={popoverText}>
         <div>
           <IconBase
-            onClickFunction={() => {addDashboardToPrivateCatalog();}}
+            onClickFunction={addDashboardToPrivateCatalog}
             icon={icon}
             className={"pointer"}
           />
@@ -56,7 +76,7 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
 }
 
 PublishDashboardIconBase.propTypes = {
-  dashboardData: PropTypes.object,
+  dashboardId: PropTypes.string,
   catalog: PropTypes.string,
   popoverText: PropTypes.string,
   className: PropTypes.string,

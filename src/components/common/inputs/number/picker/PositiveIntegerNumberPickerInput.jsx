@@ -7,7 +7,20 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import regexDefinitions from "utils/regexDefinitions";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
 
-function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, setDataObject, disabled, placeholderText, showLabel, minimum, maximum }) {
+function PositiveIntegerNumberPickerInput(
+  {
+    fieldName,
+    className,
+    dataObject,
+    setDataObject,
+    disabled,
+    placeholderText,
+    showLabel,
+    minimum,
+    maximum,
+    inputHelpOverlay,
+    infoOverlay,
+  }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -54,8 +67,14 @@ function PositiveIntegerNumberPickerInput({ fieldName, className, dataObject, se
   }
 
   return (
-    <InputContainer className={className ? className : "custom-number-input my-2"}>
-      <InputLabel field={field} showLabel={showLabel} model={dataObject} />
+    <InputContainer className={className ? className : "custom-number-input my-2"} fieldName={fieldName}>
+      <InputLabel
+        field={field}
+        showLabel={showLabel}
+        model={dataObject}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       <StandaloneNumberPickerInput
         placeholdertext={placeholderText}
         disabled={disabled}
@@ -86,7 +105,9 @@ PositiveIntegerNumberPickerInput.propTypes = {
   showLabel: PropTypes.bool,
   minimum: PropTypes.number,
   maximum: PropTypes.number,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
 };
 
 PositiveIntegerNumberPickerInput.defaultProps = {

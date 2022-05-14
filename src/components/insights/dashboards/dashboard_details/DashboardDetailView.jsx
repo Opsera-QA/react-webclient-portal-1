@@ -1,19 +1,18 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import Model from "core/data_model/model";
 import {useParams} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import axios from "axios";
 import DashboardScreenContainer from "components/common/panels/detail_view_container/DashboardScreenContainer";
+import DashboardModel from "components/insights/dashboards/dashboard.model";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
 function DashboardDetailView() {
   const {tab, id} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
+  const {  getAccessRoleData, getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -55,20 +54,36 @@ function DashboardDetailView() {
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      await getDashboard(cancelSource);
-    }
+    await getDashboard(cancelSource);
   };
 
   const getDashboard = async (cancelSource = cancelTokenSource) => {
+    const accessRoleData = await getAccessRoleData();
+
+    if (!accessRoleData) {
+      setDashboardData(undefined);
+      return;
+    }
+
     const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, id);
     const dashboard = response?.data?.data;
 
     if (isMounted.current === true && dashboard) {
-      setDashboardData(new Model(dashboard, dashboardMetadata, false));
+      // const metadata = response?.data?.metadata;
+      const roles = response?.data?.roles;
+      setDashboardData(
+        new DashboardModel(
+          dashboard,
+          dashboardMetadata,
+          false,
+          getAccessToken,
+          cancelSource,
+          loadData,
+          accessRoleData,
+          roles,
+          setDashboardData,
+        ),
+      );
     }
   };
 

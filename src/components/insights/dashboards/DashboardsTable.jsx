@@ -5,9 +5,10 @@ import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {
+  getLimitedTableTextColumn,
   getTableDateColumn,
   getTableFavoriteColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
@@ -25,7 +26,8 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "owner_name")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       {...getTableTextColumn(getField(fields, "type")), class: "upper-case-first"},
       getTableDateColumn(getField(fields, "createdAt")),
       getTableFavoriteColumn(getField(fields, "isFavorite")),

@@ -63,7 +63,7 @@ function EndpointRequestBodyFieldInputRow(
             disabled={disabled}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={12}>
           <EndpointRequestFieldIsRequiredToggleInput
             model={endpointFieldModel}
             updateMainModelFunction={updateMainModelFunction}
@@ -71,7 +71,7 @@ function EndpointRequestBodyFieldInputRow(
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={12}>
           <EndpointRequestFieldIsSensitiveDataToggleInput
             model={endpointFieldModel}
             updateMainModelFunction={updateMainModelFunction}

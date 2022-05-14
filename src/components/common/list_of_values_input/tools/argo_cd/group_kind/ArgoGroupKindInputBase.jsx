@@ -211,7 +211,7 @@ function ArgoGroupKindInputBase({dataObject, setDataObject, fieldName, disabledF
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer className={className} fieldName={fieldName}>
       <PropertyInputContainer
         titleIcon={titleIcon}
         field={field}

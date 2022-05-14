@@ -1,5 +1,5 @@
 import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
-import _ from "lodash";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -11,7 +11,7 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = _.cloneDeep(metaData);
+    this.metaData = dataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -417,7 +417,11 @@ export class Model {
   };
 
   clone = () => {
-    return _.cloneDeep(this);
+    return dataParsingHelper.cloneDeep(this);
+  };
+
+  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
+    return new Model({...newData}, this.metaData, isNew);
   };
 }
 

@@ -41,6 +41,8 @@ import teamcityStepConfigurationMetadata
 import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
+import TerraformVcsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfigurationSummaryPanel";
+import TerraformVcsStepFormMetadata from "./step_tool_configuration_forms/terraform_vcs/terraform-vcs-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
   from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
 import {parallelProcessorStepMetadata}
@@ -182,7 +184,10 @@ import GitScraperSummaryPanel from "./step_tool_configuration_forms/gitscraper/G
 import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscraper/gitscraper-step-metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationStepSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepSummaryPanel";
+  from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
+import {
+  externalRestApiIntegrationStepMetadata
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -198,6 +203,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ExternalRestApiIntegrationStepSummaryPanel
             pipelineData={pipelineData}
+            externalRestApiIntegrationModel={getModelWrappedObject(externalRestApiIntegrationStepMetadata)}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
@@ -345,6 +351,13 @@ function PipelineStepConfigurationSummary({
           <TerraformPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             terraformPipelineDataObject={getModelWrappedObject(TerraformStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
+        return (
+          <TerraformVcsStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
           />
         );
       case "xunit":
@@ -588,7 +601,7 @@ function PipelineStepConfigurationSummary({
   };
 
   return (
-    <div className={"step-configuration-summary h-100"}>
+    <div className={"h-100"}>
       {getStepConfigurationSummary()}
     </div>
   );

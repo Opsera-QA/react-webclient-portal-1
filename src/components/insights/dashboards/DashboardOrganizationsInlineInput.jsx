@@ -33,7 +33,7 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       source.cancel();
       isMounted.current = false;
     };
-  }, [model]);
+  }, []);
 
   const updateDashboardOrganizations = async (newDataModel) => {
     const newModel = modelHelpers.setDashboardFilterModelField(
@@ -41,9 +41,12 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       "organizations",
       newDataModel?.getData("organizations")
     );
-    const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
-    loadData();
-    return response;
+    return await dashboardsActions.updateDashboardFiltersV2(
+      getAccessToken,
+      cancelTokenSource,
+      newModel?.getMongoDbId(),
+      newModel?.getData("filters"),
+      );
   };
 
   if (model == null) {
@@ -53,11 +56,12 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
   return (
     <OrganizationsInlineInputBase
       tagLocation={"Dashboard"}
-      disabled={disabled}
+      disabled={disabled || model?.canUpdateDashboardFilters() !== true}
       visible={visible}
       model={temporaryModel}
       fieldName={"organizations"}
       saveDataFunction={updateDashboardOrganizations}
+      loadData={loadData}
     />
   );
 }

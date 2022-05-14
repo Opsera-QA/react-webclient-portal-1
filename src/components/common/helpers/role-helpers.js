@@ -188,7 +188,7 @@ export const roleAllowed = (accessRoles, roleLevel) => {
 export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
   let accessRoleRows = [];
 
-  if (roleDefinitions == null) {
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
     return [];
   }
 
@@ -198,8 +198,12 @@ export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
     if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
       roleDefinitionKeys.forEach((roleDefinitionKey) => {
         const roleDefinition = roleDefinitions[roleDefinitionKey];
-        const accessRoles = roleDefinition.allowedRoles;
 
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition?.allowedRoles;
         const tableRow = {
           id: roleDefinition.id,
           description: roleDefinition.description,
@@ -225,7 +229,7 @@ export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
 export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
   let accessRoleRows = [];
 
-  if (roleDefinitions == null) {
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
     return [];
   }
 
@@ -235,8 +239,12 @@ export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
     if (Array.isArray(roleDefinitionKeys) && roleDefinitionKeys.length > 0) {
       roleDefinitionKeys.forEach((roleDefinitionKey) => {
         const roleDefinition = roleDefinitions[roleDefinitionKey];
-        const accessRoles = roleDefinition.allowedRoles;
 
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition.allowedRoles;
         const tableRow = {
           id: roleDefinition.id,
           description: roleDefinition.description,
@@ -358,6 +366,56 @@ export const isActionAllowed = (customerAccessRules, action, owner, objectRoles,
   const userObjectRole = calculateUserObjectRole(customerAccessRules?.Email, customerAccessRules?.Groups, objectRoles);
   // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
   return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
+};
+
+export const isFeatureActionAllowed = (customerAccessRules, roleDefinition) => {
+  if (customerAccessRules == null || roleDefinition == null) {
+    return false;
+  }
+
+  const allowedRoles = roleDefinition?.allowedRoles;
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules?.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.OpseraAdministrator === true && allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.Administrator === true && allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.SassPowerUser === true && allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
+    return true;
+  }
+
+  if (customerAccessRules.FreeTrialUser === true && allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
+    return true;
+  }
+
+  return false;
 };
 
 //compares the user email to the objectRoles data to see if the user has a specific role

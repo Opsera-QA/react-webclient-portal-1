@@ -80,8 +80,8 @@ function TaskManagement() {
       setTaskMetadata(taskMetadata);
 
       let newFilterDto = newFilterModel;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      newFilterDto?.setData("totalCount", response?.data?.count);
+      newFilterDto?.setData("activeFilters", newFilterDto.getActiveFilters());
       setTaskFilterModel({...newFilterDto});
     }
   };

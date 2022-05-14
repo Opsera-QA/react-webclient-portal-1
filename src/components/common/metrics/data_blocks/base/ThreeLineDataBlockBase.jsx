@@ -80,7 +80,7 @@ function ThreeLineDataBlockBase(
       <Row className={"w-100 h-100 mx-auto text-center"}>
         <Col xs={12} className={"d-flex justify-content-between"}>
           <div className={"data-block-icon"}>{getLeftDataBlockIcon()}</div>
-          <div>{getTopText()}</div>
+          <div className={"w-100"}>{getTopText()}</div>
           <div className={"data-block-icon"}>{getInfoOverlayIcon()}</div>
         </Col>
         <Col xs={12} className={"my-auto text-center"}>

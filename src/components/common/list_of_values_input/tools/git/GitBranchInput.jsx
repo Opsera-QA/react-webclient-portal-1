@@ -8,6 +8,7 @@ import GithubBranchSelectInput
   from "components/common/list_of_values_input/tools/github/branches/GithubBranchSelectInput";
 import GitlabBranchSelectInput
   from "components/common/list_of_values_input/tools/gitlab/branches/GitlabBranchSelectInput";
+import TextInputBase from "../../../inputs/text/TextInputBase";
 
 // TODO: rename BranchSelectInputBase
 function GitBranchInput(
@@ -89,6 +90,12 @@ function GitBranchInput(
     );
   }
 
+    if (service === "github-deploykey") {
+      return (
+          <TextInputBase setDataObject={setDataObject} dataObject={dataObject} fieldName={fieldName} />
+      );
+    }
+    
   return (
     <></>
   );

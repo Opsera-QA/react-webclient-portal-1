@@ -1,4 +1,3 @@
-import _ from "lodash";
 import {LIVE_MESSAGE_TOPICS, LIVE_MESSAGE_TYPES} from "core/websocket/constants/liveMessage.constants";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 

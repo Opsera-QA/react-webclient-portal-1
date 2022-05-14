@@ -102,6 +102,11 @@ pipelineActions.getPipelineStates = async (pipelineIds, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, pipelineIds);
 };
 
+pipelineActions.getPipelineStatesV2 = async (getAccessToken, cancelTokenSource, pipelineIds) => {
+  const apiUrl = `/pipelines/state`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, pipelineIds);
+};
+
 pipelineActions.getPipelineStateAtRun = async (pipelineId, runNumber, getAccessToken) => {
   let apiUrl = `/pipelines/state/${pipelineId}/${runNumber}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
@@ -461,6 +466,11 @@ pipelineActions.createMongodbRealmJob = async (toolId, postBody, getAccessToken)
 
 pipelineActions.createMongodbRealmJobV2 = async (getAccessToken, cancelTokenSource, toolId, postBody) => {
   const apiUrl = `/registry/action/${toolId}/createMongodbRealmJob`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+pipelineActions.createTerraformPipelineV2 = async (getAccessToken, cancelTokenSource, postBody) => {  
+  const apiUrl = `/pipelines/terraform-cloud/createPipeline`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

@@ -9,10 +9,11 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 
-const AuthContextProvider = ({ userData, refreshToken, authClient, children, websocketClient }) => {
+const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
   const history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -27,27 +28,15 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       source.cancel();
       isMounted.current = false;
 
-      if (websocketClient) {
-        websocketClient.closeWebsocket();
-      }
+      // if (websocketClient) {
+      //   websocketClient.close();
+      // }
     };
   }, []);
 
-  const getWebsocketClient = () => {
-    return websocketClient;
-  };
-
-  const subscribeToTopic = (topicName, model) => {
-    if (websocketClient) {
-      websocketClient?.subscribeToTopic(topicName, model);
-    }
-  };
-
-  const unsubscribeFromTopic = (topicName, model) => {
-    if (websocketClient) {
-      websocketClient?.unsubscribeFromTopic(topicName, model);
-    }
-  };
+  // const getWebsocketClient = () => {
+  //   return websocketClient;
+  // };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -142,11 +131,11 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
   };
 
   const featureFlagHideItemInProd = () => {
-    return process.env.REACT_APP_ENVIRONMENT === "production";
+    return String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
   };
 
   const featureFlagHideItemInTest = () => {
-    return process.env.REACT_APP_ENVIRONMENT === "test";
+    return String(process.env.REACT_APP_ENVIRONMENT) === "test";
   };
 
   const setAccessRoles = async (user) => {
@@ -249,8 +238,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children, web
       getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
       // getWebsocketClient: getWebSocketClient,
-      subscribeToTopic: subscribeToTopic,
-      unsubscribeFromTopic: unsubscribeFromTopic,
     }}>
       {children}
     </AuthContext.Provider>
@@ -262,7 +249,6 @@ AuthContextProvider.propTypes = {
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
   children: PropTypes.any,
-  websocketClient: PropTypes.object,
 };
 
 export const AuthContext = createContext();

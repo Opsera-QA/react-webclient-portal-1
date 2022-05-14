@@ -11,12 +11,12 @@ const ebsStepFormMetadata = {
     {
       label: "Docker Volume Path",
       id: "dockerVolumePath",
-      fieldText : "Enter Source, Target path as a JSON Object"
+      formText : "Enter Source, Target path as a JSON Object"
     },
     {
       label: "Environments",
       id: "environments",
-      fieldText : "Enter environments as a JSON Object"
+      formText : "Enter environments as a JSON Object"
     },
     {
       label: "S3 Bucket Name",
@@ -97,7 +97,13 @@ const ebsStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("customDockerCompose") === true;
       },
-    }
+    },
+    {
+      label: "App startup wait Time(mins)",
+      id: "delayTime",
+      formText : "Max time to wait until environment health turns Green, limit 0-10mins",
+      regexValidator: /\b([0-9]|10)\b/,
+    },
   ],
   
   fieldsAlt: [
@@ -109,12 +115,12 @@ const ebsStepFormMetadata = {
     {
       label: "Docker Volume Path",
       id: "dockerVolumePath",
-      fieldText : "Enter Source, Target path as a JSON Object"
+      formText : "Enter Source, Target path as a JSON Object"
     },
     {
       label: "Environments",
       id: "environments",
-      fieldText : "Enter environments as a JSON Object"
+      formText : "Enter environments as a JSON Object"
     },
     {
       label: "S3 Bucket Name",
@@ -198,7 +204,13 @@ const ebsStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("customDockerCompose") === true;
       },
-    }
+    },
+    {
+      label: "App startup wait Time(mins)",
+      id: "delayTime",
+      formText : "Max time to wait until environment health turns Green, limit 0-10mins",
+      regexValidator: /\b([0-9]|10)\b/,
+    },
   ],
 
   newObjectFields:
@@ -221,7 +233,8 @@ const ebsStepFormMetadata = {
       solutionStackName: "",
       createDomain: false,
       customDockerCompose: false,
-      dockerComposeScriptId: ""
+      dockerComposeScriptId: "",
+      delayTime: ""
     }
 };
 

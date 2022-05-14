@@ -48,6 +48,7 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
+
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
@@ -111,6 +112,8 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
         data={dataScorecardMetrics}
         loadData={loadData}
         type={gitScrapperType}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
       />
     );
   };

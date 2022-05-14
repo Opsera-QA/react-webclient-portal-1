@@ -115,7 +115,10 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       label: "Upstream Branch",
       id: "upstreamBranch",
       regexDefinitionName: "generalTextWithSpacesSlash",
-      maxLength: 50
+      maxLength: 50,
+      isRequiredFunction: (model) => {
+        return model?.getData("isNewBranch") === true;
+      },
     },
     {
       label: "Include Package XML",

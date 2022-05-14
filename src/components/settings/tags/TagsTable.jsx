@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from "react";
+import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -101,7 +101,7 @@ TagsTable.propTypes = {
   tagFilterDto: PropTypes.object,
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
-  isMounted: PropTypes.object,
+  isMounted: PropTypes.object
 };
 
 export default TagsTable;

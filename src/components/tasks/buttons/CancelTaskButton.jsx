@@ -17,6 +17,9 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
   TASK_TYPES.SYNC_SALESFORCE_REPO,
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+  TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
+  TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
+  TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
 ];
 
 // TODO: This should be broken into two buttons, one for cancel and one for logs
@@ -45,12 +48,26 @@ function CancelTaskButton({taskModel, disable, className, actionAllowed, taskTyp
 
   // TODO: Add confirmation Dialog
   const handleCancelRunTask = async () => {
-    setIsCanceling(true);
-    // TODO: call cancel job api to jenkins integrator
-    await taskActions.stopTask(getAccessToken, cancelTokenSource, taskModel);
-    toastContext.showInformationToast("Task has been stopped", 10);
-    setIsCanceling(false);
-    history.push(`/task`);
+    try {
+      setIsCanceling(true);
+      await taskActions.stopTaskV3(
+        getAccessToken,
+        cancelTokenSource,
+        taskModel?.getMongoDbId(),
+      );
+      toastContext.showInformationToast("Task has been stopped", 10);
+      history.push(`/task`);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showSystemErrorToast(error, "There was an issue canceling this Task:");
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsCanceling(false);
+      }
+    }
   };
 
   const getButtonText = () => {

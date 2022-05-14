@@ -20,6 +20,8 @@ function VisibleVaultTextAreaInput(
     error,
     customMessage,
     parameterId,
+    infoOverlay,
+    inputHelpOverlay,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -141,10 +143,14 @@ function VisibleVaultTextAreaInput(
   }
 
   return (
-    <InputContainer>
+    <InputContainer
+      fieldName={fieldName}
+    >
       <InputLabel
         field={field}
         model={model}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
       />
       <div className={"d-flex"}>
         <textarea
@@ -182,6 +188,8 @@ VisibleVaultTextAreaInput.propTypes = {
   error: PropTypes.any,
   customMessage: PropTypes.string,
   parameterId: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default VisibleVaultTextAreaInput;

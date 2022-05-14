@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "../../../overlays/center/help/HelpOverlayBase";
-import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
+import PropTypes from "prop-types";
+import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
+import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
 
-function InsightsHelpDocumentation() {
+function InsightsHelpDocumentation({dashboardRoleDefinitions}) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -49,8 +51,22 @@ function InsightsHelpDocumentation() {
       helpTopic={"Insights: My Dashboard"}
       helpDocumentation={getHelpDocumentation()}
     >
+      <div className={"my-2"}>
+        <AssignedRoleAccessTable
+          roleAccessDefinitions={dashboardRoleDefinitions}
+        />
+      </div>
+      <div className={"my-2"}>
+        <SiteRoleAccessTable
+          roleAccessDefinitions={dashboardRoleDefinitions}
+        />
+      </div>
     </HelpOverlayBase>
   );
 }
+
+InsightsHelpDocumentation.propTypes = {
+  dashboardRoleDefinitions: PropTypes.object,
+};
 
 export default React.memo(InsightsHelpDocumentation);

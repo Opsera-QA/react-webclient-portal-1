@@ -19,6 +19,10 @@ function VanitySetTabAndViewContainer(
     maximumHeight,
     isLoading,
     titleRightSideButton,
+    loadDataFunction,
+    overflowYBodyStyle,
+    overflowXBodyStyle,
+    overflowYContainerStyle,
   }) {
   const getTabColumnSize = () => {
     if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
@@ -40,7 +44,7 @@ function VanitySetTabAndViewContainer(
     return ({
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
-      overflowY: "hidden",
+      overflowY: overflowYContainerStyle,
     });
   };
 
@@ -48,7 +52,8 @@ function VanitySetTabAndViewContainer(
     return ({
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
-      overflowY: "auto",
+      overflowY: overflowYBodyStyle,
+      overflowX: overflowXBodyStyle,
     });
   };
 
@@ -58,6 +63,7 @@ function VanitySetTabAndViewContainer(
       titleIcon={icon}
       className={className}
       isLoading={isLoading}
+      loadDataFunction={loadDataFunction}
       titleRightSideButton={titleRightSideButton}
     >
       <Tab.Container defaultActiveKey={defaultActiveKey}>
@@ -98,12 +104,18 @@ VanitySetTabAndViewContainer.propTypes = {
   maximumHeight: PropTypes.string,
   isLoading: PropTypes.bool,
   titleRightSideButton: PropTypes.object,
+  loadDataFunction: PropTypes.func,
+  overflowYBodyStyle: PropTypes.string,
+  overflowXBodyStyle: PropTypes.string,
+  overflowYContainerStyle: PropTypes.string,
 };
 
 VanitySetTabAndViewContainer.defaultProps = {
   bodyClassName: "mx-0",
   minimumHeight: "calc(100vh - 264px)",
   maximumHeight: "calc(100vh - 264px)",
+  overflowYBodyStyle: "auto",
+  overflowYContainerStyle: "hidden",
 };
 
 export default VanitySetTabAndViewContainer;

@@ -6,7 +6,16 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 
-function ParameterValueTextInput({fieldName, model, parameterId, setModel, disabled}) {
+function ParameterValueTextInput(
+  {
+    fieldName,
+    model,
+    parameterId,
+    setModel,
+    disabled,
+    inputHelpOverlay,
+    infoOverlay,
+  }) {
   const [field, setField] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -95,8 +104,13 @@ function ParameterValueTextInput({fieldName, model, parameterId, setModel, disab
   };
 
   return (
-    <InputContainer>
-      <InputLabel field={field} model={model}/>
+    <InputContainer fieldName={fieldName}>
+      <InputLabel
+        field={field}
+        model={model}
+        infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
+      />
       <div className={"d-flex"}>
         <textarea
           type={valueShown === false && !model?.isChanged(fieldName) ? "password" : undefined}
@@ -123,7 +137,9 @@ ParameterValueTextInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  parameterId: PropTypes.string
+  parameterId: PropTypes.string,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default ParameterValueTextInput;

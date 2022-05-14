@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import PipelineStepDetailsOverview from "components/workflow/pipelines/overview/PipelineStepDetailsOverview";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import PipelineOverviewStepTree from "components/workflow/pipelines/overview/PipelineOverviewStepTree";
-import PipelineSourceRepositoryOverview from "components/workflow/pipelines/overview/PipelineSourceRepositoryOverview";
+import PipelineSummaryAndWebhookOverviewDetailPanel from "components/workflow/pipelines/overview/PipelineSummaryAndWebhookOverviewDetailPanel";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
+import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
 
 function PipelineOverviewContainer({ pipeline }) {
   const [pipelineSteps, setPipelineSteps] = useState([]);
@@ -37,7 +38,11 @@ function PipelineOverviewContainer({ pipeline }) {
     return (
       <VanitySetTabViewContainer>
         <VanitySetTabView tabKey={0}>
-          <PipelineSourceRepositoryOverview pipeline={pipeline} />
+          <PipelineStepDetailsContainer title={`Overview`}>
+            <div className={"pt-2 pl-2"}>
+              <PipelineSummaryAndWebhookOverviewDetailPanel pipeline={pipeline} />
+            </div>
+          </PipelineStepDetailsContainer>
         </VanitySetTabView>
         {getPipelineStepTabPanes()}
       </VanitySetTabViewContainer>

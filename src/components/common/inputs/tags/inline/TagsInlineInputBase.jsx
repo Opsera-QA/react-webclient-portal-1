@@ -15,6 +15,7 @@ function TagsInlineInputBase(
     visible,
     type,
     tagLocation,
+    loadData,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -22,10 +23,10 @@ function TagsInlineInputBase(
     toastContext.showOverlayPanel(
       <TagMultiSelectOverlay
         type={type}
-        dataObject={model}
+        model={model}
         fieldName={fieldName}
         saveDataFunction={saveDataFunction}
-        showModal={true}
+        loadData={loadData}
       />
     );
   };
@@ -67,6 +68,7 @@ TagsInlineInputBase.propTypes = {
   saveDataFunction: PropTypes.func,
   type: PropTypes.string,
   badgeClassName: PropTypes.string,
+  loadData: PropTypes.func,
 };
 
 TagsInlineInputBase.defaultProps = {

@@ -21,6 +21,8 @@ function MultiTextInputBase(
     clearDataFunction,
     className,
     showLabel,
+    inputHelpOverlay,
+    infoOverlay,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -81,12 +83,14 @@ function MultiTextInputBase(
   }
 
   return (
-    <InputContainer className={className ? className : undefined}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         field={field}
         clearDataFunction={getClearDataFunction()}
         showLabel={showLabel}
+        infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -132,7 +136,9 @@ MultiTextInputBase.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
 };
 
 MultiTextInputBase.defaultProps = {

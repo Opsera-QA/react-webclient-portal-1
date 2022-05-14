@@ -32,7 +32,11 @@ function ResetDashboardMetricButton(
     );
   };
 
-  if (metricModel == null || dashboardModel == null) {
+  if (
+    metricModel == null ||
+    dashboardModel == null ||
+    dashboardModel?.canUpdateDashboardMetric() !== true
+  ) {
     return null;
   }
 

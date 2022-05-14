@@ -17,7 +17,7 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel model={dataObject} field={field}/>
       <textarea
         disabled={disabled}

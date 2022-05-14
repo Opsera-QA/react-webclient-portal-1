@@ -2,11 +2,16 @@ import baseActions from "utils/actionsBase";
 
 const terraformCloudWorkspacesActions = {};
 
-terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName) => {
+terraformCloudWorkspacesActions.createTerraformCloudWorkspace = async (getAccessToken, cancelTokenSource, toolId, organizationName, dataObject) => {
   const apiUrl = `/tools/${toolId}/terraform-cloud-workspaces/${organizationName}`;
-  const postBody = {
-    workspaceName: workspaceName
-  };
+  const postBody = dataObject.getPersistData();
+
+  if (postBody.repository === "Others"){
+    postBody.repository = postBody.repositoryText;
+  }
+
+  delete postBody["repositoryText"];
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -22,6 +27,16 @@ terraformCloudWorkspacesActions.getTerraformCloudWorkspaces = async (getAccessTo
 
 terraformCloudWorkspacesActions.getTerraformCloudWorkspaceConfiguration = async (getAccessToken, cancelTokenSource, toolId, organizationName, workspaceName) => {
   const apiUrl = `/tools/${toolId}/terraform-cloud-workspace-config/${organizationName}/${workspaceName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+terraformCloudWorkspacesActions.getVcsProviders = async (getAccessToken, cancelTokenSource, toolId, organizationName) => {  
+  const apiUrl = `/tools/${toolId}/terraform-provider-service/${organizationName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+terraformCloudWorkspacesActions.getVcsProviderRepositories = async (getAccessToken, cancelTokenSource, toolId, authToken) => {
+  const apiUrl = `/tools/${toolId}/terraform-provider-repos/${authToken}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

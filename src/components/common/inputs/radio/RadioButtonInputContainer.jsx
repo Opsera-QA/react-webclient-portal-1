@@ -8,7 +8,7 @@ function RadioButtonInputContainer({ fieldName, dataObject, children, className}
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   return (
-    <InputContainer className={className ? className : "custom-radio-button-input my-2"}>
+    <InputContainer className={className ? className : "custom-radio-button-input my-2"} fieldName={fieldName}>
       <InputLabel field={field} model={dataObject} />
       {children}
       <InfoText

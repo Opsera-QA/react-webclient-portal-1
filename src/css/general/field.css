@@ -53,6 +53,23 @@
 
 /* End Item Field */
 
+/* Diff Field Styling */
+.codeMarker {
+    background-color: rgb(178, 219, 255, .5);
+    position: absolute;
+    z-index: 20;
+}
+
+.ace-text-layer {
+    z-index: 30;
+}
+
+pre {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+/* End Diff Field Styling */
+
 
 /* Role Access Input Styling */
 .role-access .group-badge {
@@ -320,10 +337,6 @@ input[disabled] {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.step-configuration-summary {
-    color: #334152;
 }
 
 .vertical-tab-text {

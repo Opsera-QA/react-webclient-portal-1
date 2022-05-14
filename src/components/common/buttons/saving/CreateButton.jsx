@@ -12,7 +12,23 @@ import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon, className, showTypeOnLabel, customLabel}) {
+function CreateButton(
+  {
+    recordDto,
+    createRecord,
+    disable,
+    showSuccessToasts,
+    lenient,
+    setRecordDto,
+    addAnotherOption,
+    handleClose,
+    size,
+    icon,
+    className,
+    showTypeOnLabel,
+    customLabel,
+    isIncomplete,
+  }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -31,16 +47,48 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     setIsSaving(true);
 
     if (addAnother) {
-      await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
+      await persistNewRecordAndAddAnother(
+        recordDto,
+        toastContext,
+        showSuccessToasts,
+        createRecord,
+        lenient,
+        setRecordDto,
+        isIncomplete,
+        );
     }
     else if (recordDto.getDetailViewLink() != null) {
-      await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
+      await persistNewRecordAndViewDetails(
+        recordDto,
+        toastContext,
+        showSuccessToasts,
+        createRecord,
+        lenient,
+        history,
+          isIncomplete,
+        );
     }
     else if (handleClose != null) {
-      await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
+      await persistNewRecordAndClose(
+        recordDto,
+        toastContext,
+        showSuccessToasts,
+        createRecord,
+        lenient,
+        handleClose,
+        isIncomplete,
+        );
     }
     else {
-      await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+      await persistNewRecord(
+        recordDto,
+        toastContext,
+        showSuccessToasts,
+        createRecord,
+        lenient,
+        undefined,
+        isIncomplete,
+        );
     }
 
     if (isMounted?.current === true) {
@@ -101,7 +149,8 @@ CreateButton.propTypes = {
   icon: PropTypes.object,
   className: PropTypes.string,
   customLabel: PropTypes.string,
-  showTypeOnLabel: PropTypes.bool
+  showTypeOnLabel: PropTypes.bool,
+  isIncomplete: PropTypes.bool,
 };
 
 CreateButton.defaultProps = {

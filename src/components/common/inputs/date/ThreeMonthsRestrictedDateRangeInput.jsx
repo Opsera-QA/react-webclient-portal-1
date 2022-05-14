@@ -52,7 +52,7 @@ function ThreeMonthsRestrictedDateRangeInput({ fieldName, dataObject, setDataObj
     });
   };
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <div className={"d-flex justify-content-between date-range-header"}>
         <InputLabel field={field} model={dataObject} />
         <TooltipWrapper innerText={"Clear this Value"}>

@@ -35,6 +35,7 @@ function MultiSelectInputBase(
     error,
     pluralTopic,
     visible,
+    inputHelpOverlay,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -171,7 +172,7 @@ function MultiSelectInputBase(
   }
 
   return (
-    <InputContainer className={className ? className : undefined}>
+    <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
         model={dataObject}
         showLabel={showLabel}
@@ -182,6 +183,7 @@ function MultiSelectInputBase(
         detailViewLink={detailViewLink}
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
+        inputHelpOverlay={inputHelpOverlay}
       />
       <StandaloneMultiSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}
@@ -238,6 +240,7 @@ MultiSelectInputBase.propTypes = {
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
   parseValueFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,

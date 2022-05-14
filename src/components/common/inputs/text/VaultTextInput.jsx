@@ -12,6 +12,8 @@ function VaultTextInput(
     setDataObject,
     disabled,
     rightSideInputButton,
+    infoOverlay,
+    inputHelpOverlay
   }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,8 +66,13 @@ function VaultTextInput(
   }
 
   return (
-    <InputContainer>
-      <InputLabel field={field} model={dataObject}/>
+    <InputContainer fieldName={fieldName}>
+      <InputLabel
+        field={field}
+        model={dataObject}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       {getInput()}
       <VaultInfoText storedInVault={isStoredInVault()} errorMessage={errorMessage}/>
     </InputContainer>
@@ -78,6 +85,8 @@ VaultTextInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   rightSideInputButton: PropTypes.object,
+  infoOverlay: PropTypes.any,
+  inputHelpOverlay: PropTypes.any,
 };
 
 export default VaultTextInput;

@@ -76,7 +76,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
   }
 
   return (
-    <InputContainer className="form-group my-2">
+    <InputContainer className="form-group my-2" fieldName={fieldName}>
       <label className=""><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null}</span></label>
       <div className="custom-item-input">
         {rowList.map((row, key) => {

@@ -9,8 +9,8 @@ const sfdxCertGenTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },
     {
-      label: "Git Properties",
-      id: "git",
+      label: "Jenkins Tool Name",
+      id: "toolName",
       isRequired: true,
       maxLength: 250,
       regexDefinitionName: "generalTextWithSpaces",

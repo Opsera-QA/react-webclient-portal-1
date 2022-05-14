@@ -165,6 +165,64 @@ chartsActions.getGitScraperCleanRepos = async(kpiConfiguration, getAccessToken, 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, repository, branch)=>{
+  
+  const apiUrl = "/analytics/gitscraper/v1/gitScraperIssuesActionableInsights";
+  
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);  
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    repository,
+    branch
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getSfdcMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/sfdc/v1/getSfdcMetrics";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 chartsActions.parseConfigurationAndGetChartMetrics = async (
   getAccessToken,
   cancelTokenSource,
@@ -179,7 +237,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   dateRange,
   actionableInsightsQueryData,
   coveritySeverity,
-  priorityMTTR
+  priorityMTTR,
+  projectName,
+  runCount,
+  pipelineId
 ) => {
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
@@ -257,6 +318,9 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     actionableInsightsQueryData: actionableInsightsQueryData,
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
+    projectName: projectName,
+    runCount: runCount,
+    pipelineId: pipelineId,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

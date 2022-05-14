@@ -20,7 +20,13 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const toastContext = useContext(DialogToastContext);
 
   const createNewTask = () => {
-    toastContext.showOverlayPanel(<NewTaskOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewTaskOverlay
+        loadData={loadData}
+        isMounted={isMounted}
+        taskMetadata={taskMetadata}
+      />
+    );
   };
 
   const getDropdownFilters = () => {
@@ -125,6 +131,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         inlineFilters={getInlineFilters()}
         titleIcon={faTasks}
         title={"Tasks"}
+        type={"Task"}
         className={"px-2 pb-2"}
       />
   );

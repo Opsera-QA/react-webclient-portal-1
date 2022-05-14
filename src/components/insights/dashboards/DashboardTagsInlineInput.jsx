@@ -39,13 +39,16 @@ function DashboardTagsInlineInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [model]);
+  }, []);
 
-  const updateDashboardTags = async (newDataModel) => {
+  const saveDataFunction = async (newDataModel) => {
     const newModel = modelHelpers.setDashboardFilterModelField(model, "tags", newDataModel?.getData("tags"));
-    const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
-    loadData();
-    return response;
+    return await dashboardsActions.updateDashboardFiltersV2(
+      getAccessToken,
+      cancelTokenSource,
+      newModel?.getMongoDbId(),
+      newModel?.getData("filters"),
+    );
   };
 
   if (model == null) {
@@ -55,12 +58,13 @@ function DashboardTagsInlineInput(
   return (
     <TagsInlineInputBase
       tagLocation={"Dashboard"}
-      disabled={disabled}
+      disabled={disabled || model?.canUpdateDashboardFilters() !== true}
       visible={visible}
       model={temporaryModel}
       fieldName={"tags"}
       badgeClassName={"metric-badge"}
-      saveDataFunction={updateDashboardTags}
+      saveDataFunction={saveDataFunction}
+      loadData={loadData}
     />
   );
 }

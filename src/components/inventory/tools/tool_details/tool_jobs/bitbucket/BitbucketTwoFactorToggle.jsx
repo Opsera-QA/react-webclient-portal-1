@@ -19,7 +19,7 @@ function BitbucketTwoFactorToggle({dataObject, setDataObject, fieldName, disable
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <Form.Check
         type="switch"
         id={field.id}

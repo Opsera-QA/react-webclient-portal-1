@@ -18,6 +18,8 @@ function NumberPickerInputBase(
     minimum,
     maximum,
     className,
+    inputHelpOverlay,
+    infoOverlay,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,8 +45,14 @@ function NumberPickerInputBase(
   }
 
   return (
-    <InputContainer className={className ? className : "custom-number-input my-2"}>
-      <InputLabel field={field} showLabel={showLabel} model={dataObject} />
+    <InputContainer className={className ? className : "custom-number-input my-2"} fieldName={fieldName}>
+      <InputLabel
+        field={field}
+        showLabel={showLabel}
+        model={dataObject}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       <StandaloneNumberPickerInput
         placeholderText={placeholderText}
         disabled={disabled}
@@ -76,7 +84,9 @@ NumberPickerInputBase.propTypes = {
   minimum: PropTypes.number,
   maximum: PropTypes.number,
   className: PropTypes.string,
-  precision: PropTypes.number
+  precision: PropTypes.number,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
 };
 
 export default NumberPickerInputBase;

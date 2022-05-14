@@ -17,8 +17,8 @@ export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString 
   return noDataString;
 }
 
-export function hasStringValue(string) {
-  return (typeof string === "string" && string !== "");
+export function hasStringValue(string, requireText = true) {
+  return (typeof string === "string" && (requireText === false || string.trim() !== ""));
 }
 
 export function stringIncludesValue(string, searchTerm) {

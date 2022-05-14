@@ -112,7 +112,9 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
         }
       }
       else {
-        currentOptions.push(tagOption);
+        if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
+          currentOptions.push(tagOption);
+        }     
       }
     });
 
@@ -190,7 +192,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   }
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       {!inline && <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput

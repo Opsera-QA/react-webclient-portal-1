@@ -1,5 +1,5 @@
 import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
-import _ from "lodash";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -17,7 +17,7 @@ export const temporaryObjectProperties = [
 
 export class ModelBase {
   constructor(data, metaData, newModel, setStateFunction) {
-    this.metaData = _.cloneDeep({...metaData});
+    this.metaData = dataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.id = data?._id;
@@ -28,7 +28,7 @@ export class ModelBase {
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
-    this.editAccssRolesAllowed = false;
+    this.editAccessRolesAllowed = false;
     this.roleDefinitions = {};
   }
 
@@ -490,11 +490,11 @@ export class ModelBase {
   };
 
   clone = () => {
-    return _.cloneDeep(this);
+    return dataParsingHelper.cloneDeep(this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ModelBase({...newData}, this.metaData, this.newModel);
+  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
+    return new ModelBase({...newData}, this.metaData, isNew);
   };
 
   canUpdate = () => {
@@ -511,7 +511,7 @@ export class ModelBase {
   // };
 
   canEditAccessRoles = () => {
-    return this.canUpdate() === true && this.editAccssRolesAllowed === true;
+    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
 
   canPerformAction = () => {

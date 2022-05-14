@@ -1,4 +1,5 @@
 import baseActions from "utils/actionsBase";
+import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 const taskActions = {};
 
@@ -50,6 +51,25 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
 taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBody) => {
+  const apiUrl = `/tasks/${taskId}/run`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+    );
+};
+
+taskActions.stopTaskV3 = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tasks/${taskId}/stop`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
 
 taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, fields) => {
@@ -168,6 +188,39 @@ taskActions.stopTask = async (getAccessToken, cancelTokenSource, taskModel) => {
   };
   const apiUrl = `/tools/git/${taskModel.getData("_id")}/stop`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+// TODO : wire up api to validate the deployment id used for quick deploy task
+taskActions.validateDeployId = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
+  };
+  const apiUrl = `/tasks/validateDeployKey`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+// TODO : Generic task trigger function
+taskActions.triggerTask = async (getAccessToken, cancelTokenSource, taskData) => {
+  const postBody = {
+    taskId: taskData.getData("_id"),
+    ...taskData.getData("configuration")
+  };
+
+  const apiUrl = `/tasks/${taskData.getData("_id")}/run`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.getTaskAuditLogsByTaskId = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+) => {
+  const apiUrl = `/audit-logs/task/${taskId}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
 
 export default taskActions;

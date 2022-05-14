@@ -4,7 +4,7 @@ const dashboardsActions = {};
 
 dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/analytics/dashboards/${id}`;
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, dashboardFilterDto) => {
@@ -25,7 +25,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
     }
   };
 
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSource) => {
@@ -41,7 +41,7 @@ dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSour
     }
   };
 
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 
@@ -54,31 +54,53 @@ dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSourc
     }
   };
 
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardsActions.createDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = "/analytics/dashboard/create";
+  const apiUrl = "/analytics/dashboards/create";
   const postData = {
     ...dashboardModel.getPersistData()
   };
 
-  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
-
-dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}/update`;
+dashboardsActions.updateDashboardV2 = async (getAccessToken, cancelTokenSource, dashboardModel) => {
+  const apiUrl = `/analytics/dashboards/${dashboardModel?.getData('_id')}/update`;
   const postData = {
     ...dashboardModel?.getPersistData()
   };
 
-  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
+dashboardsActions.updateDashboardFiltersV2 = async (getAccessToken, cancelTokenSource, dashboardId, newDashboardFilters) => {
+  const apiUrl = `/analytics/dashboards/${dashboardId}/filters/update`;
+  const postData = {
+    filters: newDashboardFilters,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postData,
+  );
+};
+
+dashboardsActions.transferOwnershipToNewUserV2 = async(getAccessToken, cancelTokenSource, dashboardId, newOwnerId) => {
+  const apiUrl = `/analytics/dashboards/${dashboardId}/transfer`;
+  const postData = {
+    newOwnerId: newOwnerId,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardModel) => {
-  const apiUrl = `/analytics/dashboard/${dashboardModel?.getData('_id')}`;
-  return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const apiUrl = `/analytics/dashboards/${dashboardModel?.getData('_id')}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
@@ -86,7 +108,7 @@ dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
   let postData = {
     ...rowData
   };
-  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 export default dashboardsActions;

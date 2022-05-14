@@ -12,8 +12,8 @@ import ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import ExternalApiRestIntegrationStepEndpointVerticalTabContainer
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalApiRestIntegrationStepEndpointVerticalTabContainer";
+import ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer
+  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
@@ -117,12 +117,13 @@ function ExternalRestApiIntegrationStepEditorPanel(
       isLoading={isLoading}
       extraButtons={getWarningMessage()}
       className={"m-0"}
+      addAnotherOption={false}
     >
       <ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
         model={externalRestApiIntegrationModel}
         setModel={setExternalRestApiIntegrationModel}
       />
-      <ExternalApiRestIntegrationStepEndpointVerticalTabContainer
+      <ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer
         externalRestApiIntegrationModel={externalRestApiIntegrationModel}
         setExternalRestApiIntegrationModel={setExternalRestApiIntegrationModel}
       />

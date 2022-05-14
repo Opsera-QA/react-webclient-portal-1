@@ -19,7 +19,7 @@ H5FieldSubHeader.propTypes = {
 };
 
 H5FieldSubHeader.defaultProps = {
-  className: "mb-2",
+  className: "mb-2 text-color",
 };
 
 export default H5FieldSubHeader;

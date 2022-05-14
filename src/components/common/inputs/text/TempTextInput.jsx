@@ -37,7 +37,7 @@ function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, i
   };
 
   return (
-    <InputContainer>
+    <InputContainer fieldName={fieldName}>
       <InputLabel model={dataObject} field={field} extraActionButtons={extraActionButtons} />
       <input
         type={type}

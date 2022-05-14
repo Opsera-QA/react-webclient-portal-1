@@ -14,7 +14,7 @@ const sfdcPipelineWizardMetadata = {
     {
       label: "Choose Source Org",
       id: "modifiedFilesOrigin",
-      formText: "Choose the retrieval/deployment of components to happen either from SFDC Org/Git Branch"
+      formText: "Choose the retrieval/deployment of components to happen either from Salesforce Organization/Git Branch"
     },
     {
       label: "Component Types",
@@ -43,7 +43,7 @@ const sfdcPipelineWizardMetadata = {
       id: "profileComponentsRuleList",
     },
     {
-      label: "SFDC Rule List",
+      label: "Salesforce Rule List",
       id: "sfdcModifiedRuleList",
     },
     {
@@ -64,7 +64,7 @@ const sfdcPipelineWizardMetadata = {
       id: "stepId",
     },
     {
-      label: "SFDC Tool ID",
+      label: "Salesforce Tool ID",
       id: "sfdcToolId",
     },
     {
@@ -140,7 +140,7 @@ const sfdcPipelineWizardMetadata = {
       id: "gitBranch",
     },
     {
-      label: "SFDC Account Name",
+      label: "Salesforce Account Name",
       id: "accountUsername",
     },
   ],

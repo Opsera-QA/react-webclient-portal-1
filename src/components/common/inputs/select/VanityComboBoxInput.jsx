@@ -12,8 +12,9 @@ function VanityComboBoxInput(
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, formatItems, className, multiselect
-}) {
+    showLabel, formatItems, className, multiselect,
+    inputHelpOverlay, infoOverlay,
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -76,8 +77,15 @@ function VanityComboBoxInput(
   }
 
   return (
-    <InputContainer className={className}>
-      <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
+    <InputContainer className={className} fieldName={fieldName}>
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        clearDataFunction={getClearDataFunction()}
+        model={dataObject}
+        inputHelpOverlay={inputHelpOverlay}
+        infoOverlay={infoOverlay}
+      />
       <VanityComboBoxInputBase
         selectOptions={formatSelectOptions()}
         disabled={disabled}
@@ -125,7 +133,9 @@ VanityComboBoxInput.propTypes = {
   showLabel: PropTypes.bool,
   formatItems: PropTypes.bool,
   className: PropTypes.string,
-  multiselect: PropTypes.bool
+  multiselect: PropTypes.bool,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
 };
 
 VanityComboBoxInput.defaultProps = {
