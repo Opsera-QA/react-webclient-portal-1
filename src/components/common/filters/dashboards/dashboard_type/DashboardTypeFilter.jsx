@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {dashboardTypes} from "components/common/list_of_values_input/insights/dashboards/DashboardTypeSelectInput";
+import {
+  dashboardTypeConstants
+} from "components/common/list_of_values_input/insights/dashboards/types/dashboardType.constants";
 
 function DashboardTypeFilter({ filterModel, setFilterModel, className, fieldName, inline, setDataFunction }) {
   if (filterModel == null) {
@@ -15,7 +17,7 @@ function DashboardTypeFilter({ filterModel, setFilterModel, className, fieldName
         placeholderText={"Filter by Dashboard Type"}
         setDataObject={setFilterModel}
         dataObject={filterModel}
-        selectOptions={dashboardTypes}
+        selectOptions={dashboardTypeConstants.DASHBOARD_TYPE_FILTER_SELECT_OPTIONS}
         inline={inline}
         setDataFunction={setDataFunction}
       />

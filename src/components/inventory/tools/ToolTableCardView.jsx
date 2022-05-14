@@ -49,7 +49,7 @@ function ToolTableCardView(
     return(
       <>
         <ActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
-        <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
+        <LdapOwnerFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} className="mb-2" />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </>
     );

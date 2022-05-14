@@ -19,6 +19,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
       tag: dashboardFilterDto.getFilterValue("tag"),
       status: dashboardFilterDto.getFilterValue("status"),
       tool: dashboardFilterDto.getFilterValue("toolIdentifier"),
+      owner: dashboardFilterDto.getFilterValue("owner"),
       search: dashboardFilterDto.getFilterValue("search"),
       favorites: dashboardFilterDto.getFilterValue("isFavorite"),
       type: dashboardFilterDto.getFilterValue("type")

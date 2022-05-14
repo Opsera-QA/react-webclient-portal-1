@@ -13,6 +13,10 @@ const dashboardFilterMetadata = {
         id: "type",
       },
       {
+        label: "Owner",
+        id: "owner",
+      },
+      {
         label: "Page Size",
         id: "pageSize",
       },
@@ -64,6 +68,7 @@ const dashboardFilterMetadata = {
       sortOption: {text: "Sort: Name", value: "name"},
       search: "",
       status: "",
+      owner: "",
       type: "",
       isFavorite: "",
       activeFilters: []

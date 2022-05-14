@@ -17,7 +17,7 @@ function OwnershipReportLdapUserSelectInput({ model, loadData }) {
 
   return (
     <LdapOwnerFilter
-      filterDto={model}
+      filterModel={model}
       fieldName={"owner"}
       setDataFunction={setDataFunction}
     />

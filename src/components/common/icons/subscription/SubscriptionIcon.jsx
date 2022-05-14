@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faEye} from "@fortawesome/pro-light-svg-icons";
+import {faRss} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
 
@@ -8,7 +8,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
 
   const getHelpText = () => {
     if (showText) {
-      return <span className="ml-1">{isSubscribed ? "Subscribed" : "Not Subscribed"}</span>;
+      return <span className="ml-1">{isSubscribed === true ? "Subscribed" : "Not Subscribed"}</span>;
     }
   };
 
@@ -29,9 +29,14 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
   return (
     <div className={className}>
       <div className={getClassNames()} onClick={() => {handleSubscription();}}>
-        <ButtonTooltip innerText={isSubscribed ? "Click to Unsubscribe" : "Click to Subscribe"}>
+        <ButtonTooltip innerText={isSubscribed === true ? "Click to Unsubscribe" : "Click to Subscribe"}>
           <span>
-            <IconBase isLoading={isLoading} className={"my-auto"} icon={faEye} iconSize={"lg"} />
+            <IconBase
+              isLoading={isLoading}
+              className={"my-auto"}
+              icon={faRss}
+              iconSize={"lg"}
+            />
             {getHelpText()}
           </span>
         </ButtonTooltip>

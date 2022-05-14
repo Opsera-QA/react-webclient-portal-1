@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-export const dashboardTypes = [
-  {value: "pipeline", text: "Pipeline"},
-  {value: "planning", text: "Planning"},
-  {value: "security", text: "Security"},
-  {value: "quality", text: "Quality"},
-  {value: "operations", text: "Operations"},
-];
+import {
+  dashboardTypeConstants
+} from "components/common/list_of_values_input/insights/dashboards/types/dashboardType.constants";
 
 function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
@@ -16,9 +11,9 @@ function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabl
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={dashboardTypes}
-      valueField="value"
-      textField="text"
+      selectOptions={dashboardTypeConstants.DASHBOARD_TYPE_SELECT_OPTIONS}
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );
