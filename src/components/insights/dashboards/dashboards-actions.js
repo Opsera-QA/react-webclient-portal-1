@@ -104,7 +104,7 @@ dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, d
 };
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
-  const apiUrl = `/analytics/dashboard/${rowData._id}/update`;
+  const apiUrl = `/analytics/dashboards/${rowData._id}/update`;
   let postData = {
     ...rowData
   };

@@ -4,22 +4,23 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import dashboardFilterMetadata from "components/insights/dashboards/dashboard-filter-metadata";
+import dashboardFilterMetadata from "components/insights/dashboards/views/dashboardFilter.metadata";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import DashboardsTable from "components/insights/dashboards/DashboardsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import InsightsHelpDocumentation from "../../common/help/documentation/insights/InsightsHelpDocumentation";
+import DashboardTableView
+  from "components/insights/dashboards/views/DashboardTableView";
 
 function Insights() {
+  const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [dashboardsList, setDashboardsList] = useState(undefined);
-  const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
-  const toastContext = useContext(DialogToastContext);
+  const [dashboards, setDashboards] = useState(undefined);
+  const [dashboardFilterModel, setDashboardFilterModel] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
   const [dashboardRoleDefinitions, setDashboardRoleDefinitions] = useState([]);
   const isMounted = useRef(false);
@@ -34,7 +35,7 @@ function Insights() {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(dashboardFilterDto, source).catch((error) => {
+    loadData(dashboardFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -46,10 +47,10 @@ function Insights() {
     };
   }, []);
 
-  const loadData = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(filterDto, cancelSource);
+      await getRoles(filterModel, cancelSource);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -62,17 +63,17 @@ function Insights() {
     }
   };
 
-  const getRoles = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+  const getRoles = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getProfile(filterDto, cancelSource);
+      await getProfile(filterModel, cancelSource);
     }
   };
 
-  const getProfile = async(filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+  const getProfile = async(filterDto = dashboardFilterModel, cancelSource = cancelTokenSource) => {
     const response = await analyticsActions.areAnalyticsToolsEnabled(getAccessToken, cancelSource);
     const analyticsAreEnabled = response?.data.areAnalyticsToolsEnabled;
     setAreAnalyticsToolsEnabled(analyticsAreEnabled);
@@ -82,34 +83,42 @@ function Insights() {
     }
   };
 
-  const getDashboards = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await dashboardsActions.getAllDashboardsV2(getAccessToken, cancelSource, filterDto);
+  const getDashboards = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
+    const response = await dashboardsActions.getAllDashboardsV2(
+      getAccessToken,
+      cancelSource,
+      filterModel,
+    );
     const dashboards = response?.data?.data;
 
     if (isMounted.current === true && dashboards) {
       setDashboardRoleDefinitions(response?.data?.roles);
-      setDashboardsList(dashboards);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setDashboardFilterDto({...newFilterDto});
+      setDashboards(dashboards);
+      const newFilterModel = filterModel;
+      newFilterModel.setData("totalCount", response?.data?.count);
+      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+      setDashboardFilterModel({...newFilterModel});
     }
   };
 
   const getInsightsView = () => {
     if (areAnalyticsToolsEnabled == null) {
-      return (<LoadingDialog size="sm" message="Loading Insights"/>);
+      return (
+        <LoadingDialog
+          size={"sm"}
+          message={"Loading Insights"}
+        />
+      );
     }
 
     if (areAnalyticsToolsEnabled === true) {
       return (
-        <DashboardsTable
-          data={dashboardsList}
-          loadData={loadData}
+        <DashboardTableView
           isLoading={isLoading}
-          dashboardFilterDto={dashboardFilterDto}
-          setDashboardFilterDto={setDashboardFilterDto}
-          dashboardsActions={dashboardsActions}
+          loadData={loadData}
+          dashboards={dashboards}
+          dashboardFilterModel={dashboardFilterModel}
+          setDashboardFilterModel={setDashboardFilterModel}
         />
       );
     }
@@ -124,7 +133,9 @@ function Insights() {
   const getHelpDocumentation = () => {
     if (isLoading !== true) {
       return (
-        <InsightsHelpDocumentation dashboardRoleDefinitions={dashboardRoleDefinitions}/>
+        <InsightsHelpDocumentation
+          dashboardRoleDefinitions={dashboardRoleDefinitions}
+        />
       );
     }
   };

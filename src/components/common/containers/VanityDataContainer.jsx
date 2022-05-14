@@ -59,7 +59,7 @@ function VanityDataContainer(
               addRecordFunction={addRecordFunction}
             />
           </div>
-          <ActiveFilterDisplayer filterDto={paginationModel} loadData={loadData} />
+          <ActiveFilterDisplayer filterModel={paginationModel} loadData={loadData} />
         </div>
         <div>
           {body}

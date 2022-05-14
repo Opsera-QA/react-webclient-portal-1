@@ -90,8 +90,7 @@ function FilterContainer(
             />
           </div>
           <ActiveFilterDisplayer
-            filterDto={filterDto}
-            setFilterDto={setFilterDto}
+            filterModel={filterDto}
             loadData={loadData}
           />
         </div>
