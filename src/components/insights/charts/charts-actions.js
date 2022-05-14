@@ -278,6 +278,31 @@ chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, ge
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+chartsActions.getMetadataInfo = async(kpiConfiguration, getAccessToken, cancelTokenSource)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/opserapipelines/v1/deploymentAnalyticsPipelines";
+  
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+  };
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+chartsActions.getDeploymentAnalytics = async(kpiConfiguration, getAccessToken, cancelTokenSource, metadataName,tableFilterDto)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/opserapipelines/v1/deploymentAnalyticsMetrics";
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    metadataName: metadataName,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  
+};
+
+
 chartsActions.getSfdcMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sfdc/v1/getSfdcMetrics";
@@ -409,5 +434,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+
 
 export default chartsActions;
