@@ -14,7 +14,7 @@ import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMet
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
 import Model from "core/data_model/model";
-import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
+import PipelineTypeIcon from "components/common/fields/pipelines/PipelineTypeIcon";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
@@ -278,7 +278,7 @@ export const getPipelineTypeColumn = (field, className) => {
     Header: "",
     accessor: getCustomTableAccessor(field),
     Cell: function parseType(workflow) {
-      return <PipelineTypesField fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
+      return <PipelineTypeIcon fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
     },
     class: className ? className : "cell-center"
   };

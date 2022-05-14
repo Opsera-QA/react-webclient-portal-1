@@ -3,7 +3,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
-import pipelineActions from "components/workflow/pipeline-actions";
 import Col from "react-bootstrap/Col";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineSummaryMetadata
@@ -13,14 +12,16 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
+import { pipelineSubscriptionActions } from "components/workflow/pipelines/subscriptions/pipelineSubscription.actions";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 function PipelineSubscriptionsPanel({className}) {
-  const [pipelines, setPipelines] = useState([]);
+  const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const [subscribedPipelines, setSubscribedPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const toastContext = useContext(DialogToastContext);
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -50,7 +51,6 @@ function PipelineSubscriptionsPanel({className}) {
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -62,27 +62,60 @@ function PipelineSubscriptionsPanel({className}) {
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted?.current === true && userRoleAccess) {
-      await getActivityLogs(cancelSource);
+    if (isMounted?.current === true) {
+      await getSubscribedPipelines(cancelSource);
     }
   };
 
-  const getActivityLogs = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getSubscribedPipelines(getAccessToken, cancelSource);
-    const pipelineSubscriptionsData = response?.data?.data;
+  const getSubscribedPipelines = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineSubscriptionActions.getSubscribedPipelines(getAccessToken, cancelSource);
+    const pipelineSubscriptions = response?.data?.data;
 
-    if (isMounted?.current === true && pipelineSubscriptionsData) {
-      setPipelines(pipelineSubscriptionsData);
+    if (isMounted?.current === true && Array.isArray(pipelineSubscriptions)) {
+      setSubscribedPipelines([...pipelineSubscriptions]);
     }
+  };
+
+  const getBody = () => {
+    if (isLoading === true) {
+      return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
+    }
+
+    if (!Array.isArray(subscribedPipelines) || subscribedPipelines.length === 0) {
+      return (
+        <div className={"form-text text-muted ml-3"}>
+          <div>
+          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
+          You are not currently subscribed to any Pipelines</span>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <div className={"mb-2"}>You are currently subscribed to <strong>{subscribedPipelines?.length}</strong> pipelines.</div>
+        <Row>
+          {subscribedPipelines.map((pipeline) => {
+            return (
+              <Col md={6} key={pipeline?._id}>
+                <PipelineSummaryCard
+                  pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
+                  loadPipelineInNewWindow={false}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </div>
+    );
   };
 
   if (isLoading) {
     return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  if (!isLoading && (subscribedPipelines == null || subscribedPipelines.length === 0)) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
@@ -95,19 +128,7 @@ function PipelineSubscriptionsPanel({className}) {
 
   return (
     <div className={className}>
-      <div className="mb-2">You are currently subscribed to <strong>{pipelines.length}</strong> pipelines.</div>
-      <Row className={"mx-0"}>
-        {pipelines.map((pipeline) => {
-          return (
-            <Col className={"mx-0"} md={6} key={pipeline._id}>
-              <PipelineSummaryCard
-                pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
-                loadPipelineInNewWindow={false}
-              />
-            </Col>
-          );
-        })}
-      </Row>
+      {getBody()}
     </div>
   );
 }

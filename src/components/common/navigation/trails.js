@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar, faServer, faHandshake, faFileCode, faFileArchive,
+  faHexagon, faListAlt, faRss, faCodeBranch, faUserChart, faRadar, faServer, faHandshake, faFileCode, faFileArchive,
   faTasks, faUserHardHat, faCircle, faQuestion, faBook
 } from "@fortawesome/pro-light-svg-icons";
 
@@ -883,7 +883,7 @@ const breadcrumbs = {
     path: paths.userRecord,
     title: "My Subscriptions",
     linkText: "My Subscriptions",
-    icon: faEye
+    icon: faRss
   },
   myAccessTokens: {
     parent: "userProfile",

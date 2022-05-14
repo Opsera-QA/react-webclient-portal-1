@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
-import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
+import PipelineTypeIcon from "components/common/fields/pipelines/PipelineTypeIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
@@ -13,10 +13,16 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
 
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><span>{pipelineData.getData("name")}</span></div>
-        <div className="d-flex ml-auto">
-          <PipelineSubscriptionIcon pipelineId={pipelineData?.getData("_id")} className={"mr-1"}/>
-          <PipelineTypesField dataObject={pipelineData}/>
+        <div className={"d-flex"}>
+          <PipelineTypeIcon model={pipelineData} />
+          <span>{pipelineData.getData("name")}</span>
+        </div>
+        <div className={"d-flex ml-auto"}>
+          <PipelineSubscriptionIcon
+            pipelineId={pipelineData?.getData("_id")}
+            className={"mr-1"}
+            pipelineModel={pipelineData}
+          />
         </div>
       </div>
     );

@@ -48,7 +48,6 @@ function TagManagement() {
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {faEye, faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faRss, faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
@@ -122,7 +122,7 @@ function UserSettings() {
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
         <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
-        <NavigationTab icon={faEye} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
+        <NavigationTab icon={faRss} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
       </NavigationTabContainer>
     );
   };
