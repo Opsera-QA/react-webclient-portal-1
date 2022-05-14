@@ -40,20 +40,19 @@ const dashboardFilterMetadata = {
     getActiveFilters(filterModel) {
       const activeFilters = [];
 
-      console.log("filterModel: " + JSON.stringify(filterModel?.getPersistData()));
-      if (hasStringValue(filterModel.getData("status")) === true) {
+      if (hasStringValue(filterModel.getFilterValue("status")) === true) {
         activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterModel.getFilterValue("status"))}`});
       }
 
-      if (hasStringValue(filterModel.getData("type")) === true) {
+      if (hasStringValue(filterModel.getFilterValue("type")) === true) {
         activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(filterModel.getFilterValue("type"))}`});
       }
   
-      if (hasStringValue(filterModel.getData("search")) === true) {
-        activeFilters.push({filterId: "search", text: `Keywords: ${filterModel.getData("search")}`});
+      if (hasStringValue(filterModel.getFilterValue("search")) === true) {
+        activeFilters.push({filterId: "search", text: `Keywords: ${filterModel.getFilterValue("search")}`});
       }
 
-      if (hasStringValue(filterModel.getData("isFavorite")) === true) {
+      if (hasStringValue(filterModel.getFilterValue("isFavorite")) === true) {
         activeFilters.push({filterId: "isFavorite", ...filterModel.getData("isFavorite")});
       }
   
