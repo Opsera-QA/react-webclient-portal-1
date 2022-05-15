@@ -145,7 +145,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       const groups = user?.groups;
 
       if (Array?.isArray(groups)) {
-        let role = "readonly";
+        let role = "guest";
 
         if (groups.includes("Administrators")) {
           role = "administrator";
