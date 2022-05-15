@@ -56,11 +56,6 @@ analyticsActions.getBlueprintFilterData = async (getAccessToken, cancelTokenSour
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-analyticsActions.getPipelineFilterData = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/pipelines`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/analytics/profile/settings";
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
