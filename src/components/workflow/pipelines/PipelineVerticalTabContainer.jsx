@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {faBracketsCurly, faDraftingCompass, faMicrochip, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faDraftingCompass, faMicrochip, faUser, faRss} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import cookieHelpers from "core/cookies/cookie-helpers";
@@ -24,6 +24,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View all Pipelines that you have access to."}
       />
       <VanitySetVerticalTab
         icon={faUser}
@@ -32,6 +33,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Pipelines that you are the owner of."}
       />
       <VanitySetVerticalTab
         icon={faBracketsCurly}
@@ -40,6 +42,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Software Development Pipelines that you have access to."}
       />
       <VanitySetVerticalTab
         icon={faMicrochip}
@@ -48,6 +51,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Machine Learning Pipelines that you have access to."}
       />
       <VanitySetVerticalTab
         icon={faSalesforce}
@@ -56,6 +60,16 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Salesforce Pipelines that you have access to."}
+      />
+      <VanitySetVerticalTab
+        icon={faRss}
+        tabText={"Subscriptions"}
+        tabName={"subscribed"}
+        disabled={isLoading}
+        handleTabClick={handleTabClick}
+        activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Pipelines that you have access to and have subscribed to."}
       />
     </VanitySetVerticalTabContainer>
   );
