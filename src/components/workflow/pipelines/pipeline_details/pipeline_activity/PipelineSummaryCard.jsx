@@ -6,13 +6,24 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 
-function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow, closePanelFunction }) {
+function PipelineSummaryCard(
+  {
+    pipelineData,
+    isLoading,
+    loadPipelineInNewWindow,
+    closePanelFunction,
+    subscribedPipelineIds,
+  }) {
   if (isLoading) {
     return <PipelineSummaryCardContainer isLoading={isLoading} />;
   }
 
   return (
-    <PipelineSummaryCardContainer pipelineData={pipelineData} isLoading={isLoading}>
+    <PipelineSummaryCardContainer
+      pipelineData={pipelineData}
+      isLoading={isLoading}
+      subscribedPipelineIds={subscribedPipelineIds}
+    >
       <div className="mb-1">
         <DescriptionField dataObject={pipelineData} fieldName={"description"}/>
       </div>
@@ -36,7 +47,8 @@ PipelineSummaryCard.propTypes = {
   pipelineData: PropTypes.object,
   isLoading: PropTypes.bool,
   loadPipelineInNewWindow: PropTypes.bool,
-  closePanelFunction: PropTypes.func
+  closePanelFunction: PropTypes.func,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 PipelineSummaryCard.defaultProps = {

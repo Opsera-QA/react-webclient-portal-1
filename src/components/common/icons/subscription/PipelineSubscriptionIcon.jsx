@@ -11,6 +11,8 @@ function PipelineSubscriptionIcon(
   {
     pipelineModel,
     pipelineId,
+    pullSubscriptionStatus,
+    subscribedPipelineIds,
     showText,
     className,
   }) {
@@ -32,7 +34,7 @@ function PipelineSubscriptionIcon(
     isMounted.current = true;
     setIsSubscribed(false);
 
-    if (featureFlagHideItemInProd() === false && isMongoDbId(pipelineId) === true) {
+    if (featureFlagHideItemInProd() === false && pullSubscriptionStatus !== false && isMongoDbId(pipelineId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -45,6 +47,13 @@ function PipelineSubscriptionIcon(
       isMounted.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    setIsSubscribed(false);
+    if (Array.isArray(subscribedPipelineIds) && isMongoDbId(pipelineId) === true) {
+      setIsSubscribed(subscribedPipelineIds.includes(pipelineId));
+    }
+  }, [subscribedPipelineIds]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -85,7 +94,7 @@ function PipelineSubscriptionIcon(
           pipelineId,
         );
 
-        if (response?.data === false) {
+        if (isMounted?.current === true && response?.status === 200) {
           setIsSubscribed(false);
           toastContext.showSystemSuccessToast(`You have successfully unsubscribed from ${pipelineModel?.getData("name")}`);
         }
@@ -96,7 +105,7 @@ function PipelineSubscriptionIcon(
           pipelineId,
         );
 
-        if (response?.data === true) {
+        if (isMounted?.current === true && response?.status === 200) {
           setIsSubscribed(true);
           toastContext.showSystemSuccessToast(`You have successfully subscribed to ${pipelineModel?.getData("name")}`);
         }
@@ -112,7 +121,7 @@ function PipelineSubscriptionIcon(
     }
   };
 
-  if (featureFlagHideItemInProd()) {
+  if (featureFlagHideItemInProd() !== false) {
     return null;
   }
 
@@ -131,7 +140,9 @@ PipelineSubscriptionIcon.propTypes = {
   pipelineModel: PropTypes.object,
   pipelineId: PropTypes.string,
   showText: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  pullSubscriptionStatus: PropTypes.bool,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 export default PipelineSubscriptionIcon;

@@ -7,7 +7,7 @@ import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 
-function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading }) {
+function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
   const getCards = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return null;
@@ -19,6 +19,7 @@ function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading }) {
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineCard
               pipeline={pipeline}
+              subscribedPipelineIds={subscribedPipelineIds}
               pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
             />
           </Col>
@@ -41,7 +42,8 @@ PipelineCardView.propTypes = {
   data: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 export default PipelineCardView;
