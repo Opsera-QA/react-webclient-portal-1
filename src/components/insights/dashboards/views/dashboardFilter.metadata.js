@@ -1,4 +1,4 @@
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 
 const dashboardFilterMetadata = {
     idProperty: "_id",
@@ -11,6 +11,10 @@ const dashboardFilterMetadata = {
       {
         label: "Dashboard Type",
         id: "type",
+      },
+      {
+        label: "Owner",
+        id: "owner",
       },
       {
         label: "Page Size",
@@ -37,23 +41,23 @@ const dashboardFilterMetadata = {
         id: "isFavorite",
       },
     ],
-    getActiveFilters(filterDto) {
-      let activeFilters = [];
+    getActiveFilters(filterModel) {
+      const activeFilters = [];
 
-      if (filterDto.getData("status") != null) {
-        activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
+      if (hasStringValue(filterModel.getFilterValue("status")) === true) {
+        activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterModel.getFilterValue("status"))}`});
       }
 
-      if (filterDto.getData("type") != null) {
-        activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(filterDto.getFilterValue("type"))}`});
+      if (hasStringValue(filterModel.getFilterValue("type")) === true) {
+        activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(filterModel.getFilterValue("type"))}`});
       }
   
-      if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-        activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+      if (hasStringValue(filterModel.getFilterValue("search")) === true) {
+        activeFilters.push({filterId: "search", text: `Keywords: ${filterModel.getFilterValue("search")}`});
       }
 
-      if (filterDto.getData("isFavorite") != null && filterDto.getData("isFavorite") !== "") {
-        activeFilters.push({filterId: "isFavorite", ...filterDto.getData("isFavorite")});
+      if (hasStringValue(filterModel.getFilterValue("isFavorite")) === true) {
+        activeFilters.push({filterId: "isFavorite", ...filterModel.getData("isFavorite")});
       }
   
       return activeFilters;
@@ -63,6 +67,10 @@ const dashboardFilterMetadata = {
       currentPage: 1,
       sortOption: {text: "Sort: Name", value: "name"},
       search: "",
+      status: "",
+      owner: "",
+      type: "",
+      isFavorite: "",
       activeFilters: []
     },
     // TODO: If these are the same options everywhere, move to PageSort

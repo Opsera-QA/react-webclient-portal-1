@@ -14,7 +14,7 @@ import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMet
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
 import Model from "core/data_model/model";
-import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
+import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
@@ -30,6 +30,7 @@ import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetri
 import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
+import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -277,8 +278,8 @@ export const getPipelineTypeColumn = (field, className) => {
   return {
     Header: "",
     accessor: getCustomTableAccessor(field),
-    Cell: function parseType(workflow) {
-      return <PipelineTypesField fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
+    Cell: function parseType(rowWrapper) {
+      return <PipelineTypeIconBase type={rowWrapper?.row?.type} />;
     },
     class: className ? className : "cell-center"
   };

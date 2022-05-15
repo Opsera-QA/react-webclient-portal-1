@@ -405,31 +405,6 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
   return response;
 };
 
-pipelineActions.subscribeToPipeline = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/subscribe`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineActions.unsubscribeFromPipeline = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/unsubscribe`;
-  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineActions.isSubscribed = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/is_subscribed`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineActions.getSubscribedPipelines = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/pipelines/subscriptions/pipelines`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineActions.getSubscribedPipelineIds = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/pipelines/subscriptions/ids`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
   console.log(deleteObj);
   let apiUrl = `/pipelines/deletejob`;

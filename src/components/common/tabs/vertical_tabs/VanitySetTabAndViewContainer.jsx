@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Tab from "react-bootstrap/Tab";
 import InfoContainer from "components/common/containers/InfoContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 
 function VanitySetTabAndViewContainer(
   {
@@ -24,39 +22,6 @@ function VanitySetTabAndViewContainer(
     overflowXBodyStyle,
     overflowYContainerStyle,
   }) {
-  const getTabColumnSize = () => {
-    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
-      return tabColumnSize;
-    }
-
-    return 2;
-  };
-
-  const getViewColumnSize = () => {
-    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
-      return 12 - tabColumnSize;
-    }
-
-    return 10;
-  };
-
-  const getContainerStylingObject = () => {
-    return ({
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: overflowYContainerStyle,
-    });
-  };
-
-  const getBodyStylingObject = () => {
-    return ({
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: overflowYBodyStyle,
-      overflowX: overflowXBodyStyle,
-    });
-  };
-
   return (
     <InfoContainer
       titleText={title}
@@ -66,26 +31,18 @@ function VanitySetTabAndViewContainer(
       loadDataFunction={loadDataFunction}
       titleRightSideButton={titleRightSideButton}
     >
-      <Tab.Container defaultActiveKey={defaultActiveKey}>
-        <Row className={bodyClassName} style={getContainerStylingObject()}>
-          <Col
-            xs={getTabColumnSize()}
-            className={"px-0 h-100 makeup-tree-container"}
-          >
-            <div style={getBodyStylingObject()}>
-              {verticalTabContainer}
-            </div>
-          </Col>
-          <Col
-            xs={getViewColumnSize()}
-            className={"px-0"}
-          >
-            <div style={getBodyStylingObject()}>
-              {currentView}
-            </div>
-          </Col>
-        </Row>
-      </Tab.Container>
+      <TabAndViewContainer
+        verticalTabContainer={verticalTabContainer}
+        currentView={currentView}
+        tabColumnSize={tabColumnSize}
+        defaultActiveKey={defaultActiveKey}
+        bodyClassName={bodyClassName}
+        minimumHeight={minimumHeight}
+        maximumHeight={maximumHeight}
+        overflowXBodyStyle={overflowXBodyStyle}
+        overflowYContainerStyle={overflowYContainerStyle}
+        overflowYBodyStyle={overflowYBodyStyle}
+      />
       <div className={"object-properties-footer"}/>
     </InfoContainer>
   );

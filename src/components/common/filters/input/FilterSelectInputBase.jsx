@@ -3,13 +3,29 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
-function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
+function FilterSelectInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    selectOptions,
+    setDataFunction,
+    valueField,
+    textField,
+    filter,
+    placeholderText,
+    busy,
+    className,
+    inline,
+    disabled,
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-    setDataObject({...newDataObject});
+  const validateAndSetData = (fieldName, selectedOption) => {
+    const newFilterModel = dataObject;
+    newFilterModel?.setData(fieldName, selectedOption);
+    setDataObject({...newFilterModel});
   };
 
   if (field == null) {
@@ -19,7 +35,12 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
 
   return (
     <div className={className}>
-      <InputLabel model={dataObject} showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
+      <InputLabel
+        model={dataObject}
+        showLabel={!inline}
+        field={field}
+        className={inline ? "mt-1 mr-2" : undefined}
+      />
       <StandaloneSelectInput
         selectOptions={selectOptions}
         valueField={valueField}
