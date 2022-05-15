@@ -68,8 +68,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     case "user":
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.USER;
       break;
-    case "readonly":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.READ_ONLY;
+    case "guest":
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
       break;
     }
 

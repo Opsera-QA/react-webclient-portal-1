@@ -106,7 +106,7 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
   USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
-  READ_ONLY: "Read Only Role: Your account does not have any privileges associated with the Opsera platform and can only view some data.",
+  GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
 export const getAccessRolePermissionMessage = (accessRole) => {
@@ -117,10 +117,9 @@ export const getAccessRolePermissionMessage = (accessRole) => {
       return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
     case "user":
       return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
-    case "readonly":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.READ_ONLY;
+    case "guest":
     default:
-      return "";
+      return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
   }
 };
 
@@ -549,5 +548,5 @@ export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) 
     return userGroupsRole[0];
   }
 
-  return ACCESS_ROLES.READ_ONLY;
+  return ACCESS_ROLES.GUEST;
 };
