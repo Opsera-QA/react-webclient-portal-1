@@ -6,9 +6,8 @@ import { format } from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
-  faDraftingCompass, faBracketsCurly, faMicrochip, faFlag,
+   faFlag,
   faSearch,
 } from "@fortawesome/pro-light-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
@@ -17,7 +16,7 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 
 // TODO: Rewrite
-const PipelineCard = ({ pipeline, pipelineModel }) => {
+const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
   let history = useHistory();
 
   const handleDetailsClick = param => e => {
@@ -70,6 +69,8 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
                 pipelineModel={pipelineModel}
                 pipelineId={pipelineModel?.getData("_id")}
                 className={"ml-2"}
+                pullSubscriptionStatus={false}
+                subscribedPipelineIds={subscribedPipelineIds}
               />
               {getPendingApprovalField()}
             </div>
@@ -131,7 +132,8 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
 
 PipelineCard.propTypes = {
   pipeline: PropTypes.object,
-  pipelineModel: PropTypes.object
+  pipelineModel: PropTypes.object,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 export default PipelineCard;

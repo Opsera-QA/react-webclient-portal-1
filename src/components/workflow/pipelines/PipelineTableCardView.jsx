@@ -17,9 +17,17 @@ import Col from "react-bootstrap/Col";
 import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
-import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 
-function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setPipelineFilterModel, loadData, saveCookies }) {
+function PipelineTableCardView(
+  {
+    pipelines,
+    isLoading,
+    pipelineFilterModel,
+    setPipelineFilterModel,
+    loadData,
+    saveCookies,
+    subscribedPipelineIds,
+  }) {
   const history = useHistory();
 
   const getDynamicFilter = () => {
@@ -49,6 +57,7 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
         loadData={loadData}
         data={pipelines}
         pipelineFilterModel={pipelineFilterModel}
+        subscribedPipelineIds={subscribedPipelineIds}
       />
     );
   };
@@ -156,6 +165,7 @@ PipelineTableCardView.propTypes = {
   setPipelineFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   saveCookies: PropTypes.func,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 export default PipelineTableCardView;

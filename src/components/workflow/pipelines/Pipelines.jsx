@@ -27,6 +27,7 @@ function Pipelines() {
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
+  const [subscribedPipelineIds, setSubscribedPipelineIds] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -111,12 +112,11 @@ function Pipelines() {
         let newFilterDto = newPipelineFilterModel;
         newFilterDto.setData("totalCount", response?.data?.count);
         newFilterDto.setData("activeFilters", newFilterDto?.getActiveFilters());
+        setSubscribedPipelineIds(response?.data?.subscriptions);
         setPipelineFilterModel({...newFilterDto});
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        console.log(error.error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -142,6 +142,7 @@ function Pipelines() {
         setPipelineFilterModel={setPipelineFilterModel}
         loadData={loadData}
         saveCookies={saveCookies}
+        subscribedPipelineIds={subscribedPipelineIds}
       />
     </ScreenContainer>
   );
