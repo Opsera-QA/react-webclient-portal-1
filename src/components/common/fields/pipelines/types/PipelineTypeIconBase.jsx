@@ -5,15 +5,13 @@ import {faBracketsCurly, faDraftingCompass, faMicrochip} from "@fortawesome/pro-
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-// TODO: This will eventually show all category types, but for now just show the first
-function PipelineTypesField({ fieldName, dataObject }) {
+function PipelineTypeIconBase(
+  {
+    type,
+    className,
+  }) {
   const getTooltipText = () => {
-    let type = dataObject.getData(fieldName);
-    if (!type) {
-      return "No Pipeline Type Assigned";
-    }
-
-    switch (type[0]) {
+    switch (type) {
       case "sfdc":
         return ("Salesforce");
       case "ai-ml":
@@ -26,13 +24,7 @@ function PipelineTypesField({ fieldName, dataObject }) {
   };
 
   const getTypeIcon = () => {
-    let type = dataObject.getData(fieldName);
-
-    if (!type) {
-      return faDraftingCompass;
-    }
-
-    switch (type[0]) {
+    switch (type) {
       case "sfdc":
         return (faSalesforce);
       case "ai-ml":
@@ -46,18 +38,20 @@ function PipelineTypesField({ fieldName, dataObject }) {
 
   return (
     <TooltipWrapper innerText={getTooltipText()}>
-      <IconBase icon={getTypeIcon()} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
+      <div>
+        <IconBase
+          icon={getTypeIcon()}
+          className={className}
+          iconSize={"lg"}
+        />
+      </div>
     </TooltipWrapper>
   );
 }
 
-PipelineTypesField.propTypes = {
-  fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+PipelineTypeIconBase.propTypes = {
+  type: PropTypes.string,
+  className: PropTypes.string,
 };
 
-PipelineTypesField.defaultProps = {
-  fieldName: "type"
-};
-
-export default PipelineTypesField;
+export default PipelineTypeIconBase;

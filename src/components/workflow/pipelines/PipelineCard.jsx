@@ -14,6 +14,7 @@ import {
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import IconBase from "components/common/icons/IconBase";
+import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 
 // TODO: Rewrite
 const PipelineCard = ({ pipeline, pipelineModel }) => {
@@ -56,57 +57,20 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
     return description;
   };
 
-  // TODO: Deal with multiple categories when we get there
-  const getFirstCategory = () => {
-    const type = pipeline?.type;
-
-    if (!type) {
-      return (
-        <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <IconBase icon={faDraftingCompass} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
-        </TooltipWrapper>
-      );
-    }
-
-    switch (type[0]) {
-    case "sfdc":
-      return (
-        <TooltipWrapper innerText={`SalesForce`}>
-          <IconBase icon={faSalesforce} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
-        </TooltipWrapper>
-      );
-    case "ai-ml":
-      return (
-        <TooltipWrapper innerText={"Machine Learning (AI)"}>
-          <IconBase icon={faMicrochip} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
-        </TooltipWrapper>
-      );
-    case "sdlc":
-      return (
-        <TooltipWrapper innerText={"Software Development"}>
-          <IconBase icon={faBracketsCurly} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
-        </TooltipWrapper>
-      );
-    default:
-      return (
-        <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <IconBase icon={faDraftingCompass} className={"ml-1 pipeline-text"} iconSize={"lg"}/>
-        </TooltipWrapper>
-      );
-    }
-  };
-
   return (
-    <>
-      <Card style={{ height: "100%" }}>
+      <Card className={"h-100"}>
         <Card.Title className="pb-0">
-          <div className="d-flex pipeline-card-title p-2">
-            <div>
+          <div className={"d-flex pipeline-card-title p-2"}>
+            <div className={"d-flex"}>
+              <PipelineTypeIcon model={pipelineModel} className={"mr-2"} />
               {pipeline?.name}
             </div>
-            <div className="d-flex ml-auto mt-1 mr-1 text-muted small upper-case-first">
-              <PipelineSubscriptionIcon pipelineId={pipelineModel?.getData("_id")} className={"mr-2"} />
-              {getFirstCategory()}
+            <div className={"d-flex ml-auto my-auto small"}>
+              <PipelineSubscriptionIcon
+                pipelineModel={pipelineModel}
+                pipelineId={pipelineModel?.getData("_id")}
+                className={"ml-2"}
+              />
               {getPendingApprovalField()}
             </div>
           </div>
@@ -162,7 +126,6 @@ const PipelineCard = ({ pipeline, pipelineModel }) => {
           <PipelineActionBar pipeline={pipeline} handleViewClick={handleDetailsClick}/>
         </Card.Footer>
       </Card>
-    </>
   );
 };
 

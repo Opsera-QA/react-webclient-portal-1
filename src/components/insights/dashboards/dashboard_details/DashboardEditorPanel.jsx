@@ -7,7 +7,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DashboardTypeSelectInput
-  from "components/common/list_of_values_input/insights/dashboards/DashboardTypeSelectInput";
+  from "components/common/list_of_values_input/insights/dashboards/types/DashboardTypeSelectInput";
 import DashboardAccessSelectInput
   from "components/common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
 import DashboardPersonaSelectInput

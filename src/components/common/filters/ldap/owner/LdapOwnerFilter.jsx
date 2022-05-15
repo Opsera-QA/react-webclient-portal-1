@@ -6,8 +6,14 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 
-function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }) {
-  const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
+function LdapOwnerFilter(
+  { 
+    filterModel, 
+    setFilterModel, 
+    setDataFunction, 
+    className,
+  }) {
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
@@ -23,11 +29,13 @@ function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isSassUser() === false) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -38,13 +46,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const user = await getUserRecord();
-      const {ldap} = user;
-      const userRoleAccess = await setAccessRoles(user);
-
-      if (isMounted.current === true && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
-        await getUsers(cancelSource);
-      }
+      await getUsers(cancelSource);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showErrorDialog(error,"Could not load users.");
@@ -59,11 +61,11 @@ function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }
   };
 
   const getUsers = async (cancelSource = cancelTokenSource) => {
-    let response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
-    let userOptions = [];
+    const response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
+    const userOptions = [];
     const parsedUsers = response?.data;
 
-    if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
+    if (isMounted?.current === true && Array.isArray(parsedUsers) && parsedUsers.length > 0) {
       parsedUsers.map((user, index) => {
         userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
       });
@@ -84,8 +86,8 @@ function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }
         fieldName={"owner"}
         busy={isLoading}
         placeholderText={"Filter by Owner"}
-        setDataObject={setFilterDto}
-        dataObject={filterDto}
+        setDataObject={setFilterModel}
+        dataObject={filterModel}
         selectOptions={userOptions}
         setDataFunction={setDataFunction}
       />
@@ -94,8 +96,8 @@ function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }
 }
 
 LdapOwnerFilter.propTypes = {
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   className: PropTypes.string,
   setDataFunction: PropTypes.func
 };

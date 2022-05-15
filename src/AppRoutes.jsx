@@ -175,11 +175,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
   // Authenticated routes
   return (
-    <div className="container-fluid" style={{ margin: "0" }}>
-      <div className="d-flex flex-row">
+    <div className={"container-fluid m-0"}>
+      <div className={"d-flex flex-row"}>
         <Sidebar userData={userData} hideSideBar={hideSideBar} />
 
-        <div className="w-100 pb-4">
+        <div className={"w-100"} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />

@@ -2,30 +2,93 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Tab from "react-bootstrap/Tab";
 
-function TabTreeAndViewContainer({tabTree, currentView, className, tabTreeClassName, currentViewClassName}) {
+function TabAndViewContainer(
+  {
+    verticalTabContainer,
+    currentView,
+    defaultActiveKey,
+    bodyClassName,
+    tabColumnSize,
+    minimumHeight,
+    maximumHeight,
+    overflowYBodyStyle,
+    overflowXBodyStyle,
+    overflowYContainerStyle,
+  }) {
+  const getTabColumnSize = () => {
+    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
+      return tabColumnSize;
+    }
+
+    return 2;
+  };
+
+  const getViewColumnSize = () => {
+    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
+      return 12 - tabColumnSize;
+    }
+
+    return 10;
+  };
+
+  const getContainerStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: overflowYContainerStyle,
+    });
+  };
+
+  const getBodyStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: overflowYBodyStyle,
+      overflowX: overflowXBodyStyle,
+    });
+  };
+
   return (
-    <Row className={className}>
-      <Col lg={2} sm={3} className={tabTreeClassName}>
-        {tabTree}
-      </Col>
-      <Col lg={10} sm={9} className={currentViewClassName}>
-        {currentView}
-      </Col>
-    </Row>
+    <Tab.Container defaultActiveKey={defaultActiveKey}>
+      <Row className={bodyClassName} style={getContainerStylingObject()}>
+        <Col
+          xs={getTabColumnSize()}
+          className={"px-0 makeup-tree-container"}
+        >
+          <div style={getBodyStylingObject()} className={"h-100"}>
+            {verticalTabContainer}
+          </div>
+        </Col>
+        <Col
+          xs={getViewColumnSize()}
+          className={"px-0"}
+        >
+          <div style={getBodyStylingObject()}>
+            {currentView}
+          </div>
+        </Col>
+      </Row>
+    </Tab.Container>
   );
 }
 
-TabTreeAndViewContainer.propTypes = {
-  tabTree: PropTypes.object,
+TabAndViewContainer.propTypes = {
+  verticalTabContainer: PropTypes.object,
   currentView: PropTypes.object,
-  tabTreeClassName: PropTypes.string,
-  currentViewClassName: PropTypes.string,
-  className: PropTypes.string,
+  tabColumnSize: PropTypes.number,
+  defaultActiveKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  bodyClassName: PropTypes.string,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
+  overflowYBodyStyle: PropTypes.string,
+  overflowXBodyStyle: PropTypes.string,
+  overflowYContainerStyle: PropTypes.string,
 };
 
-TabTreeAndViewContainer.defaultProps = {
-  className: "d-flex"
+TabAndViewContainer.defaultProps = {
+  bodyClassName: "mx-0",
 };
 
-export default TabTreeAndViewContainer;
+export default TabAndViewContainer;

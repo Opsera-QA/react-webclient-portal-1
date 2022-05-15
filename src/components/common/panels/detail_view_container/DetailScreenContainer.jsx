@@ -9,6 +9,7 @@ import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 function DetailScreenContainer(
   {
@@ -93,7 +94,7 @@ function DetailScreenContainer(
   const getAccessBasedField = () => {
     if (objectRoles != null) {
       return (
-        <div className="content-block-footer-text-container pt-2">
+        <div className={"content-block-footer-text-container pt-2"}>
           <AccessRoleLevelField
             className={"mx-2"}
             accessRoleData={accessRoleData}
@@ -106,7 +107,7 @@ function DetailScreenContainer(
 
     if (roleRequirement) {
       return (
-        <div className="content-block-footer-text-container pt-2">
+        <div className={"content-block-footer-text-container pt-2"}>
           <RoleRequirementField
             className={"mx-2"}
             roleRequirement={roleRequirement}
@@ -114,6 +115,17 @@ function DetailScreenContainer(
         </div>
       );
     }
+  };
+
+  const getBodyHeight = () => {
+    let bodyHeightString = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - ${screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT} - 50px`;
+
+    if (roleRequirement != null || objectRoles != null) {
+      bodyHeightString += ` - ${screenContainerHeights.ROLE_REQUIREMENT_FIELD_HEIGHT}`;
+    }
+
+    bodyHeightString += ")";
+    return bodyHeightString;
   };
 
   if (!isLoading && accessDenied) {
@@ -143,11 +155,16 @@ function DetailScreenContainer(
   return (
     <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
       {getTopNavigation()}
-      <div className="content-container content-card-1">
+      <div
+        className={"content-container content-card-1"}
+        style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
+      >
         <div className="px-2 content-block-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div className="detail-container-body">
+        <div
+          style={{ minHeight: getBodyHeight()}}
+        >
           {getBody()}
         </div>
         {getAccessBasedField()}

@@ -19,6 +19,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
       tag: dashboardFilterDto.getFilterValue("tag"),
       status: dashboardFilterDto.getFilterValue("status"),
       tool: dashboardFilterDto.getFilterValue("toolIdentifier"),
+      owner: dashboardFilterDto.getFilterValue("owner"),
       search: dashboardFilterDto.getFilterValue("search"),
       favorites: dashboardFilterDto.getFilterValue("isFavorite"),
       type: dashboardFilterDto.getFilterValue("type")
@@ -104,7 +105,7 @@ dashboardsActions.deleteDashboardV2 = async(getAccessToken, cancelTokenSource, d
 };
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
-  const apiUrl = `/analytics/dashboard/${rowData._id}/update`;
+  const apiUrl = `/analytics/dashboards/${rowData._id}/update`;
   let postData = {
     ...rowData
   };

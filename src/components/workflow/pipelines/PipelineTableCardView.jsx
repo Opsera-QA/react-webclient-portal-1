@@ -24,7 +24,7 @@ function PipelineTableCardView({ pipelines, isLoading, pipelineFilterModel, setP
 
   const getDynamicFilter = () => {
     if (pipelineFilterModel?.getData("type") !== "owner") {
-      return (<LdapOwnerFilter filterDto={pipelineFilterModel} setFilterDto={setPipelineFilterModel} className={"mt-2"}/>);
+      return (<LdapOwnerFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mt-2"}/>);
     }
   };
 

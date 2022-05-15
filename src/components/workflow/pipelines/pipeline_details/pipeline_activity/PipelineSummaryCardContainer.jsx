@@ -2,21 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
-import PipelineTypesField from "components/common/fields/pipelines/PipelineTypesField";
+import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
   const getTitleBar = () => {
     if (isLoading) {
-      return (<div className="ml-1"><LoadingIcon className={"mr-1"}/>Loading Pipelines</div>);
+      return (<div><LoadingIcon className={"mr-2"}/>Loading Pipelines</div>);
     }
 
     return (
       <div className="d-flex justify-content-between w-100">
-        <div><span>{pipelineData.getData("name")}</span></div>
-        <div className="d-flex ml-auto">
-          <PipelineSubscriptionIcon pipelineId={pipelineData?.getData("_id")} className={"mr-1"}/>
-          <PipelineTypesField dataObject={pipelineData}/>
+        <div className={"d-flex"}>
+          <PipelineTypeIcon model={pipelineData} className={"mr-2"} />
+          <span>{pipelineData.getData("name")}</span>
+        </div>
+        <div className={"d-flex ml-auto"}>
+          <PipelineSubscriptionIcon
+            pipelineId={pipelineData?.getData("_id")}
+            className={"m1-2"}
+            pipelineModel={pipelineData}
+          />
         </div>
       </div>
     );
