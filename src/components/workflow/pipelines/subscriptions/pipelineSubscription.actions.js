@@ -3,12 +3,12 @@ import baseActions from "utils/actionsBase";
 export const pipelineSubscriptionActions = {};
 
 pipelineSubscriptionActions.subscribeToPipeline = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `subscriptions/pipelines/${pipelineId}/subscribe`;
+  const apiUrl = `/subscriptions/pipelines/${pipelineId}/subscribe`;
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineSubscriptionActions.unsubscribeFromPipeline = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `subscriptions/pipelines/${pipelineId}/unsubscribe`;
+  const apiUrl = `/subscriptions/pipelines/${pipelineId}/unsubscribe`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
