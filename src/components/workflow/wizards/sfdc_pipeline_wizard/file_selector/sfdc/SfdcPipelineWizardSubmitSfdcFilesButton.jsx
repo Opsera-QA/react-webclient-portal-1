@@ -89,7 +89,7 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
 
   const getLabel = () => {
     if (isSaving) {
-      return (`Saving ${filteredFileCount} SFDC Files`);
+      return (`Saving ${filteredFileCount} Salesforce Files`);
     }
 
     return (`Proceed with ${filteredFileCount} Files`);

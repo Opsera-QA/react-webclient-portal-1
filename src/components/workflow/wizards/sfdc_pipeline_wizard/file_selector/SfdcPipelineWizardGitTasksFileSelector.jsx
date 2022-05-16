@@ -87,10 +87,10 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
       <CustomTabContainer>
         <CustomTab
           activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"SFDC Files"}
+          tabText={"Salesforce Files"}
           handleTabClick={handleTabClick}
           tabName={"sfdc"}
-          toolTipText={"SFDC Files"}
+          toolTipText={"Salesforce Files"}
           icon={faSalesforce}
         />
       </CustomTabContainer>

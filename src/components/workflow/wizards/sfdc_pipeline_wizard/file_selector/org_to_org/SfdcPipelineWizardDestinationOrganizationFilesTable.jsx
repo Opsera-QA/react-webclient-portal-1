@@ -54,7 +54,7 @@ const SfdcPipelineWizardDestinationOrganizationFilesTable = ({ pipelineWizardMod
       await destSfdcPolling(cancelSource, newFilterModel);
     }
     catch (error) {
-      toastContext.showInlineErrorMessage("Error pulling SFDC Files. Check logs for more details.");
+      toastContext.showInlineErrorMessage("Error pulling Files from Salesforce. Check logs for more details.");
       console.error(error);
     }
     finally {
@@ -115,7 +115,7 @@ const SfdcPipelineWizardDestinationOrganizationFilesTable = ({ pipelineWizardMod
       isLoading={isLoading}
       paginationModel={destinationFilterModel}
       setPaginationModel={setDestinationFilterModel}
-      title={"Destination SFDC Files"}
+      title={"Destination Salesforce Files"}
       pipelineWizardModel={pipelineWizardModel}
     />
   );
