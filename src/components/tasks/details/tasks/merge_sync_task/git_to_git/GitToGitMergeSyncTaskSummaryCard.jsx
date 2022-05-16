@@ -51,7 +51,7 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
         <Col xs={12}>
           <ToolNameField
             model={taskConfigurationModel}
-            toolId={taskConfigurationModel?.getData("toolId")}
+            fieldName={"toolId"}
           />
         </Col>
         <Col xs={6}>
