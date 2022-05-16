@@ -1,9 +1,9 @@
-export const sourceCommitFileMetadata = {
+export const salesforceToGitSourceCommitFileMetadata = {
   type: "Source Commit File",
   fields: [
     {
-      label: "File",
-      id: "committedFile",
+      label: "Salesforce Component ID",
+      id: "committedFileId",
     },
     {
       label: "Component Name",
@@ -14,8 +14,8 @@ export const sourceCommitFileMetadata = {
       id: "committedTime",
     },
     {
-      label: "Action",
-      id: "commitAction",
+      label: "Component",
+      id: "componentType",
     },
     {
       label: "Last Modified By",
@@ -27,10 +27,10 @@ export const sourceCommitFileMetadata = {
     },
   ],
   newObjectFields: {
-    committedFile: "",
+    committedFileId: "",
     componentName: "",
     committedTime: "",
-    commitAction: "",
+    componentType: "",
     committedBy: "",
     commitID: "",
   }
