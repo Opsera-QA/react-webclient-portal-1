@@ -16,7 +16,7 @@ function AzureZipDeploymentStepConfigurationSummaryPanel({ azureFunctionsPipelin
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField dataObject={azureFunctionsPipelineDataObject} fieldName={"azureToolId"}/>
+          <ToolNameField model={azureFunctionsPipelineDataObject} fieldName={"azureToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={azureFunctionsPipelineDataObject} fieldName={"stepId"}/>

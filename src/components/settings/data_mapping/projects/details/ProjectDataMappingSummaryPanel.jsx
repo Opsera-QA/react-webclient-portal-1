@@ -25,7 +25,7 @@ function ProjectDataMappingSummaryPanel(
           <TextFieldBase dataObject={projectDataMappingModel} fieldName={"tool_identifier"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={projectDataMappingModel} fieldName={"tool_id"}/>
+          <ToolNameField model={projectDataMappingModel} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={projectDataMappingModel} fieldName={"key"}/>
