@@ -91,8 +91,8 @@ function ReportsSubNavigationBar({currentTab}) {
   return (
     <NavigationTabContainer>
       <NavigationTab activeTab={currentTab} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-      <NavigationTab activeTab={currentTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"toolReports"} icon={faTools} />
       <NavigationTab activeTab={currentTab} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tagReports"} icon={faTags} />
+      <NavigationTab activeTab={currentTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"toolReports"} icon={faTools} />
       {getDynamicUserTab()}
       {getActiveViewerTab()}
     </NavigationTabContainer>
