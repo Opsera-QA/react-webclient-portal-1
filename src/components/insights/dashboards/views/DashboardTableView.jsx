@@ -113,7 +113,7 @@ function DashboardTableView(
       titleIcon={faChartNetwork}
       metadata={dashboardMetadata}
       supportSearch={true}
-      title={"My Dashboards"}
+      title={"Dashboards"}
       filterDto={dashboardFilterModel}
       setFilterDto={setDashboardFilterModel}
       dropdownFilters={getDropdownFilters()}
