@@ -123,7 +123,7 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
         isLoading={isLoading}
         paginationModel={originFilterModel}
         setPaginationModel={setOriginFilterModel}
-        title={"SFDC Files"}
+        title={"Salesforce Files"}
         pipelineWizardModel={pipelineWizardModel}
         filePullCompleted={filePullCompleted}
       />
