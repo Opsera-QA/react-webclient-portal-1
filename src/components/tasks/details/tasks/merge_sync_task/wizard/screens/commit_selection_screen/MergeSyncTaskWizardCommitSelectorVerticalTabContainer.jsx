@@ -12,6 +12,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -54,14 +55,25 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     }
   };
 
+  const getShortenedName = (diffFile) => {
+    const fileName = diffFile?.committedFile;
+
+    if (hasStringValue(fileName)) {
+      const lastIndexOf = fileName.lastIndexOf('/');
+      return fileName.substring(lastIndexOf + 1);
+    }
+  };
+
   const getCommitFileTab = (diffFile, index) => {
     return (
       <VanitySetVerticalTab
         key={index}
-        tabText={diffFile?.committedFile}
+        tabText={getShortenedName(diffFile)}
         tabName={`${index}`}
         handleTabClick={handleTabClick}
+        tooltipText={diffFile?.committedFile}
         activeTab={activeTab}
+        className={"small-label-text"}
       />
     );
   };
