@@ -34,6 +34,16 @@ import SalesforceQuickDeployTaskTypeSummaryCard
     from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskTypeSummaryCard";
 import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+import GitToGitMergeSyncTaskSummaryCard
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskSummaryCard";
+import {
+  mergeSyncTaskGitConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
+import SalesforceToGitMergeSyncTaskSummaryCard
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskSummaryCard";
+import {
+  mergeSyncTaskSalesforceConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -131,7 +141,7 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return (
           <SalesforceQuickDeployTaskTypeSummaryCard
-            taskConfigurationData={modelHelpers.parseObjectIntoModel(
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration"),
               salesforceOrganizationSyncTaskConfigurationMetadata,
             )}
@@ -145,6 +155,28 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
               modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), gitscraperTaskConfigurationMetadata)
             }
             gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <SalesforceToGitMergeSyncTaskSummaryCard
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              mergeSyncTaskSalesforceConfigurationMetadata,
+            )}
+            gitConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.git,
+              mergeSyncTaskGitConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeSyncTaskSummaryCard
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.git,
+              mergeSyncTaskGitConfigurationMetadata,
+            )}
           />
         );
       default:
