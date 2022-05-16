@@ -56,6 +56,10 @@ const dashboardFilterMetadata = {
         activeFilters.push({filterId: "search", text: `Keywords: ${filterModel.getFilterValue("search")}`});
       }
 
+      if (hasStringValue(filterModel.getFilterValue("owner")) === true) {
+        activeFilters.push({filterId: "owner", text: `Owner: ${filterModel.getFilterText("owner")}`});
+      }
+
       if (hasStringValue(filterModel.getFilterValue("isFavorite")) === true) {
         activeFilters.push({filterId: "isFavorite", ...filterModel.getData("isFavorite")});
       }
