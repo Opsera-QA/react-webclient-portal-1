@@ -650,7 +650,8 @@ const breadcrumbs = {
     path: paths.toolsUsedInPipelineReport,
     title: "Tools Used In Pipelines",
     linkText: "Tools Used In Pipelines",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
+    pageDescription: "View pipeline based on the tool selected.",
   },
   toolCountsReport: {
     parent: "toolReports",
@@ -658,7 +659,8 @@ const breadcrumbs = {
     path: paths.toolCountsReport,
     title: "Tool Counts",
     linkText: "Tool Counts",
-    icon: faTally
+    icon: faTally,
+    pageDescription: "View tool usage counts.",
   },
   detailedToolReport: {
     parent: "toolReports",
@@ -683,7 +685,8 @@ const breadcrumbs = {
     path: paths.tagsUsedInPipelineReport,
     title: "Tags Used In Pipelines",
     linkText: "Tags Used In Pipelines",
-    icon: faTags
+    icon: faTags,
+    pageDescription: "View pipeline based on the tag selected.",
   },
   tagsUsedInToolsReport: {
     parent: "tagReports",
@@ -691,7 +694,8 @@ const breadcrumbs = {
     path: paths.tagsUsedInToolsReport,
     title: "Tags Used In Tools",
     linkText: "Tags Used In Tools",
-    icon: faTools
+    icon: faTools,
+    pageDescription: "View tool based on the tag selected.",
   },
   tagsUsedInDashboardsReport: {
     parent: "tagReports",
@@ -699,7 +703,8 @@ const breadcrumbs = {
     path: paths.tagsUsedInDashboardsReport,
     title: "Tags Used In Dashboards",
     linkText: "Tags Used In Dashboards",
-    icon: faTags
+    icon: faTags,
+    pageDescription: "View a dashboard based on the tag selected.",
   },
 
   userReports: {
