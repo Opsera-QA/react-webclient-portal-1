@@ -166,6 +166,8 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         <TextInputBase
           dataObject={salesforceConfigurationModel}
           setDataObject={setSalesforceModelFunction}
+          fieldName={"packageXmlReferencePath"}
+          visible={salesforceConfigurationModel?.getData("includePackageXml") === true}
         />
       </Col>
     </Row>
