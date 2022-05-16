@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const ruleFields = [
-  {value: "commitID", text: "Commit ID"},
-  {value: "commitAction", text: "Commit Action"},
-  // {value: "committedTime", text: "Commit Time"},
   {value: "committedBy", text: "Committed By"},
+  {value: "componentType", text: "Component"},
   {value: "componentName", text: "Component Name"},
+  {value: "committedFileId", text: "Salesforce Component ID"},
+  // {value: "committedTime", text: "Commit Time"},
 ];
 
 function SalesforceToGitMergeSyncTaskFileSelectionFieldSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {
