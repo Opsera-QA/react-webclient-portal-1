@@ -24,7 +24,10 @@ function VanitySetVerticalTabContainer(
         {getTitleBar()}
         <Nav variant={"pills"}>
           <div className={"h-100 w-100"}>
-            <div className={"makeup-tree-container-body p-2"}>
+            <div
+              className={"makeup-tree-container-body p-2"}
+              // style={{overflowX: "hidden"}}
+            >
               {children}
             </div>
           </div>

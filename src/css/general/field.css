@@ -129,6 +129,11 @@ pre {
     z-index: 1600 !important;
 }
 
+/* TODO: Finalize max size for dropdowns and ensure only dropdowns are affected (IE Not date input) */
+/*.rw-popup {*/
+/*    max-height: 155px !important;*/
+/*}*/
+
 .dhx_tooltip {
     z-index: 9999 !important;
 }

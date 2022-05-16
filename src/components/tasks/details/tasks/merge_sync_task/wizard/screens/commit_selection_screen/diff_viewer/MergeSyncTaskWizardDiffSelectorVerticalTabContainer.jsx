@@ -55,7 +55,7 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
     return (
       <VanitySetVerticalTab
         key={index}
-        tabText={`${index}`}
+        tabText={`${index + 1}`}
         tabName={`${index}`}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
