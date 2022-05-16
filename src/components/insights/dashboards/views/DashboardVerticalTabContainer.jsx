@@ -6,6 +6,11 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadData }) {
   const handleTabClick = (tab) => {
     dashboardFilterModel?.setData("type", tab);
+
+    if (tab === "owner") {
+      dashboardFilterModel?.setDefaultValue("owner");
+    }
+
     loadData(dashboardFilterModel);
   };
 
