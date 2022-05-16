@@ -11,7 +11,7 @@ function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData })
     <PipelineStepSummaryPanelContainer pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField dataObject={s3DataObject} fieldName={"awsToolConfigId"} />
+          <ToolNameField model={s3DataObject} fieldName={"awsToolConfigId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={s3DataObject} fieldName={"jobType"} />

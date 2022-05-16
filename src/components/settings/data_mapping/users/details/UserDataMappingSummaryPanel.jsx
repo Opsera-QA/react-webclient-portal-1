@@ -19,7 +19,7 @@ function DataMappingSummary({ userDataMappingModel, setActiveTab }) {
           <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_identifier"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={userDataMappingModel} fieldName={"tool_id"}/>
+          <ToolNameField model={userDataMappingModel} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_id"}/>

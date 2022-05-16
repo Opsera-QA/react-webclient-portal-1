@@ -16,7 +16,7 @@ function JFrogMavenPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObje
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField dataObject={jFrogPipelineDataObject} fieldName={"toolConfigId"}/>
+          <ToolNameField model={jFrogPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jFrogPipelineDataObject} fieldName={"jobType"}/>
