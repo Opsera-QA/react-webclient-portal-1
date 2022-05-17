@@ -35,9 +35,11 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
       getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
       getTableTextColumn(getField(fields,"pipelineName")),
       getTableTextColumn(getField(fields,"runCount")),
+      getTableTextColumn(getField(fields,"timeStamp")),
       getTableTextColumn(getField(fields,"status")),
       getTableTextColumn(getField(fields,"version")),
       getLimitedTableTextColumn(getField(fields,"destination"),30),
+      getTableTextColumn(getField(fields,"namespace")),
     ],
     []
   );
