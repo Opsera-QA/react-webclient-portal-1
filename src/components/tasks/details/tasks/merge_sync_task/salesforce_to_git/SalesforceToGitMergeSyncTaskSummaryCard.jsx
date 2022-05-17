@@ -74,7 +74,7 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
         <Col xs={6}>
           <TextFieldBase
             dataObject={gitConfigurationModel}
-            fieldName={"repositoryName"}
+            fieldName={"repository"}
           />
         </Col>
         <Col xs={6}>
