@@ -31,10 +31,7 @@ function PipelineScheduledTaskTable(
 
   let newData = data;
   newData.forEach(item => {
-    let options = {hour12: false};
-    let date = new Date(item.schedule.executionDate);
-    let dateString = date.toLocaleString(undefined, options);
-    item["executionDate"] = dateString;
+    item["executionDate"] = item.schedule.executionDate;
     item["interval"] = frequencyLookup[item.schedule.recurring];
   });
 
