@@ -13,12 +13,14 @@ const ApigeeRunAssistantMigrationObjectList = (
     migrationObjects, 
     isLoading, 
     migrationObjectPullCompleted,
+    updateVersionMode,
+    setUpdateVersionMode,
+    migrationObject,
+    setMigrationObject
   }) => {
   const noDataFilesPulledMessage = "The Migration Objects pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Migration Objects list has not been received from Apigee yet. Please click the refresh button to resume polling for the files.";
 
-  const [updateVersionMode, setUpdateVersionMode] = useState(false);
-  const [migrationObject, setMigrationObject] = useState(null);
 
   const customTemplate = (item) => {
     const type = item["type"] !== "" ? item["type"] : "";
@@ -50,34 +52,8 @@ const ApigeeRunAssistantMigrationObjectList = (
     setUpdateVersionMode(true);
   };
 
-  const updateHandler = (newOption) => {
-    const dataObj = {...apigeeRunParametersModel};
-    const migrationObjArray = apigeeRunParametersModel.getData("selectedMigrationObjects");
-    migrationObjArray.push(newOption);
-    dataObj.setData("selectedMigrationObjects", migrationObjArray);
-    setApigeeRunParametersModel({...dataObj});
-    setUpdateVersionMode(false);
-  };
-
-  const cancelHandler = () => {
-    setUpdateVersionMode(false);
-  };
-
-  const getBody = () => {
-    if (updateVersionMode) {
-      return (
-        <ApigeeMigrationObjectVersionSelectionPanel 
-          toolId={apigeeRunParametersModel?.getData("toolId")}
-          handler={updateHandler}
-          cancelHandler={cancelHandler}
-          migrationObject={migrationObject}
-          setMigrationObject={setMigrationObject}
-        />
-      );
-    }
-
-    return (
-      <ApigeeRunAssistantListObjectInput
+  return (
+    <ApigeeRunAssistantListObjectInput
         setDataFunction={setDataFunction}
         processDataFunction={processSelectedData}
         fieldName={"selectedMigrationObjects"}
@@ -91,13 +67,6 @@ const ApigeeRunAssistantMigrationObjectList = (
         valueField={"id"}
         noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}        
       />
-    );
-  };
-
-  return (
-    <>
-      {getBody()}
-    </>
   );
 
 };
@@ -109,6 +78,10 @@ ApigeeRunAssistantMigrationObjectList.propTypes = {
   apigeeRunParametersModel: PropTypes.object,
   setApigeeRunParametersModel: PropTypes.func,
   migrationObjectPullCompleted: PropTypes.bool,
+  updateVersionMode: PropTypes.bool,
+  setUpdateVersionMode: PropTypes.func,
+  migrationObject: PropTypes.object,
+  setMigrationObject: PropTypes.func,
 };
 
 export default ApigeeRunAssistantMigrationObjectList;

@@ -153,17 +153,6 @@ function ApigeeRunAssistantListObjectInput(
     }
   };
 
-  const updateValue = (newArray) => {
-    if (setDataFunction) {
-      const newModel = setDataFunction(field?.id, newArray);
-
-      // TODO: Implement validation on this side.
-      // if (typeof newModel === "object") {
-        // validateData(newModel);
-      // }
-    }
-  };
-
   const addItem = (item) => {
     let currentData = findCurrentValue();
 
@@ -185,8 +174,6 @@ function ApigeeRunAssistantListObjectInput(
         }
 
         processDataFunction(field?.id, newOption);
-        // currentData.push(newOption);
-        // updateValue(currentData);
       }
   };
 

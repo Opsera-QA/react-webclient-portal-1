@@ -89,24 +89,18 @@ const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, han
     return (
       <div className='px-4 py-2'>
         <Row>
-          <Col lg={12}>
+          <Col lg={4}>
             <TextFieldBase dataObject={migrationObject} fieldName={"name"}/>
           </Col>
-        </Row>
-        <Row>
-          <Col lg={12}>
+          <Col lg={4}>
             <TextFieldBase dataObject={migrationObject} fieldName={"type"}/>
           </Col>
-        </Row>        
-        <Row>
-          <Col lg={12}>
+          <Col lg={4}>
             <ArrayToTextField
               model={migrationObject}
               fieldName={"dependencies"}
             />
           </Col>
-        </Row>        
-        <Row>
           <Col lg={12}>
             <SelectInputBase
               fieldName={"version"}
