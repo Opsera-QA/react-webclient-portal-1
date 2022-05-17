@@ -14,6 +14,7 @@ import ApigeeRunAssistantMigrationObjectList
 import ApigeeRunAssistantSubmitMigrationObjectsButton
   from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantSubmitMigrationObjectsButton";
 import BackButton from "components/common/buttons/back/BackButton";
+import ApigeeMigrationObjectVersionSelectionPanel from "./ApigeeMigrationObjectVersionSelectionPanel";
 
 const ApigeeRunAssistantMigrationObjectSelector = (
   { 
@@ -31,6 +32,9 @@ const ApigeeRunAssistantMigrationObjectSelector = (
   const [migrationObjectPullCompleted, setMigrationObjectPullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [updateVersionMode, setUpdateVersionMode] = useState(false);
+  const [migrationObject, setMigrationObject] = useState(null);
+
   let timerIds = [];
 
   useEffect(() => {
@@ -118,8 +122,36 @@ const ApigeeRunAssistantMigrationObjectSelector = (
     return data?.data;
   };
 
+  const updateHandler = (newOption) => {
+    const dataObj = {...apigeeRunParametersModel};
+    const migrationObjArray = apigeeRunParametersModel.getData("selectedMigrationObjects");
+    migrationObjArray.push(newOption);
+    dataObj.setData("selectedMigrationObjects", migrationObjArray);
+    setApigeeRunParametersModel({...dataObj});
+    setUpdateVersionMode(false);
+  };
+
+  const cancelHandler = () => {
+    setUpdateVersionMode(false);
+  };
+
+  const getVersionSelectForm = () => {
+    if (updateVersionMode) {
+      return (
+        <ApigeeMigrationObjectVersionSelectionPanel 
+          toolId={apigeeRunParametersModel?.getData("toolId")}
+          handler={updateHandler}
+          cancelHandler={cancelHandler}
+          migrationObject={migrationObject}
+          setMigrationObject={setMigrationObject}
+        />
+      );
+    }
+  };
+
   return (
     <div>
+      {getVersionSelectForm()}
       <InlineWarning warningMessage={migrationObjectErrorMessage} className="pl-3" />
       <ApigeeRunAssistantMigrationObjectList
         migrationObjects={migrationObjects}
@@ -128,6 +160,10 @@ const ApigeeRunAssistantMigrationObjectSelector = (
         loadDataFunction={loadData}
         isLoading={isLoading}
         migrationObjectPullCompleted={migrationObjectPullCompleted}
+        updateVersionMode={updateVersionMode}
+        setUpdateVersionMode={setUpdateVersionMode}
+        migrationObject={migrationObject}
+        setMigrationObject={setMigrationObject}
       />
       <SaveButtonContainer>
         <BackButton
