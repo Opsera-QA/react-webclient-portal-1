@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function InlineWarning({warningMessage, className}) {
   const [messageBody, setMessageBody] = useState("");
@@ -8,14 +9,14 @@ function InlineWarning({warningMessage, className}) {
     setMessageBody(warningMessage);
   }, [warningMessage]);
 
-  if (messageBody == null || messageBody === "") {
+  if (hasStringValue(messageBody) !== true) {
     return null;
   }
 
   return (
     <div className={className}>
-      <div className="row">
-        <div className="col-sm-12 my-auto warning-text p-2">
+      <div className={"d-flex"}>
+        <div className={"warning-text"}>
           <span>{messageBody}</span>
         </div>
       </div>
@@ -26,6 +27,10 @@ function InlineWarning({warningMessage, className}) {
 InlineWarning.propTypes = {
   warningMessage: PropTypes.string,
   className: PropTypes.string
+};
+
+InlineWarning.defaultPros = {
+  className: "p-2",
 };
 
 export default InlineWarning;
