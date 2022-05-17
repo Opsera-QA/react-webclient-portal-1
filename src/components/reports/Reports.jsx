@@ -9,6 +9,7 @@ import UserReports from "components/reports/users/UserReports";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import ReportsHelpDocumentation from "../common/help/documentation/reports/ReportsHelpDocumentation";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import ReportsPageLinkCards from "./ReportsPageLinkCards";
 
 function Reports() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -95,6 +96,9 @@ function Reports() {
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       isLoading={isLoading}
     >
+      <ReportsPageLinkCards
+        accessRoleData={accessRoleData}
+      />
       {getAllReports()}
     </ScreenContainer>
   );

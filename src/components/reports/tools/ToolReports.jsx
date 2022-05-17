@@ -1,16 +1,24 @@
 import React from "react";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
-import Row from "react-bootstrap/Row";
+import BreadcrumbPageLinkCard from "../../common/card/link/BreadcrumbPageLinkCard";
+import PropTypes from "prop-types";
+import ToolsUsedByPipelinesPageLinkCard from "./pipelines/ToolsUsedByPipelinesPageLinkCard";
+import ToolsCountsPageLinkCard from "./counts/ToolsCountsPageLinkCard";
 
-function ToolReports() {
+function ToolReports({accessRoleData}) {
   return (
-    <Row className="ml-3">
-      <BreadcrumbPageLink breadcrumbDestination={"toolsUsedInPipelineReport"}/>
-      <BreadcrumbPageLink breadcrumbDestination={"toolCountsReport"}/>
-      {/* <BreadcrumbPageLink breadcrumbDestination={"detailedToolReport"}/> */}
-    </Row>
+    <div>
+      <ToolsUsedByPipelinesPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+      <ToolsCountsPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+    </div>
   );
 }
 
+ToolReports.propTypes = {
+  accessRoleData: PropTypes.object,
+};
 export default ToolReports;
 

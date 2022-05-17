@@ -650,8 +650,8 @@ const breadcrumbs = {
     path: paths.toolsUsedInPipelineReport,
     title: "Tools Used In Pipelines",
     linkText: "Tools Used In Pipelines",
-    icon: faDraftingCompass,
-    pageDescription: "View pipeline based on the tool selected.",
+    icon: faAnalytics,
+    pageDescription: "View a pipeline based on the tool selected.",
   },
   toolCountsReport: {
     parent: "toolReports",
@@ -683,17 +683,17 @@ const breadcrumbs = {
     parent: "tagReports",
     name: "tagsUsedInPipelineReport",
     path: paths.tagsUsedInPipelineReport,
-    title: "Tags Used In Pipelines",
-    linkText: "Tags Used In Pipelines",
-    icon: faTags,
+    title: "Pipeline by Tags",
+    linkText: "Pipeline by Tags",
+    icon: faDraftingCompass,
     pageDescription: "View pipeline based on the tag selected.",
   },
   tagsUsedInToolsReport: {
     parent: "tagReports",
     name: "tagsUsedInToolsReport",
     path: paths.tagsUsedInToolsReport,
-    title: "Tags Used In Tools",
-    linkText: "Tags Used In Tools",
+    title: "Tools by Tags",
+    linkText: "Tools by Tags",
     icon: faTools,
     pageDescription: "View tool based on the tag selected.",
   },
@@ -701,9 +701,9 @@ const breadcrumbs = {
     parent: "tagReports",
     name: "tagsUsedInDashboardsReport",
     path: paths.tagsUsedInDashboardsReport,
-    title: "Tags Used In Dashboards",
-    linkText: "Tags Used In Dashboards",
-    icon: faTags,
+    title: "Dashboards by Tags",
+    linkText: "Dashboards by Tags",
+    icon: faChartNetwork,
     pageDescription: "View a dashboard based on the tag selected.",
   },
 
@@ -721,7 +721,8 @@ const breadcrumbs = {
     path: paths.groupMembershipReport,
     title: "Group Membership",
     linkText: "Group Membership",
-    icon: faUsers
+    icon: faUsers,
+    pageDescription: "View the Group Membership of a selected User."
   },
   pipelineOwnershipReport: {
     parent: "userReports",
@@ -729,7 +730,8 @@ const breadcrumbs = {
     path: paths.pipelineOwnershipReport,
     title: "Pipeline Ownership",
     linkText: "Pipeline Ownership",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
+    pageDescription: "View pipelines owned by selected user."
   },
   toolOwnershipReport: {
     parent: "userReports",
@@ -737,7 +739,8 @@ const breadcrumbs = {
     path: paths.toolOwnershipReport,
     title: "Tool Ownership",
     linkText: "Tool Ownership",
-    icon: faTools
+    icon: faTools,
+    pageDescription: "View tools owned by a selected user."
   },
   taskOwnershipReport: {
     parent: "userReports",
@@ -745,7 +748,8 @@ const breadcrumbs = {
     path: paths.taskOwnershipReport,
     title: "Task Ownership",
     linkText: "Task Ownership",
-    icon: faTasks
+    icon: faTasks,
+    pageDescription: "View tasks owned by a selected user."
   },
   consolidatedUserReport: {
     parent: "userReports",
@@ -753,7 +757,8 @@ const breadcrumbs = {
     path: paths.consolidatedUserReport,
     title: "User Report",
     linkText: "User Report",
-    icon: faUser
+    icon: faUser,
+    pageDescription: "View the consolidated report for selected user."
   },
 
   pipelineReports: {
