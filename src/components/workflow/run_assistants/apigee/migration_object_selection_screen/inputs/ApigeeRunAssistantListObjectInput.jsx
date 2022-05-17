@@ -86,8 +86,8 @@ function ApigeeRunAssistantListObjectInput(
 
   const constructList = () => {
     
-    if(!Array.isArray(selectOptions) || selectOptions.length === 0) {      
-      return;
+    if (Array.isArray(selectOptions) && selectOptions.length > 0) {
+      selectOptions.forEach(data => data.id = data[valueField]);
     }
     
     let list = new List(containerRef.current, {
