@@ -11,7 +11,7 @@ function ToolUsagePanel(
     closePanelFunction,
   }) {
   const getUsedInPipelinesField = (toolIdentifier) => {
-    if (toolIdentifier === "slack" || toolIdentifier === "teams"){
+    if (toolIdentifier === "slack" || toolIdentifier === "teams" || toolIdentifier === "servicenow" || toolIdentifier === "jira"){
       return (
         <NotificationUsedInPipelineField 
           toolId={toolData?.getData("_id")}
