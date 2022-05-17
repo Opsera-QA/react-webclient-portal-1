@@ -109,7 +109,7 @@ const ApigeeRunAssistantMigrationObjectSelector = (
 
       if (Array.isArray(files)) {
         setApigeeRunParametersModel({...apigeeRunParametersModel});
-        setMigrationObjects(files);
+        setMigrationObjects(files.filter(file => file != null));
         setIsLoading(false);
         setMigrationObjectPullCompleted(true);
       }
