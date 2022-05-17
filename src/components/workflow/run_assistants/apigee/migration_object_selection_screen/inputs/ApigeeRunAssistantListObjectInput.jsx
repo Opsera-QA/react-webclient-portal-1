@@ -50,7 +50,7 @@ function ApigeeRunAssistantListObjectInput(
     return () => {
       list?.destructor();
     };
-  }, [selectOptions, isLoading]);
+  }, [selectOptions, isLoading, disabled]);
 
   useEffect(() => {
     if (list && searchFunction) {

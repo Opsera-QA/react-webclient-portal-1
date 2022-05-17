@@ -66,6 +66,7 @@ const ApigeeRunAssistantMigrationObjectList = (
         isLoading={isLoading}
         valueField={"id"}
         noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}        
+        disabled={updateVersionMode}
       />
   );
 
