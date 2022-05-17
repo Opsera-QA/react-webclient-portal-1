@@ -122,7 +122,7 @@ const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, han
             isLoading={isLoading}
             className={"mr-2"}
           />
-          <Button size="sm" variant="success" disabled={isLoading} onClick={() => handler(migrationObject.getPersistData())}>
+          <Button size="sm" variant="success" disabled={isLoading || !migrationObject.getData("version")} onClick={() => handler(migrationObject.getPersistData())}>
             <span>Save</span>
           </Button>
         </SaveButtonContainer>
