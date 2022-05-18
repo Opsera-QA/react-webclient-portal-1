@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function BitbucketRepositorySelectInput(
   {
@@ -88,8 +88,9 @@ function BitbucketRepositorySelectInput(
         valueField={"name"}
         textField={"name"}
         disabled={disabled}
-        placeholderText={placeholderText}
-        errorMessage={errorMessage}
+        error={error}
+        pluralTopic={"Bitbucket Branches"}
+        singularTopic={"Bitbucket Branch"}
       />
     );
   }
