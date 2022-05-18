@@ -25,6 +25,7 @@ function GitToGitMergeSyncTaskRepositorySelectInput({
   const clearDataFunction = () => {
     const newModel = { ...model };
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");

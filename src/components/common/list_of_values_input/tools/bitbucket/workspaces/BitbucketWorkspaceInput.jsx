@@ -11,11 +11,10 @@ import {parseError} from "components/common/helpers/error-helpers";
 
 // TODO: Rename BitbucketWorkspaceSelectInput, change "gitToolId" to "toolId"
 function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -27,6 +26,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setError(undefined);
     setWorkspaces([]);
 
     if (isMongoDbId(gitToolId) === true) {
@@ -49,11 +49,14 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       await getWorkspaces(cancelSource);
     }
     catch (error) {
-      const parsedError = parseError(error);
-      setErrorMessage(`Error pulling Bitbucket Workspaces: ${parsedError}`);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -61,7 +64,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     const response = await bitbucketActions.getWorkspacesFromBitbucketInstanceV2(getAccessToken, cancelSource, gitToolId);
     const workspaces = response?.data?.data;
 
-    if (Array.isArray(workspaces)) {
+    if (isMounted?.current === true && Array.isArray(workspaces)) {
       setWorkspaces(workspaces);
     }
   };
@@ -69,12 +72,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
   if (visible === false) {
     return null;
   }
-
-  const getNoWorkspacesMessage = () => {
-    if (!isLoading && (workspaces == null || workspaces.length === 0) && isMongoDbId(gitToolId) !== true) {
-      return ("Workspace information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
-    }
-  };
 
   return (
     <SelectInputBase
@@ -84,10 +81,9 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       setDataFunction={setDataFunction}
       selectOptions={workspaces}
       busy={isLoading}
-      placeholderText={getNoWorkspacesMessage()}
       valueField={"key"}
       textField={"name"}
-      errorMessage={errorMessage}
+      error={error}
       clearDataFunction={clearDataFunction}
       disabled={disabled || isLoading || workspaces.length === 0}
       className={className}
