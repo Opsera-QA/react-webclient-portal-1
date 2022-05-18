@@ -11,6 +11,7 @@ function SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput({
     const newModel = { ...model };
     newModel.setData("workspace", selectedOption.key);
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
@@ -23,6 +24,7 @@ function SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput({
     const newModel = { ...model };
     newModel.setDefaultValue("workspace");
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
