@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Clean up and figure out how we want to use this on React end
 export const dataParsingHelper = {};
@@ -76,4 +77,20 @@ dataParsingHelper.cloneDeep = (objectToClone) => {
 
 dataParsingHelper.isEmpty = (objectToClone) => {
   return _.isEmpty(objectToClone);
+};
+
+dataParsingHelper.parseArrayIntoString = (array, defaultValue = "") => {
+  if (!Array.isArray(array) || array.length === 0) {
+    return defaultValue;
+  }
+
+  let unpackedString = "";
+
+  array.forEach((line) => {
+    if (hasStringValue(line, false) === true) {
+      unpackedString += `${line}\n`;
+    }
+  });
+
+  return unpackedString;
 };

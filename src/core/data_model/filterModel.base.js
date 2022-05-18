@@ -1,3 +1,5 @@
+import { hasStringValue } from "components/common/helpers/string-helpers";
+
 export class FilterModelBase {
   constructor(metaData) {
     this.metaData = {...metaData};
@@ -117,6 +119,17 @@ export class FilterModelBase {
   getFilterText = (fieldName) => {
     let filter = this.getData(fieldName);
     return filter != null && filter["text"] != null ? filter["text"] : filter;
+  };
+
+  unpackQueryParameterObject = (history) => {
+    throw "This is an unsupported action!";
+  };
+
+  storeFiltersInStorage = () => {
+    const filterObject = {...this.getPersistData()};
+    if (hasStringValue(this.filterObjectId) === true) {
+      sessionStorage.setItem(this.filterObjectId, filterObject);
+    }
   };
 
   getMaxLength = (field) => {
