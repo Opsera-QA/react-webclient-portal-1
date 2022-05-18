@@ -31,8 +31,10 @@ function PipelineScheduledTaskTable(
 
   let newData = data;
   newData.forEach(item => {
-    item["executionDate"] = item?.schedule?.executionDate;
-    item["interval"] = frequencyLookup[item?.schedule?.recurring];
+      let date = new Date(item.schedule.executionDate);
+      let dateString = date.toLocaleString("en-us");
+      item["executionDate"] = dateString;
+      item["interval"] = frequencyLookup[item?.schedule?.recurring];
   });
 
   const onRowSelect = (grid, row) => {
