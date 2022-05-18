@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import apigeeActions from "../apigee-step-actions";
 
-function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
+function ApigeeEnvironmentSelectInput({ model, setModel, disabled, toolConfigId }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -35,7 +35,7 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [toolConfigId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -55,15 +55,13 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
 
   const fetchApigeeEnvironments = async (cancelSource = cancelTokenSource, acrStep, azureTool) => {
 
-    const { toolConfigId } = dataObject.getPersistData();
-
     const response = await apigeeActions.getApigeeEnvironments(
       getAccessToken,
       cancelSource,
       toolConfigId
     );
 
-    const result = response?.data?.status === 200 ? response?.data?.message : [];
+    const result = response?.data?.data;
 
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
@@ -80,26 +78,23 @@ function ApigeeEnvironmentSelectInput({ dataObject, setDataObject, disabled }) {
   return (
     <SelectInputBase
       fieldName={"environmentName"}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       placeholderText={placeholderText}
       selectOptions={environmentsList}
       textField={"name"}
       valueField={"name"}
       busy={isLoading}
-      disabled={disabled || isLoading || environmentsList == null || environmentsList.length === 0}
+      disabled={disabled}
     />
   );
 }
 
 ApigeeEnvironmentSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
-};
-
-ApigeeEnvironmentSelectInput.defaultProps = {
-  disabled: false,
+  toolConfigId: PropTypes.string,
 };
 
 export default ApigeeEnvironmentSelectInput;

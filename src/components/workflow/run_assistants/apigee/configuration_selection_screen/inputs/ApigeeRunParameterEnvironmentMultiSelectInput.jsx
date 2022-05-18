@@ -63,9 +63,9 @@ function ApigeeRunParameterEnvironmentMultiSelectInput({ dataObject, setDataObje
       toolId
     );
 
-    const result = response?.data?.status === 200 ? response?.data?.message : [];
+    const result = response?.data?.data;
 
-    if (Array.isArray(result)) {
+    if (Array.isArray(result) && result?.length > 0) {
       setErrorMessage("");
       setEnvironmentsList(result);
       setPlaceholderText("Select Apigee Environment");
@@ -86,7 +86,7 @@ function ApigeeRunParameterEnvironmentMultiSelectInput({ dataObject, setDataObje
       textField={"name"}
       valueField={"name"}
       busy={isLoading}
-      disabled={disabled || isLoading || environmentsList == null || environmentsList.length === 0}
+      disabled={disabled}
     />
   );
 }
@@ -96,10 +96,6 @@ ApigeeRunParameterEnvironmentMultiSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   parameters: PropTypes.object,
-};
-
-ApigeeRunParameterEnvironmentMultiSelectInput.defaultProps = {
-  disabled: false,
 };
 
 export default ApigeeRunParameterEnvironmentMultiSelectInput;

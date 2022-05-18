@@ -9,10 +9,9 @@ import PipelineStepEditorPanelContainer
 import ApigeeTypeSelectInput from "./inputs/ApigeeTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApigeeEnvironmentSelectInput from "./inputs/ApigeeEnvironmentSelectInput";
-import ApigeeExportOrgSelectInput from "./inputs/ApigeeExportOrgSelectInput";
 import ApigeeToolSelectInput from "./inputs/ApigeeToolSelectInput";
+import RoleRestrictedApigeeToolSelectInput from "components/common/list_of_values_input/tools/apigee/RoleRestrictedApigeeToolSelectInput";
 
 function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,18 +67,20 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
               dataObject={apigeeStepConfigurationDto}
               setDataObject={setApigeeStepConfigurationDataDto}
             />
-            <ApigeeExportOrgSelectInput 
+            <RoleRestrictedApigeeToolSelectInput 
+              fieldName={"targetToolConfigId"}
               model={apigeeStepConfigurationDto}
-              setModel={setApigeeStepConfigurationDataDto}
-            />
+              setModel={setApigeeStepConfigurationDataDto}              
+            />            
           </>
         );      
       case "deploy":
         return (
           <>
             <ApigeeEnvironmentSelectInput 
-              dataObject={apigeeStepConfigurationDto}
-              setDataObject={setApigeeStepConfigurationDataDto}
+              model={apigeeStepConfigurationDto}
+              setModel={setApigeeStepConfigurationDataDto}
+              toolConfigId={apigeeStepConfigurationDto.getData("toolConfigId")}
             />
             <TextInputBase
               dataObject={apigeeStepConfigurationDto}
