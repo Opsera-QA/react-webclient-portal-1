@@ -6,6 +6,7 @@ import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
 import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
 import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function StandaloneSourceDeltaDiffFieldBase(
   {
@@ -14,15 +15,19 @@ function StandaloneSourceDeltaDiffFieldBase(
     language,
     sourceCode,
   }) {
-  const [beginningAddedLineCount, setBeginningAddedLineCount] = useState(0);
-  const [changedLineCount, setChangedLineCount] = useState(0);
-  const [sourceLines, setSourceLines] = useState(undefined);
+  const [destinationLinesString, setDestinationLinesString] = useState(undefined);
+  const [sourceLinesString, setSourceLinesString] = useState(undefined);
+  const [topContextLinesString, setTopContextLinesString] = useState(undefined);
+  const [bottomContextLinesString, setBottomContextLinesString] = useState(undefined);
   const [unpackingDelta, setUnpackingDelta] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
-    setSourceLines(undefined);
+    setSourceLinesString(undefined);
+    setTopContextLinesString(undefined);
+    setBottomContextLinesString(undefined);
+    setDestinationLinesString(undefined);
 
     if (delta) {
       unpackDelta().catch((error) => {
@@ -39,55 +44,114 @@ function StandaloneSourceDeltaDiffFieldBase(
 
   const unpackDelta = async () => {
     setUnpackingDelta(true);
-    const originalArray = dataParsingHelper.parseArray(delta?.target?.lines, []);
+    const sourceLinesArray = dataParsingHelper.parseArray(delta?.target?.lines, []);
     const position = delta?.target?.position;
-    const endPosition = position + originalArray.length;
+    const endPosition = position + sourceLinesArray.length;
     const changedArray =  dataParsingHelper.parseArray(delta?.source?.lines, []);
-    const unpackedChangedLineCount = Array.isArray(changedArray) ? changedArray.length : 0;
-    setChangedLineCount(unpackedChangedLineCount);
+    const newSourceLinesString = dataParsingHelper.parseArrayIntoString(sourceLinesArray);
 
-    if (unpackedChangedLineCount > 0) {
-      originalArray.unshift(...changedArray);
+    if (hasStringValue(newSourceLinesString) === true) {
+      setSourceLinesString(newSourceLinesString);
     }
 
-    const deltaDiffResponse = deltaDiffHelper.addDeltaContextLines(
+    const newDestinationLinesString = dataParsingHelper.parseArrayIntoString(changedArray);
+
+    if (hasStringValue(newDestinationLinesString) === true) {
+      setDestinationLinesString(newDestinationLinesString);
+    }
+
+    const deltaDiffResponse = deltaDiffHelper.getDeltaContextLines(
       position,
-      originalArray,
       sourceCode,
       endPosition,
     );
 
-    const sourceLinesArray = deltaDiffResponse?.array;
+    const newTopContextLinesString = dataParsingHelper.parseArrayIntoString(deltaDiffResponse?.topContextLines);
 
-    if (Array.isArray(sourceLinesArray)) {
-      setBeginningAddedLineCount(deltaDiffResponse?.beginningAddedLines);
-      let unpackedString = "";
+    if (hasStringValue(newTopContextLinesString) === true) {
+      setTopContextLinesString(newTopContextLinesString);
+    }
 
-      sourceLinesArray.forEach((line) => {
-        unpackedString += `${line}\n`;
-      });
+    const newBottomContextLinesString = dataParsingHelper.parseArrayIntoString(deltaDiffResponse?.bottomContextLines);
 
-      setSourceLines(unpackedString);
+    if (hasStringValue(newBottomContextLinesString) === true) {
+      setBottomContextLinesString(newBottomContextLinesString);
     }
 
     setUnpackingDelta(false);
   };
 
-  const getLineNumberStyling = (lineNumber) => {
-    const style = {
-      display: "block",
-      fontSize: "12px",
-    };
+  const getTopContextLineSyntaxHighlighter = () => {
+    if (hasStringValue(topContextLinesString) === true) {
+      return (
+        <SyntaxHighlighter
+          style={styling}
+          language={language}
+          lineProps={deltaDiffHelper.getLineNumberStyling}
+          wrapLines={true}
+          wrapLongLines={true}
+          showLineNumbers={false}
+          showInlineLineNumbers={false}
 
-    const changeLength = delta?.target?.lines?.length;
-
-    if (lineNumber > beginningAddedLineCount && lineNumber <= beginningAddedLineCount + changedLineCount) {
-      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.REMOVED;
-    } else if (lineNumber > beginningAddedLineCount + changedLineCount && lineNumber <= beginningAddedLineCount + changedLineCount + changeLength) {
-      style.backgroundColor = commitDiffConstants.COMMIT_CHANGE_TYPE_COLOR_STRINGS.ADDED;
+        >
+          {topContextLinesString}
+        </SyntaxHighlighter>
+      );
     }
+  };
 
-    return { style };
+  const getDestinationLinesSyntaxHighlighter = () => {
+    if (hasStringValue(destinationLinesString) === true) {
+      return (
+        <SyntaxHighlighter
+          style={styling}
+          language={language}
+          lineProps={deltaDiffHelper.getRemovedLinesStyling}
+          wrapLines={true}
+          wrapLongLines={true}
+          showLineNumbers={false}
+          showInlineLineNumbers={false}
+        >
+          {destinationLinesString}
+        </SyntaxHighlighter>
+      );
+    }
+  };
+
+  const getSourceLinesSyntaxHighlighter = () => {
+    if (hasStringValue(sourceLinesString) === true) {
+      return (
+        <SyntaxHighlighter
+          style={styling}
+          language={language}
+          lineProps={deltaDiffHelper.getAddedLinesStyling}
+          wrapLines={true}
+          wrapLongLines={true}
+          showLineNumbers={false}
+          showInlineLineNumbers={false}
+        >
+          {sourceLinesString}
+        </SyntaxHighlighter>
+      );
+    }
+  };
+
+  const getBottomContextLineSyntaxHighlighter = () => {
+    if (hasStringValue(bottomContextLinesString) === true) {
+      return (
+        <SyntaxHighlighter
+          style={styling}
+          language={language}
+          wrapLines={true}
+          wrapLongLines={true}
+          showLineNumbers={false}
+          showInlineLineNumbers={false}
+          lineProps={deltaDiffHelper.getLineNumberStyling}
+        >
+          {bottomContextLinesString}
+        </SyntaxHighlighter>
+      );
+    }
   };
 
   const getBody = () => {
@@ -102,17 +166,12 @@ function StandaloneSourceDeltaDiffFieldBase(
     }
 
     return (
-      <SyntaxHighlighter
-        style={styling}
-        lineProps={(lineNumber) => getLineNumberStyling(lineNumber)}
-        language={language}
-        wrapLines={true}
-        wrapLongLines={true}
-        showLineNumbers={true}
-        showInlineLineNumbers={true}
-      >
-        {sourceLines}
-      </SyntaxHighlighter>
+      <>
+        {getTopContextLineSyntaxHighlighter()}
+        {getDestinationLinesSyntaxHighlighter()}
+        {getSourceLinesSyntaxHighlighter()}
+        {getBottomContextLineSyntaxHighlighter()}
+      </>
     );
   };
 
