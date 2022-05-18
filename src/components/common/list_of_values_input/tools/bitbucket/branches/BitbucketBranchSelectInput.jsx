@@ -24,8 +24,7 @@ function BitbucketRepositorySelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Bitbucket Branch");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -38,8 +37,7 @@ function BitbucketRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setBitbucketBranches([]);
-    setErrorMessage("");
-    setPlaceholderText("Select Bitbucket Branch");
+    setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -58,11 +56,13 @@ function BitbucketRepositorySelectInput(
       setIsLoading(true);
       await loadBitbucketBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Bitbucket Branches");
-      console.error(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -71,7 +71,6 @@ function BitbucketRepositorySelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Bitbucket Branch");
       setBitbucketBranches([...branches]);
     }
   };
@@ -107,8 +106,9 @@ function BitbucketRepositorySelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
-      errorMessage={errorMessage}
+      error={error}
+      pluralTopic={"Bitbucket Branches"}
+      singularTopic={"Bitbucket Branch"}
     />
   );
 }

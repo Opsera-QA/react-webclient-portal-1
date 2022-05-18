@@ -23,6 +23,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setError(undefined);
     setWorkspaces([]);
 
     if (isMongoDbId(gitToolId) === true) {
@@ -70,12 +71,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     return null;
   }
 
-  const getNoWorkspacesMessage = () => {
-    if (!isLoading && (workspaces == null || workspaces.length === 0) && isMongoDbId(gitToolId) !== true) {
-      return ("Workspace information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
-    }
-  };
-
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -84,7 +79,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       setDataFunction={setDataFunction}
       selectOptions={workspaces}
       busy={isLoading}
-      placeholderText={getNoWorkspacesMessage()}
       valueField={"key"}
       textField={"name"}
       error={error}

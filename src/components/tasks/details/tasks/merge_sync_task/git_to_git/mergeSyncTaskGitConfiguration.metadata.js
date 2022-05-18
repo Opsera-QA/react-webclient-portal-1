@@ -75,6 +75,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     service: "",
     workspace: "",
     repository: "",
+    repoId: "",
     targetBranch: "",
     sourceBranch: "",
     upstreamBranch: "",
