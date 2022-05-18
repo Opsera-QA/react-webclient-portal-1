@@ -279,7 +279,14 @@ export const getPipelineTypeColumn = (field, className) => {
     Header: "",
     accessor: getCustomTableAccessor(field),
     Cell: function parseType(rowWrapper) {
-      return <PipelineTypeIconBase type={rowWrapper?.row?.type} />;
+      const types = rowWrapper?.row?.original?.type;
+      let type = "";
+
+      if (Array.isArray(types) && types.length > 0) {
+        type = types[0];
+      }
+      
+      return <PipelineTypeIconBase type={type} />;
     },
     class: className ? className : "cell-center"
   };
