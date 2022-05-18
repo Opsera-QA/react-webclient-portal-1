@@ -189,6 +189,9 @@ import ExternalRestApiIntegrationStepSummaryPanel
 import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
+import ApigeePipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/ApigeePipelineStepConfigurationSummaryPanel";
+import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -597,6 +600,13 @@ function PipelineStepConfigurationSummary({
           <GitScraperSummaryPanel
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <ApigeePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
           />
         );
       default:

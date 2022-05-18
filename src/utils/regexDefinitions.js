@@ -231,4 +231,10 @@ regexDefinitions.numbersOnly = {
   errorFormText: "Only whole positive numbers are allowed",
 };
 
+regexDefinitions.apigeeNamePatternRules = {
+  regex: /^[A-Za-z0-9_*]*$/,
+  formText: "Letters, numbers, underscore, asterisk are allowed",
+  errorFormText: "Only letters, numbers, underscore, asterisk are allowed",
+};
+
 export default regexDefinitions;
