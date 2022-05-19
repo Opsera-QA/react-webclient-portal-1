@@ -104,6 +104,14 @@ const ebsStepFormMetadata = {
       formText : "Max time to wait until environment health turns Green, limit 0-10mins",
       regexValidator: /\b([0-9]|10)\b/,
     },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
   
   fieldsAlt: [
@@ -211,6 +219,14 @@ const ebsStepFormMetadata = {
       formText : "Max time to wait until environment health turns Green, limit 0-10mins",
       regexValidator: /\b([0-9]|10)\b/,
     },
+    {
+      label: "Specify Environment Variables",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Environment Variables",
+      id: "environmentVariables"
+    },
   ],
 
   newObjectFields:
@@ -234,7 +250,9 @@ const ebsStepFormMetadata = {
       createDomain: false,
       customDockerCompose: false,
       dockerComposeScriptId: "",
-      delayTime: ""
+      delayTime: "",
+      saveEnvironmentVariables: false,
+      environmentVariables: [],
     }
 };
 
