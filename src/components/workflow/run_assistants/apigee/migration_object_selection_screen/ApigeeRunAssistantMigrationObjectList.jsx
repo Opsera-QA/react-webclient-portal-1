@@ -47,6 +47,15 @@ const ApigeeRunAssistantMigrationObjectList = (
   };
 
   const processSelectedData = (fieldName, selectedOption) => {
+    if (selectedOption.type === "keyValueMaps") {
+      const dataObj = {...apigeeRunParametersModel};
+      const selectedMigrationObjects = dataObj.getData("selectedMigrationObjects");
+      selectedMigrationObjects.push(selectedOption);
+      dataObj.setData("selectedMigrationObjects", selectedMigrationObjects);
+      setApigeeRunParametersModel({...dataObj});
+      return;
+    }
+
     const newRunParametersModel = new Model({ ...apigeeMigrationObjectMetadata.newObjectFields, ...selectedOption }, apigeeMigrationObjectMetadata, false);
     setMigrationObject({...newRunParametersModel});
     setUpdateVersionMode(true);
