@@ -4,7 +4,18 @@ import Moment from "moment";
 import DatePicker from "react-widgets/DatePicker";
 import {hasDateValue} from "components/common/helpers/date/date.helpers";
 
-function StandaloneDatePickerInput({ value, setDataFunction, disabled, showTime, minDate, maxDate, dropUp, defaultToNull }) {
+function StandaloneDatePickerInput(
+  {
+    value,
+    setDataFunction,
+    disabled,
+    showTime,
+    minDate,
+    maxDate,
+    dropUp,
+    defaultToNull,
+    hasError,
+  }) {
   Moment.locale("en");
 
   return (
@@ -17,7 +28,7 @@ function StandaloneDatePickerInput({ value, setDataFunction, disabled, showTime,
       onChange={setDataFunction}
       defaultValue={defaultToNull !== true ? new Date() : undefined} // TODO: Do we want to default to now at all?
       includeTime={showTime}
-      // className={}
+      className={hasError === true ? "danger-red danger-red-border" : ""}
     />
   );
 }
@@ -31,11 +42,12 @@ StandaloneDatePickerInput.propTypes = {
   maxDate: PropTypes.any,
   dropUp: PropTypes.bool,
   defaultToNull: PropTypes.bool,
+  hasError: PropTypes.bool,
 };
 
 StandaloneDatePickerInput.defaultProps = {
   showDate: true,
-  showTime: true
+  showTime: true,
 };
 
 export default StandaloneDatePickerInput;
