@@ -139,7 +139,7 @@ function TextInputBase(
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
-        hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
+        hasError={hasStringValue(errorMessage) === true}
       />
       {getInput()}
       <InfoText
