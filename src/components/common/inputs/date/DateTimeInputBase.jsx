@@ -66,6 +66,7 @@ function DateTimeInputBase(
   const getClearDataFunction = () => {
     if (
       dataObject?.getData(fieldName) != null
+      && field?.isRequired !== true
       && disabled !== true
       && showClearValueButton !== false
     ) {
