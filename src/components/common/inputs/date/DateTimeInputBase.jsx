@@ -95,6 +95,7 @@ function DateTimeInputBase(
         value={hasDateValue(dataObject?.getData(fieldName)) === true ? new Date(dataObject?.getData(fieldName)) : null}
         setDataFunction={validateAndSetData}
         defaultToNull={defaultToNull}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <InfoText
         model={dataObject}

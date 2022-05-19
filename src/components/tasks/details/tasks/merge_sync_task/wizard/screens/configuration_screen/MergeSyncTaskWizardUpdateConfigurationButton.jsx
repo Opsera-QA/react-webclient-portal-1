@@ -81,7 +81,7 @@ function MergeSyncTaskWizardUpdateConfigurationButton({
       <Button
         size={size}
         variant={"primary"}
-        disabled={isSaving === true || disabled === true}
+        disabled={isSaving === true || disabled === true || wizardModel?.checkCurrentValidity() !== true}
         onClick={updateTaskWizardRecordConfiguration}
       >
         <span>

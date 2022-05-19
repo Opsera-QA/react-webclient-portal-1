@@ -100,13 +100,21 @@ primary analytics font*/
     color: #E57373;
 }
 
-.danger-red {
+.danger-red,
+.danger-red .rw-widget-input /* React Widgets Text */
+{
     color: #dc3545;
 }
 
 .danger-red-header {
     background-color: #dc3545;
     color: #fff;
+}
+
+.danger-red-border,
+.danger-red-border .rw-widget-container /* React Widgets Date Picker Border */
+{
+    border-color: #dc3545;
 }
 
 .yellow {
