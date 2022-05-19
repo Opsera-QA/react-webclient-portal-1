@@ -5,6 +5,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHelpOverlay, infoOverlay,}) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
@@ -79,6 +80,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHel
         field={field}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div>
         <input

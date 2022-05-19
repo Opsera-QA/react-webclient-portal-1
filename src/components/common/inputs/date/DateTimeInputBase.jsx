@@ -84,6 +84,7 @@ function DateTimeInputBase(
         clearDataFunction={getClearDataFunction()}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <StandaloneDatePickerInput
         minDate={minDate}

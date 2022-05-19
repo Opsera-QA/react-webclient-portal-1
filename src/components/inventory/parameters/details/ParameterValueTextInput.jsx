@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import regexDefinitions from "utils/regexDefinitions";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Use new VisibleVaultTextInput when complete
 function ParameterValueTextInput(
@@ -76,7 +77,11 @@ function ParameterValueTextInput(
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel field={field} model={model}/>
+      <InputLabel
+        field={field}
+        model={model}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <textarea
           disabled={disabled || isLoading}

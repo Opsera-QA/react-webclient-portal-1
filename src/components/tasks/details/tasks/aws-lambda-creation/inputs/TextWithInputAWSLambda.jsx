@@ -5,6 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import { Button, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TextInputWithButtonAWSLambda({
                                    fieldName,
@@ -78,7 +79,12 @@ function TextInputWithButtonAWSLambda({
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel field={field} extraActionButtons={extraActionButtons} model={dataObject} />
+      <InputLabel
+        field={field}
+        extraActionButtons={extraActionButtons}
+        model={dataObject}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <Row>
         <div className="input-group mb-3 ml-3 mr-3">
           <input

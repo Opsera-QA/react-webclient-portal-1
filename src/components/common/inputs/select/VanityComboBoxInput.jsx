@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import VanityComboBoxInputBase from "components/common/inputs/select/VanityComboBoxInputBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: This will replace select input base after it is verified
 function VanityComboBoxInput(
@@ -85,6 +86,7 @@ function VanityComboBoxInput(
         model={dataObject}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <VanityComboBoxInputBase
         selectOptions={formatSelectOptions()}

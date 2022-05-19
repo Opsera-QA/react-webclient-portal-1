@@ -8,12 +8,14 @@ export const mergeSyncTaskWizardMetadata = {
       id: "fromDate",
       mustBeInThePast: true,
       mustBeBefore: "toDate",
+      formText: "From Date must be a date in the past and must be before To Date",
     },
     {
       label: "To Date",
       id: "toDate",
       mustBeInThePast: true,
       mustBeAfter: "fromDate",
+      formText: "To Date must be a date in the past and must be after To Date",
     },
     {
       label: "Source Commit List",

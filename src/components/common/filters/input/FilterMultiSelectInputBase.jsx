@@ -13,21 +13,18 @@ function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, grou
     setDataObject({...newDataObject});
   };
 
-  const getInputLabel = () => {
-    if (!inline) {
-      return (
-        <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
-      );
-    }
-  };
-
   if (field == null) {
     return <WarningDialog warningMessage={"No field was found for this filter"} />;
   }
 
   return (
     <div className={className}>
-      {getInputLabel()}
+      <InputLabel
+        model={dataObject}
+        field={field}
+        className={"mt-1 mr-2"}
+        showLabel={inline !== true}
+      />
       <StandaloneMultiSelectInput
         selectOptions={selectOptions}
         valueField={valueField}

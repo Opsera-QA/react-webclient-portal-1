@@ -4,6 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function NumberPickerInputBase(
   {
@@ -52,6 +53,7 @@ function NumberPickerInputBase(
         model={dataObject}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <StandaloneNumberPickerInput
         placeholderText={placeholderText}

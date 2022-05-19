@@ -5,6 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function ParameterValueTextInput(
   {
@@ -110,6 +111,7 @@ function ParameterValueTextInput(
         model={model}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div className={"d-flex"}>
         <textarea

@@ -184,6 +184,7 @@ function MultiSelectInputBase(
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
       />
       <StandaloneMultiSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}

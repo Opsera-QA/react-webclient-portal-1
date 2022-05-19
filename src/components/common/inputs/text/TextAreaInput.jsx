@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -17,7 +18,11 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel model={dataObject} field={field}/>
+      <InputLabel
+        model={dataObject}
+        field={field}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <textarea
         disabled={disabled}
         value={dataObject.getData(fieldName)} onChange={(event) => validateAndSetData(event.target.value)}

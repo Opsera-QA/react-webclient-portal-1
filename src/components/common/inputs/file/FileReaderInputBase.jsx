@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import FileSelectButton from "components/common/buttons/data/FileSelectButton";
 import DeleteIcon from "components/common/icons/delete/DeleteIcon";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clearDataFunction, acceptType, disabled, isLoading }) {
   const [field] = useState(model?.getFieldById(fieldName));
@@ -105,7 +106,11 @@ function FileReaderInputBase({ fieldName, model, setModel, setDataFunction, clea
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel field={field} model={model} />
+      <InputLabel
+        field={field}
+        model={model}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <div className={"d-flex"}>
         <FileSelectButton
           type={field?.label}

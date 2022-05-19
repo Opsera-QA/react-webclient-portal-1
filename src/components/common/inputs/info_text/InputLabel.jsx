@@ -25,6 +25,7 @@ function InputLabel(
     linkIcon,
     ellipsisTooltipText,
     inputHelpOverlay,
+    hasError,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -58,7 +59,7 @@ function InputLabel(
 
   const getFormattedLabel = () => {
     return (
-      <label>
+      <label className={hasError === true ? "danger-red" : ""}>
         <span>{field?.label}{getRequiredAsterisk()}</span>
       </label>
     );
@@ -114,6 +115,7 @@ InputLabel.propTypes = {
   linkIcon: PropTypes.object,
   ellipsisTooltipText: PropTypes.string,
   inputHelpOverlay: PropTypes.any,
+  hasError: PropTypes.bool,
 };
 
 export default InputLabel;

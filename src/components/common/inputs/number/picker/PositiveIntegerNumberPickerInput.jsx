@@ -6,6 +6,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import regexDefinitions from "utils/regexDefinitions";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function PositiveIntegerNumberPickerInput(
   {
@@ -74,6 +75,7 @@ function PositiveIntegerNumberPickerInput(
         model={dataObject}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <StandaloneNumberPickerInput
         placeholdertext={placeholderText}

@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import VaultInfoText from "components/common/inputs/info_text/vault/VaultInfoText";
 import {InputGroup} from "react-bootstrap";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function VaultTextInput(
   {
@@ -72,6 +73,7 @@ function VaultTextInput(
         model={dataObject}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       {getInput()}
       <VaultInfoText storedInVault={isStoredInVault()} errorMessage={errorMessage}/>

@@ -17,6 +17,7 @@ function StandaloneDatePickerInput({ value, setDataFunction, disabled, showTime,
       onChange={setDataFunction}
       defaultValue={defaultToNull !== true ? new Date() : undefined} // TODO: Do we want to default to now at all?
       includeTime={showTime}
+      // className={}
     />
   );
 }
