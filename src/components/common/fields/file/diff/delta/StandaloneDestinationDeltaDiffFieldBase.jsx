@@ -44,9 +44,9 @@ function StandaloneDestinationDeltaDiffFieldBase(
   const unpackDelta = async () => {
     setUnpackingDelta(true);
     const sourceLinesArray = dataParsingHelper.parseArray(delta?.target?.lines, []);
-    const position = delta?.source?.position;
-    const endPosition = position + sourceLinesArray.length;
+    const position = delta?.target?.position;
     const changedArray =  dataParsingHelper.parseArray(delta?.source?.lines, []);
+    const endPosition = position + changedArray.length;
     const newSourceLinesString = dataParsingHelper.parseArrayIntoString(sourceLinesArray);
 
     if (hasStringValue(newSourceLinesString) === true) {
