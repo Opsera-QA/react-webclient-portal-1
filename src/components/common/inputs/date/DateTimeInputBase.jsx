@@ -31,8 +31,9 @@ function DateTimeInputBase(
   Moment.locale("en");
 
   useEffect(() => {
-    if (hasStringValue(dataObject.getData(fieldName)) === true) {
-      setErrorMessage(dataObject.getFieldError(fieldName));
+    setErrorMessage("");
+    if (dataObject && (dataObject?.isNew() !== true || dataObject?.isChanged(fieldName) === true)) {
+      setErrorMessage(dataObject?.getFieldError(fieldName));
     }
   }, [dataObject]);
 

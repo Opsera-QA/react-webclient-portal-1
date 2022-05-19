@@ -15,6 +15,7 @@ function PaginationContainer(
     scrollOnLoad,
     nextGeneration,
     data,
+    loadingMessage,
   }) {
   const getTopPaginator = () => {
     return (
@@ -43,7 +44,7 @@ function PaginationContainer(
     if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
         <LoadingDialog
-          message={"Loading Data"}
+          message={loadingMessage}
           size={"sm"}
         />
       );
@@ -83,6 +84,11 @@ PaginationContainer.propTypes = {
   scrollOnLoad: PropTypes.bool,
   nextGeneration: PropTypes.bool,
   data: PropTypes.array,
+  loadingMessage: PropTypes.string,
+};
+
+PaginationContainer.defaultProps = {
+  loadingMessage: "Loading Data",
 };
 
 export default PaginationContainer;

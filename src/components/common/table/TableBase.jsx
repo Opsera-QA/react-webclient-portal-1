@@ -3,7 +3,15 @@ import PropTypes from "prop-types";
 import {Grid} from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
+function TableBase(
+  {
+    columns,
+    data,
+    onRowSelect,
+    rowStyling,
+    sort,
+    height,
+  }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
