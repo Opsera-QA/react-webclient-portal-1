@@ -4,6 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import VanityTextInputBase from "components/common/inputs/text/VanityTextInputBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Rewrite? Combine with TextInputBase?
 function VanityTextInput({fieldName, className, dataObject, setDataObject, setDataFunction, showLabel, disabled, inputHelpOverlay, infoOverlay }) {
@@ -54,6 +55,7 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
         field={field}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <VanityTextInputBase
         setDataFunction={updateValue}

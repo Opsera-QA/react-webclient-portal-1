@@ -91,6 +91,7 @@ function MultiTextInputBase(
         showLabel={showLabel}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput

@@ -10,6 +10,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -54,7 +55,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   return (
     <InputContainer fieldName={fieldName}>
       <div className={"d-flex justify-content-between date-range-header"}>
-        <InputLabel field={field} model={dataObject} />
+        <InputLabel
+          field={field}
+          model={dataObject}
+          hasError={hasStringValue(errorMessage) === true}
+        />
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
             <IconBase icon={faTimes} className={"mr-1"} />

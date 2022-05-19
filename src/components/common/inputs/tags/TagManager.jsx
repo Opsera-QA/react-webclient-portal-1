@@ -193,7 +193,13 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
 
   return (
     <InputContainer fieldName={fieldName}>
-      {!inline && <InputLabel model={dataObject} field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
+      <InputLabel
+        showLabel={inline !== true}
+        model={dataObject}
+        field={field}
+        className={"mt-1 mr-2"}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           hasErrorState={hasStringValue(errorMessage)}

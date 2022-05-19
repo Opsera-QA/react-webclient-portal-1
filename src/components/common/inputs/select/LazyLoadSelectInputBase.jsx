@@ -4,6 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function LazyLoadSelectInputBase(
   {
@@ -101,6 +102,7 @@ function LazyLoadSelectInputBase(
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}

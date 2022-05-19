@@ -5,6 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import {InputGroup} from "react-bootstrap";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TextInputBase(
   {
@@ -138,6 +139,7 @@ function TextInputBase(
         detailViewLink={detailViewLink}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
       />
       {getInput()}
       <InfoText

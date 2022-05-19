@@ -5,6 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function LazyLoadMultiSelectInputBase({
   fieldName,
@@ -112,6 +113,7 @@ function LazyLoadMultiSelectInputBase({
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput

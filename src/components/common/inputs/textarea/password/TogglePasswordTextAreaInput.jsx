@@ -5,6 +5,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
 import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TogglePasswordTextAreaInput(
   {
@@ -96,6 +97,7 @@ function TogglePasswordTextAreaInput(
         field={field}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div className={"d-flex"}>
         <textarea

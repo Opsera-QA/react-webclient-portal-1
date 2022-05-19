@@ -87,6 +87,7 @@ function ComboBoxInputBase(
         model={model}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(internalErrorMessage) === true}
       />
       <StandaloneComboBoxInput
         selectOptions={selectOptions}
