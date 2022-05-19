@@ -6,6 +6,7 @@ export const mergeSyncTaskWizardMetadata = {
     {
       label: "From Date",
       id: "fromDate",
+      isRequired: true,
       mustBeInThePast: true,
       mustBeBefore: "toDate",
       formText: "From Date must be a date in the past and must be before To Date",
@@ -14,6 +15,7 @@ export const mergeSyncTaskWizardMetadata = {
       label: "To Date",
       id: "toDate",
       mustBeInThePast: true,
+      isRequired: true,
       mustBeAfter: "fromDate",
       formText: "To Date must be a date in the past and must be after To Date",
     },

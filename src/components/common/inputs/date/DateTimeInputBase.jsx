@@ -56,7 +56,7 @@ function DateTimeInputBase(
 
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
-      validateAndSetData(fieldName, dataObject?.getDefaultValue(fieldName));
+      validateAndSetData(dataObject?.getDefaultValue(fieldName));
     }
     else if (clearDataFunction) {
       clearDataFunction();
