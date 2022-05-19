@@ -21,7 +21,8 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
 }) => {
   const fields = salesforceToGitSourceCommitFileMetadata.fields;
   const noDataFilesPulledMessage = "The Source Commit Files pull has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The Source Commit Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesNotPulledMessage = "The Source Commit Files list has not been received yet. Please click the table's refresh button to resume polling for the files.";
+  const loadingMessage = "Pulling Source Commit File change list. Please Note: This may take some time.";
 
   const columns = useMemo(
     () => [
@@ -43,6 +44,7 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
         loadData={loadData}
         noDataMessage={filePullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}
         tableHeight={getHeight()}
+        loadingMessage={loadingMessage}
         // paginationModel={paginationModel}
         // setPaginationModel={setPaginationModel}
       />

@@ -5,7 +5,21 @@ import TableBase from "components/common/table/TableBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
-function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight }) {
+function VanityTable(
+  {
+    columns,
+    loadData,
+    data,
+    noDataMessage,
+    onRowSelect,
+    rowStyling,
+    isLoading,
+    sort,
+    paginationModel,
+    setPaginationModel,
+    tableHeight,
+    loadingMessage,
+  }) {
   const getTableBody = () => {
     return (
       <PaginationContainer
@@ -13,6 +27,7 @@ function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowS
         isLoading={isLoading}
         filterDto={paginationModel}
         setFilterDto={setPaginationModel}
+        loadingMessage={loadingMessage}
       >
         <TableBase
           noDataMessage={noDataMessage}
@@ -50,7 +65,8 @@ VanityTable.propTypes = {
   paginationModel: PropTypes.object,
   setPaginationModel: PropTypes.func,
   loadData: PropTypes.func,
-  tableHeight: PropTypes.string
+  tableHeight: PropTypes.string,
+  loadingMessage: PropTypes.string,
 };
 
 export default VanityTable;

@@ -129,6 +129,7 @@ FilterContainer.propTypes = {
   handleImportFunction: PropTypes.func,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  loadingMessage: PropTypes.string,
 };
 
 export default FilterContainer;
