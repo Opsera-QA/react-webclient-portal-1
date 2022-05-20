@@ -5,7 +5,7 @@ import {
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
   faHexagon, faListAlt, faRss, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat, faCircle, faQuestion, faBook
+  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -577,6 +577,14 @@ const breadcrumbs = {
     title: "Dashboard Details",
     linkText: "Dashboard Details",
     icon: faChartNetwork
+  },
+  lookup: {
+    parent: "insights",
+    name: "lookup",
+    path: paths.lookup,
+    title: "Lookup",
+    linkText: "Lookup",
+    icon: faMagnifyingGlass
   },
   marketplace: {
     parent: "insights",
