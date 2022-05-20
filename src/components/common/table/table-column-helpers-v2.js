@@ -169,7 +169,12 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
     // format: "%Y-%M-%d %h:%m %a",/
     tooltipTemplate: tooltipTemplateFunction,
     template: function (text, row, col) {
-      return text ? format(new Date(text), "yyyy-MM-dd', 'hh:mm a") : "";
+      try {
+        return text ? format(new Date(text), "yyyy-MM-dd', 'hh:mm a") : "";
+      } catch(error) {
+        console.log(error?.message);
+        return "";
+      }
     },
     class: className ? className : "no-wrap-inline"
   };
