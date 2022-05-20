@@ -127,7 +127,7 @@ function GitOperationStepConfiguration({
         return (
           <TextInputBase
             dataObject={gitOperationModel}
-            setDataObject={gitOperationModel}
+            setDataObject={setGitOperationModel}
             fieldName={"tag"}
           />
         );
