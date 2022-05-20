@@ -52,7 +52,7 @@ SourceRepositoryTypeSelectInput.propTypes = {
 
 SourceRepositoryTypeSelectInput.defaultProps = {
   fieldName: "service",
-  disabled: "false"
+  disabled: false
 };
 
 export default SourceRepositoryTypeSelectInput;
