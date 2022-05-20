@@ -60,6 +60,7 @@ paths.pipelineDetailView = paths.pipelines + "/details";
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
 paths.dashboardDetails = "analytics";
+paths.lookup = "/lookup";
 paths.marketplace = paths.insights + "/marketplace";
 paths.release360 = paths.insights + "/release360";
 paths.insightsSummary = "insights/summary";
