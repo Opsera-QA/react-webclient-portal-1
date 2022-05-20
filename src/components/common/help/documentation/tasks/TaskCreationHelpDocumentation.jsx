@@ -18,6 +18,7 @@ function TaskCreationHelpDocumentation({closeHelpPanel}) {
                 <li><b>{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION)}</b> - Create an AWS Lambda Function template and run the task to create a cluster. </li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.AZURE_CLUSTER_CREATION)}</b> - Create an AKS Azure Cluster template and run the task to create a cluster. </li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_GIT_BRANCHES)}</b> - Use this task to sync up between 2 different Git branches and merge the changes. The resulting Merge Request can be configured to be approved by set of approvers before Merging.</li>
+                <li><b>{getTaskTypeLabel(TASK_TYPES.GIT_TO_GIT_MERGE_SYNC)}</b> - Use this task to selectively merge changes from a source branch to a target branch.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE)}</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</b> - Create and configure the Salesforce Organization Sync task to sync the changes in Salesforce Org with the configured Git branch.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)}</b> - Migrate the entire SFDC org metadata components to a GIT repository branch. </li>
