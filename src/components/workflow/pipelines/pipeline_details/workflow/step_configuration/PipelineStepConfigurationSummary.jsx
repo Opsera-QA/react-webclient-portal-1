@@ -192,7 +192,9 @@ import {
 import ApigeePipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/ApigeePipelineStepConfigurationSummaryPanel";
 import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
-
+import GitOperationPipelineStepConfigurationSummaryPanel 
+  from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
+import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -608,6 +610,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
+        return (
+            <GitOperationPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                gitOperationPipelineDataObject={getModelWrappedObject(gitOperationStepFormMetadata)}
+            />
         );
       default:
         return (

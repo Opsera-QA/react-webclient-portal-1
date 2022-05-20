@@ -9,16 +9,16 @@ const dockerTagTypes = [
     {name: "Custom Tag", value: "other"},
   ];
 
-const DockerTagTypeSelectionInput = ({dataObject, setDataObject, disabled}) => {
+const DockerTagTypeSelectionInput = ({dataObject, setDataObject, fieldName, disabled}) => {
   return (
     <SelectInputBase
-      fieldName={"dockerTagType"}
+      fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}      
       selectOptions={dockerTagTypes}      
       valueField="value"
       textField="name"      
-      disabled={disabled || !dataObject.getData("dynamicTag")}
+      disabled={disabled}
     />
   );
 };
@@ -26,11 +26,13 @@ const DockerTagTypeSelectionInput = ({dataObject, setDataObject, disabled}) => {
 DockerTagTypeSelectionInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool, 
+  fieldName: PropTypes.string,
   listOfSteps: PropTypes.array,
 };
 
 DockerTagTypeSelectionInput.defaultProps = {
+  fieldName: "dockerTagType",
   visible: true
 };
 
