@@ -69,6 +69,7 @@ import SiteNotificationDetailView
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
+import Lookup from "./components/lookup/Lookup";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
@@ -248,6 +249,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights" exact component={Insights} />
           <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
+          <SecureRoute path="/insights/lookup" exact component={Lookup} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
           <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />

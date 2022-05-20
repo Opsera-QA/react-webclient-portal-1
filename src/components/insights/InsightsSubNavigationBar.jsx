@@ -7,7 +7,8 @@ import {
   faChartNetwork, faCircle,
   faRadar,
   faUserChart,
-  faLink
+  faLink,
+  faMagnifyingGlass
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
@@ -35,6 +36,9 @@ function InsightsSubNavigationBar({currentTab}) {
       /*case "analytics":
         history.push(`/insights/analytics`);
         return;*/
+      case "lookup":
+        history.push(`/insights/lookup`);
+        return;  
       case "marketplace":
         history.push(`/insights/marketplace`);
         return;
@@ -114,6 +118,13 @@ function InsightsSubNavigationBar({currentTab}) {
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Marketplace"}
+      />
+      <NavigationTab
+        icon={faMagnifyingGlass}
+        tabName={"lookup"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Lookup"}
       />
       {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
       {/* <NavigationTab
