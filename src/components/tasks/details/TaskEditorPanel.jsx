@@ -28,6 +28,8 @@ import SfdcOrgSyncTaskHelpDocumentation
 import GitToGitSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
 import SalesforceBulkMigrationHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
+import GitToGitMergeSyncTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -91,13 +93,13 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return <GitToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-        break;
-      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
