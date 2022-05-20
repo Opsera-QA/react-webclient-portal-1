@@ -93,6 +93,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
 
   //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
   const validateRequiredFields = () => {
+    console.log(sourceRepositoryModel?.getPersistData()); //TODO REMOVE THIS - Adding this to test for the time being as Node Azure service is not working in dev.
     let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
 
     if (service.length === 0) {
