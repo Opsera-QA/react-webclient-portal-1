@@ -1,8 +1,5 @@
 import React, {useContext} from "react";
-import Row from "react-bootstrap/Row";
 import {AuthContext} from "contexts/AuthContext";
-import ToolsUsedByPipelinesPageLinkCard from "components/reports/tools/pipelines/ToolsUsedByPipelinesPageLinkCard";
-import ToolsCountsPageLinkCard from "components/reports/tools/counts/ToolsCountsPageLinkCard";
 import GroupMembershipReportsPageLinkCard
   from "components/reports/users/user/consolidated_user_report/group_membership/GroupMembershipReportsPageLinkCard";
 import PipelineOwnershipReportsPageLinkCard
@@ -23,12 +20,6 @@ function UserReportPageLinkCards({accessRoleData}) {
 
   return (
     <div>
-      <ToolsUsedByPipelinesPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <ToolsCountsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
       <GroupMembershipReportsPageLinkCard
         accessRoleData={accessRoleData}
       />
