@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 const taskActions = {};
 
@@ -47,6 +48,16 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelTokenSource, taskId, notificationConfiguration) => {
+  const apiUrl = `/tasks/${taskId}/notifications/update/`;
+  const postBody = {
+    notifications: notificationConfiguration,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 
 taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;

@@ -19,6 +19,8 @@ import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigur
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 import {TASK_TYPES} from "components/tasks/task.types";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
+import TaskOrchestrationNotificationInlineInput
+  from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -120,6 +122,16 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
+        </Col>
+        <Col md={6}>
+          <TaskOrchestrationNotificationInlineInput
+            model={gitTasksData}
+            fieldName={"notifications"}
+            loadDataFunction={loadData}
+          />
+        </Col>
+        <Col md={6}>
+          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
