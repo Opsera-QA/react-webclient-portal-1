@@ -1,10 +1,9 @@
 import React from "react";
-import BreadcrumbPageLinkCard from "../../common/card/link/BreadcrumbPageLinkCard";
 import PropTypes from "prop-types";
 import ToolsUsedByPipelinesPageLinkCard from "./pipelines/ToolsUsedByPipelinesPageLinkCard";
 import ToolsCountsPageLinkCard from "./counts/ToolsCountsPageLinkCard";
 
-function ToolReports({accessRoleData}) {
+function ToolReportPageLinkCards({accessRoleData}) {
   return (
     <div>
       <ToolsUsedByPipelinesPageLinkCard
@@ -17,8 +16,8 @@ function ToolReports({accessRoleData}) {
   );
 }
 
-ToolReports.propTypes = {
+ToolReportPageLinkCards.propTypes = {
   accessRoleData: PropTypes.object,
 };
-export default ToolReports;
+export default ToolReportPageLinkCards;
 

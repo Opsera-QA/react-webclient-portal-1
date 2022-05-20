@@ -2,13 +2,9 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import ToolReports from "components/reports/tools/ToolReports";
-import TagReports from "components/reports/tags/TagReports";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import UserReports from "components/reports/users/UserReports";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import ReportsHelpDocumentation from "../common/help/documentation/reports/ReportsHelpDocumentation";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ReportsPageLinkCards from "./ReportsPageLinkCards";
 
 function Reports() {
@@ -53,35 +49,6 @@ function Reports() {
     }
   };
 
-  const getUserReports = () => {
-    if (isSassUser() === false) {
-      return (
-        <div className={"mt-3"}>
-          <H5FieldSubHeader className={"ml-3"} subheaderText={"User Reports"} />
-          <UserReports />
-        </div>
-      );
-    }
-  };
-
-  const getAllReports = () => {
-    return (
-      <div>
-        <div>
-          <H5FieldSubHeader className={"ml-3"} subheaderText={"Tag Reports"} />
-          <TagReports />
-        </div>
-        <div className={"mt-3"}>
-          <H5FieldSubHeader className={"ml-3"} subheaderText={"Tool Reports"} />
-          <ToolReports />
-        </div>
-        {getUserReports()}
-        {/*TODO: Uncomment when Pipeline Report is added*/}
-        {/*<PipelineReports />*/}
-      </div>
-    );
-  };
-
   const getHelpComponent = () => {
       return (<ReportsHelpDocumentation/>);
   };
@@ -99,7 +66,6 @@ function Reports() {
       <ReportsPageLinkCards
         accessRoleData={accessRoleData}
       />
-      {getAllReports()}
     </ScreenContainer>
   );
 }

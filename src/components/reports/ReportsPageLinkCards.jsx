@@ -1,49 +1,51 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ToolsUsedByPipelinesPageLinkCard from "./tools/pipelines/ToolsUsedByPipelinesPageLinkCard";
-import ToolsCountsPageLinkCard from "./tools/counts/ToolsCountsPageLinkCard";
-import GroupMembershipReportsPageLinkCard
-  from "./users/user/consolidated_user_report/group_membership/GroupMembershipReportsPageLinkCard";
-import PipelineOwnershipReportsPageLinkCard
-  from "./users/user/consolidated_user_report/pipeline_access/PipelineOwnershipReportsPageLinkCard";
-import ToolOwnershipReportsPageLinkCard
-  from "./users/user/consolidated_user_report/tool_access/ToolOwnershipReportsPageLinkCard";
-import TaskOwnershipReportsPageLinkCard
-  from "./users/user/consolidated_user_report/task_access/TaskOwnershipReportsPageLinkCard";
-import UserReportsPageLinkCard from "./users/user/UserReportsPageLinkCard";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import TagReportPageLinkCards from "components/reports/tags/TagReportPageLinkCards";
+import ToolReportPageLinkCards from "components/reports/tools/ToolReportPageLinkCards";
+import UserReportPageLinkCards from "components/reports/users/UserReportPageLinkCards";
+import { AuthContext } from "contexts/AuthContext";
 
 function ReportsPageLinkCards({accessRoleData}) {
+  const { isSassUser } = useContext(AuthContext);
+
+  const getUserReports = () => {
+    if (isSassUser() === false) {
+      return (
+        <div className={"mt-3"}>
+          <H5FieldSubHeader className={"ml-3"} subheaderText={"User Reports"} />
+          <UserReportPageLinkCards accessRoleData={accessRoleData} />
+        </div>
+      );
+    }
+  };
+
+  const getAllReports = () => {
+    return (
+      <div>
+        <div>
+          <H5FieldSubHeader className={"ml-3"} subheaderText={"Tag Reports"} />
+          <TagReportPageLinkCards accessRoleData={accessRoleData} />
+        </div>
+        <div className={"mt-3"}>
+          <H5FieldSubHeader className={"ml-3"} subheaderText={"Tool Reports"} />
+          <ToolReportPageLinkCards accessRoleData={accessRoleData} />
+        </div>
+        {getUserReports()}
+        {/*TODO: Uncomment when Pipeline Report is added*/}
+        {/*<PipelineReports />*/}
+      </div>
+    );
+  };
+
   if (accessRoleData == null) {
     return (<LoadingDialog size={"sm"} />);
   }
 
   return (
     <div>
-      <ToolsUsedByPipelinesPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <ToolsCountsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <GroupMembershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      {/*<UserSettingsPageLinkCard*/}
-      {/*  accessRoleData={accessRoleData}*/}
-      {/*/>*/}
-      <PipelineOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <ToolOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <TaskOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <UserReportsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      {getAllReports()}
     </div>
   );
 }
