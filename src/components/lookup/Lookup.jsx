@@ -24,6 +24,16 @@ import LookupTableTotals from "./LookupTableTotals";
 import LookupTablePipelines from "./LookupTablePipelines";
 import LoadingDialog from "components/common/status_notifications/loading";
 
+const cleanUrlPath = ({url}) => {
+	let returnUrl = url;
+  if (url.slice(-1) !== '/') {
+    returnUrl += '/';
+  }
+  return returnUrl;
+};
+//.env params were different when going to server, trailing slash
+const ANALYTICS_API = cleanUrlPath({url: NODE_ANALYTICS_API_SERVER_URL});
+
 const ENDPOINTS = {
   componentNames: 'analytics/sfdc/v1/component/names',
   componentSearch: 'analytics/sfdc/v1/component'
@@ -91,7 +101,7 @@ const Lookup = () => {
     // load in component names for search dropdown
     const accessToken = await getAccessToken();
     new ApiService(
-      NODE_ANALYTICS_API_SERVER_URL + ENDPOINTS.componentNames,
+      ANALYTICS_API + ENDPOINTS.componentNames,
       null,
       accessToken)
       .get()
@@ -179,7 +189,7 @@ const Lookup = () => {
     };
     
     new ApiService(
-      NODE_ANALYTICS_API_SERVER_URL + ENDPOINTS.componentSearch,
+      ANALYTICS_API + ENDPOINTS.componentSearch,
       data,
       accessToken
     )
