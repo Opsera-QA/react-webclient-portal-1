@@ -133,7 +133,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         </Col>
         <Col md={6}>
           <TaskSchedulerField
-            model={gitTasksData}
+            taskModel={gitTasksData}
             canEditTaskSchedule={true} // TODO: Wire up RBAC
           />
         </Col>
