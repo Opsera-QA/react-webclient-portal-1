@@ -97,15 +97,11 @@ function DashboardTableView(
 
   const getBody = () => {
     return (
-      getDashboardsTable()
+      <TabAndViewContainer
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getDashboardsTable()}
+      />
     );
-    //
-    // return (
-    //   <TabAndViewContainer
-    //     verticalTabContainer={getVerticalTabContainer()}
-    //     currentView={getDashboardsTable()}
-    //   />
-    // );
   };
 
   return (
@@ -117,7 +113,7 @@ function DashboardTableView(
       titleIcon={faChartNetwork}
       metadata={dashboardMetadata}
       supportSearch={true}
-      title={"My Dashboards"}
+      title={"Dashboards"}
       filterDto={dashboardFilterModel}
       setFilterDto={setDashboardFilterModel}
       dropdownFilters={getDropdownFilters()}
