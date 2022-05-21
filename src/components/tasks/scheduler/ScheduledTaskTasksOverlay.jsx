@@ -66,7 +66,7 @@ function ScheduledTaskTasksOverlay(
   };
 
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
-    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, taskId);
+    const response = await scheduledTaskActions.getScheduledTaskTasksV2(getAccessToken, cancelSource, taskId);
     const newScheduledTasksList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
@@ -77,15 +77,16 @@ function ScheduledTaskTasksOverlay(
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-  };
-
-  const closeEditorPanel = async () => {
-    if (isMounted?.current === true ) {
-      setScheduledTaskModel(null);
-    }
 
     if (loadDataFunction) {
       loadDataFunction();
+    }
+  };
+
+  const closeEditorPanel = async () => {
+    if (isMounted?.current === true) {
+      setScheduledTaskModel(null);
+      await loadData();
     }
   };
 

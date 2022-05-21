@@ -45,7 +45,7 @@ function ScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) 
 
     if (scheduledTaskData?.isNew()) {
       const scheduleCount = taskList?.length ? taskList?.length + 1 : 1;
-      scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
+      scheduledTaskData.setData("name", `Scheduled Task ${scheduleCount}`);
     }
 
     setSchedulerTaskModel(scheduledTaskData);

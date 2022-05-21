@@ -180,7 +180,6 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
 
         if (convertToLocalTimezone === true) {
           let date = new Date(dateString);
-          console.log("dateString: " + JSON.stringify(dateString));
           dateString = date.toLocaleString("en-us");
         }
 
