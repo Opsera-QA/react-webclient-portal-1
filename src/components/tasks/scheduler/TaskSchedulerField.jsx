@@ -5,6 +5,8 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
+import { TASK_TYPES } from "components/tasks/task.types";
+import ScheduledTaskTasksOverlay from "components/tasks/scheduler/ScheduledTaskTasksOverlay";
 
 const SCHEDULER_SUPPORTED_TASK_TYPES = [
   // TASK_TYPES.GITSCRAPER,
@@ -16,6 +18,7 @@ function TaskSchedulerField(
     canEditTaskSchedule,
     fieldName,
   }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [taskCount, setTaskCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,16 +78,14 @@ function TaskSchedulerField(
     }
   };
 
-  const toastContext = useContext(DialogToastContext);
-
-  // const showSchedulerOverlay = () => {
-  //   toastContext.showOverlayPanel(
-  //     <PipelineScheduledTasksOverlay
-  //       pipelineId={pipelineModel?.getMongoDbId()}
-  //       loadDataFunction={loadData}
-  //     />
-  //   );
-  // };
+  const showSchedulerOverlay = () => {
+    toastContext.showOverlayPanel(
+      <ScheduledTaskTasksOverlay
+        taskId={taskModel?.getMongoDbId()}
+        loadDataFunction={loadData}
+      />
+    );
+  };
 
   if (taskModel == null || SCHEDULER_SUPPORTED_TASK_TYPES.includes(taskModel?.getData("type")) !== true) {
     return null;
@@ -92,7 +93,7 @@ function TaskSchedulerField(
 
   return (
     <SchedulerFieldBase
-      // showSchedulerOverlayFunction={showSchedulerOverlay}
+      showSchedulerOverlayFunction={showSchedulerOverlay}
       scheduledTaskCount={taskCount}
       error={error}
       fieldName={fieldName}

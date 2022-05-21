@@ -3,13 +3,13 @@ import baseActions from "utils/actionsBase";
 export const scheduledTaskActions = {};
 
 scheduledTaskActions.getScheduledPipelineTasksV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/scheduler/pipelines/${pipelineId}`;
+  const apiUrl = `/scheduler/pipeline/${pipelineId}`;
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 scheduledTaskActions.getScheduledTaskTasksV2 = async (getAccessToken, cancelTokenSource, taskId) => {
-  const apiUrl = `/scheduler/tasks/${taskId}`;
+  const apiUrl = `/scheduler/task/${taskId}`;
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
