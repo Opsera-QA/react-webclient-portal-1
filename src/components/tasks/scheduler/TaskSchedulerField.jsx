@@ -5,6 +5,7 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
+import { TASK_TYPES } from "components/tasks/task.types";
 
 const SCHEDULER_SUPPORTED_TASK_TYPES = [
   TASK_TYPES.GITSCRAPER,
