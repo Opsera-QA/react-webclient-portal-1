@@ -66,7 +66,7 @@ function ScheduledTaskTasksOverlay(
   };
 
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
-    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, pipelineId);
+    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, taskId);
     const newScheduledTasksList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
