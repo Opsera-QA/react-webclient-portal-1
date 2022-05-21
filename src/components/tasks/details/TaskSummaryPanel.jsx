@@ -132,26 +132,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           />
         </Col>
         <Col md={6}>
-          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
-        </Col>
-        <Col md={6}>
-          <TaskOrchestrationNotificationInlineInput
-            model={gitTasksData}
-            fieldName={"notifications"}
-            loadDataFunction={loadData}
-          />
-        </Col>
-        <Col md={6}>
-          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
-        </Col>
-        <Col md={6}>
-          <TaskOrchestrationNotificationInlineInput
-            model={gitTasksData}
-            fieldName={"notifications"}
-            loadDataFunction={loadData}
-          />
-        </Col>
-        <Col md={6}>
           <TaskSchedulerField
             model={gitTasksData}
             canEditTaskSchedule={true} // TODO: Wire up RBAC
