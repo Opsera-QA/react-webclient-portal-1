@@ -8,13 +8,13 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import ScheduledTasksTable from "components/common/fields/scheduler/ScheduledTasksTable";
 import {AuthContext} from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import modelHelpers from "components/common/model/modelHelpers";
+import Model from "core/data_model/model";
 import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PipelineScheduledTasksOverlay(
+function ScheduledTaskTasksOverlay(
   {
-    pipelineId,
+    taskId,
     loadDataFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -35,7 +35,7 @@ function PipelineScheduledTasksOverlay(
     isMounted.current = true;
     setScheduledTasks([]);
 
-    if (isMongoDbId(pipelineId) === true) {
+    if (isMongoDbId(taskId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -47,7 +47,7 @@ function PipelineScheduledTasksOverlay(
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipelineId]);
+  }, [taskId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -90,8 +90,8 @@ function PipelineScheduledTasksOverlay(
   };
 
   const createScheduledTaskFunction = () => {
-    const newModel = modelHelpers.parseObjectIntoModel(undefined, scheduledTaskMetadata);
-    newModel.setData("task", { taskType: "pipeline-run", pipelineId: pipelineId });
+    const newModel = new Model({ ...scheduledTaskMetadata.newObjectFields }, scheduledTaskMetadata, true);
+    newModel.setData("task", { taskType: "task-run", taskId: taskId });
     setScheduledTaskModel({ ...newModel });
   };
 
@@ -118,9 +118,13 @@ function PipelineScheduledTasksOverlay(
     );
   };
 
+  if (isMongoDbId(taskId) !== true) {
+    return null;
+  }
+
   return (
     <CenterOverlayContainer
-      titleText={"Pipeline Scheduled Tasks"}
+      titleText={"Scheduled Task Tasks"}
       closePanel={closePanel}
       titleIcon={faCalendarAlt}
       showPanel={true}
@@ -131,11 +135,11 @@ function PipelineScheduledTasksOverlay(
   );
 }
 
-PipelineScheduledTasksOverlay.propTypes = {
-  pipelineId: PropTypes.string,
+ScheduledTaskTasksOverlay.propTypes = {
+  taskId: PropTypes.string,
   loadDataFunction: PropTypes.func,
 };
 
-export default PipelineScheduledTasksOverlay;
+export default ScheduledTaskTasksOverlay;
 
 

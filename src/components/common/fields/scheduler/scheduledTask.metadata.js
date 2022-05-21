@@ -1,6 +1,6 @@
-const pipelineSchedulerMetadata = {
+export const scheduledTaskMetadata = {
   idProperty: "_id",
-  type: "Pipeline Scheduled Task",
+  type: "Scheduled Task",
   fields: [
     {
       label: "ID",
@@ -45,6 +45,14 @@ const pipelineSchedulerMetadata = {
       id: "schedule",
     },
     {
+      label: "Interval",
+      id: "schedule.recurring",
+    },
+    {
+      label: "Next Run",
+      id: "schedule.executionDate",
+    },
+    {
       label: "Last Run",
       id: "lastRun"
     }
@@ -59,5 +67,3 @@ const pipelineSchedulerMetadata = {
     schedule: { recurring: "NONE", executionDate: new Date() },
   }
 };
-
-export default pipelineSchedulerMetadata;

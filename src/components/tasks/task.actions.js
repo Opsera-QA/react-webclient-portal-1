@@ -56,7 +56,6 @@ taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelT
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-
 taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
