@@ -125,13 +125,10 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         {/*</Col>*/}
         {/*<Col md={6}>*/}
         {/*  <TaskSchedulerField*/}
-        {/*    model={gitTasksData}*/}
+        {/*    taskModel={gitTasksData}*/}
         {/*    canEditTaskSchedule={true} // TODO: Wire up RBAC*/}
         {/*  />*/}
         {/*</Col>*/}
-        <Col md={6}>
-          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
-        </Col>
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
