@@ -1,5 +1,4 @@
 import baseActions from "utils/actionsBase";
-import {axiosApiService} from "api/apiService";
 
 const pipelineSchedulerActions = {};
 
