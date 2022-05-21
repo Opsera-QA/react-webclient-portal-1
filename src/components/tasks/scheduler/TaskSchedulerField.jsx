@@ -1,21 +1,22 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
 
-function PipelineSchedulerField(
+const SCHEDULER_SUPPORTED_TASK_TYPES = [
+  // TASK_TYPES.GITSCRAPER,
+];
+
+function TaskSchedulerField(
   {
-    pipelineModel,
-    canEditPipelineSchedule,
+    taskModel,
+    canEditTaskSchedule,
     fieldName,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [pipelineTypes, setPipelineTypes] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -31,7 +32,7 @@ function PipelineSchedulerField(
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (pipelineModel) {
+    if (taskModel && SCHEDULER_SUPPORTED_TASK_TYPES.includes(taskModel?.getData("type"))) {
       loadData(source).catch((error) => {
         if (isMounted.current === true) {
           setError(error);
@@ -43,18 +44,13 @@ function PipelineSchedulerField(
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipelineModel]);
+  }, [taskModel]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setError(undefined);
-      const types = pipelineModel?.getArrayData("type");
-      setPipelineTypes(types);
-
-      if (Array.isArray(types) && !pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc")) {
-        await getScheduledTasksCount(cancelSource);
-      }
+      await getScheduledTasksCount(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -67,7 +63,11 @@ function PipelineSchedulerField(
   };
 
   const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, pipelineModel?.getMongoDbId());
+    const response = await scheduledTaskActions.getScheduledTaskTasksV2(
+      getAccessToken,
+      cancelSource,
+      taskModel?.getMongoDbId(),
+    );
     const scheduledTasks = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(scheduledTasks)) {
@@ -75,42 +75,42 @@ function PipelineSchedulerField(
     }
   };
 
+  const toastContext = useContext(DialogToastContext);
 
+  // const showSchedulerOverlay = () => {
+  //   toastContext.showOverlayPanel(
+  //     <PipelineScheduledTasksOverlay
+  //       pipelineId={pipelineModel?.getMongoDbId()}
+  //       loadDataFunction={loadData}
+  //     />
+  //   );
+  // };
 
-  const showSchedulerOverlay = () => {
-    toastContext.showOverlayPanel(
-      <PipelineScheduledTasksOverlay
-        pipelineId={pipelineModel?.getMongoDbId()}
-        loadDataFunction={loadData}
-      />
-    );
-  };
-
-  if (Array.isArray(pipelineTypes) && (pipelineTypes.includes("informatica") || pipelineTypes.includes("sfdc"))) {
+  if (taskModel == null || SCHEDULER_SUPPORTED_TASK_TYPES.includes(taskModel?.getData("type")) !== true) {
     return null;
   }
 
   return (
     <SchedulerFieldBase
-      showSchedulerOverlayFunction={showSchedulerOverlay}
+      // showSchedulerOverlayFunction={showSchedulerOverlay}
       scheduledTaskCount={taskCount}
       error={error}
       fieldName={fieldName}
-      model={pipelineModel}
-      canEdit={canEditPipelineSchedule}
+      model={taskModel}
+      canEdit={canEditTaskSchedule}
       isLoading={isLoading}
     />
   );
 }
 
-PipelineSchedulerField.propTypes = {
-  canEditPipelineSchedule: PropTypes.bool,
-  pipelineModel: PropTypes.object,
+TaskSchedulerField.propTypes = {
+  canEditTaskSchedule: PropTypes.bool,
+  taskModel: PropTypes.object,
   fieldName: PropTypes.string,
 };
 
-PipelineSchedulerField.defaultProps = {
+TaskSchedulerField.defaultProps = {
   fieldName: "schedule",
 };
 
-export default PipelineSchedulerField;
+export default TaskSchedulerField;

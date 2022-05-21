@@ -6,12 +6,12 @@ import Row from "react-bootstrap/Row";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
+import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) {
+function ScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,20 +54,20 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, task
 
   const createScheduledTask = async () => {
     schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
-    const response = await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    const response = await scheduledTaskActions.createScheduledTaskV2(getAccessToken, cancelTokenSource, schedulerTaskModel);
     handleClose();
     return response;
   };
 
   const updateScheduledTask = async () => {
     schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
-    const response = await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    const response = await scheduledTaskActions.updateScheduledTaskV2(getAccessToken, cancelTokenSource, schedulerTaskModel);
     handleClose();
     return response;
   };
 
   const deleteScheduledTask = async () => {
-    const response = await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+    const response = await scheduledTaskActions.deleteScheduledTaskV2(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
     handleClose();
     return response;
   };
@@ -118,12 +118,12 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, task
   );
 }
 
-PipelineScheduledTaskEditorPanel.propTypes = {
+ScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   handleClose: PropTypes.func,
   taskList: PropTypes.any,
 };
 
-export default PipelineScheduledTaskEditorPanel;
+export default ScheduledTaskEditorPanel;
 
 

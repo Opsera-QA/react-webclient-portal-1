@@ -79,6 +79,10 @@ dataParsingHelper.isEmpty = (objectToClone) => {
   return _.isEmpty(objectToClone);
 };
 
+dataParsingHelper.safeObjectPropertyParser = (object, propertyName, defaultValue = undefined) => {
+  return _.get(object, propertyName, defaultValue);
+};
+
 dataParsingHelper.parseArrayIntoString = (array, defaultValue = "") => {
   if (!Array.isArray(array) || array.length === 0) {
     return defaultValue;

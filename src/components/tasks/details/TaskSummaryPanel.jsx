@@ -17,7 +17,10 @@ import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionBu
 import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
-import {TASK_TYPES} from "components/tasks/task.types";
+import TaskOrchestrationNotificationInlineInput
+  from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
+import { TASK_TYPES } from "components/tasks/task.types";
+import TaskSchedulerField from "components/tasks/scheduler/TaskSchedulerField";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -110,6 +113,22 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
         </Col>
+        <Col md={6}>
+          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
+        </Col>
+        {/*<Col md={6}>*/}
+        {/*  <TaskOrchestrationNotificationInlineInput*/}
+        {/*    model={gitTasksData}*/}
+        {/*    fieldName={"notifications"}*/}
+        {/*    loadDataFunction={loadData}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        {/*<Col md={6}>*/}
+        {/*  <TaskSchedulerField*/}
+        {/*    model={gitTasksData}*/}
+        {/*    canEditTaskSchedule={true} // TODO: Wire up RBAC*/}
+        {/*  />*/}
+        {/*</Col>*/}
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>

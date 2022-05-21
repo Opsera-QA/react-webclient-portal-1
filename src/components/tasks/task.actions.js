@@ -48,6 +48,15 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelTokenSource, taskId, notificationConfiguration) => {
+  const apiUrl = `/tasks/${taskId}/notifications/update/`;
+  const postBody = {
+    notifications: notificationConfiguration,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);

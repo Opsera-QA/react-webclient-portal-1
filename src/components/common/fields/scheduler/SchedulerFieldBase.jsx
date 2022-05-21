@@ -5,6 +5,7 @@ import IconBase from "components/common/icons/IconBase";
 import {faBinoculars, faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import FieldLabel from "components/common/fields/FieldLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function SchedulerFieldBase(
   {
@@ -14,10 +15,20 @@ function SchedulerFieldBase(
     fieldName,
     showSchedulerOverlayFunction,
     error,
+    isLoading,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
 
   const getTaskCountText = () => {
+    if (isLoading === true) {
+      return (
+        <span>
+          <LoadingIcon className={"mr-2"} />
+          <span>Loading Scheduled Task Count</span>
+        </span>
+      );
+    }
+
     if (scheduledTaskCount === 0) {
       return "No scheduled tasks";
     }
@@ -28,7 +39,7 @@ function SchedulerFieldBase(
   };
 
   const getScheduleIcon = () => {
-    if (canEdit !== true || showSchedulerOverlayFunction == null) {
+    if (canEdit !== true || showSchedulerOverlayFunction == null || isLoading === true) {
       return null;
     }
 
@@ -82,6 +93,7 @@ SchedulerFieldBase.propTypes = {
   showSchedulerOverlayFunction: PropTypes.func,
   scheduledTaskCount: PropTypes.number,
   error: PropTypes.any,
+  isLoading: PropTypes.bool,
 };
 
 export default SchedulerFieldBase;
