@@ -133,6 +133,16 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
+        <Col md={6}>
+          <TaskOrchestrationNotificationInlineInput
+            model={gitTasksData}
+            fieldName={"notifications"}
+            loadDataFunction={loadData}
+          />
+        </Col>
+        <Col md={6}>
+          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
+        </Col>
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase

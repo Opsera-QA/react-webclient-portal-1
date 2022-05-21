@@ -9,7 +9,6 @@ import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pi
 import PipelineScheduledTaskTable from "components/workflow/pipelines/scheduler/PipelineScheduledTaskTable";
 import {AuthContext} from "contexts/AuthContext";
 
-// TODO: Only pass pipeline ID.
 function PipelineScheduledTasksOverlay({ pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -57,7 +56,7 @@ function PipelineScheduledTasksOverlay({ pipelineId }) {
   };
 
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipelineId);
+    const response = await pipelineSchedulerActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, pipelineId);
     const newScheduledTasksList = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList) && newScheduledTasksList.length > 0) {
