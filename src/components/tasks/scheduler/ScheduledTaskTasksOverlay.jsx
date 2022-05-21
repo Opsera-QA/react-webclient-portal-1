@@ -77,15 +77,16 @@ function ScheduledTaskTasksOverlay(
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-  };
-
-  const closeEditorPanel = async () => {
-    if (isMounted?.current === true ) {
-      setScheduledTaskModel(null);
-    }
 
     if (loadDataFunction) {
       loadDataFunction();
+    }
+  };
+
+  const closeEditorPanel = async () => {
+    if (isMounted?.current === true) {
+      setScheduledTaskModel(null);
+      await loadData();
     }
   };
 
