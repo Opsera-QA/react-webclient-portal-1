@@ -19,6 +19,7 @@ import taskActions from "components/tasks/task.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import emailStepNotificationMetadata
   from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
 
 function TaskNotificationEditorPanel(
   {
@@ -75,19 +76,19 @@ function TaskNotificationEditorPanel(
   const loadConfiguration = async () => {
     const notifications = task?.getArrayData("notifications");
 
-    const emailNotification = notifications?.find((notification) => notification.type === "email");
+    const emailNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
     setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata));
 
-    const slackNotification = notifications.find((notification) => notification.type === "slack");
+    const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
     setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
 
-    // const jiraNotification = notifications?.find((notification) => notification.type === "jira");
+    // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
     // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
 
-    const teamsNotification = notifications?.find((notification) => notification.type === "teams");
+    const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
     setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
 
-    // const serviceNowNotification = notifications?.find((notification) => notification.type === "servicenow");
+    // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
     // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
   };
 

@@ -1,101 +1,88 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import RoleDisplayer from "components/common/fields/multiple_items/roles/displayer/RoleDisplayer";
+import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
 
+// TODO: Make actual displayer
 function OrchestrationNotificationSettingsDisplayer({notifications, className, noDataMessage}) {
-  const [administrators, setAdministrators] = useState([]);
-  const [managers, setManagers] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [guests, setGuests] = useState([]);
+  const [emailSettings, setEmailSettings] = useState(undefined);
+  const [jiraSettings, setJiraSettings] = useState(undefined);
+  const [serviceNowSettings, setServiceNowSettings] = useState(undefined);
+  const [slackSettings, setSlackSettings] = useState(undefined);
+  const [microsoftTeamsSettings, setMicrosoftTeamsSettings] = useState(undefined);
 
-  // useEffect(() => {
-  //     unpackRoles();
-  // }, [JSON.stringify(notifications)]);
-  //
-  // const unpackRoles = () => {
-  //   const newAdministrators = [];
-  //   const newManagers = [];
-  //   const newUsers = [];
-  //   const newGuests = [];
-  //
-  //   if (Array.isArray(notifications) && notifications.length > 0) {
-  //     notifications.forEach((accessRole) => {
-  //       const role = accessRole?.role;
-  //
-  //       switch (role) {
-  //         case ACCESS_ROLE_TYPES.ADMINISTRATOR:
-  //           newAdministrators.push(accessRole);
-  //           break;
-  //         case ACCESS_ROLE_TYPES.MANAGER:
-  //           newManagers.push(accessRole);
-  //           break;
-  //         case ACCESS_ROLE_TYPES.USER:
-  //           newUsers.push(accessRole);
-  //           break;
-  //         case ACCESS_ROLE_TYPES.GUEST:
-  //           newGuests.push(accessRole);
-  //           break;
-  //       }
-  //     });
-  //   }
-  //
-  //   setAdministrators(newAdministrators);
-  //   setManagers(newManagers);
-  //   setUsers(newUsers);
-  //   setGuests(newGuests);
-  // };
+  useEffect(() => {
+      unpackRoles();
+  }, [JSON.stringify(notifications)]);
 
-  const getRoleAccessPopover = () => {
-    return (
-      <div>
-        <RoleDisplayer
-          className={"mb-3"}
-          accessRoles={administrators}
-          type={"Administrator"}
-        />
-        <RoleDisplayer
-          className={"mb-3"}
-          accessRoles={managers}
-          type={"Manager"}
-        />
-        <RoleDisplayer
-          className={"mb-3"}
-          accessRoles={users}
-          type={"User"}
-        />
-        <RoleDisplayer
-          className={"mb-3"}
-          accessRoles={guests}
-          type={"Guest"}
-        />
-      </div>
-    );
+  const unpackRoles = () => {
+    if (Array.isArray(notifications) && notifications.length > 0) {
+      notifications.forEach((notificationConfiguration) => {
+        const type = notificationConfiguration?.type;
+
+        switch (type) {
+          case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
+            setJiraSettings({...notificationConfiguration});
+            break;
+          case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
+            setEmailSettings({...notificationConfiguration});
+            break;
+          case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
+            setServiceNowSettings({...notificationConfiguration});
+            break;
+          case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
+            setSlackSettings({...notificationConfiguration});
+            break;
+          case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
+            setMicrosoftTeamsSettings({...notificationConfiguration});
+            break;
+        }
+      });
+    }
   };
 
-  if (!Array.isArray(notifications) || notifications?.length === 0) {
+  const getEnabledNotificationTypeString = () => {
+    let enabledNotificationString = "";
 
+    if (emailSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Email" : "Email";
+    }
+
+    if (jiraSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Jira" : "Jira";
+    }
+
+    if (serviceNowSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Service Now" : "Service Now";
+    }
+
+    if (slackSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Slack" : "Slack";
+    }
+
+    if (microsoftTeamsSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Microsoft Teams" : "Microsoft Teams";
+    }
+
+    if (enabledNotificationString?.length === 0) {
+      enabledNotificationString = "No";
+    }
+
+    return `${enabledNotificationString} notification settings enabled`;
+  };
+
+
+  if (!Array.isArray(notifications) || notifications?.length === 0) {
     return (
-      <span>Implement displayer</span>
+      <span className={className}>
+        {noDataMessage}
+      </span>
     );
-    // return (noDataMessage);
   }
 
   return (
-    <span>Implement displayer</span>
-    // <TooltipWrapper
-    //   innerText={getRoleAccessPopover()}
-    //   title={"Access Roles"}
-    //   showCloseButton={false}
-    //   className={"popover-filter"}
-    // >
-    //   <span className={className}>
-    //     <span className="item-field">
-    //       <SpyglassBadge
-    //         badgeText={`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied`}
-    //       />
-    //     </span>
-    //   </span>
-    // </TooltipWrapper>
+    <span className={className}>
+      {getEnabledNotificationTypeString()}
+    </span>
   );
 }
 
@@ -103,6 +90,10 @@ OrchestrationNotificationSettingsDisplayer.propTypes = {
   notifications: PropTypes.array,
   className: PropTypes.string,
   noDataMessage: PropTypes.any,
+};
+
+OrchestrationNotificationSettingsDisplayer.defaultProps = {
+  noDataMessage: "No notification settings enabled"
 };
 
 export default OrchestrationNotificationSettingsDisplayer;
