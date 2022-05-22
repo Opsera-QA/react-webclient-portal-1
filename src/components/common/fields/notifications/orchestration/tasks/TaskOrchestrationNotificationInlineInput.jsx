@@ -19,17 +19,6 @@ function TaskOrchestrationNotificationInlineInput(
   const toastContext = useContext(DialogToastContext);
 
   const launchOverlayFunction = async () => {
-    // TODO: Check RBAC rules, but also don't show the icon if not allowed
-    // if (!authorizedAction("edit_step_notification", pipeline.owner)) {
-    //   setInfoModal({
-    //     show: true,
-    //     header: "Permission Denied",
-    //     message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
-    //     button: "OK",
-    //   });
-    //   return;
-    // }
-
     toastContext.showOverlayPanel(
       <TaskNotificationConfigurationOverlay
         taskId={model?.getMongoDbId()}

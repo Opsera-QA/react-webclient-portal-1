@@ -16,6 +16,7 @@ function SchedulerFieldBase(
     showSchedulerOverlayFunction,
     error,
     isLoading,
+    iconSize,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
 
@@ -58,8 +59,8 @@ function SchedulerFieldBase(
       <IconBase
         icon={faPencilAlt}
         className={"ml-2 text-muted pointer"}
-        iconSize={"xs"}
-        iconTransformProperties={"shrink-6"}
+        iconSize={iconSize}
+        iconTransformProperties={iconSize === "xs" ? "shrink-6" : undefined}
         onClickFunction={showSchedulerOverlayFunction}
       />
     );
@@ -94,6 +95,7 @@ SchedulerFieldBase.propTypes = {
   scheduledTaskCount: PropTypes.number,
   error: PropTypes.any,
   isLoading: PropTypes.bool,
+  iconSize: PropTypes.string,
 };
 
 export default SchedulerFieldBase;

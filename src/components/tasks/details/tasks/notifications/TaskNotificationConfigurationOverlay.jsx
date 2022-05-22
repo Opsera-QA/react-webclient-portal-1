@@ -32,7 +32,7 @@ function TaskNotificationConfigurationOverlay(
       showToasts={true}
       showCloseButton={false}
     >
-      <div className={"p-3"}>
+      <div className={"px-3 pb-3"}>
         <TaskNotificationEditorPanel
           taskId={taskId}
           task={task}
