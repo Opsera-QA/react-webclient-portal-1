@@ -648,10 +648,10 @@ const breadcrumbs = {
     parent: "toolReports",
     name: "toolsUsedInPipelineReport",
     path: paths.toolsUsedInPipelineReport,
-    title: "Tools Used In Pipelines",
-    linkText: "Tools Used In Pipelines",
+    title: "Pipelines by Tool",
+    linkText: "Pipelines by Tool",
     icon: faAnalytics,
-    pageDescription: "View a pipeline based on the tool selected.",
+    pageDescription: "View Pipelines based on the selected Tools.",
   },
   toolCountsReport: {
     parent: "toolReports",
@@ -686,7 +686,7 @@ const breadcrumbs = {
     title: "Pipeline by Tags",
     linkText: "Pipeline by Tags",
     icon: faDraftingCompass,
-    pageDescription: "View pipeline based on the tag selected.",
+    pageDescription: "View Pipelines based on the selected Tags.",
   },
   tagsUsedInToolsReport: {
     parent: "tagReports",
@@ -695,7 +695,7 @@ const breadcrumbs = {
     title: "Tools by Tags",
     linkText: "Tools by Tags",
     icon: faTools,
-    pageDescription: "View tool based on the tag selected.",
+    pageDescription: "View Tools based on the selected Tags.",
   },
   tagsUsedInDashboardsReport: {
     parent: "tagReports",
@@ -704,7 +704,7 @@ const breadcrumbs = {
     title: "Dashboards by Tags",
     linkText: "Dashboards by Tags",
     icon: faChartNetwork,
-    pageDescription: "View a dashboard based on the tag selected.",
+    pageDescription: "View Dashboards based on the selected Tags.",
   },
 
   userReports: {
@@ -728,28 +728,28 @@ const breadcrumbs = {
     parent: "userReports",
     name: "pipelineOwnershipReport",
     path: paths.pipelineOwnershipReport,
-    title: "Pipeline Ownership",
-    linkText: "Pipeline Ownership",
+    title: "Pipelines by Owner",
+    linkText: "Pipelines by Owner",
     icon: faDraftingCompass,
-    pageDescription: "View pipelines owned by selected user."
+    pageDescription: "Find all Pipelines owned by the selected User."
   },
   toolOwnershipReport: {
     parent: "userReports",
     name: "toolOwnershipReport",
     path: paths.toolOwnershipReport,
-    title: "Tool Ownership",
-    linkText: "Tool Ownership",
+    title: "Tools by Owner",
+    linkText: "Tools by Owner",
     icon: faTools,
-    pageDescription: "View tools owned by a selected user."
+    pageDescription: "Find all Tools owned by the selected user."
   },
   taskOwnershipReport: {
     parent: "userReports",
     name: "taskOwnershipReport",
     path: paths.taskOwnershipReport,
-    title: "Task Ownership",
-    linkText: "Task Ownership",
+    title: "Tasks by Owner",
+    linkText: "Tasks by Owner",
     icon: faTasks,
-    pageDescription: "View tasks owned by a selected user."
+    pageDescription: "Find all Tasks owned by the selected user."
   },
   consolidatedUserReport: {
     parent: "userReports",
