@@ -101,6 +101,7 @@ function GitOperationStepConfiguration({
         <SourceRepositoryPrimaryBranchSelectInput
           model={gitOperationModel}
           setModel={setGitOperationModel}
+          fieldName={"gitBranch"}
         />
       </div>
     );
