@@ -651,7 +651,7 @@ const breadcrumbs = {
     title: "Pipelines by Tool",
     linkText: "Pipelines by Tool",
     icon: faAnalytics,
-    pageDescription: "Select a Tool to view its usages in Pipelines.",
+    pageDescription: "View Pipelines based on the selected Tools.",
   },
   toolCountsReport: {
     parent: "toolReports",
