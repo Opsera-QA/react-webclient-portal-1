@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import TagReports from "components/reports/tags/TagReports";
+import TagReportPageLinkCards from "components/reports/tags/TagReportPageLinkCards";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 
@@ -56,7 +56,7 @@ function TagReportsScreen() {
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       isLoading={isLoading}
     >
-      <TagReports />
+      <TagReportPageLinkCards accessRoleData={accessRoleData} />
     </ScreenContainer>
   );
 }
