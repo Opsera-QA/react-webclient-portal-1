@@ -68,12 +68,25 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+          ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+          ]?.value;
+      
       const response = await chartsActions.getDeploymentAnalytics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
         metadataName,
-        filterDto
+        filterDto,
+        dashboardTags,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.data;
         console.log(response?.data?.data[0]?.data,'***Test table');
