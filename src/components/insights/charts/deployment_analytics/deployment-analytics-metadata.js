@@ -2,7 +2,7 @@ const DeploymentAnalyticsMetadata = {
     idProperty: "_id",
     type: "Deployment Analysis",
     fields:[
-      {label: "Artifactory Name", id: "artifactoryName"},
+      {label: "Artifact/Image Name", id: "artifactoryName"},
       {label: "Pipeline Name", id: "pipelineName"},
       {label: "Run Count", id: "runCount"},
       {label: "Timestamp", id: "timeStamp"},

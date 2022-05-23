@@ -61,10 +61,23 @@ function DeploymentAnalytics({
   }, [JSON.stringify(dashboardData)]);
 
   const loadMetadataInfo = async (cancelSource = cancelTokenSource) => {
+    let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+          ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+          ]?.value;
+
     const response = await chartsActions.getMetadataInfo(
       kpiConfiguration,
       getAccessToken,
       cancelSource,
+      dashboardTags,
+      dashboardOrgs
     );
     setMetadataInfo(response?.data?.data);
     setActiveTab(response?.data?.data[0].metadataName);
@@ -156,6 +169,7 @@ function DeploymentAnalytics({
         defaultActiveKey={metadataInfo[0]?.metadataName}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTable()}
+        minimumHeight={'400px'}
       />
     );
   };
