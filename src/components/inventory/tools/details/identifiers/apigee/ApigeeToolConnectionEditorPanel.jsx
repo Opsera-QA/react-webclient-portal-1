@@ -49,13 +49,13 @@ function ApigeeToolConnectionEditorPanel({ toolData }) {
 
   const saveApigeeToolConfiguration = async () => {
     const newConfiguration = apigeeConfigurationModel.getPersistData();
-    newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(
+    newConfiguration.accountPassword = await toolsActions.saveThreePartToolPasswordToVaultV3(
       getAccessToken,
       cancelTokenSource,
       toolData?.getMongoDbId(),
       toolData.getData("tool_identifier"),
-      "password",
-      newConfiguration?.password
+      "accountPassword",
+      newConfiguration?.accountPassword
     );
 
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
