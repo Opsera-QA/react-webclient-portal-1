@@ -87,6 +87,7 @@ import axios from "axios";
 import GitScraperStepFormConfiguration
   from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
 import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
+import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import SalesforceScanStepConfiguration
   from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
@@ -1285,6 +1286,17 @@ function StepToolConfiguration({
                 setShowToast={setShowToast}
                 closeEditorPanel={closeEditorPanel}
             />
+          );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return (
+          <SnaplogicStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
         );
     }
   };
