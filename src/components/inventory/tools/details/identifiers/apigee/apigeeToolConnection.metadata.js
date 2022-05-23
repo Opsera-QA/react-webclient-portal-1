@@ -29,7 +29,7 @@ export const apigeeToolConnectionMetadata = {
   newObjectFields: {
     version: "edge",
     zoneId: "",
-    userName: "",
-    password: "",
+    accountUsername: "",
+    accountPassword: "",
   }
 };
