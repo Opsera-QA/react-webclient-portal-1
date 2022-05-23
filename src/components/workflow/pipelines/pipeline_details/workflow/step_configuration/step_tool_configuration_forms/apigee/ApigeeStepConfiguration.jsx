@@ -46,6 +46,7 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
 
   const handleSaveStepConfig = async () => {
     await callbackFunction();
+    closeEditorPanel();
   };
 
   const callbackFunction = async () => {
@@ -54,7 +55,7 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
     const item = {
       configuration: apigeeStepConfigurationDto.getPersistData(),
     };
-    parentCallback(item);
+    await parentCallback(item);
   };
 
   const getDynamicFields = () => {
