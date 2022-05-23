@@ -195,6 +195,10 @@ import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_detai
 import GitOperationPipelineStepConfigurationSummaryPanel 
   from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
 import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
+import SnaplogicPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
+import SnaplogicStepFormMetadata 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -617,6 +621,13 @@ function PipelineStepConfigurationSummary({
                 pipelineData={pipelineData}
                 gitOperationPipelineDataObject={getModelWrappedObject(gitOperationStepFormMetadata)}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return (
+          <SnaplogicPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
+          />
         );
       default:
         return (
