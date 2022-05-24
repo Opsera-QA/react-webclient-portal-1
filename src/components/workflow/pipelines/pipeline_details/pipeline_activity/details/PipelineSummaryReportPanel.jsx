@@ -8,6 +8,7 @@ import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipel
 import ApigeeLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeLogSummaryReportPanel";
 import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
+import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -38,6 +39,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         );        
       case "jenkins":
         return getJenkinsReport();
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+            <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }

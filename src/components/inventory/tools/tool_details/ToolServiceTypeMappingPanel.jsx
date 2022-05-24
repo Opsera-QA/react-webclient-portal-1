@@ -1,8 +1,8 @@
 import React from "react";
 import InformaticaMapping from "./tool_jobs/informatica/mapping/InformaticaMapping";
 import PropTypes from "prop-types";
-import AzureToolStorageAccountsPanel
-  from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/AzureToolStorageAccountsPanel";
+import SfdxRulesPanel from "./tool_jobs/salesforce_code_analyzer/sfdx_scan_rule_mapping/SfdxRulesPanel";
+import {toolIdentifierConstants} from "../../../admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
@@ -16,6 +16,16 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
             loadData={loadData}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+          <SfdxRulesPanel
+            toolActions={toolData?.getData("actions")}
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+  
       default:
         return (
           <div className="text-center p-5 text-muted mt-5">
@@ -37,7 +47,7 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
     <>
       <div className="text-muted p-3">
         <div className="h6">Manage Rule Validation</div>
-        <div className="mb-3">Use this feature to add Rule validations on individual Informatica type.</div>
+        {/* <div className="mb-3">Use this feature to add Rule validations on individual Informatica type.</div> */}
         {getBody()}
       </div>
     </>
