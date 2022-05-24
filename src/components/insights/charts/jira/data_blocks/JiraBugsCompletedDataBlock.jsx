@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
-function JiraBugsCompletedDataBlock({ data }) {
+function JiraBugsCompletedDataBlock({ data, previousData }) {
   return (    
     <DataBlockBoxContainer showBorder={true}>
-      <TwoLineScoreDataBlock
+      <ThreeLineScoreDataBlock
         className={"p-3"}
         score={data}
-        subtitle={"Bugs Completed"}
+        topText={"Bugs Completed"}
+        bottomText={"Previous Bugs: " + previousData} 
       />
     </DataBlockBoxContainer>
   );
@@ -17,6 +18,7 @@ function JiraBugsCompletedDataBlock({ data }) {
 
 JiraBugsCompletedDataBlock.propTypes = {
   data: PropTypes.number,
+  previousData: PropTypes.number
 };
 
 export default JiraBugsCompletedDataBlock;

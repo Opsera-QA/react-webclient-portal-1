@@ -24,6 +24,8 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [issueData, setIssueData] = useState([]);
+  const [previousResults, setPreviousResults] = useState(undefined);
+  const [previousIssues, setPreviousIssues] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(false);
@@ -77,11 +79,21 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
           ? response?.data?.data[0]?.jiraLeadTime?.issueData
           : [];
+      const previousResultsData =
+        response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+          ? response?.data?.data[0]?.jiraLeadTime?.previousResults
+          : [];
+      const previousResultsIssueData =
+          response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+            ? response?.data?.data[0]?.jiraLeadTime?.previousResults?.data[0]?.issueData
+            : [];
       assignStandardColors(dataObject && dataObject[0]?.data, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setIssueData(issueDataObject);
+        setPreviousResults(previousResultsData);
+        setPreviousIssues(previousResultsIssueData);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -145,15 +157,21 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
             <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
               <Row>
                 <Col lg={12} className={"my-3"}>
-                  <JiraMeanLeadTimeDataBlock data={metrics[0].data[0].mean} />
+                  <JiraMeanLeadTimeDataBlock data={metrics[0]?.data[0]?.mean} previousData={previousResults?.mean}/>
                 </Col>
                 <Col lg={12} className={"my-3"}>
-                  <JiraIssuesCompletedDataBlock data={issueData.length} />
+                  <JiraIssuesCompletedDataBlock data={issueData?.length} previousData={previousIssues.length}/>
                 </Col>
                 <Col lg={12} className={"mb-3"}>
                   <JiraBugsCompletedDataBlock
                     data={
                       issueData.filter(
+                        (item) =>
+                          item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
+                      ).length
+                    }
+                    previousData={
+                      previousIssues.filter(
                         (item) =>
                           item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
                       ).length
@@ -220,7 +238,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       </>
     );
   };
-
+  console.log(metrics);
   return (
     <div>
       <VanityMetricContainer
