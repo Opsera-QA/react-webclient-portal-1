@@ -12,7 +12,7 @@ function InlineGitCustodianStatusSelectInput({ fieldName, filterModel, setFilter
 
   return (
     <GitCustodianStatusSelectInput
-      inline={true}
+      inline={false}
       fieldName={fieldName}
       setFilterModel={setFilterModel}
       filterModel={filterModel}

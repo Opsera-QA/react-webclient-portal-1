@@ -77,17 +77,6 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     };
   }, [JSON.stringify(gitCustodianData)]);
 
-  const getInlineFilters = () => {
-    return (
-      <div className="d-flex">
-        <InlineGitCustodianAuthorsSelectInput filterModel={gitCustodianFilterModel} options={authors} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mr-2"} />
-        <InlineGitCustodianServiceSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mr-2"} />
-        <InlineGitCustodianRepositoriesSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mr-2"} />
-        <InlineGitCustodianStatusSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mr-2"} />
-      </div>
-    );
-  };
-
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -101,6 +90,17 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
         setIsLoading(false);
       }
     }
+  };
+
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <InlineGitCustodianAuthorsSelectInput filterModel={gitCustodianFilterModel} options={authors} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
+        <InlineGitCustodianServiceSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
+        <InlineGitCustodianRepositoriesSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
+        <InlineGitCustodianStatusSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
+      </>
+    );
   };
 
   const getCharts = () => {
@@ -188,8 +188,8 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
       addRecordFunction={createNewJiraTicket}
       type={'Jira Ticket'}
       body={getBody()}
-      inlineFilters={getInlineFilters()}
       titleIcon={faShieldKeyhole}
+      dropdownFilters={getDropdownFilters()}
       metadata={dashboardMetadata}
       supportSearch={false}
       filterDto={gitCustodianFilterModel}

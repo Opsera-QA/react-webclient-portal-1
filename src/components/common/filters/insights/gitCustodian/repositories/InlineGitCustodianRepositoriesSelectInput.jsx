@@ -12,7 +12,7 @@ function InlineGitCustodianRepositoriesSelectInput({ fieldName, filterModel, set
 
   return (
     <GitCustodianRepositoriesSelectInput
-      inline={true}
+      inline={false}
       fieldName={fieldName}
       setFilterModel={setFilterModel}
       filterModel={filterModel}
