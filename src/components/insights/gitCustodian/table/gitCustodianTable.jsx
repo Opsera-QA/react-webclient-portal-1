@@ -225,6 +225,7 @@ function GitCustodianTable({ dashboardData}) {
       getTableDateTimeColumn(getField(fields, "commitDate")),
       getTableTextColumn(getField(fields, "author")),
       getTableTextColumn(getField(fields, "path")),
+      getTableTextColumn(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
       getTableTextColumn(getField(fields, "exposedFor")),
       getTableTextColumn(getField(fields, "library")),

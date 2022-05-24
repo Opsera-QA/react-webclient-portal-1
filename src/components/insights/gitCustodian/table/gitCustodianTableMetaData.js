@@ -87,6 +87,10 @@ const GitCustodianTableMetaData = {
       id: "authors",
     },
     {
+      label: "Line Number",
+      id: "lineNumber",
+    },
+    {
       label: "Tool Registry Entry",
       id: "tool"
     },
