@@ -34,6 +34,10 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
           configuration.repositoryName && configuration.repositoryFormat  && 
           configuration.artifactStepId ? true : false;
 
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return configuration.toolConfigId && configuration.qualityGateIds && 
+          configuration.sfdxScanToolId && configuration.stepIdXML ? true : false;
+    
       default:
         return true;
     }
