@@ -160,7 +160,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                   <JiraMeanLeadTimeDataBlock data={metrics[0]?.data[0]?.mean} previousData={previousResults?.mean}/>
                 </Col>
                 <Col lg={12} className={"my-3"}>
-                  <JiraIssuesCompletedDataBlock data={issueData?.length} previousData={previousIssues.length}/>
+                  <JiraIssuesCompletedDataBlock data={issueData?.length} previousData={previousIssues?.length}/>
                 </Col>
                 <Col lg={12} className={"mb-3"}>
                   <JiraBugsCompletedDataBlock
