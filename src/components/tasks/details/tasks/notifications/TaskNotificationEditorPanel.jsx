@@ -96,9 +96,9 @@ function TaskNotificationEditorPanel(
     if (validateRequiredFields()) {
       const newNotificationConfiguration = [
         emailNotificationModel.getPersistData(),
-        slackNotificationModel.getPersistData(),
+        // slackNotificationModel.getPersistData(),
         // jiraNotificationModel.getPersistData(),
-        teamsNotificationModel.getPersistData(),
+        // teamsNotificationModel.getPersistData(),
         // serviceNowNotificationModel.getPersistData()
       ];
       await taskActions.updateTaskNotificationConfiguration(
@@ -167,7 +167,7 @@ function TaskNotificationEditorPanel(
 
   return (
     <OverlayPanelBodyContainer
-      // getHelpComponentFunction={getHelpComponentFunction}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
       {getTitleBar()}
