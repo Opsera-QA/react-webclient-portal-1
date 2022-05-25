@@ -96,9 +96,9 @@ function TaskNotificationEditorPanel(
     if (validateRequiredFields()) {
       const newNotificationConfiguration = [
         emailNotificationModel.getPersistData(),
-        slackNotificationModel.getPersistData(),
+        // slackNotificationModel.getPersistData(),
         // jiraNotificationModel.getPersistData(),
-        teamsNotificationModel.getPersistData(),
+        // teamsNotificationModel.getPersistData(),
         // serviceNowNotificationModel.getPersistData()
       ];
       await taskActions.updateTaskNotificationConfiguration(
