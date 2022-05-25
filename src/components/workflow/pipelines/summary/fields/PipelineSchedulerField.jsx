@@ -6,6 +6,7 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
+import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 function PipelineSchedulerField(
   {
@@ -75,8 +76,6 @@ function PipelineSchedulerField(
     }
   };
 
-
-
   const showSchedulerOverlay = () => {
     toastContext.showOverlayPanel(
       <PipelineScheduledTasksOverlay
@@ -86,7 +85,9 @@ function PipelineSchedulerField(
     );
   };
 
-  if (Array.isArray(pipelineTypes) && (pipelineTypes.includes("informatica") || pipelineTypes.includes("sfdc"))) {
+  if (
+    Array.isArray(pipelineTypes)
+    && (pipelineTypes.includes(PIPELINE_TYPES.INFORMATICA) || pipelineTypes.includes(PIPELINE_TYPES.SALESFORCE) || pipelineTypes.includes(PIPELINE_TYPES.APIGEE))) {
     return null;
   }
 
