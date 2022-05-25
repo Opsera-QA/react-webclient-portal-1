@@ -161,6 +161,7 @@ import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sona
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import SalesforceComponentsDataBlockChart
   from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
+import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1151,6 +1152,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <GithubPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "github-commit-statistics":
+        return (
+          <Col md={12} className="p-2">
+            <GithubCommitsStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
