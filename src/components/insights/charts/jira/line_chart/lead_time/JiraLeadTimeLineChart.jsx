@@ -165,13 +165,13 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 <Col lg={12} className={"mb-3"}>
                   <JiraBugsCompletedDataBlock
                     data={
-                      issueData.filter(
+                      issueData?.filter(
                         (item) =>
                           item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
                       ).length
                     }
                     previousData={
-                      previousIssues.filter(
+                      previousIssues?.filter(
                         (item) =>
                           item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
                       ).length
@@ -238,7 +238,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       </>
     );
   };
-  console.log(metrics);
+
   return (
     <div>
       <VanityMetricContainer
