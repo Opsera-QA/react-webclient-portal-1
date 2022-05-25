@@ -161,6 +161,56 @@ chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource)=
   return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/charts";
+
+  const postBody = {
+      startDate: filterModel.getFilterValue('date').startDate,
+      endDate: filterModel.getFilterValue('date').endDate,
+      filters: {
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : []
+      }
+    };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table";
+
+  const postBody = {
+      startDate: filterModel.getFilterValue('date').startDate,
+      endDate: filterModel.getFilterValue('date').endDate,
+      filters: {
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : []
+      },
+      page: filterModel?.getData("currentPage"),
+      size: filterModel?.getData("pageSize"),
+    };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/download";
+
+  const postBody = {
+    startDate: filterModel.getFilterValue('date').startDate,
+    endDate: filterModel.getFilterValue('date').endDate,
+    filters: {
+      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : []
+    }
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 chartsActions.getGitScraperMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, type, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/gitscraper/v1/gitScraperMetrics";

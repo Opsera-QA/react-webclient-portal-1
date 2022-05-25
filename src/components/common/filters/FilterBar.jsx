@@ -29,7 +29,8 @@ function FilterBar(
     metadata,
     handleExportFunction,
     handleImportFunction,
-    showRefreshButton
+    showRefreshButton,
+    disableNewRecordButton
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -94,6 +95,7 @@ function FilterBar(
             type={getType()}
             isLoading={isLoading}
             variant={"success"}
+            disabled={disableNewRecordButton}
           />
           <ImportDataButton
             className={"mr-2"}
@@ -154,10 +156,12 @@ FilterBar.propTypes = {
   handleExportFunction: PropTypes.func,
   handleImportFunction: PropTypes.func,
   showRefreshButton: PropTypes.bool,
+  disableNewRecordButton: PropTypes.bool
 };
 
 FilterBar.defaultProps = {
-  showRefreshButton: true
+  showRefreshButton: true,
+  disableNewRecordButton: false
 };
 
 export default FilterBar;

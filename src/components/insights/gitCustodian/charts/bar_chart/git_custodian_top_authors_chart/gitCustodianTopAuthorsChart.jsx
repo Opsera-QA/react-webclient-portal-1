@@ -7,35 +7,9 @@ import axios from "axios";
 import { defaultConfig, getColorByData, adjustBarWidth} from "../../../../charts/charts-views";
 import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 
-function GitCustodianTopAuthorsChart({ dashboardData }) {
+function GitCustodianTopAuthorsChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [topAuthorsData, setTopAuthorsData] = useState([
-    {
-      "_id": "DIlnawaz Ragib",
-      "count": 48
-    },
-    {
-      "_id": "Vignesh Kumar Subramanian",
-      "count": 44
-    },
-    {
-      "_id": "DIlnawaz Ragib1",
-      "count": 48
-    },
-    {
-      "_id": "Vignesh Kumar Subramanian1",
-      "count": 44
-    },
-    {
-      "_id": "DIlnawaz Ragib2",
-      "count": 48
-    },
-    {
-      "_id": "Vignesh Kumar Subramanian2",
-      "count": 44
-    }
-  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -72,18 +46,20 @@ function GitCustodianTopAuthorsChart({ dashboardData }) {
   };
 
   const getBody = () => {
-    if (!Array.isArray(topAuthorsData) || topAuthorsData.length === 0) {
-      return null;
+    if (!Array.isArray(data) || data.length === 0) {
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}}/>
+      );
     }
 
     return (
       <div className="new-chart p-0" style={{ height: "200px" }}>
         <ResponsiveBar
-          data={topAuthorsData}
+          data={data}
           {...defaultConfig("Author", "Count",
             true, false, "cutoffString", "values", true)}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-          {...adjustBarWidth(topAuthorsData, false)}
+          {...adjustBarWidth(data, false)}
         />
       </div>
     );
@@ -93,7 +69,8 @@ function GitCustodianTopAuthorsChart({ dashboardData }) {
 }
 
 GitCustodianTopAuthorsChart.propTypes = {
-  dashboardData: PropTypes.object
+  dashboardData: PropTypes.object,
+  data: PropTypes.array
 };
 
 export default GitCustodianTopAuthorsChart;
