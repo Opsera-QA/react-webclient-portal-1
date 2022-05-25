@@ -14,7 +14,7 @@ const sfdxRulesMapMetadata = {
     {
       label: "Threshold",
       id: "threshold",
-      regexDefinitionName: "numericalField",
+      formText: "This threshold is applicable for all rules under the selected category"
     },
     {
       label: "Quality Gates",

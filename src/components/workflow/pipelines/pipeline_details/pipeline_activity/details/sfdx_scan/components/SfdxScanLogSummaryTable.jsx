@@ -1,8 +1,6 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import informaticaImportObjectLogResultMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaImportObjectLogResult.metadata";
 import {
   getColumnHeader, getColumnId,
   getTableTextColumn
@@ -19,15 +17,16 @@ function SfdxScanLogSummaryTable({ summaryQGObject }) {
   
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "ruleId")),
+      getTableTextColumn(getField(fields, "ruleName")),
       getTableTextColumn(getField(fields, "rule")),
       getTableTextColumn(getField(fields, "category")),
       getTableTextColumn(getField(fields, "count")),
       getTableTextColumn(getField(fields, "threshold")),
       getTableTextColumn(getField(fields, "passStatus")),
+      getTableTextColumn(getField(fields, "engine")),
       getTableTextColumn(getField(fields, "description")),
     ],
-    []
+    [],
   );
 
   const getComponentResultsTable = () => {
@@ -35,7 +34,7 @@ function SfdxScanLogSummaryTable({ summaryQGObject }) {
       <VanityTable
         data={summaryQGObject}
         columns={columns}
-        tableHeight={"28.2vh"}
+        tableHeight={"48.2vh"}
       />
     );
   };
