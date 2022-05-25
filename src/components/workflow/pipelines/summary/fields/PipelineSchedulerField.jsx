@@ -8,12 +8,6 @@ import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
 import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
-const UNSUPPORTED_PIPELINE_TYPES = [
-  PIPELINE_TYPES.INFORMATICA,
-  PIPELINE_TYPES.MACHINE_LEARNING,
-  PIPELINE_TYPES.SALESFORCE
-];
-
 function PipelineSchedulerField(
   {
     pipelineModel,
@@ -91,7 +85,9 @@ function PipelineSchedulerField(
     );
   };
 
-  if (Array.isArray(pipelineTypes) && (pipelineTypes.includes("informatica") || pipelineTypes.includes("sfdc"))) {
+  if (
+    Array.isArray(pipelineTypes)
+    && (pipelineTypes.includes(PIPELINE_TYPES.INFORMATICA) || pipelineTypes.includes(PIPELINE_TYPES.SALESFORCE) || pipelineTypes.includes(PIPELINE_TYPES.APIGEE))) {
     return null;
   }
 
