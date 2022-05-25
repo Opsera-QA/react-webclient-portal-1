@@ -8,6 +8,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
+import {Col, Row} from "react-bootstrap";
 import sfdxScanExecLogResultMetadata from "../metadata/SfdxScanExecLogResult.metadata";
 
 
@@ -33,7 +34,7 @@ function SfdxScanExecLogSummaryTable({ execLogResults }) {
       <VanityTable
         data={execLogResults}
         columns={columns}
-        tableHeight={"28.2vh"}
+        tableHeight={"55.2vh"}
       />
     );
   };
@@ -48,13 +49,17 @@ function SfdxScanExecLogSummaryTable({ execLogResults }) {
   }
 
   return (
-    <FilterContainer
-      showBorder={false}
-      body={getComponentResultsTable()}
-      titleIcon={faExclamationCircle}
-      title={`Objects`}
-      className={"mt-2"}
-    />
+    <Row className={"my-3"}>
+      <Col lg={12}>
+        <FilterContainer
+          showBorder={false}
+          body={getComponentResultsTable()}
+          titleIcon={faExclamationCircle}
+          title={`Execution Summary`}
+          className={"mt-2"}
+        />
+      </Col>
+    </Row>
   );
 }
 

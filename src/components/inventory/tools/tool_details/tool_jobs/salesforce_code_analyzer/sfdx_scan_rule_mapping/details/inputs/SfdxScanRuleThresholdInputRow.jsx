@@ -7,6 +7,9 @@ import Row from "react-bootstrap/Row";
 import StandalonePositiveIntegerNumberTextInput from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {truncateString} from "../../../../../../../../common/helpers/string-helpers";
+
 
 function SfdxScanRuleThresholdInputRow({
   disabledThresholdLevels,
@@ -18,6 +21,8 @@ function SfdxScanRuleThresholdInputRow({
   deleteThresholdRow,
   thresholdKeys,
   count,
+  description,
+  engine,
   loading,
   level,
 }) {
@@ -30,7 +35,7 @@ function SfdxScanRuleThresholdInputRow({
         value={level}
         disabled={disabled || disabledThresholdLevels}
         placeholder={"Select A Threshold Level"}
-        setDataFunction={(newValue) => updateThresholdLevel(newValue?.name)}
+        setDataFunction={(newValue) => updateThresholdLevel(newValue)}
       />
     );
   };
@@ -67,7 +72,7 @@ function SfdxScanRuleThresholdInputRow({
             {getThresholdLevelInput()}
           </Col>
           <Col
-            sm={6}
+            sm={2}
             className={"pl-1 pr-0"}
           >
             <StandalonePositiveIntegerNumberTextInput
@@ -75,6 +80,24 @@ function SfdxScanRuleThresholdInputRow({
               disabled={disabled || duplicates}
               value={count}
             />
+          </Col>
+          <Col
+            sm={2}
+            className={"pl-3 pr-0"}
+          >
+            <div className="w-10 d-flex">
+              <span>{engine}</span>
+            </div>
+          </Col>
+          <Col
+            sm={2}
+            className={"pl-1 pr-0"}
+          >
+            <div className="w-10 d-flex text-overflow: ellipsis;">
+              <TooltipWrapper innerText={description}>
+                <span>{truncateString(description, 25, true)}</span>
+              </TooltipWrapper>
+            </div>
           </Col>
         </Row>
       </Col>
@@ -99,6 +122,8 @@ SfdxScanRuleThresholdInputRow.propTypes = {
   disabled: PropTypes.bool,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   level: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  engine: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   loading: PropTypes.bool,
 };
 

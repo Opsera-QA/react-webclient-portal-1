@@ -10,10 +10,10 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SfdxMapRuleSetSelectInput from "./inputs/SfdxMapRuleSetSelectInput";
 import SfdxScanThresholdInputBase from "./inputs/SfdxScanThresholdInputBase";
-import SfdxMapRuleBasedToggleInput from "./inputs/SfdxMapRuleBasedToggleInput";
+import PositiveIntegerNumberPickerInput
+  from "../../../../../../../common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -105,18 +105,11 @@ function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
                 disabled={!pmdRuleData?.isNew()}
             />
           </Col>
-          <Col lg={4}>
-            <TextFieldBase
-                dataObject={pmdRuleModel}
-                fieldName={"category"}
-            />
-          </Col>
           <Col lg={12}>
-            <TextInputBase
-                setDataObject={setPmdRuleModel}
+            <PositiveIntegerNumberPickerInput
                 dataObject={pmdRuleModel}
+                setDataObject={setPmdRuleModel}
                 fieldName={"threshold"}
-                disabled={!pmdRuleData?.isNew()}
             />
           </Col>
           <Col lg={12}>

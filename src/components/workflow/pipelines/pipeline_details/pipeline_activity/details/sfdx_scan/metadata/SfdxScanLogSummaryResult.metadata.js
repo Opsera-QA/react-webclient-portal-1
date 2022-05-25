@@ -6,8 +6,16 @@ const sfdxScanLogSummaryResultMetadata = {
       id: "ruleId",
     },
     {
+      label: "Rule Name",
+      id: "ruleName",
+    },
+    {
       label: "Rule",
       id: "rule",
+    },
+    {
+      label: "Engine",
+      id: "engine",
     },
     {
       label: "Category",
@@ -32,7 +40,9 @@ const sfdxScanLogSummaryResultMetadata = {
   ],
   newObjectFields: {
     ruleId: "",
+    ruleName: "",
     rule: "",
+    engine: "",
     category: "",
     count: "",
     threshold: "",

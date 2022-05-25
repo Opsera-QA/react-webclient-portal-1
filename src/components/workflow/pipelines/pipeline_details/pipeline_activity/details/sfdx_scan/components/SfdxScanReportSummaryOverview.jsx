@@ -22,7 +22,7 @@ function SfdxScanReportSummaryOverview({ statusSummaryModel, sfdxScanResults }) 
       {/*<Col lg={6}>*/}
       {/*  <TextFieldBase dataObject={statusSummaryModel} fieldName={"status"} />*/}
       {/*</Col>*/}
-      <Col lg={6}>
+      <Col lg={12}>
         <TextFieldBase dataObject={statusSummaryModel} fieldName={"message"} />
       </Col>
         <Col lg={12}>
