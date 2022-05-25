@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import {faClipboardList, faDraftingCompass, faQuestion} from "@fortawesome/pro-light-svg-icons";
-import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import { faChartNetwork, faClipboardList, faDraftingCompass, faQuestion } from "@fortawesome/pro-light-svg-icons";
 import PipelinesFrequentlyAskedQuestions from "components/about/faq/PipelinesFrequentlyAskedQuestions";
+import InsightsFrequentlyAskedQuestions from "./InsightsFrequentlyAskedQuestions";
+import ToolRegistryFrequentlyAskedQuestions from "./ToolRegistryFrequentlyAskedQuestions";
+import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+
+const FAQ_HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - 72px)`;
 
 function FrequentlyAskedQuestionsVerticalTabContainer() {
   const [activeTab, setActiveTab] = useState("pipelines");
@@ -19,15 +24,16 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
       <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
           <VanitySetVerticalTab
-            tabText={"Welcome"}
-            tabName={"welcome"}
+            tabText={"Pipelines"}
+            tabName={"pipelines"}
+            icon={faDraftingCompass}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
           <VanitySetVerticalTab
-            tabText={"Pipelines"}
-            tabName={"pipelines"}
-            icon={faDraftingCompass}
+            tabText={"Insights"}
+            tabName={"insights"}
+            icon={faChartNetwork}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
@@ -43,21 +49,36 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
     );
   };
 
-  const getCurrentView = () => {
+  const getCurrentScreen = () => {
     switch (activeTab) {
       case "pipelines":
         return (
           <PipelinesFrequentlyAskedQuestions />
         );
+      case "insights":
+        return (
+          <InsightsFrequentlyAskedQuestions />
+        );
+      case "toolRegistry":
+        return (
+          <ToolRegistryFrequentlyAskedQuestions />
+        );
     }
   };
 
+  const getCurrentView = () => {
+    return (
+      <div>
+        <div className={"mt-3 ml-4"}><h6>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://opsera.atlassian.net/l/c/GovpxW7m" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a></b>. Have a question? Contact <b><a id="mailto" href="mailto:support@opsera.io" target="_blank" rel="noreferrer">Opsera Support</a></b>.</h6></div>
+        {getCurrentScreen()}
+      </div>
+    );
+  };
+
   return (
-    <VanitySetTabAndViewContainer
-      icon={faQuestion}
-      title={`Frequently Asked Questions`}
+    <TabAndViewContainer
+      minimumHeight={FAQ_HEIGHT}
       verticalTabContainer={getVerticalTabContainer()}
-      bodyClassName={"mx-0"}
       currentView={getCurrentView()}
     />
   );
