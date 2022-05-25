@@ -21,10 +21,10 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
 
         switch (type) {
           case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
-            setJiraSettings({...notificationConfiguration});
+            setEmailSettings({...notificationConfiguration});
             break;
           case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
-            setEmailSettings({...notificationConfiguration});
+            setJiraSettings({...notificationConfiguration});
             break;
           case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
             setServiceNowSettings({...notificationConfiguration});
