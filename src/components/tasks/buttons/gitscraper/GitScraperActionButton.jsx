@@ -14,6 +14,7 @@ function GitScraperActionButton(
   {
     gitTasksData,
     status,
+    runCountUpdate
   }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -101,6 +102,7 @@ function GitScraperActionButton(
       await taskActions.startGitscraperScan(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
       toastContext.showSuccessDialog("Git Custodian Triggered Successfully");
       setIsTaskRunning(true);
+      runCountUpdate();
       await startTaskPolling();
     } catch (error) {
       setIsTaskRunning(false);
@@ -216,6 +218,7 @@ function GitScraperActionButton(
 GitScraperActionButton.propTypes = {
   gitTasksData: PropTypes.object,
   status: PropTypes.string,
+  runCountUpdate: PropTypes.func
 };
 
 export default GitScraperActionButton;
