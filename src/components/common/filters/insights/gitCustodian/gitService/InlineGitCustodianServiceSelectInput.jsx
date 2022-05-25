@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitCustodianServicesSelectInput from "./GitCustodianServicesSelectInput";
 
-function InlineGitCustodianServiceSelectInput({ fieldName, filterModel, setFilterModel, loadData, className, options}) {
+function InlineGitCustodianServiceSelectInput({ fieldName, filterModel, setFilterModel, loadData, className, options, inline}) {
   const setDataFunction = (fieldName, value) => {
     let newDataObject = filterModel;
     newDataObject.setData("currentPage", 1);
@@ -12,7 +12,7 @@ function InlineGitCustodianServiceSelectInput({ fieldName, filterModel, setFilte
 
   return (
     <GitCustodianServicesSelectInput
-      inline={false}
+      inline={inline}
       fieldName={fieldName}
       setFilterModel={setFilterModel}
       filterModel={filterModel}
@@ -29,12 +29,14 @@ InlineGitCustodianServiceSelectInput.propTypes = {
   setFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
-  options: PropTypes.array
+  options: PropTypes.array,
+  inline: PropTypes.bool
 };
 
 InlineGitCustodianServiceSelectInput.defaultProps = {
   fieldName: "service",
   options: [],
+  inline: true
 };
 
 export default InlineGitCustodianServiceSelectInput;
