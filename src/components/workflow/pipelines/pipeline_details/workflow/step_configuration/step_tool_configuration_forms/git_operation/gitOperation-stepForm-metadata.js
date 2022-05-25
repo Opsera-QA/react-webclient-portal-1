@@ -74,6 +74,7 @@ const gitOperationStepFormMetadata = {
       label: "Git Action",
       id: "action",
       maxLength: 50,
+      isRequired: true,
       lowercase: true,
     },
   ],

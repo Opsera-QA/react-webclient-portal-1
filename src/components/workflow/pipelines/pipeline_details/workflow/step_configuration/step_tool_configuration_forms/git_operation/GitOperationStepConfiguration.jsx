@@ -8,10 +8,11 @@ import SourceRepositoryTypeSelectInput from "components/workflow/pipelines/pipel
 import SourceRepositoryToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryToolSelectInput";
 import SourceRepositoryBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryBitbucketWorkspaceSelectInput";
 import SourceRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositorySelectInput";
-import SourceRepositoryPrimaryBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryPrimaryBranchSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitOperationActionSelectInput from "./inputs/GitOperationActionSelectInput";
 import InlineWarning from "../../../../../../../common/status_notifications/inline/InlineWarning";
+import GitOperationDestinationBranchSelectInput from "./inputs/GitOperationDestinationBranchSelectInput";
+import GitOperationSourceBranchSelectInput from "./inputs/GitOperationSourceBranchSelectInput";
 
 function GitOperationStepConfiguration({
   pipelineId,
@@ -98,10 +99,11 @@ function GitOperationStepConfiguration({
               : true)
           }
         />
-        <SourceRepositoryPrimaryBranchSelectInput
-          model={gitOperationModel}
-          setModel={setGitOperationModel}
-          fieldName={"gitBranch"}
+        <GitOperationSourceBranchSelectInput
+            model={gitOperationModel}
+            setModel={setGitOperationModel}
+            fieldName={"gitBranch"}
+            targetBranch={gitOperationModel?.getData("targetBranch")}
         />
       </div>
     );
@@ -112,10 +114,11 @@ function GitOperationStepConfiguration({
       case "pr-creation":
         return (
           <>
-            <SourceRepositoryPrimaryBranchSelectInput
-              model={gitOperationModel}
-              setModel={setGitOperationModel}
-              fieldName={"targetBranch"}
+            <GitOperationDestinationBranchSelectInput
+                model={gitOperationModel}
+                setModel={setGitOperationModel}
+                fieldName={"targetBranch"}
+                sourceBranch={gitOperationModel?.getData("gitBranch")}
             />
             <TextInputBase
               dataObject={gitOperationModel}
