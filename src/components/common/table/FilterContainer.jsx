@@ -28,6 +28,7 @@ function FilterContainer(
     handleImportFunction,
     minimumHeight,
     maximumHeight,
+    showRefreshButton,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -51,6 +52,7 @@ function FilterContainer(
         supportClientSideSearching={supportClientSideSearching}
         handleExportFunction={handleExportFunction}
         handleImportFunction={handleImportFunction}
+        showRefreshButton={showRefreshButton}
       />
     );
   };
@@ -130,6 +132,11 @@ FilterContainer.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
+  showRefreshButton: PropTypes.bool,
+};
+
+FilterContainer.defaultProps = {
+  showRefreshButton: true
 };
 
 export default FilterContainer;

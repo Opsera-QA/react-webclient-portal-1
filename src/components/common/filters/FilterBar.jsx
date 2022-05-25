@@ -29,6 +29,7 @@ function FilterBar(
     metadata,
     handleExportFunction,
     handleImportFunction,
+    showRefreshButton
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -114,11 +115,13 @@ function FilterBar(
             isLoading={isLoading}
             className={dropdownFilters != null || loadData != null ? "mr-2" : null}
           />
-          <RefreshButton
-            isLoading={isLoading}
-            loadDataFunction={loadData}
-            className={dropdownFilters != null ? "mr-2" : null}
-          />
+          {showRefreshButton &&
+            <RefreshButton
+              isLoading={isLoading}
+              loadDataFunction={loadData}
+              className={dropdownFilters != null ? "mr-2" : null}
+            />
+          }
           <FilterButtons
             isLoading={isLoading}
             loadData={loadData}
@@ -150,6 +153,11 @@ FilterBar.propTypes = {
   exportButton: PropTypes.any,
   handleExportFunction: PropTypes.func,
   handleImportFunction: PropTypes.func,
+  showRefreshButton: PropTypes.bool,
+};
+
+FilterBar.defaultProps = {
+  showRefreshButton: true
 };
 
 export default FilterBar;
