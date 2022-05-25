@@ -8,6 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {
   getLimitedTableTextColumn,
   getTableTextColumn,
+  getTableDateTimeColumn
 } from "components/common/table/table-column-helpers";
 import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -35,7 +36,7 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
       getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
       getTableTextColumn(getField(fields,"pipelineName")),
       getTableTextColumn(getField(fields,"runCount")),
-      getTableTextColumn(getField(fields,"timeStamp")),
+      getTableDateTimeColumn(getField(fields,"timeStamp")),
       getTableTextColumn(getField(fields,"status")),
       getTableTextColumn(getField(fields,"version")),
       getLimitedTableTextColumn(getField(fields,"destination"),30),
