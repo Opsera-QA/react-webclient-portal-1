@@ -188,6 +188,9 @@ import ExternalRestApiIntegrationStepSummaryPanel
 import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
+import GitOperationPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
+import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -590,6 +593,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
+        return (
+            <GitOperationPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                gitOperationPipelineDataObject={getModelWrappedObject(gitOperationStepFormMetadata)}
+            />
         );
       default:
         return (

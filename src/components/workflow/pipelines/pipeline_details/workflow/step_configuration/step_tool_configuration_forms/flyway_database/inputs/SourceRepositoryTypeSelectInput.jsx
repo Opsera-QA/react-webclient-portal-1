@@ -13,7 +13,7 @@ function SourceRepositoryTypeSelectInput({ fieldName, model, setModel, disabled 
     newModel?.setData("repoId", "");
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");
-    newModel?.setData("gitbranch", "");
+    newModel?.setData("gitBranch", "");
     setModel({...newModel});
   };
 
@@ -26,7 +26,7 @@ function SourceRepositoryTypeSelectInput({ fieldName, model, setModel, disabled 
     newModel?.setData("repoId", "");
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");
-    newModel?.setData("gitbranch", "");
+    newModel?.setData("gitBranch", "");
     setModel({...newModel});
   };
 
@@ -52,7 +52,7 @@ SourceRepositoryTypeSelectInput.propTypes = {
 
 SourceRepositoryTypeSelectInput.defaultProps = {
   fieldName: "service",
-  disabled: "false"
+  disabled: false
 };
 
 export default SourceRepositoryTypeSelectInput;

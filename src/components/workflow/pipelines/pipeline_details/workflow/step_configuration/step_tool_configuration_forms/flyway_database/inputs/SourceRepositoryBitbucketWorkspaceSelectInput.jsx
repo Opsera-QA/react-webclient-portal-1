@@ -10,6 +10,7 @@ function SourceRepositoryBitbucketWorkspaceSelectInput({className, fieldName, mo
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("gitBranch", "");
+    newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
 
