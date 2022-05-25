@@ -1,7 +1,7 @@
 // TODO: put metadata on node server and pull down that way?
 const emailStepNotificationMetadata = {
   idProperty: "name",
-  type: "Email Step Notification",
+  type: "Email Notification",
   fields: [
     {
       label: "Type",
@@ -19,7 +19,7 @@ const emailStepNotificationMetadata = {
       isRequired: true,
       isEmailArray: true,
       maxItems: 5,
-      formText: "You can select up to five Email Addresses to receive notifications for this Pipeline step",
+      formText: "You can select up to five Email Addresses to receive notifications",
     },
     {
       label: "Email Notifications",

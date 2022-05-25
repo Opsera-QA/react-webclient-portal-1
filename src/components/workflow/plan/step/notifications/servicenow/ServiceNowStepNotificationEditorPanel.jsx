@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
-import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
+import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import ServiceNowStepNotificationToolSelectInput
   from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationToolSelectInput";
 import ServiceNowGroupSelectInput
@@ -32,7 +32,7 @@ function ServiceNowStepNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"ServiceNow"}/>
       </Col>
       <Col xs={12}>
-        <PipelineStepNotificationLevelSelectInput
+        <OrchestrationNotificationLevelSelectInput
           model={serviceNowNotificationModel}
           setModel={setServiceNowNotificationModel}
         />
