@@ -8,12 +8,11 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import GitCustodianDetails from "./GitCustodianDetails";
 import GitCustodianTableMetaData from "./table/gitCustodianTableMetaData";
-import {addDays, format} from "date-fns";
+import { format } from "date-fns";
 import modelHelpers from "../../common/model/modelHelpers";
 import {Button, Overlay, Popover} from "react-bootstrap";
 import {DateRangePicker} from "react-date-range";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import ActionBarContainer from "../../common/actions/ActionBarContainer";
 import IconBase from "../../common/icons/IconBase";
 import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
 import InlineGitCustodianAuthorsSelectInput
@@ -26,7 +25,6 @@ import InlineGitCustodianStatusSelectInput
   from "../../common/filters/insights/gitCustodian/status/InlineGitCustodianStatusSelectInput";
 import chartsActions from "../charts/charts-actions";
 import FilterButtons from "../../common/filters/buttons/FilterButtons";
-import PropTypes from "prop-types";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -40,8 +38,8 @@ function GitCustodian() {
   const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, false));
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: null,
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -79,43 +77,14 @@ function GitCustodian() {
     };
   }, []);
 
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject = gitCustodianFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-
-      let dateRange = newDataObject?.data?.filters[
-        gitCustodianData?.data?.filters.findIndex(
-          (obj) => obj.type === "date"
-        )
-        ]?.value;
-      const filterResponse = await chartsActions.getGitCustodianFilters(
-        getAccessToken,
-        cancelSource,
-        dateRange?.startDate ? dateRange?.startDate : null,
-        dateRange?.endDate? dateRange?.endDate : null
-      );
-      console.log(filterResponse);
-      const filterResponseData = filterResponse?.data?.data?.data?.[0];
-      if(filterResponseData) {
-        setAuthorsFilterData([
-          {
-            "value": "1",
-            "text": "support@opsera.io"
-          },
-          {
-            "value": "2",
-            "text": "Mahantha"
-          },
-          {
-            "value": "3",
-            "text": "Harsha Pullabhatlapogada"
-          }
-        ]);
-        setRepositoriesFilterData(filterResponseData?.repositories ? filterResponseData?.repositories : []);
-        setStatusFilterData(filterResponseData?.status ? filterResponseData?.status : []);
-        setServicesFilterData(filterResponseData?.service ? filterResponseData?.service : []);
-      }
+      await getFilters(cancelSource);
+      let newFilterDto = newDataObject;
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setGitCustodianData(newDataObject);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -128,12 +97,49 @@ function GitCustodian() {
     }
   };
 
+  const restructureFilterData = (filterData, filterType) => {
+    if( filterData.length > 0 ) {
+      filterData.forEach(data => {
+        data.text = data[filterType];
+        data.value = data[filterType];
+      });
+      return filterData;
+    }
+    return [];
+  };
+
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+    }
+  };
+
+  const getFilters = async (cancelSource) => {
+    const filterResponse = await chartsActions.getGitCustodianFilters(
+      getAccessToken,
+      cancelSource
+    );
+    const filterResponseData = filterResponse?.data?.data?.data?.[0];
+    if(isMounted.current === true &&  filterResponseData) {
+      const authorsData = restructureFilterData(
+        filterResponseData?.authors ? filterResponseData?.authors : [],
+        'author');
+      const repositoriesData = restructureFilterData(
+        filterResponseData?.repositories ? filterResponseData?.repositories : [],
+        'repository');
+      const statusData = restructureFilterData(
+        filterResponseData?.status ? filterResponseData?.status : [],
+        'status');
+      const serviceData = restructureFilterData(
+        filterResponseData?.service ? filterResponseData?.service : [],
+        'service');
+      setAuthorsFilterData(authorsData);
+      setRepositoriesFilterData(repositoriesData);
+      setStatusFilterData(statusData);
+      setServicesFilterData(serviceData);
     }
   };
 
@@ -380,12 +386,13 @@ function GitCustodian() {
       breadcrumbDestination={"insightsGitCustodian"}
     >
       {getGitCustodianActionBar()}
-      <GitCustodianDetails
-        gitCustodianData={gitCustodianData}
-        setGitCustodianData={setGitCustodianData}
-        gitCustodianFilterModel={gitCustodianFilterModel}
-        setGitCustodianFilterModel={setGitCustodianFilterModel}
-      />
+      {isLoading ? <LoadingDialog size="sm" message="Loading Git Custodian Report"/> :
+        <GitCustodianDetails
+          gitCustodianData={gitCustodianData}
+          gitCustodianFilterModel={gitCustodianFilterModel}
+          setGitCustodianFilterModel={setGitCustodianFilterModel}
+        />
+      }
     </ScreenContainer>
   );
 

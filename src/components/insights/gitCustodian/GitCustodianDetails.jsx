@@ -1,42 +1,20 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
 import {AuthContext} from "../../../contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "../../common/status_notifications/loading";
 import {parseError} from "../../common/helpers/error-helpers";
-import GitCustodianTopSecretsChart from "./charts/bar_chart/git_custodian_top_secrets_chart/gitCustodianTopSecretsChart";
-import GitCustodianTopRepositoriesChart from "./charts/pie_chart/git_custodian_top_repositories_chart/gitCustodianTopRepositoriesChart";
-import GitCustodianTable from "./table/gitCustodianTable";
-import GitCustodianTopAuthorsChart
-  from "./charts/bar_chart/git_custodian_top_authors_chart/gitCustodianTopAuthorsChart";
-import GitCustodianTopCleanRepositoriesChart
-  from "./charts/pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTopCleanRepositoriesChart";
-import GitCustodianTimelineChart from "./charts/line_chart/git_custodian_timeline_chart/gitCustodianTimelineChart";
 import { faShieldKeyhole } from "@fortawesome/pro-light-svg-icons";
-import dashboardMetadata from "../dashboards/dashboard-metadata";
 import FilterContainer from "../../common/table/FilterContainer";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import InlineGitCustodianAuthorsSelectInput
-  from "../../common/filters/insights/gitCustodian/authors/InlineGitCustodianAuthorsSelectInput";
-import InlineGitCustodianServiceSelectInput
-  from "../../common/filters/insights/gitCustodian/gitService/InlineGitCustodianServiceSelectInput";
-import InlineGitCustodianRepositoriesSelectInput
-  from "../../common/filters/insights/gitCustodian/repositories/InlineGitCustodianRepositoriesSelectInput";
-import InlineGitCustodianStatusSelectInput
-  from "../../common/filters/insights/gitCustodian/status/InlineGitCustodianStatusSelectInput";
-import chartsActions from "components/insights/charts/charts-actions";
+import GitCustodianChartsView from "./charts/GitCustodianChartsView";
+import GitCustodianTable from "./table/gitCustodianTable";
 
 
 function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -74,48 +52,13 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     }
   };
 
-  const getCharts = () => {
-    return (
-      <div style={{overflow: 'scroll'}} className={"p-2"}>
-        <div style={{display: 'flex', width: '100%'}}>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP CLEAN REPOSITORIES</div>
-              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TIMELINE</div>
-              <GitCustodianTimelineChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP SECRETS</div>
-              <GitCustodianTopSecretsChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP REPOSITORIES</div>
-              <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP USERS</div>
-              <GitCustodianTopAuthorsChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
-        </div>
-      </div>
-    );
-  };
-
   const getTable = () => {
     return (
-      <GitCustodianTable dashboardData={gitCustodianData} />
+      <GitCustodianTable
+        gitCustodianData={gitCustodianData}
+        gitCustodianFilterModel={gitCustodianFilterModel}
+        setGitCustodianFilterModel={setGitCustodianFilterModel}
+      />
     );
   };
 
@@ -136,7 +79,7 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
 
     return (
       <div>
-        {getCharts()}
+        <GitCustodianChartsView gitCustodianData={gitCustodianData}/>
         {getTable()}
       </div>
     );
@@ -150,7 +93,7 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
       type={'Jira Ticket'}
       body={getBody()}
       titleIcon={faShieldKeyhole}
-      metadata={dashboardMetadata}
+      metadata={gitCustodianData}
       supportSearch={false}
       filterDto={gitCustodianFilterModel}
       setFilterDto={setGitCustodianFilterModel}

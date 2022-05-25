@@ -102,6 +102,14 @@ const GitCustodianTableMetaData = {
       label: "Jira Issue Type",
       id: "issueType"
     },
+    {
+      label: "Description",
+      id: "description"
+    },
+    {
+      label: "Summary",
+      id: "summary"
+    },
   ],
   getActiveFilters(filterDto) {
      let activeFilters = [];
@@ -131,8 +139,8 @@ const GitCustodianTableMetaData = {
      search: "",
      activeFilters: [],
      date: {
-       startDate: null,
-       endDate: null,
+       startDate: new Date(),
+       endDate: new Date(),
        key: "selection",
      }
   },

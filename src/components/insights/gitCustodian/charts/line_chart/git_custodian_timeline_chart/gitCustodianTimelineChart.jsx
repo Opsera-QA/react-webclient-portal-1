@@ -8,7 +8,7 @@ import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/met
 import { defaultConfig, getColor, assignStandardColors} from "../../../../charts/charts-views";
 import ChartTooltip from "../../../../charts/ChartTooltip";
 
-function GitCustodianTimelineChart({ dashboardData }) {
+function GitCustodianTimelineChart({ dashboardData, data }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([
@@ -72,7 +72,6 @@ function GitCustodianTimelineChart({ dashboardData }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      assignStandardColors(metrics);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -89,7 +88,9 @@ function GitCustodianTimelineChart({ dashboardData }) {
 
   const getBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
-      return null;
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}}/>
+      );
     }
 
     return (
@@ -99,7 +100,6 @@ function GitCustodianTimelineChart({ dashboardData }) {
           {...defaultConfig("Number of Pending Issues", "Date",
             false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor, METRIC_THEME_CHART_PALETTE_COLORS)}
-          onClick={() => setShowModal(true)}
           tooltip={({ point, color }) => <ChartTooltip
             titles = {["Issues Remaining"]}
             values = {[point.data.y]} />}
@@ -112,7 +112,8 @@ function GitCustodianTimelineChart({ dashboardData }) {
 }
 
 GitCustodianTimelineChart.propTypes = {
-  dashboardData: PropTypes.object
+  dashboardData: PropTypes.object,
+  data: PropTypes.array
 };
 
 export default GitCustodianTimelineChart;
