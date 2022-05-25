@@ -195,7 +195,7 @@ const RepoSelectionView = ({
     if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
       selectedOptions.forEach((selectedOptionName) => {
         let componentType = repositories.find(
-          (type) => type.repository === selectedOptionName,
+          (type) => type.repoId === selectedOptionName,
         );
 
         if (componentType != null) {
@@ -220,7 +220,7 @@ const RepoSelectionView = ({
     let setDataArray = [];
     let reposToScan = dataObject?.getData("repositories");
     for (let item in reposToScan) {
-      setDataArray.push(repositories.find(repo => repo?.repository === reposToScan[item]));
+      setDataArray.push(repositories.find(repo => repo?.repoId === reposToScan[item]));
     }
     if (reposToScan?.length === setDataArray?.length) {
       newModel.setData("reposToScan", setDataArray);
@@ -293,7 +293,7 @@ RepoSelectionView.propTypes = {
 };
 
 RepoSelectionView.defaultProps = {
-  valueField: "repository",
+  valueField: "repoId",
   textField: "repository",
   disabled: false
 };
