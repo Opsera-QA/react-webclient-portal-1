@@ -59,7 +59,8 @@ const salesforceScanStepFormMetadata = {
     {
       label: "Quality Gates",
       id: "qualityGateIds",
-      isRequired: true
+      isRequired: true,
+      formText: "Select Quality gates configured under Validation rule on tool registry"
     },
     {
       label: "Select Salesforce Scan Tool",
