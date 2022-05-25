@@ -10,7 +10,6 @@ import SourceRepositoryBitbucketWorkspaceSelectInput from "components/workflow/p
 import SourceRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositorySelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitOperationActionSelectInput from "./inputs/GitOperationActionSelectInput";
-import InlineWarning from "../../../../../../../common/status_notifications/inline/InlineWarning";
 import GitOperationDestinationBranchSelectInput from "./inputs/GitOperationDestinationBranchSelectInput";
 import GitOperationSourceBranchSelectInput from "./inputs/GitOperationSourceBranchSelectInput";
 
@@ -140,13 +139,6 @@ function GitOperationStepConfiguration({
     }
   };
 
-  const getMessages = () => {
-    let configuration= gitOperationModel.getPersistData();
-    if(configuration.gitBranch === configuration.targetBranch) {
-      return (<InlineWarning warningMessage={"Warning : Source Branch and Target Branch cannot be the same."} />);
-    }
-  };
-
   if (isLoading || gitOperationModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -165,7 +157,6 @@ function GitOperationStepConfiguration({
         fieldName={"action"}
       />
       {getDynamicFields()}
-      {getMessages()}
     </PipelineStepEditorPanelContainer>
   );
 }
