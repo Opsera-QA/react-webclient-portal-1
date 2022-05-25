@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
-import UserReports from "components/reports/users/UserReports";
+import UserReportPageLinkCards from "components/reports/users/UserReportPageLinkCards";
 
 function UserReportsScreen() {
   const { getAccessRoleData, isSassUser } = useContext(AuthContext);
@@ -60,7 +60,7 @@ function UserReportsScreen() {
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       isLoading={isLoading}
     >
-      <UserReports />
+      <UserReportPageLinkCards accessRoleData={accessRoleData} />
     </ScreenContainer>
   );
 }
