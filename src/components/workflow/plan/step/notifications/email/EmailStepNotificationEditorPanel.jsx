@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
+import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import EmailNotificationToggle
   from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
 import Row from "react-bootstrap/Row";
@@ -33,7 +33,7 @@ function EmailStepNotificationEditorPanel(
         />
       </Col>
       <Col xs={12}>
-        <PipelineStepNotificationLevelSelectInput
+        <OrchestrationNotificationLevelSelectInput
           model={emailNotificationModel}
           setModel={setEmailNotificationModel}
         />

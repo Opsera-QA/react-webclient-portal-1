@@ -1,7 +1,6 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: Make constants, wire up message field
@@ -11,7 +10,7 @@ const notificationLevels = [
   { value: "all", text: "All Activity", message: "You will receive notifications for any activity on this step." },
 ];
 
-function PipelineStepNotificationLevelSelectInput(
+function OrchestrationNotificationLevelSelectInput(
   {
     fieldName,
     model,
@@ -52,7 +51,7 @@ function PipelineStepNotificationLevelSelectInput(
   );
 }
 
-PipelineStepNotificationLevelSelectInput.propTypes = {
+OrchestrationNotificationLevelSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -60,8 +59,8 @@ PipelineStepNotificationLevelSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-PipelineStepNotificationLevelSelectInput.defaultProps = {
+OrchestrationNotificationLevelSelectInput.defaultProps = {
   fieldName: "event",
 };
 
-export default PipelineStepNotificationLevelSelectInput;
+export default OrchestrationNotificationLevelSelectInput;

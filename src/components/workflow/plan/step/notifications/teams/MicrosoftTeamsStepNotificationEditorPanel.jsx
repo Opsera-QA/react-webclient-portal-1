@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
-import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
+import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import TeamsStepNotificationTeamsToolSelectInput
   from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
@@ -30,7 +30,7 @@ function MicrosoftTeamsStepNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"}/>
       </Col>
       <Col xs={12}>
-        <PipelineStepNotificationLevelSelectInput
+        <OrchestrationNotificationLevelSelectInput
           model={teamsNotificationModel}
           setModel={setTeamsNotificationModel}
         />
