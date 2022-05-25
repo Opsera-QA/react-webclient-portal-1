@@ -62,6 +62,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   SERVICE_NOW: "servicenow",
   SFDC_CONFIGURATOR: "sfdc-configurator",
   SLACK: "slack",
+  SNAPLOGIC: "snaplogic",
   SONAR: "sonar",
   SPINNAKER: "spinnaker",
   SSH_UPLOAD: "ssh-upload",
