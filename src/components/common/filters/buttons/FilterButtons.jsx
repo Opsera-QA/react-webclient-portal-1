@@ -8,7 +8,16 @@ import Popover from "react-bootstrap/Popover";
 import Model from "core/data_model/model";
 import IconBase from "components/common/icons/IconBase";
 
-function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoading }) {
+function FilterButtons({
+  dropdownFilters,
+  filterDto,
+  loadData,
+  className,
+  isLoading,
+  filterBtnClassName,
+  includeButtonText,
+  filterDropdownTitle
+}) {
   const loadFilters = async () => {
     filterDto?.setData("currentPage", 1);
     loadData(filterDto);
@@ -55,7 +64,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
     <Popover id="popover-basic" className="popover-filter">
       <Popover.Title as="h3" className="filter-title">
         <Row>
-          <Col sm={10} className="my-auto">Filters</Col>
+          <Col sm={10} className="my-auto">{filterDropdownTitle ? filterDropdownTitle : 'Filters'}</Col>
           <Col sm={2} className="text-right">
             <IconBase
               icon={faTimes}
@@ -96,12 +105,16 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
-            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><IconBase icon={faFilter}/></span></Button>
+            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
+              <span><IconBase icon={faFilter}/></span>
+              {includeButtonText && <span>Filter Results</span>}
+            </Button>
           </div>
         </OverlayTrigger>
         <div>
-          <Button className={"ml-2"} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
             <StackedFilterRemovalIcon />
+            {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
           </Button>
         </div>
       </div>
@@ -114,7 +127,10 @@ FilterButtons.propTypes = {
   filterDto: PropTypes.object,
   dropdownFilters: PropTypes.any,
   loadData: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  filterBtnClassName: PropTypes.string,
+  includeButtonText: PropTypes.bool,
+  filterDropdownTitle: PropTypes.string
 };
 
 export default FilterButtons;

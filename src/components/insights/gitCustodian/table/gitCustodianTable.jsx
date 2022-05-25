@@ -13,6 +13,13 @@ import {
 import {getField} from "../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
+import {faDownload, faShieldKeyhole} from "@fortawesome/pro-light-svg-icons";
+import dashboardMetadata from "../../dashboards/dashboard-metadata";
+import TooltipWrapper from "../../../common/tooltip/TooltipWrapper";
+import Button from "react-bootstrap/Button";
+import IconBase from "../../../common/icons/IconBase";
+import FilterContainer from "../../../common/table/FilterContainer";
+import GitCustodianNewJiraTicketModal from "../modal/GitCustodianNewJiraTicketModal";
 
 function GitCustodianTable({ dashboardData}) {
   const toastContext = useContext(DialogToastContext);
@@ -250,6 +257,15 @@ function GitCustodianTable({ dashboardData}) {
     }
   };
 
+  const createNewJiraTicket = () => {
+    toastContext.showOverlayPanel(
+      <GitCustodianNewJiraTicketModal
+        loadData={loadData}
+        isMounted={isMounted}
+      />
+    );
+  };
+
   const getBody = () => {
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
@@ -274,9 +290,31 @@ function GitCustodianTable({ dashboardData}) {
   };
 
   return (
-    <div>
-      {getBody()}
-    </div> );
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      title={'Vulnerable Commits'}
+      addRecordFunction={createNewJiraTicket}
+      type={'Jira Ticket'}
+      body={getBody()}
+      metadata={dashboardMetadata}
+      supportSearch={false}
+      className={"px-2 pb-2"}
+      showRefreshButton={false}
+      exportButton={
+        <TooltipWrapper innerText={"Export CSV"}>
+          <div className={"mx-2"}>
+            <Button
+              variant={"outline-primary"}
+              size={"sm"}
+              disabled={isLoading}>
+              <span><IconBase icon={faDownload}/></span>
+            </Button>
+          </div>
+        </TooltipWrapper>
+      }
+    />
+  );
 }
 
 GitCustodianTable.propTypes = {

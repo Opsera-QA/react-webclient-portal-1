@@ -14,13 +14,9 @@ import GitCustodianTopAuthorsChart
 import GitCustodianTopCleanRepositoriesChart
   from "./charts/pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTopCleanRepositoriesChart";
 import GitCustodianTimelineChart from "./charts/line_chart/git_custodian_timeline_chart/gitCustodianTimelineChart";
-import {faDownload, faShieldKeyhole} from "@fortawesome/pro-light-svg-icons";
+import { faShieldKeyhole } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "../dashboards/dashboard-metadata";
 import FilterContainer from "../../common/table/FilterContainer";
-import Button from "react-bootstrap/Button";
-import IconBase from "../../common/icons/IconBase";
-import TooltipWrapper from "../../common/tooltip/TooltipWrapper";
-import NewDashboardModal from "../dashboards/NewDashboardModal";
 import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import InlineGitCustodianAuthorsSelectInput
   from "../../common/filters/insights/gitCustodian/authors/InlineGitCustodianAuthorsSelectInput";
@@ -30,7 +26,7 @@ import InlineGitCustodianRepositoriesSelectInput
   from "../../common/filters/insights/gitCustodian/repositories/InlineGitCustodianRepositoriesSelectInput";
 import InlineGitCustodianStatusSelectInput
   from "../../common/filters/insights/gitCustodian/status/InlineGitCustodianStatusSelectInput";
-import GitCustodianNewJiraTicketModal from "./modal/GitCustodianNewJiraTicketModal";
+import chartsActions from "components/insights/charts/charts-actions";
 
 
 function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
@@ -41,20 +37,6 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [data, setData] = useState([]);
-  const authors = [
-    {
-      "value": "1",
-      "text": "support@opsera.io"
-    },
-    {
-      "value": "1",
-      "text": "Mahantha"
-    },
-    {
-      "value": "1",
-      "text": "Harsha Pullabhatlapogada"
-    }
-  ];
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -92,31 +74,26 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     }
   };
 
-  const getDropdownFilters = () => {
-    return (
-      <>
-        <InlineGitCustodianAuthorsSelectInput filterModel={gitCustodianFilterModel} options={authors} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
-        <InlineGitCustodianServiceSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
-        <InlineGitCustodianRepositoriesSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
-        <InlineGitCustodianStatusSelectInput filterModel={gitCustodianFilterModel} setFilterModel={setGitCustodianFilterModel} loadData={loadData} className={"mb-2"} />
-      </>
-    );
-  };
-
   const getCharts = () => {
     return (
       <div style={{overflow: 'scroll'}} className={"p-2"}>
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP SECRETS</div>
-              <GitCustodianTopSecretsChart dashboardData={gitCustodianData}/>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP CLEAN REPOSITORIES</div>
+              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TIMELINE</div>
               <GitCustodianTimelineChart dashboardData={gitCustodianData}/>
+            </DataBlockBoxContainer>
+          </Col>
+          <Col sm={6} md={4} className={'p-1'}>
+            <DataBlockBoxContainer showBorder={true}>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP SECRETS</div>
+              <GitCustodianTopSecretsChart dashboardData={gitCustodianData}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
@@ -131,12 +108,6 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
               <GitCustodianTopAuthorsChart dashboardData={gitCustodianData}/>
             </DataBlockBoxContainer>
           </Col>
-          <Col sm={6} md={4} className={'p-1'}>
-            <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP CLEAN REPOSITORIES</div>
-              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData}/>
-            </DataBlockBoxContainer>
-          </Col>
         </div>
       </div>
     );
@@ -145,15 +116,6 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
   const getTable = () => {
     return (
       <GitCustodianTable dashboardData={gitCustodianData} />
-    );
-  };
-
-  const createNewJiraTicket = () => {
-    toastContext.showOverlayPanel(
-      <GitCustodianNewJiraTicketModal
-        loadData={loadData}
-        isMounted={isMounted}
-      />
     );
   };
 
@@ -185,28 +147,15 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
       loadData={loadData}
       isLoading={isLoading}
       title={'Git Custodian Report'}
-      addRecordFunction={createNewJiraTicket}
       type={'Jira Ticket'}
       body={getBody()}
       titleIcon={faShieldKeyhole}
-      dropdownFilters={getDropdownFilters()}
       metadata={dashboardMetadata}
       supportSearch={false}
       filterDto={gitCustodianFilterModel}
       setFilterDto={setGitCustodianFilterModel}
       className={"px-2 pb-2"}
-      exportButton={
-        <TooltipWrapper innerText={"Export CSV"}>
-          <div className={"mx-2"}>
-            <Button
-              variant={"outline-primary"}
-              size={"sm"}
-              disabled={isLoading}>
-              <span><IconBase icon={faDownload}/></span>
-            </Button>
-          </div>
-        </TooltipWrapper>
-    }
+      showRefreshButton={false}
     />
   );
 }
