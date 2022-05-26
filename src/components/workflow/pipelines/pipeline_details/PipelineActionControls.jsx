@@ -26,6 +26,7 @@ import CancelPipelineQueueConfirmationOverlay
 import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
+import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 
@@ -437,6 +438,15 @@ function PipelineActionControls(
     );
   };
 
+  const launchApigeeRunAssistant = (pipelineOrientation, pipelineId) => {
+    toastContext.showOverlayPanel(
+      <ApigeePipelineRunAssistantOverlay
+        pipeline={pipeline}
+        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
+      />
+    );
+  };
+
   // TODO: Handle more gracefully
   const triggerInformaticaPipelineRun = async (pipelineOrientation, pipelineId) => {
     if (pipelineOrientation === "start") {
@@ -471,6 +481,8 @@ function PipelineActionControls(
       launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
     } else if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
+    }else if (pipelineType === "apigee") {
+      launchApigeeRunAssistant(pipelineOrientation, pipelineId);
     } else if (pipelineType === "informatica") {
       launchInformaticaRunAssistant(pipelineOrientation, pipelineId);
     } else {

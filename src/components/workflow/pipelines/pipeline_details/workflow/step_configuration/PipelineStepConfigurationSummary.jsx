@@ -195,6 +195,9 @@ import salesforceScanStepFormMetadata
 import GitOperationPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
 import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
+import ApigeePipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/ApigeePipelineStepConfigurationSummaryPanel";
+import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -611,6 +614,13 @@ function PipelineStepConfigurationSummary({
                 pipelineData={pipelineData}
                 gitOperationPipelineDataObject={getModelWrappedObject(gitOperationStepFormMetadata)}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <ApigeePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            apigeePipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
+          />
         );
       default:
         return (
