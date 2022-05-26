@@ -9,7 +9,7 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import ScheduledTaskTasksOverlay from "components/tasks/scheduler/ScheduledTaskTasksOverlay";
 
 export const SCHEDULER_SUPPORTED_TASK_TYPES = [
-  // TASK_TYPES.GITSCRAPER,
+  TASK_TYPES.GITSCRAPER,
 ];
 
 function TaskSchedulerField(
