@@ -37,10 +37,7 @@ const ApigeeStepFormMetadata = {
     {
       label: "Delay Time (in secs)",
       id: "delayTime",
-      regexDefinitionName: "numericalField",
-      isRequiredFunction: (model) => {
-        return model?.getData("type") === APIGEE_TYPES.DEPLOY;
-      },
+      regexDefinitionName: "numericalField"      
     },
     {
       label: "Override Version",
