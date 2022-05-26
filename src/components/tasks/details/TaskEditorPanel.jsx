@@ -30,6 +30,8 @@ import SalesforceBulkMigrationHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
 import GitToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
+import SalesforceToGitMergeSyncTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
 import vaultActions from "components/vault/vault.actions";
 import TaskModel from "components/tasks/task.model";
 
@@ -124,13 +126,13 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GITSCRAPER:
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-        break;
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         break;
