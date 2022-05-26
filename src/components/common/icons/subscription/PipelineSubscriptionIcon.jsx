@@ -17,7 +17,7 @@ function PipelineSubscriptionIcon(
     className,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isUpdatingSubscriptionStatus, setIsUpdatingSubscriptionStatus] = useState(false);
@@ -34,7 +34,7 @@ function PipelineSubscriptionIcon(
     isMounted.current = true;
     setIsSubscribed(false);
 
-    if (featureFlagHideItemInProd() === false && pullSubscriptionStatus !== false && isMongoDbId(pipelineId) === true) {
+    if (pullSubscriptionStatus !== false && isMongoDbId(pipelineId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -120,10 +120,6 @@ function PipelineSubscriptionIcon(
       }
     }
   };
-
-  if (featureFlagHideItemInProd() !== false) {
-    return null;
-  }
 
   return (
     <SubscriptionIcon

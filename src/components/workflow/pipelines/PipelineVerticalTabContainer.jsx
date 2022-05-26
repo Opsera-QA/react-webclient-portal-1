@@ -62,15 +62,15 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
         activeTab={pipelineFilterModel?.getData("type")}
         tooltipText={"View Salesforce Pipelines that you have access to."}
       />
-      {/*<VanitySetVerticalTab*/}
-      {/*  icon={faRss}*/}
-      {/*  tabText={"Subscriptions"}*/}
-      {/*  tabName={"subscribed"}*/}
-      {/*  disabled={isLoading}*/}
-      {/*  handleTabClick={handleTabClick}*/}
-      {/*  activeTab={pipelineFilterModel?.getData("type")}*/}
-      {/*  tooltipText={"View Pipelines that you have access to and have subscribed to."}*/}
-      {/*/>*/}
+      <VanitySetVerticalTab
+        icon={faRss}
+        tabText={"Subscriptions"}
+        tabName={"subscribed"}
+        disabled={isLoading}
+        handleTabClick={handleTabClick}
+        activeTab={pipelineFilterModel?.getData("type")}
+        tooltipText={"View Pipelines that you have access to and have subscribed to."}
+      />
     </VanitySetVerticalTabContainer>
   );
 }
