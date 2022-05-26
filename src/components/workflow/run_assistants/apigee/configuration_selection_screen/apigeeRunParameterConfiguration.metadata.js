@@ -19,6 +19,7 @@ export const apigeeRunParameterConfigurationMetadata = {
       label: "Name pattern match regex - (* - any character, _ - single character)",
       id: "namePattern",
       regexDefinitionName: "apigeeNamePatternRules",
+      maxLength: 24,
     },
   ],
   newObjectFields: {
