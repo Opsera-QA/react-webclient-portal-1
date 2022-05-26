@@ -112,23 +112,29 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_GIT_BRANCHES:
-        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-        return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
         return <GitToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GITSCRAPER:
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        break;
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        break;
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+        break;
+      case TASK_TYPES.SNAPLOGIC_TASK:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
