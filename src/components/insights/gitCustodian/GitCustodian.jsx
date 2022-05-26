@@ -85,6 +85,11 @@ function GitCustodian() {
       await getFilters(cancelSource);
       let newFilterDto = newDataObject;
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      newFilterDto.setData("totalCount", newFilterDto.getData('totalCount'));
+      let pageSize = newFilterDto.getData("pageSize");
+      newFilterDto.setData("pageSize", pageSize);
+      let sortOption = newFilterDto.getData("sortOption");
+      newFilterDto.setData("sortOption", sortOption);
       setGitCustodianData(newDataObject);
     } catch (error) {
       if (isMounted.current === true) {
@@ -305,7 +310,7 @@ function GitCustodian() {
     ]);
     setSDate(undefined);
     setEDate(undefined);
-    validate();
+    validate(new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)), new Date(new Date().setHours(0, 0, 0, 0)));
   };
 
   const getDateRangeButton = () => {

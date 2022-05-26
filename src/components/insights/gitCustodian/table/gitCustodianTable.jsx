@@ -8,7 +8,7 @@ import {
   getTableTextColumn,
   getTableDateTimeColumn,
   getGitCustodianOriginColumn,
-  getTableBooleanIconColumn
+  getGitCustodianExternalLinkIconColumnDefinition
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
@@ -69,7 +69,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
-      getTableBooleanIconColumn(getField(fields, "jiraTicket"))
+      getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "jiraTicket")),
     ],
     []
   );
@@ -79,15 +79,19 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       let tableResponseData = await chartsActions.getGitCustodianTableData(
         getAccessToken,
         cancelSource,
-        gitCustodianData
+        filterDto
       );
       let tableResponse = tableResponseData?.data?.data;
-      if (isMounted?.current === true && Array.isArray(tableResponse?.data)) {
+      if (isMounted?.current === true && tableResponse && Array.isArray(tableResponse?.data)) {
         setResponseData(tableResponse?.data);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", tableResponse?.count);
+        let pageSize = filterDto.getData("pageSize");
+        newFilterDto.setData("pageSize", pageSize);
+        let sortOption = filterDto.getData("sortOption");
+        newFilterDto.setData("sortOption", sortOption);
+        setGitCustodianFilterModel({...newFilterDto});
       }
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", tableResponse?.count);
-      setGitCustodianFilterModel({...newFilterDto});
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

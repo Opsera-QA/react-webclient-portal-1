@@ -52,7 +52,7 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
       if (isMounted?.current === true) {
         setIsLoading(false);
         setMetrics([
-          {      
+          {
             "id": "No of Issues added",
             "data": data,
             "color": "#5B5851"
@@ -63,16 +63,19 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
   };
 
   const getBody = () => {
-    if (!metrics || !Array.isArray(metrics) || metrics.length === 0) {
+    if (!data || !Array.isArray(data) || data.length === 0
+    || !data[0].data || !Array.isArray(data[0].data) || data[0].data.length === 0) {
       return (
-        <div className="new-chart p-0" style={{height: "200px"}}/>
+        <div className="new-chart p-0" style={{height: "200px"}} >
+          <div className={'p-2'}>No data found.</div>
+        </div>
       );
     }
 
     return (
       <div className="new-chart p-0" style={{height: "200px"}}>
         <ResponsiveLine
-          data={metrics}
+          data={data}
           {...defaultConfig("Issues Added", "Date",
             false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor, METRIC_THEME_CHART_PALETTE_COLORS)}

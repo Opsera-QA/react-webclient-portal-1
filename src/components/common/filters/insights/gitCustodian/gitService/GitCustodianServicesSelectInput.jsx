@@ -12,7 +12,6 @@ function GitCustodianServicesSelectInput({ fieldName, filterModel, setFilterMode
       fieldName={fieldName}
       className={className}
       placeholderText={"Filter by Service"}
-      groupBy={"service"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
       selectOptions={options}
