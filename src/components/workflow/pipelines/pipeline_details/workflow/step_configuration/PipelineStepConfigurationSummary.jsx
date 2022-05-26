@@ -188,7 +188,6 @@ import ExternalRestApiIntegrationStepSummaryPanel
 import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
-src/components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary.jsx
 import SalesforceScanPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanPipelineStepConfigurationSummaryPanel";
 import salesforceScanStepFormMetadata
