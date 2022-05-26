@@ -22,3 +22,11 @@ hr {
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+.lookup-table .p-2 {
+  height: 110px;
+}
+
+.lookup-pipelines {
+  margin-bottom: 22px;
+}

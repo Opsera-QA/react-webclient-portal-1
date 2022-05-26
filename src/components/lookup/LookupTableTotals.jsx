@@ -18,7 +18,7 @@ const DataBlock = ({title, value}) => (
   <Col xl={2} lg={2} sm={4} className={"my-3"}>
     <DataBlockBoxContainer showBorder={true}>
     <TwoLineScoreDataBlock
-      className="p-2"
+      className="p-2 lookup-pipelines"
       score={value}
       subtitle={title}
     />
