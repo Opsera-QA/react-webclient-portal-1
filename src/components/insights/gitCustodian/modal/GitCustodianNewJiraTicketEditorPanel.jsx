@@ -38,10 +38,9 @@ function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData })
     };
   }, []);
 
-  const createNewJiraTicket = async () => {
-    console.log({createJiraTicketDataModel});
+  const createNewJiraTicket = async () => {    
     const response = await chartsActions.createGitCustodianJiraTicket(getAccessToken, cancelTokenSource, createJiraTicketDataModel.getPersistData());
-    console.log({response});
+    handleClose();
   };
 
   return (
