@@ -7,7 +7,7 @@ function JiraBugsCompletedDataBlock({ data, previousData, getIcon, getIconColor 
   return (    
     <DataBlockBoxContainer showBorder={true}>
       <ThreeLineScoreDataBlock
-        className={`${getIconColor(data, previousData)}`}
+        className={`p-3 ${getIconColor(data, previousData)}`}
         score={data}
         topText={"Bugs Completed"}
         bottomText={"Previous Bugs: " + previousData} 
