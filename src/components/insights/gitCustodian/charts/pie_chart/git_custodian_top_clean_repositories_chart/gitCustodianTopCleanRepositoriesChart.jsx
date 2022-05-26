@@ -4,8 +4,13 @@ import { ResponsivePie } from "@nivo/pie";
 import config from "./gitCustodianTopCleanRepositoriesChartConfig";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData } from '../../../../charts/charts-views';
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
+import TwoLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
 function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -70,13 +75,27 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
 
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
-        <ResponsivePie
-          data={chartData}
-          {...defaultConfig()}
-          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-        />
-        <div style={{ position: "absolute", top: "40%", marginLeft: "53.5%"}}>
-          <span>{totalRepo}</span>
+        <div className={"mx-2"}>
+          <Row className={"mx-0 p-2 justify-content-between"}>
+            <Col md={6} className={"my-2"}>
+              <DataBlockBoxContainer showBorder={true} className={'h-100'}>
+                <TwoLineDataBlockBase
+                  className={"p-2"}
+                  title={totalCleanRepo === 0 ? '0' : totalCleanRepo}
+                  subtitle={"Clean Repositories"}
+                ></TwoLineDataBlockBase>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={6} className={"my-2"}>
+              <DataBlockBoxContainer showBorder={true}>
+                <TwoLineDataBlockBase
+                  className={"p-2"}
+                  subtitle={'Unclean Repositories'}
+                  title={totalUncleanRepo === 0 ? '0' : totalUncleanRepo}
+                ></TwoLineDataBlockBase>
+              </DataBlockBoxContainer>
+            </Col>
+          </Row>
         </div>
       </div>
     );

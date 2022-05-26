@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import FilterMultiSelectInputBase from "../../../input/FilterMultiSelectInputBase";
 
 function GitCustodianRepositoriesSelectInput({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, options}) {
   if (filterModel == null) {
@@ -8,14 +8,15 @@ function GitCustodianRepositoriesSelectInput({ fieldName, filterModel, setFilter
   }
 
   return (
-    <FilterSelectInputBase
-      inline={inline}
+    <FilterMultiSelectInputBase
       fieldName={fieldName}
       className={className}
-      placeholderText={"Filter By Repositories"}
+      placeholderText={"Filter by Repositories"}
+      groupBy={"repositories"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
       selectOptions={options}
+      inline={inline}
       setDataFunction={setDataFunction}
     />
   );
