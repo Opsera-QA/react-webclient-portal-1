@@ -8,7 +8,7 @@ import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFiel
 import { TASK_TYPES } from "components/tasks/task.types";
 import ScheduledTaskTasksOverlay from "components/tasks/scheduler/ScheduledTaskTasksOverlay";
 
-const SCHEDULER_SUPPORTED_TASK_TYPES = [
+export const SCHEDULER_SUPPORTED_TASK_TYPES = [
   // TASK_TYPES.GITSCRAPER,
 ];
 

@@ -20,7 +20,7 @@ import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 import TaskOrchestrationNotificationInlineInput
   from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
 import { TASK_TYPES } from "components/tasks/task.types";
-import TaskSchedulerField from "components/tasks/scheduler/TaskSchedulerField";
+import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -95,6 +95,19 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     }
   };
 
+  const getSchedulerField = () => {
+    if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) !== true) {
+      return (
+        <Col md={6}>
+          <TaskSchedulerField
+            taskModel={gitTasksData}
+            canEditTaskSchedule={actionAllowed("run_task")}
+          />
+        </Col>
+      );
+    }
+  };
+
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
       <Row>
@@ -116,19 +129,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
-        {/*<Col md={6}>*/}
-        {/*  <TaskOrchestrationNotificationInlineInput*/}
-        {/*    model={gitTasksData}*/}
-        {/*    fieldName={"notifications"}*/}
-        {/*    loadDataFunction={loadData}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        {/*<Col md={6}>*/}
-        {/*  <TaskSchedulerField*/}
-        {/*    taskModel={gitTasksData}*/}
-        {/*    canEditTaskSchedule={true} // TODO: Wire up RBAC*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <Col md={6}>
+          <TaskOrchestrationNotificationInlineInput
+            model={gitTasksData}
+            fieldName={"notifications"}
+            loadDataFunction={loadData}
+          />
+        </Col>
+        {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase
