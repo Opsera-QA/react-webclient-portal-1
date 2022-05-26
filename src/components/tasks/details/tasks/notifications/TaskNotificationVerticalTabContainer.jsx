@@ -26,13 +26,13 @@ function TaskNotificationVerticalTabContainer(
       {/*  handleTabClick={handleTabClickFunction}*/}
       {/*  activeTab={activeTab}*/}
       {/*/>*/}
-      {/*<VanitySetVerticalTab*/}
-      {/*  icon={faMicrosoft}*/}
-      {/*  tabText={"Microsoft Teams"}*/}
-      {/*  tabName={"teams"}*/}
-      {/*  handleTabClick={handleTabClickFunction}*/}
-      {/*  activeTab={activeTab}*/}
-      {/*/>*/}
+      <VanitySetVerticalTab
+        icon={faMicrosoft}
+        tabText={"Microsoft Teams"}
+        tabName={"teams"}
+        handleTabClick={handleTabClickFunction}
+        activeTab={activeTab}
+      />
       {/*<VanitySetVerticalTab*/}
       {/*  icon={faEnvelope}*/}
       {/*  tabText={"Service Now"}*/}
@@ -40,13 +40,13 @@ function TaskNotificationVerticalTabContainer(
       {/*  handleTabClick={handleTabClickFunction}*/}
       {/*  activeTab={activeTab}*/}
       {/*/>*/}
-      {/*<VanitySetVerticalTab*/}
-      {/*  icon={faSlack}*/}
-      {/*  tabText={"Slack"}*/}
-      {/*  tabName={"slack"}*/}
-      {/*  handleTabClick={handleTabClickFunction}*/}
-      {/*  activeTab={activeTab}*/}
-      {/*/>*/}
+      <VanitySetVerticalTab
+        icon={faSlack}
+        tabText={"Slack"}
+        tabName={"slack"}
+        handleTabClick={handleTabClickFunction}
+        activeTab={activeTab}
+      />
     </VanitySetVerticalTabContainer>
   );
 }
