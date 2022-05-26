@@ -16,6 +16,10 @@ const JENKINS_JOB_TYPES = [
     value: "PMD_SCAN"
   },
   {
+    label: "Salesforce Code Analyzer",
+    value: "SFDC_CODE_SCAN"
+  },
+  {
     label: "Code Scan",
     value: "CODE SCAN"
   },

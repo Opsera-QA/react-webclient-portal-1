@@ -74,5 +74,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   XUNIT: "xunit",
   YAML_GIT_PROCESSOR: "yaml_git_processor",
   GITHUB_DEPLOY_KEY: "github-deploykey",
+  SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
   GIT_OPERATION: "git-operation"
 };

@@ -302,4 +302,10 @@ toolsActions.getPipelinesUsingNotificationTool = async (getAccessToken, cancelTo
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+//pmd actions
+toolsActions.getSfdxScanRules = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/sfdc-scan/getrules`;
+  return await baseActions.apiGetCallV2(getAccessToken, null, apiUrl);
+}
+
 export default toolsActions;
