@@ -462,13 +462,12 @@ const Lookup = () => {
                     title={`${componentName}: Totals`}
                   />
                   <FilterContainer
-                    className="mt-2 lookup-table"
+                    className="mt-2 lookup-table lookup-pipelines"
                     showBorder={false}
                     body={<LookupTablePipelines data={pipelines} />}
                     titleIcon={faBug}
                     title={`${componentName}: Pipelines`}
                   />
-                  <br />
                 </>
               );
             })}

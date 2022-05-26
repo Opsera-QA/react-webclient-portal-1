@@ -74,7 +74,6 @@ const LookupTablePipelines = ({
 
   return (
     <MakeupTableBase
-      className="pipelines"
       columns={columns}
       data={data}
       initialState={initialState}
