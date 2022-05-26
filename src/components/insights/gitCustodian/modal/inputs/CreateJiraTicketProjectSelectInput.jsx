@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function CreateJiraTicketProjectSelectInput(
   {
@@ -9,22 +10,37 @@ function CreateJiraTicketProjectSelectInput(
     setModel,
     disabled,
   }) {
+
+  const [issueTypes, setIssueTypes] = useState([]);
+
   const setDataFunction = (fieldName, selectedOption) => {
+    setIssueTypes(selectedOption.issuetypes);
     const newModel = {...model};
     newModel?.setData(fieldName, selectedOption?.key);
-    newModel?.setData("issueTypeId", selectedOption?.id);
+    newModel.setDefaultValue("issueTypeId");
     setModel({...newModel});
   };
 
   return (
-    <JiraProjectSelectInput
-      fieldName={"projectKey"}
-      jiraToolId={jiraToolId}
-      model={model}
-      setModel={setModel}
-      setDataFunction={setDataFunction}
-      disabled={disabled}
-    />
+    <>
+      <JiraProjectSelectInput
+        fieldName={"projectKey"}
+        jiraToolId={jiraToolId}
+        model={model}
+        setModel={setModel}
+        setDataFunction={setDataFunction}
+        disabled={disabled}
+      />
+      <SelectInputBase
+        fieldName={"issueTypeId"}
+        dataObject={model}
+        setDataObject={setModel}
+        selectOptions={issueTypes}        
+        valueField={"id"}
+        textField={"name"}
+        disabled={issueTypes.length === 0}
+      />
+    </>    
   );
 }
 

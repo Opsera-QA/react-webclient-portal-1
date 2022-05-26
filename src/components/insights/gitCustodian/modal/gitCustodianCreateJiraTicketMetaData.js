@@ -21,7 +21,9 @@ const GitCustodianCreateJiraTicketMetaData = {
       isRequired: true
     },
     {
-      id: "issueTypeId"
+      label: "Issue Type",
+      id: "issueTypeId",
+      isRequired: true
     },
     {
       label: "Project",
