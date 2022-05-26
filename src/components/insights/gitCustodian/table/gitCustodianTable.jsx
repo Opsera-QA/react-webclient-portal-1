@@ -113,6 +113,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
   const createNewJiraTicket = () => {
     toastContext.showOverlayPanel(
       <GitCustodianNewJiraTicketModal
+        gitCustodianData={gitCustodianData}
         loadData={loadData}
         isMounted={isMounted}
       />
