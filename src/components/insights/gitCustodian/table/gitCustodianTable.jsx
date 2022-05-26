@@ -83,7 +83,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         setResponseData(tableResponse?.data);
       }
       let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", tableResponse?.length);
+      newFilterDto.setData("totalCount", tableResponse?.count);
       setGitCustodianFilterModel({...newFilterDto});
     } catch (error) {
       if (isMounted?.current === true) {
