@@ -6,6 +6,7 @@ import {
   getTableTextColumn,
   getTableDateTimeColumn,
   getFormattedLabelWithFunctionColumnDefinition,
+  getTableDateTimeColumnWithTimeZone
 } from "components/common/table/table-column-helpers-v2";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -48,10 +49,10 @@ function ScheduledTasksTable(
         undefined,
         getTooltipTemplate,
       ),
-      getTableDateTimeColumn(
+      getTableDateTimeColumnWithTimeZone(
         getField(fields, "schedule.executionDate"),
         "no-wrap-inline",
-        175,
+        220,
         undefined,
         getTooltipTemplate,
         true,
@@ -62,10 +63,10 @@ function ScheduledTasksTable(
         "no-wrap-inline",
         getTooltipTemplate,
       ),
-      getTableDateTimeColumn(
+      getTableDateTimeColumnWithTimeZone(
         getField(fields, "lastRun"),
         "no-wrap-inline",
-        175,
+        220,
         undefined,
         getTooltipTemplate,
       ),
