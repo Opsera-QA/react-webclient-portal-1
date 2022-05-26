@@ -24,7 +24,8 @@ function TasksHelpDocumentation() {
               <div><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE)}</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</div>
               <div><b><a href="https://opsera.atlassian.net/l/c/GKoC01mX" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)}</a></b> - Migrate the entire SFDC org metadata components to a GIT repository branch.</div>
               <div><b><a href="https://opsera.atlassian.net/l/c/8X7xNseS" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</a></b> - Create and configure the Salesforce Organization Sync task to sync the changes in Salesforce Org with the configured Git branch. </div>
-              <div><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</b> - Use this task to quickly deploy any already successfully validated and unit-tested packages (which are not older than 10 days or 240 hours) to a Salesforce Org by providing the Deploy/Job ID corresponding to the validation. </div>
+            <div><b><a href="https://opsera.atlassian.net/l/c/1KJiEUnH" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC)}</a></b> - Use this task to selectively merge Salesforce components to a target branch.</div>
+              <div><b><a href="https://opsera.atlassian.net/l/c/ua7m5Fnb" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</a></b> - Use this task to quickly deploy any already successfully validated and unit-tested packages (which are not older than 10 days or 240 hours) to a Salesforce Org by providing the Deploy/Job ID corresponding to the validation. </div>
 
           </div>
         </div>
