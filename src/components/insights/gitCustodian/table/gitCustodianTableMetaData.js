@@ -20,10 +20,10 @@ const GitCustodianTableMetaData = {
     },
     {
     label: "Exposed For",
-    id: "exposedFor"
+    id: "exposedHours"
     },
     {
-      label: "Type",
+      label: "Library",
       id: "library"
     },
     {
