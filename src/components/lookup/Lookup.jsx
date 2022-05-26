@@ -402,7 +402,7 @@ const Lookup = () => {
       breadcrumbDestination={"lookup"}
       helpComponent={<LookupHelp />}
       pageDescription={`
-      Currently applicable only for Salesforce Pipelines. This Component based search provides details on when selected components have been deployed along with pipeline details. Also provides summary on validations and unit tests.
+          Opsera provides users with access to several data points regarding components and their respective pipelines. The search input will provide you with any component(s) previously deployed. Access core data points on your component(s) below.
       `}
     >
       <Container>
@@ -468,7 +468,6 @@ const Lookup = () => {
                     titleIcon={faBug}
                     title={`${componentName}: Pipelines`}
                   />
-                  <br />
                 </>
               );
             })}

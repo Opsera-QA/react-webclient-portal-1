@@ -14,8 +14,7 @@ const LookupHelp = () => {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div>Select components through the search bar along with a Date Range. The Date Range is mandatory, and it returns results based on pipeline executions that happened within that time frame.
-Click on Search to get the results component-wise.</div>
+        <div>Opsera lookup allows you to search for your component across all your pipelines.</div>
       </div>
     );
   };
