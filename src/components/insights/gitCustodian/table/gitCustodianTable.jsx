@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef, useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
 import LoadingIcon from "../../../common/icons/LoadingIcon";
 import CustomTable from "../../../common/table/CustomTable";
 import {
@@ -14,15 +13,15 @@ import {
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
 import {faDownload} from "@fortawesome/pro-light-svg-icons";
-import dashboardMetadata from "../../dashboards/dashboard-metadata";
 import TooltipWrapper from "../../../common/tooltip/TooltipWrapper";
 import Button from "react-bootstrap/Button";
 import IconBase from "../../../common/icons/IconBase";
 import FilterContainer from "../../../common/table/FilterContainer";
 import GitCustodianNewJiraTicketModal from "../modal/GitCustodianNewJiraTicketModal";
 import chartsActions from "../../charts/charts-actions";
+import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
+import Model from "../../../../core/data_model/model";
 
 function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -31,6 +30,10 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [responseData, setResponseData] = useState([]);
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, true)
+  );
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,7 +69,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
-      getTableBooleanIconColumn(getField(fields, "mainBranch"))
+      getTableBooleanIconColumn(getField(fields, "jiraTicket"))
     ],
     []
   );
@@ -147,7 +150,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       addRecordFunction={createNewJiraTicket}
       type={'Jira Ticket'}
       body={getBody()}
-      metadata={dashboardMetadata}
+      metadata={gitCustodianData}
       supportSearch={false}
       className={"px-2 pb-2"}
       showRefreshButton={false}

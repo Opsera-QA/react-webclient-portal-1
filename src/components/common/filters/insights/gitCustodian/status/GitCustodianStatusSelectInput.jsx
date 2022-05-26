@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import FilterMultiSelectInputBase from "../../../input/FilterMultiSelectInputBase";
 
 function GitCustodianStatusSelectInput({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, options}) {
   if (filterModel == null) {
@@ -8,7 +8,7 @@ function GitCustodianStatusSelectInput({ fieldName, filterModel, setFilterModel,
   }
 
   return (
-    <FilterSelectInputBase
+    <FilterMultiSelectInputBase
       inline={inline}
       fieldName={fieldName}
       className={className}

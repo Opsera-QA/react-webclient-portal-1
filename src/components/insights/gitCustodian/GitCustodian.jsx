@@ -298,8 +298,8 @@ function GitCustodian() {
   const clearCalendar = () => {
     setDate([
       {
-        startDate: undefined,
-        endDate: undefined,
+        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
         key: "selection",
       },
     ]);

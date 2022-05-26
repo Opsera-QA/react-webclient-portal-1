@@ -80,31 +80,31 @@ function GitCustodianChartsView({ gitCustodianData }) {
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP CLEAN REPOSITORIES</div>
-              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos}/>
+              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TIMELINE</div>
-              <GitCustodianTimelineChart dashboardData={gitCustodianData} data={chartData?.trend}/>
+              <GitCustodianTimelineChart dashboardData={gitCustodianData} data={chartData?.trend ? chartData?.trend : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP SECRETS</div>
-              <GitCustodianTopSecretsChart dashboardData={gitCustodianData} data={chartData?.topSecrets}/>
+              <GitCustodianTopSecretsChart dashboardData={gitCustodianData} data={chartData?.topSecrets ? chartData?.topSecrets : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP REPOSITORIES</div>
-              <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData} data={chartData?.topRepos}/>
+              <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData} data={chartData?.topRepos ? chartData?.topRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP USERS</div>
-              <GitCustodianTopAuthorsChart dashboardData={gitCustodianData} data={chartData?.topAuthors}/>
+              <GitCustodianTopAuthorsChart dashboardData={gitCustodianData} data={chartData?.topAuthors ? chartData?.topAuthors : []}/>
             </DataBlockBoxContainer>
           </Col>
         </div>
