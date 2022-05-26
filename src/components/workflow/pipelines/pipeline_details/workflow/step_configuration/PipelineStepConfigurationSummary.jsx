@@ -616,7 +616,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ApigeePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            gitScraperPipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
+            apigeePipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
