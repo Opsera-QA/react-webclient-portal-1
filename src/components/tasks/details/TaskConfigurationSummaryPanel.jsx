@@ -44,6 +44,8 @@ import SalesforceToGitMergeSyncTaskSummaryCard
 import {
   mergeSyncTaskSalesforceConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
+import SnaplogicTaskSummaryCard from "./tasks/snaplogic/SnaplogicTaskSummaryCard";
+import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -176,6 +178,15 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             taskConfigurationModel={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration")?.git,
               mergeSyncTaskGitConfigurationMetadata,
+            )}
+          />
+        ); 
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return (
+          <SnaplogicTaskSummaryCard
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              snaplogicTaskConfigurationMetadata,
             )}
           />
         );
