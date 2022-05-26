@@ -582,8 +582,8 @@ const breadcrumbs = {
     parent: "insights",
     name: "lookup",
     path: paths.lookup,
-    title: "Lookup",
-    linkText: "Lookup",
+    title: "Salesforce Lookup",
+    linkText: "Salesforce Lookup",
     icon: faMagnifyingGlass
   },
   marketplace: {
