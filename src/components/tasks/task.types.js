@@ -24,6 +24,8 @@ import ec2ServiceCreationTaskConfigurationMetadata
   from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
+import snaplogicTaskConfigurationMetadata
+  from "components/tasks/details/tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 
 export const TASK_TYPES = {
   // Salesforce
@@ -46,6 +48,9 @@ export const TASK_TYPES = {
 
   //AZURE
   AZURE_CLUSTER_CREATION: "azure_cluster_creation",
+
+  //snaplogic
+  SNAPLOGIC_TASK: "snaplogic"
 };
 
 export const TASK_TYPE_LABELS = {
@@ -69,6 +74,9 @@ export const TASK_TYPE_LABELS = {
 
   // Azure
   AZURE_CLUSTER_CREATION: "Azure AKS Cluster Creation",
+
+  //snaplogic
+  SNAPLOGIC_TASK: "Snaplogic Task"
 };
 
 export const getTaskTypeLabel = (taskType) => {
@@ -108,6 +116,9 @@ export const getTaskTypeLabel = (taskType) => {
     // Azure
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
       return TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION;
+
+    case TASK_TYPES.SNAPLOGIC_TASK:
+      return TASK_TYPE_LABELS.SNAPLOGIC_TASK;
     default:
       return taskType;
   }
@@ -149,6 +160,10 @@ export const getTaskConfigurationMetadataForTaskType = (taskType) => {
     // Azure
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
       return azureAksClusterTaskConfigurationMetadata;
+    
+    //snaplogic
+    case TASK_TYPES.SNAPLOGIC_TASK:
+      return snaplogicTaskConfigurationMetadata;
     default:
       return taskType;
   }

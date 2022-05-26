@@ -20,6 +20,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
+  TASK_TYPES.SNAPLOGIC_TASK,
 ];
 
 // TODO: This should be broken into two buttons, one for cancel and one for logs
