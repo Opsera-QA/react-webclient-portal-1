@@ -7,7 +7,7 @@ function JiraIssuesCompletedDataBlock({ data, previousData, getIcon, getIconColo
   return (    
     <DataBlockBoxContainer showBorder={true}>
       <ThreeLineScoreDataBlock
-        className={`${getIconColor(data, previousData)}`}
+        className={`p-3 ${getIconColor(data, previousData)}`}
         score={data}
         topText={"Issues Completed"}
         bottomText={"Previous Issues: " + previousData}

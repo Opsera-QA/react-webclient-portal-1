@@ -7,7 +7,7 @@ function JiraMeanLeadTimeDataBlock({ data, previousData, getIcon, getIconColor }
   return (
     <DataBlockBoxContainer showBorder={true}>      
       <ThreeLineScoreDataBlock
-        className={`${getIconColor(data, previousData)}`}
+        className={`p-3 ${getIconColor(data, previousData)}`}
         score={data}
         topText={"Mean Lead Time (Days)"}
         bottomText={"Previous Lead Time: " + previousData} 
