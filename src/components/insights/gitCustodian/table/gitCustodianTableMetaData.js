@@ -1,3 +1,5 @@
+import { addDays } from "date-fns";
+
 const GitCustodianTableMetaData = {
   idProperty: "_id",
   type: "Git Custodian",
@@ -20,10 +22,10 @@ const GitCustodianTableMetaData = {
     },
     {
     label: "Exposed For",
-    id: "exposedFor"
+    id: "exposedHours"
     },
     {
-      label: "Type",
+      label: "Library",
       id: "library"
     },
     {
@@ -139,8 +141,8 @@ const GitCustodianTableMetaData = {
      search: "",
      activeFilters: [],
      date: {
-       startDate: new Date(),
-       endDate: new Date(),
+       startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+       endDate: new Date(new Date().setHours(0, 0, 0, 0)),
        key: "selection",
      }
   },

@@ -11,6 +11,7 @@ import {
   getGitCustodianOriginColumn,
   getTableBooleanIconColumn
 } from "../../../common/table/table-column-helpers";
+import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
@@ -63,8 +64,8 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getTableTextColumn(getField(fields, "path")),
       getTableTextColumn(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
-      getTableTextColumn(getField(fields, "exposedFor")),
-      getTableTextColumn(getField(fields, "library")),
+      getDurationInDaysHours(getField(fields, "exposedHours")),
+      getTableTextColumn(getField(fields, "type")),
       getTableBooleanIconColumn(getField(fields, "mainBranch"))
     ],
     []
@@ -82,7 +83,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         setResponseData(tableResponse?.data);
       }
       let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", tableResponse?.length);
+      newFilterDto.setData("totalCount", tableResponse?.count);
       setGitCustodianFilterModel({...newFilterDto});
     } catch (error) {
       if (isMounted?.current === true) {

@@ -11,6 +11,8 @@ import {getTaskTypeLabel} from "components/tasks/task.types";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 import {getCustomTableAccessor, getCustomTableHeader} from "components/common/table/table-column-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { getDurationInDaysAndHours } from "components/insights/charts/gitscrapper/git-scraper-utility";
+
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -580,5 +582,17 @@ export const getSalesforceSumamryTableBooleanIconColumn = (field, className, wid
     },
     htmlEnable: true,
     class: className ? className : "text-left"
+  };
+};
+
+export const getDurationInDaysHours = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: function parseText(row) {
+      const value = row?.value;
+      return getDurationInDaysAndHours(value);
+    }
   };
 };

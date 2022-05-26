@@ -71,7 +71,7 @@ function GitCustodianTopSecretsCharts({ gitCustodianData, data }) {
 
 GitCustodianTopSecretsCharts.propTypes = {
   gitCustodianData: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.array
 };
 
 export default GitCustodianTopSecretsCharts;

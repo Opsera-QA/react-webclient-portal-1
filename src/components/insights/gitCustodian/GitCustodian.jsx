@@ -25,6 +25,7 @@ import InlineGitCustodianStatusSelectInput
   from "../../common/filters/insights/gitCustodian/status/InlineGitCustodianStatusSelectInput";
 import chartsActions from "../charts/charts-actions";
 import FilterButtons from "../../common/filters/buttons/FilterButtons";
+import { addDays } from "date-fns";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -38,8 +39,8 @@ function GitCustodian() {
   const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, false));
   const [date, setDate] = useState([
     {
-      startDate: null,
-      endDate: new Date(),
+      startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
       key: "selection",
     },
   ]);
@@ -346,6 +347,7 @@ function GitCustodian() {
               onChange={dateChange}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
+              retainEndDateOnFirstSelection={true}
               months={1}
               ranges={date}
               direction="horizontal"
