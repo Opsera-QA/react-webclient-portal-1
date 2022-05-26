@@ -121,7 +121,6 @@ function GitScraperActionButton(
 
   const handleCancelRunTask = async (automatic) => {
     setIsCanceling(true);
-    await taskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
     await taskActions.cancelGitscraperScan(getAccessToken, axios.CancelToken.source(), gitTasksData);
     setIsTaskRunning(false);
     isMounted.current = false;

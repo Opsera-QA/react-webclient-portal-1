@@ -59,6 +59,7 @@ const RepoSelectionView = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setRepositories([]);
 
       if (service === "bitbucket") {
         await loadBitbucketRepositories(cancelSource);
