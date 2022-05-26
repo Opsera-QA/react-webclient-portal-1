@@ -108,6 +108,21 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     }
   };
 
+  const getNotificationsInput = () => {
+    if ([TASK_TYPES.AWS_CREATE_ECS_SERVICE, TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION].includes(gitTasksData?.getData("type")) === false) {
+      return (
+        <Col md={6}>
+          <TaskOrchestrationNotificationInlineInput
+            model={gitTasksData}
+            fieldName={"notifications"}
+            loadDataFunction={loadData}
+          />
+        </Col>
+      );
+    }
+  };
+
+
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
       <Row>
@@ -129,13 +144,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
-        <Col md={6}>
-          <TaskOrchestrationNotificationInlineInput
-            model={gitTasksData}
-            fieldName={"notifications"}
-            loadDataFunction={loadData}
-          />
-        </Col>
+        {getNotificationsInput()}
         {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
