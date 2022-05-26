@@ -188,6 +188,11 @@ import ExternalRestApiIntegrationStepSummaryPanel
 import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
+src/components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary.jsx
+import SalesforceScanPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanPipelineStepConfigurationSummaryPanel";
+import salesforceScanStepFormMetadata
+  from "./step_tool_configuration_forms/salesforce_scan/salesforceScan-stepForm-metadata";
 import GitOperationPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
 import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
@@ -593,6 +598,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+            <SalesforceScanPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                salesforceScanPipelineDataObject={getModelWrappedObject(salesforceScanStepFormMetadata)}
+            />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
         return (
