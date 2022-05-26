@@ -11,38 +11,7 @@ import ChartTooltip from "../../../../charts/ChartTooltip";
 function GitCustodianTimelineChart({ dashboardData, data }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([
-    {
-      "_id": [
-        "Dummy Second Sprint"
-      ],
-      "id": "Dummy Second Sprin...",
-      "data": [
-        {
-          "x": "2021-02-10",
-          "y": 0
-        }
-      ],
-      "color": "#5B5851"
-    },
-    {
-      "_id": [
-        "Dummy Sprint One"
-      ],
-      "id": "Dummy Sprint One.....",
-      "data": [
-        {
-          "x": "2021-04-15",
-          "y": 1
-        },
-        {
-          "x": "2021-02-09",
-          "y": 1
-        }
-      ],
-      "color": "#7A756C"
-    }
-  ]);
+  const [metrics, setMetrics] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -82,12 +51,19 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
     finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
+        setMetrics([
+          {      
+            "id": "No of Issues added",
+            "data": data,
+            "color": "#5B5851"
+          }
+        ]);
       }
     }
   };
 
   const getBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (!metrics || !Array.isArray(metrics) || metrics.length === 0) {
       return (
         <div className="new-chart p-0" style={{height: "200px"}}/>
       );
@@ -97,11 +73,12 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
       <div className="new-chart p-0" style={{height: "200px"}}>
         <ResponsiveLine
           data={metrics}
-          {...defaultConfig("Number of Pending Issues", "Date",
+          {...defaultConfig("Issues Added", "Date",
             false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor, METRIC_THEME_CHART_PALETTE_COLORS)}
           tooltip={({ point, color }) => <ChartTooltip
-            titles = {["Issues Remaining"]}
+            key={point.data.range}
+            titles = {["Issues"]}
             values = {[point.data.y]} />}
         />
       </div>
