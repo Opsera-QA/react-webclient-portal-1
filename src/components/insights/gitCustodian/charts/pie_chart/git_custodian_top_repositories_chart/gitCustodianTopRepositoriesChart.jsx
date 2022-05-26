@@ -66,7 +66,7 @@ function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />
-        <div style={{ position: "absolute", top: "40%", marginLeft: "52.5%"}}>
+        <div style={{ position: "absolute", top: "40%", marginLeft: "51.5%"}}>
           <span>{total}</span>
         </div>
       </div>
