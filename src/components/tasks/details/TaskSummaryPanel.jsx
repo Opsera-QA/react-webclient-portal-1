@@ -57,6 +57,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     let newDataObject = gitTasksData;
     const currRunCount = gitTasksData?.getData("run_count") ? gitTasksData?.getData("run_count") : 0;
     newDataObject.setData("run_count", currRunCount + 1);
+    newDataObject.setData("status", "running");
     setGitTasksData(newDataObject);
   };
 
