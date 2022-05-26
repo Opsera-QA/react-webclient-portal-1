@@ -215,7 +215,7 @@ export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175
         const property = col?.id;
         let dateString = dataParsingHelper.safeObjectPropertyParser(row, property, "");
 
-        if (dateString == null) {
+        if (dateString == null || dateString === "") {
           return "";
         }
 
