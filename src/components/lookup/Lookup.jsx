@@ -402,7 +402,7 @@ const Lookup = () => {
       breadcrumbDestination={"lookup"}
       helpComponent={<LookupHelp />}
       pageDescription={`
-          Opsera provides users with access to several data points regarding components and their respective pipelines. The search input will provide you with any component(s) previously deployed. Access core data points on your component(s) below.
+      Currently applicable only for Salesforce Pipelines. This Component based search provides details on when selected components have been deployed along with pipeline details. Also provides summary on validations and unit tests.
       `}
     >
       <Container>
@@ -438,7 +438,7 @@ const Lookup = () => {
           </Button>
           </Col>
         </Row>
-        <hr />
+        <hr className="lookup-hr" />
         <Row>
           <Col className="table-results">
             
@@ -455,14 +455,14 @@ const Lookup = () => {
               return (
                 <>
                   <FilterContainer
-                    className="mt-2"
+                    className="mt-2 lookup-table"
                     showBorder={false}
                     body={<LookupTableTotals data={totals} />}
                     titleIcon={faBug}
                     title={`${componentName}: Totals`}
                   />
                   <FilterContainer
-                    className="mt-2"
+                    className="mt-2 lookup-table lookup-pipelines"
                     showBorder={false}
                     body={<LookupTablePipelines data={pipelines} />}
                     titleIcon={faBug}
