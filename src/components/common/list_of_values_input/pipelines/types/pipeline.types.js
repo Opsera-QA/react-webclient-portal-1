@@ -33,6 +33,10 @@ export const getPipelineTypeLabel = (pipelineType) => {
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [
   {
+    text: PIPELINE_TYPE_LABELS.APIGEE,
+    value: PIPELINE_TYPES.APIGEE,
+  },
+  {
     text: PIPELINE_TYPE_LABELS.INFORMATICA,
     value: PIPELINE_TYPES.INFORMATICA,
   },
