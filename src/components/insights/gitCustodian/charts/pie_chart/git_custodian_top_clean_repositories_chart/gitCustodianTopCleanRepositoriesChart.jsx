@@ -53,7 +53,9 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
   const getChartBody = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return (
-        <div className="new-chart p-0" style={{height: "200px"}} />
+        <div className="new-chart p-0" style={{height: "200px"}} >
+          <div className={'p-2'}>No data found.</div>
+        </div>
       );
     }
 

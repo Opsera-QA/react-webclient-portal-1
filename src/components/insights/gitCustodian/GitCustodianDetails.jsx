@@ -37,7 +37,7 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     };
   }, [JSON.stringify(gitCustodianData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = gitCustodianFilterModel) => {
     try {
       setIsLoading(true);
     } catch (error) {

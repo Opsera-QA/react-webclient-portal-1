@@ -619,3 +619,20 @@ export const getExternalLinkIconColumnDefinition = (field, linkText, className) 
     class: className ? className : undefined
   };
 };
+
+export const getGitCustodianExternalLinkIconColumnDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value?.url}
+          externalLink={true}
+          pageLinkText={row?.value?.key}
+        />
+      );
+    },
+    class: className ? className : undefined
+  };
+};

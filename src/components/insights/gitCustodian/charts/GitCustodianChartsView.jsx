@@ -72,7 +72,15 @@ function GitCustodianChartsView({ gitCustodianData }) {
       setChartData(chartsResponse);
     }
   };
-
+  const timeLineData = chartData?.trend ? [{
+      "id": "No of Issues added",
+      "data": chartData?.trend,
+      "color": "#5B5851"
+    }] : [{
+    "id": "No of Issues added",
+    "data": [],
+    "color": "#5B5851"
+  }];
   const getCharts = () => {
     return (
       <div style={{overflow: 'scroll'}} className={"p-2"}>
@@ -86,7 +94,7 @@ function GitCustodianChartsView({ gitCustodianData }) {
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
               <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TIMELINE</div>
-              <GitCustodianTimelineChart dashboardData={gitCustodianData} data={chartData?.trend ? chartData?.trend : []}/>
+              <GitCustodianTimelineChart dashboardData={gitCustodianData} data={timeLineData}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
