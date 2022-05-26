@@ -77,29 +77,39 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
 
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
-        <div className={"mx-2"}>
-          <Row className={"mx-0 p-2 justify-content-between"}>
-            <Col md={6} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true} className={'h-100'}>
-                <TwoLineDataBlockBase
-                  className={"p-2"}
-                  title={totalCleanRepo === 0 ? '0' : totalCleanRepo}
-                  subtitle={"Clean Repositories"}
-                ></TwoLineDataBlockBase>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={6} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
-                <TwoLineDataBlockBase
-                  className={"p-2"}
-                  subtitle={'Unclean Repositories'}
-                  title={totalUncleanRepo === 0 ? '0' : totalUncleanRepo}
-                ></TwoLineDataBlockBase>
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
+        <ResponsivePie
+          data={chartData}
+          {...defaultConfig()}
+          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
+        />
+        <div style={{ position: "absolute", top: "40%", marginLeft: "52.5%"}}>
+          <span>{totalRepo}</span>
         </div>
       </div>
+      // <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
+      //   <div className={"mx-2"}>
+      //     <Row className={"mx-0 p-2 justify-content-between"}>
+      //       <Col md={6} className={"my-2"}>
+      //         <DataBlockBoxContainer showBorder={true} className={'h-100'}>
+      //           <TwoLineDataBlockBase
+      //             className={"p-2"}
+      //             title={totalCleanRepo === 0 ? '0' : totalCleanRepo}
+      //             subtitle={"Clean Repositories"}
+      //           ></TwoLineDataBlockBase>
+      //         </DataBlockBoxContainer>
+      //       </Col>
+      //       <Col md={6} className={"my-2"}>
+      //         <DataBlockBoxContainer showBorder={true}>
+      //           <TwoLineDataBlockBase
+      //             className={"p-2"}
+      //             subtitle={'Unclean Repositories'}
+      //             title={totalUncleanRepo === 0 ? '0' : totalUncleanRepo}
+      //           ></TwoLineDataBlockBase>
+      //         </DataBlockBoxContainer>
+      //       </Col>
+      //     </Row>
+      //   </div>
+      // </div>
     );
   };
 
