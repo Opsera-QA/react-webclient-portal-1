@@ -12,14 +12,14 @@ import axios from "axios";
 import modelHelpers from "components/common/model/modelHelpers";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import PipelineStepNotificationConfigurationHelpDocumentation
-  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 import TaskNotificationTabView from "components/tasks/details/tasks/notifications/TaskNotificationTabView";
 import taskActions from "components/tasks/task.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import emailStepNotificationMetadata
   from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
+import TaskNotificationConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
 
 function TaskNotificationEditorPanel(
   {
@@ -155,7 +155,7 @@ function TaskNotificationEditorPanel(
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     return (
-      <PipelineStepNotificationConfigurationHelpDocumentation
+      <TaskNotificationConfigurationHelpDocumentation
         closeHelpPanel={() => setHelpIsShown(false)}
         />
     );

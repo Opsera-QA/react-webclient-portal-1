@@ -8,16 +8,18 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     newModel.setData("gitRepository", selectedOption?.name);
-    newModel.setData("projectId", repoId);
+    newModel.setData("repoId", repoId);
     newModel.setData("gitBranch", "");
+    newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
 
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setData("gitRepository", "");
-    newModel.setData("projectId", "");
+    newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
+    newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
 

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitCustodianStatusSelectInput from "./GitCustodianStatusSelectInput";
 
-function InlineGitCustodianStatusSelectInput({ fieldName, filterModel, setFilterModel, loadData, className, options}) {
+function InlineGitCustodianStatusSelectInput({ fieldName, filterModel, setFilterModel, loadData, className, options, inline}) {
   const setDataFunction = (fieldName, value) => {
     let newDataObject = filterModel;
     newDataObject.setData("currentPage", 1);
@@ -12,7 +12,7 @@ function InlineGitCustodianStatusSelectInput({ fieldName, filterModel, setFilter
 
   return (
     <GitCustodianStatusSelectInput
-      inline={false}
+      inline={inline}
       fieldName={fieldName}
       setFilterModel={setFilterModel}
       filterModel={filterModel}
@@ -29,12 +29,14 @@ InlineGitCustodianStatusSelectInput.propTypes = {
   setFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
-  options: PropTypes.array
+  options: PropTypes.array,
+  inline: PropTypes.bool
 };
 
 InlineGitCustodianStatusSelectInput.defaultProps = {
   fieldName: "status",
   options: [],
+  inline: true
 };
 
 export default InlineGitCustodianStatusSelectInput;

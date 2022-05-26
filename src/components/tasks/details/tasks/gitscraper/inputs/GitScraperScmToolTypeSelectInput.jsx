@@ -20,6 +20,11 @@ export const SCRAPER_SCM_TOOL_LIST = [
 function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}) {
   const setDataFunction = async (fieldName, selectedOption) => {
     let newModel = {...model};
+    await newModel.setData("repositories",[]);
+    await newModel.setData("reposToScan",[]);
+    await newModel.setData("gitToolId", "");
+    await newModel.setData("workspace", "");
+    await newModel.setData("bitbucketWorkspace", "");
     await newModel.setData(fieldName, selectedOption?.value);
     setModel({...newModel});
   };

@@ -8,41 +8,10 @@ import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/met
 import { defaultConfig, getColor, assignStandardColors} from "../../../../charts/charts-views";
 import ChartTooltip from "../../../../charts/ChartTooltip";
 
-function GitCustodianTimelineChart({ dashboardData }) {
+function GitCustodianTimelineChart({ dashboardData, data }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([
-    {
-      "_id": [
-        "Dummy Second Sprint"
-      ],
-      "id": "Dummy Second Sprin...",
-      "data": [
-        {
-          "x": "2021-02-10",
-          "y": 0
-        }
-      ],
-      "color": "#5B5851"
-    },
-    {
-      "_id": [
-        "Dummy Sprint One"
-      ],
-      "id": "Dummy Sprint One.....",
-      "data": [
-        {
-          "x": "2021-04-15",
-          "y": 1
-        },
-        {
-          "x": "2021-02-09",
-          "y": 1
-        }
-      ],
-      "color": "#7A756C"
-    }
-  ]);
+  const [metrics, setMetrics] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -72,7 +41,6 @@ function GitCustodianTimelineChart({ dashboardData }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      assignStandardColors(metrics);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -83,25 +51,34 @@ function GitCustodianTimelineChart({ dashboardData }) {
     finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
+        setMetrics([
+          {      
+            "id": "No of Issues added",
+            "data": data,
+            "color": "#5B5851"
+          }
+        ]);
       }
     }
   };
 
   const getBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
-      return null;
+    if (!metrics || !Array.isArray(metrics) || metrics.length === 0) {
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}}/>
+      );
     }
 
     return (
       <div className="new-chart p-0" style={{height: "200px"}}>
         <ResponsiveLine
           data={metrics}
-          {...defaultConfig("Number of Pending Issues", "Date",
+          {...defaultConfig("Issues Added", "Date",
             false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor, METRIC_THEME_CHART_PALETTE_COLORS)}
-          onClick={() => setShowModal(true)}
           tooltip={({ point, color }) => <ChartTooltip
-            titles = {["Issues Remaining"]}
+            key={point.data.range}
+            titles = {["Issues"]}
             values = {[point.data.y]} />}
         />
       </div>
@@ -112,7 +89,8 @@ function GitCustodianTimelineChart({ dashboardData }) {
 }
 
 GitCustodianTimelineChart.propTypes = {
-  dashboardData: PropTypes.object
+  dashboardData: PropTypes.object,
+  data: PropTypes.array
 };
 
 export default GitCustodianTimelineChart;

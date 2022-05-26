@@ -4,24 +4,17 @@ import { ResponsivePie } from "@nivo/pie";
 import config from "./gitCustodianTopCleanRepositoriesChartConfig";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData } from '../../../../charts/charts-views';
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
+import TwoLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
-function GitCustodianTopCleanRepositoriesChart({ dashboardData }) {
+function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [totalCleanRepositoriesData, setTotalUncleanRepositoriesData] = useState([
-    {
-      "totalRepos": 2,
-      "value": 1,
-      "id": "Clean Repositories"
-    },
-    {
-      "totalRepos": 2,
-      "value": 2,
-      "id": "Unclean Repositories"
-    }
-  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -58,23 +51,51 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData }) {
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(totalCleanRepositoriesData) || totalCleanRepositoriesData.length === 0) return null;
+    if (!Array.isArray(data) || data.length === 0) {
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}} />
+      );
+    }
 
-    let total = 0;
-    totalCleanRepositoriesData.forEach(datum => {
-      total += datum.value;
-    });
+    const totalRepo = data?.[0]?.totalRepos ? data?.[0]?.totalRepos : 0;
+    const totalCleanRepo = data?.[0]?.cleanRepos ? data?.[0]?.cleanRepos : 0;
+    const totalUncleanRepo = totalRepo - totalCleanRepo;
+
+    const chartData = [{
+        "totalRepos": totalRepo,
+        "value": totalCleanRepo,
+        "id": "Clean Repositories"
+      },
+      {
+        "totalRepos": totalRepo,
+        "value": totalUncleanRepo,
+        "id": "Unclean Repositories"
+      }
+    ];
 
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
-        <ResponsivePie
-          data={totalCleanRepositoriesData}
-          {...defaultConfig()}
-          {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-          onClick={() => setShowModal(true)}
-        />
-        <div style={{ position: "absolute", top: "40%", marginLeft: "53.5%"}}>
-          <span>{total}</span>
+        <div className={"mx-2"}>
+          <Row className={"mx-0 p-2 justify-content-between"}>
+            <Col md={6} className={"my-2"}>
+              <DataBlockBoxContainer showBorder={true} className={'h-100'}>
+                <TwoLineDataBlockBase
+                  className={"p-2"}
+                  title={totalCleanRepo === 0 ? '0' : totalCleanRepo}
+                  subtitle={"Clean Repositories"}
+                ></TwoLineDataBlockBase>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={6} className={"my-2"}>
+              <DataBlockBoxContainer showBorder={true}>
+                <TwoLineDataBlockBase
+                  className={"p-2"}
+                  subtitle={'Unclean Repositories'}
+                  title={totalUncleanRepo === 0 ? '0' : totalUncleanRepo}
+                ></TwoLineDataBlockBase>
+              </DataBlockBoxContainer>
+            </Col>
+          </Row>
         </div>
       </div>
     );
@@ -88,6 +109,7 @@ GitCustodianTopCleanRepositoriesChart.propTypes = {
   dataWithArc: PropTypes.any,
   centerX: PropTypes.any,
   centerY: PropTypes.any,
+  data: PropTypes.array
 };
 
 export default GitCustodianTopCleanRepositoriesChart;

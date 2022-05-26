@@ -19,6 +19,7 @@ import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
 import GitToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
 import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
+import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -125,6 +126,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksConfigurationData={taskConfigurationModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
+          />
+        );
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return (
+          <SnaplogicTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
           />
         );
       default:

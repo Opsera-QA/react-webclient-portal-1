@@ -7,36 +7,9 @@ import axios from "axios";
 import { defaultConfig, getColorByData, adjustBarWidth} from "../../../../charts/charts-views";
 import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 
-function GitCustodianTopSecretsCharts({ gitCustodianData }) {
+function GitCustodianTopSecretsCharts({ gitCustodianData, data }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [topSecretsData, setTopSecretsData] = useState([
-  {
-    "count": 21,
-    "commitHash": "645d799933b8c8f6989ce33044831156bcf1d596",
-    "commitDate": "2022-04-19T15:09:51.000Z"
-  },
-  {
-    "count": 11,
-    "commitHash": "4972737d39781d2d09414ca3a9e258a9a2eaae70",
-    "commitDate": "2022-01-21T08:27:25.000Z"
-  },
-  {
-    "count": 11,
-    "commitHash": "869e6b455667def686d8d4e216e66aac4ccd2ac0",
-    "commitDate": "2021-01-05T13:34:09.000Z"
-  },
-  {
-    "count": 10,
-    "commitHash": "4447db4ddb95b00a13701614b179f9f3a71edef3",
-    "commitDate": "2021-12-21T15:34:57.000Z"
-  },
-  {
-    "count": 7,
-    "commitHash": "f3bf293aca437376eacf3f57081211d97e312508",
-    "commitDate": "2022-03-21T17:21:12.000Z"
-  }
-]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -73,19 +46,21 @@ function GitCustodianTopSecretsCharts({ gitCustodianData }) {
   };
 
   const getBody = () => {
-    if (!Array.isArray(topSecretsData) || topSecretsData.length === 0) {
-      return null;
+    if (!Array.isArray(data) || data.length === 0) {
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}}/>
+      );
     }
 
     return (
       <div className="new-chart p-0" style={{ height: "200px" }}>
         <ResponsiveBar
-          data={topSecretsData}
+          data={data}
           cutoffLength={5}
           {...defaultConfig("Count", "Commit Hash",
             true, false, "values", "cutoffString", true)}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
-          {...adjustBarWidth(topSecretsData)}
+          {...adjustBarWidth(data)}
         />
       </div>
     );
@@ -95,7 +70,8 @@ function GitCustodianTopSecretsCharts({ gitCustodianData }) {
 }
 
 GitCustodianTopSecretsCharts.propTypes = {
-  gitCustodianData: PropTypes.object
+  gitCustodianData: PropTypes.object,
+  data: PropTypes.array
 };
 
 export default GitCustodianTopSecretsCharts;

@@ -43,10 +43,16 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "BitBucket Workspace",
       id: "workspace",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "bitbucket";
+      },
     },
     {
       label: "BitBucket Workspace/Project",
       id: "bitbucketWorkspaceName",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "bitbucket";
+      },
     },
   ],
   newObjectFields:
@@ -61,7 +67,7 @@ const gitscraperTaskConfigurationMetadata = {
       service: "",
       gitToolId: "",
       workspace: "",
-      bitbucketWorkspace: ""
+      bitbucketWorkspaceName: ""
     }
 };
 

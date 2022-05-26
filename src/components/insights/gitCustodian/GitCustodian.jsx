@@ -8,16 +8,28 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import GitCustodianDetails from "./GitCustodianDetails";
 import GitCustodianTableMetaData from "./table/gitCustodianTableMetaData";
-import {addDays, format} from "date-fns";
+import { format } from "date-fns";
 import modelHelpers from "../../common/model/modelHelpers";
 import {Button, Overlay, Popover} from "react-bootstrap";
 import {DateRangePicker} from "react-date-range";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import ActionBarContainer from "../../common/actions/ActionBarContainer";
 import IconBase from "../../common/icons/IconBase";
+import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
+import InlineGitCustodianAuthorsSelectInput
+  from "../../common/filters/insights/gitCustodian/authors/InlineGitCustodianAuthorsSelectInput";
+import InlineGitCustodianServiceSelectInput
+  from "../../common/filters/insights/gitCustodian/gitService/InlineGitCustodianServiceSelectInput";
+import InlineGitCustodianRepositoriesSelectInput
+  from "../../common/filters/insights/gitCustodian/repositories/InlineGitCustodianRepositoriesSelectInput";
+import InlineGitCustodianStatusSelectInput
+  from "../../common/filters/insights/gitCustodian/status/InlineGitCustodianStatusSelectInput";
+import chartsActions from "../charts/charts-actions";
+import FilterButtons from "../../common/filters/buttons/FilterButtons";
+import { addDays } from "date-fns";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const toastContext = useContext(DialogToastContext);
@@ -27,8 +39,8 @@ function GitCustodian() {
   const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, false));
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
       key: "selection",
     },
   ]);
@@ -37,6 +49,10 @@ function GitCustodian() {
   const [sDate, setSDate] = useState("");
   const [eDate, setEDate] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
+  const [authorsFilterData, setAuthorsFilterData] = useState([]);
+  const [servicesFilterData, setServicesFilterData] = useState([]);
+  const [repositoriesFilterData, setRepositoriesFilterData] = useState([]);
+  const [statusFilterData, setStatusFilterData] = useState([]);
   const node = useRef();
   const ref = useRef(null);
 
@@ -62,11 +78,14 @@ function GitCustodian() {
     };
   }, []);
 
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject = gitCustodianFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-      setGitCustodianData({...newDataObject});
+      await getFilters(cancelSource);
+      let newFilterDto = newDataObject;
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setGitCustodianData(newDataObject);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -79,12 +98,49 @@ function GitCustodian() {
     }
   };
 
+  const restructureFilterData = (filterData, filterType) => {
+    if( filterData.length > 0 ) {
+      filterData.forEach(data => {
+        data.text = data[filterType];
+        data.value = data[filterType];
+      });
+      return filterData;
+    }
+    return [];
+  };
+
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+    }
+  };
+
+  const getFilters = async (cancelSource) => {
+    const filterResponse = await chartsActions.getGitCustodianFilters(
+      getAccessToken,
+      cancelSource
+    );
+    const filterResponseData = filterResponse?.data?.data?.data?.[0];
+    if(isMounted.current === true &&  filterResponseData) {
+      const authorsData = restructureFilterData(
+        filterResponseData?.authors ? filterResponseData?.authors : [],
+        'author');
+      const repositoriesData = restructureFilterData(
+        filterResponseData?.repositories ? filterResponseData?.repositories : [],
+        'repository');
+      const statusData = restructureFilterData(
+        filterResponseData?.status ? filterResponseData?.status : [],
+        'status');
+      const serviceData = restructureFilterData(
+        filterResponseData?.service ? filterResponseData?.service : [],
+        'service');
+      setAuthorsFilterData(authorsData);
+      setRepositoriesFilterData(repositoriesData);
+      setStatusFilterData(statusData);
+      setServicesFilterData(serviceData);
     }
   };
 
@@ -138,6 +194,96 @@ function GitCustodian() {
     }
   };
 
+  const getFilterButtons = () => {
+    return (
+      <div className={'d-xl-none'}>
+        <FilterButtons
+          isLoading={isLoading}
+          loadData={loadData}
+          dropdownFilters={getDropdownFilters()}
+          filterDto={gitCustodianFilterModel}
+          filterBtnClassName={'btn-success'}
+          includeButtonText={true}
+          filterDropdownTitle={'Filter Report'}
+        />
+      </div>
+    );
+  };
+
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <InlineGitCustodianAuthorsSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={authorsFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mb-2"}
+          inline={false}
+        />
+        <InlineGitCustodianServiceSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={servicesFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mb-2"}
+          inline={false}
+        />
+        <InlineGitCustodianRepositoriesSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={repositoriesFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mb-2"}
+          inline={false}
+        />
+        <InlineGitCustodianStatusSelectInput
+          filterModel={gitCustodianFilterModel}
+          setFilterModel={setGitCustodianFilterModel}
+          options={statusFilterData}
+          loadData={loadData}
+          className={"mb-2"}
+          inline={false}
+        />
+      </>
+    );
+  };
+
+  const getInlineFilters = () => {
+    return (
+      <div className="d-none d-xl-flex">
+        <InlineGitCustodianAuthorsSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={authorsFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mx-2"}
+        />
+        <InlineGitCustodianServiceSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={servicesFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mx-2"}
+        />
+        <InlineGitCustodianRepositoriesSelectInput
+          filterModel={gitCustodianFilterModel}
+          options={repositoriesFilterData}
+          setFilterModel={setGitCustodianFilterModel}
+          loadData={loadData}
+          className={"mx-2"}
+        />
+        <InlineGitCustodianStatusSelectInput
+          filterModel={gitCustodianFilterModel}
+          setFilterModel={setGitCustodianFilterModel}
+          options={statusFilterData}
+          loadData={loadData}
+          className={"mx-2"}
+        />
+      </div>
+    );
+  };
+
   const validate = (startDate,endDate)=>{
     let sDate = startDate ? new Date(startDate).toISOString() : undefined;
     let eDate = endDate ? new Date(endDate).toISOString() : undefined;
@@ -145,15 +291,15 @@ function GitCustodian() {
     newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
     setGitCustodianFilterModel({...newDashboardFilterTagsModel});
 
-    let newDataModel = modelHelpers.setDashboardFilterModelField(gitCustodianData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    let newDataModel = modelHelpers.setDashboardFilterModelField(gitCustodianFilterModel, "date", { startDate: sDate , endDate: eDate, key: "selection" });
     loadData(newDataModel);
   };
 
   const clearCalendar = () => {
     setDate([
       {
-        startDate: undefined,
-        endDate: undefined,
+        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
         key: "selection",
       },
     ]);
@@ -201,11 +347,11 @@ function GitCustodian() {
               onChange={dateChange}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
+              retainEndDateOnFirstSelection={true}
               months={1}
               ranges={date}
               direction="horizontal"
             />
-            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} /> */}
           </Popover.Content>
         </Popover>
       </Overlay>
@@ -214,17 +360,19 @@ function GitCustodian() {
 
   const getGitCustodianActionBar = () => {
     return (
-      <div>
-        <ActionBarContainer>
-          <div className="d-flex">
-            <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+      <DataBlockBoxContainer showBorder={true} className={'p-2'}>
+        <div className="d-flex px-2 py-2">
+          {getInlineFilters()}
+          {getFilterButtons()}
+          <div className="d-flex mx-2">
+            <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
               <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
               {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
             </Button>
             {getDateRangeButton()}
           </div>
-        </ActionBarContainer>
-      </div>
+        </div>
+      </DataBlockBoxContainer>
     );
   };
 
@@ -240,12 +388,13 @@ function GitCustodian() {
       breadcrumbDestination={"insightsGitCustodian"}
     >
       {getGitCustodianActionBar()}
-      <GitCustodianDetails
-        gitCustodianData={gitCustodianData}
-        setGitCustodianData={setGitCustodianData}
-        gitCustodianFilterModel={gitCustodianFilterModel}
-        setGitCustodianFilterModel={setGitCustodianFilterModel}
-      />
+      {isLoading ? <LoadingDialog size="sm" message="Loading Git Custodian Report"/> :
+        <GitCustodianDetails
+          gitCustodianData={gitCustodianData}
+          gitCustodianFilterModel={gitCustodianFilterModel}
+          setGitCustodianFilterModel={setGitCustodianFilterModel}
+        />
+      }
     </ScreenContainer>
   );
 

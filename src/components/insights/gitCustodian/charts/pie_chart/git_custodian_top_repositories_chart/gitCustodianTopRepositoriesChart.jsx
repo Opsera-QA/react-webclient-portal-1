@@ -7,27 +7,9 @@ import axios from "axios";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData } from '../../../../charts/charts-views';
 
-function GitCustodianTopRepositoriesChart({ dashboardData }) {
+function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [totalRepositoriesData, setTotalRepositoriesData] = useState([
-    {
-      "value": 49,
-      "repoId": "17365813",
-      "service": "gitlab",
-      "id": "HelmCharts",
-      "repository": "HelmCharts",
-      "lastScannedOn": "2022-05-18T12:24:14.218Z"
-    },
-    {
-      "value": 43,
-      "repoId": "18638970",
-      "service": "gitlab",
-      "id": "terraform",
-      "repository": "terraform",
-      "lastScannedOn": "2022-05-18T12:17:45.591Z"
-    }
-  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -64,17 +46,21 @@ function GitCustodianTopRepositoriesChart({ dashboardData }) {
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(totalRepositoriesData) || totalRepositoriesData.length === 0) return null;
+    if (!Array.isArray(data) || data.length === 0) {
+      return (
+        <div className="new-chart p-0" style={{height: "200px"}}/>
+      );
+    }
 
     let total = 0;
-    totalRepositoriesData.forEach(datum => {
+    data.forEach(datum => {
       total += datum.value;
     });
 
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
         <ResponsivePie
-          data={totalRepositoriesData}
+          data={data}
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />
@@ -90,9 +76,7 @@ function GitCustodianTopRepositoriesChart({ dashboardData }) {
 
 GitCustodianTopRepositoriesChart.propTypes = {
   dashboardData: PropTypes.object,
-  dataWithArc: PropTypes.any,
-  centerX: PropTypes.any,
-  centerY: PropTypes.any,
+  data: PropTypes.array
 };
 
 export default GitCustodianTopRepositoriesChart;

@@ -19,6 +19,15 @@ function ApigeePipelineStepConfigurationSummaryPanel({ apigeePipelineDataObject,
         <Col lg={6}>
           <TextFieldBase dataObject={apigeePipelineDataObject} fieldName={"type"}/>
         </Col>        
+        <Col lg={6}>
+          <TextFieldBase dataObject={apigeePipelineDataObject} fieldName={"targetToolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <ToolNameField model={apigeePipelineDataObject} fieldName={"environmentName"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={apigeePipelineDataObject} fieldName={"delayTime"}/>
+        </Col>        
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

@@ -80,7 +80,9 @@ function DeploymentAnalytics({
       dashboardOrgs
     );
     setMetadataInfo(response?.data?.data);
-    setActiveTab(response?.data?.data[0].metadataName);
+    if(response?.data?.data && response?.data?.data.length>0){
+      setActiveTab(response?.data?.data[0].metadataName);
+    }
   };
 
   const loadData = async (

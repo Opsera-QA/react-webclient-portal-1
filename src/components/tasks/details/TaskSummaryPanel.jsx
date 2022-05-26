@@ -53,6 +53,13 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
+  const updateRunCount = () => {
+    let newDataObject = gitTasksData;
+    const currRunCount = gitTasksData?.getData("run_count") ? gitTasksData?.getData("run_count") : 0;
+    newDataObject.setData("run_count", currRunCount + 1);
+    setGitTasksData(newDataObject);
+  };
+
   const getDynamicField = () => {
     if (gitTasksData.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
       return (
@@ -88,6 +95,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           <GitScraperActionButton
             gitTasksData={gitTasksData}
             status={gitTasksData?.getData("status")}
+            runCountUpdate={updateRunCount}
           />
         );
       default:

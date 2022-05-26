@@ -113,7 +113,7 @@ const IssuesSelectionView = ({
 
   return (
     <Row>
-      <Col lg={6}>
+      <Col lg={12}>
         <ListInputBase
           height={"40vh"}
           customTitle={"Available Issues"}
@@ -130,24 +130,6 @@ const IssuesSelectionView = ({
           disabled={disabled}
           noDataMessage={"No Issues Found"}
           callbackFunction={callbackFunction}
-        />
-      </Col>
-      <Col lg={6}>
-        <ListInputBase
-          height={"40vh"}
-          customTitle={"Selected Issues"}
-          fieldName={"tool"}
-          selectOptions={getSelectedOptions()}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          setDataFunction={handleRemoveFromSelected}
-          noDataMessage={"No Issues Selected"}
-          valueField={valueField}
-          textField={textField}
-          isLoading={isLoading}
-          searchFunction={searchFunction}
-          icon={faShieldKeyhole}
-          disabled={isLoading || getSelectedOptions().length === 0}
         />
       </Col>
     </Row>

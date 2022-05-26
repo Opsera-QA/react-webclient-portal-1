@@ -16,8 +16,9 @@ function SnaplogicScmToolTypeSelectInput({model, setModel, isLoading, disabled})
     newModel.setData("service", selectedOption?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("gitRepository", "");
-    newModel.setData("projectId", "");
+    newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
+    newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
 
