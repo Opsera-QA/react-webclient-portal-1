@@ -195,6 +195,43 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
   };
 };
 
+export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175, showFilter, tooltipTemplateFunction, convertToLocalTimezone) => {
+  let header = getColumnHeader(field);
+
+  if (showFilter) {
+    header.push({ content: "inputFilter" }); 
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    width: width,
+    // TODO: Figure out why date format isn't working and convert to using that.
+    // type: "date",
+    // format: "%Y-%M-%d %h:%m %a",/
+    tooltipTemplate: tooltipTemplateFunction,
+    template: function (text, row, col) {
+      try {
+        const property = col?.id;
+        let dateString = dataParsingHelper.safeObjectPropertyParser(row, property, "");
+
+        if (dateString == null || dateString === "") {
+          return "";
+        }
+
+        let date = new Date(dateString);
+        dateString = date.toLocaleString("en-us", {timeZoneName:"short"});
+
+        return dateString;
+      } catch(error) {
+        console.log(error?.message);
+        return "";
+      }
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
 export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
   return {
     header: header,

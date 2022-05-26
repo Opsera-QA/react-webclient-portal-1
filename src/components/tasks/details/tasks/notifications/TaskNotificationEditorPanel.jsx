@@ -82,11 +82,11 @@ function TaskNotificationEditorPanel(
     const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
     setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
 
-    // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
-    // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
-
     const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
     setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
+
+    // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
+    // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
 
     // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
     // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
@@ -117,11 +117,6 @@ function TaskNotificationEditorPanel(
       return false;
     }
 
-    // if (jiraNotificationModel.getData("enabled") === true && !jiraNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Jira notification without all required fields filled out.");
-    //   return false;
-    // }
-
     if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
       toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
       return false;
@@ -131,6 +126,11 @@ function TaskNotificationEditorPanel(
       toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
       return false;
     }
+
+    // if (jiraNotificationModel.getData("enabled") === true && !jiraNotificationModel.isModelValid()) {
+    //   toastContext.showInlineErrorMessage("Error: Cannot enable Jira notification without all required fields filled out.");
+    //   return false;
+    // }
 
     // if (serviceNowNotificationModel.getData("enabled") === true && !serviceNowNotificationModel.isModelValid()) {
     //   toastContext.showInlineErrorMessage("Error: Cannot enable ServiceNow notifications without all required fields filled out.");

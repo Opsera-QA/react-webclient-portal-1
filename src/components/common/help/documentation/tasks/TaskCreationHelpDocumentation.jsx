@@ -22,6 +22,7 @@ function TaskCreationHelpDocumentation({closeHelpPanel}) {
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE)}</b> - Convert the Salesforce metadata components available in Git Branch from Ant to SFDX format or vice versa.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</b> - Create and configure the Salesforce Organization Sync task to sync the changes in Salesforce Org with the configured Git branch.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)}</b> - Migrate the entire SFDC org metadata components to a GIT repository branch. </li>
+                <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC)}</b> - Use this task to selectively merge Salesforce components to a target branch.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</b> - Use this task to quickly deploy any already successfully validated and unit-tested packages (which are not older than 10 days or 240 hours) to a Salesforce Org by providing the Deploy/Job ID corresponding to the validation.</li>
             </ul></li>
         <li><b>Tags</b> - Select any tags to be associated with your Task. Applying tags at this level will associate that tag with this Task.</li>
