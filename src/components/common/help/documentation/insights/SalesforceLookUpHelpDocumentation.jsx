@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from 'components/common/overlays/center/help/HelpOverlayBase';
 
-const LookupHelp = () => {
+const SalesforceLookUpHelpDocumentation = () => {
 
   const toastContext = useContext(DialogToastContext);
 
@@ -25,11 +25,11 @@ Click on Search to get the results component-wise.
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Pipelines"}
+      helpTopic={"Salesforce Lookup"}
       helpDocumentation={getHelpDocumentation()}
     >
     </HelpOverlayBase>
   );
 };
 
-export default React.memo(LookupHelp);
+export default React.memo(SalesforceLookUpHelpDocumentation);

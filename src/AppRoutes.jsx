@@ -69,7 +69,7 @@ import SiteNotificationDetailView
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
-import Lookup from "./components/lookup/Lookup";
+import Lookup from "./components/insights/lookup/Lookup";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
