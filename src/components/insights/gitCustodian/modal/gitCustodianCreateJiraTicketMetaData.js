@@ -11,14 +11,16 @@ const GitCustodianCreateJiraTicketMetaData = {
       id: "issues",
     },
     {
+      label: "Issues List",
+      id: "issuesList",
+    },
+    {
       label: "Issue Description",
       id: "description",
-      isRequired: true
     },
     {
       label: "Issue Summary",
       id: "summary",
-      isRequired: true
     },
     {
       label: "Issue Type",
@@ -35,7 +37,7 @@ const GitCustodianCreateJiraTicketMetaData = {
     jiraToolId: "",
     issues: [],
     description: "",
-    summary: "",
+    summary: "Git Vulnerabilities",
     issueTypeId: "",
     projectKey: ""
   }

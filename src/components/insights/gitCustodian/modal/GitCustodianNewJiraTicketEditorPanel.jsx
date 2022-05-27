@@ -7,7 +7,6 @@ import IssuesSelectionView from "./IssuesSelectionView";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import GitCustodianCreateJiraTicketMetaData from "./gitCustodianCreateJiraTicketMetaData";
 import axios from "axios";
-import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 import RoleRestrictedJiraToolSelectInput
   from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 import CreateJiraTicketProjectSelectInput from "./inputs/CreateJiraTicketProjectSelectInput";
@@ -17,11 +16,8 @@ import chartsActions from "../../charts/charts-actions";
 function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData }) {
   const { getAccessToken } = useContext(AuthContext);  
   const [createJiraTicketDataModel, setCreateJiraTicketDataModel] = useState(new Model({ ...GitCustodianCreateJiraTicketMetaData.newObjectFields }, GitCustodianCreateJiraTicketMetaData, false));
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [issuesData, setIssuesData] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -67,20 +63,6 @@ function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData })
               jiraToolId={createJiraTicketDataModel.getData("jiraToolId")}
               model={createJiraTicketDataModel}
               setModel={setCreateJiraTicketDataModel}
-            />
-          </Col>
-          <Col md={12}>
-            <TextAreaInput
-              fieldName={"description"}
-              dataObject={createJiraTicketDataModel}
-              setDataObject={setCreateJiraTicketDataModel}
-            />
-          </Col>
-          <Col md={12}>
-            <TextAreaInput
-              fieldName={"summary"}
-              dataObject={createJiraTicketDataModel}
-              setDataObject={setCreateJiraTicketDataModel}
             />
           </Col>
           <Col md={12}>
