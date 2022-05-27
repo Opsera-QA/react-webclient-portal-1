@@ -2,8 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import BadgeBase from "components/common/badges/BadgeBase";
+import { faCircleInfo } from "@fortawesome/pro-light-svg-icons";
+import BetaBadge from "components/common/badges/TooltipBadgeBase";
 
-function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar, helpComponent }) {
+function TitleBar(
+  {
+    title,
+    titleIcon,
+    isLoading,
+    inactive,
+    titleActionBar,
+    helpComponent,
+    isBeta,
+  }) {
   const getInactiveText = () => {
     if (inactive) {
       return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
@@ -16,6 +28,7 @@ function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar, helpC
         {getInactiveText()}
         {titleActionBar}
         <LaunchHelpIcon helpComponent={helpComponent} className={"mx-1"} />
+        <BetaBadge isBeta={isBeta} />
       </div>
     );
   };
@@ -39,7 +52,8 @@ TitleBar.propTypes = {
   titleActionBar: PropTypes.object,
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool,
-  helpComponent: PropTypes.object
+  helpComponent: PropTypes.object,
+  isBeta: PropTypes.bool,
 };
 
 export default TitleBar;
