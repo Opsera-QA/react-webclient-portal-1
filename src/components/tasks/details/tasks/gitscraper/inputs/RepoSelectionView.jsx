@@ -41,6 +41,7 @@ const RepoSelectionView = ({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setRepositories([]);
 
     if (isMongoDbId(gitToolId) === true && !disabled) {
       loadData(source).catch((error) => {
@@ -59,7 +60,6 @@ const RepoSelectionView = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      setRepositories([]);
 
       if (service === "bitbucket") {
         await loadBitbucketRepositories(cancelSource);
