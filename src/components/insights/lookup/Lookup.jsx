@@ -19,7 +19,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
-import LookupHelp from './LookupHelp';
+import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import LookupTableTotals from "./LookupTableTotals";
 import LookupTablePipelines from "./LookupTablePipelines";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -400,7 +400,7 @@ const Lookup = () => {
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"lookup"} />}
       isLoading={!screenReady}
       breadcrumbDestination={"lookup"}
-      helpComponent={<LookupHelp />}
+      helpComponent={<SalesforceLookUpHelpDocumentation />}
       pageDescription={`
       Currently applicable only for Salesforce Pipelines. This Component based search provides details on when selected components have been deployed along with pipeline details. Also provides summary on validations and unit tests.
       `}
