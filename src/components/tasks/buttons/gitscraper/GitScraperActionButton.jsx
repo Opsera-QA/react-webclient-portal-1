@@ -70,10 +70,7 @@ function GitScraperActionButton(
 
     const taskAtHand = await getTaskStatus(cancelSource);
     console.log("task at hand status: " + JSON.stringify(taskAtHand?.status));
-
-    if (count > 15) {
-      await handleCancelRunTask(true);
-    }
+    setIsTaskRunning(true);
 
     if (taskAtHand?.status === "running") {
       let timeout = 15000;
@@ -101,8 +98,7 @@ function GitScraperActionButton(
     try {
       await taskActions.startGitscraperScan(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
       toastContext.showSuccessDialog("Git Custodian Triggered Successfully");
-      setIsTaskRunning(true);
-      runCountUpdate();
+      await runCountUpdate();
       await startTaskPolling();
     } catch (error) {
       setIsTaskRunning(false);
