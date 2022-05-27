@@ -4,8 +4,7 @@ import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-ico
 import gitScraperReportMetaData
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
-  getColumnHeader, getColumnId, getTableDateColumn,
-  getTableTextColumn,
+    getTableDateTimeColumn, getTableTextColumn,
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
@@ -24,7 +23,7 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
       getTableTextColumn(getField(fields, "lineNumber")),
       getTableTextColumn(getField(fields, "reason")),
       getTableTextColumn(getField(fields, "repository")),
-      getTableDateColumn(getField(fields, "scannedOn")),
+      getTableDateTimeColumn(getField(fields, "scannedOn")),
     ],
     []
   );
