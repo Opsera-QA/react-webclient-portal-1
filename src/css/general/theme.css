@@ -1386,8 +1386,7 @@ div.data-blocks-ellipses {
 }
 
 .custom-inline-filter-input {
-    max-width: 25%;
-    min-width: 250px;
+    width: 250px;
 }
 
 .filter-bar .custom-filter-input .form-control {
