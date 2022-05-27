@@ -41,6 +41,8 @@ import ExternalApiIntegratorToolConnectionEditorPanel
 import GithubDeploykeysToolConfigurationPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeploykeysToolConfigurationPanel";
 import ApigeeToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
+import SnaplogicToolConfiguration 
+  from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 
 function ToolConnectionPanel({ toolData, setToolData }) {
   const getConnectionPanel = () => {
@@ -127,6 +129,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <GithubDeploykeysToolConfigurationPanel toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
         return <ApigeeToolConnectionEditorPanel toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return <SnaplogicToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
