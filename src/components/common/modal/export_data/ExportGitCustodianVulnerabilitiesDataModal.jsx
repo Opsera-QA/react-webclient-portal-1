@@ -41,7 +41,7 @@ function ExportGitCustodianVulnerabilitiesDataModal({ showModal, closeModal, for
       showModal={showModal}
       handleCancelModal={closeModal}
       isLoading={isLoading}
-      getRawData={getRawData}
+      //getRawData={getRawData}
       getPdfExporter={getPdfExporter}
       // getCsvData={getCsvData}
     />

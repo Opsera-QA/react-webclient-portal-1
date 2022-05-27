@@ -55,7 +55,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(gitCustodianData)]);
+  }, []);
 
   const noDataMessage = "No data found";
 
@@ -88,6 +88,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         setResponseData(tableResponse?.data);
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", tableResponse?.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         let pageSize = filterDto.getData("pageSize");
         newFilterDto.setData("pageSize", pageSize);
         let sortOption = filterDto.getData("sortOption");
