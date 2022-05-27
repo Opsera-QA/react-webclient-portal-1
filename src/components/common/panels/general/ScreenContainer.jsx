@@ -29,7 +29,9 @@ function ScreenContainer(
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
-
+console.log('screencontainer:', {
+  isLoading
+});
   useEffect(() => {
     toastContext.removeInlineMessage();
     if (breadcrumb?.name !== breadcrumbDestination) {
