@@ -1385,6 +1385,11 @@ div.data-blocks-ellipses {
     height: 20px;
 }
 
+.custom-inline-filter-input {
+    max-width: 25%;
+    min-width: 250px;
+}
+
 .filter-bar .custom-filter-input .form-control {
     height: 1.9em;
 }

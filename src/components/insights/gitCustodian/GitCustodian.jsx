@@ -262,28 +262,32 @@ function GitCustodian() {
           options={authorsFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianServiceSelectInput
           filterModel={gitCustodianFilterModel}
           options={servicesFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianRepositoriesSelectInput
           filterModel={gitCustodianFilterModel}
           options={repositoriesFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianStatusSelectInput
           filterModel={gitCustodianFilterModel}
           setFilterModel={setGitCustodianFilterModel}
           options={statusFilterData}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
       </div>
     );
