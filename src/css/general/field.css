@@ -31,6 +31,13 @@
     color: #fff;
 }
 
+.beta-badge {
+    border: 1px solid #CF940C;
+    color: white;
+    background-color: #CF940C;
+    font-size: 15px;
+}
+
 .standard-badge {
     font-weight: normal;
     letter-spacing: 1px;

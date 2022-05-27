@@ -40,7 +40,14 @@ function FaqSubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab activeTab={currentTab} tabText={"FAQs"} handleTabClick={handleTabClick} tabName={"all"} icon={faQuestion} />
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"FAQs"}
+        handleTabClick={handleTabClick}
+        tabName={"all"}
+        icon={faQuestion}
+        isBeta={true}
+      />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
