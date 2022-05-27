@@ -18,12 +18,15 @@ import JiraMeanLeadTimeDataBlock from "../../data_blocks/JiraMeanLeadTimeDataBlo
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
 import IconBase from "components/common/icons/IconBase";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [issueData, setIssueData] = useState([]);
+  const [previousResults, setPreviousResults] = useState(undefined);
+  const [previousIssues, setPreviousIssues] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(false);
@@ -77,11 +80,21 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
           ? response?.data?.data[0]?.jiraLeadTime?.issueData
           : [];
+      const previousResultsData =
+        response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+          ? response?.data?.data[0]?.jiraLeadTime?.previousResults
+          : [];
+      const previousResultsIssueData =
+          response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+            ? response?.data?.data[0]?.jiraLeadTime?.previousResults?.data[0]?.issueData
+            : [];
       assignStandardColors(dataObject && dataObject[0]?.data, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setIssueData(issueDataObject);
+        setPreviousResults(previousResultsData);
+        setPreviousIssues(previousResultsIssueData);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -138,6 +151,48 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       setShowModal(true);
     };
 
+    const getIcon = (data, previousData) => {
+      if (data > previousData) {
+          return faArrowCircleUp;
+      } else 
+      if (data < previousData) {
+        return faArrowCircleDown;
+      } else
+      if (data === previousData) {
+          return faMinusCircle;
+      } else {
+          return undefined;
+      }
+      };
+  
+      const getIconColor = (data, previousData) => {
+        if (data > previousData) {
+          return "green";
+        } else 
+        if (data < previousData) {
+          return "red";
+        } else
+        if (data === previousData) {
+          return "light-gray-text-secondary";
+        } else {
+          return "black";
+        }
+        };
+
+        const getLeadTimeIconColor = (data, previousData) => {
+          if (data > previousData) {
+            return "red";
+          } else 
+          if (data < previousData) {
+            return "green";
+          } else
+          if (data === previousData) {
+            return "light-gray-text-secondary";
+          } else {
+            return "black";
+          }
+          };
+
     return (
       <>
         <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
@@ -145,19 +200,27 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
             <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
               <Row>
                 <Col lg={12} className={"my-3"}>
-                  <JiraMeanLeadTimeDataBlock data={metrics[0].data[0].mean} />
+                  <JiraMeanLeadTimeDataBlock data={metrics[0]?.data[0]?.mean} previousData={previousResults?.mean} getIcon={getIcon} getIconColor={getLeadTimeIconColor}/>
                 </Col>
                 <Col lg={12} className={"my-3"}>
-                  <JiraIssuesCompletedDataBlock data={issueData.length} />
+                  <JiraIssuesCompletedDataBlock data={issueData?.length} previousData={previousIssues?.length}  getIcon={getIcon} getIconColor={getIconColor}/>
                 </Col>
                 <Col lg={12} className={"mb-3"}>
                   <JiraBugsCompletedDataBlock
                     data={
-                      issueData.filter(
+                      issueData?.filter(
                         (item) =>
                           item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
                       ).length
                     }
+                    previousData={
+                      previousIssues?.filter(
+                        (item) =>
+                          item?.issueType?.toLowerCase() === "bug" || item?.issueType?.toLowerCase() === "defect"
+                      ).length
+                    }
+                    getIcon={getIcon} 
+                    getIconColor={getIconColor}
                   />
                 </Col>
               </Row>
@@ -174,7 +237,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
                 {/*  iconSize={"lg"}*/}
                 {/*/>*/}
                 {/*<br />*/}
-                {`Mean Lead Time `}
+                { `Mean Lead Time `}
                 <IconBase
                   icon={faMinus}
                   iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_2}
