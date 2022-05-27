@@ -333,6 +333,7 @@ function KpiSettingsForm({
     "git-scraper",
     "salesforce-components-chart",
     "github-commit-statistics",
+    "deployment-analytics"
   ];
 
   const getKpiFilters = (filter) => {
