@@ -22,6 +22,7 @@ import GitCustodianNewJiraTicketModal from "../modal/GitCustodianNewJiraTicketMo
 import chartsActions from "../../charts/charts-actions";
 import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
 import Model from "../../../../core/data_model/model";
+import ExportGitCustodianVulnerabilitiesButton from "./ExportGitCustodianVulnerabilitiesButton";
 
 function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -54,7 +55,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(gitCustodianData)]);
+  }, []);
 
   const noDataMessage = "No data found";
 
@@ -63,6 +64,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
   const columns = useMemo(
     () => [
       getTableDateTimeColumn(getField(fields, "commitDate")),
+      getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
       getTableTextColumn(getField(fields, "path")),
       getTableTextColumn(getField(fields, "lineNumber")),
@@ -86,6 +88,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         setResponseData(tableResponse?.data);
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", tableResponse?.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         let pageSize = filterDto.getData("pageSize");
         newFilterDto.setData("pageSize", pageSize);
         let sortOption = filterDto.getData("sortOption");
@@ -159,20 +162,8 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       supportSearch={false}
       className={"px-2 pb-2"}
       showRefreshButton={false}
-      disableNewRecordButton={responseData?.length === 0}
-      exportButton={
-        <TooltipWrapper innerText={"Export CSV"}>
-          <div className={"mx-2"}>
-            <Button
-              variant={"outline-primary"}
-              size={"sm"}
-              onClick={exportData}
-              disabled={isLoading || responseData?.length === 0}>
-              <span><IconBase icon={faDownload}/></span>
-            </Button>
-          </div>
-        </TooltipWrapper>
-      }
+      disableNewRecordButton={responseData?.length === 0}      
+      exportButton={<ExportGitCustodianVulnerabilitiesButton className={"ml-2"} gitCustodianData={gitCustodianData} data={responseData} isLoading={isLoading} />}
     />
   );
 }

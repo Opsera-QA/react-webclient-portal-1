@@ -30,7 +30,7 @@ const GitCustodianTableMetaData = {
     },
     {
       label: "Repository",
-      id: "repositoryName"
+      id: "repository"
     },
     {
       label: "Main Branch",

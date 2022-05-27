@@ -262,28 +262,32 @@ function GitCustodian() {
           options={authorsFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianServiceSelectInput
           filterModel={gitCustodianFilterModel}
           options={servicesFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianRepositoriesSelectInput
           filterModel={gitCustodianFilterModel}
           options={repositoriesFilterData}
           setFilterModel={setGitCustodianFilterModel}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
         <InlineGitCustodianStatusSelectInput
           filterModel={gitCustodianFilterModel}
           setFilterModel={setGitCustodianFilterModel}
           options={statusFilterData}
           loadData={loadData}
-          className={"mx-2"}
+          className={"mx-2 custom-inline-filter-input"}
+          inline={false}
         />
       </div>
     );
@@ -350,6 +354,8 @@ function GitCustodian() {
               startDatePlaceholder="Start Date"
               endDatePlaceholder="End Date"
               onChange={dateChange}
+              minDate={new Date(addDays(new Date(), -7300).setHours(0, 0, 0, 0))}
+              maxDate={new Date(addDays(new Date(), 365).setHours(0, 0, 0, 0))}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               retainEndDateOnFirstSelection={true}

@@ -15,7 +15,7 @@ const bitbucketConnectionMetadata = {
       maxLength: 100
     },
     {
-      label: "Password",
+      label: "API Token",
       id: "accountPassword",
       isRequired: true,
       maxLength: 256

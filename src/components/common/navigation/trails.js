@@ -17,6 +17,7 @@ const breadcrumbs = {
     linkText: "Frequently Asked Questions",
     title: "Frequently Asked Questions",
     icon: faQuestion,
+    isBeta: true,
   },
   helpDocumentation: {
     parent: undefined,
@@ -25,6 +26,7 @@ const breadcrumbs = {
     linkText: "Help Documentation",
     title: "Help Documentation",
     icon: faBook,
+    isBeta: true,
   },
 
   // Inventory

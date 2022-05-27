@@ -10,8 +10,8 @@ import GitCustodianTopSecretsChart from "../charts/bar_chart/git_custodian_top_s
 import GitCustodianTopRepositoriesChart from "../charts/pie_chart/git_custodian_top_repositories_chart/gitCustodianTopRepositoriesChart";
 import GitCustodianTopAuthorsChart
   from "../charts/bar_chart/git_custodian_top_authors_chart/gitCustodianTopAuthorsChart";
-import GitCustodianTopCleanRepositoriesChart
-  from "../charts/pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTopCleanRepositoriesChart";
+import GitCustodianTotalRepositoriesChart
+  from "./pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTotalRepositoriesChart";
 import GitCustodianTimelineChart from "../charts/line_chart/git_custodian_timeline_chart/gitCustodianTimelineChart";
 import chartsActions from "../../charts/charts-actions";
 
@@ -87,8 +87,8 @@ function GitCustodianChartsView({ gitCustodianData }) {
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP CLEAN REPOSITORIES</div>
-              <GitCustodianTopCleanRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOTAL REPOSITORIES</div>
+              <GitCustodianTotalRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>

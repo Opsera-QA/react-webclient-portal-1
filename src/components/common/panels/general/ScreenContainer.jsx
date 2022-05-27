@@ -147,6 +147,7 @@ function ScreenContainer(
           <TitleBar
             titleIcon={breadcrumb?.icon}
             title={breadcrumb?.title}
+            isBeta={breadcrumb?.isBeta === true}
             isLoading={isLoading}
             titleActionBar={titleActionBar}
             helpComponent={helpComponent}

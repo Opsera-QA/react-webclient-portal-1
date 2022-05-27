@@ -62,7 +62,7 @@ function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
         <ResponsivePie
-          data={data}
+          data={data.filter(d => d.value != 0)}
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />

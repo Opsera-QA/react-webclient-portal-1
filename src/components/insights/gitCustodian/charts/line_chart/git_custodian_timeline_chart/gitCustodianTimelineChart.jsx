@@ -72,6 +72,35 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
       );
     }
 
+    const getMonthDifference = (startDate, endDate) => {
+      return (
+        endDate.getMonth() -
+        startDate.getMonth() +
+        12 * (endDate.getFullYear() - startDate.getFullYear())
+      );
+    };
+
+    const formats = {
+      dynamicDateFormat: (d) =>{
+        let date = new Date(d).toUTCString();
+        date = date.split(" ");
+
+        let length = data[0]?.data?.length;
+        let minDate = data[0]?.data[0]?.x;
+        let maxDate = data[0]?.data[length-1]?.x;
+
+        let monthDiff  = getMonthDifference(new Date(minDate), new Date(maxDate));
+
+        console.log(monthDiff);
+
+        if(monthDiff < 12){
+          return date[2] + " " + date[1];
+        }
+        return date[2] + " " + date[3];
+      }
+    };
+    
+
     return (
       <div className="new-chart p-0" style={{height: "200px"}}>
         <ResponsiveLine
@@ -83,6 +112,16 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
             key={point.data.range}
             titles = {["Issues"]}
             values = {[point.data.y]} />}
+          axisBottom={{
+            format: formats.dynamicDateFormat,
+            orient: "bottom",
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: -45,
+            legend: "Date",
+            legendOffset: 60,
+            legendPosition: "middle",
+          }}
         />
       </div>
     );

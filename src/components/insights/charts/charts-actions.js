@@ -212,6 +212,7 @@ chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, 
 };
 
 chartsActions.createGitCustodianJiraTicket = async(getAccessToken, cancelTokenSource, postBody)=>{
+  delete postBody.issuesList;
   const apiUrl = "/analytics/actions/v1/jira/ticket/createDefault";
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

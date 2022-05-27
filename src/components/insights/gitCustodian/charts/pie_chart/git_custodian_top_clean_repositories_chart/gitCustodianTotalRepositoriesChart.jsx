@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "./gitCustodianTopCleanRepositoriesChartConfig";
+import config from "./gitCustodianTotalRepositoriesChartConfig";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
@@ -12,7 +12,7 @@ import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/Dat
 import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
 import TwoLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
-function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
+function GitCustodianTotalRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +78,7 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
     return (
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
         <ResponsivePie
-          data={chartData}
+          data={chartData.filter(data => data.value != 0)}
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />
@@ -116,7 +116,7 @@ function GitCustodianTopCleanRepositoriesChart({ dashboardData, data }) {
   return getChartBody();
 }
 
-GitCustodianTopCleanRepositoriesChart.propTypes = {
+GitCustodianTotalRepositoriesChart.propTypes = {
   dashboardData: PropTypes.object,
   dataWithArc: PropTypes.any,
   centerX: PropTypes.any,
@@ -124,4 +124,4 @@ GitCustodianTopCleanRepositoriesChart.propTypes = {
   data: PropTypes.array
 };
 
-export default GitCustodianTopCleanRepositoriesChart;
+export default GitCustodianTotalRepositoriesChart;

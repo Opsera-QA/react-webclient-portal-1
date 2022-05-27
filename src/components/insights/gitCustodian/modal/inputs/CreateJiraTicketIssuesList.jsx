@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import ListInputBase from "components/common/inputs/list/ListInputBase";
+import ListObjectInputBase from "components/common/inputs/list/ListObjectInputBase";
 
 const CreateJiraTicketIssuesList = (
   { 
@@ -32,21 +32,44 @@ const CreateJiraTicketIssuesList = (
     return item.path.toLowerCase().includes(searchTerm.toLowerCase());
   };
 
+  const setDataFunction = async (fieldName, newArray) => {    
+    const newModel = {...model};
+
+    const issueIdArr = newArray?.map((issue) => issue.id);
+
+    const description = newArray?.reduce((pv, cv) => pv + `Repository: ${cv.repository}; Path: ${cv.path}; Line Number: ${cv.lineNumber}\n`, "");
+
+    newModel.setData(fieldName, newArray);
+    newModel.setData("issues", issueIdArr);
+    newModel.setData("description", description);
+    newModel.setData("summary", `Opsera Git custodian - Compliance issue - total number of issues #${issueIdArr.length}`);
+    setModel({ ...newModel });
+  };
+
+  const clearDataFunction = () => {
+    const newModel = {...model};
+    newModel.setDefaultValue("issues");
+    newModel.setDefaultValue("description");
+    newModel.setDefaultValue("summary");
+    setModel({...newModel});
+  };
+
   return (
-    <div>
-      <ListInputBase
-        customTitle={"Issues List"}
-        fieldName={"issues"}
-        valueField={"issueId"}
+    <div>      
+      <ListObjectInputBase
+        customTitle={"Vulnerabilities List"}
+        setDataFunction={setDataFunction}
+        fieldName={"issuesList"}
+        model={model}
+        setModel={setModel}
         selectOptions={issuesList}
         searchFunction={searchFunction}
-        showSelectAllButton={true}
-        dataObject={model}
-        setDataObject={setModel}
+        clearDataFunction={clearDataFunction}
         customTemplate={customTemplate}
         isLoading={isLoading}
-        loadDataFunction={loadDataFunction}
+        valueField={"issueId"}        
         noDataMessage={ noDataFilesPulledMessage }
+        showSelectAllButton={true}
       />
     </div>
   );
