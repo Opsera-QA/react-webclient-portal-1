@@ -96,7 +96,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
   };
 
   const getSchedulerField = () => {
-    if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) !== true) {
+    if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) === true) {
       return (
         <Col md={6}>
           <TaskSchedulerField
