@@ -54,7 +54,12 @@ function ToolNameFieldDisplayer(
       await loadToolName(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
+        if (error?.response?.status !== 404) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+        else {
+          console.error(error);
+        }
       }
     } finally {
       if (isMounted?.current === true) {
