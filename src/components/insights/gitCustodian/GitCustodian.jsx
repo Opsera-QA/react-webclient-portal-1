@@ -354,6 +354,8 @@ function GitCustodian() {
               startDatePlaceholder="Start Date"
               endDatePlaceholder="End Date"
               onChange={dateChange}
+              minDate={new Date(addDays(new Date(), -7300).setHours(0, 0, 0, 0))}
+              maxDate={new Date(addDays(new Date(), 365).setHours(0, 0, 0, 0))}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               retainEndDateOnFirstSelection={true}
