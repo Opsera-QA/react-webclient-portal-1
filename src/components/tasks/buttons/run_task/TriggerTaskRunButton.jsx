@@ -137,7 +137,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_QUICK_DEPLOY) {
+    else if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_QUICK_DEPLOY || gitTasksData?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK) {
       try {
         setIsLoading(true);
         const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};

@@ -198,6 +198,10 @@ import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_op
 import ApigeePipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/ApigeePipelineStepConfigurationSummaryPanel";
 import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
+import SnaplogicPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
+import SnaplogicStepFormMetadata 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -620,6 +624,13 @@ function PipelineStepConfigurationSummary({
           <ApigeePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             apigeePipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return (
+          <SnaplogicPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            snaplogicPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
           />
         );
       default:

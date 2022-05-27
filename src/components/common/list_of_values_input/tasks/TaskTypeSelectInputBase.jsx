@@ -23,6 +23,9 @@ export const productionTaskTypes = [
   {text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION, value: TASK_TYPES.SALESFORCE_BULK_MIGRATION, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC, value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce"},
+  
+  //snaplogic
+  // {text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Compliance"},
 ];
 
 export const nonProductionTaskTypes = [
@@ -45,6 +48,9 @@ export const nonProductionTaskTypes = [
   {text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC, value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC, category: "Salesforce"},
   {text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce"},
+  
+  //snaplogic
+  // {text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git"},
 ];
 
 function TaskTypeSelectInputBase({ fieldName, model, setModel, isLoading, setDataFunction, disabled }) {

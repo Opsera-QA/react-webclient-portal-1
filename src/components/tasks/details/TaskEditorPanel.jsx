@@ -30,6 +30,8 @@ import SalesforceBulkMigrationHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
 import GitToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
+import vaultActions from "components/vault/vault.actions";
+import TaskModel from "components/tasks/task.model";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -68,12 +70,39 @@ function TaskEditorPanel({ taskData, handleClose }) {
   const createGitTask = async () => {
     const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
     taskModel.setData("configuration", configuration);
-    return await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    const newTaskResponse = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    const taskId = newTaskResponse?.data?._id;
+
+    if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && configuration?.iValidatorScan && typeof configuration?.validationToken === "string") {
+      const keyName = `${taskId}-${taskModel?.getData("type")}-validationToken`;
+      const response = await vaultActions.saveRecordToVault (
+        getAccessToken,
+        cancelTokenSource,
+        keyName,
+        configuration?.validationToken
+      );
+      configuration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+      taskModel.setData("_id", taskId);
+      taskModel.setData("configuration", configuration);
+
+      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    }
+    return newTaskResponse;
   };
 
   const updateGitTask = async () => {
-    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
-    taskModel.setData("configuration", configuration);
+    const newConfiguration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && newConfiguration?.iValidatorScan && typeof newConfiguration?.validationToken === "string") {
+      const keyName = `${taskModel?.getData("_id")}-${taskModel?.getData("type")}-validationToken`;
+      const response = await vaultActions.saveRecordToVault (
+        getAccessToken,
+        cancelTokenSource,
+        keyName,
+        newConfiguration?.validationToken
+      );
+      newConfiguration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+    }
+    taskModel.setData("configuration", newConfiguration);
     return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
