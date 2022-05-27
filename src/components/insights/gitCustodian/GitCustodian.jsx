@@ -373,15 +373,17 @@ function GitCustodian() {
     return (
       <DataBlockBoxContainer showBorder={true} className={'p-2'}>
         <div className="d-flex px-2 py-2">
-          {getInlineFilters()}
-          {getFilterButtons()}
-          <div className="d-flex mx-2">
+        <div className="mx-2 custom-inline-filter-input">
+          <div>
             <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
               <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
               {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
             </Button>
+            </div>
             {getDateRangeButton()}
           </div>
+          {getInlineFilters()}
+          {getFilterButtons()}
         </div>
       </DataBlockBoxContainer>
     );
