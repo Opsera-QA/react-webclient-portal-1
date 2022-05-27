@@ -103,7 +103,6 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
-
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
@@ -171,7 +170,6 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
-
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
@@ -235,7 +233,6 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
 
-
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
@@ -297,7 +294,6 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
-
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
@@ -361,7 +357,6 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
           <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
             className="menu-text">Insights</span></NavLink>
-
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 

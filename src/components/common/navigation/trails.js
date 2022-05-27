@@ -580,6 +580,14 @@ const breadcrumbs = {
     linkText: "Dashboard Details",
     icon: faChartNetwork
   },
+  lookup: {
+    parent: "insights",
+    name: "lookup",
+    path: paths.lookup,
+    title: "Salesforce Lookup",
+    linkText: "Salesforce Lookup",
+    icon: faMagnifyingGlass
+  },
   marketplace: {
     parent: "insights",
     name: "marketplace",
