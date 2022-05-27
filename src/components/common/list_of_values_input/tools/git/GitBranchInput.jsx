@@ -24,71 +24,76 @@ function GitBranchInput(
     setDataFunction,
     clearDataFunction,
     disabled,
+    multi
   }) {
+
   if (visible === false) {
     return <></>;
   }
 
-  if (service === "azure-devops") {
-    return (
-      <AzureDevOpsBranchSelectInput
-        toolId={gitToolId}
-        repositoryId={repoId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-      />
-    );
-  }
+    if (service === "azure-devops") {
+      return (
+        <AzureDevOpsBranchSelectInput
+          toolId={gitToolId}
+          repositoryId={repoId}
+          model={dataObject}
+          setModel={setDataObject}
+          setDataFunction={setDataFunction}
+          fieldName={fieldName}
+          disabled={disabled}
+          clearDataFunction={clearDataFunction}
+        />
+      );
+    }
 
-  if (service === "bitbucket") {
-    return (
-      <BitbucketBranchSelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-        workspace={workspace}
-        repositoryId={repoId}
-      />
-    );
-  }
+    if (service === "bitbucket") {
+      return (
+        <BitbucketBranchSelectInput
+          toolId={gitToolId}
+          multi={multi}
+          model={dataObject}
+          setModel={setDataObject}
+          setDataFunction={setDataFunction}
+          fieldName={fieldName}
+          disabled={disabled}
+          clearDataFunction={clearDataFunction}
+          workspace={workspace}
+          repositoryId={repoId}
+        />
+      );
+    }
 
-  if (service === "github") {
-    return (
-      <GithubBranchSelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-        repositoryId={repoId}
-      />
-    );
-  }
+    if (service === "github") {
+      return (
+        <GithubBranchSelectInput
+          toolId={gitToolId}
+          multi={multi}
+          model={dataObject}
+          setModel={setDataObject}
+          setDataFunction={setDataFunction}
+          fieldName={fieldName}
+          disabled={disabled}
+          clearDataFunction={clearDataFunction}
+          repositoryId={repoId}
+        />
+      );
+    }
 
-  if (service === "gitlab") {
-    return (
-      <GitlabBranchSelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-        repositoryId={repoId}
-      />
-    );
-  }
+    if (service === "gitlab") {
+      return (
+        <GitlabBranchSelectInput
+          toolId={gitToolId}
+          multi={multi}
+          model={dataObject}
+          setModel={setDataObject}
+          setDataFunction={setDataFunction}
+          fieldName={fieldName}
+          disabled={disabled}
+          clearDataFunction={clearDataFunction}
+          repositoryId={repoId}
+        />
+      );
+    }
 
     if (service === "github-deploykey") {
       return (
@@ -116,6 +121,11 @@ GitBranchInput.propTypes = {
   ]),
   visible: PropTypes.bool,
   clearDataFunction: PropTypes.func,
+  multi: PropTypes.bool
+};
+
+GitBranchInput.defaultProps = {
+  multi: false
 };
 
 export default GitBranchInput;

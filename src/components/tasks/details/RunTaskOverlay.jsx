@@ -42,6 +42,8 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 import SnaplogicProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicProjectSelectInput";
 import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicScmBranchSelectInput";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
@@ -135,6 +137,9 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         break;
       case TASK_TYPES.SNAPLOGIC_TASK:
         configurationData = modelHelpers.parseObjectIntoModel(configuration, snaplogicTaskConfigurationMetadata);
+        break;
+      case TASK_TYPES.GITSCRAPER:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
         break;
       default:
         setTaskConfigurationModel(null);

@@ -10,6 +10,7 @@ import PipelineTaskSummaryMessageField
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import SalesforceLogSummaryReportPanel
   from "../../../workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
+import GitscraperLogSummaryReportPanel from "../../details/tasks/gitscraper/GitscraperLogSummaryPanel";
 
 function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 
@@ -22,6 +23,12 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
     if(taskActivityLogModel.getPersistData()?.type === "sfdc_quick_deploy" && taskActivityLogModel.getPersistData()?.log_type === "report") {
       return (
           <SalesforceLogSummaryReportPanel pipelineTaskData={taskActivityLogModel.getPersistData()?.api_response?.sfdcJobDetails[0]?.deployResult}/>
+      );
+    }
+
+    if(taskActivityLogModel.getPersistData()?.type === "gitscraper" && taskActivityLogModel.getPersistData()?.log_type === "report") {
+      return (
+        <GitscraperLogSummaryReportPanel pipelineTaskData={taskActivityLogModel.getPersistData()}/>
       );
     }
 

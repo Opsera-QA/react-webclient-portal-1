@@ -21,6 +21,7 @@ import TaskOrchestrationNotificationInlineInput
   from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
+import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -52,6 +53,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
+  const updateRunCount = () => {
+    let newDataObject = gitTasksData;
+    const currRunCount = gitTasksData?.getData("run_count") ? gitTasksData?.getData("run_count") : 0;
+    newDataObject.setData("run_count", currRunCount + 1);
+    newDataObject.setData("status", "running");
+    setGitTasksData(newDataObject);
+  };
+
   const getDynamicField = () => {
     if (gitTasksData.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
       return (
@@ -80,6 +89,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
           <TasksEcsActionButtons
             gitTasksData={gitTasksData}
             status={gitTasksData?.getData("status")}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperActionButton
+            gitTasksData={gitTasksData}
+            status={gitTasksData?.getData("status")}
+            runCountUpdate={updateRunCount}
           />
         );
       default:
