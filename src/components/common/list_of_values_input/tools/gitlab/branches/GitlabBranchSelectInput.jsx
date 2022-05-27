@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 
 function GitlabBranchSelectInput(
   {
@@ -17,6 +18,7 @@ function GitlabBranchSelectInput(
     setDataFunction,
     clearDataFunction,
     repositoryId,
+    multi
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +73,27 @@ function GitlabBranchSelectInput(
     }
   };
 
+  if (multi) {
+    return (
+      <MultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={model}
+        setDataObject={setModel}
+        selectOptions={gitlabBranches}
+        busy={isLoading}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled}
+        placeholderText={placeholderText}
+        error={error}
+        pluralTopic={"Gitlab Branches"}
+        singularTopic={"Gitlab Branch"}
+      />
+    );
+  }
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -103,6 +126,7 @@ GitlabBranchSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   repositoryId: PropTypes.string,
+  multi: PropTypes.bool
 };
 
 export default GitlabBranchSelectInput;

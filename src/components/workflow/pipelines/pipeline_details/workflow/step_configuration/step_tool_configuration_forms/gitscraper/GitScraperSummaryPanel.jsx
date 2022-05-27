@@ -25,9 +25,9 @@ function GitScraperSummaryPanel({ gitScraperPipelineDataObject, pipelineData, se
         <Col lg={6}>
           <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"gitToolId"} />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"type"} />
-        </Col>
+        {/*<Col lg={6}>*/}
+        {/*  <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"type"} />*/}
+        {/*</Col>*/}
         <Col lg={6}>
           <TextFieldBase dataObject={gitScraperPipelineDataObject} fieldName={"service"} />
         </Col>

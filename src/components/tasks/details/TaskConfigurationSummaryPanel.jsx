@@ -44,6 +44,8 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 import SnaplogicTaskSummaryCard from "./tasks/snaplogic/SnaplogicTaskSummaryCard";
 import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
+import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -178,6 +180,16 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             )}
           />
         );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitscraperSummaryPanel
+            gitTaskConfigurationData={
+              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), gitscraperTaskConfigurationMetadata)
+            }
+            gitTasksData={taskModel}
+          />
+        );
+  
       default:
         return <div>No type associated with this Task</div>;
     }
