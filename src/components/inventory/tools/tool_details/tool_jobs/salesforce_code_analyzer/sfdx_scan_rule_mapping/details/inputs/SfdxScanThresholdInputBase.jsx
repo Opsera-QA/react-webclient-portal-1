@@ -55,7 +55,7 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
     if (Array.isArray(currentData) && currentData.length > 0) {
       unpackedRoles = currentData;
     } else {
-      unpackedRoles.push({level: "", count: ""});
+      unpackedRoles.push({level: "", count: "", engine: "", description: ""});
     }
     setThresholdRows([...unpackedRoles]);
   };
@@ -117,6 +117,8 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
       newRoleList.map((item) => {
         const level = item?.level;
         const count = item?.count;
+        const engine = item?.engine;
+        const description = item?.description;
 
         if (level === "" || count === "") {
           return;
@@ -149,7 +151,7 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
     let newThresholdList = thresholdRows;
 
     if (lastThresholdComplete()) {
-      let newRow = {level: "", count: ""};
+      let newRow = {level: "", count: "", engine: "", description: ""};
       newThresholdList.push(newRow);
       validateAndSetData(newThresholdList);
     }
@@ -164,7 +166,17 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
 
   const updateThresholdRow = (index, innerField, newValue) => {
     let newPropertyList = thresholdRows;
+    if (newPropertyList[index][innerField] !== newValue?.name) {
+      newPropertyList[index][innerField] = newValue.name;
+      newPropertyList[index]["description"] = newValue.description;
+      newPropertyList[index]["engine"] = newValue.engine;
+      validateAndSetData(newPropertyList);
+    }
+  };
 
+  const updateThresholdCountRow = (index, innerField, newValue) => {
+    let newPropertyList = thresholdRows;
+    console.log(newPropertyList[index][innerField] );
     if (newPropertyList[index][innerField] !== newValue) {
       newPropertyList[index][innerField] = newValue;
       validateAndSetData(newPropertyList);
@@ -225,9 +237,11 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
                 loading={isLoading}
                 count={threshold?.count}
                 level={threshold?.level}
+                engine={threshold?.engine}
+                description={threshold?.description}
                 thresholdKeys={thresholdRules}
                 updateThresholdCount={(newValue) =>
-                  updateThresholdRow(index, "count", newValue)
+                  updateThresholdCountRow(index, "count", newValue)
                 }
                 updateThresholdLevel={(newValue) =>
                   updateThresholdRow(index, "level", newValue)
@@ -246,10 +260,16 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
         <Col sm={11}>
           <Row>
             <Col sm={6}>
-              <span className="text-muted ml-5">Level</span>
+              <span className="text-muted ml-5">Rule</span>
             </Col>
-            <Col sm={6} className={"mx-auto"}>
+            <Col sm={2} className={"mx-auto"}>
               <span className="text-muted">Threshold/Count</span>
+            </Col>
+            <Col sm={2} className={"mx-auto"}>
+              <span className="text-muted">Engine</span>
+            </Col>
+            <Col sm={2} className={"mx-auto"}>
+              <span className="text-muted">Description</span>
             </Col>
           </Row>
         </Col>

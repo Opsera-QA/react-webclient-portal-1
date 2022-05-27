@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
 function SourceRepositoryPrimaryBranchSelectInput({className, fieldName, model, setModel, disabled}) {
-  
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption);
+    newModel.setData("targetBranch", "");
+    setModel({...newModel});
+  };
   return (
     <GitBranchInput
       repoId={model?.getData("repoId")}
@@ -12,6 +17,7 @@ function SourceRepositoryPrimaryBranchSelectInput({className, fieldName, model, 
       workspace={model?.getData("workspace")}
       fieldName={fieldName}
       dataObject={model}
+      setDataFunction={setDataFunction}
       setDataObject={setModel}
       disabled={disabled}
       className={className}

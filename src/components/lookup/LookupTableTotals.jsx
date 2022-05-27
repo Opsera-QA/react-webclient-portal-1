@@ -15,7 +15,7 @@ const BLOCK_MAP = {
 };
 
 const DataBlock = ({title, value}) => (
-  <Col xl={2} lg={2} sm={4} className={"my-3"}>
+  <Col xl={2} lg={2} sm={4} className={"my-3 lookup-totals"}>
     <DataBlockBoxContainer showBorder={true}>
     <TwoLineScoreDataBlock
       className="p-2"

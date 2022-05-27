@@ -52,9 +52,9 @@ const gitOperationStepFormMetadata = {
     {
       label: "Description",
       id: "description",
-      isRequiredFunction: (model) => {
-        return model?.getData("action") === "pr-creation";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("action") === "pr-creation";
+      // },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
       formText:"Description for PR"
@@ -74,6 +74,7 @@ const gitOperationStepFormMetadata = {
       label: "Git Action",
       id: "action",
       maxLength: 50,
+      isRequired: true,
       lowercase: true,
     },
   ],

@@ -77,4 +77,8 @@ baseActions.handleNodeAnalyticsApiPostRequest = async (getAccessToken, sourceTok
   return await nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
+baseActions.handleNodeAnalyticsApiGetRequest = async (getAccessToken, sourceToken, apiUrl, urlParams = {}) => {
+  return await nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
+};
+
 export default baseActions;

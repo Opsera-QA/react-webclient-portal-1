@@ -24,6 +24,8 @@ import ec2ServiceCreationTaskConfigurationMetadata
   from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
+import snaplogicTaskConfigurationMetadata
+  from "components/tasks/details/tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 
 export const TASK_TYPES = {
   // Salesforce
@@ -46,6 +48,9 @@ export const TASK_TYPES = {
 
   //AZURE
   AZURE_CLUSTER_CREATION: "azure_cluster_creation",
+
+  //snaplogic
+  SNAPLOGIC_TASK: "snaplogic"
 };
 
 export const TASK_TYPE_LABELS = {
@@ -69,6 +74,9 @@ export const TASK_TYPE_LABELS = {
 
   // Azure
   AZURE_CLUSTER_CREATION: "Azure AKS Cluster Creation",
+
+  //snaplogic
+  SNAPLOGIC_TASK: "Snaplogic Task"
 };
 
 export const getTaskTypeLabel = (taskType) => {
@@ -108,47 +116,9 @@ export const getTaskTypeLabel = (taskType) => {
     // Azure
     case TASK_TYPES.AZURE_CLUSTER_CREATION:
       return TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION;
-    default:
-      return taskType;
-  }
-};
 
-export const getTaskConfigurationMetadataForTaskType = (taskType) => {
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-      return salesforceOrganizationSyncTaskConfigurationMetadata;
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      return sfdxCertGenTaskConfigurationMetadata;
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return sfdcGitBranchTaskConfigurationMetadata;
-    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-      return salesforceBulkMigrationTaskConfigurationMetadata;
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      return salesforceQuickDeployTaskConfigurationMetadata;
-
-
-    // Merge Sync
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      return mergeSyncTaskConfigurationMetadata;
-
-    // Git
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return branchToBranchGitTaskConfigurationMetadata;
-    case TASK_TYPES.GITSCRAPER:
-      return gitscraperTaskConfigurationMetadata;
-
-    // AWS
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      return ec2ClusterCreationTaskConfigurationMetadata;
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      return ec2ServiceCreationTaskConfigurationMetadata;
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return awsLambdaFunctionTaskConfigurationMetadata;
-
-    // Azure
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return azureAksClusterTaskConfigurationMetadata;
+    case TASK_TYPES.SNAPLOGIC_TASK:
+      return TASK_TYPE_LABELS.SNAPLOGIC_TASK;
     default:
       return taskType;
   }

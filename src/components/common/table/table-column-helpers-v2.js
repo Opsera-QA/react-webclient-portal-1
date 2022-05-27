@@ -11,6 +11,8 @@ import {getTaskTypeLabel} from "components/tasks/task.types";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 import {getCustomTableAccessor, getCustomTableHeader} from "components/common/table/table-column-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { getDurationInDaysAndHours } from "components/insights/charts/gitscrapper/git-scraper-utility";
+
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
   SELECT_FILTER: "selectFilter",
@@ -184,6 +186,43 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
         }
 
         return format(new Date(dateString), "yyyy-MM-dd', 'hh:mm a");
+      } catch(error) {
+        console.log(error?.message);
+        return "";
+      }
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175, showFilter, tooltipTemplateFunction, convertToLocalTimezone) => {
+  let header = getColumnHeader(field);
+
+  if (showFilter) {
+    header.push({ content: "inputFilter" }); 
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    width: width,
+    // TODO: Figure out why date format isn't working and convert to using that.
+    // type: "date",
+    // format: "%Y-%M-%d %h:%m %a",/
+    tooltipTemplate: tooltipTemplateFunction,
+    template: function (text, row, col) {
+      try {
+        const property = col?.id;
+        let dateString = dataParsingHelper.safeObjectPropertyParser(row, property, "");
+
+        if (dateString == null || dateString === "") {
+          return "";
+        }
+
+        let date = new Date(dateString);
+        dateString = date.toLocaleString("en-us", {timeZoneName:"short"});
+
+        return dateString;
       } catch(error) {
         console.log(error?.message);
         return "";
@@ -580,5 +619,17 @@ export const getSalesforceSumamryTableBooleanIconColumn = (field, className, wid
     },
     htmlEnable: true,
     class: className ? className : "text-left"
+  };
+};
+
+export const getDurationInDaysHours = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: function parseText(row) {
+      const value = row?.value;
+      return getDurationInDaysAndHours(value);
+    }
   };
 };

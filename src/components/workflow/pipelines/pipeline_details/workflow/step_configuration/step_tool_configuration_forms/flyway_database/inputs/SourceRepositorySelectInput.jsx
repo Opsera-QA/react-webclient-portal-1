@@ -12,6 +12,7 @@ function SourceRepositorySelectInput({className, fieldName, model, setModel, dis
     newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl);
     newModel.setData("gitBranch", "");
+    newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
 

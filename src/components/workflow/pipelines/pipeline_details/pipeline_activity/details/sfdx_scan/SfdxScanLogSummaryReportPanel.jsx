@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -8,7 +8,7 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import SfdxScanSummaryLogVerticalTabContainer from "./SfdxScanSummaryLogVerticalTabContainer";
 import SfdxScanReportSummaryOverview from "./components/SfdxScanReportSummaryOverview";
 import sfdxScanSummaryLogResultMetadata from "./metadata/SfdxScanSummaryLogResult.metadata";
@@ -39,15 +39,20 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
     try {
       const result = pipelineTaskData?.api_response?.scanResult;
       const report = JSON.parse(result);
-      setStatusSummaryModel(new Model(report, sfdxScanSummaryLogResultMetadata, false));
-      setSfdxScanSummary(Object.keys(report)?.length > 0 ? report.summary : undefined);
-      setSfdxScanExecDetails(Object.keys(report)?.length > 0 ? report.execDetails : undefined);
+      setStatusSummaryModel(
+        new Model(report, sfdxScanSummaryLogResultMetadata, false),
+      );
+      setSfdxScanSummary(
+        Object.keys(report)?.length > 0 ? report.summary : undefined,
+      );
+      setSfdxScanExecDetails(
+        Object.keys(report)?.length > 0 ? report.execDetails : undefined,
+      );
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -61,15 +66,15 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
         <VanitySetTabView tabKey={"summary"}>
           <SummaryPanelContainer className={"mx-3 mt-3"}>
             <SfdxScanReportSummaryOverview
-                statusSummaryModel={statusSummaryModel}
+              statusSummaryModel={statusSummaryModel}
               sfdxScanResults={sfdxScanSummary}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
         <VanitySetTabView tabKey={"execDetails"}>
-          <SfdxScanExecLogSummaryTable
-              execLogResults={sfdxScanExecDetails}
-          />
+          <SummaryPanelContainer className={"mx-3 mt-3"}>
+            <SfdxScanExecLogSummaryTable execLogResults={sfdxScanExecDetails} />
+          </SummaryPanelContainer>
         </VanitySetTabView>
       </VanitySetTabViewContainer>
     );
@@ -79,7 +84,7 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
     return (
       <LoadingDialog
         message={"Loading Report"}
-        size={'sm'}
+        size={"sm"}
       />
     );
   }
@@ -87,7 +92,10 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
   if (sfdxScanSummary == null) {
     return (
       <div className={"mt-3"}>
-        <IconBase className={"mr-2"} icon={faCheckCircle} />
+        <IconBase
+          className={"mr-2"}
+          icon={faCheckCircle}
+        />
         There was no proper summary log captured with this execution.
       </div>
     );
@@ -103,7 +111,6 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
     />
   );
 }
-
 
 SfdxScanLogSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,

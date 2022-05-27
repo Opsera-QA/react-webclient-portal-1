@@ -1,39 +1,36 @@
 
-#### Pipelines
-
-____
 <details>
 <summary>
-<b>PIPELINE - GENERAL FAQS</b>
 
+##### Pipeline General FAQs
 </summary>
 
 <details>
-<summary>Can I publish the pipelines into a catalog?</summary>
+<summary>Can I publish the pipelines to a catalog?</summary>  
 
->Yes, you can create a pipeline with the respective stages and go to the pipeline summary tab and select "publish" to publish the pipeline to your organization's private catalog of pipeline templates.
+>Yes. Navigate to the pipeline summary tab of the pipeline with the respective stages and select "publish". This will publish the pipeline to your organization's private catalog of pipeline templates.
 </details>
 
 <details>
-<summary>I deleted a tool in Tool Registry. What happens to the pipelines using that tool?</summary>
-
+<summary>I deleted a tool in Tool Registry. What happens to the pipelines using that tool?</summary>  
+  
 >Pipelines will fail without the Tool Registry.
 </details>
 
 <details>
-<summary>Can I migrate my Github Yaml pipelines to Opsera pipelines?</summary>
-
+<summary>Can I migrate my Github Yaml pipelines to Opsera pipelines?</summary>  
+  
 >Opsera offers drag and drop pipelines where users can build the stages of the pipeline in minutes without the need of YAML and pipeline can be published in the catalog for other users to reuse it.
 </details>
 
 <details>
-  <summary>Do we have to configure pipelines/steps everytime before running them? </summary>
-
->Not required, once the pipeline is set up, users do not have to update or reconfigure the pipelines unless there is a change in the branch
+  <summary>Do I have to configure pipelines steps each time before I run them? </summary>  
+  
+>This is not required. Once the pipeline is set up, users do not have to update or reconfigure the pipelines unless there is a change in the branch.
 </details>
 
 <details>
-<summary>Can we configure steps to run in parallel?</summary>
+<summary>Can we configure steps to run in parallel?</summary>  
 
 >Yes, users can add parallel step within a pipeline and trigger up to 5 pipeline at a time.
 </details>
@@ -75,13 +72,13 @@ ____
 </details>
 </details>
 
-*Expand to view frequently asked questions relating to general pipeline usages.*
 
 ----
 
 <details>
 <summary>
-<b>PIPELINE - TROUBLESHOOTING AND LOGS FAQS</b>
+
+##### Pipeline Troubleshooting and Logs FAQs
 
 </summary>
 
@@ -135,12 +132,11 @@ ____
 
 </details>
 
-*Expand to view frequently asked questions relating to troubleshooting Opsera pipelines and pipeline logging.*
-
 ----
 <details>
 <summary>
-<b>PIPELINE - TRIGGERING A PIPELINE FAQS</b>
+
+##### Pipeline Triggering FAQs
 
 </summary>
 
@@ -167,12 +163,12 @@ ____
 </details>
 
 
-*Expand to view frequently asked questions relating to triggering and configuring an Opsera pipeline.*
 
 ----
 <details>
 <summary>
-<b>PIPELINE - SUPPORTED STEPS AND PIPELINE NOTIFICATIONS FAQS</b>
+
+##### Pipeline Step and Notification FAQs
 
 </summary>
 
@@ -213,6 +209,15 @@ ____
 </details>
 
 
-*Expand to view frequently asked questions relating to Opsera pipeline supported steps and pipeline step configuration including pipeline notification and approval gates.*
 
 ----
+
+##### Related Articles
+
+
+[**Approval Gate Setup Help Documentation**](https://opsera.atlassian.net/l/c/1Xde12e1)  
+[**Configure Single Pipeline for Multiple Webhook Documentation**](https://opsera.atlassian.net/l/c/Lp1CiJzc)   
+[**Building a Declarative Pipeline**](https://opsera.atlassian.net/l/c/EfKd0ZW8)  
+
+
+

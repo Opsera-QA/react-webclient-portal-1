@@ -3,6 +3,16 @@ import baseActions from "utils/actionsBase";
 
 const vaultActions = {};
 
+vaultActions.saveRecordToVault = async (getAccessToken, cancelTokenSource, key, value) => {
+  const apiUrl = `/vault`;
+  const postBody = {
+    key: key,
+    value: value,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 vaultActions.deleteOwnerVaultRecordsForToolIdV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const apiUrl = `/vault/tool/delete`;
   let postBody = {
