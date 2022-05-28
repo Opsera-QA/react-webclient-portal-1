@@ -12,14 +12,14 @@ import axios from "axios";
 import modelHelpers from "components/common/model/modelHelpers";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import PipelineStepNotificationConfigurationHelpDocumentation
-  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 import TaskNotificationTabView from "components/tasks/details/tasks/notifications/TaskNotificationTabView";
 import taskActions from "components/tasks/task.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import emailStepNotificationMetadata
   from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
+import TaskNotificationConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
 
 function TaskNotificationEditorPanel(
   {
@@ -79,14 +79,14 @@ function TaskNotificationEditorPanel(
     const emailNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
     setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata));
 
-    // const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
-    // setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
+    const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
+    setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
+
+    const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
+    setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
 
     // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
     // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
-
-    // const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
-    // setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
 
     // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
     // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
@@ -96,9 +96,9 @@ function TaskNotificationEditorPanel(
     if (validateRequiredFields()) {
       const newNotificationConfiguration = [
         emailNotificationModel.getPersistData(),
-        // slackNotificationModel.getPersistData(),
+        slackNotificationModel.getPersistData(),
         // jiraNotificationModel.getPersistData(),
-        // teamsNotificationModel.getPersistData(),
+        teamsNotificationModel.getPersistData(),
         // serviceNowNotificationModel.getPersistData()
       ];
       await taskActions.updateTaskNotificationConfiguration(
@@ -117,18 +117,18 @@ function TaskNotificationEditorPanel(
       return false;
     }
 
+    if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
+      toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
+      return false;
+    }
+
+    if (slackNotificationModel.getData("enabled") === true && !slackNotificationModel.isModelValid()) {
+      toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
+      return false;
+    }
+
     // if (jiraNotificationModel.getData("enabled") === true && !jiraNotificationModel.isModelValid()) {
     //   toastContext.showInlineErrorMessage("Error: Cannot enable Jira notification without all required fields filled out.");
-    //   return false;
-    // }
-
-    // if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
-    //   return false;
-    // }
-
-    // if (slackNotificationModel.getData("enabled") === true && !slackNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
     //   return false;
     // }
 
@@ -155,7 +155,7 @@ function TaskNotificationEditorPanel(
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     return (
-      <PipelineStepNotificationConfigurationHelpDocumentation
+      <TaskNotificationConfigurationHelpDocumentation
         closeHelpPanel={() => setHelpIsShown(false)}
         />
     );
@@ -167,7 +167,7 @@ function TaskNotificationEditorPanel(
 
   return (
     <OverlayPanelBodyContainer
-      // getHelpComponentFunction={getHelpComponentFunction}
+      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
       {getTitleBar()}
