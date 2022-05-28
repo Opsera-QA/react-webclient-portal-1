@@ -137,7 +137,7 @@ const GitCustodianTableMetaData = {
   newObjectFields: {
      pageSize: 10,
      currentPage: 1,
-     sortOption: {text: "Newest", value: ""},
+     // sortOption: {text: "Newest", value: ""}, //TBD - Sort logic to be fixed
      search: "",
      activeFilters: [],
      date: {
@@ -146,13 +146,14 @@ const GitCustodianTableMetaData = {
        key: "selection",
      }
   },
-    sortOptions: [
-     {text: "Newest", option: ""},
-     {text: "Oldest", option: "oldest"},
-     {text: "Date Created", option: "commitDate"},
-     {text: "Author", option: "author"},
-     {text: "Origin", option: "service"}
-  ]
+  // TBD - sort logic to be fixed in next release.
+  //   sortOptions: [
+  //    {text: "Newest", option: ""},
+  //    {text: "Oldest", option: "oldest"},
+  //    {text: "Date Created", option: "commitDate"},
+  //    {text: "Author", option: "author"},
+  //    {text: "Origin", option: "service"}
+  // ]
 };
 
 export default GitCustodianTableMetaData;
