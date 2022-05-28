@@ -276,9 +276,11 @@ function ListObjectInputBase(
           }
         }
 
-        newSelections.push(item[valueField]);
-        list.selection.add(item[valueField]);
+        newSelections.push(item);
+        // list.selection.add(item[valueField]);
       });
+
+      list.selection.add();
     }
 
     updateValue(newSelections);

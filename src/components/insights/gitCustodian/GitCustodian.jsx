@@ -44,6 +44,7 @@ function GitCustodian() {
       key: "selection",
     },
   ]);
+  const [isStartDateSelected, setIsStartDateSelected] = useState(false);
   const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
   const [sDate, setSDate] = useState("");
@@ -153,6 +154,7 @@ function GitCustodian() {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
+    setIsStartDateSelected(false);
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
       if (date[0].endDate === 0) {
@@ -168,6 +170,7 @@ function GitCustodian() {
 
   const closeCalender = () => {
     setCalendar(false);
+    setIsStartDateSelected(false);
 
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
@@ -185,7 +188,7 @@ function GitCustodian() {
   const dateChange = (item) => {
     setDate([item.selection]);
 
-    if (item.selection) {
+    if (item.selection && isStartDateSelected) {
       let startDate = format(item.selection.startDate, "MM/dd/yyyy");
       setSDate(startDate);
 
@@ -197,6 +200,9 @@ function GitCustodian() {
         validate(startDate,endDate);
       }
     }
+
+    setIsStartDateSelected(!isStartDateSelected);
+
   };
 
   const getFilterButtons = () => {
@@ -298,6 +304,7 @@ function GitCustodian() {
     let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = gitCustodianFilterModel;
     newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    newDashboardFilterTagsModel.setData( "currentPage" , 1);
     setGitCustodianFilterModel({...newDashboardFilterTagsModel});
 
     let newDataModel = modelHelpers.setDashboardFilterModelField(gitCustodianFilterModel, "date", { startDate: sDate , endDate: eDate, key: "selection" });
