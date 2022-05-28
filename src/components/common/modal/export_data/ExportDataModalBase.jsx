@@ -81,6 +81,7 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
           exportDataModel={exportDataModel}
           className={"mr-2"}
           isLoading={isLoading}
+          closeEditorCallback={handleClose} 
         />
         <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
       </>

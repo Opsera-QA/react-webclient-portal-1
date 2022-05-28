@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import modelHelpers from "../../common/model/modelHelpers";
 import {Button, Overlay, Popover} from "react-bootstrap";
 import {DateRangePicker} from "react-date-range";
+import InputContainer from "components/common/inputs/InputContainer";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../common/icons/IconBase";
 import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
@@ -375,10 +376,17 @@ function GitCustodian() {
         <div className="d-flex px-2 py-2">
         <div className="mx-2 custom-inline-filter-input">
           <div>
-            <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
-              <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-            </Button>
+            <InputContainer fieldName={"dateSelctor"}>
+              <div className={"d-flex justify-content-between date-range-header"}>
+                <div className="d-flex justify-content-between">
+                  <label><span>Date Selector</span></label>
+                </div>
+              </div>
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
+                  <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
+                  {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+                </Button>
+            </InputContainer>
             </div>
             {getDateRangeButton()}
           </div>

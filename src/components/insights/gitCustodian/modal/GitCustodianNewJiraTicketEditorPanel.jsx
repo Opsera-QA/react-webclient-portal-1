@@ -39,6 +39,13 @@ function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData })
     handleClose();
   };
 
+  const checkCustomFormValidity = () => {
+    if(createJiraTicketDataModel?.checkCurrentValidity() && createJiraTicketDataModel?.getData("issuesList").length > 0) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <EditorPanelContainer
       recordDto={createJiraTicketDataModel}
@@ -47,6 +54,7 @@ function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData })
       createRecord={createNewJiraTicket}
       updateRecord={createNewJiraTicket}
       addAnotherOption={false}
+      disable={checkCustomFormValidity()}
     >
       <div className={"px-2"}>
         <Row>
@@ -54,8 +62,7 @@ function GitCustodianNewJiraTicketEditorPanel({ handleClose, gitCustodianData })
             <RoleRestrictedJiraToolSelectInput
               fieldName={"jiraToolId"}
               model={createJiraTicketDataModel}
-              setModel={setCreateJiraTicketDataModel}
-            // setDataFunction={setDataFunction}              
+              setModel={setCreateJiraTicketDataModel}  
             />
           </Col>
           <Col md={12}>
