@@ -1,16 +1,17 @@
 export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
   indexBy: "date",
-  xScale: {
-    type: "time",
-    format: "%Y-%m-%d",
-    precision: "day",
-  },
+  // xScale: {
+  //   type: "time",
+  //   format: "%Y-%m-%d",
+  //   precision: "day",
+  // },
   yScale: {
     type: "linear",
     min: "auto",
     max: "auto",
     stacked: false
   },
+  xFormat: "time:%Y-%m-%d",
   curve: "step",
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
