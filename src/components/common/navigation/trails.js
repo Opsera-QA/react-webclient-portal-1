@@ -614,13 +614,21 @@ const breadcrumbs = {
     icon: faRadar,
   },
   insightsConnectedAssets: {
+      parent: "insights",
+      name: "connectedAssets",
+      path: paths.insightsConnectedAssets,
+      title: "Connected Assets",
+      linkText: "Connected Assets",
+      icon: faLink,
+      isBeta: true
+    },
+  insightsGitCustodian: {
     parent: "insights",
-    name: "connectedAssets",
+    name: "gitCustodian",
     path: paths.insightsConnectedAssets,
-    title: "Connected Assets",
-    linkText: "Connected Assets",
-    icon: faLink,
-    isBeta: true,
+    title: "Git Custodian",
+    linkText: "Git Custodian",
+    icon: faShieldKeyhole
   },
   reports: {
     parent: undefined,
