@@ -586,7 +586,8 @@ const breadcrumbs = {
     path: paths.lookup,
     title: "Salesforce Lookup",
     linkText: "Salesforce Lookup",
-    icon: faMagnifyingGlass
+    icon: faMagnifyingGlass,
+    isBeta: true,
   },
   marketplace: {
     parent: "insights",
@@ -610,16 +611,17 @@ const breadcrumbs = {
     path: paths.insightsSummary,
     title: "Synopsis",
     linkText: "Synopsis",
-    icon: faRadar
+    icon: faRadar,
   },
   insightsConnectedAssets: {
-      parent: "insights",
-      name: "connectedAssets",
-      path: paths.insightsConnectedAssets,
-      title: "Connected Assets",
-      linkText: "Connected Assets",
-      icon: faLink
-    },
+    parent: "insights",
+    name: "connectedAssets",
+    path: paths.insightsConnectedAssets,
+    title: "Connected Assets",
+    linkText: "Connected Assets",
+    icon: faLink,
+    isBeta: true,
+  },
   reports: {
     parent: undefined,
     name: "reports",
