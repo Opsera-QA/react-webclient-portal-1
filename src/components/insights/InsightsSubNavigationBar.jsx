@@ -154,6 +154,7 @@ function InsightsSubNavigationBar({currentTab}) {
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Git Custodian"}
+        isBeta={true}
       /> }
       {getActiveViewerTab()}
     </NavigationTabContainer>
