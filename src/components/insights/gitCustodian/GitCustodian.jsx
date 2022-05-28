@@ -47,7 +47,7 @@ function GitCustodian() {
       key: "selection",
     },
   ]);
-  const [isStartDateSelected, setIsStartDateSelected] = useState(false);
+  // const [isStartDateSelected, setIsStartDateSelected] = useState(false);
   const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
   const [sDate, setSDate] = useState("");
@@ -157,7 +157,7 @@ function GitCustodian() {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
-    setIsStartDateSelected(false);
+    // setIsStartDateSelected(false);
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
       if (date[0].endDate === 0) {
@@ -173,7 +173,7 @@ function GitCustodian() {
 
   const closeCalender = () => {
     setCalendar(false);
-    setIsStartDateSelected(false);
+    // setIsStartDateSelected(false);
 
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
@@ -191,7 +191,9 @@ function GitCustodian() {
   const dateChange = (item) => {
     setDate([item.selection]);
 
-    if (item.selection && isStartDateSelected) {
+    if (item.selection
+        // && isStartDateSelected
+    ) {
       let startDate = format(item.selection.startDate, "MM/dd/yyyy");
       setSDate(startDate);
 
@@ -204,7 +206,7 @@ function GitCustodian() {
       }
     }
 
-    setIsStartDateSelected(!isStartDateSelected);
+    // setIsStartDateSelected(!isStartDateSelected);
 
   };
 
