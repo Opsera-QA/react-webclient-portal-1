@@ -6,7 +6,7 @@ import jsPDF from "jspdf";
 function ExportGitCustodianVulnerabilitiesDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
 
   const getRawData = () => {
-    return new Blob([rawData], {type : 'text/plain'});
+    return new Blob([JSON.stringify(rawData)], {type : 'text/plain'});
   };
 
   const getPdfExporter = () => {
@@ -41,7 +41,7 @@ function ExportGitCustodianVulnerabilitiesDataModal({ showModal, closeModal, for
       showModal={showModal}
       handleCancelModal={closeModal}
       isLoading={isLoading}
-      //getRawData={getRawData}
+      getRawData={getRawData}
       getPdfExporter={getPdfExporter}
       // getCsvData={getCsvData}
     />
