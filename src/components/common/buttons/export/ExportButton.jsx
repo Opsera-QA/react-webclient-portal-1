@@ -13,7 +13,7 @@ export const ExportTypes = {
 };
 
 // TODO: If this will include both the csv and pdf exports, add an option for .csv and trigger based on prop. OR make two separate buttons.
-function ExportButton({isLoading, variant, size, className, getRawData, getPdfExporter, getCsvData, exportDataModel}) {
+function ExportButton({isLoading, variant, size, className, getRawData, getPdfExporter, getCsvData, exportDataModel, closeEditorCallback}) {
   const [isExporting, setIsExporting] = React.useState(false);
 
   const csvLink = React.createRef();
@@ -37,6 +37,7 @@ function ExportButton({isLoading, variant, size, className, getRawData, getPdfEx
 
     // TODO: Add ismounted check
     setIsExporting(false);
+    closeEditorCallback();
   };
 
   const exportRaw = async () => {
@@ -82,6 +83,7 @@ ExportButton.propTypes = {
   getRawData: PropTypes.func,
   getPdfExporter: PropTypes.func,
   getCsvData: PropTypes.func,
+  closeEditorCallback: PropTypes.func,
   exportDataModel: PropTypes.object
 };
 

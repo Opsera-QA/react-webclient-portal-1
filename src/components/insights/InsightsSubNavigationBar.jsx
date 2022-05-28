@@ -8,7 +8,8 @@ import {
   faRadar,
   faUserChart,
   faLink,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faShieldKeyhole
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
@@ -53,6 +54,9 @@ function InsightsSubNavigationBar({currentTab}) {
         return;
       case "connectedAssets":
         history.push(`/insights/connected-assets`);
+        return;
+      case "gitCustodian":
+        history.push(`/insights/git-custodian`);
         return;
     }
   };
@@ -141,6 +145,14 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Connected Assets"}
         isBeta={true}
       /> }
+      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
+        icon={faShieldKeyhole}
+        tabName={"gitCustodian"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Git Custodian"}
+        isBeta={true}
+      /> }      
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
