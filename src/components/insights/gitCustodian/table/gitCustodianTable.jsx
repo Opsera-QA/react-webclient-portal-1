@@ -81,19 +81,18 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       let tableResponseData = await chartsActions.getGitCustodianTableData(
         getAccessToken,
         cancelSource,
-        filterDto
+        filterDto,
+        tableFilterDto
       );
       let tableResponse = tableResponseData?.data?.data;
       if (isMounted?.current === true && tableResponse && Array.isArray(tableResponse?.data)) {
         setResponseData(tableResponse?.data);
-        let newFilterDto = filterDto;
+        let newFilterDto = tableFilterDto;
         newFilterDto.setData("totalCount", tableResponse?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        let pageSize = filterDto.getData("pageSize");
-        newFilterDto.setData("pageSize", pageSize);
         let sortOption = filterDto.getData("sortOption");
         newFilterDto.setData("sortOption", sortOption);
-        setGitCustodianFilterModel({...newFilterDto});
+        setTableFilterDto({...newFilterDto});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -144,8 +143,8 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         data={responseData}
         noDataMessage={noDataMessage}
         loadData={loadData}
-        paginationDto={gitCustodianFilterModel}
-        setPaginationDto={setGitCustodianFilterModel}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
       />
     );
   };

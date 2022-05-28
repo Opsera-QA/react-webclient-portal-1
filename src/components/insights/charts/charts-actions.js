@@ -177,7 +177,7 @@ chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSourc
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource, filterModel, tableFilterDto)=>{
   const apiUrl = "/analytics/gitscraper/v1/dashboard/table";
 
   const postBody = {
@@ -189,8 +189,8 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
         service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
         status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
       },
-      page: filterModel?.getData("currentPage"),
-      size: filterModel?.getData("pageSize"),
+      page: tableFilterDto?.getData("currentPage"),
+      size: tableFilterDto?.getData("pageSize"),
     };
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
