@@ -26,6 +26,8 @@ import InlineGitCustodianStatusSelectInput
 import chartsActions from "../charts/charts-actions";
 import FilterButtons from "../../common/filters/buttons/FilterButtons";
 import { addDays } from "date-fns";
+import GitCustodianLookUpHelpDocumentation
+  from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -399,6 +401,7 @@ function GitCustodian() {
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"gitCustodian"}/>}
       pageDescription={'Custodian for repositories. This Dashboard provides visibility to exposed secrets, tokens, passwords, key files, and sensitive data.'}
       breadcrumbDestination={"insightsGitCustodian"}
+      helpComponent={<GitCustodianLookUpHelpDocumentation/>}
     >
       {getGitCustodianActionBar()}
       {isLoading ? <LoadingDialog size="sm" message="Loading Git Custodian Report"/> :
