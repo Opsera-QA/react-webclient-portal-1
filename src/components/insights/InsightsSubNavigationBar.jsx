@@ -129,6 +129,7 @@ function InsightsSubNavigationBar({currentTab}) {
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Salesforce Lookup"}
+        isBeta={true}
       />
       {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
       {/* <NavigationTab
@@ -145,6 +146,7 @@ function InsightsSubNavigationBar({currentTab}) {
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Connected Assets"}
+        isBeta={true}
       /> }
       {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
         icon={faShieldKeyhole}
