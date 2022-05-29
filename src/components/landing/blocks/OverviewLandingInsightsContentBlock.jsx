@@ -12,7 +12,7 @@ function OverviewLandingInsightsContentBlock() {
   };
 
   const loadAnalytics = () => {
-    history.push("/insights/analytics");
+    history.push("/insights");
   };
 
 

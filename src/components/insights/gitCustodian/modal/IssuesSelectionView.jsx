@@ -44,8 +44,8 @@ const IssuesSelectionView = ({
       setIsLoading(true);
       const dataResponse = await chartsActions.exportGitCustodianData(getAccessToken, cancelSource, gitCustodianData);
       const issuesArr = dataResponse?.data?.data?.data;
-      if (Array.isArray(issuesArr)) {
-        setIssuesData(issuesArr);
+      if (Array.isArray(issuesArr)) {        
+        setIssuesData(issuesArr.filter(issue => !issue?.jiraTicket));
       }
     } catch (error) {
       if (isMounted?.current === true) {

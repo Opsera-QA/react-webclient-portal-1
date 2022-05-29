@@ -14,7 +14,7 @@ function CreateJiraTicketProjectSelectInput(
   const [issueTypes, setIssueTypes] = useState([]);
 
   const setDataFunction = (fieldName, selectedOption) => {
-    setIssueTypes(selectedOption.issuetypes);
+    setIssueTypes(selectedOption.issuetypes.filter(issue => !issue.subtask));
     const newModel = {...model};
     newModel?.setData(fieldName, selectedOption?.key);
     newModel.setDefaultValue("issueTypeId");

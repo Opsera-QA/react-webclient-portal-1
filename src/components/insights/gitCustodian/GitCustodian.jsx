@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import modelHelpers from "../../common/model/modelHelpers";
 import {Button, Overlay, Popover} from "react-bootstrap";
 import {DateRangePicker} from "react-date-range";
+import InputContainer from "components/common/inputs/InputContainer";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../common/icons/IconBase";
 import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
@@ -26,6 +27,8 @@ import InlineGitCustodianStatusSelectInput
 import chartsActions from "../charts/charts-actions";
 import FilterButtons from "../../common/filters/buttons/FilterButtons";
 import { addDays } from "date-fns";
+import GitCustodianLookUpHelpDocumentation
+  from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -44,6 +47,7 @@ function GitCustodian() {
       key: "selection",
     },
   ]);
+  const [isStartDateSelected, setIsStartDateSelected] = useState(false);
   const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
   const [sDate, setSDate] = useState("");
@@ -153,6 +157,7 @@ function GitCustodian() {
     setCalenderActivation(true);
     setCalendar(!calendar);
     setTarget(event.target);
+    setIsStartDateSelected(false);
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
       if (date[0].endDate === 0) {
@@ -168,6 +173,7 @@ function GitCustodian() {
 
   const closeCalender = () => {
     setCalendar(false);
+    setIsStartDateSelected(false);
 
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
@@ -185,7 +191,7 @@ function GitCustodian() {
   const dateChange = (item) => {
     setDate([item.selection]);
 
-    if (item.selection) {
+    if (item.selection && isStartDateSelected) {
       let startDate = format(item.selection.startDate, "MM/dd/yyyy");
       setSDate(startDate);
 
@@ -197,6 +203,9 @@ function GitCustodian() {
         validate(startDate,endDate);
       }
     }
+
+    setIsStartDateSelected(!isStartDateSelected);
+
   };
 
   const getFilterButtons = () => {
@@ -298,6 +307,7 @@ function GitCustodian() {
     let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = gitCustodianFilterModel;
     newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    newDashboardFilterTagsModel.setData( "currentPage" , 1);
     setGitCustodianFilterModel({...newDashboardFilterTagsModel});
 
     let newDataModel = modelHelpers.setDashboardFilterModelField(gitCustodianFilterModel, "date", { startDate: sDate , endDate: eDate, key: "selection" });
@@ -375,10 +385,17 @@ function GitCustodian() {
         <div className="d-flex px-2 py-2">
         <div className="mx-2 custom-inline-filter-input">
           <div>
-            <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
-              <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-            </Button>
+            <InputContainer fieldName={"dateSelctor"}>
+              <div className={"d-flex justify-content-between date-range-header"}>
+                <div className="d-flex justify-content-between">
+                  <label><span>Date Selector</span></label>
+                </div>
+              </div>
+                <Button variant="outline-secondary" type="button" onClick={toggleCalendar} className={'btn-sm'}>
+                  <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
+                  {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+                </Button>
+            </InputContainer>
             </div>
             {getDateRangeButton()}
           </div>
@@ -399,6 +416,7 @@ function GitCustodian() {
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"gitCustodian"}/>}
       pageDescription={'Custodian for repositories. This Dashboard provides visibility to exposed secrets, tokens, passwords, key files, and sensitive data.'}
       breadcrumbDestination={"insightsGitCustodian"}
+      helpComponent={<GitCustodianLookUpHelpDocumentation/>}
     >
       {getGitCustodianActionBar()}
       {isLoading ? <LoadingDialog size="sm" message="Loading Git Custodian Report"/> :

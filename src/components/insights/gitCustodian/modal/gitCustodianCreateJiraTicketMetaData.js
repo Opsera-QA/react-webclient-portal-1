@@ -13,6 +13,7 @@ const GitCustodianCreateJiraTicketMetaData = {
     {
       label: "Issues List",
       id: "issuesList",
+      isRequired: true
     },
     {
       label: "Issue Description",
