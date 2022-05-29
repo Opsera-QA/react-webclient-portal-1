@@ -27,6 +27,7 @@ import {
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
+import { addDays } from "date-fns";
 
 const chartsActions = {};
 
@@ -174,7 +175,7 @@ chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSourc
 
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
-      endDate: filterModel.getFilterValue('date').endDate,
+      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
       filters: {
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
@@ -190,7 +191,7 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
 
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
-      endDate: filterModel.getFilterValue('date').endDate,
+      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
       filters: {
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
@@ -208,7 +209,7 @@ chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, 
 
   const postBody = {
     startDate: filterModel.getFilterValue('date').startDate,
-    endDate: filterModel.getFilterValue('date').endDate,
+    endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
     filters: {
       repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
       authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
