@@ -12,11 +12,6 @@ import UserReportsPageLinkCard from "components/reports/users/user/UserReportsPa
 import PropTypes from "prop-types";
 
 function UserReportPageLinkCards({accessRoleData}) {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
-
-  if (featureFlagHideItemInProd()) {
-    return null;
-  }
 
   return (
     <div>
