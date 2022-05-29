@@ -636,3 +636,15 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     class: className ? className : undefined
   };
 };
+
+export const getPathDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPath(row){
+      const path = row?.value;
+      return (<TooltipWrapper innerText={path}><span>{truncateString(path, 50, true)}</span></TooltipWrapper>);
+    },
+    class: className ? className : undefined
+  };
+};
