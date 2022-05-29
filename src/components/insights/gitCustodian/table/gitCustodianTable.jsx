@@ -8,6 +8,7 @@ import {
   getTableTextColumn,
   getTableDateTimeColumn,
   getGitCustodianOriginColumn,
+  getPathDefinition,
   getGitCustodianExternalLinkIconColumnDefinition
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
@@ -66,7 +67,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getTableDateTimeColumn(getField(fields, "commitDate")),
       getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
-      getTableTextColumn(getField(fields, "path")),
+      getPathDefinition(getField(fields, "path")),
       getTableTextColumn(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
