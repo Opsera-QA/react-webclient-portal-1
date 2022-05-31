@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.9 as build
+FROM node:lts-alpine3.15 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl
@@ -8,7 +8,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY .npmrc /usr/src/app/.npmrc
-RUN npm install --silent
+RUN npm ci --silent --production
 RUN npm install react-scripts -g --silent
 COPY . /usr/src/app
 RUN npm run build:${build_env}
