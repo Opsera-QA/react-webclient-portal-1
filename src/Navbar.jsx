@@ -96,13 +96,11 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   };
 
   const getFrequentlyAskedQuestionsLink = () => {
-    if (featureFlagHideItemInProd() === false) {
-      return (
-        <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
-          Frequently Asked Questions
-        </Link>
-      );
-    }
+    return (
+      <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
+        Frequently Asked Questions
+      </Link>
+    );
   };
 
   const getHelpDocumentationLink = () => {
