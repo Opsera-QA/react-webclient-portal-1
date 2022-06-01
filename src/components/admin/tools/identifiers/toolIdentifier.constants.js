@@ -20,6 +20,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_ZIP_DEPLOYMENT: "azure-zip-deployment",
   BITBUCKET: "bitbucket",
   BUILDKITE: "buildkite",
+  BLACKDUCK: "blackduck",
   CHILD_PIPELINE: "child-pipeline",
   COMMAND_LINE: "command-line",
   COVERITY: "coverity",
