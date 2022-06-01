@@ -203,6 +203,11 @@ import SnaplogicPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
 import SnaplogicStepFormMetadata 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
+import BlackDuckPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
+import BlackDuckStepFormMetadata 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
+
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -637,7 +642,14 @@ function PipelineStepConfigurationSummary({
         return (
           <SnaplogicPipelineStepConfigurationSummary
             pipelineData={pipelineData}
-            gitScraperPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
+            snaplogicPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackDuckPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            blackDuckPipelineDataObject={getModelWrappedObject(BlackDuckStepFormMetadata)}
           />
         );
       default:
