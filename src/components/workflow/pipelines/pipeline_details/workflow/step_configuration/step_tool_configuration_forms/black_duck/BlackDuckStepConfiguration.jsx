@@ -19,6 +19,7 @@ import BlackDuckGitBranchInput from "./inputs/BlackDuckGitBranchInput";
 import ParameterMappingInputBase
   from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 
 function BlackDuckStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
