@@ -15,7 +15,7 @@
         "require": "readonly",
         "process": "readonly"
     },
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
