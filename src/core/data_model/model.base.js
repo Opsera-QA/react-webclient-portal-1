@@ -360,7 +360,7 @@ export class ModelBase {
 
   getChangeMap = () => {
     return this.changeMap;
-  }
+  };
 
   // TODO: This is the new getPersistData. It needs to replace the other one.
   getChangedProperties = () => {
@@ -372,7 +372,7 @@ export class ModelBase {
     });
 
     return changedProperties;
-  }
+  };
 
   getOriginalValue = (fieldName) => {
     const originalValue = this.changeMap.get(fieldName);
@@ -455,16 +455,16 @@ export class ModelBase {
 
   getType = () => {
     return this.metaData?.type;
-  }
+  };
 
   getActiveField = () => {
     return this.metaData?.activeField;
-  }
+  };
 
   isInactive = () => {
     const activeField = this.metaData?.activeField;
     return activeField && this.getData(activeField) === false;
-  }
+  };
 
   getIsLoading = () => {
     return this.isLoading === true;

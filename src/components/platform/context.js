@@ -26,7 +26,7 @@ class NewAppProvider extends React.Component {
 
   componentDidMount = () => {
     this.getToken();
-  }
+  };
 
   /*   componentDidUpdate() {
     this.getToken();
@@ -45,7 +45,7 @@ class NewAppProvider extends React.Component {
       user: userInfo,
       isEKS : isEKS
     });
-  }
+  };
 
   reset = () => {
     this.setState({
@@ -55,7 +55,7 @@ class NewAppProvider extends React.Component {
       appid: "",
       saving: false,
     });
-  }
+  };
 
   handleCancel = () => {
     const { service, data } = this.state;
@@ -64,7 +64,7 @@ class NewAppProvider extends React.Component {
       data,
       open: false,
     });
-  }
+  };
 
   handleSave = () => {
     const { service, data } = this.state;
@@ -74,15 +74,15 @@ class NewAppProvider extends React.Component {
       open: false,
       data,
     });
-  }
+  };
 
   gotoInventory = () => {
     this.props.history.push("/inventory/tools");
-  }
+  };
 
   setAppDetails = (app) => {
     this.setState({ appid: app._id, appname: app.name, data: {} });
-  }
+  };
 
   // eslint-disable-next-line  no-unused-vars
   handleChange = ({ target: { name, value } }, service) => {
@@ -96,11 +96,12 @@ class NewAppProvider extends React.Component {
         },
       };
     });
-  }
+  };
+
   isChecked = (service, name) => {
     const { data } = this.state;
     return data[service] && data[service][name];
-  }
+  };
 
   // eslint-disable-next-line  no-unused-vars
   handleCheckboxChanged = (service, name) => {
@@ -111,13 +112,13 @@ class NewAppProvider extends React.Component {
     this.setState({
       data,
     });
-  }
+  };
 
   toggleModal = ({ open }) => {
     this.setState({
       open,
     });
-  }
+  };
 
   render() {
     return (

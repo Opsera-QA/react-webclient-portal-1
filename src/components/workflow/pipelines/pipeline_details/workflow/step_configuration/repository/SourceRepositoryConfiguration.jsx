@@ -22,6 +22,7 @@ import PipelineSourceRepositoryToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolSelectInput";
 import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -66,8 +67,15 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
   };
 
   const callbackFunction = async () => {
-    if (validateRequiredFields()) {
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches } = sourceRepositoryModel?.getPersistData();
+    if (sourceRepositoryModel && validateRequiredFields()) {
+      const persistData = dataParsingHelper.parseObject(sourceRepositoryModel?.getPersistData());
+
+      if (persistData == null) {
+        return;
+      }
+
+      // TODO: Don't deconstruct like this.
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches } = persistData;
       const item = {
         name: name,
         service: service,

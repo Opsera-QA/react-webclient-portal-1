@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {faFilter} from "@fortawesome/pro-light-svg-icons/faTags";
+import {faFilter} from "@fortawesome/pro-light-svg-icons/faFilter";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";

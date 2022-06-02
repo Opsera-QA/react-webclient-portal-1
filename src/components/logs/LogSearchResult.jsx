@@ -6,7 +6,7 @@ import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
 
-const Highlight = require("react-highlighter");
+const Highlight = require("react-highlighter-ts");
 
 function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
   const [showModal, setShowModal] = useState(false);

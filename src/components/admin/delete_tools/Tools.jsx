@@ -7,8 +7,9 @@ import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/status_notifications/error";
 import Modal from "../../common/modal/modal";
 
+// TODO: Rewrite or delete
 class Tools extends Component {
-  state = {}
+  state = {};
 
   render() {
     const { application } = this.props;
@@ -55,21 +56,21 @@ class ToolTable extends React.PureComponent {
     };
   }
 
-  handleDeletePress = () => this.setState({ confirm: true })
-  handleCancel = () => this.setState({ confirm: false })
+  handleDeletePress = () => this.setState({ confirm: true });
+  handleCancel = () => this.setState({ confirm: false });
 
   handleConfirm = () => {
     const { tool } = this.props;
     this.setState({ confirm: false });
     this.deleteTool(tool);
-  }
+  };
 
   deleteTool = async tool => {
     const { getAccessToken } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const accessToken = await getAccessToken();
     this.delToolData(accessToken, tool);
 
-  }
+  };
 
   delToolData(accessToken, tool) {
     console.log(tool);
@@ -98,7 +99,7 @@ class ToolTable extends React.PureComponent {
       return true;
     else
       return false;
-  }
+  };
 
   render() {
     const { tool } = this.state;
