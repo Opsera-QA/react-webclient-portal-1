@@ -230,6 +230,10 @@ const getDateValidationErrors = (model, value, field) => {
   if (field.mustBeInThePast === true && parsedDate > new Date()) {
     errorMessages.push(`${model.getLabel(field.id)} must be set to a date before now.`);
   }
+
+  if (field.mustBeInTheFuture === true && parsedDate <= new Date()) {
+    errorMessages.push(`${model.getLabel(field.id)} must be set to a date after now.`);
+  }
   
   return errorMessages;
 };
