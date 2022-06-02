@@ -9,10 +9,11 @@ import IconBase from "components/common/icons/IconBase";
 
 const TOOL_NAME = "ELK-Kibana";
 
+// TODO: Remove or rewrite
 export default class Reports_Old extends PureComponent {
   static contextType = AuthContext;  //Import AuthContext values into Component
     
-  state = { tool: null, loading: null, showIframe: false }
+  state = { tool: null, loading: null, showIframe: false };
 
   async componentDidMount() {
     const { getAccessToken } = this.context;
@@ -49,7 +50,7 @@ export default class Reports_Old extends PureComponent {
   onClickButton = () => {
     const { tool } = this.state;
     tool.toolURL && window.open(tool.toolURL, "_blank");
-  }
+  };
 
   handleSubmit = e => {
     const { tool } = this.state;
@@ -58,7 +59,7 @@ export default class Reports_Old extends PureComponent {
     this.setState({
       showIframe: true,
     });
-  }
+  };
 
   getplaceHolderText = () => {
     const { loading, tool } = this.state;
@@ -67,7 +68,7 @@ export default class Reports_Old extends PureComponent {
     if (!tool || !tool.toolURL)
       return "kibana tool Url unavailable, please check later..";
     return tool.toolURL;
-  }
+  };
 
   render() {
     const { tool, showIframe, error } = this.state;

@@ -21,7 +21,7 @@ export class FilterModelBase {
 
   getTotalCount = () => {
     return this.data?.totalCount;
-  }
+  };
 
   setTotalCount = (newValue) => {
    this.setData("totalCount", newValue);
@@ -29,7 +29,7 @@ export class FilterModelBase {
 
   getPageSize = () => {
     return this.getFilterValue("pageSize");
-  }
+  };
 
   getPageCount = () => {
     return Math.ceil(this.getTotalCount() / this.getPageSize());
@@ -150,7 +150,7 @@ export class FilterModelBase {
 
   getType = () => {
     return this.metaData?.type;
-  }
+  };
 
   getFieldById = (id) => {
     return this.metaData?.fields.find(field => {return field.id === id; });

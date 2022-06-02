@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
+// TODO: Remove or rewrite
 class AdminReportRegistration extends Component {
   static contextType = AuthContext;
   state = {
     administrator: false
-  }
+  };
 
   async componentDidMount() {
     const { getUserRecord } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
