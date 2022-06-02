@@ -102,6 +102,15 @@ const coverityStepFormMetadata = {
       label: ".Net SDK Version",
       id: "dotnetSdkVersion",      
     },
+    {
+      label: "Command Line Arguments",
+      id: "commandLineArguments"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
@@ -127,6 +136,8 @@ const coverityStepFormMetadata = {
     coverityCredntialId :"",
     dotnetType: "",
     dotnetSdkVersion : "",
+    commandLineArguments: "",
+    customParameters: [],
   }
 };
 
