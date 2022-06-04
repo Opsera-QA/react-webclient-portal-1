@@ -144,7 +144,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       const ldap = user?.ldap;
       const groups = user?.groups;
 
-      if (Array?.isArray(groups)) {
+      if (Array.isArray(groups)) {
         let role = "guest";
 
         if (groups.includes("Administrators")) {
@@ -175,14 +175,12 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
           Type: ldap ? ldap.type : "sass-user",
           Groups: groups,
         };
+
+        if (ldap?.domain === "opsera.io") { //checking for OpsERA account domain
+          customerAccessRules.OpseraAdministrator = groups.includes("Administrators");
+        }
       }
 
-      if (ldap?.domain === "opsera.io") { //checking for OpsERA account domain
-        customerAccessRules = {
-          ...customerAccessRules,
-          OpseraAdministrator: groups.includes("Administrators"),
-        };
-      }
       //console.table(customerAccessRules);
       return customerAccessRules;
     } else {
