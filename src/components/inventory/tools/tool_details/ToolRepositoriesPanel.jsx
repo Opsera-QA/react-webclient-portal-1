@@ -6,27 +6,29 @@ import JFrogToolRepositoriesPanel from "components/inventory/tools/tool_details/
 import MessageField from "components/common/fields/text/MessageField";
 import ArgoToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesPanel";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import argoRepositoryMetadata from "./tool_jobs/argo/argo-repository-metadata";
+
 
 function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
   const getToolRepositoriesPanel = () => {
     switch (toolData?.getData("tool_identifier")) {
-    case "jfrog_artifactory_maven":
-      return (
-        <JFrogToolRepositoriesPanel
-          toolId={toolData?.getData("_id")}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return (
-        <ArgoToolRepositoriesPanel
-          toolActions={toolData?.getData("repositories")}
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-        />
-      );
-    default:
-      return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogToolRepositoriesPanel
+            toolId={toolData?.getData("_id")}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <ArgoToolRepositoriesPanel
+            toolActions={toolData?.getData("repositories")}
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+      default:
+        return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }
   };
 
@@ -36,6 +38,7 @@ function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
       <MessageField message={`Add, Modify or Delete Repositories. These repositories can be entered once and reused across the Opsera platform.`}/>
       {getToolRepositoriesPanel()}
     </DetailPanelContainer>
+
   );
 }
 

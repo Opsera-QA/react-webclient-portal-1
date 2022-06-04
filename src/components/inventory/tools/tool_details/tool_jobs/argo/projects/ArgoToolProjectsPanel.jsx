@@ -1,13 +1,18 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import ArgoProjectTable from "./ArgoProjectTable";
 import PropTypes from "prop-types";
-import ArgoProjectOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/ArgoProjectOverlay";
+import CreateArgoProjectOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/CreateArgoProjectOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import ArgoProjectEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/details/ArgoProjectEditorPanel";
+import modelHelpers from "components/common/model/modelHelpers";
+import argoProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-project-metadata";
 
-function ArgoProject({ toolData, loadData, isLoading, toolActions }) {
-  const toastContext = useContext(DialogToastContext);
+// TODO: This needs to be rewritten
+function ArgoToolProjectsPanel({ toolData, loadData, isLoading, toolActions }) {
   const [argoProjects, setArgoProjects] = useState([]);
+  const [argoModel, setArgoModel] = useState(undefined);
 
   useEffect(() => {
     unpackProjs(toolActions);
@@ -29,16 +34,26 @@ function ArgoProject({ toolData, loadData, isLoading, toolActions }) {
   };
 
   const onRowSelect = (grid, row) => {
-    let selectedRow = toolData?.getArrayData("projects")[row?.index];
-    toastContext.showOverlayPanel(
-      <ArgoProjectOverlay
-        argoDataObject={selectedRow?.configuration}
-        projId={selectedRow?._id}
+    const argoProject = toolData?.getArrayData("projects")[row?.index];
+    setArgoModel({...modelHelpers.parseObjectIntoModel(argoProject, argoProjectMetadata)});
+  };
+
+  const closePanel = () => {
+    setArgoModel(null);
+    loadData();
+  };
+
+  if (argoModel) {
+    return (
+      <ArgoProjectEditorPanel
+        argoProjectData={argoModel}
         toolData={toolData}
         loadData={loadData}
+        handleClose={closePanel}
+        projId={argoModel?.getMongoDbId()}
       />
     );
-  };
+  }
 
   return (
     <ArgoProjectTable
@@ -51,11 +66,11 @@ function ArgoProject({ toolData, loadData, isLoading, toolActions }) {
   );
 }
 
-ArgoProject.propTypes = {
+ArgoToolProjectsPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   toolActions: PropTypes.array
 };
 
-export default ArgoProject;
+export default ArgoToolProjectsPanel;
