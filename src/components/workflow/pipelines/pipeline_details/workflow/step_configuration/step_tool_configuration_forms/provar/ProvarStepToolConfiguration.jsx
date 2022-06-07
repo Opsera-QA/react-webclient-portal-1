@@ -115,11 +115,6 @@ function ProvarConfiguration({
         dataObject={provarStepConfigurationDto}
         fieldName={"buildXmlPath"}
       />
-      <TextInputBase
-        setDataObject={setProvarConfigurationDataDto}
-        dataObject={provarStepConfigurationDto}
-        fieldName={"sfdcConnectionName"}
-      />
       {/*<ProvarSCMRepoFiles*/}
       {/*    setDataObject={setProvarConfigurationDataDto}*/}
       {/*    dataObject={provarStepConfigurationDto}*/}
