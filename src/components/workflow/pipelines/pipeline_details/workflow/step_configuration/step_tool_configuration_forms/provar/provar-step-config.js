@@ -58,10 +58,6 @@ const provarStepFormMetadata = {
         {
             label: "Ant Target",
             id: "antTarget",
-        },
-        {
-            label: "SFDC Connection Name",
-            id: "sfdcConnectionName",
         }
     ],
     newObjectFields: {
@@ -80,7 +76,6 @@ const provarStepFormMetadata = {
         buildXmlPath : "",
         antTarget: "",
         jobType: "SFDC_PROVAR_TEST",
-        sfdcConnectionName: ""
     }
 };
 

@@ -52,7 +52,6 @@ function ProvarLicenseConfiguration({ toolData }) {
       setModel={setProvarConfigurationDto}
       persistRecord={saveProvarLicenseConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"provar"}
     >
       <Row>
         <Col sm={12}>
