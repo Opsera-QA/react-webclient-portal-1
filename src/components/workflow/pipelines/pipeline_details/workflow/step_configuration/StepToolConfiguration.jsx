@@ -92,6 +92,7 @@ import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_o
 import SalesforceScanStepConfiguration
   from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
+import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/ProvarStepToolConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1310,6 +1311,17 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );        
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+            <ProvarStepToolConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
     }
   };
 

@@ -207,7 +207,8 @@ import BlackDuckPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
 import BlackDuckStepFormMetadata 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
-
+import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
+import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -650,6 +651,13 @@ function PipelineStepConfigurationSummary({
           <BlackDuckPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             blackDuckPipelineDataObject={getModelWrappedObject(BlackDuckStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+          <ProvarStepConfigSummary
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
         );
       default:
