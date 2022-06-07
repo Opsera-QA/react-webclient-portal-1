@@ -25,6 +25,7 @@ import ToolOrganizationsPanel from "components/inventory/tools/tool_details/Tool
 import ToolWorkspacesPanel from "components/inventory/tools/tool_details/ToolWorkspacesPanel";
 import ToolEndpointsPanel from "components/inventory/tools/details/endpoints/ToolEndpointsPanel";
 import ToolProvidersPanel from "components/inventory/tools/tool_details/ToolProvidersPanel";
+import ToolLicensePanel from "../../tool_details/ToolLicensePanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -226,6 +227,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <ToolClustersPanel
             toolModel={toolData}
           />
+        );
+      case TOOL_DETAIL_PANEL_TABS.LICENSES:
+        return (
+            <ToolLicensePanel
+                toolData={toolData}
+            />
         );
       default:
         return null;

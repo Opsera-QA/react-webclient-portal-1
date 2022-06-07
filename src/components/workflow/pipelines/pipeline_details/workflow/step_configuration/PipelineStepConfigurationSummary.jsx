@@ -202,7 +202,8 @@ import SnaplogicPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
 import SnaplogicStepFormMetadata 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
-
+import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
+import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -631,6 +632,13 @@ function PipelineStepConfigurationSummary({
           <SnaplogicPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             snaplogicPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+          <ProvarStepConfigSummary
+            pipelineData={pipelineData}
+            gitScraperPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
         );
       default:
