@@ -10,22 +10,43 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
+import {format} from "date-fns";
+import CustomTable from "../../../../../../../../common/table/CustomTable";
 
 function ProvarLogSummaryTable({ provarObj }) {
     const fields = provarSummaryLogResultMetadata?.fields;
 
     const columns = useMemo(
         () => [
-            getTableTextColumn(getField(fields, "className")),
-            getTableTextColumn(getField(fields, "name")),
-            getTableTextColumn(getField(fields, "time")),
+            {
+                Header: "Class Name",
+                accessor: "className",
+            },
+            {
+                Header: "Name",
+                accessor: "name",
+            },
+            {
+                Header: "Time",
+                accessor: "time"
+            },
+            {
+                Header: "Failure Reason",
+                accessor: "failure",
+                Cell: function formatValue(row) {
+                    if (row?.value?.content) {
+                        return `${row?.value?.content?.substring(0,54)}...`;
+                    }
+                    return "N/A";
+                }
+            },
         ],
         []
     );
 
     const getComponentResultsTable = () => {
         return (
-            <VanityTable
+            <CustomTable
                 data={provarObj}
                 columns={columns}
                 tableHeight={"28.2vh"}

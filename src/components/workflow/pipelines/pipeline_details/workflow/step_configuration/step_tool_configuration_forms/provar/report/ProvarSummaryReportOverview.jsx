@@ -21,16 +21,16 @@ function ProvarReportSummaryOverview({ provarResultsModel }) {
         <Row className={"my-3"}>
             <Col lg={12}><H4FieldSubHeader subheaderText={"Execution Overview"}/></Col>
             <Col lg={6}>
-                <TextFieldBase dataObject={provarResultsModel} fieldName={"tests"} />
-            </Col>
-            <Col lg={6}>
-                <TextFieldBase dataObject={provarResultsModel} fieldName={"failures"} />
-            </Col>
-            <Col lg={6}>
                 <TextFieldBase dataObject={provarResultsModel} fieldName={"name"} />
             </Col>
             <Col lg={6}>
                 <TextFieldBase dataObject={provarResultsModel} fieldName={"time"} />
+            </Col>
+            <Col lg={6}>
+                <TextFieldBase dataObject={provarResultsModel} fieldName={"tests"} />
+            </Col>
+            <Col lg={6}>
+                <TextFieldBase dataObject={provarResultsModel} fieldName={"failures"} />
             </Col>
             <Col lg={6}>
                 <TextFieldBase dataObject={provarResultsModel} fieldName={"skipped"} />
