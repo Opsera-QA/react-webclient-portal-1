@@ -12,12 +12,32 @@ const provarSummaryLogResultMetaData = {
         {
             label: "Time",
             id: "time"
+        },
+        {
+            label: "Tests",
+            id: "tests"
+        },
+        {
+            label: "Failures",
+            id: "failures"
+        },
+        {
+            label: "Failure Cause",
+            id: "failure"
+        },
+        {
+            label: "Tests Skipped",
+            id: "skipped"
         }
     ],
     newObjectFields: {
         className: "",
         name: "",
         time: "",
+        tests: "",
+        failures: "",
+        skipped: "",
+        failure: ""
     }
 };
 
