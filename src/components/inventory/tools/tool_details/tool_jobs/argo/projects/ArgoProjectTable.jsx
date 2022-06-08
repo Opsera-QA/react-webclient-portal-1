@@ -5,8 +5,8 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ArgoProjectOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/ArgoProjectOverlay";
+import CreateArgoProjectOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/CreateArgoProjectOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
@@ -15,7 +15,7 @@ function ArgoProjectTable({ toolData, argoProjects, loadData, onRowSelect, isLoa
   let fields = argoProjectMetadata.fields;
 
   const createArgoProject = () => {
-    toastContext.showOverlayPanel(<ArgoProjectOverlay toolData={toolData} loadData={loadData} />);
+    toastContext.showOverlayPanel(<CreateArgoProjectOverlay toolData={toolData} loadData={loadData} />);
   };
 
   const columns = useMemo(
