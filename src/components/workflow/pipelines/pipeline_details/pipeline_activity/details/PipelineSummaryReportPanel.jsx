@@ -10,6 +10,8 @@ import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import ProvarLogSummaryReportPanel
+  from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -43,6 +45,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
         return (
             <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+            <ProvarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
