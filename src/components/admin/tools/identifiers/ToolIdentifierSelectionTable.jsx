@@ -22,10 +22,6 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
 
   const noDataMessage = "No tool identifiers are currently registered";
 
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
-  };
-
   const onRowSelect = (rowData) => {
     setDataFunction(rowData?.original);
   };
@@ -36,7 +32,6 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
       onRowSelect={onRowSelect}
       data={toolIdentifiers}
       columns={columns}
-      rowStyling={rowStyling}
       noDataMessage={noDataMessage}
     />
   );
