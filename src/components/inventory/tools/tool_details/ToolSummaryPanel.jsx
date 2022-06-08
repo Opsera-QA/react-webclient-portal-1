@@ -32,7 +32,7 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <TextFieldBase dataObject={toolData} fieldName={"name"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"tool_identifier"} />
+          <TextFieldBase dataObject={toolData} fieldName={"owner_name"} />
         </Col>
         <Col sm={12} lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
@@ -48,9 +48,6 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"_id"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"owner_name"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"account"} />

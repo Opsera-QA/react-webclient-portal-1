@@ -4,8 +4,6 @@ import CustomTable from "components/common/table/CustomTable";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import {
   getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -15,12 +13,9 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "identifier")),
-      getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableDateColumn(getField(fields, "createdAt")),
-      getTableBooleanIconColumn(getField(fields, "active")),
-      getTableBooleanIconColumn(getField(fields, "enabledInRegistry")),
+      getLimitedTableTextColumn(getField(fields, "name"), 100),
+      getLimitedTableTextColumn(getField(fields, "identifier"), 100),
+      getTableTextColumn(getField(fields, "description")),
     ],
     []
   );
