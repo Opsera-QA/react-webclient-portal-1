@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import {
@@ -19,11 +19,14 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import "css/general/sidebar.css";
 import IconBase from "components/common/icons/IconBase";
+import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 
 const hiddenNav = () => {
   return <></>;
 };
 
+// TODO: This should be reworked into one sidebar
+//  with the tabs using SidebarNavigationLinkBase which can handle visibility based on roles
 function Sidebar({ userData, hideSideBar }) {
   const contextType = useContext(AuthContext);
   const { setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = contextType;
@@ -91,9 +94,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <IconBase iconSize={"lg"} icon={faBox} /> <span
-            className="menu-text">Toolchain</span></NavLink>
+          <ToolchainSidebarNavigationLink />
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
@@ -159,9 +160,7 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <IconBase iconSize={"lg"} icon={faBox} /> <span
-            className="menu-text">Toolchain</span></NavLink>
+          <ToolchainSidebarNavigationLink />
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
@@ -223,9 +222,7 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <IconBase iconSize={"lg"} icon={faBox} /> <span
-            className="menu-text">Toolchain</span></NavLink>
+          <ToolchainSidebarNavigationLink />
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
@@ -286,9 +283,7 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <IconBase iconSize={"lg"} icon={faBox} /> <span
-            className="menu-text">Toolchain</span></NavLink>
+          <ToolchainSidebarNavigationLink />
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
@@ -350,9 +345,7 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
 
           <div className="mt-3 mb-2 sub-header">Products</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/platform">
-            <IconBase iconSize={"lg"} icon={faBox} /> <span
-            className="menu-text">Toolchain</span></NavLink>
+          <ToolchainSidebarNavigationLink />
 
           <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
             <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span

@@ -7,7 +7,7 @@ import { SecureRoute, LoginCallback } from "@okta/okta-react";
 //template routes
 import Home from "./Home";
 import Logout from "./components/login/Logout";
-import Sidebar from "./Sidebar";
+import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "./components/dashboard/DashboardHome";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";

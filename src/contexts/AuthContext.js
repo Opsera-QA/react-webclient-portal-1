@@ -13,6 +13,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const history = useHistory();
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   useEffect(() => {
@@ -33,6 +34,23 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       // }
     };
   }, []);
+
+  // TODO: We should probably combine with the above
+  useEffect(() => {
+    setUserAccessRoles(undefined);
+
+    if (userData) {
+      setAccessRoles(userData).then((newUserAccessRoles) => {
+        setUserAccessRoles(newUserAccessRoles);
+      }).catch((error) => {
+        if (isMounted?.current === true) {
+          console.error("Could not set User access roles: " + JSON.stringify(error));
+          setUserAccessRoles({});
+          throw error;
+        }
+      });
+    }
+  }, [userData]);
 
   // const getWebsocketClient = () => {
   //   return websocketClient;
@@ -183,20 +201,23 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
 
       //console.table(customerAccessRules);
       return customerAccessRules;
-    } else {
-      console.info("Unable to set user access rules: " + JSON.stringify(user));
     }
   };
 
   const generateJwtServiceTokenWithValue = (object = {}, expirationDuration = "1h") => {
-    return jwt.sign(object, ACCESS_TOKEN_SECRET, {expiresIn: expirationDuration});
+    return jwt.sign(
+      object,
+      ACCESS_TOKEN_SECRET,
+      {expiresIn: expirationDuration},
+      undefined,
+    );
   };
 
-  const getAccessRoleData = async () => {
-    const user = await getUserRecord();
-    return await setAccessRoles(user);
+  const getAccessRoleData = () => {
+    return userAccessRoles;
   };
 
+  // TODO: Don't return as function, just return true/false when pulling from auth context
   const isSassUser = () => {
     if (userData == null) {
       return false;
@@ -207,6 +228,15 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.type === "sass-user" || (Array.isArray(groups) && groups?.includes("NonLDAPEndUser"));
   };
 
+  const isPowerUser = () => {
+    return userAccessRoles?.PowerUser === true;
+  };
+
+  const isSiteAdministrator = () => {
+    return userAccessRoles?.Administrator === true;
+  };
+
+  // TODO: Don't return as function, just return true/false when pulling from auth context
   const isOpseraAdministrator = () => {
     if (userData == null) {
       return false;
@@ -231,6 +261,9 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       getIsAuthenticated: getIsAuthenticated,
       generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
       getAccessRoleData: getAccessRoleData,
+      userAccessRoles: userAccessRoles,
+      isPowerUser: isPowerUser(),
+      isSiteAdministrator: isSiteAdministrator(),
       isSassUser: isSassUser,
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
