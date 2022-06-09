@@ -425,7 +425,9 @@ const TerraformStepFormMetadata = {
     saveEnvironmentVariables: false,
     environmentVariables: [],
     isVariableFile: false,
-    inputFilePaths: [],    
+    inputFilePaths: [],
+    azureCPCredentialId: "",
+    azureCPToolConfigId: ""
   }
 };
 
