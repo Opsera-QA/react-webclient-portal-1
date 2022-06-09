@@ -14,13 +14,12 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
   const columns = useMemo(
     () => [
       getLimitedTableTextColumn(getField(fields, "name"), 100),
-      getLimitedTableTextColumn(getField(fields, "identifier"), 100),
       getTableTextColumn(getField(fields, "description")),
     ],
     []
   );
 
-  const noDataMessage = "No tool identifiers are currently registered";
+  const noDataMessage = "No Tools are currently registered.";
 
   const onRowSelect = (rowData) => {
     setDataFunction(rowData?.original);
