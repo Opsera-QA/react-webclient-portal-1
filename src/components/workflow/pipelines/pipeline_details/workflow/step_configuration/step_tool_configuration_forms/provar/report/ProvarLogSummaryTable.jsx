@@ -10,7 +10,6 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
-import {format} from "date-fns";
 import CustomTable from "../../../../../../../../common/table/CustomTable";
 
 function ProvarLogSummaryTable({ provarObj }) {
@@ -35,7 +34,7 @@ function ProvarLogSummaryTable({ provarObj }) {
                 accessor: "failure",
                 Cell: function formatValue(row) {
                     if (row?.value?.content) {
-                        return `${row?.value?.content?.substring(0,54)}...`;
+                        return row?.value?.content;
                     }
                     return "N/A";
                 }
