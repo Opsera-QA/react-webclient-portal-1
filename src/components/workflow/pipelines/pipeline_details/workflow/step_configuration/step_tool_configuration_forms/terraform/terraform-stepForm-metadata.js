@@ -174,6 +174,19 @@ const TerraformStepFormMetadata = {
       label: "Packer Variables Files",
       id: "inputFilePaths"
     },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider",
+      isRequired: true
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCPCredentialId",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureCPToolConfigId",
+    },
   ],
   fieldsAlt: [
     {
@@ -355,6 +368,14 @@ const TerraformStepFormMetadata = {
       label: "Packer Variables Files",
       id: "inputFilePaths"
     },
+    {
+      label: "Azure Credential",
+      id: "azureCPCredentialId",
+    },
+    {
+      label: "Azure Tool",
+      id: "azureCPToolConfigId",
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -381,7 +402,7 @@ const TerraformStepFormMetadata = {
     storeStateInBucket: false,
     bucketName: "",
     bucketRegion: "",
-    cloudProvider: "aws",
+    cloudProvider: "",
     tag: "",
     resourceGroup : "",
     storageName : "",
@@ -402,6 +423,8 @@ const TerraformStepFormMetadata = {
     environmentVariables: [],
     isVariableFile: false,
     inputFilePaths: [],
+    azureCPCredentialId: "",
+    azureCPToolConfigId: ""
   }
 };
 

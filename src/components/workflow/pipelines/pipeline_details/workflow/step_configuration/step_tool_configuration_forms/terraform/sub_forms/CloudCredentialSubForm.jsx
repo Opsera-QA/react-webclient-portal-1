@@ -5,6 +5,8 @@ import TerraformIAmRoleFlagToggleInput from "../inputs/aws/TerraformIAmRoleFlagT
 import TerraformRuntimeArgsInput from "../inputs/TerraformRuntimeArgsInput";
 import TerraformIamRolesSelectInput from "../inputs/aws/TerraformIamRolesSelectInput";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
+import CloudProviderAzureToolSelect from "../inputs/azure/CloudProviderAzureToolSelect";
+import CloudProviderAzureApplicationSelect from "../inputs/azure/CloudProviderAzureApplicationSelect";
 
 function CloudCredentialSubForm({ model, setModel}) {
 
@@ -32,12 +34,33 @@ function CloudCredentialSubForm({ model, setModel}) {
     }
   };
 
+    const getAWSFields = () => {
+        if (model?.getData('cloudProvider') === "aws") {
+            return (
+                <>
+                    <TerraformAwsCredentialsSelectInput model={model} setModel={setModel} />
+                    <TerraformIAmRoleFlagToggleInput model={model} setModel={setModel} />
+                    {getIamRoleFields()}
+                    <TerraformRuntimeArgsInput dataObject={model} setDataObject={setModel} />
+                </>
+            );
+        }
+    };
+
+    const getAzureFields = () => {
+        if (model?.getData('cloudProvider') === "azure") {
+            return (
+                <>
+                    <CloudProviderAzureToolSelect model={model} setModel={setModel}/>
+                    <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
+                </>
+            );
+        }
+    };
+
   return (
     <>
-      <TerraformAwsCredentialsSelectInput model={model} setModel={setModel} />
-      <TerraformIAmRoleFlagToggleInput model={model} setModel={setModel} />
-      {getIamRoleFields()}
-      <TerraformRuntimeArgsInput dataObject={model} setDataObject={setModel} />
+      {getAWSFields()} {getAzureFields()}
     </>
   );
 }
