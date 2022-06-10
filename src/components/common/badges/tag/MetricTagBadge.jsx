@@ -6,24 +6,17 @@ import AppliedTagOverlay from "components/common/fields/multiple_items/tags/Appl
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 
-function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge}) {
-  const getTagLabel = () => {
-    let tagText = `${tags?.length} `;
+function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge, kpiTags, dashboardTags}) {
 
-    if (hasStringValue(type) === true) {
-      tagText += `${type} `;
-    }
-
-    return tagText + (tags?.length !== 1 ? "Tags Applied" : "Tag Applied");
-  };
-
-  if (!Array.isArray(tags) || tags.length === 0) {
+  if ((!Array.isArray(kpiTags) || kpiTags.length === 0) &&
+      (!Array.isArray(dashboardTags) || dashboardTags.length === 0)
+    ) {
     if (showNoTagsAppliedBadge === true) {
       return (
         <div className={className}>
           <MetricBadgeBase
             icon={faTags}
-            badgeText={`No ${type ? `${type} ` : ""}Tags Applied`}
+            badgeText={`No Tags Applied`}
           />
         </div>
       );
@@ -32,17 +25,27 @@ function MetricTagBadge({tags, type, className, showNoTagsAppliedBadge}) {
     return null;
   }
 
-  return (
-    <AppliedTagOverlay
-      className={className}
-      tags={tags}
-    >
-      <SpyglassBadge
-        className={"metric-subheader-text"}
-        badgeText={getTagLabel()}
-      />
-    </AppliedTagOverlay>
-  );
+  let tagsCount = 0;
+  if(kpiTags && kpiTags.length>0)
+  {
+    tagsCount = kpiTags.length ;
+  }
+  if(dashboardTags && dashboardTags.length>0)
+  {
+    tagsCount = tagsCount + dashboardTags.length;
+  }
+
+  return (<AppliedTagOverlay
+    className={className}
+    kpiTags={kpiTags}
+    dashboardTags={dashboardTags}
+  >
+    <SpyglassBadge
+      className={"metric-subheader-text"}
+      badgeText={`${tagsCount} Tags Applied`}
+    />
+  </AppliedTagOverlay>);
+
 }
 
 MetricTagBadge.propTypes = {
@@ -50,6 +53,8 @@ MetricTagBadge.propTypes = {
   className: PropTypes.string,
   showNoTagsAppliedBadge: PropTypes.bool,
   type: PropTypes.string,
+  kpiTags: PropTypes.array,
+  dashboardTags: PropTypes.array,
 };
 
 export default MetricTagBadge;
