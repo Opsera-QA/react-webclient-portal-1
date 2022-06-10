@@ -112,6 +112,9 @@ function ScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) 
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
+          <div>
+            <small className="form-text text-muted text-right"> Scheduled dates must be in the future</small>
+          </div>
         </Col>
       </Row>
     </EditorPanelContainer>

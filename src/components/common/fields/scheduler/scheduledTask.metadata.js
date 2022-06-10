@@ -51,6 +51,7 @@ export const scheduledTaskMetadata = {
     {
       label: "Next Run",
       id: "schedule.executionDate",
+      mustBeInTheFuture: true
     },
     {
       label: "Last Run",
