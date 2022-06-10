@@ -32,11 +32,11 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
-    newModel.setData("azureToolConfigId", "");
+    newModel.setData("azureCPToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
     newModel.setData("backendState", "");
-    newModel.setData("azureCredentialId", "");
+    newModel.setData("azureCPCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData("backendState", selectedOption.value);
     setDataObject({...newModel});
@@ -48,11 +48,11 @@ function TerraformRemoteStateCloudSelect({dataObject, setDataObject, disabled}) 
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
-    newModel.setData("azureToolConfigId", "");
+    newModel.setData("azureCPToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
     newModel.setData("backendState", "LOCAL");
-    newModel.setData("azureCredentialId", "");
+    newModel.setData("azureCPCredentialId", "");
     newModel.setData("bucketName", "");
     setDataObject({...newModel});
   };
