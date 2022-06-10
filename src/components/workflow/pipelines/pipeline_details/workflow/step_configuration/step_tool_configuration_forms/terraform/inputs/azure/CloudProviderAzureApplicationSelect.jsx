@@ -21,7 +21,7 @@ function CloudProviderAzureApplicationSelect({fieldName, model, setModel}) {
             fieldName={fieldName}
             model={model}
             setModel={setModel}
-            toolId={model?.getData("azureCPToolConfigId")}
+            toolId={model?.getData("azureToolConfigId")}
             setDataFunction={setDataFunction}
             clearDataFunction={clearDataFunction}
             valueField={"_id"}
@@ -38,7 +38,7 @@ CloudProviderAzureApplicationSelect.propTypes = {
 };
 
 CloudProviderAzureApplicationSelect.defaultProps = {
-    fieldName: "azureCPCredentialId",
+    fieldName: "azureCredentialId",
 };
 
 export default CloudProviderAzureApplicationSelect;

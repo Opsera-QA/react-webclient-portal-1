@@ -6,7 +6,7 @@ import RoleRestrictedAzureToolSelectInput
 function AksServiceDeployStepAzureToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData("azureCredentialId", "");
+    newModel.setData("azureCPCredentialId", "");
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
@@ -20,8 +20,8 @@ function AksServiceDeployStepAzureToolSelectInput({ fieldName, model, setModel, 
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
-    newModel.setData("azureToolConfigId", "");
-    newModel.setData("azureCredentialId", "");
+    newModel.setData("azureCPToolConfigId", "");
+    newModel.setData("azureCPCredentialId", "");
     setModel({...newModel});
   };
 
@@ -51,7 +51,7 @@ AksServiceDeployStepAzureToolSelectInput.propTypes = {
 AksServiceDeployStepAzureToolSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
-  fieldName: "azureToolConfigId",
+  fieldName: "azureCPToolConfigId",
   
 };
 
