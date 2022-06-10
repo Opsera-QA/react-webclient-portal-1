@@ -56,9 +56,8 @@ function ConnectedAssetsDetails({ dashboardData }) {
         dateRange?.startDate ? dateRange?.startDate : null,
         dateRange?.endDate? dateRange?.endDate : null
       );
-      let responseData = response?.data?.data;
-
-      if (isMounted?.current === true && Array.isArray(responseData)) {
+      let responseData = response?.data?.data[0]?.connectedAssets?.data;
+      if (isMounted?.current === true) {
         setData(responseData);
       }
     } catch (error) {
@@ -98,7 +97,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faDatabase}
                   className={"p-2"}
                   middleText={"Repository"}
-                  bottomText={data?.[0]?.repositories}
+                  bottomText={data?.repositories}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -108,7 +107,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faCodeBranch}
                   className={"p-2"}
                   middleText={"Branches"}
-                  bottomText={data?.[0]?.branches}
+                  bottomText={data?.branches}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -118,7 +117,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faUsers}
                   className={"p-2"}
                   middleText={"Collaborators"}
-                  bottomText={data?.[0]?.collaborators}
+                  bottomText={data?.collaborators}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -128,7 +127,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faDiagramSuccessor}
                   className={"p-2"}
                   middleText={"Pipelines"}
-                  bottomText={data?.[0]?.pipelines}
+                  bottomText={data?.pipelines}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -138,7 +137,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faListCheck}
                   className={"p-2"}
                   middleText={"Tasks"}
-                  bottomText={data?.[0]?.tasks}
+                  bottomText={data?.tasks}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -148,7 +147,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faStopwatch}
                   className={"p-2"}
                   middleText={"Jobs"}
-                  bottomText={data?.[0]?.jobs}
+                  bottomText={data?.jobs}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -158,7 +157,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faCompressArrowsAlt}
                   className={"p-2"}
                   middleText={"Webhooks"}
-                  bottomText={data?.[0]?.webhooks}
+                  bottomText={data?.webhooks}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
@@ -168,7 +167,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
                   icon={faBox}
                   className={"p-2"}
                   middleText={"Packages"}
-                  bottomText={data?.[0]?.packages}
+                  bottomText={data?.packages}
                 ></ThreeLineIconDataBlockBase>
               </DataBlockBoxContainer>
             </Col>
