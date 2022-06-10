@@ -249,4 +249,28 @@ taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, git
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.saveRecordToVault = async (
+  getAccessToken,
+  cancelTokenSource,
+  key,
+  value,
+  taskId,
+) => {
+  const apiUrl = `/tasks/vault/write`;
+
+  const postBody = {
+    key: key,
+    value: value,
+    taskId: taskId,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+
 export default taskActions;
