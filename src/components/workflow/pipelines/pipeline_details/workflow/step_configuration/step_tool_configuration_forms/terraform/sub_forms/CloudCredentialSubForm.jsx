@@ -41,7 +41,6 @@ function CloudCredentialSubForm({ model, setModel}) {
                     <TerraformAwsCredentialsSelectInput model={model} setModel={setModel} />
                     <TerraformIAmRoleFlagToggleInput model={model} setModel={setModel} />
                     {getIamRoleFields()}
-                    <TerraformRuntimeArgsInput dataObject={model} setDataObject={setModel} />
                 </>
             );
         }
@@ -61,6 +60,7 @@ function CloudCredentialSubForm({ model, setModel}) {
   return (
     <>
       {getAWSFields()} {getAzureFields()}
+      <TerraformRuntimeArgsInput dataObject={model} setDataObject={setModel} />
     </>
   );
 }
