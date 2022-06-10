@@ -35,6 +35,7 @@ function AppliedTagBadge({tags, badgeClassName, tagLocation, className, showNoTa
     <AppliedTagOverlay
       className={className}
       tags={tags}
+      badgeClassName={badgeClassName}
     >
       <SpyglassBadge
         className={badgeClassName}
