@@ -97,10 +97,6 @@ const TerraformStepFormMetadata = {
       id: "bucketRegion"
     },
     {
-      label: "Cloud Provider",
-      id: "cloudProvider"
-    },
-    {
       label: "Terraform Version",
       id: "tag",
       isRequired: true
@@ -290,10 +286,6 @@ const TerraformStepFormMetadata = {
       id: "bucketRegion"
     },
     {
-      label: "Cloud Provider",
-      id: "cloudProvider"
-    },
-    {
       label: "Terraform Version",
       id: "tag",
       isRequired: true
@@ -378,6 +370,10 @@ const TerraformStepFormMetadata = {
     {
       label: "Azure Tool",
       id: "azureCPToolConfigId",
+    },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider"
     },
   ],
   newObjectFields: {

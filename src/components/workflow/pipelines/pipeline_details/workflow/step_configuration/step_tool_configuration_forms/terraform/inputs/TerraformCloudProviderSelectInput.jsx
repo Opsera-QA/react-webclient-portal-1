@@ -17,8 +17,8 @@ function TerraformCloudProviderSelectInput({dataObject, setDataObject, disabled,
 
   const setDataFunction = (fieldName, value) => {
     let newModel = {...dataObject};
-    newModel.setData("azureCPToolConfigId", "");
-    newModel.setData("azureCPCredentialId", "");
+    newModel.setData("azureToolConfigId", "");
+    newModel.setData("azureCredentialId", "");
     newModel.setData("accessKeyParamName", "");
     newModel.setData("secretKeyParamName", "");
     newModel.setData("regionParamName", "");
@@ -32,8 +32,8 @@ function TerraformCloudProviderSelectInput({dataObject, setDataObject, disabled,
 
   const clearDataFunction = (fieldName, value) => {
     let newModel = {...dataObject};
-    newModel.setData("azureCPToolConfigId", "");
-    newModel.setData("azureCPCredentialId", "");
+    newModel.setData("azureToolConfigId", "");
+    newModel.setData("azureCredentialId", "");
     newModel.setData("accessKeyParamName", "");
     newModel.setData("secretKeyParamName", "");
     newModel.setData("regionParamName", "");
