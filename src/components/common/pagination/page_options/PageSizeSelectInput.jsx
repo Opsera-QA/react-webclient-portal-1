@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
 function PageSizeSelectInput({ paginationModel, loadData, isLoading, className}) {
-  const updatePageSize = (fieldName, pageSize) => {
+  const updatePageSize = (fieldName, selectedOption) => {
     paginationModel.setData("currentPage", 1);
-    paginationModel.setData("pageSize", pageSize);
+    paginationModel.setData("pageSize", selectedOption?.value);
     loadData(paginationModel);
   };
 

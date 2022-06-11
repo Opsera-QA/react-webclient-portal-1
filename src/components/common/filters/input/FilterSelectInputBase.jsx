@@ -28,6 +28,17 @@ function FilterSelectInputBase(
     setDataObject({...newFilterModel});
   };
 
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(field?.id, newValue);
+    }
+    else {
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+      validateAndSetData(field?.id, parsedValue);
+    }
+  };
+
+
   if (field == null) {
     console.error(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
     return null;
@@ -52,7 +63,7 @@ function FilterSelectInputBase(
         disabled={disabled || busy}
         busy={busy}
         placeholderText={placeholderText}
-        setDataFunction={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}
+        setDataFunction={(data) => updateValue(data)}
       />
     </div>
   );

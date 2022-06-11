@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 
 function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModel, loadData, className, textField, valueField, status, policySupport, manualDataEntry}) {
-  const setDataFunction = (fieldName, value) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = filterModel;
-    newDataObject.setData(fieldName, value);
+    newDataObject.setData(fieldName, selectedOption?.identifier);
+    newDataObject.setData("identifierName", selectedOption?.name);
     loadData(newDataObject);
   };
 
@@ -40,13 +41,13 @@ InlineKpiIdentifierFilter.propTypes = {
   valueField: PropTypes.string,
   status: PropTypes.string,
   policySupport: PropTypes.string,
-  manualDataEntry: PropTypes.bool
+  manualDataEntry: PropTypes.bool,
 };
 
 InlineKpiIdentifierFilter.defaultProps = {
   fieldName: "identifier",
   textField: "name",
-  valueField: "identifier"
+  valueField: "identifier",
 };
 
 export default InlineKpiIdentifierFilter;

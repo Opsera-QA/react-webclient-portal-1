@@ -43,11 +43,11 @@ toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTok
 
   const urlParams = {
     params: {
-      sortOption: toolFilterModel?.getSortOption(),
-      currentPage: toolFilterModel?.getFilterValue("currentPage"),
-      pageSize: toolFilterModel?.getFilterValue("pageSize"),
-      toolIdentifier: toolFilterModel?.getFilterValue("toolIdentifier"),
-      tag: toolFilterModel?.getFilterValue("tag"),
+      sortOption: toolFilterModel?.getData("sortOption"),
+      currentPage: toolFilterModel?.getData("currentPage"),
+      pageSize: toolFilterModel?.getData("pageSize"),
+      toolIdentifier: toolFilterModel?.getData("toolIdentifier"),
+      tag: toolFilterModel?.getData("tag"),
       active: toolFilterModel?.getFilterValue("status"),
       search: toolFilterModel?.getFilterValue("search"),
       owner: toolFilterModel?.getFilterValue("owner"),

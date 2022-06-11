@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 
 function InlineTagTypeFilter({ fieldName, filterModel, setFilterModel, className, loadData}) {
-  const setDataFunction = (fieldName, value) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = filterModel;
-    newDataObject.setData(fieldName, value);
+    newDataObject.setData(fieldName, selectedOption?.value);
     loadData(newDataObject);
   };
 

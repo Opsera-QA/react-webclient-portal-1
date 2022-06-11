@@ -23,6 +23,7 @@ function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, classNam
       setDataFunction={setDataFunction}
       groupBy={"category"}
       placeholderText={"Select Task Type"}
+      valueField={"value"}
       dataObject={filterModel}
       selectOptions={featureFlagHideItemInProd() !== false ? productionTaskTypes : nonProductionTaskTypes}
     />
