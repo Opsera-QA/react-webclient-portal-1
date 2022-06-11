@@ -9,8 +9,8 @@ ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
-RUN npm install --silent
 RUN npm install react-scripts -g --silent
+RUN npm ci --production --legacy-peer-deps
 COPY . /usr/src/app
 RUN npm run build:${build_env}
 RUN mv build* code
