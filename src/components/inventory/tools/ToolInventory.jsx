@@ -3,7 +3,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import PropTypes from "prop-types";
-import cookieHelpers from "core/cookies/cookie-helpers";
 import ToolTableCardView from "components/inventory/tools/ToolTableCardView";
 import axios from "axios";
 import ToolRegistryHelpDocumentation
@@ -33,7 +32,8 @@ function ToolInventory() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    getCookie(source).catch((error) => {
+    const newToolFilterModel = new ToolFilterModel();
+    loadData(newToolFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -45,31 +45,12 @@ function ToolInventory() {
     };
   }, []);
 
-  const getCookie = async (cancelSource = cancelTokenSource) => {
-    setLoading(true);
-    let newToolFilterModel = new ToolFilterModel();
-    try {
-      let storedViewType = cookieHelpers.getCookie("registry", "viewType");
-
-      if (storedViewType != null) {
-        newToolFilterModel.setData("viewType", JSON.parse(storedViewType));
-      }
-    } catch (error) {
-      cookieHelpers.setCookie("registry", "viewType", JSON.stringify(newToolFilterModel?.getData("viewType")));
-      console.error("Error loading cookie. Setting to default");
-      console.error(error);
-    } finally {
-      await loadData(newToolFilterModel, cancelSource);
-    }
-  };
-
   const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
       await getToolRegistryList(newFilterModel, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -79,13 +60,8 @@ function ToolInventory() {
     }
   };
 
-  const saveCookies = (newFilterModel) => {
-    cookieHelpers.setCookie("registry", "viewType", JSON.stringify(newFilterModel.getData("viewType")));
-  };
-
   const getToolRegistryList = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelSource, newFilterModel);
-    saveCookies(newFilterModel);
     const toolArray = response?.data?.data;
     const accessRoleData = await getAccessRoleData();
     setCustomerAccessRules(accessRoleData);
@@ -96,8 +72,9 @@ function ToolInventory() {
       setToolMetadata(metadata);
       setToolRegistryList(toolArray);
       setRegistryToolRoleDefinitions(roleDefinitions);
-      newFilterModel.setData("totalCount", response?.data?.count);
-      newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
+      newFilterModel.updateTotalCount(response?.data?.count);
+      newFilterModel.updateActiveFilters();
+      newFilterModel.updateBrowserStorage();
       setToolFilterModel({ ...newFilterModel });
     }
   };
@@ -117,7 +94,6 @@ function ToolInventory() {
       <ToolTableCardView
         isLoading={isLoading}
         loadData={loadData}
-        saveCookies={saveCookies}
         tools={toolRegistryList}
         toolFilterDto={toolFilterModel}
         toolMetadata={toolMetadata}

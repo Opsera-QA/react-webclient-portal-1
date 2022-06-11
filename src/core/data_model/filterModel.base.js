@@ -1,7 +1,11 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import sessionHelper from "utils/session.helper";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export class FilterModelBase {
   constructor(metaData) {
+    this.sessionDataKey = "";
+    this.updateUrlWithQueryParameters = false;
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields()};
   }
@@ -15,8 +19,21 @@ export class FilterModelBase {
     return this.data[fieldName];
   };
 
-  setData = (fieldName, newValue) => {
+  setData = (fieldName, newValue, updateQueryParameters = true) => {
       this.data[fieldName] = newValue;
+
+      if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
+        sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
+      }
+  };
+
+  updateBrowserStorage = () => {
+    if (hasStringValue(this.sessionDataKey) !== true) {
+      throw "Must set a session data key in order to save to browser storage.";
+    }
+
+    const currentData = this.getPersistData();
+    sessionHelper.setStoredSessionValue(this.sessionDataKey, currentData);
   };
 
   getTotalCount = () => {
@@ -37,6 +54,14 @@ export class FilterModelBase {
 
   getPersistData = () => {
     return this.trimStrings();
+  };
+
+  enableUrlUpdatesWithQueryParameters = () => {
+    this.updateUrlWithQueryParameters = true;
+  };
+
+  getUpdateUrlWithQueryParameters = () => {
+    return this.updateUrlWithQueryParameters === true;
   };
 
   trimStrings = () => {
@@ -74,11 +99,29 @@ export class FilterModelBase {
   getActiveFilters = () => {
     let activeFilters = [];
 
-    if (this.canSearch() && this.getData("search") != null && this.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
+    const searchKeyword = this.getData("search");
+
+    if (this.canSearch() && hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
     }
 
     return activeFilters;
+  };
+
+  updateActiveFilters = () => {
+    const activeFilters = dataParsingHelper.parseArray(this.getActiveFilters(), []);
+
+    if (Array.isArray(activeFilters)) {
+      this.data.activeFilters = activeFilters;
+    }
+  };
+
+  updateTotalCount = (newTotalCount) => {
+    const parsedTotalCount = dataParsingHelper.parseInteger(newTotalCount, 0);
+
+    if (parsedTotalCount) {
+      this.data.totalCount = parsedTotalCount;
+    }
   };
 
   canSearch = () => {
@@ -112,24 +155,23 @@ export class FilterModelBase {
   };
 
   getFilterValue = (fieldName) => {
-    let filter = this.getData(fieldName);
-    return filter != null && filter["value"] != null ? filter["value"] : filter;
+    const filter = this.getData(fieldName);
+
+    if (typeof filter === "object" && filter?.value != null) {
+      return filter?.value;
+    }
+
+    return filter;
   };
 
   getFilterText = (fieldName) => {
-    let filter = this.getData(fieldName);
-    return filter != null && filter["text"] != null ? filter["text"] : filter;
-  };
+    const filter = this.getData(fieldName);
 
-  unpackQueryParameterObject = (history) => {
-    throw "This is an unsupported action!";
-  };
-
-  storeFiltersInStorage = () => {
-    const filterObject = {...this.getPersistData()};
-    if (hasStringValue(this.filterObjectId) === true) {
-      sessionStorage.setItem(this.filterObjectId, filterObject);
+    if (typeof filter === "object" && filter?.text != null) {
+      return filter?.text;
     }
+
+    return filter;
   };
 
   getMaxLength = (field) => {
@@ -170,8 +212,7 @@ export class FilterModelBase {
   };
 
   getSortOption = () => {
-    let filter = this.getData("sortOption");
-    return filter?.option ? filter?.option : this.getFilterValue(filter);
+    return this.getData("sortOption");
   };
 }
 

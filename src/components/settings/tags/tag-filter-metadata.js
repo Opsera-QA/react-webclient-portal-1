@@ -1,4 +1,4 @@
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 
 const tagFilterMetadata = {
   idProperty: "_id",
@@ -33,19 +33,26 @@ const tagFilterMetadata = {
       id: "activeFilters",
     },
   ],
-  getActiveFilters(filterDto) {
-    let activeFilters = [];
+  getActiveFilters(filterModel) {
+    const activeFilters = [];
 
-    if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
+
+    const status = filterModel.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", text: `Status: ${filterDto.getFilterValue("type")}`});
+    const type = filterModel?.getData("type");
+
+    if (hasStringValue(type) === true) {
+      activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(type)}`});
     }
 
-    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    const search = filterModel?.getData(search);
+
+    if (hasStringValue(search) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
     }
 
     return activeFilters;

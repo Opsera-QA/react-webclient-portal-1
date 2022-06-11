@@ -1,4 +1,7 @@
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+import {
+  getNotificationTypeLabel
+} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 
 const notificationActivityLogFilterMetadata = {
   idProperty: "_id",
@@ -37,24 +40,39 @@ const notificationActivityLogFilterMetadata = {
       id: "activeFilters",
     },
   ],
-  getActiveFilters(filterDto) {
-    let activeFilters = [];
+  getActiveFilters(filterModel) {
+    const activeFilters = [];
 
-    if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
+    if (filterModel == null) {
+      return filterModel;
     }
 
-    if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+    const status = filterModel.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (filterDto.getData("tag") != null) {
-      const tag = filterDto.getData("tag");
-      activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
+    const type = filterModel.getData("type");
+
+    if (hasStringValue(type) === true) {
+      activeFilters.push({filterId: "type", text: `Type: ${getNotificationTypeLabel(type)}`});
     }
 
-    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    const tag = filterModel.getData("tag");
+
+    if (hasStringValue(tag) === true) {
+      const tagArray = tag.split(":");
+
+      if (Array.isArray(tagArray) && tagArray.length === 2) {
+        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
+      }
+    }
+
+    const searchKeyword = filterModel.getData("search");
+
+    if (hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
     }
 
     return activeFilters;

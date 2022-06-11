@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 
 function InlineNotificationTypeFilter({ filterModel, setFilterModel, fieldName, className, loadData, isLoading }) {
-  const validateAndSetData = (fieldName, value) => {
+  const validateAndSetData = (fieldName, selectedOption) => {
     let newDataObject = filterModel;
-    newDataObject.setData(fieldName, value);
+    newDataObject.setData(fieldName, selectedOption?.value);
     loadData(newDataObject);
   };
 
@@ -33,7 +33,7 @@ InlineNotificationTypeFilter.propTypes = {
 };
 
 InlineNotificationTypeFilter.defaultProps = {
-  fieldName: "type"
+  fieldName: "type",
 };
 
 export default InlineNotificationTypeFilter;

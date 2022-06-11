@@ -26,16 +26,13 @@ analyticsDataActions.getAllAnalyticsDataEntriesV2 = async (getAccessToken, cance
 };
 
 analyticsDataActions.getAnalyticsDataEntriesV2 = async (getAccessToken, cancelTokenSource, analyticsDataEntryFilterDto) => {
-  const sortOption = analyticsDataEntryFilterDto?.getData("sortOption");
-  const identifier = analyticsDataEntryFilterDto?.getData("identifier");
-
   const apiUrl = "/analytics/data-entry";
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
-      size: analyticsDataEntryFilterDto?.getData("pageSize"),
-      page: analyticsDataEntryFilterDto?.getData("currentPage"),
-      kpi_identifier: identifier ? identifier?.identifier : undefined,
+      sort: analyticsDataEntryFilterDto?.getFilterValue("sortOption"),
+      size: analyticsDataEntryFilterDto?.getFilterValue("pageSize"),
+      page: analyticsDataEntryFilterDto?.getFilterValue("currentPage"),
+      kpi_identifier: analyticsDataEntryFilterDto?.getFilterValue("identifier"),
       search: analyticsDataEntryFilterDto?.getData("search")
     },
   };

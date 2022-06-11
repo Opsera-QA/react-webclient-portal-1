@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 
 function InlineTaskTypeFilter({ filterModel, setFilterModel, className, fieldName, loadData}) {
-  const setDataFunction = (fieldName, value) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newModel = filterModel;
-    newModel.setData(fieldName, value);
+    newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("category", "");
     loadData(newModel);
   };
@@ -35,7 +35,7 @@ InlineTaskTypeFilter.propTypes = {
 };
 
 InlineTaskTypeFilter.defaultProps = {
-  fieldName: "type"
+  fieldName: "type",
 };
 
 export default InlineTaskTypeFilter;

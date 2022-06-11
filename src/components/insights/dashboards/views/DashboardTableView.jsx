@@ -11,7 +11,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
-import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
+import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 
 function DashboardTableView(
   {
@@ -37,7 +37,7 @@ function DashboardTableView(
   const getDynamicFilter = () => {
     if (dashboardFilterModel?.getData("type") !== "owner") {
       return (
-        <LdapOwnerFilter
+        <OwnerFilter
           filterModel={dashboardFilterModel}
           setFilterModel={setDashboardFilterModel}
           className={"mt-2"}

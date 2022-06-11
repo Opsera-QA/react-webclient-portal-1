@@ -1,4 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 const taskFilterMetadata = {
   type: "Task",
@@ -74,30 +76,47 @@ export class TaskFilterModel extends FilterModelBase {
   };
 
   getActiveFilters = () => {
-    let activeFilters = [];
+    const activeFilters = [];
 
-    if (this.getData("status") != null && this.getData("status") !== "") {
-      activeFilters.push({filterId: "status", text: `Status: ${this.getFilterText("status")}`});
+    const status = this.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (this.getData("active") != null && this.getData("active") !== "") {
-      activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
+    const active = this.getData("active");
+
+    if (hasStringValue(active) === true) {
+      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
     }
 
-    if (this.getData("type") != null && this.getData("type") !== "") {
-      activeFilters.push({filterId: "type", text: `Type: ${this.getFilterText("type")}`});
+    const type = this.getData("type");
+
+    if (hasStringValue(type) === true) {
+      activeFilters.push({filterId: "type", text: `Type: ${getTaskTypeLabel(type)}`});
     }
 
-    if (this.getData("tag") != null) {
-      activeFilters.push({filterId: "tag", ...this.getData("tag")});
+    const tag = this.getData("tag");
+
+    if (hasStringValue(tag) === true) {
+      const tagArray = tag.split(":");
+
+      if (Array.isArray(tagArray) && tagArray.length === 2) {
+        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
+      }
     }
 
-    if (this.getData("owner") != null) {
-      activeFilters.push({filterId: "owner", text: `Owner: ${this.getFilterText("owner")}`});
+    const searchKeyword = this.getData("search");
+
+    if (hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
     }
 
-    if (this.getData("search") != null && this.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
+    const ownerName = this.getData("ownerName");
+    const owner = this.getData("owner");
+
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+      activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
     }
 
     return activeFilters;

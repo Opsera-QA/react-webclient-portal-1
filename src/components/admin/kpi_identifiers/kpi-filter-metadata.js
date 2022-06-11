@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+
 const kpiFilterMetadata = {
   idProperty: "_id",
   type: "Kpi",
@@ -38,20 +40,22 @@ const kpiFilterMetadata = {
   getActiveFilters(filterDto) {
     let activeFilters = [];
 
-    if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+    const status = filterDto.getFilterValue("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Active Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+    const search = filterDto.getFilterValue("search");
+
+    if (hasStringValue(search) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
     }
 
-    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-    }
+    const policySupport = filterDto.getFilterValue("policySupport");
 
-    if (filterDto.getData("policySupport") != null && filterDto.getData("policySupport") !== "") {
-      activeFilters.push({filterId: "policySupport", text: `Policy Support: ${filterDto.getFilterText("policySupport")}`});
+    if (hasStringValue(policySupport) === true) {
+      activeFilters.push({filterId: "policySupport", text: `Policy Support: ${capitalizeFirstLetter(policySupport)}`});
     }
 
     return activeFilters;

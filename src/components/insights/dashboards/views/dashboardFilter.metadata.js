@@ -44,24 +44,36 @@ const dashboardFilterMetadata = {
     getActiveFilters(filterModel) {
       const activeFilters = [];
 
-      if (hasStringValue(filterModel.getFilterValue("status")) === true) {
-        activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterModel.getFilterValue("status"))}`});
+      const status = filterModel.getFilterValue("status");
+
+      if (hasStringValue(status) === true) {
+        activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
       }
 
-      if (hasStringValue(filterModel.getFilterValue("type")) === true) {
-        activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(filterModel.getFilterValue("type"))}`});
-      }
-  
-      if (hasStringValue(filterModel.getFilterValue("search")) === true) {
-        activeFilters.push({filterId: "search", text: `Keywords: ${filterModel.getFilterValue("search")}`});
+      const type = filterModel.getFilterValue("type");
+
+      if (hasStringValue(type) === true) {
+        activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(type)}`});
       }
 
-      if (hasStringValue(filterModel.getFilterValue("owner")) === true) {
-        activeFilters.push({filterId: "owner", text: `Owner: ${filterModel.getFilterText("owner")}`});
+      const search = filterModel.getFilterValue("search");
+
+      if (hasStringValue(search) === true) {
+        activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
       }
 
-      if (hasStringValue(filterModel.getFilterValue("isFavorite")) === true) {
-        activeFilters.push({filterId: "isFavorite", ...filterModel.getData("isFavorite")});
+
+      const owner = filterModel.getFilterValue("owner");
+      const ownerName = filterModel.getFilterValue("ownerName");
+
+      if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+        activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
+      }
+
+      const isFavorite = filterModel.getFilterValue("isFavorite");
+
+      if (hasStringValue(isFavorite) === true) {
+        activeFilters.push({filterId: "isFavorite", text: `Only Show Favorites`});
       }
   
       return activeFilters;

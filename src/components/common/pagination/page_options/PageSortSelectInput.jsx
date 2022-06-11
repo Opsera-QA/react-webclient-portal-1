@@ -5,7 +5,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 function PageSortSelectInput({ paginationModel, loadData, isLoading, className}) {
   const updateSortOption = (fieldName, sortOption) => {
     paginationModel.setData("currentPage", 1);
-    paginationModel.setData("sortOption", sortOption);
+    paginationModel.setData("sortOption", sortOption?.value);
     loadData(paginationModel);
   };
 

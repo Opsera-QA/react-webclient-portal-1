@@ -2,22 +2,18 @@ import baseActions from "utils/actionsBase";
 
 const KpiActions = {};
 
-KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) => {
+KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterModel) => {
   const apiUrl = "/analytics/kpi/configurations";
-  let sortOption = kpiFilterDto.getData("sortOption");
-  let status = kpiFilterDto.getData("status");
-  let policySupport = kpiFilterDto.getData("policySupport");
-
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
-      size: kpiFilterDto.getData("pageSize"),
-      page: kpiFilterDto.getData("currentPage"),
-      tool: kpiFilterDto.getFilterValue("tool"),
-      category: kpiFilterDto.getFilterValue("category"),
-      status: status ? status.value : undefined,
-      policySupport: policySupport ? policySupport.value : undefined,
-      search: kpiFilterDto.getFilterValue("search"),
+      sort: kpiFilterModel?.getFilterValue("sortOption"),
+      size: kpiFilterModel?.getFilterValue("pageSize"),
+      page: kpiFilterModel?.getFilterValue("currentPage"),
+      tool: kpiFilterModel?.getFilterValue("tool"),
+      category: kpiFilterModel?.getFilterValue("category"),
+      status: kpiFilterModel?.getFilterValue("status"),
+      policySupport: kpiFilterModel?.getFilterValue("policySupport"),
+      search: kpiFilterModel?.getFilterValue("search"),
     },
   };
 
@@ -26,20 +22,16 @@ KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) =
 
 KpiActions.getKpiIdentifiersV2 = async (getAccessToken, cancelTokenSource, kpiFilterModel) => {
   const apiUrl = "/analytics/kpi/identifiers";
-  const sortOption = kpiFilterModel?.getData("sortOption");
-  const status = kpiFilterModel?.getData("status");
-  const policySupport = kpiFilterModel?.getData("policySupport");
-
   const urlParams = {
     params: {
-      sort: sortOption?.value,
-      size: kpiFilterModel.getData("pageSize"),
-      page: kpiFilterModel.getData("currentPage"),
-      tool: kpiFilterModel.getFilterValue("tool"),
-      category: kpiFilterModel.getFilterValue("category"),
-      status: status?.value,
-      policySupport: policySupport?.value,
-      search: kpiFilterModel.getFilterValue("search"),
+      sort: kpiFilterModel?.getFilterValue("sortOption"),
+      size: kpiFilterModel?.getFilterValue("pageSize"),
+      page: kpiFilterModel?.getFilterValue("currentPage"),
+      tool: kpiFilterModel?.getFilterValue("tool"),
+      category: kpiFilterModel?.getFilterValue("category"),
+      status: kpiFilterModel?.getFilterValue("status"),
+      policySupport: kpiFilterModel?.getFilterValue("policySupport"),
+      search: kpiFilterModel?.getFilterValue("search"),
     },
   };
 
