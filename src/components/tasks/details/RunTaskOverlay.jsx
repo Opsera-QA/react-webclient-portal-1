@@ -39,6 +39,11 @@ import TextInputBase from "../../common/inputs/text/TextInputBase";
 import TestDeployIdButton from "../../common/buttons/task/quick_deploy/TestDeployIdButton";
 import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
+import SnaplogicProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicProjectSelectInput";
+import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicScmBranchSelectInput";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
@@ -129,6 +134,12 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
           configuration,
           azureAksClusterTaskConfigurationMetadata,
         );
+        break;
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, snaplogicTaskConfigurationMetadata);
+        break;
+      case TASK_TYPES.GITSCRAPER:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
         break;
       default:
         setTaskConfigurationModel(null);
@@ -248,6 +259,29 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     }
   };
 
+  const SnaplogicForm = () => {
+    if (canEdit) {
+      return (
+        <Row>
+          <Col lg={12}>
+            <SnaplogicProjectSelectInput 
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              toolConfigId={taskConfigurationModel?.getData("toolConfigId")}
+              projectSpace={taskConfigurationModel?.getData("projectSpace")}
+            />
+          </Col>
+          <Col lg={12}>
+            <SnaplogicScmBranchSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+            />
+          </Col>
+        </Row>
+      );
+    }
+  };
+
   // TODO: This should be put inside the first step of Wizards.
   const getRunView = () => {
     const type = taskModel?.getData("type");
@@ -258,6 +292,8 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         return branchSelectionInputs();
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return quickDeployForm();
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return SnaplogicForm();
       default:
         return;
     }

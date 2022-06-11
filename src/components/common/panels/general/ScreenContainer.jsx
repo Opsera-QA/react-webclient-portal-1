@@ -24,7 +24,8 @@ function ScreenContainer(
     accessRoleData,
     roleRequirement,
     titleActionBar,
-    helpComponent
+    helpComponent,
+    bodyClassName,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -87,7 +88,7 @@ function ScreenContainer(
       <div>
         {toastContext.getInlineBanner()}
         {getPageDescription()}
-        <div className="mt-2">
+        <div className={bodyClassName}>
           {children}
         </div>
       </div>
@@ -146,6 +147,7 @@ function ScreenContainer(
           <TitleBar
             titleIcon={breadcrumb?.icon}
             title={breadcrumb?.title}
+            isBeta={breadcrumb?.isBeta === true}
             isLoading={isLoading}
             titleActionBar={titleActionBar}
             helpComponent={helpComponent}
@@ -174,7 +176,12 @@ ScreenContainer.propTypes = {
   titleActionBar: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
-  helpComponent: PropTypes.object
+  helpComponent: PropTypes.object,
+  bodyClassName: PropTypes.string,
+};
+
+ScreenContainer.defaultProps = {
+  bodyClassName: "mt-2",
 };
 
 export default ScreenContainer;

@@ -21,6 +21,8 @@ import EBSKeyPairInput from "./inputs/EBSKeyPairInput";
 import EbsSolutionStackInput from "./inputs/EbsSolutionStackInput";
 import EbsCustomDockerComposeToggleInput from "./inputs/EbsCustomDockerComposeToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+import EbsEnvironmentVariablesInput from "./inputs/EbsEnvironmentVariablesInput";
+
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
@@ -206,6 +208,10 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
           setDataObject={setEBSStepConfigurationDataDto}
           dataObject={ebsStepConfigurationDto}
           fieldName={"delayTime"}
+      />
+      <EbsEnvironmentVariablesInput 
+        setModel={setEBSStepConfigurationDataDto}
+        model={ebsStepConfigurationDto}
       />
     </PipelineStepEditorPanelContainer>
   );

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import VaultInfoText from "components/common/inputs/info_text/vault/VaultInfoText";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled, inputHelpOverlay, infoOverlay}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -35,6 +36,7 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled, inp
         model={dataObject}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <textarea
         style={{WebkitTextSecurity: 'disc'}}

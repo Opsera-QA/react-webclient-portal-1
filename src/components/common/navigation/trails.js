@@ -4,8 +4,8 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faRss, faCodeBranch, faUserChart, faRadar, faServer, faHandshake, faFileCode, faFileArchive,
-  faTasks, faUserHardHat, faCircle, faQuestion, faBook
+  faHexagon, faListAlt, faRss, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
+  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -17,6 +17,7 @@ const breadcrumbs = {
     linkText: "Frequently Asked Questions",
     title: "Frequently Asked Questions",
     icon: faQuestion,
+    isBeta: true,
   },
   helpDocumentation: {
     parent: undefined,
@@ -25,6 +26,7 @@ const breadcrumbs = {
     linkText: "Help Documentation",
     title: "Help Documentation",
     icon: faBook,
+    isBeta: true,
   },
 
   // Inventory
@@ -202,6 +204,7 @@ const breadcrumbs = {
     linkText: "Pipeline Storage Record Details",
     icon: faFileArchive
   },
+
 
   toolManagement: {
     parent: "admin",
@@ -577,6 +580,15 @@ const breadcrumbs = {
     linkText: "Dashboard Details",
     icon: faChartNetwork
   },
+  lookup: {
+    parent: "insights",
+    name: "lookup",
+    path: paths.lookup,
+    title: "Salesforce Lookup",
+    linkText: "Salesforce Lookup",
+    icon: faMagnifyingGlass,
+    isBeta: true,
+  },
   marketplace: {
     parent: "insights",
     name: "marketplace",
@@ -599,7 +611,7 @@ const breadcrumbs = {
     path: paths.insightsSummary,
     title: "Synopsis",
     linkText: "Synopsis",
-    icon: faRadar
+    icon: faRadar,
   },
   insightsConnectedAssets: {
       parent: "insights",
@@ -607,9 +619,17 @@ const breadcrumbs = {
       path: paths.insightsConnectedAssets,
       title: "Connected Assets",
       linkText: "Connected Assets",
-      icon: faLink
+      icon: faLink,
+      isBeta: true
     },
-  //Reports
+  insightsGitCustodian: {
+    parent: "insights",
+    name: "gitCustodian",
+    path: paths.insightsConnectedAssets,
+    title: "Git Custodian",
+    linkText: "Git Custodian",
+    icon: faShieldKeyhole
+  },
   reports: {
     parent: undefined,
     name: "reports",
@@ -647,9 +667,10 @@ const breadcrumbs = {
     parent: "toolReports",
     name: "toolsUsedInPipelineReport",
     path: paths.toolsUsedInPipelineReport,
-    title: "Tools Used In Pipelines",
-    linkText: "Tools Used In Pipelines",
-    icon: faDraftingCompass
+    title: "Pipelines by Tool",
+    linkText: "Pipelines by Tool",
+    icon: faAnalytics,
+    pageDescription: "View Pipelines based on the selected Tools.",
   },
   toolCountsReport: {
     parent: "toolReports",
@@ -657,7 +678,8 @@ const breadcrumbs = {
     path: paths.toolCountsReport,
     title: "Tool Counts",
     linkText: "Tool Counts",
-    icon: faTally
+    icon: faTally,
+    pageDescription: "View tool usage counts.",
   },
   detailedToolReport: {
     parent: "toolReports",
@@ -680,25 +702,28 @@ const breadcrumbs = {
     parent: "tagReports",
     name: "tagsUsedInPipelineReport",
     path: paths.tagsUsedInPipelineReport,
-    title: "Tags Used In Pipelines",
-    linkText: "Tags Used In Pipelines",
-    icon: faTags
+    title: "Pipelines by Tags",
+    linkText: "Pipelines by Tags",
+    icon: faDraftingCompass,
+    pageDescription: "View Pipelines based on the selected Tags.",
   },
   tagsUsedInToolsReport: {
     parent: "tagReports",
     name: "tagsUsedInToolsReport",
     path: paths.tagsUsedInToolsReport,
-    title: "Tags Used In Tools",
-    linkText: "Tags Used In Tools",
-    icon: faTools
+    title: "Tools by Tags",
+    linkText: "Tools by Tags",
+    icon: faTools,
+    pageDescription: "View Tools based on the selected Tags.",
   },
   tagsUsedInDashboardsReport: {
     parent: "tagReports",
     name: "tagsUsedInDashboardsReport",
     path: paths.tagsUsedInDashboardsReport,
-    title: "Tags Used In Dashboards",
-    linkText: "Tags Used In Dashboards",
-    icon: faTags
+    title: "Dashboards by Tags",
+    linkText: "Dashboards by Tags",
+    icon: faChartNetwork,
+    pageDescription: "View Dashboards based on the selected Tags.",
   },
 
   userReports: {
@@ -715,31 +740,35 @@ const breadcrumbs = {
     path: paths.groupMembershipReport,
     title: "Group Membership",
     linkText: "Group Membership",
-    icon: faUsers
+    icon: faUsers,
+    pageDescription: "View the Group Membership of a selected User."
   },
   pipelineOwnershipReport: {
     parent: "userReports",
     name: "pipelineOwnershipReport",
     path: paths.pipelineOwnershipReport,
-    title: "Pipeline Ownership",
-    linkText: "Pipeline Ownership",
-    icon: faDraftingCompass
+    title: "Pipelines by Owner",
+    linkText: "Pipelines by Owner",
+    icon: faDraftingCompass,
+    pageDescription: "Find all Pipelines owned by the selected User."
   },
   toolOwnershipReport: {
     parent: "userReports",
     name: "toolOwnershipReport",
     path: paths.toolOwnershipReport,
-    title: "Tool Ownership",
-    linkText: "Tool Ownership",
-    icon: faTools
+    title: "Tools by Owner",
+    linkText: "Tools by Owner",
+    icon: faTools,
+    pageDescription: "Find all Tools owned by the selected user."
   },
   taskOwnershipReport: {
     parent: "userReports",
     name: "taskOwnershipReport",
     path: paths.taskOwnershipReport,
-    title: "Task Ownership",
-    linkText: "Task Ownership",
-    icon: faTasks
+    title: "Tasks by Owner",
+    linkText: "Tasks by Owner",
+    icon: faTasks,
+    pageDescription: "Find all Tasks owned by the selected user."
   },
   consolidatedUserReport: {
     parent: "userReports",
@@ -747,7 +776,8 @@ const breadcrumbs = {
     path: paths.consolidatedUserReport,
     title: "User Report",
     linkText: "User Report",
-    icon: faUser
+    icon: faUser,
+    pageDescription: "View the consolidated report for selected user."
   },
 
   pipelineReports: {

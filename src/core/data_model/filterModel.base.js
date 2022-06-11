@@ -1,3 +1,5 @@
+import { hasStringValue } from "components/common/helpers/string-helpers";
+
 export class FilterModelBase {
   constructor(metaData) {
     this.metaData = {...metaData};
@@ -19,7 +21,7 @@ export class FilterModelBase {
 
   getTotalCount = () => {
     return this.data?.totalCount;
-  }
+  };
 
   setTotalCount = (newValue) => {
    this.setData("totalCount", newValue);
@@ -27,7 +29,7 @@ export class FilterModelBase {
 
   getPageSize = () => {
     return this.getFilterValue("pageSize");
-  }
+  };
 
   getPageCount = () => {
     return Math.ceil(this.getTotalCount() / this.getPageSize());
@@ -119,6 +121,17 @@ export class FilterModelBase {
     return filter != null && filter["text"] != null ? filter["text"] : filter;
   };
 
+  unpackQueryParameterObject = (history) => {
+    throw "This is an unsupported action!";
+  };
+
+  storeFiltersInStorage = () => {
+    const filterObject = {...this.getPersistData()};
+    if (hasStringValue(this.filterObjectId) === true) {
+      sessionStorage.setItem(this.filterObjectId, filterObject);
+    }
+  };
+
   getMaxLength = (field) => {
     return this.metaData[field].maxLength;
   };
@@ -137,7 +150,7 @@ export class FilterModelBase {
 
   getType = () => {
     return this.metaData?.type;
-  }
+  };
 
   getFieldById = (id) => {
     return this.metaData?.fields.find(field => {return field.id === id; });

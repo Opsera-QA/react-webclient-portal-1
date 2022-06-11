@@ -3,6 +3,8 @@
 
 //IF this returns false it will flag a pipelien step as "Warning, missing configration"
 
+import {toolIdentifierConstants} from "../../../../../../admin/tools/identifiers/toolIdentifier.constants";
+
 const StepValidationHelper = {};
 
 
@@ -33,6 +35,10 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
         return configuration.jfrogToolConfigId && configuration.type && 
           configuration.repositoryName && configuration.repositoryFormat  && 
           configuration.artifactStepId ? true : false;
+
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return configuration.toolConfigId && configuration.qualityGateIds &&
+        configuration.sfdxScanToolId && configuration.stepIdXML ? true : false;
 
       default:
         return true;

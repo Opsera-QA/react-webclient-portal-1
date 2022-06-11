@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 
 function BitbucketRepositorySelectInput(
   {
@@ -18,12 +19,12 @@ function BitbucketRepositorySelectInput(
     clearDataFunction,
     workspace,
     repositoryId,
+    multi
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Bitbucket Branch");
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -36,8 +37,7 @@ function BitbucketRepositorySelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setBitbucketBranches([]);
-    setErrorMessage("");
-    setPlaceholderText("Select Bitbucket Branch");
+    setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -56,11 +56,13 @@ function BitbucketRepositorySelectInput(
       setIsLoading(true);
       await loadBitbucketBranches(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Branches Available!");
-      setErrorMessage("There was an error pulling Bitbucket Branches");
-      console.error(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -69,10 +71,29 @@ function BitbucketRepositorySelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Bitbucket Branch");
       setBitbucketBranches([...branches]);
     }
   };
+
+  if (multi) {
+    return (
+        <MultiSelectInputBase
+            fieldName={fieldName}
+            dataObject={model}
+            setDataObject={setModel}
+            selectOptions={bitbucketBranches}
+            busy={isLoading}
+            setDataFunction={setDataFunction}
+            clearDataFunction={clearDataFunction}
+            valueField={"name"}
+            textField={"name"}
+            disabled={disabled}
+            error={error}
+            pluralTopic={"Bitbucket Branches"}
+            singularTopic={"Bitbucket Branch"}
+        />
+    );
+  }
 
   return (
     <SelectInputBase
@@ -86,8 +107,9 @@ function BitbucketRepositorySelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
-      errorMessage={errorMessage}
+      error={error}
+      pluralTopic={"Bitbucket Branches"}
+      singularTopic={"Bitbucket Branch"}
     />
   );
 }
@@ -97,11 +119,15 @@ BitbucketRepositorySelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   workspace: PropTypes.string,
   repositoryId: PropTypes.string,
+  multi: PropTypes.bool
 };
 
 export default BitbucketRepositorySelectInput;

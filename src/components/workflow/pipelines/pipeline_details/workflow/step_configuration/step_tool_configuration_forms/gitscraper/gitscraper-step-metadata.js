@@ -1,5 +1,5 @@
 const GitScraperStepFormMetadata = {
-  type: "GitScraper Step Configuration",
+  type: "Git Custodian Step Configuration",
   fields: [
     {
       label: "Source Code Management Tool Type",
@@ -86,7 +86,7 @@ const GitScraperStepFormMetadata = {
     gitUrl: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
-    type: "",
+    type: "git_custodian",
     commits: "",
     threshold: 0,
     excludeSecrets: [],

@@ -64,7 +64,11 @@ function PipelineSummaryField({ model, fieldName, pipelineId }) {
 
   const getPipelineCards = () => {
     if (pipeline) {
-      return (<PipelineSummaryCard pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)} />);
+      return (
+        <PipelineSummaryCard
+          pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
+        />
+      );
     }
   };
 

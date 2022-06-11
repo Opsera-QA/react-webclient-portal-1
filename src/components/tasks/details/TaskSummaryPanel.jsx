@@ -17,7 +17,11 @@ import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionBu
 import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
 import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
-import {TASK_TYPES} from "components/tasks/task.types";
+import TaskOrchestrationNotificationInlineInput
+  from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
+import { TASK_TYPES } from "components/tasks/task.types";
+import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
+import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -47,6 +51,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
 
   const actionAllowed = (action) => {
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
+  };
+
+  const updateRunCount = async () => {
+    let newDataObject = gitTasksData;
+    const currRunCount = gitTasksData?.getData("run_count") ? gitTasksData?.getData("run_count") : 0;
+    newDataObject.setData("run_count", currRunCount + 1);
+    newDataObject.setData("status", "running");
+    setGitTasksData(newDataObject);
   };
 
   const getDynamicField = () => {
@@ -79,6 +91,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
             status={gitTasksData?.getData("status")}
           />
         );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperActionButton
+            gitTasksData={gitTasksData}
+            status={gitTasksData?.getData("status")}
+            runCountUpdate={updateRunCount}
+          />
+        );
       default:
         return (
           <RunTaskButton
@@ -91,6 +111,34 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         );
     }
   };
+
+  const getSchedulerField = () => {
+    if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) === true) {
+      return (
+        <Col md={6}>
+          <TaskSchedulerField
+            taskModel={gitTasksData}
+            canEditTaskSchedule={actionAllowed("run_task")}
+          />
+        </Col>
+      );
+    }
+  };
+
+  const getNotificationsInput = () => {
+    if ([TASK_TYPES.AWS_CREATE_ECS_SERVICE, TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION].includes(gitTasksData?.getData("type")) === false) {
+      return (
+        <Col md={6}>
+          <TaskOrchestrationNotificationInlineInput
+            model={gitTasksData}
+            fieldName={"notifications"}
+            loadDataFunction={loadData}
+          />
+        </Col>
+      );
+    }
+  };
+
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
@@ -113,6 +161,8 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
+        {getNotificationsInput()}
+        {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
           <TagsInlineInputBase

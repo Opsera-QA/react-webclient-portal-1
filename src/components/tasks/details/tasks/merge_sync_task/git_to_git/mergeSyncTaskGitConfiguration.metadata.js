@@ -28,11 +28,6 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
-      label: "Repository",
-      id: "repositoryName",
-      maxLength: 255,
-    },
-    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
@@ -80,7 +75,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     service: "",
     workspace: "",
     repository: "",
-    repositoryName: "",
+    repoId: "",
     targetBranch: "",
     sourceBranch: "",
     upstreamBranch: "",

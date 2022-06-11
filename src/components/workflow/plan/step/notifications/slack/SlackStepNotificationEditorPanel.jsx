@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
-import PipelineStepNotificationLevelSelectInput from "components/workflow/plan/step/notifications/PipelineStepNotificationLevelSelectInput";
+import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import SlackStepNotificationToolInput
   from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -31,7 +31,7 @@ function SlackStepNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"Slack"}/>
       </Col>
       <Col xs={12}>
-        <PipelineStepNotificationLevelSelectInput
+        <OrchestrationNotificationLevelSelectInput
           model={slackNotificationModel}
           setModel={setSlackNotificationModel}
         />

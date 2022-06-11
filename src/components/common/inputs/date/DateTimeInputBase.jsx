@@ -31,8 +31,9 @@ function DateTimeInputBase(
   Moment.locale("en");
 
   useEffect(() => {
-    if (hasStringValue(dataObject.getData(fieldName)) === true) {
-      setErrorMessage(dataObject.getFieldError(fieldName));
+    setErrorMessage("");
+    if (dataObject && (dataObject?.isNew() !== true || dataObject?.isChanged(fieldName) === true)) {
+      setErrorMessage(dataObject?.getFieldError(fieldName));
     }
   }, [dataObject]);
 
@@ -55,7 +56,7 @@ function DateTimeInputBase(
 
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
-      validateAndSetData(fieldName, dataObject?.getDefaultValue(fieldName));
+      validateAndSetData(dataObject?.getDefaultValue(fieldName));
     }
     else if (clearDataFunction) {
       clearDataFunction();
@@ -65,6 +66,7 @@ function DateTimeInputBase(
   const getClearDataFunction = () => {
     if (
       dataObject?.getData(fieldName) != null
+      && field?.isRequired !== true
       && disabled !== true
       && showClearValueButton !== false
     ) {
@@ -84,6 +86,7 @@ function DateTimeInputBase(
         clearDataFunction={getClearDataFunction()}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <StandaloneDatePickerInput
         minDate={minDate}
@@ -94,6 +97,7 @@ function DateTimeInputBase(
         value={hasDateValue(dataObject?.getData(fieldName)) === true ? new Date(dataObject?.getData(fieldName)) : null}
         setDataFunction={validateAndSetData}
         defaultToNull={defaultToNull}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <InfoText
         model={dataObject}

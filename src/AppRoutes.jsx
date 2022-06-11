@@ -69,9 +69,11 @@ import SiteNotificationDetailView
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
+import Lookup from "./components/insights/lookup/Lookup";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
+import GitCustodian from "./components/insights/gitCustodian/GitCustodian";
 import ConnectedAssets from "./components/insights/connectedAssets/ConnectedAssets";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
@@ -179,7 +181,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       <div className={"d-flex flex-row"}>
         <Sidebar userData={userData} hideSideBar={hideSideBar} />
 
-        <div className={"w-100"} style={{ marginBottom: "26px"}}>
+        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />
@@ -248,14 +250,15 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights" exact component={Insights} />
           <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
           <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
+          <SecureRoute path="/insights/lookup" exact component={Lookup} />
           <SecureRoute path="/insights/release360" exact component={Release360} />
           <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
           <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
+          <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
 
           {/*Insights Reports*/}
           <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType" component={SonarPipelineScanReport} />
           <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity" component={CoverityScanReport} />
-
 
 
           <SecureRoute path="/task" exact component={TaskManagement} />

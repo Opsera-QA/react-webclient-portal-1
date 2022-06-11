@@ -54,9 +54,13 @@ function AzureDevOpsRepositorySelectInput(
       setIsLoading(true);
       await loadAzureRepositories(cancelSource);
     } catch (error) {
-      setError(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 

@@ -145,6 +145,7 @@ function SelectInputBase(
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
         inputHelpOverlay={inputHelpOverlay}
+        hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
       />
       <StandaloneSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}

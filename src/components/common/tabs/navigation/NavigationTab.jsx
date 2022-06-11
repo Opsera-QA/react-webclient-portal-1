@@ -3,13 +3,26 @@ import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted} from "components/common/tooltip/popover-text";
 import IconBase from "components/common/icons/IconBase";
+import BetaBadge from "components/common/badges/TooltipBadgeBase";
 
-function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, toolTipText}) {
+function NavigationTab(
+  {
+    activeTab,
+    tabName,
+    tabText,
+    handleTabClick,
+    icon,
+    visible,
+    disabled,
+    toolTipText,
+    isBeta,
+  }) {
   const getTab = () => {
     return (
       <li className="mr-1">
         <a className={"nav-link " + (activeTab === tabName ? "active" : "")} onClick={handleTabClick(tabName)} href="#">
           {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
+          <BetaBadge isBeta={isBeta} />
         </a>
       </li>
     );
@@ -23,7 +36,7 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
     }
   };
 
-  if (!visible) {
+  if (visible === false) {
     return null;
   }
 
@@ -58,11 +71,8 @@ NavigationTab.propTypes = {
   icon: PropTypes.object,
   visible: PropTypes.bool,
   disabled: PropTypes.bool,
-  toolTipText: PropTypes.string
-};
-
-NavigationTab.defaultProps = {
-  visible: true
+  toolTipText: PropTypes.string,
+  isBeta: PropTypes.bool,
 };
 
 export default NavigationTab;

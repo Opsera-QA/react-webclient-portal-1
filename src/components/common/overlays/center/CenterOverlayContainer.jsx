@@ -12,6 +12,11 @@ export const CENTER_OVERLAY_SIZES = {
   SMALL: "small",
 };
 
+const CENTER_OVERLAY_PANEL_HEIGHTS = {
+  CONTAINER: "calc(100% - 20px)",
+  BODY: "calc(100% - 48px)",
+};
+
 function CenterOverlayContainer(
   {
     children,

@@ -1,22 +1,28 @@
 import React, {useState, useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PipelineScheduledTaskEditorPanel from "components/workflow/pipelines/scheduler/PipelineScheduledTaskEditorPanel";
+import ScheduledTaskEditorPanel from "components/common/fields/scheduler/ScheduledTaskEditorPanel";
 import axios from "axios";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import PipelineScheduledTaskTable from "components/workflow/pipelines/scheduler/PipelineScheduledTaskTable";
+import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
+import ScheduledTasksTable from "components/common/fields/scheduler/ScheduledTasksTable";
 import {AuthContext} from "contexts/AuthContext";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import modelHelpers from "components/common/model/modelHelpers";
+import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
 
-// TODO: Only pass pipeline ID.
-function PipelineScheduledTasksOverlay({ pipelineId }) {
+function PipelineScheduledTasksOverlay(
+  {
+    pipelineId,
+    loadDataFunction,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [scheduledTasksList, setScheduledTasksList] = useState([]);
-  const [scheduledTaskData, setScheduledTaskData] = useState(undefined);
+  const [scheduledTasks, setScheduledTasks] = useState([]);
+  const [scheduledTaskModel, setScheduledTaskModel] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -27,12 +33,15 @@ function PipelineScheduledTasksOverlay({ pipelineId }) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setScheduledTasks([]);
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isMongoDbId(pipelineId) === true) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -57,45 +66,55 @@ function PipelineScheduledTasksOverlay({ pipelineId }) {
   };
 
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipelineId);
+    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, pipelineId);
     const newScheduledTasksList = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(newScheduledTasksList) && newScheduledTasksList.length > 0) {
-      setScheduledTasksList([...newScheduledTasksList]);
+    if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
+      setScheduledTasks([...newScheduledTasksList]);
     }
   };
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+
+    if (loadDataFunction) {
+      loadDataFunction();
+    }
   };
 
   const closeEditorPanel = async () => {
-    if (isMounted?.current === true ) {
-      setScheduledTaskData(null);
+    if (isMounted?.current === true) {
+      setScheduledTaskModel(null);
+      await loadData();
     }
-   await loadData();
+  };
+
+  const createScheduledTaskFunction = () => {
+    const newModel = modelHelpers.parseObjectIntoModel(undefined, scheduledTaskMetadata);
+    newModel.setData("task", { taskType: "pipeline-run", pipelineId: pipelineId });
+    setScheduledTaskModel({ ...newModel });
   };
 
   const getBody = () => {
-    if (scheduledTaskData) {
+    if (scheduledTaskModel) {
       return (
-        <PipelineScheduledTaskEditorPanel
+        <ScheduledTaskEditorPanel
           handleClose={closeEditorPanel}
-          scheduledTaskData={scheduledTaskData}
-          taskList={scheduledTasksList}
+          scheduledTaskData={scheduledTaskModel}
+          taskList={scheduledTasks}
         />
       );
     }
 
     return (
-      <PipelineScheduledTaskTable
+      <ScheduledTasksTable
         isLoading={isLoading}
-        setScheduledTaskData={setScheduledTaskData}
-        data={scheduledTasksList}
-        loadData={loadData}
+        scheduledTasks={scheduledTasks}
+        loadDataFunction={loadData}
+        setScheduledTaskModel={setScheduledTaskModel}
         isMounted={isMounted}
-        pipelineId={pipelineId}
+        createScheduledTaskFunction={createScheduledTaskFunction}
       />
     );
   };
@@ -106,7 +125,7 @@ function PipelineScheduledTasksOverlay({ pipelineId }) {
       closePanel={closePanel}
       titleIcon={faCalendarAlt}
       showPanel={true}
-      showCloseButton={scheduledTaskData == null}
+      showCloseButton={scheduledTaskModel == null}
     >
       {getBody()}
     </CenterOverlayContainer>
@@ -115,6 +134,7 @@ function PipelineScheduledTasksOverlay({ pipelineId }) {
 
 PipelineScheduledTasksOverlay.propTypes = {
   pipelineId: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };
 
 export default PipelineScheduledTasksOverlay;

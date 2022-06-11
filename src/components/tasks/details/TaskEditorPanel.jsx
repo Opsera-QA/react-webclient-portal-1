@@ -11,27 +11,32 @@ import TaskConfigurationPanel
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import axios from "axios";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
 import AwsEcsServiceCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
-import SfdcOrgSyncTaskHelpDocumentation
-  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
 import AzureAksClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 import TasksTaskTypeSelectInput from "components/tasks/details/TasksTaskTypeSelectInput";
 import AwsLambdaFunctionCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
-import GitToGitSyncTaskHelpDocumentation
-  from "components/common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
+import SfdcOrgSyncTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
+import GitToGitSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
 import SalesforceBulkMigrationHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
-import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import GitToGitMergeSyncTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
+import SalesforceToGitMergeSyncTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
+import vaultActions from "components/vault/vault.actions";
+import TaskModel from "components/tasks/task.model";
 
 function TaskEditorPanel({ taskData, handleClose }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
+  const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const [taskModel, setTaskModel] = useState(undefined);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -67,12 +72,39 @@ function TaskEditorPanel({ taskData, handleClose }) {
   const createGitTask = async () => {
     const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
     taskModel.setData("configuration", configuration);
-    return await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    const newTaskResponse = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    const taskId = newTaskResponse?.data?._id;
+
+    if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && configuration?.iValidatorScan && typeof configuration?.validationToken === "string") {
+      const keyName = `${taskId}-${taskModel?.getData("type")}-validationToken`;
+      const response = await vaultActions.saveRecordToVault (
+        getAccessToken,
+        cancelTokenSource,
+        keyName,
+        configuration?.validationToken
+      );
+      configuration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+      taskModel.setData("_id", taskId);
+      taskModel.setData("configuration", configuration);
+
+      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+    }
+    return newTaskResponse;
   };
 
   const updateGitTask = async () => {
-    const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
-    taskModel.setData("configuration", configuration);
+    const newConfiguration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
+    if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && newConfiguration?.iValidatorScan && typeof newConfiguration?.validationToken === "string") {
+      const keyName = `${taskModel?.getData("_id")}-${taskModel?.getData("type")}-validationToken`;
+      const response = await vaultActions.saveRecordToVault (
+        getAccessToken,
+        cancelTokenSource,
+        keyName,
+        newConfiguration?.validationToken
+      );
+      newConfiguration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+    }
+    taskModel.setData("configuration", newConfiguration);
     return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
@@ -82,23 +114,29 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
         return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
         return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_GIT_BRANCHES:
-        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return <GitToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GITSCRAPER:
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         break;
-      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+        break;
+      case TASK_TYPES.SNAPLOGIC_TASK:
         break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
@@ -106,19 +144,14 @@ function TaskEditorPanel({ taskData, handleClose }) {
   };
 
   const getDynamicFields = () => {
-    if (taskModel?.isNew() && isSassUser() === false) {
+    if (taskModel?.isNew() && !isSassUser()) {
       return (
-        <Col lg={12} className={"mb-4"}>
-          <RoleAccessInput
-            dataObject={taskModel}
-            setDataObject={setTaskModel}
-            fieldName={"roles"}
-          />
+        <Col lg={12} className="mb-4">
+          <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
         </Col>
       );
     }
   };
-
 
   const getBody = () => {
     return (
@@ -137,6 +170,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
           {/* <Col lg={6}>
           <ActivityToggleInput dataObject={taskModel} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
+
           <Col lg={12}>
             <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
                            fieldName={"description"}/>

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 
-const ReactMarkdownWrapper = ({markdownFile, className}) => {
+const ReactMarkdownWrapper = ({markdownFile}) => {
   const [postMarkdown, setPostMarkdown] = useState('');
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const ReactMarkdownWrapper = ({markdownFile, className}) => {
   }, []);
 
   return (
-    <div className={className}>
+    <div className={"m-4"}>
       <ReactMarkdown
         rehypePlugins={[rehypeRaw, rehypeSanitize]}
         components={{
@@ -27,9 +27,9 @@ const ReactMarkdownWrapper = ({markdownFile, className}) => {
           // eslint-disable-next-line react/prop-types,react/display-name
           h4: ({node, ...props}) => <div style={{fontSize: "24px", color: "#3D3B36" }} {...props} />,
           // eslint-disable-next-line react/prop-types,react/display-name
-          h5: ({node, ...props}) => <div style={{fontSize: "20px", color: "#3D3B36" }} {...props} />,
+          h5: ({node, ...props}) => <div style={{fontSize: "20px", color: "#3D3B36", display: "inline"}} {...props} />,
           // eslint-disable-next-line react/prop-types,react/display-name
-          p: ({node, ...props}) => <div style={{color: "#6c757d", marginLeft: "13px", marginBottom: "10px"}} {...props} />,
+          p: ({node, ...props}) => <div style={{color: "#6c757d"}} {...props} />,
           // eslint-disable-next-line react/prop-types,react/display-name
         }}
       >

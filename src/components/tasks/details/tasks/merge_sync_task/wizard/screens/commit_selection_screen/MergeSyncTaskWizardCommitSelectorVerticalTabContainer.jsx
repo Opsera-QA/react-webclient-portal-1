@@ -12,6 +12,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -54,14 +56,25 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     }
   };
 
+  const getShortenedName = (diffFile) => {
+    const fileName = diffFile?.committedFile;
+
+    if (hasStringValue(fileName)) {
+      const lastIndexOf = fileName.lastIndexOf('/');
+      return fileName.substring(lastIndexOf + 1);
+    }
+  };
+
   const getCommitFileTab = (diffFile, index) => {
     return (
       <VanitySetVerticalTab
         key={index}
-        tabText={diffFile?.committedFile}
+        tabText={getShortenedName(diffFile)}
         tabName={`${index}`}
         handleTabClick={handleTabClick}
+        tooltipText={diffFile?.committedFile}
         activeTab={activeTab}
+        className={"small-label-text"}
       />
     );
   };
@@ -94,6 +107,7 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
+          customMessage={"Pulling Files and calculating selection options to handle Diff Comparison. Please Note: this may take some time."}
         />
       );
     }
@@ -123,17 +137,22 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   }
 
   return (
-    <VanitySetTabAndViewContainer
-      icon={faBracketsCurly}
-      title={`Merge Change Selection`}
-      verticalTabContainer={getVerticalTabContainer()}
-      bodyClassName={"mx-0"}
-      currentView={getCurrentView()}
-      isLoading={isLoading}
-      loadDataFunction={loadDataFunction}
-      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-    />
+    <>
+      {/*<InlineWarning*/}
+      {/*  warningMessage={"Please Note: The line numbers shown do not correspond to the lines in the actual file."}*/}
+      {/*/>*/}
+      <VanitySetTabAndViewContainer
+        icon={faBracketsCurly}
+        title={`Merge Change Selection`}
+        verticalTabContainer={getVerticalTabContainer()}
+        bodyClassName={"mx-0"}
+        currentView={getCurrentView()}
+        isLoading={isLoading}
+        loadDataFunction={loadDataFunction}
+        minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+        maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+      />
+    </>
   );
 };
 

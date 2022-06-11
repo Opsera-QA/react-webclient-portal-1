@@ -5,8 +5,11 @@ import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
 import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
+import ApigeeLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeLogSummaryReportPanel";
 import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
+import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
+import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -31,8 +34,16 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         return (
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
+      case "apigee":
+        return (
+          <ApigeeLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
       case "jenkins":
         return getJenkinsReport();
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+            <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
     }

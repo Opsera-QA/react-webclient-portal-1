@@ -30,6 +30,10 @@ import SalesforceBulkMigrationTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SalesforceBulkMigrationTaskDetailsHelpDocumentation";
 import SfdcOrgSyncTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SfdcOrgSyncTaskDetailsHelpDocumentation";
+import GitToGitMergeSyncTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/GitToGitMergeSyncTaskDetailsHelpDocumentation";
+import SalesforceToGitMergeSyncTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/SalesforceToGitMergeSyncTaskDetailsHelpDocumentation";
 
 function TaskDetailView() {
   const location = useLocation();
@@ -136,10 +140,14 @@ function TaskDetailView() {
         return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return <GitToGitMergeSyncTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
         return <SalesforceBulkMigrationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
         return <SfdcOrgSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return <SalesforceToGitMergeSyncTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       default:

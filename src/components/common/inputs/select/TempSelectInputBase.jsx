@@ -96,7 +96,11 @@ function TempSelectInputBase(
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} model={dataObject} />
+      <InputLabel
+        showLabel={showLabel}
+        field={field} clearDataFunction={getClearDataFunction()}
+        model={dataObject}
+      />
       <div className={"w-100"} id="select-input" ref={el => (containerRef.current = el)} />
       <InfoText
         field={field}

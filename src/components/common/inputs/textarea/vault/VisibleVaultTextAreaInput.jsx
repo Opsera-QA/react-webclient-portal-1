@@ -151,6 +151,7 @@ function VisibleVaultTextAreaInput(
         model={model}
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
+        hasError={hasStringValue(errorMessage) === true}
       />
       <div className={"d-flex"}>
         <textarea

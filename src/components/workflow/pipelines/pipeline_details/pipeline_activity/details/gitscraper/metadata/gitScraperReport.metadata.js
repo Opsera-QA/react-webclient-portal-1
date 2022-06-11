@@ -29,6 +29,22 @@ const gitScraperReportMetaData = {
       label: "Reason",
       id: "reason"
     },
+    {
+      label: "Scanned On",
+      id: "scannedOn"
+    },
+    {
+      label: "Branch",
+      id: "branch"
+    },
+    {
+      label: "Repository",
+      id: "repository"
+    },
+    {
+      label: "Tool",
+      id: "gitToolId"
+    },
   ],
   newObjectFields: {
     author: "",
@@ -36,7 +52,11 @@ const gitScraperReportMetaData = {
     commitHash: "",
     path: "",
     lineNumber: "",
-    reason: ""
+    reason: "",
+    scannedOn: "",
+    branch: "",
+    repository: "",
+    gitToolId: ""
   }
 };
 

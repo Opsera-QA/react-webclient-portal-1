@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
 
 function InlineDashboardTypeFilter({ filterModel, setFilterModel, fieldName, className, loadData, isLoading }) {
-  const validateAndSetData = (fieldName, value) => {
+  const validateAndSetData = (fieldName, selectedOption) => {
     let newDataObject = filterModel;
-    newDataObject.setData(fieldName, value);
+    newDataObject.setData(fieldName, selectedOption?.value);
     loadData(newDataObject);
   };
 

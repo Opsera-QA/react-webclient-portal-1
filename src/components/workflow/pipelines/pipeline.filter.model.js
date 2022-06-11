@@ -75,7 +75,7 @@ export class PipelineFilterModel extends FilterModelBase {
 
   canSort = () => {
     return true;
-  }
+  };
 
   getActiveFilters = () => {
     let activeFilters = [];

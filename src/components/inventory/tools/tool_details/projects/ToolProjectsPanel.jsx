@@ -4,7 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import MessageField from "components/common/fields/text/MessageField";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import JiraToolProjectsPanel from "components/inventory/tools/tool_details/tool_jobs/jira/projects/JiraToolProjectsPanel";
-import ArgoProject from "../tool_jobs/argo/projects/ArgoProject";
+import ArgoToolProjectsPanel from "../tool_jobs/argo/projects/ArgoToolProjectsPanel";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolProjectsPanel({ toolData, loadData, isLoading }) {
@@ -19,7 +19,7 @@ function ToolProjectsPanel({ toolData, loadData, isLoading }) {
         />
       );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return <ArgoProject isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
+      return <ArgoToolProjectsPanel isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
     default:
       return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }

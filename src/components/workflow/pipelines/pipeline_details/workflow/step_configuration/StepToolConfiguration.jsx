@@ -85,6 +85,11 @@ import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scr
 import axios from "axios";
 import GitScraperStepFormConfiguration
   from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
+import SalesforceScanStepConfiguration
+  from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
+import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
+import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
+import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1246,6 +1251,58 @@ function StepToolConfiguration({
             callbackSaveToVault={saveToVault}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+            <SalesforceScanStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                callbackSaveToVault={saveToVault}
+                createJob={createJob}
+                setToast={setToast}
+                setShowToast={setShowToast}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
+        return (
+            <GitOperationStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                callbackSaveToVault={saveToVault}
+                createJob={createJob}
+                setToast={setToast}
+                setShowToast={setShowToast}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <ApigeeStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return (
+          <SnaplogicStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
         );

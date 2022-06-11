@@ -4,7 +4,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
-function TextFieldBase({dataObject, fieldName, className, showClipboardButton }) {
+function TextFieldBase({dataObject, fieldName, className, showClipboardButton, visible }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const getClipboardButton = () => {
@@ -13,7 +13,7 @@ function TextFieldBase({dataObject, fieldName, className, showClipboardButton })
     }
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -32,7 +32,8 @@ TextFieldBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   className: PropTypes.string,
-  showClipboardButton: PropTypes.bool
+  showClipboardButton: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 export default TextFieldBase;

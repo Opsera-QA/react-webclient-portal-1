@@ -1,7 +1,7 @@
 import React, {Component, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import GitHub from "./source_control/gitHub";
-import GitLab from "./source_control/gitLab";
+// import GitLab from "./source_control/gitLab";
 import Bitbucket from "./source_control/bitbucket";
 import Jira from "./defect_tracking/jira";
 import ServiceNow from "./itsm/serviceNow";
@@ -28,6 +28,7 @@ import CustomTab from "../common/tabs/CustomTab";
 import MicrosoftTeamsApiConnector from "./microsoft_teams/MicrosoftTeamsApiConnector";
 import SlackToolConfiguration from "../inventory/tools/tool_details/tool_jobs/slack/SlackToolConfiguration";
 
+// TODO: This is legacy and should be removed
 function ApiConnector() {
   const [activeTab, setTabSelection] = useState("home");
 
@@ -97,8 +98,8 @@ function ApiConnectorTabView({ activeTab }) {
         );
       case "github":
         return <GitHub />;
-      case "gitlab":
-        return <GitLab />;
+      // case "gitlab":
+        // return <GitLab />;
       case "bitbucket":
         return <Bitbucket />;
       case "jira":

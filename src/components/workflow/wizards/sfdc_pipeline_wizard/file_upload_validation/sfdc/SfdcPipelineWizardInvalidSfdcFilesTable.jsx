@@ -54,7 +54,7 @@ const SfdcPipelineWizardInvalidSfdcFilesTable = ({ pipelineWizardModel}) => {
       await invalidFilePolling(cancelSource, newFilterModel);
     }
     catch (error) {
-      toastContext.showInlineErrorMessage("Error pulling Invalid Sfdc Files. Check logs for more details.");
+      toastContext.showInlineErrorMessage("Error pulling Invalid Salesforce Files. Check logs for more details.");
       console.error(error);
     }
     finally {

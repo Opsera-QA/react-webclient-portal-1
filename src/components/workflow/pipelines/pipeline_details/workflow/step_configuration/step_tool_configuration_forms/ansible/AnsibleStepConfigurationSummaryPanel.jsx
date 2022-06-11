@@ -21,7 +21,7 @@ function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData,
           <ToolNameField model={ansibleDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={ansibleDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={ansibleDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={ansibleDataObject} fieldName={"repoId"}/>

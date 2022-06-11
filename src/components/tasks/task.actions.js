@@ -48,6 +48,15 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelTokenSource, taskId, notificationConfiguration) => {
+  const apiUrl = `/tasks/${taskId}/notifications/update/`;
+  const postBody = {
+    notifications: notificationConfiguration,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObject) => {
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -164,7 +173,6 @@ taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, g
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-// TODO: This should be a get route.
 taskActions.createAksClusterWithTaskIdV2 = async (getAccessToken, cancelTokenSource, taskId) => {
   const apiUrl = `/tools/azure/create/aks`;
   const postBody = {
@@ -221,6 +229,24 @@ taskActions.getTaskAuditLogsByTaskId = async (
     cancelTokenSource,
     apiUrl,
   );
+};
+
+taskActions.startGitscraperScan = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tasks/${taskId}/run`;
+
+  let postBody = {
+    taskId: taskId
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
+  const apiUrl = `/tasks/${gitTasksDataDto.getData("_id")}/stop`;
+
+  let postBody = {
+    taskId: gitTasksDataDto.getData("_id"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default taskActions;

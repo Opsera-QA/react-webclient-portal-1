@@ -18,6 +18,8 @@ import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
 import SalesforceQuickDeployTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
+import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
+import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -117,6 +119,22 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
             />
+        );
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return (
+          <SnaplogicTaskConfigurationEditorPanel
+            taskConfigurationModel={taskConfigurationModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskModel={taskModel}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperConfigurationPanel
+            gitTasksConfigurationData={taskConfigurationModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksDataDto={taskModel}
+          />
         );
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;

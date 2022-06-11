@@ -286,7 +286,7 @@ export class Model {
 
   getChangeMap = () => {
     return this.changeMap;
-  }
+  };
 
   getOriginalValue = (fieldName) => {
     const originalValue = this.changeMap.get(fieldName);
@@ -391,16 +391,16 @@ export class Model {
 
   getType = () => {
     return this.metaData?.type;
-  }
+  };
 
   getActiveField = () => {
     return this.metaData?.activeField;
-  }
+  };
 
   isInactive = () => {
     const activeField = this.metaData?.activeField;
     return activeField && this.getData(activeField) === false;
-  }
+  };
 
   getFieldById = (id) => {
     return this.metaData?.fields.find(field => {return field.id === id; });

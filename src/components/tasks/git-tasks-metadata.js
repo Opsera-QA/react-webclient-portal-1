@@ -81,6 +81,18 @@ const gitTasksMetadata = {
       label: "Access Rules",
       id: "roles",
     },
+    {
+      label: "Jenkins List",
+      id: "jenkinsIds",
+    },
+    {
+      label: "Notification Settings",
+      id: "notifications",
+    },
+    {
+      label: "Schedule",
+      id: "schedule"
+    }
   ],
   newObjectFields: {
     name: "",
@@ -90,6 +102,7 @@ const gitTasksMetadata = {
     active: true,
     configuration: {},
     status: "",
+    notifications: [],
     tags: [],
     roles: [],
     account: "",

@@ -6,6 +6,7 @@ import ErrorDialog from "../common/status_notifications/error";
 import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State 
 import { ApiService } from "../../api/apiService";
 
+// TODO: Remove or rewrite
 class Update extends Component {
   static contextType = AuthContext;  //Import AuthContext values into Component
 
@@ -73,7 +74,7 @@ class Update extends Component {
         });
         console.log(`Error Reported: ${error}`);
       });
-  }
+  };
 
   /* loader = () => {
     const { fetching } = this.state;
@@ -85,7 +86,7 @@ class Update extends Component {
   messages = () => {
     const { fetching, apps } = this.state;
     return !fetching && apps.length === 0 ? <p>No Tools To Upgrade</p> : <LoadingDialog />;
-  }
+  };
 
   toolList = () => {
     const { apps, disabledIds } = this.state;
@@ -108,7 +109,7 @@ class Update extends Component {
         </div>}
       </>
     );
-  }
+  };
 
   render() {
     const { error, fetching } = this.state;

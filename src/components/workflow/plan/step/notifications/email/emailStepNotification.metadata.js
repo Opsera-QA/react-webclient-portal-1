@@ -19,7 +19,7 @@ const emailStepNotificationMetadata = {
       isRequired: true,
       isEmailArray: true,
       maxItems: 5,
-      formText: "You can select up to five Email Addresses to receive notifications for this Pipeline step",
+      formText: "You can select up to five Email Addresses to receive notifications",
     },
     {
       label: "Email Notifications",

@@ -24,6 +24,7 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
       <PipelineSubscriptionIcon
         pipelineModel={pipelineModel}
         pipelineId={pipeline?._id}
+        pullSubscriptionStatus={true}
         className={"ml-3"}
       />
       <ActionBarShowPipelineSummaryOverlayButton

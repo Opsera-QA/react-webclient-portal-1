@@ -15,6 +15,7 @@ function SalesforceToGitMergeSyncTaskSourceControlToolSelectInput({
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("workspace");
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
     newModel.setDefaultValue("upstreamBranch");
@@ -28,6 +29,7 @@ function SalesforceToGitMergeSyncTaskSourceControlToolSelectInput({
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("workspace");
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
     newModel.setDefaultValue("upstreamBranch");

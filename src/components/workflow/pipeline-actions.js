@@ -6,11 +6,6 @@ import {axiosApiService} from "api/apiService";
 //  step for step configuration related ones (save to vault, tools, etc)
 const pipelineActions = {};
 
-pipelineActions.getPipelineById = async (pipelineId, getAccessToken) => {
-  const apiUrl = `/pipelines/${pipelineId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 pipelineActions.getPipelineByIdV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
   const apiUrl = `/pipelines/v2/${pipelineId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -56,8 +51,7 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
       sort: pipelineFilterModel?.getFilterValue("sortOption"),
       size: pipelineFilterModel?.getFilterValue("pageSize"),
       page: pipelineFilterModel?.getData("currentPage"),
-      type: type !== "all" && type !== "owner" ? type : undefined,
-      myPipelines: type === "owner",
+      type: type !== "all" ? type : undefined,
       search: pipelineFilterModel?.getFilterValue("search"),
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
@@ -249,15 +243,6 @@ pipelineActions.transferPipelineV2 = async (getAccessToken, cancelTokenSource, p
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-pipelineActions.get = async (pipelineId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}`;   
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
 };
 
 pipelineActions.saveToVault = async (postBody, getAccessToken) => {

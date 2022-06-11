@@ -5,7 +5,8 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   ANCHORE_INTEGRATOR: "anchore-integrator",
   ANCHORE_SCAN: "anchore-scan",
   ANSIBLE: "ansible",
-  APPROVAL: "approval",
+  APIGEE: "apigee",
+  APPROVAL: "approval",  
   ARGO: "argo",
   AWS_ACCOUNT: "aws_account",
   AWS_LAMDA: "aws_lambda",
@@ -61,6 +62,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   SERVICE_NOW: "servicenow",
   SFDC_CONFIGURATOR: "sfdc-configurator",
   SLACK: "slack",
+  SNAPLOGIC: "snaplogic",
   SONAR: "sonar",
   SPINNAKER: "spinnaker",
   SSH_UPLOAD: "ssh-upload",
@@ -74,4 +76,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   XUNIT: "xunit",
   YAML_GIT_PROCESSOR: "yaml_git_processor",
   GITHUB_DEPLOY_KEY: "github-deploykey",
+  SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
+  GIT_OPERATION: "git-operation"
 };

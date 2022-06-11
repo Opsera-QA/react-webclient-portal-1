@@ -21,6 +21,14 @@ import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
+import SalesforceDurationByStageActionableInsightsTable
+    from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageActionableInsightTable";
+import SalesforceDurationByStageTasksActionableTable
+    from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageTasksActionableTable";
+import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../../common/tabs/CustomTab";
+import DeploymentStatisticsTasksActionableTable from "./DeploymentStatisticsActionableTasksTable";
+import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 
 function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -31,9 +39,18 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
       false
     )
   );
+  const [tableFilterDto2, setTableFilterDto2] = useState(
+      new Model(
+          { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+          actionableInsightsGenericChartFilterMetadata,
+          false
+      )
+  );
   const toastContext = useContext(DialogToastContext);
+    const [activeTab, setActiveTab] = useState("pipelines");
   const [isLoading, setIsLoading] = useState(false);
   const [deploymentStatsData, setDeploymentStatsData] = useState([]);
+  const [quickDeployStats, setQuickDeployStats] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -105,12 +122,26 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
             _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
           }))
         );
+        const quickDeploy = response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.quickdeploy[0].data;
+        await setQuickDeployStats(
+            quickDeploy.map((dd, index) => ({
+              ...dd,
+              _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
+            }))
+        );
+
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
           response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
+        let newFilterDto2 = filterDto;
+        newFilterDto2.setData(
+            "totalCount",
+            response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.quickdeploy[0]?.count[0]?.count
+        );
+        setTableFilterDto2({ ...newFilterDto2 });
         setDeploymentSummaryData(response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.summaryData[0]);
       }
     } catch (error) {
@@ -125,17 +156,69 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
     }
   };
 
+    const closePanel = () => {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
+    };
+
+
+    const getTabs = () => {
+        if (activeTab == "pipelines") {
+            return (
+                <FilterContainer
+                    isLoading={isLoading}
+                    title={`Opsera Deployment Statistics Report`}
+                    titleIcon={faDraftingCompass}
+                    body={getTable()}
+                    className={"px-2 pb-2"}
+                />
+            );
+        } else if (activeTab == "jobs") {
+            return (
+                <DeploymentStatisticsTasksActionableTable
+                    dashboardData={dashboardData}
+                    kpiConfiguration={kpiConfiguration}
+                    data={quickDeployStats}
+                    isLoading={isLoading}
+                    loadData={loadData}
+                    filterModel={tableFilterDto2}
+                    setFilterModel={setTableFilterDto2}
+                />
+            );
+        }
+    };
+
+    const handleTabClick = (tabSelection) => (e) => {
+        e.preventDefault();
+        setActiveTab(tabSelection);
+    };
+
+    const getTabContainer = () => {
+        return (
+            <CustomTabContainer>
+                <CustomTab
+                    activeTab={activeTab}
+                    tabText={"Pipelines"}
+                    handleTabClick={handleTabClick}
+                    tabName={"pipelines"}
+                />
+                <CustomTab
+                    activeTab={activeTab}
+                    tabText={"Tasks"}
+                    handleTabClick={handleTabClick}
+                    tabName={"jobs"}
+                />
+            </CustomTabContainer>
+        );
+    };
+
   const getBody = () => {
     return (
       <>
         {getDeploymentSummaryDetails()}
-        <FilterContainer
-          isLoading={isLoading}
-          title={`Opsera Deployment Statistics Report`}
-          titleIcon={faDraftingCompass}
-          body={getTable()}
-          className={"px-2 pb-2"}
-        />
+          <div className={"p-3"}>
+              <TabPanelContainer currentView={getTabs()} tabContainer={getTabContainer()} />
+          </div>
       </>
     );
   };
@@ -144,6 +227,7 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
     if (!deploymentSummaryData) {
       return null;
     }
+    Math.round(deploymentSummaryData?.avgTimeToResolve);
     return (
       <Row className="pb-3 px-2">
         <Col lg={4} md={6} className="mt-3">
@@ -159,10 +243,10 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
           <FailedBuildsDeployments displayValue={deploymentSummaryData?.failure} displayText="Failed Deployments" />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <AverageDuration displayValue={deploymentSummaryData?.avgDuration} />
+          <AverageDuration displayValue={deploymentSummaryData?.avgDuration.toFixed(2)} />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-          <AverageDurationToResolve displayValue={deploymentSummaryData?.avgTimeToResolve} />
+          <AverageDurationToResolve displayValue={deploymentSummaryData?.avgTimeToResolve.toFixed(2)} />
         </Col>
         <Col lg={4} md={6} className="mt-3">
           <TotalDurationToResolve displayValue={deploymentSummaryData?.timeToResolve} />

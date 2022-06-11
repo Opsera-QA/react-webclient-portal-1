@@ -26,7 +26,8 @@ function DetailScreenContainer(
     roleRequirement,
     titleActionBar,
     objectRoles,
-    helpComponent
+    helpComponent,
+    isBeta,
   }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
@@ -62,6 +63,7 @@ function DetailScreenContainer(
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
         titleActionBar={titleActionBar}
         helpComponent={helpComponent}
+        isBeta={isBeta}
       />
     );
   };
@@ -188,7 +190,8 @@ DetailScreenContainer.propTypes = {
   roleRequirement: PropTypes.string,
   titleActionBar: PropTypes.object,
   objectRoles: PropTypes.array,
-  helpComponent: PropTypes.object
+  helpComponent: PropTypes.object,
+  isBeta: PropTypes.bool,
 };
 
 export default DetailScreenContainer;

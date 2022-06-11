@@ -188,6 +188,20 @@ import ExternalRestApiIntegrationStepSummaryPanel
 import {
   externalRestApiIntegrationStepMetadata
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
+import SalesforceScanPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanPipelineStepConfigurationSummaryPanel";
+import salesforceScanStepFormMetadata
+  from "./step_tool_configuration_forms/salesforce_scan/salesforceScan-stepForm-metadata";
+import GitOperationPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/git_operation/GitOperationPipelineStepConfigurationSummaryPanel";
+import gitOperationStepFormMetadata from "./step_tool_configuration_forms/git_operation/gitOperation-stepForm-metadata";
+import ApigeePipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/ApigeePipelineStepConfigurationSummaryPanel";
+import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
+import SnaplogicPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
+import SnaplogicStepFormMetadata 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -589,6 +603,34 @@ function PipelineStepConfigurationSummary({
           <GitScraperSummaryPanel
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(GitScraperStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+            <SalesforceScanPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                salesforceScanPipelineDataObject={getModelWrappedObject(salesforceScanStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
+        return (
+            <GitOperationPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                gitOperationPipelineDataObject={getModelWrappedObject(gitOperationStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <ApigeePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            apigeePipelineDataObject={getModelWrappedObject(ApigeeStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return (
+          <SnaplogicPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            snaplogicPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
           />
         );
       default:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, Modal, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
@@ -9,6 +9,8 @@ import PipelineActions from "./pipeline-actions";
 import CommonModal from "components/common/modal/modal";
 import LoadingDialog from "../common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
+import axios from "axios";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 const INITIAL_FORM = {
   message: "",
@@ -31,15 +33,24 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
   const [nextToApprovalStep, setNextToApprovalStep] = useState({});
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [isChildProcess, setIsChildProcess] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
     setApprovalStep({});
     setApprovalPipeline({});
     setFormData(INITIAL_FORM);
     setChildPipelineMessage("");
     setIsChildProcess(false);
 
-    loadFormData(pipelineId)
+    loadFormData(source)
       .then(res => {
           setIsLoading(false);
         },
@@ -48,16 +59,24 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
         toastContext.showLoadingErrorDialog(err);
         setIsLoading(false);
       });
-  }, []);
 
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [pipelineId]);
 
-  const loadFormData = async (pipelineId) => {
+  const loadFormData = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
-    const pipelineData = await PipelineActions.get(pipelineId, getAccessToken)
+    const pipelineData = await PipelineActions.getPipelineByIdV2(
+      getAccessToken,
+      cancelSource,
+      pipelineId,
+      )
       .catch(err => {
         toastContext.showLoadingErrorDialog(err);
       });
-    const pipeline = pipelineData && pipelineData.data[0];
+    const pipeline = pipelineData?.data?.data;
 
     if (!pipelineData) {
       return;
@@ -116,17 +135,26 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
       return e.state === "paused";
     });
 
-    if (!pausedPipelines || !pausedPipelines[0] || pausedPipelines[0].length === 0) {
+    if (!Array.isArray(pausedPipelines) || pausedPipelines.length === 0) {
       return false;
     }
 
+    const pausedPipelineId = pausedPipelines[0]?.pipelineId;
+
+    if (isMongoDbId(pausedPipelineId) !== true) {
+      return;
+    }
+
     //lookup child pipeline and return that and approval to caller
-    const pausedChildPipelineData = await PipelineActions.get(pausedPipelines[0].pipelineId, getAccessToken)
+    const pausedChildPipelineData = await PipelineActions.getPipelineByIdV2(
+      getAccessToken,
+      cancelTokenSource,
+      pausedPipelineId,
+    )
       .catch(err => {
         toastContext.showLoadingErrorDialog(err);
-        setIsLoading(false);
       });
-    const childPipeline = pausedChildPipelineData && pausedChildPipelineData.data[0];
+    const childPipeline = pausedChildPipelineData?.data?.data;
 
     if (!childPipeline) {
       return false;

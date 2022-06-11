@@ -263,6 +263,11 @@ const formats = {
     date = date.split(" ");
     return date[2];
   },
+  monthYear: (d) => {
+    var date = new Date(d).toUTCString();
+    date = date.split(" ");
+    return date[2] + " " + date[3];
+  },
   yearMonthDate: (d) => typeof d === "string" && d.split("T")[0],
   cutoffString: (d) => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
   values: (d) => /(?:(?!-).)*/.exec(d)[0],

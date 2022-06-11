@@ -20,6 +20,7 @@ function CustomTable(
     scrollOnLoad,
     nextGeneration
   }) {
+
   return (
     <PaginationContainer
       nextGeneration={nextGeneration}

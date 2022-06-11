@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 
 function GithubBranchSelectInput(
   {
@@ -17,6 +18,7 @@ function GithubBranchSelectInput(
     setDataFunction,
     clearDataFunction,
     repositoryId,
+    multi
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -73,6 +75,25 @@ function GithubBranchSelectInput(
     }
   };
 
+  if (multi) {
+    return (
+      <MultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={model}
+        setDataObject={setModel}
+        selectOptions={githubBranches}
+        busy={isLoading}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled}
+        placeholderText={placeholderText}
+        errorMessage={errorMessage}
+      />
+    );
+  }
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -96,10 +117,14 @@ GithubBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   repositoryId: PropTypes.string,
+  multi: PropTypes.bool
 };
 
 export default GithubBranchSelectInput;

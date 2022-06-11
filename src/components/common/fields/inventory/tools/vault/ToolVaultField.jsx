@@ -5,10 +5,20 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function ToolVaultField({ model, fieldName }) {
   if (model?.getData(fieldName) === "") {
-    return (<StandaloneTextFieldBase label={model?.getLabel(fieldName)} text={"Opsera Default Hashicorp Vault"} />);
+    return (
+      <StandaloneTextFieldBase
+        label={model?.getLabel(fieldName)}
+        text={"Opsera Default Hashicorp Vault"}
+      />
+    );
   }
 
-  return (<ToolNameField model={model} fieldName={fieldName} />);
+  return (
+    <ToolNameField
+      model={model}
+      fieldName={fieldName}
+    />
+  );
 }
 
 ToolVaultField.propTypes = {

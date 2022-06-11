@@ -4,8 +4,6 @@ import CustomTable from "components/common/table/CustomTable";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import {
   getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -15,21 +13,13 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "identifier")),
-      getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableDateColumn(getField(fields, "createdAt")),
-      getTableBooleanIconColumn(getField(fields, "active")),
-      getTableBooleanIconColumn(getField(fields, "enabledInRegistry")),
+      getLimitedTableTextColumn(getField(fields, "name"), 100),
+      getTableTextColumn(getField(fields, "description")),
     ],
     []
   );
 
-  const noDataMessage = "No tool identifiers are currently registered";
-
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
-  };
+  const noDataMessage = "No Tools are currently registered.";
 
   const onRowSelect = (rowData) => {
     setDataFunction(rowData?.original);
@@ -41,7 +31,6 @@ function ToolIdentifierSelectionTable({toolIdentifiers, setDataFunction, isLoadi
       onRowSelect={onRowSelect}
       data={toolIdentifiers}
       columns={columns}
-      rowStyling={rowStyling}
       noDataMessage={noDataMessage}
     />
   );

@@ -15,7 +15,7 @@ function InfoText(
   }) {
   if (hasStringValue(errorMessage) === true) {
     return (
-      <small className={"red form-text"}>
+      <small className={"danger-red form-text"}>
         <div>{errorMessage}</div>
       </small>
     );

@@ -5,7 +5,7 @@ import CardContainerBase from "components/common/card_containers/CardContainerBa
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
+function PipelineSummaryCardContainer({ children, isLoading, pipelineData, subscribedPipelineIds }) {
   const getTitleBar = () => {
     if (isLoading) {
       return (<div><LoadingIcon className={"mr-2"}/>Loading Pipelines</div>);
@@ -22,6 +22,7 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
             pipelineId={pipelineData?.getData("_id")}
             className={"m1-2"}
             pipelineModel={pipelineData}
+            subscribedPipelineIds={subscribedPipelineIds}
           />
         </div>
       </div>
@@ -48,7 +49,8 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
 PipelineSummaryCardContainer.propTypes = {
   children: PropTypes.any,
   pipelineData: PropTypes.object,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  subscribedPipelineIds: PropTypes.array,
 };
 
 

@@ -4,6 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -18,7 +19,11 @@ function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
 
   return (
     <InputContainer fieldName={fieldName}>
-      <InputLabel field={field} model={dataObject} />
+      <InputLabel
+        field={field}
+        model={dataObject}
+        hasError={hasStringValue(errorMessage) === true}
+      />
       <input
         type={"file"}
         disabled={disabled}

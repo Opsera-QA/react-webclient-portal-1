@@ -237,10 +237,25 @@ const PipelineWorkflowItem = (
     deleteStep(index);
   };
 
+  const getToolField = () => {
+    if (toolIdentifier?.identifier !== null && toolIdentifier?.identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+      return (
+        <div className="p-1 text-muted small">
+          <IconBase icon={faToolbox} iconSize={"sm"} className={"mr-1"} />
+          Tool: {toolIdentifier?.name || ""}
+        </div>
+      );
+    }
+
+    return (
+      <div style={{ height: "26px" }} />
+    );
+  };
+
   return (
     <>
       <div className="workflow-module-container-height">
-        <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex flex-row">
+        <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex">
           <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
 
           <div className={"ml-auto d-flex"}>
@@ -405,18 +420,12 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
-
-        <div className="p-1 text-muted small">
-          <IconBase icon={faToolbox} iconSize={"sm"}
-                           className={"mr-1"} /> Tool: {toolIdentifier?.name || ""}
-        </div>
-
-
         <div className="p-1 text-muted small">
           <IconBase icon={faIdBadge} iconSize={"sm"}
                            className={"mr-1"} />ID: {item._id}</div>
+        {getToolField()}
 
-        <div className="ml-auto">
+        <div className="ml-auto mt-auto">
         <div className="p-1 ml-auto d-flex">
           {isToolSet &&
           <div className={"ml-auto d-flex"}>

@@ -1,0 +1,36 @@
+.select-component {
+  margin-top: 8px;
+}
+
+.btn-search {
+  margin-top: 7px;
+  margin-left: 0.5rem;
+  height: 39px;
+}
+
+.table-results {
+  width: 100%;
+}
+
+.pipeline-list {
+  margin-top: 7px;
+}
+
+.lookup-hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.lookup-table {
+  margin-bottom: 12px;
+}
+
+.lookup-table .p-2 {
+  height: 110px;
+}
+
+.lookup-pipelines {
+  margin-bottom: 30px;
+}

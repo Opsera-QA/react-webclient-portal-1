@@ -6,6 +6,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 
 export const SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER,
 ];
 
 function ToolServiceTypeMappingTab({ toolModel, handleTabClick, activeTab }) {

@@ -54,7 +54,7 @@ function ActiveFilterDisplayer(
 
 ActiveFilterDisplayer.propTypes = {
   filterModel: PropTypes.object,
-  setFilterModel: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default ActiveFilterDisplayer;

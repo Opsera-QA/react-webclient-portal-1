@@ -28,7 +28,8 @@ function FilterContainer(
     handleImportFunction,
     minimumHeight,
     maximumHeight,
-
+    showRefreshButton,
+    disableNewRecordButton,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -51,6 +52,8 @@ function FilterContainer(
         supportClientSideSearching={supportClientSideSearching}
         handleExportFunction={handleExportFunction}
         handleImportFunction={handleImportFunction}
+        showRefreshButton={showRefreshButton}
+        disableNewRecordButton={disableNewRecordButton}
       />
     );
   };
@@ -129,6 +132,14 @@ FilterContainer.propTypes = {
   handleImportFunction: PropTypes.func,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  loadingMessage: PropTypes.string,
+  showRefreshButton: PropTypes.bool,
+  disableNewRecordButton: PropTypes.bool
+};
+
+FilterContainer.defaultProps = {
+  showRefreshButton: true,
+  disableNewRecordButton: false
 };
 
 export default FilterContainer;

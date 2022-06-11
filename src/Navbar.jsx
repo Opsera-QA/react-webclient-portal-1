@@ -68,8 +68,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     case "user":
       permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.USER;
       break;
-    case "readonly":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.READ_ONLY;
+    case "guest":
+      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
       break;
     }
 
@@ -96,13 +96,11 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   };
 
   const getFrequentlyAskedQuestionsLink = () => {
-    if (featureFlagHideItemInProd() === false) {
-      return (
-        <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
-          Frequently Asked Questions
-        </Link>
-      );
-    }
+    return (
+      <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
+        Frequently Asked Questions
+      </Link>
+    );
   };
 
   const getHelpDocumentationLink = () => {
