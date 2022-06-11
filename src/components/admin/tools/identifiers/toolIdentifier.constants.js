@@ -77,6 +77,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   YAML_GIT_PROCESSOR: "yaml_git_processor",
   GITHUB_DEPLOY_KEY: "github-deploykey",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
-  GIT_OPERATION: "git-operation"
+  GIT_OPERATION: "git-operation",
   PROVAR: "provar"
 };

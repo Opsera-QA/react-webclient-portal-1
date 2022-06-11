@@ -10,7 +10,6 @@ import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
 import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
-import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 
