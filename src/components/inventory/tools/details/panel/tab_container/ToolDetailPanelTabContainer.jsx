@@ -9,7 +9,7 @@ import ToolLogsTab, {LOG_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/
 import ToolAttributesTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolAttributesTab";
 import ToolApplicationsTab, {APPLICATION_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolApplicationsTab";
 import ToolRepositoriesTab, {REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolRepositoriesTab";
-import ToolConnectionTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
+import ToolConnectionTab, { CONNECTION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
 import ToolProjectsTab, {PROJECT_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProjectsTab";
 import ToolStorageTab, {STORAGE_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolStorageTab";
 import ToolUsageTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolUsageTab";
@@ -19,11 +19,14 @@ import ToolOrganizationsTab, {ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS} from "co
 import ToolClustersTab, {ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolClustersTab";
 import ToolWorkspacesTab, {WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolWorkspacesTab";
 import ToolProvidersTab, {PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import ToolLicenseTab, {LICENSE_SUPPORTED_TOOL_IDENTIFIERS} from "../../../tool_details/ToolLicenseTab";
 import ToolEndpointsTab, {
   ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS
 } from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
-import ToolLicenseTab, {LICENSE_SUPPORTED_TOOL_IDENTIFIERS} from "../../../tool_details/ToolLicenseTab";
+
+
+import {hasStringValue} from "components/common/helpers/string-helpers";
+
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -54,6 +57,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
   switch (toolDetailPanelTab) {
     case TOOL_DETAIL_PANEL_TABS.VAULT:
       return VAULT_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.CONNECTION:
+      return CONNECTION_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.REPOSITORIES:
       return REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.JOBS:
