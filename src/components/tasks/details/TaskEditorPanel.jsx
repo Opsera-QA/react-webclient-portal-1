@@ -32,6 +32,7 @@ import GitToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
 import SalesforceToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -72,6 +73,8 @@ function TaskEditorPanel({ taskData, handleClose }) {
     taskModel.setData("configuration", configuration);
     const newTaskResponse = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
     const taskId = newTaskResponse?.data?._id;
+    const updatedTaskData = newTaskResponse?.data;
+    const newTaskModel = modelHelpers.parseObjectIntoModel(updatedTaskData, taskModel.getMetaData());
 
     if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && configuration?.iValidatorScan && typeof configuration?.validationToken === "string") {
       const keyName = `${taskId}-${taskModel?.getData("type")}-validationToken`;
@@ -83,10 +86,9 @@ function TaskEditorPanel({ taskData, handleClose }) {
         taskId,
       );
       configuration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
-      taskModel.setData("_id", taskId);
       taskModel.setData("configuration", configuration);
 
-      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newTaskModel);
     }
     return newTaskResponse;
   };
