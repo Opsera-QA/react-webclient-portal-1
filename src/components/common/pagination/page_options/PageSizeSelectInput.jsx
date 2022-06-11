@@ -10,9 +10,9 @@ function PageSizeSelectInput({ paginationModel, loadData, isLoading, className})
   };
 
   const getTextFieldString = (option) => {
-    const value = typeof option === "object" ? option.value : value;
+    const value = typeof option === "object" ? option.value : option;
 
-    if (typeof value === "number") {
+    if (value) {
       return `${value} Results Per Page`;
     }
 
