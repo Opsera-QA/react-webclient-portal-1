@@ -40,15 +40,6 @@ function SalesforceDurationByStageTasksActionableTable({
         []
     );
 
-    const onRowSelect = (rowData) => {
-        toastContext.showOverlayPanel(
-            <BlueprintLogOverlay
-                pipelineId={rowData?.original?.latest_run[0]?._id?.pipelineId}
-                runCount={rowData?.original?.latest_run[0]?._id?.run}
-            />
-        );
-    };
-
     const getTable = () => {
         return (
             <CustomTable
@@ -59,7 +50,6 @@ function SalesforceDurationByStageTasksActionableTable({
                 noDataMessage={noDataMessage}
                 paginationDto={filterModel}
                 setPaginationDto={setFilterModel}
-                onRowSelect={onRowSelect}
             />
         );
     };
