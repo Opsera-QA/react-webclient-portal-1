@@ -35,19 +35,10 @@ function SalesforceDurationByStageTasksActionableTable({
             getTableTextColumn(getField(fields, "total_failed"), "total_failed"),
             getTableDurationTextColumn(getField(fields, "duration"), "duration"),
             getTableDurationTextColumn(getField(fields, "time_to_resolve"), "time_to_resolve"),
-            getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
         ],
         []
     );
 
-    const onRowSelect = (rowData) => {
-        toastContext.showOverlayPanel(
-            <BlueprintLogOverlay
-                pipelineId={rowData?.original?.latest_run[0]?._id?.pipelineId}
-                runCount={rowData?.original?.latest_run[0]?._id?.run}
-            />
-        );
-    };
 
     const getTable = () => {
         return (
@@ -59,7 +50,6 @@ function SalesforceDurationByStageTasksActionableTable({
                 noDataMessage={noDataMessage}
                 paginationDto={filterModel}
                 setPaginationDto={setFilterModel}
-                onRowSelect={onRowSelect}
             />
         );
     };
