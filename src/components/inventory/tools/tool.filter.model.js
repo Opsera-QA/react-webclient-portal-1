@@ -142,7 +142,7 @@ export class ToolFilterModel extends FilterModelBase {
 
     const sortOption = sessionHelper.getStoredUrlParameter("sortOption");
 
-    if (hasStringValue()) {
+    if (hasStringValue(sortOption) === true) {
       hasUrlParams = true;
       this.setData("sortOption", sortOption);
     }

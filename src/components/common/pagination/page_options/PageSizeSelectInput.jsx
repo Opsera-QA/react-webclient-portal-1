@@ -9,6 +9,16 @@ function PageSizeSelectInput({ paginationModel, loadData, isLoading, className})
     loadData(paginationModel);
   };
 
+  const getTextFieldString = (option) => {
+    const value = typeof option === "object" ? option.value : value;
+
+    if (typeof value === "number") {
+      return `${value} Results Per Page`;
+    }
+
+    return `Select Page Size`;
+  };
+
   if (paginationModel == null || paginationModel.canSetPageSize() === false) {
     return null;
   }
@@ -19,7 +29,7 @@ function PageSizeSelectInput({ paginationModel, loadData, isLoading, className})
       selectOptions={paginationModel?.getPageSizes()}
       inline={true}
       dataObject={paginationModel}
-      textField={(option) => `${option?.value} Results Per Page`}
+      textField={getTextFieldString}
       valueField={"value"}
       fieldName={"pageSize"}
       disabled={isLoading || paginationModel?.getData("totalCount") == null}
