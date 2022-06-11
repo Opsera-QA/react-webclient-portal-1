@@ -15,6 +15,10 @@ import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/d
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import IconBase from "components/common/icons/IconBase";
+import CustomTabContainer from "../../../../../../common/tabs/CustomTabContainer";
+import CustomTab from "../../../../../../common/tabs/CustomTab";
+import TabPanelContainer from "../../../../../../common/panels/general/TabPanelContainer";
+import SalesforceDurationByStageTasksActionableTable from "./SalesforceDurationByStageTasksActionableTable";
 
 function SalesforceDurationByStageActionableInsightsOverlay({
   title,
@@ -24,10 +28,13 @@ function SalesforceDurationByStageActionableInsightsOverlay({
 }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
+  const [activeTab, setActiveTab] = useState("pipelines");
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [metrics2, setMetrics2] = useState([]);
   const [dataBlockValues, setDataBlockValues] = useState([]);
+  const [quickDeployValues, setQuickDeployValues] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -38,6 +45,13 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       actionableInsightsGenericChartFilterMetadata,
       false
     )
+  );
+  const [filterModel2, setFilterModel2] = useState(
+      new Model(
+          { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+          actionableInsightsGenericChartFilterMetadata,
+          false
+      )
   );
 
   useEffect(() => {
@@ -95,6 +109,22 @@ function SalesforceDurationByStageActionableInsightsOverlay({
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
+
+      if(actionableInsightsQueryData.serieId === "Deploy")
+      {
+        let dataObject2 = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data?.quickDeployResults[0]?.data : [];
+        if (isMounted?.current === true && dataObject) {
+          setMetrics2(dataObject2);
+        }
+        let dataCount2 = response?.data
+            ? response?.data?.data[0]?.salesforceDurationByStage?.data?.quickDeployResults[0]?.count[0]?.count
+            : [];
+        let newFilterDto2 = filterDto;
+        newFilterDto2.setData("totalCount", dataCount2);
+        setFilterModel2({ ...newFilterDto2 });
+      }
+
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setDataBlockValues(summary);
@@ -149,31 +179,108 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     return <MetricDateRangeBadge startDate={date?.lowerBound} endDate={date?.upperBound} />;
   };
 
-  return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={title}
-      showToasts={true}
-      titleIcon={faTable}
-      isLoading={isLoading}
-      linkTooltipText={"View Full Blueprint"}
-    >
-      <div className={"p-3"}>
-        {getDateBadge()}
-        <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues} />
-        <SalesforceDurationByStageActionableInsightsTable
-          data={metrics}
-          isLoading={isLoading}
-          loadData={loadData}
-          filterModel={filterModel}
-          setFilterModel={setFilterModel}
-          title={title}
-        />
-        {/* {getFooterDetails()} */}
-      </div>
-    </FullScreenCenterOverlayContainer>
-  );
+  console.log("data", metrics);
+  console.log("data2", metrics2);
+
+  const getBody = () => {
+    if (activeTab == "pipelines") {
+      return (
+          <SalesforceDurationByStageActionableInsightsTable
+              dashboardData={dashboardData}
+              kpiConfiguration={kpiConfiguration}
+              data={metrics}
+              isLoading={isLoading}
+              loadData={loadData}
+              filterModel={filterModel}
+              setFilterModel={setFilterModel}
+          />
+      );
+    } else if (activeTab == "jobs") {
+      return (
+          <SalesforceDurationByStageTasksActionableTable
+              dashboardData={dashboardData}
+              kpiConfiguration={kpiConfiguration}
+              data={metrics2}
+              isLoading={isLoading}
+              loadData={loadData}
+              filterModel={filterModel2}
+              setFilterModel={setFilterModel2}
+          />
+      );
+    }
+  };
+
+  const handleTabClick = (tabSelection) => (e) => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
+
+  const getTabContainer = () => {
+    return (
+        <CustomTabContainer>
+          <CustomTab
+              activeTab={activeTab}
+              tabText={"Pipelines"}
+              handleTabClick={handleTabClick}
+              tabName={"pipelines"}
+          />
+          <CustomTab
+              activeTab={activeTab}
+              tabText={"Tasks"}
+              handleTabClick={handleTabClick}
+              tabName={"jobs"}
+          />
+        </CustomTabContainer>
+    );
+  };
+
+  if(actionableInsightsQueryData.serieId === "Deploy") {
+    return (
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={title}
+            showToasts={true}
+            titleIcon={faTable}
+            isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+          <div className={"p-3"}>
+            {getDateBadge()}
+            <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
+            <div className={"p-3"}>
+              <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+            </div>
+          </div>
+        </FullScreenCenterOverlayContainer>
+    );
+  }
+    return (
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={title}
+            showToasts={true}
+            titleIcon={faTable}
+            isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+          <div className={"p-3"}>
+            {getDateBadge()}
+            <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
+            <SalesforceDurationByStageActionableInsightsTable
+                data={metrics}
+                isLoading={isLoading}
+                loadData={loadData}
+                filterModel={filterModel}
+                setFilterModel={setFilterModel}
+                title={title}
+            />
+            {/* {getFooterDetails()} */}
+          </div>
+        </FullScreenCenterOverlayContainer>
+    );
+
 }
 
 SalesforceDurationByStageActionableInsightsOverlay.propTypes = {
