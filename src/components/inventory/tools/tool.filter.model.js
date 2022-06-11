@@ -89,7 +89,7 @@ export class ToolFilterModel extends FilterModelBase {
     const toolIdentifierName =  this.getData("toolIdentifierName");
 
     if (hasStringValue(toolIdentifierName) === true && hasStringValue(toolIdentifier) === true) {
-      activeFilters.push({filterId: "toolIdentifierName", text: `Tool: ${toolIdentifierName}`});
+      activeFilters.push({filterId: "toolIdentifier", text: `Tool: ${toolIdentifierName}`});
     }
 
     const tag = this.getData("tag");
@@ -182,16 +182,11 @@ export class ToolFilterModel extends FilterModelBase {
     }
 
     const toolIdentifier = sessionHelper.getStoredUrlParameter("toolIdentifier");
-
-    if (hasStringValue(toolIdentifier) === true) {
-      hasUrlParams = true;
-      this.setData("toolIdentifier", toolIdentifier);
-    }
-
     const toolIdentifierName = sessionHelper.getStoredUrlParameter("toolIdentifierName");
 
-    if (hasStringValue(toolIdentifierName) === true) {
+    if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
       hasUrlParams = true;
+      this.setData("toolIdentifier", toolIdentifier);
       this.setData("toolIdentifierName", toolIdentifierName);
     }
 
@@ -203,10 +198,11 @@ export class ToolFilterModel extends FilterModelBase {
     }
 
     const owner = sessionHelper.getStoredUrlParameter("owner");
+    const ownerName = sessionHelper.getStoredUrlParameter("ownerName");
 
-    if (hasStringValue(owner) === true) {
-      hasUrlParams = true;
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
       this.setData("owner", owner);
+      this.setData("ownerName", ownerName);
     }
 
     if (hasUrlParams !== true) {
@@ -256,14 +252,10 @@ export class ToolFilterModel extends FilterModelBase {
       }
 
       const toolIdentifier = parsedBrowserStorage?.toolIdentifier;
-
-      if (hasStringValue(toolIdentifier) === true) {
-        this.setData("toolIdentifier", toolIdentifier);
-      }
-
       const toolIdentifierName = parsedBrowserStorage?.toolIdentifierName;
 
-      if (hasStringValue(toolIdentifierName) === true) {
+      if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
+        this.setData("toolIdentifier", toolIdentifier);
         this.setData("toolIdentifierName", toolIdentifierName);
       }
 
@@ -274,9 +266,11 @@ export class ToolFilterModel extends FilterModelBase {
       }
 
       const owner = parsedBrowserStorage?.owner;
+      const ownerName = parsedBrowserStorage?.ownerName;
 
-      if (hasStringValue(owner) === true) {
+      if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
         this.setData("owner", owner);
+        this.setData("ownerName", ownerName);
       }
     }
   };

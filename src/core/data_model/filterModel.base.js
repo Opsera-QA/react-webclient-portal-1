@@ -1,6 +1,7 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { numberHelpers } from "components/common/helpers/number/number.helpers";
 
 export class FilterModelBase {
   constructor(metaData) {
@@ -119,7 +120,7 @@ export class FilterModelBase {
   updateTotalCount = (newTotalCount) => {
     const parsedTotalCount = dataParsingHelper.parseInteger(newTotalCount, 0);
 
-    if (parsedTotalCount) {
+    if (numberHelpers.isNumberGreaterThanOrEqualTo(0, parsedTotalCount)) {
       this.data.totalCount = parsedTotalCount;
     }
   };
