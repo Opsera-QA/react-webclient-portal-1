@@ -35,7 +35,7 @@ function SalesforceDurationByStageActionableInsightTable({
         getTableTextColumn(getField(fields, "total_failed"), "total_failed"),
         getTableDurationTextColumn(getField(fields, "duration"), "duration"),
         getTableDurationTextColumn(getField(fields, "time_to_resolve"), "time_to_resolve"),
-        getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
+        //getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
       ],
       []
   );
