@@ -1,6 +1,9 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
+import sessionHelper from "utils/session.helper";
+import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const taskFilterMetadata = {
   type: "Task",
@@ -65,6 +68,9 @@ export class TaskFilterModel extends FilterModelBase {
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
+    this.sessionDataKey = "task-filter-model-data";
+    this.enableUrlUpdatesWithQueryParameters();
+    this.unpackUrlParameters();
   }
 
   canSearch = () => {
@@ -136,6 +142,65 @@ export class TaskFilterModel extends FilterModelBase {
         {text: "Last Updated", value: "lastupdated"},
       ]
     );
+  };
+
+  canToggleView = () => {
+    return true;
+  }
+
+  unpackUrlParameters = () => {
+    let hasUrlParams = this.unpackCommonUrlParameters();
+
+    const status = sessionHelper.getStoredUrlParameter("status");
+
+    if (hasStringValue(status) === true) {
+      hasUrlParams = true;
+      this.setData("status", status);
+    }
+
+    const category = sessionHelper.getStoredUrlParameter("category");
+
+    if (hasStringValue(category) === true) {
+      hasUrlParams = true;
+      this.setData("category", category);
+    }
+
+    const taskType = sessionHelper.getStoredUrlParameter("type");
+
+    if (hasStringValue(taskType) === true) {
+      hasUrlParams = true;
+      this.setData("type", taskType);
+    }
+
+    if (hasUrlParams !== true) {
+      this.unpackBrowserStorage();
+    }
+  };
+
+  unpackBrowserStorage = () => {
+    this.unpackCommonBrowserStorageFields();
+    const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
+    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+
+    if (parsedBrowserStorage) {
+      const status = parsedBrowserStorage?.status;
+
+      if (hasStringValue(status) === true) {
+        this.setData("status", status);
+      }
+
+      const category = parsedBrowserStorage?.category;
+
+      if (hasStringValue(category) === true) {
+        this.setData("category", category);
+      }
+
+      const type = parsedBrowserStorage?.type;
+
+      if (hasStringValue(type) === true) {
+        this.setData("type", type);
+      }
+    }
   };
 }
 

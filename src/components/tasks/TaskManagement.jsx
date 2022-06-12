@@ -78,11 +78,10 @@ function TaskManagement() {
     if (isMounted.current === true && Array.isArray(taskList)) {
       setTasks(taskList);
       setTaskMetadata(taskMetadata);
-
-      let newFilterDto = newFilterModel;
-      newFilterDto?.setData("totalCount", response?.data?.count);
-      newFilterDto?.setData("activeFilters", newFilterDto.getActiveFilters());
-      setTaskFilterModel({...newFilterDto});
+      newFilterModel.updateTotalCount(response?.data?.count);
+      newFilterModel.updateActiveFilters();
+      newFilterModel.updateBrowserStorage();
+      setTaskFilterModel({...newFilterModel});
     }
   };
 

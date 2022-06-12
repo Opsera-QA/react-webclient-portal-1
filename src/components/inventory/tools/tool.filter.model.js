@@ -89,7 +89,7 @@ export class ToolFilterModel extends FilterModelBase {
     const toolIdentifierName =  this.getData("toolIdentifierName");
 
     if (hasStringValue(toolIdentifierName) === true && hasStringValue(toolIdentifier) === true) {
-      activeFilters.push({filterId: "toolIdentifierName", text: `Tool: ${toolIdentifierName}`});
+      activeFilters.push({filterId: "toolIdentifier", text: `Tool: ${toolIdentifierName}`});
     }
 
     const tag = this.getData("tag");
@@ -122,6 +122,10 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   };
 
+  canToggleView = () => {
+    return true;
+  }
+
   getDetailViewLink = (toolId) => {
     return `/inventory/tools/details/${toolId}`;
   };
@@ -138,41 +142,7 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   unpackUrlParameters = () => {
-    let hasUrlParams = false;
-
-    const sortOption = sessionHelper.getStoredUrlParameter("sortOption");
-
-    if (hasStringValue()) {
-      hasUrlParams = true;
-      this.setData("sortOption", sortOption);
-    }
-
-    const pageSize =  sessionHelper.getStoredUrlParameter("pageSize");
-
-    if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
-      this.setData("pageSize", pageSize);
-    }
-
-    const currentPage = sessionHelper.getStoredUrlParameter("currentPage");
-
-    if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
-      hasUrlParams = true;
-      this.setData("currentPage", currentPage);
-    }
-
-    const search = sessionHelper.getStoredUrlParameter("search");
-
-    if (hasStringValue(search) === true) {
-      hasUrlParams = true;
-      this.setData("search", search);
-    }
-
-    const viewType = sessionHelper.getStoredUrlParameter("viewType");
-
-    if (hasStringValue(viewType) === true) {
-      hasUrlParams = true;
-      this.setData("viewType", viewType);
-    }
+    let hasUrlParams = this.unpackCommonUrlParameters();
 
     const status = sessionHelper.getStoredUrlParameter("status");
 
@@ -182,31 +152,12 @@ export class ToolFilterModel extends FilterModelBase {
     }
 
     const toolIdentifier = sessionHelper.getStoredUrlParameter("toolIdentifier");
-
-    if (hasStringValue(toolIdentifier) === true) {
-      hasUrlParams = true;
-      this.setData("toolIdentifier", toolIdentifier);
-    }
-
     const toolIdentifierName = sessionHelper.getStoredUrlParameter("toolIdentifierName");
 
-    if (hasStringValue(toolIdentifierName) === true) {
+    if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
       hasUrlParams = true;
+      this.setData("toolIdentifier", toolIdentifier);
       this.setData("toolIdentifierName", toolIdentifierName);
-    }
-
-    const tag = sessionHelper.getStoredUrlParameter("tag");
-
-    if (hasStringValue(tag) === true) {
-      hasUrlParams = true;
-      this.setData("tag", tag);
-    }
-
-    const owner = sessionHelper.getStoredUrlParameter("owner");
-
-    if (hasStringValue(owner) === true) {
-      hasUrlParams = true;
-      this.setData("owner", owner);
     }
 
     if (hasUrlParams !== true) {
@@ -215,40 +166,11 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   unpackBrowserStorage = () => {
+    this.unpackCommonBrowserStorageFields();
     const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
     const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
 
     if (parsedBrowserStorage) {
-      const pageSize = parsedBrowserStorage?.pageSize;
-
-      if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
-        this.setData("pageSize", pageSize);
-      }
-
-      const currentPage = parsedBrowserStorage?.currentPage;
-
-      if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
-        this.setData("currentPage", currentPage);
-      }
-
-      const sortOption = parsedBrowserStorage?.sortOption;
-
-      if (hasStringValue(sortOption) === true) {
-        this.setData("sortOption", sortOption);
-      }
-
-      const search = parsedBrowserStorage?.search;
-
-      if (hasStringValue(search) === true) {
-        this.setData("search", search);
-      }
-
-      const viewType = parsedBrowserStorage?.viewType;
-
-      if (hasStringValue(viewType) === true) {
-        this.setData("viewType", viewType);
-      }
-
       const status = parsedBrowserStorage?.status;
 
       if (hasStringValue(status) === true) {
@@ -256,27 +178,11 @@ export class ToolFilterModel extends FilterModelBase {
       }
 
       const toolIdentifier = parsedBrowserStorage?.toolIdentifier;
-
-      if (hasStringValue(toolIdentifier) === true) {
-        this.setData("toolIdentifier", toolIdentifier);
-      }
-
       const toolIdentifierName = parsedBrowserStorage?.toolIdentifierName;
 
-      if (hasStringValue(toolIdentifierName) === true) {
+      if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
+        this.setData("toolIdentifier", toolIdentifier);
         this.setData("toolIdentifierName", toolIdentifierName);
-      }
-
-      const tag = parsedBrowserStorage?.tag;
-
-      if (hasStringValue(tag) === true) {
-        this.setData("tag", tag);
-      }
-
-      const owner = parsedBrowserStorage?.owner;
-
-      if (hasStringValue(owner) === true) {
-        this.setData("owner", owner);
       }
     }
   };
