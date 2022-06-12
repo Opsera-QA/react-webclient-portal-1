@@ -16,6 +16,10 @@ const toolFilterMetadata = {
       id: "toolIdentifier",
     },
     {
+      label: "Tool Identifier",
+      id: "toolIdentifierName",
+    },
+    {
       label: "Page Size",
       id: "pageSize",
     },
@@ -30,6 +34,10 @@ const toolFilterMetadata = {
     {
       label: "Tool Owner",
       id: "owner"
+    },
+    {
+      label: "Owner",
+      id: "ownerName"
     },
     {
       label: "Tag",
@@ -52,7 +60,9 @@ const toolFilterMetadata = {
     search: "",
     status: "",
     toolIdentifier: "",
+    toolIdentifierName: "",
     owner: "",
+    ownerName: "",
     tag: "",
     activeFilters: [],
     viewType: "card",
@@ -76,7 +86,7 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   getActiveFilters = () => {
-    let activeFilters = [];
+    const activeFilters = [];
 
     const status = this.getData("status");
 
@@ -165,9 +175,7 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   unpackBrowserStorage = () => {
-    this.unpackCommonBrowserStorageFields();
-    const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
-    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+    const parsedBrowserStorage = this.unpackCommonBrowserStorageFields();
 
     if (parsedBrowserStorage) {
       const status = parsedBrowserStorage?.status;

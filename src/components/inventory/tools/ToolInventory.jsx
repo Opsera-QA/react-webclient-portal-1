@@ -74,7 +74,6 @@ function ToolInventory() {
       setRegistryToolRoleDefinitions(roleDefinitions);
       newFilterModel.updateTotalCount(response?.data?.count);
       newFilterModel.updateActiveFilters();
-      newFilterModel.updateBrowserStorage();
       setToolFilterModel({ ...newFilterModel });
     }
   };

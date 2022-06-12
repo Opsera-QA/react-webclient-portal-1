@@ -10,13 +10,11 @@ function InlineToolIdentifierFilter(
     className,
     loadData,
     isLoading,
-    valueField,
   }) {
-  const validateAndSetData = (fieldName, selectedOption) => {
-    let newDataObject = filterModel;
-    newDataObject.setData("toolIdentifierName", selectedOption?.name);
-    newDataObject.setData(fieldName, selectedOption[valueField]);
-    loadData(newDataObject);
+  const setDataFunction = (fieldName, selectedOption) => {
+    filterModel.setData(fieldName, selectedOption?.identifier);
+    filterModel.setData("toolIdentifierName", selectedOption?.name);
+    loadData({...filterModel});
   };
 
   return (
@@ -26,7 +24,7 @@ function InlineToolIdentifierFilter(
       setFilterModel={setFilterModel}
       loadingData={isLoading}
       fieldName={fieldName}
-      setDataFunction={validateAndSetData}
+      setDataFunction={setDataFunction}
       inline={true}
     />
   );
@@ -40,12 +38,10 @@ InlineToolIdentifierFilter.propTypes = {
   fieldName: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
-  valueField: PropTypes.string,
 };
 
 InlineToolIdentifierFilter.defaultProps = {
   fieldName: "toolIdentifier",
-  valueField: "identifier",
 };
 
 export default InlineToolIdentifierFilter;

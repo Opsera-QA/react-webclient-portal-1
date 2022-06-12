@@ -7,8 +7,8 @@ export class FilterModelBase {
   constructor(metaData) {
     this.sessionDataKey = "";
     this.updateUrlWithQueryParameters = false;
-    this.metaData = {...metaData};
-    this.data = {...this.getNewObjectFields()};
+    this.metaData = { ...metaData };
+    this.data = { ...this.getNewObjectFields() };
   }
 
   getData = (fieldName) => {
@@ -21,12 +21,12 @@ export class FilterModelBase {
   };
 
   setData = (fieldName, newValue, updateQueryParameters = true) => {
-      this.data[fieldName] = newValue;
+    this.data[fieldName] = newValue;
 
-      if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
-        sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
-        this.updateBrowserStorage();
-      }
+    if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
+      sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
+      this.updateBrowserStorage();
+    }
   };
 
   updateBrowserStorage = () => {
@@ -51,7 +51,6 @@ export class FilterModelBase {
     }
 
     if (this.showPagination() === true) {
-      const pageSize =  sessionHelper.getStoredUrlParameter("pageSize");
 
       if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
         this.setData("pageSize", pageSize);
@@ -173,6 +172,8 @@ export class FilterModelBase {
         this.setData("tag", tag);
       }
     }
+
+    return parsedBrowserStorage;
   };
 
   getTotalCount = () => {
@@ -180,7 +181,7 @@ export class FilterModelBase {
   };
 
   setTotalCount = (newValue) => {
-   this.setData("totalCount", newValue);
+    this.setData("totalCount", newValue);
   };
 
   getPageSize = () => {
@@ -208,15 +209,14 @@ export class FilterModelBase {
 
     try {
       Object.keys(data).forEach(key => {
-        if (typeof data[key] == 'string') {
+        if (typeof data[key] == "string") {
           data[key] = data[key].trim();
         }
       });
 
       // save trimmed strings in data
       this.data = data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Could not parse object's strings. Sending unparsed data.");
       return this.data;
     }
@@ -227,7 +227,9 @@ export class FilterModelBase {
   getLabel = (fieldName) => {
     let fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
-    let field = fields.find(field => { return field.id === fieldName;});
+    let field = fields.find(field => {
+      return field.id === fieldName;
+    });
     return field ? field.label : "No label found in metadata";
   };
 
@@ -241,7 +243,7 @@ export class FilterModelBase {
     const searchKeyword = this.getData("search");
 
     if (this.canSearch() && hasStringValue(searchKeyword) === true) {
-      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
+      activeFilters.push({ filterId: "search", text: `Keywords: ${searchKeyword}` });
     }
 
     return activeFilters;
@@ -289,11 +291,11 @@ export class FilterModelBase {
 
   getPageSizes = () => {
     return [
-      {value: 25, text: "25 Results Per Page"},
-      {value: 50, text: "50 Results Per Page"},
-      {value: 100, text: "100 Results Per Page"},
-      {value: 150, text: "150 Results Per Page"},
-      {value: 200, text: "200 Results Per Page"},
+      { value: 25, text: "25 Results Per Page" },
+      { value: 50, text: "50 Results Per Page" },
+      { value: 100, text: "100 Results Per Page" },
+      { value: 150, text: "150 Results Per Page" },
+      { value: 200, text: "200 Results Per Page" },
     ];
   };
 
@@ -338,7 +340,9 @@ export class FilterModelBase {
   };
 
   getFieldById = (id) => {
-    return this.metaData?.fields.find(field => {return field.id === id; });
+    return this.metaData?.fields.find(field => {
+      return field.id === id;
+    });
   };
 
   getDefaultValue = (fieldName) => {
