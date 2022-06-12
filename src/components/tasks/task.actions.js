@@ -1,5 +1,4 @@
 import baseActions from "utils/actionsBase";
-import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 const taskActions = {};
 
