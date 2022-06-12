@@ -4,7 +4,6 @@ import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
-import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -17,6 +16,7 @@ import Col from "react-bootstrap/Col";
 import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
+import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 
 function PipelineTableCardView(
   {
@@ -25,14 +25,13 @@ function PipelineTableCardView(
     pipelineFilterModel,
     setPipelineFilterModel,
     loadData,
-    saveCookies,
     subscribedPipelineIds,
   }) {
   const history = useHistory();
 
   const getDynamicFilter = () => {
     if (pipelineFilterModel?.getData("type") !== "owner") {
-      return (<LdapOwnerFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mt-2"}/>);
+      return (<OwnerFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mt-2"}/>);
     }
   };
 
@@ -89,6 +88,7 @@ function PipelineTableCardView(
           <PipelineVerticalTabContainer
             pipelineFilterModel={pipelineFilterModel}
             isLoading={isLoading}
+            loadData={loadData}
           />
         </Col>
         <Col sm={10} className={"px-0"}>
@@ -143,7 +143,6 @@ function PipelineTableCardView(
         setFilterDto={setPipelineFilterModel}
         addRecordFunction={addPipeline}
         supportSearch={true}
-        saveCookies={saveCookies}
         supportViewToggle={true}
         isLoading={isLoading}
         metadata={pipelineSummaryMetadata}

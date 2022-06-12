@@ -8,8 +8,7 @@ function ViewToggle(
   {
     filterModel, 
     setFilterModel, 
-    saveCookies, 
-    supportViewToggle, 
+    supportViewToggle,
     className, 
     isLoading,
   }) {
@@ -44,10 +43,6 @@ function ViewToggle(
     const newViewType = filterModel.getData("viewType") === "list" ? "card" : "list";
     newFilterDto.setData("viewType", newViewType);
 
-    if (saveCookies) {
-      saveCookies(newFilterDto);
-    }
-
     setFilterModel({ ...newFilterDto });
   };
 
@@ -65,7 +60,6 @@ function ViewToggle(
 ViewToggle.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  saveCookies: PropTypes.func,
   supportViewToggle: PropTypes.bool,
   className: PropTypes.string,
   isLoading: PropTypes.bool

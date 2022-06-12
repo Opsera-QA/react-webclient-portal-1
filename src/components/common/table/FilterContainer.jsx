@@ -18,7 +18,6 @@ function FilterContainer(
     addRecordFunction,
     supportSearch,
     supportViewToggle,
-    saveCookies,
     className,
     metadata,
     exportButton,
@@ -44,7 +43,6 @@ function FilterContainer(
         addRecordFunction={addRecordFunction}
         type={type}
         metadata={metadata}
-        saveCookies={saveCookies}
         supportSearch={supportSearch}
         supportViewToggle={supportViewToggle}
         dropdownFilters={dropdownFilters}
@@ -122,7 +120,6 @@ FilterContainer.propTypes = {
   addRecordFunction: PropTypes.func,
   supportViewToggle: PropTypes.bool,
   inlineFilters: PropTypes.any,
-  saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
   metadata: PropTypes.object,

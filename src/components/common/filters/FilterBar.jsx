@@ -17,7 +17,6 @@ function FilterBar(
     setFilterModel,
     loadData,
     isLoading,
-    saveCookies,
     addRecordFunction,
     inlineFilters,
     supportSearch,
@@ -113,7 +112,6 @@ function FilterBar(
             supportViewToggle={supportViewToggle}
             filterModel={filterModel}
             setFilterModel={setFilterModel}
-            saveCookies={saveCookies}
             isLoading={isLoading}
             className={dropdownFilters != null || loadData != null ? "mr-2" : null}
           />
