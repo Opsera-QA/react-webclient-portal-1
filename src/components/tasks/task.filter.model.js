@@ -2,8 +2,6 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import sessionHelper from "utils/session.helper";
-import { numberHelpers } from "components/common/helpers/number/number.helpers";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const taskFilterMetadata = {
   type: "Task",
@@ -178,9 +176,7 @@ export class TaskFilterModel extends FilterModelBase {
   };
 
   unpackBrowserStorage = () => {
-    this.unpackCommonBrowserStorageFields();
-    const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
-    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+    const parsedBrowserStorage = this.unpackCommonBrowserStorageFields();
 
     if (parsedBrowserStorage) {
       const status = parsedBrowserStorage?.status;

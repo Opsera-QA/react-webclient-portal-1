@@ -80,7 +80,6 @@ function TaskManagement() {
       setTaskMetadata(taskMetadata);
       newFilterModel.updateTotalCount(response?.data?.count);
       newFilterModel.updateActiveFilters();
-      newFilterModel.updateBrowserStorage();
       setTaskFilterModel({...newFilterModel});
     }
   };
