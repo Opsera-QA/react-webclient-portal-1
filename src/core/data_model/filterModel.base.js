@@ -25,6 +25,7 @@ export class FilterModelBase {
 
       if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
         sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
+        this.updateBrowserStorage();
       }
   };
 
@@ -35,6 +36,143 @@ export class FilterModelBase {
 
     const currentData = this.getPersistData();
     sessionHelper.setStoredSessionValue(this.sessionDataKey, currentData);
+  };
+
+  unpackCommonUrlParameters = () => {
+    let hasUrlParams = false;
+
+    if (this.canSort() === true) {
+      const sortOption = sessionHelper.getStoredUrlParameter("sortOption");
+
+      if (hasStringValue(sortOption) === true) {
+        hasUrlParams = true;
+        this.setData("sortOption", sortOption);
+      }
+    }
+
+    if (this.showPagination() === true) {
+      const pageSize =  sessionHelper.getStoredUrlParameter("pageSize");
+
+      if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
+        this.setData("pageSize", pageSize);
+      }
+
+      const currentPage = sessionHelper.getStoredUrlParameter("currentPage");
+
+      if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
+        hasUrlParams = true;
+        this.setData("currentPage", currentPage);
+      }
+    }
+
+    if (this.canSearch() === true) {
+      const search = sessionHelper.getStoredUrlParameter("search");
+
+      if (hasStringValue(search) === true) {
+        hasUrlParams = true;
+        this.setData("search", search);
+      }
+    }
+
+    if (this.canToggleView() === true) {
+      const viewType = sessionHelper.getStoredUrlParameter("viewType");
+
+      if (hasStringValue(viewType) === true) {
+        hasUrlParams = true;
+        this.setData("viewType", viewType);
+      }
+    }
+
+    const owner = sessionHelper.getStoredUrlParameter("owner");
+    const ownerName = sessionHelper.getStoredUrlParameter("ownerName");
+
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+      this.setData("owner", owner);
+      this.setData("ownerName", ownerName);
+    }
+
+    const active = sessionHelper.getStoredUrlParameter("active");
+
+    if (hasStringValue(active) === true) {
+      hasUrlParams = true;
+      this.setData("active", active);
+    }
+
+    const tag = sessionHelper.getStoredUrlParameter("tag");
+
+    if (hasStringValue(tag) === true) {
+      hasUrlParams = true;
+      this.setData("tag", tag);
+    }
+
+
+    return hasUrlParams;
+  };
+
+  unpackCommonBrowserStorageFields = () => {
+    const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
+    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+
+    if (parsedBrowserStorage) {
+
+      if (this.canSort() === true) {
+        const sortOption = parsedBrowserStorage?.sortOption;
+
+        if (hasStringValue(sortOption) === true) {
+          this.setData("sortOption", sortOption);
+        }
+      }
+
+      if (this.canSearch() === true) {
+        const search = parsedBrowserStorage?.search;
+
+        if (hasStringValue(search) === true) {
+          this.setData("search", search);
+        }
+      }
+
+      if (this.canToggleView() === true) {
+        const viewType = parsedBrowserStorage?.viewType;
+
+        if (hasStringValue(viewType) === true) {
+          this.setData("viewType", viewType);
+        }
+      }
+
+      if (this.showPagination() === true) {
+        const pageSize = parsedBrowserStorage?.pageSize;
+
+        if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
+          this.setData("pageSize", pageSize);
+        }
+
+        const currentPage = parsedBrowserStorage?.currentPage;
+
+        if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
+          this.setData("currentPage", currentPage);
+        }
+      }
+
+      const owner = parsedBrowserStorage?.owner;
+      const ownerName = parsedBrowserStorage?.ownerName;
+
+      if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+        this.setData("owner", owner);
+        this.setData("ownerName", ownerName);
+      }
+
+      const active = parsedBrowserStorage?.active;
+
+      if (hasStringValue(active) === true) {
+        this.setData("active", active);
+      }
+
+      const tag = parsedBrowserStorage?.tag;
+
+      if (hasStringValue(tag) === true) {
+        this.setData("tag", tag);
+      }
+    }
   };
 
   getTotalCount = () => {
@@ -142,6 +280,10 @@ export class FilterModelBase {
   };
 
   showPagination = () => {
+    return false;
+  };
+
+  canToggleView = () => {
     return false;
   };
 

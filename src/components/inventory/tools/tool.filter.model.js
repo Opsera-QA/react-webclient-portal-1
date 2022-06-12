@@ -2,7 +2,6 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import { numberHelpers } from "components/common/helpers/number/number.helpers";
 
 const toolFilterMetadata = {
   idProperty: "_id",
@@ -122,6 +121,10 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   };
 
+  canToggleView = () => {
+    return true;
+  }
+
   getDetailViewLink = (toolId) => {
     return `/inventory/tools/details/${toolId}`;
   };
@@ -138,41 +141,7 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   unpackUrlParameters = () => {
-    let hasUrlParams = false;
-
-    const sortOption = sessionHelper.getStoredUrlParameter("sortOption");
-
-    if (hasStringValue(sortOption) === true) {
-      hasUrlParams = true;
-      this.setData("sortOption", sortOption);
-    }
-
-    const pageSize =  sessionHelper.getStoredUrlParameter("pageSize");
-
-    if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
-      this.setData("pageSize", pageSize);
-    }
-
-    const currentPage = sessionHelper.getStoredUrlParameter("currentPage");
-
-    if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
-      hasUrlParams = true;
-      this.setData("currentPage", currentPage);
-    }
-
-    const search = sessionHelper.getStoredUrlParameter("search");
-
-    if (hasStringValue(search) === true) {
-      hasUrlParams = true;
-      this.setData("search", search);
-    }
-
-    const viewType = sessionHelper.getStoredUrlParameter("viewType");
-
-    if (hasStringValue(viewType) === true) {
-      hasUrlParams = true;
-      this.setData("viewType", viewType);
-    }
+    let hasUrlParams = this.unpackCommonUrlParameters();
 
     const status = sessionHelper.getStoredUrlParameter("status");
 
@@ -190,61 +159,17 @@ export class ToolFilterModel extends FilterModelBase {
       this.setData("toolIdentifierName", toolIdentifierName);
     }
 
-    const tag = sessionHelper.getStoredUrlParameter("tag");
-
-    if (hasStringValue(tag) === true) {
-      hasUrlParams = true;
-      this.setData("tag", tag);
-    }
-
-    const owner = sessionHelper.getStoredUrlParameter("owner");
-    const ownerName = sessionHelper.getStoredUrlParameter("ownerName");
-
-    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
-      this.setData("owner", owner);
-      this.setData("ownerName", ownerName);
-    }
-
     if (hasUrlParams !== true) {
       this.unpackBrowserStorage();
     }
   };
 
   unpackBrowserStorage = () => {
+    this.unpackCommonBrowserStorageFields();
     const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
     const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
 
     if (parsedBrowserStorage) {
-      const pageSize = parsedBrowserStorage?.pageSize;
-
-      if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
-        this.setData("pageSize", pageSize);
-      }
-
-      const currentPage = parsedBrowserStorage?.currentPage;
-
-      if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
-        this.setData("currentPage", currentPage);
-      }
-
-      const sortOption = parsedBrowserStorage?.sortOption;
-
-      if (hasStringValue(sortOption) === true) {
-        this.setData("sortOption", sortOption);
-      }
-
-      const search = parsedBrowserStorage?.search;
-
-      if (hasStringValue(search) === true) {
-        this.setData("search", search);
-      }
-
-      const viewType = parsedBrowserStorage?.viewType;
-
-      if (hasStringValue(viewType) === true) {
-        this.setData("viewType", viewType);
-      }
-
       const status = parsedBrowserStorage?.status;
 
       if (hasStringValue(status) === true) {
@@ -257,20 +182,6 @@ export class ToolFilterModel extends FilterModelBase {
       if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
         this.setData("toolIdentifier", toolIdentifier);
         this.setData("toolIdentifierName", toolIdentifierName);
-      }
-
-      const tag = parsedBrowserStorage?.tag;
-
-      if (hasStringValue(tag) === true) {
-        this.setData("tag", tag);
-      }
-
-      const owner = parsedBrowserStorage?.owner;
-      const ownerName = parsedBrowserStorage?.ownerName;
-
-      if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
-        this.setData("owner", owner);
-        this.setData("ownerName", ownerName);
       }
     }
   };

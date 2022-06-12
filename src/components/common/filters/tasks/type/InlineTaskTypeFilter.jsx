@@ -7,6 +7,7 @@ function InlineTaskTypeFilter({ filterModel, setFilterModel, className, fieldNam
     let newModel = filterModel;
     newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("category", "");
+    newModel.setData("currentPage", 1);
     loadData(newModel);
   };
 
