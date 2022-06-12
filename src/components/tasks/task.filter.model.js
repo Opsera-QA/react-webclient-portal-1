@@ -2,6 +2,7 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import sessionHelper from "utils/session.helper";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const taskFilterMetadata = {
   type: "Task",

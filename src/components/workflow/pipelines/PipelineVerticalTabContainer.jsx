@@ -4,15 +4,12 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import {faBracketsCurly, faDraftingCompass, faMicrochip, faUser, faRss} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import cookieHelpers from "core/cookies/cookie-helpers";
-import {useHistory} from "react-router-dom";
 
-function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
-  const history = useHistory();
-
+function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel, loadData }) {
   const handleTabClick = (tab) => {
-    cookieHelpers.setCookie("pipelines", "selectedTab", tab);
-    history.push(`/workflow/${tab}`);
+    pipelineFilterModel?.setData("type", tab);
+    pipelineFilterModel?.setData("currentPage", 1);
+    loadData({...pipelineFilterModel});
   };
 
   return (
@@ -78,6 +75,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel }) {
 PipelineVerticalTabContainer.propTypes = {
   isLoading: PropTypes.bool,
   pipelineFilterModel: PropTypes.object,
+  loadData: PropTypes.func,
 };
 
 export default PipelineVerticalTabContainer;

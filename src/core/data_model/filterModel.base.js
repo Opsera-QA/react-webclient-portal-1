@@ -51,6 +51,7 @@ export class FilterModelBase {
     }
 
     if (this.showPagination() === true) {
+      const pageSize = sessionHelper.getStoredUrlParameter("pageSize");
 
       if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
         this.setData("pageSize", pageSize);

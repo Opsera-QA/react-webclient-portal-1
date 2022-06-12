@@ -1,27 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import cookieHelpers from "core/cookies/cookie-helpers";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import axios from "axios";
-import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineTableCardView from "components/workflow/pipelines/PipelineTableCardView";
 import PipelinesHelpDocumentation from "../../common/help/documentation/pipelines/PipelinesHelpDocumentation";
-
-const unpackTab = (tab) => {
-  if (tab != null) {
-    return tab;
-  } else {
-    let storedTab = cookieHelpers.getCookie("pipelines", "selectedTab");
-    return storedTab != null ? storedTab : "owner";
-  }
-};
+import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 
 function Pipelines() {
-  const { tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [pipelines, setPipelines] = useState([]);
@@ -39,8 +27,9 @@ function Pipelines() {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    const newPipelineFilterModel = new PipelineFilterModel(getAccessToken, source, loadData);
 
-    getCookie(source).catch((error) => {
+    loadData(newPipelineFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -50,57 +39,13 @@ function Pipelines() {
       source.cancel();
       isMounted.current = false;
     };
-  }, [tab]);
-
-
-  const getCookie = async (cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-    const newTab = unpackTab(tab);
-    let newPipelineFilterModel = new PipelineFilterModel(getAccessToken, cancelTokenSource, loadData);
-    newPipelineFilterModel?.setData("type", newTab);
-    try {
-      let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
-      let storedPageSize = cookieHelpers.getCookie("pipelines-v2", "pageSize");
-      let storedViewType = cookieHelpers.getCookie("pipelines-v2", "viewType");
-
-      if (isMounted?.current === true && storedSortOption != null) {
-        newPipelineFilterModel.setData("sortOption", JSON.parse(storedSortOption));
-      }
-
-      if (isMounted?.current === true && storedPageSize != null) {
-        newPipelineFilterModel.setData("pageSize", JSON.parse(storedPageSize));
-      }
-
-      if (isMounted?.current === true && storedViewType != null) {
-        newPipelineFilterModel.setData("viewType", JSON.parse(storedViewType));
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
-        cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
-        cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
-        console.error("Error loading cookie. Setting to default");
-        console.error(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        await loadData(newPipelineFilterModel, cancelSource);
-      }
-    }
-  };
-
-  const saveCookies = (newPipelineFilterModel) => {
-    cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterModel.getData("sortOption")));
-    cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterModel.getData("pageSize")));
-    cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterModel.getData("viewType")));
-  };
+  }, []);
 
   const loadData = async (newPipelineFilterModel = pipelineFilterModel, cancelSource = cancelTokenSource) => {
     try {
       if (isMounted?.current === true) {
         setIsLoading(true);
         setPipelines([]);
-        saveCookies(newPipelineFilterModel);
       }
 
       const pipelineFields = ["type", "_id", "name", "owner", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
@@ -109,11 +54,10 @@ function Pipelines() {
 
       if (isMounted?.current === true && Array.isArray(pipelines)) {
         setPipelines([...pipelines]);
-        let newFilterDto = newPipelineFilterModel;
-        newFilterDto.setData("totalCount", response?.data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto?.getActiveFilters());
+        newPipelineFilterModel.updateTotalCount(response?.data?.count);
+        newPipelineFilterModel.updateActiveFilters();
         setSubscribedPipelineIds(response?.data?.subscriptions);
-        setPipelineFilterModel({...newFilterDto});
+        setPipelineFilterModel({...newPipelineFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -141,7 +85,6 @@ function Pipelines() {
         pipelineFilterModel={pipelineFilterModel}
         setPipelineFilterModel={setPipelineFilterModel}
         loadData={loadData}
-        saveCookies={saveCookies}
         subscribedPipelineIds={subscribedPipelineIds}
       />
     </ScreenContainer>
