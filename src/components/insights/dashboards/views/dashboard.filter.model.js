@@ -1,22 +1,21 @@
 import FilterModelBase from "core/data_model/filterModel.base";
-import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
-import { getTaskTypeLabel } from "components/tasks/task.types";
+import sessionHelper from "utils/session.helper";
 
-const pipelineFilterMetadata = {
-  type: "Pipeline",
+const dashboardFilterMetadata = {
+  type: "Dashboard",
   fields: [
-    {
-      label: "Active",
-      id: "active",
-    },
     {
       label: "Status",
       id: "status",
     },
     {
-      label: "Type",
+      label: "Dashboard Type",
       id: "type",
+    },
+    {
+      label: "Owner",
+      id: "owner",
     },
     {
       label: "Page Size",
@@ -31,14 +30,6 @@ const pipelineFilterMetadata = {
       id: "sortOption",
     },
     {
-      label: "Owner",
-      id: "owner",
-    },
-    {
-      label: "Tag",
-      id: "tag",
-    },
-    {
       label: "Search",
       id: "search",
     },
@@ -46,27 +37,29 @@ const pipelineFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
+    {
+      label: "Favorites",
+      id: "isFavorite",
+    },
   ],
   newObjectFields: {
-    pageSize: 25,
+    pageSize: 50,
     currentPage: 1,
     sortOption: "name",
     search: "",
-    activeFilters: [],
-    viewType: "list",
-    category: "",
     status: "",
-    active: "",
+    owner: "",
+    type: "",
+    isFavorite: "",
+    activeFilters: []
   },
 };
 
-export class PipelineFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData) {
-    super(pipelineFilterMetadata);
+export class DashboardFilterModel extends FilterModelBase {
+  constructor(getAccessToken) {
+    super(dashboardFilterMetadata);
     this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.sessionDataKey = "pipeline-filter-model-data";
+    this.sessionDataKey = "dashboard-filter-model-data";
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }
@@ -83,8 +76,9 @@ export class PipelineFilterModel extends FilterModelBase {
     return true;
   };
 
+  // TODO: Add card view
   canToggleView = () => {
-    return true;
+    return false;
   }
 
   getActiveFilters = () => {
@@ -96,33 +90,23 @@ export class PipelineFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    const active = this.getData("active");
+    const search = this.getData("search");
 
-    if (hasStringValue(active) === true) {
-      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
+    if (hasStringValue(search) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
     }
 
-    const tag = this.getData("tag");
-
-    if (hasStringValue(tag) === true) {
-      const tagArray = tag.split(":");
-
-      if (Array.isArray(tagArray) && tagArray.length === 2) {
-        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
-      }
-    }
-
-    const searchKeyword = this.getData("search");
-
-    if (hasStringValue(searchKeyword) === true) {
-      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
-    }
-
-    const ownerName = this.getData("ownerName");
     const owner = this.getData("owner");
+    const ownerName = this.getData("ownerName");
 
     if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
       activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
+    }
+
+    const isFavorite = this.getData("isFavorite");
+
+    if (hasStringValue(isFavorite) === true) {
+      activeFilters.push({filterId: "isFavorite", text: `Only Show Favorites`});
     }
 
     return activeFilters;
@@ -131,12 +115,11 @@ export class PipelineFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest Pipelines", value: "oldest"},
-        {text: "Newest Pipelines", value: "newest"},
-        {text: "Pipeline Name (A-Za-z)", value: "name"},
-        {text: "Pipeline Name (z-aZ-A)", value: "name-descending"},
-        {text: "Updated (Latest)", value: "last-updated"},
-        {text: "Updated (Earliest)", value: "earliest-updated"},
+        {text: "Oldest Dashboards", value: "oldest"},
+        {text: "Newest Dashboards", value: "newest"},
+        {text: "Dashboard Name (A-Za-z)", value: "name"},
+        {text: "Dashboard Name (z-aZ-A)", value: "name-descending"},
+        {text: "Last Updated", value: "last-updated"},
       ]
     );
   };
@@ -158,6 +141,13 @@ export class PipelineFilterModel extends FilterModelBase {
       this.setData("type", taskType);
     }
 
+    const isFavorite = sessionHelper.getStoredUrlParameter("isFavorite");
+
+    if (hasStringValue(isFavorite) === true) {
+      hasUrlParams = true;
+      this.setData("isFavorite", isFavorite);
+    }
+
     if (hasUrlParams !== true) {
       this.unpackBrowserStorage();
     }
@@ -173,21 +163,21 @@ export class PipelineFilterModel extends FilterModelBase {
         this.setData("status", status);
       }
 
-      const category = parsedBrowserStorage?.category;
-
-      if (hasStringValue(category) === true) {
-        this.setData("category", category);
-      }
-
       const type = parsedBrowserStorage?.type;
 
       if (hasStringValue(type) === true) {
         this.setData("type", type);
       }
+
+      const isFavorite = parsedBrowserStorage?.isFavorite;
+
+      if (hasStringValue(isFavorite) === true) {
+        this.setData("isFavorite", isFavorite);
+      }
     }
   };
 }
 
-export default PipelineFilterModel;
+export default DashboardFilterModel;
 
 
