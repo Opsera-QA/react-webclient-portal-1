@@ -50,18 +50,14 @@ adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status
 };
 
 adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
-  let sortOption = tagFilterDto.getData("sortOption");
-  let type = tagFilterDto.getData("type");
-  let status = tagFilterDto.getData("status");
-
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
-      size: tagFilterDto.getData("pageSize"),
-      page: tagFilterDto.getData("currentPage"),
-      type: type ? type.value : undefined,
-      status: status ? status.value : undefined,
+      sort: tagFilterDto.getFilterValue("sortOption"),
+      size: tagFilterDto.getFilterValue("pageSize"),
+      page: tagFilterDto.getFilterValue("currentPage"),
+      type: tagFilterDto.getFilterValue("type"),
+      status: tagFilterDto.getFilterValue("status"),
       search: tagFilterDto.getData("search")
     },
   };

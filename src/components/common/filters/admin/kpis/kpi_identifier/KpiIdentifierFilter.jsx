@@ -90,14 +90,14 @@ KpiIdentifierFilter.propTypes = {
   valueField: PropTypes.string,
   status: PropTypes.string,
   policySupport: PropTypes.string,
-  manualDataEntry: PropTypes.bool
+  manualDataEntry: PropTypes.bool,
 };
 
 KpiIdentifierFilter.defaultProps = {
   fieldName: "identifier",
   textField: "name",
   valueField: "identifier",
-  status: "active"
+  status: "active",
 };
 
 export default KpiIdentifierFilter;

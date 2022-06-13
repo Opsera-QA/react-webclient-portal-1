@@ -1,22 +1,21 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
-import { getTaskTypeLabel } from "components/tasks/task.types";
 import sessionHelper from "utils/session.helper";
 
-const taskFilterMetadata = {
-  type: "Task",
+const dashboardFilterMetadata = {
+  type: "Dashboard",
   fields: [
-    {
-      label: "Active",
-      id: "active",
-    },
     {
       label: "Status",
       id: "status",
     },
     {
-      label: "Type",
+      label: "Dashboard Type",
       id: "type",
+    },
+    {
+      label: "Owner",
+      id: "owner",
     },
     {
       label: "Page Size",
@@ -31,14 +30,6 @@ const taskFilterMetadata = {
       id: "sortOption",
     },
     {
-      label: "Owner",
-      id: "owner",
-    },
-    {
-      label: "Tag",
-      id: "tag",
-    },
-    {
       label: "Search",
       id: "search",
     },
@@ -46,27 +37,29 @@ const taskFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
+    {
+      label: "Favorites",
+      id: "isFavorite",
+    },
   ],
   newObjectFields: {
-    pageSize: 100,
+    pageSize: 50,
     currentPage: 1,
     sortOption: "name",
     search: "",
-    activeFilters: [],
-    viewType: "list",
-    category: "",
     status: "",
-    active: "",
+    owner: "",
+    type: "",
+    isFavorite: "",
+    activeFilters: []
   },
 };
 
-export class TaskFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData) {
-    super(taskFilterMetadata);
+export class DashboardFilterModel extends FilterModelBase {
+  constructor(getAccessToken) {
+    super(dashboardFilterMetadata);
     this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.sessionDataKey = "task-filter-model-data";
+    this.sessionDataKey = "dashboard-filter-model-data";
     // this.enableUrlUpdatesWithQueryParameters();
     // this.unpackUrlParameters();
   }
@@ -79,6 +72,15 @@ export class TaskFilterModel extends FilterModelBase {
     return true;
   };
 
+  canSort = () => {
+    return true;
+  };
+
+  // TODO: Add card view
+  canToggleView = () => {
+    return false;
+  }
+
   getActiveFilters = () => {
     const activeFilters = [];
 
@@ -88,63 +90,39 @@ export class TaskFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    const active = this.getData("active");
+    const search = this.getData("search");
 
-    if (hasStringValue(active) === true) {
-      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
+    if (hasStringValue(search) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
     }
 
-    const type = this.getData("type");
-
-    if (hasStringValue(type) === true) {
-      activeFilters.push({filterId: "type", text: `Type: ${getTaskTypeLabel(type)}`});
-    }
-
-    const tag = this.getData("tag");
-
-    if (hasStringValue(tag) === true) {
-      const tagArray = tag.split(":");
-
-      if (Array.isArray(tagArray) && tagArray.length === 2) {
-        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
-      }
-    }
-
-    const searchKeyword = this.getData("search");
-
-    if (hasStringValue(searchKeyword) === true) {
-      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
-    }
-
-    const ownerName = this.getData("ownerName");
     const owner = this.getData("owner");
+    const ownerName = this.getData("ownerName");
 
     if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
       activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
     }
 
-    return activeFilters;
-  };
+    const isFavorite = this.getData("isFavorite");
 
-  canSort = () => {
-    return true;
+    if (hasStringValue(isFavorite) === true) {
+      activeFilters.push({filterId: "isFavorite", text: `Only Show Favorites`});
+    }
+
+    return activeFilters;
   };
 
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest Tasks", value: "oldest"},
-        {text: "Newest Tasks", value: "newest"},
-        {text: "Task Name (A-Za-z)", value: "name"},
-        {text: "Task Name (z-aZ-A)", value: "name-descending"},
+        {text: "Oldest Dashboards", value: "oldest"},
+        {text: "Newest Dashboards", value: "newest"},
+        {text: "Dashboard Name (A-Za-z)", value: "name"},
+        {text: "Dashboard Name (z-aZ-A)", value: "name-descending"},
         {text: "Last Updated", value: "last-updated"},
       ]
     );
   };
-
-  canToggleView = () => {
-    return true;
-  }
 
   unpackUrlParameters = () => {
     let hasUrlParams = this.unpackCommonUrlParameters();
@@ -156,18 +134,18 @@ export class TaskFilterModel extends FilterModelBase {
       this.setData("status", status);
     }
 
-    const category = sessionHelper.getStoredUrlParameter("category");
-
-    if (hasStringValue(category) === true) {
-      hasUrlParams = true;
-      this.setData("category", category);
-    }
-
     const taskType = sessionHelper.getStoredUrlParameter("type");
 
     if (hasStringValue(taskType) === true) {
       hasUrlParams = true;
       this.setData("type", taskType);
+    }
+
+    const isFavorite = sessionHelper.getStoredUrlParameter("isFavorite");
+
+    if (hasStringValue(isFavorite) === true) {
+      hasUrlParams = true;
+      this.setData("isFavorite", isFavorite);
     }
 
     if (hasUrlParams !== true) {
@@ -185,21 +163,21 @@ export class TaskFilterModel extends FilterModelBase {
         this.setData("status", status);
       }
 
-      const category = parsedBrowserStorage?.category;
-
-      if (hasStringValue(category) === true) {
-        this.setData("category", category);
-      }
-
       const type = parsedBrowserStorage?.type;
 
       if (hasStringValue(type) === true) {
         this.setData("type", type);
       }
+
+      const isFavorite = parsedBrowserStorage?.isFavorite;
+
+      if (hasStringValue(isFavorite) === true) {
+        this.setData("isFavorite", isFavorite);
+      }
     }
   };
 }
 
-export default TaskFilterModel;
+export default DashboardFilterModel;
 
 

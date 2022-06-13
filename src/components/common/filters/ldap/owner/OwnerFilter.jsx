@@ -11,7 +11,7 @@ function OwnerFilter(
   const setDataFunction = (fieldName, selectedOption) => {
     filterModel.setData(fieldName, selectedOption?.value);
     filterModel.setData("ownerName", selectedOption?.text);
-    setFilterModel(filterModel);
+    setFilterModel({...filterModel});
   };
 
   return (

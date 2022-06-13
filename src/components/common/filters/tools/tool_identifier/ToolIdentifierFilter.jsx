@@ -6,7 +6,16 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import axios from "axios";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 
-function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline, loadingData }) {
+function ToolIdentifierFilter(
+  {
+    filterModel,
+    setFilterModel,
+    fieldName,
+    setDataFunction,
+    className,
+    inline,
+    loadingData,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
@@ -37,6 +46,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setToolIdentifiers([]);
       setIsLoading(true);
       await getToolIdentifiers(cancelSource);
     }
@@ -56,25 +66,12 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     const toolResponse = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
     const toolIdentifiers = toolResponse?.data?.data;
 
-    // TODO: Rewrite this to not construct objects
-    if (isMounted?.current === true && Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0) {
-      const toolIdentifierOptions = [];
-
-      toolIdentifiers.map((toolIdentifier, index) => {
-        toolIdentifierOptions.push({
-          text: `${toolIdentifier["name"]}`,
-          value: `${toolIdentifier["identifier"]}`,
-          tool_type: `${toolIdentifier["tool_type_name"]}`,
-        });
-      });
-
-      if (isMounted?.current === true) {
-        setToolIdentifiers(toolIdentifierOptions);
-      }
+    if (isMounted?.current === true && Array.isArray(toolIdentifiers)) {
+      setToolIdentifiers(toolIdentifiers);
     }
   };
 
-  if (filterDto == null) {
+  if (filterModel == null) {
     return null;
   }
 
@@ -85,9 +82,11 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
       fieldName={fieldName}
       inline={inline}
       disabled={loadingData}
-      groupBy={"tool_type"}
-      setDataObject={setFilterDto}
-      dataObject={filterDto}
+      groupBy={"tool_type_name"}
+      textField={"name"}
+      valueField={"identifier"}
+      setDataObject={setFilterModel}
+      dataObject={filterModel}
       setDataFunction={setDataFunction}
       selectOptions={toolIdentifiers}
       className={className}
@@ -97,8 +96,8 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
 
 
 ToolIdentifierFilter.propTypes = {
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
   className: PropTypes.string,

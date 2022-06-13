@@ -7,11 +7,11 @@ import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
+import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 
 function ToolTableCardView(
   {
@@ -21,7 +21,6 @@ function ToolTableCardView(
     isLoading,
     loadData,
     tools,
-    saveCookies,
     customerAccessRules,
     roleDefinitions,
     isMounted
@@ -48,9 +47,20 @@ function ToolTableCardView(
   const getDropdownFilters = () => {
     return(
       <>
-        <ActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
-        <LdapOwnerFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} className="mb-2" />
-        <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <ActiveFilter
+          filterDto={toolFilterDto}
+          setFilterDto={setToolFilterDto}
+          className={"mb-2"}
+        />
+        <OwnerFilter
+          filterModel={toolFilterDto}
+          setFilterModel={setToolFilterDto}
+          className={"mb-2"}
+        />
+        <TagFilter
+          filterDto={toolFilterDto}
+          setFilterDto={setToolFilterDto}
+        />
       </>
     );
   };
@@ -113,7 +123,6 @@ function ToolTableCardView(
         setFilterDto={setToolFilterDto}
         addRecordFunction={getCreateNewToolFunction()}
         supportSearch={true}
-        saveCookies={saveCookies}
         supportViewToggle={true}
         isLoading={isLoading}
         metadata={toolMetadata}

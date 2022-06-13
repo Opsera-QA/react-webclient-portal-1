@@ -18,7 +18,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new ToolFilterModel());
+  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -30,6 +30,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setToolIdentifierFilterModel(new ToolFilterModel());
 
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {

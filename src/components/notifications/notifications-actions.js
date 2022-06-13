@@ -40,22 +40,19 @@ notificationsActions.createNotificationV2 = async (getAccessToken, cancelTokenSo
 };
 
 notificationsActions.getNotificationsListV2 = async (getAccessToken, cancelTokenSource, notificationFilterModel) => {
-  let sortOption = notificationFilterModel?.getData("sortOption");
-
-  let urlParams = {
+  const apiUrl = `/notifications`;
+  const urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
-      page: notificationFilterModel?.getData("currentPage"),
-      size: notificationFilterModel?.getData("pageSize"),
+      sort: notificationFilterModel?.getFilterValue("sortOption"),
+      page: notificationFilterModel?.getFilterValue("currentPage"),
+      size: notificationFilterModel?.getFilterValue("pageSize"),
       tag: notificationFilterModel?.getFilterValue("tag"),
       type: notificationFilterModel?.getFilterValue("type"),
       status: notificationFilterModel?.getFilterValue("status"),
-      tool: notificationFilterModel?.getFilterValue("toolIdentifier"),
       search: notificationFilterModel?.getFilterValue("search")
     }
   };
 
-  const apiUrl = `/notifications`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource,  apiUrl, urlParams);
 };
 
@@ -71,12 +68,11 @@ notificationsActions.getNotificationByIdV2 = async (getAccessToken, cancelTokenS
 
 notificationsActions.getNotificationActivityLogsV2 = async (getAccessToken, cancelTokenSource, notificationId, notificationActivityFilterDto) => {
   const apiUrl = `/notifications/logs/${notificationId}`;
-  const sortOption = notificationActivityFilterDto?.getData("sortOption");
   let urlParams = {
     params: {
-      sort: notificationActivityFilterDto ? sortOption.value : undefined,
-      page: notificationActivityFilterDto?.getData("currentPage"),
-      size: notificationActivityFilterDto?.getData("pageSize"),
+      sort: notificationActivityFilterDto?.getFilterValue("sortOption"),
+      page: notificationActivityFilterDto?.getFilterValue("currentPage"),
+      size: notificationActivityFilterDto?.getFilterValue("pageSize"),
       tag: notificationActivityFilterDto?.getFilterValue("tag"),
       type: notificationActivityFilterDto?.getFilterValue("type"),
       status: notificationActivityFilterDto?.getFilterValue("status"),

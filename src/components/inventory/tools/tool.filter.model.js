@@ -1,5 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+import sessionHelper from "utils/session.helper";
 
 const toolFilterMetadata = {
   idProperty: "_id",
@@ -12,6 +13,10 @@ const toolFilterMetadata = {
     {
       label: "Tool Identifier",
       id: "toolIdentifier",
+    },
+    {
+      label: "Tool Identifier",
+      id: "toolIdentifierName",
     },
     {
       label: "Page Size",
@@ -30,6 +35,10 @@ const toolFilterMetadata = {
       id: "owner"
     },
     {
+      label: "Owner",
+      id: "ownerName"
+    },
+    {
       label: "Tag",
       id: "tag",
     },
@@ -45,8 +54,15 @@ const toolFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Name", option: "name"},
+    totalCount: 0,
+    sortOption: "name",
     search: "",
+    status: "",
+    toolIdentifier: "",
+    toolIdentifierName: "",
+    owner: "",
+    ownerName: "",
+    tag: "",
     activeFilters: [],
     viewType: "card",
   },
@@ -55,6 +71,9 @@ const toolFilterMetadata = {
 export class ToolFilterModel extends FilterModelBase {
   constructor() {
     super(toolFilterMetadata);
+    this.sessionDataKey = "tool-filter-model-data";
+    // this.enableUrlUpdatesWithQueryParameters();
+    // this.unpackUrlParameters();
   }
 
   canSearch = () => {
@@ -66,27 +85,42 @@ export class ToolFilterModel extends FilterModelBase {
   };
 
   getActiveFilters = () => {
-    let activeFilters = [];
+    const activeFilters = [];
 
-    if (this.getData("status") != null) {
-      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(this.getFilterValue("status"))}`});
+    const status = this.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (this.getData("toolIdentifier") != null) {
-      activeFilters.push({filterId: "toolIdentifier", text: `Tool: ${this.getData("toolIdentifier")["text"]}`});
+    const toolIdentifier =  this.getData("toolIdentifier");
+    const toolIdentifierName =  this.getData("toolIdentifierName");
+
+    if (hasStringValue(toolIdentifierName) === true && hasStringValue(toolIdentifier) === true) {
+      activeFilters.push({filterId: "toolIdentifier", text: `Tool: ${toolIdentifierName}`});
     }
 
-    if (this.getData("tag") != null) {
-      const tag = this.getData("tag");
-      activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
+    const tag = this.getData("tag");
+
+    if (hasStringValue(tag) === true) {
+      const tagArray = tag.split(":");
+
+      if (Array.isArray(tagArray) && tagArray.length === 2) {
+        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
+      }
     }
 
-    if (this.getData("owner") != null) {
-      activeFilters.push({filterId: "owner", text: `Owner: ${this.getFilterText("owner")}`});
+    const ownerName = this.getData("ownerName");
+    const owner = this.getData("owner");
+
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+      activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
     }
 
-    if (this.getData("search") != null && this.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
+    const searchKeyword = this.getData("search");
+
+    if (hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
     }
 
     return activeFilters;
@@ -96,6 +130,11 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   };
 
+  canToggleView = () => {
+    return true;
+  }
+
+  // TODO: This probably shouldn't be here
   getDetailViewLink = (toolId) => {
     return `/inventory/tools/details/${toolId}`;
   };
@@ -103,12 +142,57 @@ export class ToolFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", option: "oldest"},
-        {text: "Newest", option: "newest"},
-        {text: "Name", option: "name"},
-        {text: "Last Updated", option: "lastupdated"},
+        {text: "Oldest", value: "oldest"},
+        {text: "Newest", value: "newest"},
+        {text: "Tool Name (A-Za-z)", value: "name"},
+        {text: "Tool Name (z-aZ-A)", value: "name-descending"},
+        {text: "Last Updated", value: "last-updated"},
       ]
     );
+  };
+
+  unpackUrlParameters = () => {
+    let hasUrlParams = this.unpackCommonUrlParameters();
+
+    const status = sessionHelper.getStoredUrlParameter("status");
+
+    if (hasStringValue(status) === true) {
+      hasUrlParams = true;
+      this.setData("status", status);
+    }
+
+    const toolIdentifier = sessionHelper.getStoredUrlParameter("toolIdentifier");
+    const toolIdentifierName = sessionHelper.getStoredUrlParameter("toolIdentifierName");
+
+    if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
+      hasUrlParams = true;
+      this.setData("toolIdentifier", toolIdentifier);
+      this.setData("toolIdentifierName", toolIdentifierName);
+    }
+
+    if (hasUrlParams !== true) {
+      this.unpackBrowserStorage();
+    }
+  };
+
+  unpackBrowserStorage = () => {
+    const parsedBrowserStorage = this.unpackCommonBrowserStorageFields();
+
+    if (parsedBrowserStorage) {
+      const status = parsedBrowserStorage?.status;
+
+      if (hasStringValue(status) === true) {
+        this.setData("status", status);
+      }
+
+      const toolIdentifier = parsedBrowserStorage?.toolIdentifier;
+      const toolIdentifierName = parsedBrowserStorage?.toolIdentifierName;
+
+      if (hasStringValue(toolIdentifier) === true && hasStringValue(toolIdentifierName) === true) {
+        this.setData("toolIdentifier", toolIdentifier);
+        this.setData("toolIdentifierName", toolIdentifierName);
+      }
+    }
   };
 }
 

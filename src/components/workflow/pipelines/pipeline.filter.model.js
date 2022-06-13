@@ -1,4 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
+import sessionHelper from "utils/session.helper";
+import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -47,7 +50,7 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { value: "name", text: "Pipeline Name (A-Za-z)"},
+    sortOption: "name",
     search: "",
     activeFilters: [],
     viewType: "list",
@@ -63,6 +66,9 @@ export class PipelineFilterModel extends FilterModelBase {
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
+    this.sessionDataKey = "pipeline-filter-model-data";
+    // this.enableUrlUpdatesWithQueryParameters();
+    // this.unpackUrlParameters();
   }
 
   canSearch = () => {
@@ -77,27 +83,46 @@ export class PipelineFilterModel extends FilterModelBase {
     return true;
   };
 
+  canToggleView = () => {
+    return true;
+  }
+
   getActiveFilters = () => {
-    let activeFilters = [];
+    const activeFilters = [];
 
-    if (this.getData("status") != null && this.getData("status") !== "") {
-      activeFilters.push({filterId: "status", text: `Status: ${this.getFilterText("status")}`});
+    const status = this.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(status)}`});
     }
 
-    if (this.getData("active") != null && this.getData("active") !== "") {
-      activeFilters.push({filterId: "active",  text: `${this.getFilterText("active")}`});
+    const active = this.getData("active");
+
+    if (hasStringValue(active) === true) {
+      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
     }
 
-    if (this.getData("tag") != null) {
-      activeFilters.push({filterId: "tag", ...this.getData("tag")});
+    const tag = this.getData("tag");
+
+    if (hasStringValue(tag) === true) {
+      const tagArray = tag.split(":");
+
+      if (Array.isArray(tagArray) && tagArray.length === 2) {
+        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
+      }
     }
 
-    if (this.getData("owner") != null) {
-      activeFilters.push({filterId: "owner", text: `Owner: ${this.getFilterText("owner")}`});
+    const searchKeyword = this.getData("search");
+
+    if (hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
     }
 
-    if (this.getData("search") != null && this.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
+    const ownerName = this.getData("ownerName");
+    const owner = this.getData("owner");
+
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+      activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
     }
 
     return activeFilters;
@@ -110,10 +135,56 @@ export class PipelineFilterModel extends FilterModelBase {
         {text: "Newest Pipelines", value: "newest"},
         {text: "Pipeline Name (A-Za-z)", value: "name"},
         {text: "Pipeline Name (z-aZ-A)", value: "name-descending"},
-        {text: "Updated (Latest)", value: "lastupdated"},
+        {text: "Updated (Latest)", value: "last-updated"},
         {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
+  };
+
+  unpackUrlParameters = () => {
+    let hasUrlParams = this.unpackCommonUrlParameters();
+
+    const status = sessionHelper.getStoredUrlParameter("status");
+
+    if (hasStringValue(status) === true) {
+      hasUrlParams = true;
+      this.setData("status", status);
+    }
+
+    const taskType = sessionHelper.getStoredUrlParameter("type");
+
+    if (hasStringValue(taskType) === true) {
+      hasUrlParams = true;
+      this.setData("type", taskType);
+    }
+
+    if (hasUrlParams !== true) {
+      this.unpackBrowserStorage();
+    }
+  };
+
+  unpackBrowserStorage = () => {
+    const parsedBrowserStorage = this.unpackCommonBrowserStorageFields();
+
+    if (parsedBrowserStorage) {
+      const status = parsedBrowserStorage?.status;
+
+      if (hasStringValue(status) === true) {
+        this.setData("status", status);
+      }
+
+      const category = parsedBrowserStorage?.category;
+
+      if (hasStringValue(category) === true) {
+        this.setData("category", category);
+      }
+
+      const type = parsedBrowserStorage?.type;
+
+      if (hasStringValue(type) === true) {
+        this.setData("type", type);
+      }
+    }
   };
 }
 

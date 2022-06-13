@@ -18,7 +18,6 @@ function VanityDataContainer(
     body,
     addRecordFunction,
     supportViewToggle,
-    saveCookies,
     className,
     metadata,
     exportButton,
@@ -35,7 +34,6 @@ function VanityDataContainer(
         addRecordFunction={addRecordFunction}
         type={type}
         metadata={metadata}
-        saveCookies={saveCookies}
         supportViewToggle={supportViewToggle}
         dropdownFilters={dropdownFilters}
         inlineFilters={inlineFilters}
@@ -83,7 +81,6 @@ VanityDataContainer.propTypes = {
   addRecordFunction: PropTypes.func,
   supportViewToggle: PropTypes.bool,
   inlineFilters: PropTypes.any,
-  saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
   stackFilters: PropTypes.bool,

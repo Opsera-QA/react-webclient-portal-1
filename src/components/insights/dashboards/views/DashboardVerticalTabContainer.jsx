@@ -2,7 +2,16 @@ import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import { faChartNetwork, faUser, faDraftingCompass, faShieldCheck, faBanBug, faMemoCircleCheck, faDisplayMedical } from "@fortawesome/pro-light-svg-icons";
+import {
+  faChartNetwork,
+  faUser,
+  faDraftingCompass,
+  faShieldCheck,
+  faBanBug,
+  faMemoCircleCheck,
+  faDisplayMedical,
+  faRss,
+} from "@fortawesome/pro-light-svg-icons";
 
 function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadData }) {
   const handleTabClick = (tab) => {
@@ -69,6 +78,14 @@ function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadDa
         tabText={"Security"}
         tabName={"security"}
         icon={faShieldCheck}
+        disabled={isLoading}
+        handleTabClick={handleTabClick}
+        activeTab={dashboardFilterModel?.getData("type")}
+      />
+      <VanitySetVerticalTab
+        icon={faRss}
+        tabText={"Subscriptions"}
+        tabName={"subscribed"}
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={dashboardFilterModel?.getData("type")}

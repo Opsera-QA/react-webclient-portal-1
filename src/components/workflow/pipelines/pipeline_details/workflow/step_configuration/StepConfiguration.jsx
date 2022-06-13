@@ -17,6 +17,7 @@ import StepConfigurationTagsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
 import IconBase from "components/common/icons/IconBase";
 import StepConfigurationTypeSelectInput from "./StepConfigurationTypeSelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);
@@ -119,7 +120,10 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
         <BooleanToggleInput dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"active"}/>
         <TextInputBase disabled={stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
         <StepConfigurationToolIdentifierSelectInput disabled={lockTool || stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
-        <StepConfigurationTypeSelectInput setDataObject={setStepConfigurationModel} dataObject={stepConfigurationModel} />
+        <StepConfigurationTypeSelectInput
+          setModel={setStepConfigurationModel}
+          model={stepConfigurationModel}
+        />
         <StepConfigurationTagsInput setStepConfigurationModel={setStepConfigurationModel} stepConfigurationModel={stepConfigurationModel} />
       </div>
     </PipelineStepEditorPanelContainer>
