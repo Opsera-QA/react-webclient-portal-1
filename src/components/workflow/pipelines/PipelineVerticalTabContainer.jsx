@@ -17,7 +17,7 @@ function PipelineVerticalTabContainer({ isLoading, pipelineFilterModel, loadData
       <VanitySetVerticalTab
         icon={faDraftingCompass}
         tabText={"All Pipelines"}
-        tabName={"all"}
+        tabName={""}
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={pipelineFilterModel?.getData("type")}
