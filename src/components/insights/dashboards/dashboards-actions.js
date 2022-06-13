@@ -7,22 +7,21 @@ dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, dashboardFilterDto) => {
+dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, dashboardFilterModel) => {
   const apiUrl = "/analytics/dashboards";
-  let sortOption = dashboardFilterDto.getData("sortOption");
 
   let urlParams = {
     params: {
-      sort: sortOption ? sortOption.value : undefined,
-      page: dashboardFilterDto.getData("currentPage"),
-      size: dashboardFilterDto.getData("pageSize"),
-      tag: dashboardFilterDto.getFilterValue("tag"),
-      status: dashboardFilterDto.getFilterValue("status"),
-      tool: dashboardFilterDto.getFilterValue("toolIdentifier"),
-      owner: dashboardFilterDto.getFilterValue("owner"),
-      search: dashboardFilterDto.getFilterValue("search"),
-      favorites: dashboardFilterDto.getFilterValue("isFavorite"),
-      type: dashboardFilterDto.getFilterValue("type")
+      sort: dashboardFilterModel?.getFilterValue("sortOption"),
+      page: dashboardFilterModel?.getFilterValue("currentPage"),
+      size: dashboardFilterModel?.getFilterValue("pageSize"),
+      tag: dashboardFilterModel?.getFilterValue("tag"),
+      status: dashboardFilterModel?.getFilterValue("status"),
+      tool: dashboardFilterModel?.getFilterValue("toolIdentifier"),
+      owner: dashboardFilterModel?.getFilterValue("owner"),
+      search: dashboardFilterModel?.getFilterValue("search"),
+      favorites: dashboardFilterModel?.getFilterValue("isFavorite"),
+      type: dashboardFilterModel?.getFilterValue("type")
     }
   };
 

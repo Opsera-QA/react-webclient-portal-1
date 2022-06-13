@@ -29,6 +29,11 @@ export class FilterModelBase {
     }
   };
 
+  setDefaultValue = (fieldName) => {
+    const defaultValue = this.metaData?.newObjectFields?.[fieldName];
+    this.setData(fieldName, defaultValue);
+  };
+
   updateBrowserStorage = () => {
     if (hasStringValue(this.sessionDataKey) !== true) {
       throw "Must set a session data key in order to save to browser storage.";
