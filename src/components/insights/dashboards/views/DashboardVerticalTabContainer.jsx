@@ -21,7 +21,7 @@ function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadDa
       dashboardFilterModel?.setDefaultValue("owner");
     }
 
-    loadData(dashboardFilterModel);
+    loadData({...dashboardFilterModel});
   };
 
   return (
