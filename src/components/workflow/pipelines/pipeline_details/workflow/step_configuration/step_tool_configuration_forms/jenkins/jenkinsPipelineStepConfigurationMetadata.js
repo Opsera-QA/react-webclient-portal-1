@@ -218,6 +218,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       regexDefinitionName: "argumentList",
       formText: "A newline-separated list of Runtime Arguments",
       maxLength: 500
+    },
+    {
+      label: "Data Transformer Rule",
+      id: "ruleIds",
     }
   ],
   newObjectFields: {
@@ -272,6 +276,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     runtimeArguments: "",
     dependencies: {},
     dependencyType:"",
+    ruleIds: [],
   }
 };
 

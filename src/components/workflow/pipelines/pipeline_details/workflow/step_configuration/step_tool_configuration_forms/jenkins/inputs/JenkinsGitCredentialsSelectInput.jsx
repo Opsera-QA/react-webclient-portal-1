@@ -5,7 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
+const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY", "SFDC DATA TRANSFORMER"];
 
 // TODO: Make JenkinsToolAccountSelectInput
 function JenkinsGitCredentialsSelectInput({
