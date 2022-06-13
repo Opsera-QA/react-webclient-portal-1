@@ -23,6 +23,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
 import TransferDashboardOwnershipButton
   from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
+import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
 
 function DashboardScreenContainer(
   {
@@ -112,6 +113,12 @@ function DashboardScreenContainer(
           <ActionBarContainer>
             <div/>
             <div className="d-inline-flex float-right">
+              <DashboardSubscriptionIcon
+                dashboardModel={dashboardModel}
+                dashboardId={dashboardModel?.getMongoDbId()}
+                className={"mr-2"}
+                pullSubscriptionStatus={true}
+              />
               <FavoriteInput
                 dataObject={dashboardModel}
                 setDataObject={setDashboardModel}
