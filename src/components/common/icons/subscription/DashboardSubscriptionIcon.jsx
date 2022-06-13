@@ -81,8 +81,6 @@ function DashboardSubscriptionIcon(
       dashboardId,
     );
 
-    console.log("response: " + JSON.stringify(response));
-
     if (isMounted?.current === true && response?.data) {
       setIsSubscribed(response.data === true);
     }
