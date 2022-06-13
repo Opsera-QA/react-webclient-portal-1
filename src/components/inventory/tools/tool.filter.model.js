@@ -1,7 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 const toolFilterMetadata = {
   idProperty: "_id",
@@ -135,6 +134,7 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   }
 
+  // TODO: This probably shouldn't be here
   getDetailViewLink = (toolId) => {
     return `/inventory/tools/details/${toolId}`;
   };
@@ -144,8 +144,9 @@ export class ToolFilterModel extends FilterModelBase {
       [
         {text: "Oldest", value: "oldest"},
         {text: "Newest", value: "newest"},
-        {text: "Name", value: "name"},
-        {text: "Last Updated", value: "lastupdated"},
+        {text: "Tool Name (A-Za-z)", value: "name"},
+        {text: "Tool Name (z-aZ-A)", value: "name-descending"},
+        {text: "Last Updated", value: "last-updated"},
       ]
     );
   };

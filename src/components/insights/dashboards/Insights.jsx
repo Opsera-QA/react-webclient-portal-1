@@ -1,10 +1,8 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import Model from "core/data_model/model";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import dashboardFilterMetadata from "components/insights/dashboards/views/dashboardFilter.metadata";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -13,6 +11,7 @@ import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationB
 import InsightsHelpDocumentation from "../../common/help/documentation/insights/InsightsHelpDocumentation";
 import DashboardTableView
   from "components/insights/dashboards/views/DashboardTableView";
+import DashboardFilterModel from "components/insights/dashboards/views/dashboard.filter.model";
 
 function Insights() {
   const toastContext = useContext(DialogToastContext);
@@ -20,7 +19,7 @@ function Insights() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboards, setDashboards] = useState(undefined);
-  const [dashboardFilterModel, setDashboardFilterModel] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
+  const [dashboardFilterModel, setDashboardFilterModel] = useState(undefined);
   const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
   const [dashboardRoleDefinitions, setDashboardRoleDefinitions] = useState([]);
   const isMounted = useRef(false);
@@ -33,9 +32,10 @@ function Insights() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
-    loadData(dashboardFilterModel, source).catch((error) => {
+    const newDashboardFilterModel = new DashboardFilterModel(getAccessToken);
+
+    loadData(newDashboardFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -94,10 +94,9 @@ function Insights() {
     if (isMounted.current === true && dashboards) {
       setDashboardRoleDefinitions(response?.data?.roles);
       setDashboards(dashboards);
-      const newFilterModel = filterModel;
-      newFilterModel.setData("totalCount", response?.data?.count);
-      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
-      setDashboardFilterModel({...newFilterModel});
+      filterModel.updateTotalCount(response?.data?.count);
+      filterModel.updateActiveFilters();
+      setDashboardFilterModel({...filterModel});
     }
   };
 
