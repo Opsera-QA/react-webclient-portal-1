@@ -32,7 +32,11 @@ const JobTypeSFDC = {
       {
         name: "SDFC Push Artifacts",
         value: "SFDC PUSH ARTIFACTS"
-      }
+      },
+      {
+        name: "Salesforce Data Transformer",
+        value: "SFDC DATA TRANSFORMER",
+      },
     ],
     toShow: true,
     disabled: false,

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import jenkinsPipelineStepConfigurationMetadata from "./jenkinsPipelineStepConfigurationMetadata";
@@ -15,15 +15,17 @@ import JenkinsXmlStepInfoSelectInput from "components/workflow/pipelines/pipelin
 import JenkinsStepConfigurationDockerEditorPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationDockerEditorPanel";
 import JenkinsPythonPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationPythonEditorPanel";
 import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import JenkinsStepToolJobSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepToolJobSelectInput";
 import JenkinsStepDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepDependencyTypeInput";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import JenkinsStepJobTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
+import JenkinsSfdcDataTransformerRulesSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -83,7 +85,7 @@ function JenkinsStepConfiguration({
         stepTool,
         jenkinsPipelineStepConfigurationMetadata
       );
-      jenkinsConfigurationData.setData('job_type',job_type);
+      jenkinsConfigurationData.setData('job_type', job_type);
 
       setJenkinsStepConfigurationDto(jenkinsConfigurationData);
 
@@ -151,7 +153,7 @@ function JenkinsStepConfiguration({
         },
         job_type: jenkinsStepConfigurationDto.getData("job_type"),
       };
-      if(jenkinsStepConfigurationDto.getData("job_type") === "opsera-job"){
+      if (jenkinsStepConfigurationDto.getData("job_type") === "opsera-job") {
         await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
       } else {
         parentCallback(toolConfiguration);
@@ -166,7 +168,7 @@ function JenkinsStepConfiguration({
   const loadSfdcConfigurationPanel = () => {
     const jobType = jenkinsStepConfigurationDto?.getData("job_type");
     const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
-    const isSfdcJob =  SFDC_JOB_TYPES.includes(jobType);
+    const isSfdcJob = SFDC_JOB_TYPES.includes(jobType);
     const isSfdcToolJobType = Array.isArray(toolJobType) && toolJobType.includes("SFDC");
 
     if (isSfdcJob === true || isSfdcToolJobType === true) {
@@ -233,6 +235,13 @@ function JenkinsStepConfiguration({
           jobType={jenkinsStepConfigurationDto?.getData("jobType")}
           workspace={jenkinsStepConfigurationDto?.getData("workspace")}
           repoId={jenkinsStepConfigurationDto?.getData("repoId")}
+        />
+        <JenkinsSfdcDataTransformerRulesSelectInput
+          model={jenkinsStepConfigurationDto}
+          setModel={setJenkinsStepConfigurationDto}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
+          toolId={jenkinsStepConfigurationDto?.getData("sfdcToolId")}
+          disabled={jenkinsStepConfigurationDto?.getData("sfdcToolId") == undefined || jenkinsStepConfigurationDto?.getData("sfdcToolId") === ""}
         />
         <JenkinsXmlStepInfoSelectInput
           dataObject={jenkinsStepConfigurationDto}
