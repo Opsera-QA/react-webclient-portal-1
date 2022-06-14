@@ -28,7 +28,7 @@ function LogsBackupManagementTableLoader({ s3ToolId, setScheduledTaskModel }) {
     isMounted.current = true;
 
     if (isMongoDbId(s3ToolId) === true) {
-      loadData(cancelTokenSource).catch((error) => {
+      loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -59,6 +59,7 @@ function LogsBackupManagementTableLoader({ s3ToolId, setScheduledTaskModel }) {
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
     const response = await scheduledTaskActions.getScheduledLogPush(getAccessToken, cancelSource, s3ToolId);
     const newScheduledTasksList = response?.data?.data;
+    console.log("response: " + JSON.stringify(response));
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
       setScheduledTasks([...newScheduledTasksList]);
