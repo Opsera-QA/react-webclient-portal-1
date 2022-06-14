@@ -68,7 +68,13 @@ export const scheduledTaskMetadata = {
     notes: "",
     active: true,
     roles: [],
-    task: {},
-    schedule: { recurring: "NONE", executionDate: new Date() },
+    task: {
+      taskType: "pipeline-log-s3-push",
+      s3ToolId: "",
+    },
+    schedule: {
+      recurring: "NONE",
+      executionDate: new Date()
+    },
   }
 };

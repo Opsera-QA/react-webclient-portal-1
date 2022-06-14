@@ -4,7 +4,6 @@ import { scheduledTaskMetadata } from "components/common/fields/scheduler/schedu
 import {
   getTableActiveBooleanIconColumn,
   getTableTextColumn,
-  getTableDateTimeColumn,
   getFormattedLabelWithFunctionColumnDefinition,
   getTableDateTimeColumnWithTimeZone
 } from "components/common/table/table-column-helpers-v2";
