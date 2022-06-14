@@ -7,8 +7,9 @@ import { scheduledTaskMetadata } from "components/common/fields/scheduler/schedu
 import ScheduledTasksTable from "components/common/fields/scheduler/ScheduledTasksTable";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import modelHelpers from "components/common/model/modelHelpers";
+import PropTypes from "prop-types";
 
-function LogsBackupManagementTableLoader(s3ToolId, setScheduledTaskModel) {
+function LogsBackupManagementTableLoader({ s3ToolId, setScheduledTaskModel }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasks, setScheduledTasks] = useState([]);
@@ -88,5 +89,9 @@ function LogsBackupManagementTableLoader(s3ToolId, setScheduledTaskModel) {
   );
 }
 
+LogsBackupManagementTableLoader.propTypes = {
+  s3ToolId: PropTypes.string,
+  setScheduledTaskModel: PropTypes.func,
+};
 
 export default LogsBackupManagementTableLoader;
