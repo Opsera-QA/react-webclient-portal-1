@@ -450,6 +450,17 @@ const breadcrumbs = {
     icon: faTags
   },
 
+  // Audit Logging 
+  logsBackupManagement: {
+    parent: "accountSettings",
+    name: "logsBackupManagement",
+    path: paths.logsBackupManagement,
+    title: "Logs Backup Management",
+    linkText: "Logs Backup Management",
+    icon: faTags,
+    pageDescription: "Manage backup of pipeline activity audit logs."
+  },
+
   // Organization Management
   organizationManagement: {
     parent: "accountSettings",

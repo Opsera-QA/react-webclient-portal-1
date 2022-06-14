@@ -56,6 +56,10 @@ export const scheduledTaskMetadata = {
     {
       label: "Last Run",
       id: "lastRun"
+    },
+    {
+      label: "S3 Tool",
+      id: "s3ToolId"      
     }
   ],
   newObjectFields: {
