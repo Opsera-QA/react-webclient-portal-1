@@ -54,11 +54,18 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroupName",
-      formText: "Resource group is mandatory if the Specify Resource Group toggle is selected"
     },
     {
       label: "Specify Resource Group",
       id: "useCustomResourceGroup"
+    },
+    {
+      label: "Use Existing Azure Function?",
+      id: "existingFunctionName"
+    },
+    {
+      label: "Azure Function",
+      id: "azureFunctionName"
     },
   ],
   newObjectFields: {
@@ -71,7 +78,9 @@ const azureFunctionsStepFormMetadata = {
     resourceGroupName: "",
     useCustomResourceGroup: false,
     deploymentType: "",
-    applicationType: ""
+    applicationType: "",
+    existingFunctionName: false,
+    azureFunctionName: ""
   }
 };
 
