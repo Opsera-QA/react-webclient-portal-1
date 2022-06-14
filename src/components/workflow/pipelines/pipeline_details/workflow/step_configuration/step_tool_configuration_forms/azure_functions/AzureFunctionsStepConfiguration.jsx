@@ -74,17 +74,6 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
         setApplicationData={setApplicationData}
         azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}
       />
-      <AzureFunctionsStepRegionSelectInput
-        model={azureFunctionsModel}
-        setModel={setAzureFunctionsModel}
-        azureToolId={azureFunctionsModel?.getData("azureToolConfigId")}
-        azureApplicationId={azureFunctionsModel?.getData("azureCredentialId")}
-      />
-      <AzureFunctionsStepDynamicNameToggleInput
-        model={azureFunctionsModel}
-        setModel={setAzureFunctionsModel}
-        fieldName={"dynamicServiceName"}
-      />
       <AzureFunctionsZipDeployment
         model={azureFunctionsModel}
         setModel={setAzureFunctionsModel}
