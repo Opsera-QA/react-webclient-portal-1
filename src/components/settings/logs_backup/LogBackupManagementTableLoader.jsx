@@ -44,7 +44,7 @@ function LogsBackupManagementTableLoader({ s3ToolId, setScheduledTaskModel }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadScheduledTasks(cancelSource, getAccessToken);
+      await loadScheduledTasks(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -56,7 +56,7 @@ function LogsBackupManagementTableLoader({ s3ToolId, setScheduledTaskModel }) {
     }
   };
 
-  const loadScheduledTasks = async (cancelSource = cancelTokenSource, getAccessToken) => {
+  const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
     const response = await scheduledTaskActions.getScheduledLogPush(getAccessToken, cancelSource, s3ToolId);
     const newScheduledTasksList = response?.data?.data;
 
