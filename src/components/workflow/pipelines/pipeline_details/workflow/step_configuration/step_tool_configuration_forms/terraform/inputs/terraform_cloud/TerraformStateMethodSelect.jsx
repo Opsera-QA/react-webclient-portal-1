@@ -20,10 +20,10 @@ function TerraformStateMethodSelect({dataObject, setDataObject, disabled}) {
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
-    newModel.setData("azureToolConfigId", "");
+    newModel.setData("azureCPToolConfigId", "");
     newModel.setData("terraformCloudId", "");
     newModel.setData("organizationName", "");
-    newModel.setData("azureCredentialId", "");
+    newModel.setData("azureCPCredentialId", "");
     newModel.setData("bucketName", "");
     newModel.setData(fieldName, selectedOption.value);
     setDataObject({...newModel});
