@@ -23,6 +23,7 @@ import ToolEndpointsTab, {
   ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS
 } from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
 import ToolProvidersTab, { PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
+import ToolLicenseTab, {LICENSE_SUPPORTED_TOOL_IDENTIFIERS} from "../../../tool_details/ToolLicenseTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -46,6 +47,7 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
+  LICENSES: "license"
 };
 
 export const getTabSupportedTools = (toolDetailPanelTab) => {
@@ -80,6 +82,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
       return WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.PROVIDERS:
       return PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.LICENSES:
+      return LICENSE_SUPPORTED_TOOL_IDENTIFIERS;
   }
 };
 
@@ -187,6 +191,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
       <ToolUsageTab
         handleTabClick={handleTabClick}
         activeTab={activeTab}
+      />
+      <ToolLicenseTab
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        toolModel={toolModel}
       />
     </CustomTabContainer>
   );

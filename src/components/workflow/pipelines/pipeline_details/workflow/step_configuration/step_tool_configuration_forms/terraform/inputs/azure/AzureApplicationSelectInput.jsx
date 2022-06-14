@@ -27,7 +27,7 @@ function AksServiceDeployStepApplicationSelectInput({fieldName, model, setModel}
       fieldName={fieldName}
       model={model}
       setModel={setModel}
-      toolId={model?.getData("azureToolConfigId")}
+      toolId={model?.getData("azureCPToolConfigId")}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={"_id"}
@@ -44,7 +44,7 @@ AksServiceDeployStepApplicationSelectInput.propTypes = {
 };
 
 AksServiceDeployStepApplicationSelectInput.defaultProps = {
-  fieldName: "azureCredentialId",
+  fieldName: "azureCPCredentialId",
 };
 
 export default AksServiceDeployStepApplicationSelectInput;

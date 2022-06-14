@@ -19,20 +19,20 @@ function BackendStateAzure({ model, setModel }) {
       <AzureStorageAccountInput
         dataObject={model}
         setDataObject={setModel}
-        azureToolConfigId={model?.getData("azureToolConfigId")}
-        applicationId={model?.getData("azureCredentialId")}
+        azureToolConfigId={model?.getData("azureCPToolConfigId")}
+        applicationId={model?.getData("azureCPCredentialId")}
       />
       <AksResourceGroupSelectInput
         dataObject={model}
         setDataObject={setModel}
-        azureToolConfigId={model?.getData("azureToolConfigId")}
-        azureApplication={model?.getData("azureCredentialId")}
+        azureToolConfigId={model?.getData("azureCPToolConfigId")}
+        azureApplication={model?.getData("azureCPCredentialId")}
       />
       <AzureContainerSelectInput
         dataObject={model}
         setDataObject={setModel}
-        azureToolConfigId={model?.getData("azureToolConfigId")}
-        applicationId={model?.getData("azureCredentialId")}
+        azureToolConfigId={model?.getData("azureCPToolConfigId")}
+        applicationId={model?.getData("azureCPCredentialId")}
         storageName={model?.getData("storageName")}
         resourceGroup={model?.getData("resourceGroup")}
       />

@@ -90,6 +90,7 @@ import SalesforceScanStepConfiguration
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
 import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
+import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/ProvarStepToolConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1305,6 +1306,17 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
+        );   
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+            <ProvarStepToolConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
         );
     }
   };

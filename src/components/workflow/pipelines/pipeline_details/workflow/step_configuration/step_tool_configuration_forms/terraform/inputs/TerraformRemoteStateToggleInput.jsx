@@ -12,11 +12,11 @@ function TerraformRemoteStateToggleInput({dataObject, setDataObject, disabled}) 
     newDataObject.setData("resourceGroup", "");
     newDataObject.setData("storageName", "");
     newDataObject.setData("containerName", "");
-    newDataObject.setData("azureToolConfigId", "");
+    newDataObject.setData("azureCPToolConfigId", "");
     newDataObject.setData("terraformCloudId", "");
     newDataObject.setData("organizationName", "");
     newDataObject.setData("backendState", "LOCAL");
-    newDataObject.setData("azureCredentialId", "");
+    newDataObject.setData("azureCPCredentialId", "");
     newDataObject.setData("bucketName", "");
     setDataObject({...newDataObject});
   };

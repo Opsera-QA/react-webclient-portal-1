@@ -103,11 +103,11 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TerraformGitRepositorySelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformGitBranchSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TextInputBase dataObject={terraformStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setTerraformStepConfigurationModel}/>
-      <TerraformTagSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
-      <CustomScriptSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformCloudProviderSelectInput dataObject={terraformStepConfigurationModel} setDataObject={setTerraformStepConfigurationModel} fieldName={"cloudProvider"} />
       <CloudCredentialSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
-      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />      
+      <TerraformTagSelectInput model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <CustomScriptSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
+      <TerraformStateSubForm model={terraformStepConfigurationModel} setModel={setTerraformStepConfigurationModel} />
       <TerraformCustomParametersInput
         model={terraformStepConfigurationModel}
         setModel={setTerraformStepConfigurationModel}
