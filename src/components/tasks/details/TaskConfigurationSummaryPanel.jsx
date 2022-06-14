@@ -46,6 +46,8 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 import SnaplogicTaskSummaryCard from "./tasks/snaplogic/SnaplogicTaskSummaryCard";
 import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
+import salesforceQuickDeployTaskConfigurationMetadata
+  from "./tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -143,13 +145,13 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return (
           <SalesforceQuickDeployTaskTypeSummaryCard
-            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              tasksData={taskModel}
+              taskConfigurationData={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration"),
-              salesforceOrganizationSyncTaskConfigurationMetadata,
+                salesforceQuickDeployTaskConfigurationMetadata,
             )}
-            tasksData={taskModel}
-            />
-            );
+          />
+        );
       case TASK_TYPES.GITSCRAPER:
         return (
           <GitscraperSummaryPanel
