@@ -21,14 +21,14 @@ function AzureFunctionsZipDeployment({ model, setModel }) {
       return (
         <>
           <AzureFunctionsStepRegionSelectInput
-            dataObject={model}
-            setDataObject={setModel}
+            model={model}
+            setModel={setModel}
             azureToolId={model?.getData("azureToolConfigId")}
             azureApplicationId={model?.getData("azureCredentialId")}
           />
           <AzureFunctionsStepDynamicNameToggleInput
-            dataObject={model}
-            setDataObject={setModel}
+            model={model}
+            setModel={setModel}
             fieldName={"dynamicServiceName"}
           />
           <AzureFunctionsApplicationTypeSelectInput

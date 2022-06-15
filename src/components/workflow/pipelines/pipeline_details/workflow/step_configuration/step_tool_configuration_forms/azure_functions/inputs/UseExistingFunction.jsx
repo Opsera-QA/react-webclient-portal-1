@@ -12,6 +12,8 @@ function UseExistingFunction({dataObject, setDataObject, disabled}) {
         newDataObject.setData("resourceGroupName", "");
         newDataObject.setData("useCustomResourceGroup", "");
         newDataObject.setData("applicationType", "");
+        newDataObject.setData("azureRegion", "");
+        newDataObject.setData("dynamicServiceName", "");
         setDataObject({...newDataObject});
     };
 
