@@ -77,6 +77,8 @@ function AzureFunctionsStepConfiguration({ stepTool, closeEditorPanel, parentCal
       <AzureFunctionsZipDeployment
         model={azureFunctionsModel}
         setModel={setAzureFunctionsModel}
+        plan={plan}
+        stepId={stepId}
       />
       <AzureFunctionsDockerDeployment
         model={azureFunctionsModel}
