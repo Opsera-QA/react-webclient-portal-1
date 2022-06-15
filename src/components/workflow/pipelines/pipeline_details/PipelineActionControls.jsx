@@ -29,6 +29,7 @@ import InformaticaPipelineRunAssistantOverlay
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
+import SapCpqPipelineRunAssistantOverlay from "../../run_assistants/sap_cpq/SapCpqPipelineRunAssistantOverlay";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -447,6 +448,15 @@ function PipelineActionControls(
     );
   };
 
+  const launchSapCpqRunAssistant = (pipelineOrientation, pipelineId) => {
+    toastContext.showOverlayPanel(
+        <SapCpqPipelineRunAssistantOverlay
+            pipeline={pipeline}
+            startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
+        />
+    );
+  };
+
   // TODO: Handle more gracefully
   const triggerInformaticaPipelineRun = async (pipelineOrientation, pipelineId) => {
     if (pipelineOrientation === "start") {
@@ -485,6 +495,8 @@ function PipelineActionControls(
       launchApigeeRunAssistant(pipelineOrientation, pipelineId);
     } else if (pipelineType === "informatica") {
       launchInformaticaRunAssistant(pipelineOrientation, pipelineId);
+    }  else if (pipelineType === "sap-cpq") {
+      launchSapCpqRunAssistant(pipelineOrientation, pipelineId);
     } else {
       if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
