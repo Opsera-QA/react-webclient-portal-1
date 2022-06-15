@@ -19,6 +19,8 @@ import pipelineLogHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
+import PipelineActivityFilterModel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivity.filter.model";
 
 function PipelineActivityLogTreeTable(
   {
@@ -28,7 +30,7 @@ function PipelineActivityLogTreeTable(
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
+  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
