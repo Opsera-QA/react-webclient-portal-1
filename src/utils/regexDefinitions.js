@@ -207,6 +207,13 @@ regexDefinitions.azureFunctionsLabel = {
   errorFormText: "The name must consist of lowercase alphanumeric characters (e.g. 'name', or 'abc123')"
 };
 
+regexDefinitions.azureContainerName = {
+  regex: /^[a-z0-9](?!.*--)[a-z0-9-]{1,61}[a-z0-9]$/,
+  formText: "This name may only contain lowercase letters, numbers, and hyphens, and must begin with a letter or a number. Each hyphen must be preceded and followed by a non-hyphen character. The name must also be between 3 and 63 characters long.",
+  errorFormText:
+    "This name may only contain lowercase letters, numbers, and hyphens, and must begin with a letter or a number. Each hyphen must be preceded and followed by a non-hyphen character. The name must also be between 3 and 63 characters long.",
+};
+
 regexDefinitions.argumentList = {
   regex: /^[A-Za-z0-9-_.$=\n]*$/,
   formText: "Letters, numbers, dashes, underscores, equals sign, dollar sign, periods and new lines are allowed",
