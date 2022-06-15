@@ -39,8 +39,7 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
     if (toolData == null) {
       return null;
     }
-
-    return getPanel(toolData.getPersistData()?.tool_identifier?.toLowerCase(), loadData);
+    return getPanel(toolData.getData("tool_identifier")?.toLowerCase(), loadData);
   };
 
   return (
