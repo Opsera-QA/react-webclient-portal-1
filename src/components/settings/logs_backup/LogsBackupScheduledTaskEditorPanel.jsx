@@ -81,6 +81,9 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
     }
   };
 
+  console.log("schedulerTaskModel.getErrors(): " + JSON.stringify(schedulerTaskModel?.getErrors()));
+  console.log("scheduleModel.getErrors(): " + JSON.stringify(scheduleModel?.getErrors()));
+
   return (
     <EditorPanelContainer
       recordDto={schedulerTaskModel}
@@ -91,10 +94,9 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
       handleClose={handleClose}
       extraButtons={getExtraButtons()}
       addAnotherOption={false}
-      disable={ schedulerTaskModel == null
-        || !schedulerTaskModel.checkCurrentValidity()
-        || scheduleModel == null
-        || !scheduleModel.checkCurrentValidity()
+      disable={
+        schedulerTaskModel?.checkCurrentValidity() !== true
+        || scheduleModel?.checkCurrentValidity() !== true
       }
     >
       <Row>
