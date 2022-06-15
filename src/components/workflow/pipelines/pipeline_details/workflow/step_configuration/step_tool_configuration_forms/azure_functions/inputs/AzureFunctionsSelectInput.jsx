@@ -48,7 +48,6 @@ function AzureFunctionsSelectInput(
         } catch (error) {
             setPlaceholderText("There was an error pulling Azure Functions");
             setErrorMessage("No Azure Functions available.");
-            toastContext.showErrorDialog(error);
             console.error(error);
         } finally {
             setIsLoading(false);
