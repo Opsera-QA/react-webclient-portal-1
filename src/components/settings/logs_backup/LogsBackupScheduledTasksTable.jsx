@@ -17,6 +17,7 @@ import {
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateLogsBackupScheduleOverlay from "components/settings/logs_backup/CreateLogsBackupScheduleOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import UpdateLogsBackupScheduleOverlay from "components/settings/logs_backup/UpdateLogsBackupScheduleOverlay";
 
 function LogsBackupScheduledTasksTable(
   {
@@ -34,7 +35,7 @@ function LogsBackupScheduledTasksTable(
     const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata);
 
     toastContext.showOverlayPanel(
-      <CreateLogsBackupScheduleOverlay
+      <UpdateLogsBackupScheduleOverlay
         loadData={loadDataFunction}
         isMounted={isMounted}
         scheduledTaskModel={scheduledTaskModel}
