@@ -38,6 +38,9 @@ const azureZipDeploymentMetadata = {
       label: "Storage Container",
       id: "containerName",
       isRequired: true,
+      regexDefinitionName: "azureContainerName",
+      minLength: 3,
+      maxLength: 63
     },
   ],
   newObjectFields: {
