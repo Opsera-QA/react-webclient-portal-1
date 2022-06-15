@@ -209,6 +209,10 @@ import BlackDuckStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
 import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
 import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
+import SapCpqPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/sap_cpq/SapCpqPipelineStepConfigurationSummaryPanel";
+import sapCpqStepFormMetadata from "./step_tool_configuration_forms/sap_cpq/sap-cpq-stepForm-metadata";
+
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -659,6 +663,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             gitScraperPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+            <SapCpqPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                sapCpqPipelineDataObject={getModelWrappedObject(sapCpqStepFormMetadata)}
+             />
         );
       default:
         return (
