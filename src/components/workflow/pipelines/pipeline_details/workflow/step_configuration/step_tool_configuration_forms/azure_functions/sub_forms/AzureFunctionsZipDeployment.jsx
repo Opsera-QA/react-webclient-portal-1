@@ -8,7 +8,7 @@ import AzureFunctionsStepDynamicNameToggleInput from "../inputs/AzureFunctionsSt
 import AzureExistingFunctionDeployment from "./AzureExistingFunctionDeployment";
 import UseExistingFunction from "../inputs/UseExistingFunction";
 
-function AzureFunctionsZipDeployment({ model, setModel }) {
+function AzureFunctionsZipDeployment({ model, setModel, plan, stepId }) {
   if (
     !model?.getData("deploymentType") ||
     model?.getData("deploymentType") === "docker"
@@ -61,6 +61,8 @@ function AzureFunctionsZipDeployment({ model, setModel }) {
         <AzureExistingFunctionDeployment
           model={model}
           setModel={setModel}
+          plan={plan}
+          stepId={stepId}
         />
       );
     }
@@ -81,6 +83,8 @@ function AzureFunctionsZipDeployment({ model, setModel }) {
 AzureFunctionsZipDeployment.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 export default AzureFunctionsZipDeployment;

@@ -28,6 +28,7 @@ const azureZipDeploymentMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroup",
+      isRequired: true,
     },
     {
       label: "Use Existing Container?",
@@ -36,6 +37,7 @@ const azureZipDeploymentMetadata = {
     {
       label: "Storage Container",
       id: "containerName",
+      isRequired: true,
     },
   ],
   newObjectFields: {
