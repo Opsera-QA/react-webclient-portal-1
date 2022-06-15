@@ -71,7 +71,7 @@ const toolFilterMetadata = {
 export class ToolFilterModel extends FilterModelBase {
   constructor() {
     super(toolFilterMetadata);
-    this.sessionDataKey = "tool-filter-model-data";
+    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }

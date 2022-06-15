@@ -38,7 +38,7 @@ function ExtendedTreeBase(
   }
 
   return (
-    <div className={"table-tree mb-3"}>
+    <div className={"table-tree"}>
       <div className={"scroll-y hide-x-overflow table-tree-with-paginator-and-secondary-tree"}>
         <TreeBase
           data={mainTreeData}

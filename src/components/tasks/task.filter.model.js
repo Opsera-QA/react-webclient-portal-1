@@ -66,7 +66,7 @@ export class TaskFilterModel extends FilterModelBase {
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
-    this.sessionDataKey = "task-filter-model-data";
+    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }
