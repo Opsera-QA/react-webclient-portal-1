@@ -9,7 +9,7 @@ import ToolLogsTab, {LOG_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/
 import ToolAttributesTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolAttributesTab";
 import ToolApplicationsTab, {APPLICATION_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolApplicationsTab";
 import ToolRepositoriesTab, {REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolRepositoriesTab";
-import ToolConnectionTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
+import ToolConnectionTab, {CONNECTION_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
 import ToolProjectsTab, {PROJECT_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProjectsTab";
 import ToolStorageTab, {STORAGE_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolStorageTab";
 import ToolUsageTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolUsageTab";
@@ -54,6 +54,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
   switch (toolDetailPanelTab) {
     case TOOL_DETAIL_PANEL_TABS.VAULT:
       return VAULT_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.CONNECTION:
+      return CONNECTION_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.REPOSITORIES:
       return REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.JOBS:
