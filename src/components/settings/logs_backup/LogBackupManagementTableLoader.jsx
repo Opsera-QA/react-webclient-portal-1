@@ -3,15 +3,11 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
-import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
-import ScheduledTasksTable from "components/common/fields/scheduler/ScheduledTasksTable";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import modelHelpers from "components/common/model/modelHelpers";
 import PropTypes from "prop-types";
-import NewLogsBackupScheduleOverlay from "components/settings/logs_backup/NewLogsBackupScheduleOverlay";
 import LogsBackupScheduledTasksTable from "components/settings/logs_backup/LogsBackupScheduledTasksTable";
 
-function LogsBackupManagementTableLoader({ s3ToolId, scheduledTaskModel, setScheduledTaskModel }) {
+function LogsBackupManagementTableLoader({ s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasks, setScheduledTasks] = useState([]);
@@ -61,18 +57,10 @@ function LogsBackupManagementTableLoader({ s3ToolId, scheduledTaskModel, setSche
   const loadScheduledTasks = async (cancelSource = cancelTokenSource) => {
     const response = await scheduledTaskActions.getScheduledLogPush(getAccessToken, cancelSource, s3ToolId);
     const newScheduledTasksList = response?.data?.data;
-    console.log("response: " + JSON.stringify(response));
 
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
       setScheduledTasks([...newScheduledTasksList]);
     }
-  };
-
-  // TODO: If this is just a copy of the main model, we could just use that as the base.
-  //  IE: const newModel = modelHelpers.parseObjectIntoModel(setScheduledTaskModel?.getPersistData(), scheduledTaskMetadata);
-
-  const createScheduledTask = () => {
-    toastContext.showOverlayPanel(<NewLogsBackupScheduleOverlay loadData={loadData} isMounted={isMounted} scheduledTaskModel={scheduledTaskModel} scheduledTasks={scheduledTasks} />);
   };
 
   return (
@@ -80,17 +68,13 @@ function LogsBackupManagementTableLoader({ s3ToolId, scheduledTaskModel, setSche
       isLoading={isLoading}
       scheduledTasks={scheduledTasks}
       loadDataFunction={loadData}
-      setScheduledTaskModel={setScheduledTaskModel}
       isMounted={isMounted}
-      createScheduledTaskFunction={createScheduledTask}
     />
   );
 }
 
 LogsBackupManagementTableLoader.propTypes = {
   s3ToolId: PropTypes.string,
-  setScheduledTaskModel: PropTypes.func,
-  scheduledTaskModel: PropTypes.object
 };
 
 export default LogsBackupManagementTableLoader;

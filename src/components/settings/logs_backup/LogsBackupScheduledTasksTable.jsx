@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
 import {
@@ -15,6 +15,8 @@ import {
   getSchedulerFrequencyLabel
 } from "components/common/fields/scheduler/frequencies/schedulerFrequency.constants";
 import modelHelpers from "components/common/model/modelHelpers";
+import CreateLogsBackupScheduleOverlay from "components/settings/logs_backup/CreateLogsBackupScheduleOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function LogsBackupScheduledTasksTable(
   {
@@ -24,15 +26,21 @@ function LogsBackupScheduledTasksTable(
     setPaginationModel,
     loadDataFunction,
     isMounted,
-    setScheduledTaskModel,
-    createScheduledTaskFunction,
   }) {
+  const toastContext = useContext(DialogToastContext);
   const fields = scheduledTaskMetadata.fields;
 
   const onRowSelect = (grid, row) => {
-    if (isMounted?.current === true) {
-      setScheduledTaskModel({...modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata)});
-    }
+    const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata);
+
+    toastContext.showOverlayPanel(
+      <CreateLogsBackupScheduleOverlay
+        loadData={loadDataFunction}
+        isMounted={isMounted}
+        scheduledTaskModel={scheduledTaskModel}
+        scheduledTasks={scheduledTasks}
+      />
+    );
   };
 
   const getTooltipTemplate = () => {
@@ -79,6 +87,16 @@ function LogsBackupScheduledTasksTable(
     [],
   );
 
+  const createScheduledTask = () => {
+    toastContext.showOverlayPanel(
+      <CreateLogsBackupScheduleOverlay
+        loadData={loadDataFunction}
+        isMounted={isMounted}
+        scheduledTasks={scheduledTasks}
+      />
+    );
+  };
+
   const getScheduledTaskTable = () => {
     return (
       <VanityTable
@@ -106,7 +124,7 @@ function LogsBackupScheduledTasksTable(
       type={"Scheduled Task"}
       title={"Scheduled Tasks"}
       metadata={scheduledTaskMetadata}
-      addRecordFunction={createScheduledTaskFunction}
+      addRecordFunction={createScheduledTask}
       body={getScheduledTaskTable()}
       className={"mt-3 mx-3"}
     />
@@ -120,8 +138,6 @@ LogsBackupScheduledTasksTable.propTypes = {
   paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
   isMounted: PropTypes.object,
-  setScheduledTaskModel: PropTypes.func,
-  createScheduledTaskFunction: PropTypes.func,
 };
 
 export default LogsBackupScheduledTasksTable;

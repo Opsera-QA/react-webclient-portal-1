@@ -1,16 +1,13 @@
-import React, {useState, useContext} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import LogsBackupScheduledTaskEditorPanel from "components/settings/logs_backup/LogsBackupScheduledTaskEditorPanel";
-import ScheduledTaskEditorPanel from "components/common/fields/scheduler/ScheduledTaskEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
+import UpdateCenterPanelOverlayBase from "components/common/overlays/center/UpdateCenterPanelOverlayBase";
 
-function NewLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskModel, scheduledTasks }) {
+function UpdateLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskModel, scheduledTasks }) {
   const toastContext = useContext(DialogToastContext);
-  const [tagData, setTagData] = useState(new Model({...tagMetadata.newObjectFields}, tagMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -21,29 +18,33 @@ function NewLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskModel,
     toastContext.clearOverlayPanel();
   };
 
+  if (scheduledTaskModel == null) {
+    return null;
+  }
+
   return (
-    <CreateCenterPanel
-      closePanel={closePanel}
+    <UpdateCenterPanelOverlayBase
+      isMounted={isMounted}
       objectType={tagMetadata.type}
       loadData={loadData}
-      size={CENTER_OVERLAY_SIZES.SMALL}
+      size={CENTER_OVERLAY_SIZES.STANDARD}
     >
       <LogsBackupScheduledTaskEditorPanel
-          handleClose={closePanel}
-          scheduledTaskData={scheduledTaskModel}
-          taskList={scheduledTasks}
-        />
-    </CreateCenterPanel>
+        scheduledTaskData={scheduledTaskModel}
+        taskList={scheduledTasks}
+        handleClose={closePanel}
+      />
+    </UpdateCenterPanelOverlayBase>
   );
 }
- 
-NewLogsBackupScheduleOverlay.propTypes = {
+
+UpdateLogsBackupScheduleOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
   scheduledTaskModel: PropTypes.object,
   scheduledTasks: PropTypes.array
 };
 
-export default NewLogsBackupScheduleOverlay;
+export default UpdateLogsBackupScheduleOverlay;
 
 

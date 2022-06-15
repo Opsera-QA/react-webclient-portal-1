@@ -8,8 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
-import LogsBackupScheduleEditorPanel from "components/settings/logs_backup/LogsBackupScheduleEditorPanel"; 
+import LogsBackupScheduleEditorPanel from "components/settings/logs_backup/LogsBackupScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 
