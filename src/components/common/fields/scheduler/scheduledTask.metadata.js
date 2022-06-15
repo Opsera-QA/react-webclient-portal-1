@@ -60,6 +60,10 @@ export const scheduledTaskMetadata = {
     {
       label: "S3 Tool",
       id: "s3ToolId"      
+    },
+    {
+      label: "Backup Interval",
+      id: "task.pushToS3Interval"
     }
   ],
   newObjectFields: {
@@ -71,6 +75,7 @@ export const scheduledTaskMetadata = {
     task: {
       taskType: "pipeline-log-s3-push",
       s3ToolId: "",
+      pushToS3Interval: ""
     },
     schedule: {
       recurring: "NONE",

@@ -28,6 +28,7 @@ function LogsBackupManagement() {
       </div>
       <LogsBackupManagementTableLoader
         s3ToolId={scheduledTaskModel?.getData("task.s3ToolId")}
+        scheduledTaskModel={scheduledTaskModel}
         setScheduledTaskModel={setScheduledTaskModel}
       />
     </ScreenContainer>
