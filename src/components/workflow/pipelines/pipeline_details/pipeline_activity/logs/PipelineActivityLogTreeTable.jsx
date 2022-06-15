@@ -10,7 +10,6 @@ import PipelineStatusFilter from "components/common/filters/pipelines/status/Pip
 import InlinePipelineStatusFilter from "components/common/filters/pipelines/status/InlinePipelineStatusFilter";
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
-import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 import axios from "axios";
 import pipelineActivityLogsActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
