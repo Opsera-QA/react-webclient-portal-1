@@ -14,7 +14,9 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Region",
       id: "azureRegion",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === false;
+      },
     },
     {
       label: "Deployment Type",
@@ -24,6 +26,9 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Application Type",
       id: "applicationType",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === false;
+      },
     },
     {
       label: "Artifact Tool",
@@ -32,6 +37,9 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Azure Push Step",
       id: "artifactStepId",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
     {
       label: "Service Name",
@@ -53,6 +61,9 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroupName",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
     {
       label: "Specify Resource Group?",
@@ -64,7 +75,10 @@ const azureFunctionsStepFormMetadata = {
     },
     {
       label: "Azure Function",
-      id: "azureFunctionName"
+      id: "azureFunctionName",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
   ],
   newObjectFields: {
