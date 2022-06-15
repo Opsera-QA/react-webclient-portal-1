@@ -30,9 +30,8 @@ const azureFunctionsStepFormMetadata = {
       id: "artifactToolId"
     },
     {
-      label: "Artifact Step",
+      label: "Azure Push Step",
       id: "artifactStepId",
-      formText: "Docker based function deployments will keep created resources occupied at all times unless manually destroyed by the user."
     },
     {
       label: "Service Name",

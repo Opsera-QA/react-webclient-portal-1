@@ -57,7 +57,7 @@ azureFunctionsActions.getAzureResourceGroups = async (getAccessToken, cancelToke
 };
 
 azureFunctionsActions.getAzureStorageAccounts = async (getAccessToken, cancelTokenSource, config, applicationData, resourceGroup) => {
-  const apiUrl = `tools/azure/management/storageAccounts`;
+  const apiUrl = `tools/azure/management/storageAccountsByRG`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {

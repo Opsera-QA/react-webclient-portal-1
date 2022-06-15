@@ -18,7 +18,7 @@ function AzureFunctionsStepDockerStepSelectInput({
   const [dockerList, setDockerList] = useState([]);
   const [isDockerSearching, setIsDockerSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select Artifact Push Step");
+  const [placeholder, setPlaceholder] = useState("Select Azure Push Step");
 
   useEffect(() => {
     loadData();
@@ -40,7 +40,7 @@ function AzureFunctionsStepDockerStepSelectInput({
     try {
       if (plan && stepId) {
         let pipelineSteps = formatStepOptions(plan, stepId);
-        let dockerSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "azure_acr_push");
+        let dockerSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "azure_acr_push" || step.tool.tool_identifier.toLowerCase() === "azure-zip-deployment");
         if (dockerSteps.length === 0) {
           let newDataObject = { ...dataObject };
           newDataObject.setData("artifactStepId", "");
@@ -48,11 +48,11 @@ function AzureFunctionsStepDockerStepSelectInput({
         }
         setDockerList(dockerSteps);
         if (dockerSteps.length === 0) {
-          setPlaceholder("No Artifact Push Steps Configured");
+          setPlaceholder("No Azure Push Steps Configured");
         }
       }
     } catch (error) {
-      setPlaceholder("No Artifact Push Steps Configured");
+      setPlaceholder("No Azure Push Steps Configured");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
