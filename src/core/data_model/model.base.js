@@ -1,5 +1,6 @@
 import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const DataState = {
   LOADED: 0,
@@ -24,7 +25,6 @@ export class ModelBase {
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
     this.changeMap = new Map();
-    this.initializeObjectProperties({...metaData});
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
@@ -32,57 +32,13 @@ export class ModelBase {
     this.roleDefinitions = {};
   }
 
-  initializeObjectProperties = (metaData) => {
-    const fields = metaData?.fields;
-    if (Array.isArray(fields)) {
-      for (const field of fields) {
-        let id = field.id;
-
-        Object.defineProperty(this, id, {
-          get: () => {
-            return this.getData(id);
-          },
-          set: (newValue) => {
-            if (this.getData(id) !== newValue) {
-              this.setData(id, newValue);
-            }
-          },
-        });
-      }
-    }
-  };
-
-  /**
-   * Retrieve nested item from object/array
-   * @param {String} fieldName dot separated
-   * @returns {*}
-   */
-  getNestedData = (fieldName) => {
-    let index;
-    const fieldNameArray = fieldName.split('.');
-    const length = fieldNameArray.length;
-    let nestedObject = {...this.data};
-
-    for (index = 0; index < length; index++) {
-      if(nestedObject == null) {
-        return null;
-      }
-
-    let nextFieldName = fieldNameArray[index];
-      nestedObject = nestedObject[nextFieldName];
-    }
-
-    return nestedObject !== undefined ? nestedObject : null;
-  };
-
-
   getData = (fieldName) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
       return null;
     }
 
-    return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
+    return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
   };
 
   setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
@@ -92,14 +48,14 @@ export class ModelBase {
       this.propertyChange(fieldName, newValue, oldValue);
     }
 
-    this.data[fieldName] = newValue;
+    this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
     this.updateState();
   };
 
   setDefaultValue = (fieldName) => {
     const defaultValue = this.metaData?.newObjectFields?.[fieldName];
     this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
-    this.data[fieldName] = defaultValue;
+    this.setData(fieldName, defaultValue);
   };
 
   createModel = async () => {

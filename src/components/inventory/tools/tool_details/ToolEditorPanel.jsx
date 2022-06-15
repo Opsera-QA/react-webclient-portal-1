@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import toolsActions from "components/inventory/tools/tools-actions";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ToolClassificationSelectInput from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
 import RegistryToolIdentifierSelectInput from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -14,7 +12,7 @@ import axios from "axios";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
 function ToolEditorPanel({ toolData, handleClose }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
+  const { isSassUser } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);

@@ -12,16 +12,16 @@ export class FilterModelBase {
   }
 
   getData = (fieldName) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
       return null;
     }
 
-    return this.data[fieldName];
+    return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
   };
 
   setData = (fieldName, newValue, updateQueryParameters = true) => {
-    this.data[fieldName] = newValue;
+    this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
 
     if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
       sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
