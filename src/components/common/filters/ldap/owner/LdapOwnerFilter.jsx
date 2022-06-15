@@ -12,6 +12,7 @@ function LdapOwnerFilter(
     setFilterModel, 
     setDataFunction, 
     className,
+    visible,
   }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
@@ -76,7 +77,7 @@ function LdapOwnerFilter(
     }
   };
 
-  if (isSassUser() !== false) {
+  if (isSassUser() !== false || visible === false) {
     return null;
   }
 
@@ -99,7 +100,8 @@ LdapOwnerFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   className: PropTypes.string,
-  setDataFunction: PropTypes.func
+  setDataFunction: PropTypes.func,
+  visible: PropTypes.bool,
 };
 
 export default LdapOwnerFilter;

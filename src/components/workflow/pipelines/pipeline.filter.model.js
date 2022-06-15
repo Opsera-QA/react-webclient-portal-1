@@ -55,6 +55,7 @@ const pipelineFilterMetadata = {
     activeFilters: [],
     viewType: "list",
     category: "",
+    type: "",
     status: "",
     active: "",
   },

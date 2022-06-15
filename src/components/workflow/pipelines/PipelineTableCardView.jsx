@@ -29,18 +29,24 @@ function PipelineTableCardView(
   }) {
   const history = useHistory();
 
-  const getDynamicFilter = () => {
-    if (pipelineFilterModel?.getData("type") !== "owner") {
-      return (<OwnerFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mt-2"}/>);
-    }
-  };
-
   const getDropdownFilters = () => {
     return (
       <>
-        <PipelineStatusFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mb-2"} />
-        <TagFilter filterDto={pipelineFilterModel} setFilterDto={setPipelineFilterModel}/>
-        {getDynamicFilter()}
+        <PipelineStatusFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
+        <TagFilter
+          filterDto={pipelineFilterModel}
+          setFilterDto={setPipelineFilterModel}
+        />
+        <OwnerFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mt-2"}
+          visible={pipelineFilterModel?.getData("type") !== "owner"}
+        />
       </>
     );
   };
