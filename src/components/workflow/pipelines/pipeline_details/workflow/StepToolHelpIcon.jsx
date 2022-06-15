@@ -22,6 +22,8 @@ import AnsibleStepConfigurationHelpDocumentation
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApprovalGateStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ApprovalGateStepConfigurationHelpDocumentation";
+import ExternalApiIntegratorHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ExternalApiIntegratorHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -43,6 +45,8 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <AnsibleStepConfigurationHelpDocumentation/>;
       case "approval":
         return <ApprovalGateStepConfigurationHelpDocumentation/>;
+      case "external_rest_api_integration":
+        return <ExternalApiIntegratorHelpDocumentation/>;
       case "jenkins":
       case "junit":
       case "xunit":
