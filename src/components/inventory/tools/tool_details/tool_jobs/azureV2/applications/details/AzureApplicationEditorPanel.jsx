@@ -60,7 +60,7 @@ console.log(azureApplicationData);
     newConfiguration.clientId = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientId", newConfiguration.clientId, getAccessToken);
     newConfiguration.clientSecret = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientSecret", newConfiguration.clientSecret, getAccessToken);
 
-    return await azureActions.createAzureCredential(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    return await azureActions.createAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), newConfiguration);
   };
 
   const updateApplication = async () => {
@@ -68,11 +68,11 @@ console.log(azureApplicationData);
     newConfiguration.clientId = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientId", newConfiguration.clientId, getAccessToken);
     newConfiguration.clientSecret = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientSecret", newConfiguration.clientSecret, getAccessToken);
 
-    return await azureActions.updateAzureCredential(getAccessToken, cancelTokenSource, toolData?._id, applicationId, newConfiguration);
+    return await azureActions.updateAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId, newConfiguration);
   };
 
   const deleteApplication = async () => {
-    await azureActions.deleteAzureCredential(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    await azureActions.deleteAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId);
     handleClose();
   };
 

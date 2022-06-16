@@ -67,13 +67,13 @@ function AwsS3BucketEditorPanel({ awsS3BucketsData, toolData, handleClose, editM
 
   const createS3Bucket = async () => {
     let newConfiguration = awsS3BucketModel.getPersistData();
-    const response = await awsActions.createS3Bucket(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    const response = await awsActions.createS3Bucket(getAccessToken, cancelTokenSource, toolData?.getData("_id"), newConfiguration);
     handleClose();
     return response;
   };
 
   const deleteS3Bucket = async () => {
-    const response = await awsActions.deleteS3Bucket(getAccessToken, cancelTokenSource, toolData?._id, awsS3BucketModel.getPersistData());
+    const response = await awsActions.deleteS3Bucket(getAccessToken, cancelTokenSource, toolData?.getData("_id"), awsS3BucketModel.getPersistData());
     handleClose();
     return response;
   };
