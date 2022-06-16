@@ -85,7 +85,8 @@ sessionHelper.setStoredSessionValue = (sessionKey, value) => {
 
 sessionHelper.deleteStoredSessionValue = (sessionKey) => {
   if (hasStringValue(sessionKey) !== true) {
-    return null;
+    console.error("No session key was included");
+    return;
   }
 
   return sessionStorage.removeItem(sessionKey);
@@ -99,16 +100,7 @@ sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
 };
 
 sessionHelper.clearOutSessionStorage = () => {
-  const keysObject = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS;
-  const keys = Object.keys(keysObject);
-
-  console.log("keysObject: " + JSON.stringify(keysObject));
-  if (Array.isArray(keys)) {
-    console.log("clearing out: " + JSON.stringify(keys));
-    keys.forEach((key) => {
-      sessionHelper.deleteStoredSessionValue(key);
-    });
-  }
+  return sessionStorage.clear();
 };
 
 // TODO: Make get/set/delete cookie functions
