@@ -55,15 +55,15 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
   };
 
   const createProject = async () => {
-    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
+    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?.getData("_id"), argoProjectModel);
   };
 
   const updateProject = async () => {
-    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId, argoProjectModel);
+    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?.getData("_id"), projId, argoProjectModel);
   };
 
   const deleteProject = async () => {
-    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId);
+    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?.getData("_id"), projId);
     handleClose();
   };
 
@@ -109,7 +109,7 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
               fieldName={"sourceRepos"}
               model={argoProjectModel}
               setModel={setArgoProjectModel}
-              argoToolId={toolData?._id}
+              argoToolId={toolData?.getData("_id")}
               disabled={!argoProjectData?.isNew()}
             />
           </Col>
