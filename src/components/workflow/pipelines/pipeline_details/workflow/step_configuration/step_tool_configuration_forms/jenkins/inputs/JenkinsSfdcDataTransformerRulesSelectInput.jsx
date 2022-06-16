@@ -67,7 +67,7 @@ function JenkinsSfdcDataTransformerRulesSelectInput({ model, setModel, fieldName
     }
   };
 
-  if (model == null || jobType !== "SFDC DATA TRANSFORMER") {
+  if (model == null || jobType !== "SFDC DATA TRANSFORM") {
     return null;
   }
 
