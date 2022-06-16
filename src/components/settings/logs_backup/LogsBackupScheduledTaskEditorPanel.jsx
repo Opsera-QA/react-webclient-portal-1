@@ -119,7 +119,11 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"task.s3FileName"}/>
         </Col>
         <Col lg={12}>
-          <LogsBackupManagementAwsStorageAccountSelectInput s3ToolId={s3ToolId} setModel={setSchedulerTaskModel} model={schedulerTaskModel} fieldName={"task.awsBucketName"}/>
+          <LogsBackupManagementAwsStorageAccountSelectInput
+            s3ToolId={s3ToolId}
+            setModel={setSchedulerTaskModel}
+            model={schedulerTaskModel}
+          />
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>

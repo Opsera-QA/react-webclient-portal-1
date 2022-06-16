@@ -13,9 +13,7 @@ function LogsBackupManagementAwsAccountToolSelectInput(
     valueField,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    const task = model?.getData("task");
-    task.s3ToolId = selectedOption?._id;
-    model.setData("task", task);
+    model.setData("task.s3ToolId", selectedOption?._id);
     setModel({...model});
   };
 

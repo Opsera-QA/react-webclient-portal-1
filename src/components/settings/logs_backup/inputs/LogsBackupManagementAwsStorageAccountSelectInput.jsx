@@ -1,17 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AWSBucketNameSelectionInput from "components/common/list_of_values_input/tools/aws/AWSBucketNameSelectionInput";
+import AwsBucketSelectInput from "components/common/list_of_values_input/tools/aws/bucket/AwsBucketSelectInput";
 
-function LogsBackupManagementAwsStorageAccountSelectInput({fieldName, model, setModel, disabled, textField, valueField, s3ToolId}) {
+function LogsBackupManagementAwsStorageAccountSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    textField,
+    valueField,
+    s3ToolId,
+  }) {
   const setDataFunction = (fieldName, selectedOption) => {
     model.setData("task.region", selectedOption?.regions);
     model.setData("task.awsBucketName", selectedOption?.bucketName);
-    setModel({...model});
+    setModel({ ...model });
   };
 
   return (
-    <AWSBucketNameSelectionInput
-      awsToolId={s3ToolId}
+    <AwsBucketSelectInput
+      s3ToolId={s3ToolId}
       fieldName={fieldName}
       model={model}
       setModel={setModel}
@@ -30,7 +39,7 @@ LogsBackupManagementAwsStorageAccountSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  s3ToolId: PropTypes.string
+  s3ToolId: PropTypes.string,
 };
 
 LogsBackupManagementAwsStorageAccountSelectInput.defaultProps = {
