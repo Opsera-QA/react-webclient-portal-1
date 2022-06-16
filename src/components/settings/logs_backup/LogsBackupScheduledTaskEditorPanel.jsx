@@ -98,6 +98,7 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
       }
     >
       <Row>
+        {console.log(schedulerTaskModel)}
         <LogsBackupScheduleEditorPanel
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
@@ -110,6 +111,12 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
+        </Col>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"s3FileName"}/>
+        </Col>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"pushToS3Path"}/>
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>

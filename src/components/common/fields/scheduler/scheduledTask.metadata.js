@@ -64,6 +64,22 @@ export const scheduledTaskMetadata = {
     {
       label: "Backup Interval",
       id: "task.pushToS3Interval"
+    },
+    {
+      label: "File Name",
+      id: "task.s3FileName"
+    },
+    {
+      label: "Path",
+      id: "task.pushToS3Path"
+    },
+    {
+      label: "Region",
+      id: "task.region"
+    },
+    {
+      label: "AWS Bucket Name",
+      id: "task.awsBucketName"
     }
   ],
   newObjectFields: {
@@ -75,7 +91,11 @@ export const scheduledTaskMetadata = {
     task: {
       taskType: "pipeline-log-s3-push",
       s3ToolId: "",
-      pushToS3Interval: ""
+      pushToS3Interval: "",
+      awsBucketName: "",
+      s3FileName: "",
+      region: "",
+      pushToS3Path: ""
     },
     schedule: {
       recurring: "NONE",
