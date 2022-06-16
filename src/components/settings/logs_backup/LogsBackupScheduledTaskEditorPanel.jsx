@@ -10,7 +10,8 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import LogsBackupScheduleEditorPanel from "components/settings/logs_backup/LogsBackupScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import LogsBackupManagementAwsStorageAccountSelectInput from "./inputs/LogsBackupManagementAwsStorageAccountSelectInput ";
+import LogsBackupManagementAwsStorageAccountSelectInput
+  from "components/settings/logs_backup/inputs/LogsBackupManagementAwsStorageAccountSelectInput";
 
 function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList, awsStorageAccounts }) {
   const { getAccessToken } = useContext(AuthContext);
