@@ -17,9 +17,9 @@ function TerraformS3BucketSelectInput({dataObject, setDataObject, disabled}) {
      <AWSBucketNameSelectionInput
        fieldName={"bucketName"}
        awsToolId={dataObject.getData("awsToolConfigId")}
-       dataObject={dataObject}
+       model={dataObject}
        setDataFunction={setBucketName}
-       setDataObject={setDataObject}
+       setModel={setDataObject}
        clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
