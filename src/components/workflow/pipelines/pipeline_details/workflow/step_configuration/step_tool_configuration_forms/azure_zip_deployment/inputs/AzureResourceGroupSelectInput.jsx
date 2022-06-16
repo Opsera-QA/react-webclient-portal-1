@@ -51,7 +51,6 @@ function AzureResourceGroupSelectInput(
         } catch (error) {
             setPlaceholderText("There was an error pulling Resource Groups");
             setErrorMessage("No Resource Groups available.");
-            toastContext.showErrorDialog(error);
             console.error(error);
         } finally {
             setIsLoading(false);

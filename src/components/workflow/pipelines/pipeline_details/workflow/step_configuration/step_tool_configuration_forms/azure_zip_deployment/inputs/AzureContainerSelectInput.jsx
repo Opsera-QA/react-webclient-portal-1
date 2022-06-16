@@ -56,7 +56,6 @@ function AzureContainerSelectInput({
     } catch (error) {
       setPlaceholderText("There was an error pulling Containers");
       setErrorMessage("No Containers available.");
-      toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
       setIsLoading(false);

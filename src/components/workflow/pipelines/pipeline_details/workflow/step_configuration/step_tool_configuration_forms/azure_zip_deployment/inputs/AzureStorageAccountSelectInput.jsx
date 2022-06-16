@@ -48,7 +48,6 @@ function AzureStorageAccountInput(
         } catch (error) {
             setPlaceholderText("There was an error pulling Storage Accounts");
             setErrorMessage("No Storage Accounts available.");
-            toastContext.showErrorDialog(error);
             console.error(error);
         } finally {
             setIsLoading(false);
