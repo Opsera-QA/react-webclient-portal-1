@@ -160,12 +160,12 @@ toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, 
 };
 
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
-  const apiUrl = `/registry/${toolData._id}/update`;
+  const apiUrl = `/registry/${toolData?.getData("_id")}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
 
 toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/registry/${toolData._id}/update`;
+  const apiUrl = `/registry/${toolData?.getData("_id")}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
 };
 

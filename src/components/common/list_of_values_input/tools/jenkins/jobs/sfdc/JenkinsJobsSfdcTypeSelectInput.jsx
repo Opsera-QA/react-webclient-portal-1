@@ -33,7 +33,7 @@ const JENKINS_JOBS_SFDC_OPTIONS = [
   },
   {
     name: "Salesforce Data Transformer",
-    value: "SFDC DATA TRANSFORMER",
+    value: "SFDC DATA TRANSFORM",
   },
 ];
 

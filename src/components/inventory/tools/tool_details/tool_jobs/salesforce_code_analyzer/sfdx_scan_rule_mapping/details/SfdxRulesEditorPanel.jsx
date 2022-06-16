@@ -54,15 +54,15 @@ function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
   };
 
   const createQualityGate = async () => {
-    return await sfdxScanActions.createRule(getAccessToken, cancelTokenSource, toolData?._id, pmdRuleModel);
+    return await sfdxScanActions.createRule(getAccessToken, cancelTokenSource, toolData?.getData("_id"), pmdRuleModel);
   };
 
   const updateQualityGate = async () => {
-    return await sfdxScanActions.updateRule(getAccessToken, cancelTokenSource, toolData?._id, ruleId, pmdRuleModel);
+    return await sfdxScanActions.updateRule(getAccessToken, cancelTokenSource, toolData?.getData("_id"), ruleId, pmdRuleModel);
   };
 
   const deleteQualityGate = async () => {
-    const response = await sfdxScanActions.deleteRule(getAccessToken, cancelTokenSource, toolData?._id, ruleId);
+    const response = await sfdxScanActions.deleteRule(getAccessToken, cancelTokenSource, toolData?.getData("_id"), ruleId);
     handleClose();
     return response;
   };

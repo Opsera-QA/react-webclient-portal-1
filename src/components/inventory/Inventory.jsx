@@ -5,7 +5,7 @@ function Inventory() {
   const history = useHistory();
 
   useEffect(() => {
-    history.push(`/inventory/tools`);
+    history.replace(`/inventory/tools`);
   }, []);
 
   return (

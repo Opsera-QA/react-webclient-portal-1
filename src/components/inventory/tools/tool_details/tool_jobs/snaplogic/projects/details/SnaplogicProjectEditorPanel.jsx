@@ -61,7 +61,7 @@ function SnaplogicProjectEditorPanel({
     return await snaplogicToolActions.createProject(
       getAccessToken,
       cancelTokenSource,
-      toolData?._id,
+      toolData?.getData("_id"),
       pmdRuleModel,
     );
   };
@@ -70,7 +70,7 @@ function SnaplogicProjectEditorPanel({
     return await snaplogicToolActions.updateProject(
       getAccessToken,
       cancelTokenSource,
-      toolData?._id,
+      toolData?.getData("_id"),
       projectId,
       pmdRuleModel,
     );
@@ -80,7 +80,7 @@ function SnaplogicProjectEditorPanel({
     const response = await snaplogicToolActions.deleteProject(
       getAccessToken,
       cancelTokenSource,
-      toolData?._id,
+      toolData?.getData("_id"),
       projectId,
     );
     handleClose();
@@ -118,7 +118,7 @@ function SnaplogicProjectEditorPanel({
             <SnaplogicProjectSpaceSelectInput
               setModel={setPmdRuleModel}
               model={pmdRuleModel}
-              toolConfigId={toolData?._id}
+              toolConfigId={toolData?.getData("_id")}
             />
           </Col>
           <Col lg={12}>

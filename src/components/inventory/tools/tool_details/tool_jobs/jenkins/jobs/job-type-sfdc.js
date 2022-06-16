@@ -35,7 +35,7 @@ const JobTypeSFDC = {
       },
       {
         name: "Salesforce Data Transformer",
-        value: "SFDC DATA TRANSFORMER",
+        value: "SFDC DATA TRANSFORM",
       },
     ],
     toShow: true,

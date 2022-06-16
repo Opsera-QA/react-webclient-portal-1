@@ -3,6 +3,7 @@ export const PIPELINE_TYPES = {
   INFORMATICA: "informatica",
   MACHINE_LEARNING: "ai-ml",
   SALESFORCE: "sfdc",
+  SAP_CPQ: "sap-cpq",
   SOFTWARE_DEVELOPMENT: "sdlc",  
 };
 
@@ -11,6 +12,7 @@ export const PIPELINE_TYPE_LABELS = {
   INFORMATICA: "Informatica",
   MACHINE_LEARNING: "Machine Learning (AI)",
   SALESFORCE: "Salesforce",
+  SAP_CPQ: "SAP CPQ",
   SOFTWARE_DEVELOPMENT: "Software Development",
 };
 
@@ -22,6 +24,8 @@ export const getPipelineTypeLabel = (pipelineType) => {
       return PIPELINE_TYPE_LABELS.INFORMATICA;
     case PIPELINE_TYPES.MACHINE_LEARNING:
       return PIPELINE_TYPE_LABELS.MACHINE_LEARNING;
+    case PIPELINE_TYPES.SAP_CPQ:
+      return PIPELINE_TYPE_LABELS.SAP_CPQ;  
     case PIPELINE_TYPES.SALESFORCE:
       return PIPELINE_TYPE_LABELS.SALESFORCE;
     case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
@@ -43,6 +47,10 @@ export const PIPELINE_TYPE_SELECT_OPTIONS = [
   {
     text: PIPELINE_TYPE_LABELS.MACHINE_LEARNING,
     value: PIPELINE_TYPES.MACHINE_LEARNING,
+  }, 
+  {
+    text: PIPELINE_TYPE_LABELS.SAP_CPQ,
+    value: PIPELINE_TYPES.SAP_CPQ,
   },
   {
     text: PIPELINE_TYPE_LABELS.SALESFORCE,

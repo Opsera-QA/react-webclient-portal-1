@@ -58,6 +58,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   PMD: "pmd",
   POWERSHELL: "powershell",
   S3: "s3",
+  SAP_CPQ: "sap-cpq",
   SELENIUM: "selenium",
   SENTINEL: "sentinel",
   SERVICE_NOW: "servicenow",

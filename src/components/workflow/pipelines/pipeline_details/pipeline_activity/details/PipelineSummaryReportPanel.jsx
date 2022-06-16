@@ -12,6 +12,7 @@ import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportP
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
+import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -26,7 +27,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
   };
 
   const getSummaryReportPanel = () => {
-    console.log(pipelineTaskData);
+    // console.log(pipelineTaskData);
     switch(pipelineTaskData?.api_response?.stepIdentifier) {
       case "informatica":
         return (
@@ -49,6 +50,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
         return (
             <ProvarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+          <SapCpqLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
         );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);

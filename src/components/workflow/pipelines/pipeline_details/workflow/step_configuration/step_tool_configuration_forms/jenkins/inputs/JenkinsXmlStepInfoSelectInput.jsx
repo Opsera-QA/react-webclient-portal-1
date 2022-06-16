@@ -16,7 +16,7 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, d
     return plan.slice(0, plan.findIndex((element) => element._id === stepId));
   };
 
-  if (dataObject == null || (jobType !== "SFDC PUSH ARTIFACTS" && jobType !== "SFDC DATA TRANSFORMER")) {
+  if (dataObject == null || (jobType !== "SFDC PUSH ARTIFACTS" && jobType !== "SFDC DATA TRANSFORM")) {
     return null;
   }
 

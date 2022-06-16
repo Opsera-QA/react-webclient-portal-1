@@ -72,7 +72,7 @@ azureFunctionsActions.getApplicationType = async (getAccessToken, cancelTokenSou
 };
 
 azureFunctionsActions.getAzureResourceGroups = async (getAccessToken, cancelTokenSource, config, applicationData) => {
-  const apiUrl = `tools/azure/management/resourcebycluster`;
+  const apiUrl = `tools/azure/management/resourceGroups`;
   const cfg = config?.configuration;
   const owner = config?.owner;
   const postBody = {
@@ -82,6 +82,24 @@ azureFunctionsActions.getAzureResourceGroups = async (getAccessToken, cancelToke
     "tenantId": cfg?.azureTenantId,
     "subscriptionId": cfg?.azureSubscriptionId,
     "resource": applicationData?.resource,
+    "type" : "v2"
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+azureFunctionsActions.getAzureFunctions = async (getAccessToken, cancelTokenSource, config, applicationData, resourceGroup) => {
+  const apiUrl = `tools/azure/functions/listFunctions`;
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody = {
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.azureTenantId,
+    "subscriptionId": cfg?.azureSubscriptionId,
+    "resource": applicationData?.resource,
+    resourceGroup: resourceGroup
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

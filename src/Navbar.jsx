@@ -10,6 +10,7 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import { renderTooltip } from "utils/helpers";
 import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-helpers";
 import IconBase from "components/common/icons/IconBase";
+import sessionHelper from "utils/session.helper";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
@@ -48,6 +49,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   const logout = async function() {
     //call logout API to clear cache
     try {
+      sessionHelper.clearOutSessionStorage();
       await userActions.logout(getAccessToken);
       logoutUserContext();
     } catch (error) {

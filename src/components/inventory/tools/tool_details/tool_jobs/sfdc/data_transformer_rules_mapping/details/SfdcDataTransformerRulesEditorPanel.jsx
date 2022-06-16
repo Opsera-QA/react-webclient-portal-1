@@ -54,15 +54,15 @@ function SfdcDataTransformerRulesEditorPanel({ dataTransformerRuleData, toolData
   };
 
   const createQualityGate = async () => {
-    return await sfdcDataTransformerRulesActions.createDataTransformerRule(getAccessToken, cancelTokenSource, toolData?._id, dataTransformerRuleModel);
+    return await sfdcDataTransformerRulesActions.createDataTransformerRule(getAccessToken, cancelTokenSource, toolData.getData("_id"), dataTransformerRuleModel);
   };
 
   const updateQualityGate = async () => {
-    return await sfdcDataTransformerRulesActions.updateDataTransformerRule(getAccessToken, cancelTokenSource, toolData?._id, ruleId, dataTransformerRuleModel);
+    return await sfdcDataTransformerRulesActions.updateDataTransformerRule(getAccessToken, cancelTokenSource, toolData.getData("_id"), ruleId, dataTransformerRuleModel);
   };
 
   const deleteQualityGate = async () => {
-    const response = await sfdcDataTransformerRulesActions.deleteDataTransformerRule(getAccessToken, cancelTokenSource, toolData?._id, ruleId);
+    const response = await sfdcDataTransformerRulesActions.deleteDataTransformerRule(getAccessToken, cancelTokenSource, toolData.getData("_id"), ruleId);
     handleClose();
     return response;
   };
@@ -165,7 +165,7 @@ function SfdcDataTransformerRulesEditorPanel({ dataTransformerRuleData, toolData
               model={dataTransformerRuleModel}
               setModel={setDataTransformerRuleModel}
               disabled={!dataTransformerRuleData?.isNew()}
-              toolId={toolData?._id}
+              toolId={toolData.getData("_id")}
               operation={dataTransformerRuleModel?.getData("operation")}
             />
           </Col>
