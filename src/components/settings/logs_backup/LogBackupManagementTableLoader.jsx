@@ -6,11 +6,13 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import PropTypes from "prop-types";
 import LogsBackupScheduledTasksTable from "components/settings/logs_backup/LogsBackupScheduledTasksTable";
+import awsActions from "components/inventory/tools/tool_details/tool_jobs/aws/aws-actions";
 
 function LogsBackupManagementTableLoader({ s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasks, setScheduledTasks] = useState([]);
+  const [awsStorageAccounts, setAwsStorageAccounts] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -58,8 +60,12 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
     const response = await scheduledTaskActions.getScheduledLogPush(getAccessToken, cancelSource, s3ToolId);
     const newScheduledTasksList = response?.data?.data;
 
+    const awsResponse = await awsActions.getS3BucketList(s3ToolId, getAccessToken, cancelSource);
+    const awsStorageAccountsList = awsResponse?.data?.message;
+
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
       setScheduledTasks([...newScheduledTasksList]);
+      setAwsStorageAccounts([...awsStorageAccountsList]);
     }
   };
 
@@ -70,6 +76,7 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
       loadDataFunction={loadData}
       isMounted={isMounted}
       s3ToolId={s3ToolId}
+      awsStorageAccounts={awsStorageAccounts}
     />
   );
 }

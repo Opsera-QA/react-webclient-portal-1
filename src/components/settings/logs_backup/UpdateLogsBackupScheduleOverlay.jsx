@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 import UpdateCenterPanelOverlayBase from "components/common/overlays/center/UpdateCenterPanelOverlayBase";
 
-function UpdateLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskModel, scheduledTasks }) {
+function UpdateLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskModel, scheduledTasks, awsStorageAccounts }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -33,6 +33,7 @@ function UpdateLogsBackupScheduleOverlay({ loadData, isMounted, scheduledTaskMod
         scheduledTaskData={scheduledTaskModel}
         taskList={scheduledTasks}
         handleClose={closePanel}
+        awsStorageAccounts={awsStorageAccounts}
       />
     </UpdateCenterPanelOverlayBase>
   );
@@ -42,7 +43,8 @@ UpdateLogsBackupScheduleOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
   scheduledTaskModel: PropTypes.object,
-  scheduledTasks: PropTypes.array
+  scheduledTasks: PropTypes.array,
+  awsStorageAccounts: PropTypes.array
 };
 
 export default UpdateLogsBackupScheduleOverlay;

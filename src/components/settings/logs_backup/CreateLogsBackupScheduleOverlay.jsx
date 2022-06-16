@@ -15,6 +15,7 @@ function CreateLogsBackupScheduleOverlay(
     isMounted,
     scheduledTasks,
     s3ToolId,
+    awsStorageAccounts
   }) {
   const toastContext = useContext(DialogToastContext);
   const [scheduledTaskModel, setScheduledTaskModel] = useState(undefined);
@@ -53,6 +54,7 @@ function CreateLogsBackupScheduleOverlay(
         handleClose={closePanel}
         scheduledTaskData={scheduledTaskModel}
         taskList={scheduledTasks}
+        awsStorageAccounts={awsStorageAccounts}
       />
     </CreateCenterPanel>
   );
@@ -62,6 +64,7 @@ CreateLogsBackupScheduleOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
   scheduledTasks: PropTypes.array,
+  awsStorageAccounts: PropTypes.array,
   s3ToolId: PropTypes.string,
 };
 

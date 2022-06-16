@@ -29,6 +29,7 @@ function LogsBackupScheduledTasksTable(
     loadDataFunction,
     isMounted,
     s3ToolId,
+    awsStorageAccounts,
   }) {
   const toastContext = useContext(DialogToastContext);
   const fields = scheduledTaskMetadata.fields;
@@ -43,6 +44,7 @@ function LogsBackupScheduledTasksTable(
         isMounted={isMounted}
         scheduledTaskModel={scheduledTaskModel}
         scheduledTasks={scheduledTasks}
+        awsStorageAccounts={awsStorageAccounts}
       />
     );
   };
@@ -98,6 +100,7 @@ function LogsBackupScheduledTasksTable(
         isMounted={isMounted}
         scheduledTasks={scheduledTasks}
         s3ToolId={s3ToolId}
+        awsStorageAccounts={awsStorageAccounts}
       />
     );
   };
@@ -138,6 +141,7 @@ function LogsBackupScheduledTasksTable(
 
 LogsBackupScheduledTasksTable.propTypes = {
   scheduledTasks: PropTypes.array,
+  awsStorageAccounts: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
