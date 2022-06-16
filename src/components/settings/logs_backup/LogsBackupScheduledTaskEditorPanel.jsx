@@ -10,9 +10,9 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import LogsBackupScheduleEditorPanel from "components/settings/logs_backup/LogsBackupScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import LogsBackupManagementAwsStorageAccountSelectInput from "./inputs/LogsBackupManagementAwsStorageAccountSelectInput ";
+import LogsBackupManagementAwsStorageAccountSelectInput from "./inputs/LogsBackupManagementAwsStorageAccountSelectInput";
 
-function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList, awsStorageAccounts }) {
+function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList, s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,6 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-console.log(awsStorageAccounts);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
@@ -54,7 +53,6 @@ console.log(awsStorageAccounts);
   };
 
   const createScheduledTask = async () => {
-    console.log(schedulerTaskModel);
     schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
     const response = await scheduledTaskActions.createScheduledTaskV2(getAccessToken, cancelTokenSource, schedulerTaskModel);
     handleClose();
@@ -101,7 +99,6 @@ console.log(awsStorageAccounts);
       }
     >
       <Row>
-        {console.log(scheduledTaskData)}
         <LogsBackupScheduleEditorPanel
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
@@ -122,7 +119,7 @@ console.log(awsStorageAccounts);
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"task.s3FileName"}/>
         </Col>
         <Col lg={12}>
-          <LogsBackupManagementAwsStorageAccountSelectInput awsStorageAccounts={awsStorageAccounts} setModel={setSchedulerTaskModel} model={schedulerTaskModel} fieldName={"task.awsBucketName"}/>
+          <LogsBackupManagementAwsStorageAccountSelectInput s3ToolId={s3ToolId} setModel={setSchedulerTaskModel} model={schedulerTaskModel} fieldName={"task.awsBucketName"}/>
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
@@ -139,7 +136,7 @@ LogsBackupScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   handleClose: PropTypes.func,
   taskList: PropTypes.any,
-  awsStorageAccounts: PropTypes.array
+  s3ToolId: PropTypes.string
 };
 
 export default LogsBackupScheduledTaskEditorPanel;

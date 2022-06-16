@@ -12,7 +12,6 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasks, setScheduledTasks] = useState([]);
-  const [awsStorageAccounts, setAwsStorageAccounts] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -60,12 +59,8 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
     const response = await scheduledTaskActions.getScheduledLogPush(getAccessToken, cancelSource, s3ToolId);
     const newScheduledTasksList = response?.data?.data;
 
-    const awsResponse = await awsActions.getS3BucketList(s3ToolId, getAccessToken, cancelSource);
-    const awsStorageAccountsList = awsResponse?.data?.message;
-
     if (isMounted?.current === true && Array.isArray(newScheduledTasksList)) {
       setScheduledTasks([...newScheduledTasksList]);
-      setAwsStorageAccounts([...awsStorageAccountsList]);
     }
   };
 
@@ -76,7 +71,6 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
       loadDataFunction={loadData}
       isMounted={isMounted}
       s3ToolId={s3ToolId}
-      awsStorageAccounts={awsStorageAccounts}
     />
   );
 }
