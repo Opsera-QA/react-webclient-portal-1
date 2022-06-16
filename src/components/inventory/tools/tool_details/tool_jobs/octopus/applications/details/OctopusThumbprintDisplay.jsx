@@ -36,7 +36,7 @@ function OctopusThumbprintDisplay ({dataObject, setDataObject, toolData, classNa
 
     const fetchIisThumbprint = async (cancelSource = cancelTokenSource) => {    
         setThumbprintLoading(true);
-        const response = await OctopusActions.fetchIisThumbprint(toolData._id, getAccessToken, cancelSource);    
+        const response = await OctopusActions.fetchIisThumbprint(toolData?.getData("_id"), getAccessToken, cancelSource);
         if(response.data.status === 200){
           let newDataObject = dataObject;
           newDataObject.setData("thumbprint", response.data.message.thumbprint);

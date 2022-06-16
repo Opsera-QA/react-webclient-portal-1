@@ -43,14 +43,14 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
     jenkinsJobModel.setData("configuration", configuration);
 
-    return await jenkinsToolJobActions.updateJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel);
+    return await jenkinsToolJobActions.updateJenkinsJob(getAccessToken, cancelTokenSource, toolData?.getData("_id"), jenkinsJobModel);
   };
 
   const createJob = async () => {
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
     jenkinsJobModel.setData("configuration", configuration);
 
-    return await jenkinsToolJobActions.createJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel);
+    return await jenkinsToolJobActions.createJenkinsJob(getAccessToken, cancelTokenSource, toolData?.getData("_id"), jenkinsJobModel);
   };
 
   const getEditingWarning = () => {
@@ -84,7 +84,7 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
   }
 
   const deleteJob = async () => {
-    const response = await jenkinsToolJobActions.deleteJenkinsJob(getAccessToken, cancelTokenSource, toolData?._id, jenkinsJobModel?.getData("_id"));
+    const response = await jenkinsToolJobActions.deleteJenkinsJob(getAccessToken, cancelTokenSource, toolData?.getData("_id"), jenkinsJobModel?.getData("_id"));
     loadData();
     handleClose();
     return response;

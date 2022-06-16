@@ -77,7 +77,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const fetchOnloadDetails = async () => {
     if (!appID) {
       let newDataObject = octopusApplicationData;
-      newDataObject.setData("toolId", toolData._id);
+      newDataObject.setData("toolId", toolData?.getData("_id"));
       setOctopusApplicationDataDto({ ...newDataObject });
     } else {
       setOctopusApplicationDataDto(octopusApplicationData);
@@ -135,7 +135,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
 
   const deleteApplication = async () => {
     try {
-      await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID, octopusApplicationDataDto);
+      await OctopusActions.deleteOctopusApplication(toolData?.getData("_id"), type, getAccessToken, appID, octopusApplicationDataDto);
       toastContext.showDeleteSuccessResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "");
       handleClose();
     } catch (error) {
