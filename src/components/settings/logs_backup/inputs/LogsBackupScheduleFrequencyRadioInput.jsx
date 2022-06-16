@@ -83,7 +83,7 @@ LogsBackupScheduleFrequencyRadioInput.propTypes = {
 };
 
 LogsBackupScheduleFrequencyRadioInput.defaultProps = {
-  fieldName: "frequency",
+  fieldName: "recurring",
 };
 
 export default LogsBackupScheduleFrequencyRadioInput;

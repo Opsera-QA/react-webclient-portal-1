@@ -83,9 +83,8 @@ function LogsBackupScheduleEditorPanel(
       </Col>
       <Col lg={4}>
         <LogsBackupScheduleFrequencyRadioInput
-          setDataObject={updateModel}
-          dataObject={scheduleModel}
-          fieldName={"recurring"}
+          setModel={updateModel}
+          model={scheduleModel}
         />
       </Col>
     </Row>
