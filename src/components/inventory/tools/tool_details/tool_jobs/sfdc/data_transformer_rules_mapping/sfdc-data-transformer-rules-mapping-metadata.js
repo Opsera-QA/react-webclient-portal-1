@@ -23,7 +23,8 @@ const sfdcDataTransformerRulesMapMetadata = {
     },
     {
       label: "Tag Name",
-      id: "tagName"
+      id: "tagName",
+      formText: "Please make sure that nested tags are separated by .(dot) . For e.g.: to look for senderAddress under Workflow Alert, the Tag Name to be provided is Workflow.alerts.senderAddress"
     },
     {
       label: "Tag Filters",
