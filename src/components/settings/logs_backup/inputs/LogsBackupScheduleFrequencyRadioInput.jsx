@@ -5,17 +5,28 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 
-function LogsBackupScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, disabled }) {
+function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, disabled }) {
+  const setDataFunction = (fieldName, value) => {
+    model.setData(fieldName, value);
+    // TODO: Get string based on value
+    model.setData("pushToS3Interval", value);
+  };
+
+  if (model == null) {
+    return null;
+  }
+
   return (
     <InputContainer className={"custom-radio-button-input my-2 h-100"} fieldName={fieldName}>
       <div className={"content-container h-100"}>
-        <InputTitleBar icon={faSync} field={dataObject.getFieldById(fieldName)}/>
+        <InputTitleBar icon={faSync} field={model?.getFieldById(fieldName)}/>
         <div className={"p-3"}>
           <RadioButtonOption
             className={"mb-2"}
             fieldName={fieldName}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
+            dataObject={model}
+            setDataObject={setModel}
+            setDataFunction={setDataFunction}
             value={"HOUR"}
             label={
               <span>
@@ -29,8 +40,9 @@ function LogsBackupScheduleFrequencyRadioInput({ fieldName, dataObject, setDataO
           <RadioButtonOption
             className={"mb-2"}
             fieldName={fieldName}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
+            dataObject={model}
+            setDataObject={setModel}
+            setDataFunction={setDataFunction}
             value={"6HOURS"}
             label={
               <span>
@@ -44,8 +56,9 @@ function LogsBackupScheduleFrequencyRadioInput({ fieldName, dataObject, setDataO
           <RadioButtonOption
             className={"mb-2"}
             fieldName={fieldName}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
+            dataObject={model}
+            setDataObject={setModel}
+            setDataFunction={setDataFunction}
             value={"DAY"}
             label={
               <span>
@@ -64,8 +77,8 @@ function LogsBackupScheduleFrequencyRadioInput({ fieldName, dataObject, setDataO
 
 LogsBackupScheduleFrequencyRadioInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
