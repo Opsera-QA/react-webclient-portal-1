@@ -55,15 +55,15 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
   };
 
   const createRepository = async () => {
-    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, argoRepositoryModel);
+    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), argoRepositoryModel);
   };
 
   const updateRepository = async () => {
-    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId, argoRepositoryModel);
+    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
-    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId);
     handleClose();
   };
 
@@ -98,7 +98,7 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
           </Col>
           <Col lg={12}>
             <ArgoRepositoriesArgoProjectSelectInput 
-              argoToolId={toolData?._id}
+              argoToolId={toolData?.getData("_id")}
               setModel={setArgoRepositoryModel}
               model={argoRepositoryModel}
               fieldName={"projectName"}

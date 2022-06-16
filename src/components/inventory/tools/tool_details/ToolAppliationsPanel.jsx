@@ -43,7 +43,7 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
       return null;
     }
 
-    return getPanel(toolData["tool_identifier"].toLowerCase(), loadData);
+    return getPanel(toolData?.getData("tool_identifier")?.toLowerCase(), loadData);
   };
 
   return (

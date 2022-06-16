@@ -55,15 +55,15 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
   };
 
   const createApplication = async () => {
-    return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, argoApplicationModel);
+    return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), argoApplicationModel);
   };
 
   const updateApplication = async () => {
-    return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId, argoApplicationModel);
+    return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId, argoApplicationModel);
   };
 
   const deleteApplication = async () => {
-    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
+    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId);
     handleClose();
     return response;
   };
@@ -100,7 +100,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           </Col>
           <Col lg={12}>
             <ArgoApplicationArgoProjectSelectInput
-              argoToolId={toolData?._id}
+              argoToolId={toolData?.getData("_id")}
               setModel={setArgoApplicationModel}
               model={argoApplicationModel}
               fieldName={"projectName"}
@@ -118,7 +118,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           <Col lg={12}>
             <ArgoClusterSelectInput
               fieldName={"cluster"}
-              argoToolId={toolData?._id}
+              argoToolId={toolData?.getData("_id")}
               dataObject={argoApplicationModel}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
