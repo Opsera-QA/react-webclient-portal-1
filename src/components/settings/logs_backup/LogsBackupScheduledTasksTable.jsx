@@ -18,6 +18,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import CreateLogsBackupScheduleOverlay from "components/settings/logs_backup/CreateLogsBackupScheduleOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import UpdateLogsBackupScheduleOverlay from "components/settings/logs_backup/UpdateLogsBackupScheduleOverlay";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function LogsBackupScheduledTasksTable(
   {
@@ -27,12 +28,14 @@ function LogsBackupScheduledTasksTable(
     setPaginationModel,
     loadDataFunction,
     isMounted,
+    s3ToolId,
   }) {
   const toastContext = useContext(DialogToastContext);
   const fields = scheduledTaskMetadata.fields;
 
   const onRowSelect = (grid, row) => {
     const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata);
+    console.log("row: " + JSON.stringify(row));
 
     toastContext.showOverlayPanel(
       <UpdateLogsBackupScheduleOverlay
@@ -94,6 +97,7 @@ function LogsBackupScheduledTasksTable(
         loadData={loadDataFunction}
         isMounted={isMounted}
         scheduledTasks={scheduledTasks}
+        s3ToolId={s3ToolId}
       />
     );
   };
@@ -106,7 +110,7 @@ function LogsBackupScheduledTasksTable(
         loadData={loadDataFunction}
         data={scheduledTasks}
         isLoading={isLoading}
-        noDataMessage={"No Tasks Have Been Scheduled"}
+        noDataMessage={isMongoDbId(s3ToolId) === true ? "No Tasks Have Been Scheduled" : "Please select an S3 Tool to schedule a task."}
         setPaginationModel={setPaginationModel}
         paginationModel={paginationModel}
       />
@@ -125,7 +129,7 @@ function LogsBackupScheduledTasksTable(
       type={"Scheduled Task"}
       title={"Scheduled Tasks"}
       metadata={scheduledTaskMetadata}
-      addRecordFunction={createScheduledTask}
+      addRecordFunction={isMongoDbId(s3ToolId) === true ? createScheduledTask : undefined}
       body={getScheduledTaskTable()}
       className={"mt-3 mx-3"}
     />
@@ -139,6 +143,7 @@ LogsBackupScheduledTasksTable.propTypes = {
   paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
   isMounted: PropTypes.object,
+  s3ToolId: PropTypes.string,
 };
 
 export default LogsBackupScheduledTasksTable;

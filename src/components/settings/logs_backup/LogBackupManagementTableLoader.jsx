@@ -69,6 +69,7 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
       scheduledTasks={scheduledTasks}
       loadDataFunction={loadData}
       isMounted={isMounted}
+      s3ToolId={s3ToolId}
     />
   );
 }
