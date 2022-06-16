@@ -9,7 +9,9 @@ function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, dis
   const setDataFunction = (fieldName, value) => {
     model.setData(fieldName, value);
     // TODO: Get string based on value
+    console.log("value: " + JSON.stringify(value));
     model.setData("pushToS3Interval", value);
+    setModel({...model});
   };
 
   if (model == null) {
