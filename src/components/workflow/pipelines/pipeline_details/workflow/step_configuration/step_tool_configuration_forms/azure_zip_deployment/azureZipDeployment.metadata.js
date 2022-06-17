@@ -25,12 +25,32 @@ const azureZipDeploymentMetadata = {
       id: "buildStepId",
       isRequired: true,
     },
+    {
+      label: "Resource Group",
+      id: "resourceGroup",
+      isRequired: true,
+    },
+    {
+      label: "Use Existing Container?",
+      id: "existingContainer",
+    },
+    {
+      label: "Storage Container",
+      id: "containerName",
+      isRequired: true,
+      regexDefinitionName: "azureContainerName",
+      minLength: 3,
+      maxLength: 63
+    },
   ],
   newObjectFields: {
     azureToolId : "",
     azureCredentialId : "",
     azureStorageAccountName : "",
-    buildStepId: ""
+    buildStepId: "",
+    resourceGroup: "",
+    containerName: "",
+    existingContainer: false
   }
 };
 
