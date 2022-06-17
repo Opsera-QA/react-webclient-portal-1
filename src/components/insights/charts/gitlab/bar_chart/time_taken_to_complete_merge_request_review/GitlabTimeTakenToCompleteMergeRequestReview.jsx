@@ -7,9 +7,15 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, assignStandardColors,
          adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
+import {
+  METRIC_THEME_CHART_PALETTE_COLORS,
+  METRIC_CHART_STANDARD_HEIGHT,
+} from "components/common/helpers/metrics/metricTheme.helpers";
+
+
 function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -72,12 +78,12 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
     }
 
   return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
+    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
           <ResponsiveBar
             data={metrics}
             {...defaultConfig("Reviewer", "Time (Hours)", 
                   true, false, "cutoffString", "wholeNumbers")}
-            {...config(getColorByData)}
+            {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
             {...adjustBarWidth(metrics, false)}
             onClick={() => setShowModal(true)}
             tooltip={({ indexValue, color, value }) => <ChartTooltip 
