@@ -83,6 +83,10 @@ dataParsingHelper.safeObjectPropertyParser = (object, propertyName, defaultValue
   return _.get(object, propertyName, defaultValue);
 };
 
+dataParsingHelper.safeObjectPropertySetter = (object, fieldName, newValue) => {
+  return _.set(object, fieldName, newValue);
+};
+
 dataParsingHelper.parseArrayIntoString = (array, defaultValue = "") => {
   if (!Array.isArray(array) || array.length === 0) {
     return defaultValue;

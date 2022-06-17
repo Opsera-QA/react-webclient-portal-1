@@ -7,6 +7,7 @@ function OwnerFilter(
     filterModel, 
     setFilterModel, 
     className,
+    visible,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
     filterModel.setData(fieldName, selectedOption?.value);
@@ -20,6 +21,7 @@ function OwnerFilter(
       setFilterModel={setFilterModel}
       setDataFunction={setDataFunction}
       className={className}
+      visible={visible}
     />
   );
 }
@@ -28,6 +30,7 @@ OwnerFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   className: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default OwnerFilter;
