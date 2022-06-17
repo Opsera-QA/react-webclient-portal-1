@@ -51,9 +51,6 @@ function LogsBackupScheduledTasksTable(
   const getTooltipTemplate = () => {
     return "Click row to view/edit details";
   };
-console.log(scheduledTasks);
-const test = getField(fields, "task.awsBucketName");
-console.log(test);
   const columns = useMemo(
     () => [
       getTableTextColumn(
