@@ -9,7 +9,7 @@ import ToolLogsTab, {LOG_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/
 import ToolAttributesTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolAttributesTab";
 import ToolApplicationsTab, {APPLICATION_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolApplicationsTab";
 import ToolRepositoriesTab, {REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolRepositoriesTab";
-import ToolConnectionTab, {CONNECTION_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
+import ToolConnectionTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
 import ToolProjectsTab, {PROJECT_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProjectsTab";
 import ToolStorageTab, {STORAGE_SUPPORTED_TOOL_IDENTIFIERS} from "components/inventory/tools/details/panel/tab_container/tabs/ToolStorageTab";
 import ToolUsageTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolUsageTab";
@@ -24,6 +24,7 @@ import ToolEndpointsTab, {
 } from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
 import ToolProvidersTab, { PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
 import ToolLicenseTab, {LICENSE_SUPPORTED_TOOL_IDENTIFIERS} from "../../../tool_details/ToolLicenseTab";
+import { CONNECTION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/tool_details/ToolConnectionPanel";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
