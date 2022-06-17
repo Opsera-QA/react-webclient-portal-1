@@ -13,12 +13,13 @@ function AppliedTagOverlay({
   badgeClassName,
 }) {
   const getDashboardTags = () => {
+    const dashboardTagsCount = Array.isArray(dashboardTags) && dashboardTags.length ? dashboardTags.length : 0;
     return (
       <>
         <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
-          {"# Dashboard Tags"}
+          {`${dashboardTagsCount} Dashboard Tags`}
         </div>
-        {!Array.isArray(dashboardTags) || dashboardTags.length === 0 ? (
+        {dashboardTagsCount === 0 ? (
           <div className={className}>
             <TagBadgeBase
               className={badgeClassName}
@@ -46,18 +47,17 @@ function AppliedTagOverlay({
     );
   };
   const getKPITags = () => {
-    console.log(kpiTags, "**kpiTags");
+    const kpiTagsCount = Array.isArray(kpiTags) && kpiTags.length ? kpiTags.length : 0;
     return (
       <>
         <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
-          {"# Kpi Tags"}
+          {`${kpiTagsCount} KPI Tags`}
         </div>
-        {(!Array.isArray(kpiTags) || kpiTags.length) === 0 ? (
+        {kpiTagsCount === 0 ? (
           <div className={className}>
-            111
             <TagBadgeBase
               className={badgeClassName}
-              badgeText={`No Kpi Tags Applied`}
+              badgeText={`No KPI Tags Applied`}
             />
           </div>
         ) : (

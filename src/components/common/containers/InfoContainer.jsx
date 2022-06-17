@@ -17,6 +17,7 @@ function InfoContainer(
     maximumHeight,
     loadDataFunction,
     backgroundColor,
+    field,
   }) {
   const getBodyStyling = () => {
     const styling = {};
@@ -44,6 +45,7 @@ function InfoContainer(
         className={titleClassName}
         rightSideButton={titleRightSideButton}
         loadDataFunction={loadDataFunction}
+        field={field}
       />
       <div
         className={"content-container"}
@@ -68,6 +70,7 @@ InfoContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadDataFunction: PropTypes.func,
   backgroundColor: PropTypes.string,
+  field: PropTypes.object,
 };
 
 export default InfoContainer;

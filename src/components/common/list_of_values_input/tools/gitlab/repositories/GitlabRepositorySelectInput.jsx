@@ -1,30 +1,36 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
 
-function GitlabRepositorySelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    valueField,
-    textField,
-  }) {
+function GitlabRepositorySelectInput({
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  valueField,
+  textField,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,7 +58,7 @@ function GitlabRepositorySelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadGitlabRepositories(cancelSource);
+      await loadGitlabRepositories("", toolId, cancelSource);
     } catch (error) {
       setError(error);
     } finally {
@@ -60,29 +66,61 @@ function GitlabRepositorySelectInput(
     }
   };
 
-  const loadGitlabRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await gitlabActions.getRepositoriesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId);
-    const repositories = response?.data?.data;
+  const loadGitlabRepositories = async (
+    searchTerm,
+    toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
+    try {
+      setIsLoading(true);
+      // const response = await gitlabActions.getRepositoriesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId);
+      const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
+        getAccessToken,
+        cancelSource,
+        searchTerm,
+        toolId,
+      );
 
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setGitlabRepositories([...repositories]);
+      const repositories = response?.data?.data;
 
-      const existingRepository = model?.getData(fieldName);
+      if (isMounted?.current === true && Array.isArray(repositories)) {
+        setGitlabRepositories([...repositories]);
 
-      if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+        const existingRepository = model?.getData(fieldName);
 
-        if (existingRepositoryExists == null) {
-          setError(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+        if (hasStringValue(existingRepository) === true) {
+          const existingRepositoryExists = repositories.find(
+            (repository) => repository[valueField] === existingRepository,
           );
+
+          if (existingRepositoryExists == null) {
+            setError(
+              "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list.",
+            );
+          }
         }
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        setError(
+          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.",
+        );
+      }
+      console.error(error);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadGitlabRepositories(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
-    <SelectInputBase
+    <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -96,6 +134,8 @@ function GitlabRepositorySelectInput(
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
       error={error}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      useToggle={true}
     />
   );
 }
