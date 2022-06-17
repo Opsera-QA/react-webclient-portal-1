@@ -41,8 +41,50 @@ import ExternalApiIntegratorToolConnectionEditorPanel
 import GithubDeploykeysToolConfigurationPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeploykeysToolConfigurationPanel";
 import ApigeeToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
-import SnaplogicToolConfiguration 
+import SnaplogicToolConfiguration
   from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
+
+//TODO: Use constants, alphabetize
+export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
+  toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR,
+  "jenkins",
+  "jira",
+  "github",
+  "gitlab",
+  "bitbucket",
+  "spinnaker",
+  "cypress",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
+  "anchore-scan",
+  "anchore-integrator",
+  "sonar",
+  "aws_account",
+  "sfdc-configurator",
+  "nexus",
+  "teams",
+  "octopus",
+  "slack",
+  "azure_account",
+  "jfrog_artifactory_maven",
+  "jfrog_artifactory_docker",
+  "servicenow",
+  "azure-devops",
+  "hashicorp_vault",
+  "kafka_connect",
+  "coverity",
+  "twistlock",
+  "azure",
+  "ansible",
+  "mongodb_realm",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR,
+  "informatica",
+  "terraform-cloud",
+  "buildkite",
+  "gcp_account",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
+];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
   const getConnectionPanel = () => {
@@ -50,6 +92,7 @@ function ToolConnectionPanel({ toolData, setToolData }) {
       return <></>;
     }
 
+    //TODO: Use constants, alphabetize
     switch (toolData?.getData("tool_identifier")) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
