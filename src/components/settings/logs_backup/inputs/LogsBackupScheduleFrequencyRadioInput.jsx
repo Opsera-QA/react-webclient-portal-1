@@ -5,15 +5,15 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 
-function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, disabled }) {
+function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, scheduledTaskData, setSchedulerTaskModel, disabled }) {
   const setDataFunction = (fieldName, value) => {
     model.setData(fieldName, value);
     if (value === "HOUR") { value = 1; }
     if (value === "6HOURS") { value = 6; }
     if (value === "DAY") { value = 24; }
     console.log("value: " + JSON.stringify(value));
-    model.setData("task.pushToS3Interval", value);
-    setModel({...model});
+    scheduledTaskData.setData("task.pushToS3Interval", value);
+    setSchedulerTaskModel({...scheduledTaskData});
   };
 
   if (model == null) {
@@ -83,6 +83,8 @@ LogsBackupScheduleFrequencyRadioInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  scheduledTaskData: PropTypes.object,
+  setSchedulerTaskModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 

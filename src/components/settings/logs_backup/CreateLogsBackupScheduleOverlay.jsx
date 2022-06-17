@@ -6,7 +6,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
 import modelHelpers from "components/common/model/modelHelpers";
-import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
+import { scheduledTaskMetadata } from "components/settings/logs_backup/LogsBackupScheduledTask.metadata";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function CreateLogsBackupScheduleOverlay(

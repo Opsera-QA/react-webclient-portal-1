@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
+import { scheduledTaskMetadata } from "components/settings/logs_backup/LogsBackupScheduledTask.metadata";
 import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
 import LogsBackupManagementTableLoader from "./LogBackupManagementTableLoader";
 import LogsBackupManagementAwsAccountToolSelectInput

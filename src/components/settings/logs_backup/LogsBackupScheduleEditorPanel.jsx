@@ -84,6 +84,8 @@ function LogsBackupScheduleEditorPanel(
       <Col lg={4}>
         <LogsBackupScheduleFrequencyRadioInput
           setModel={updateModel}
+          setSchedulerTaskModel={setSchedulerTaskModel}
+          scheduledTaskData={scheduledTaskData}
           model={scheduleModel}
         />
       </Col>

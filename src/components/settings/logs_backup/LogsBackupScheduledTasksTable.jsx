@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
-import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
+import { scheduledTaskMetadata } from "components/settings/logs_backup/LogsBackupScheduledTask.metadata";
 import {
   getTableActiveBooleanIconColumn,
   getTableTextColumn,
@@ -51,7 +51,9 @@ function LogsBackupScheduledTasksTable(
   const getTooltipTemplate = () => {
     return "Click row to view/edit details";
   };
-
+console.log(scheduledTasks);
+const test = getField(fields, "task.awsBucketName");
+console.log(test);
   const columns = useMemo(
     () => [
       getTableTextColumn(
