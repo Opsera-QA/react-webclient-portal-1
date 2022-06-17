@@ -8,9 +8,11 @@ import {faSync} from "@fortawesome/pro-light-svg-icons";
 function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction = (fieldName, value) => {
     model.setData(fieldName, value);
-    // TODO: Get string based on value
+    if (value === "HOUR") { value = 1; }
+    if (value === "6HOURS") { value = 6; }
+    if (value === "DAY") { value = 24; }
     console.log("value: " + JSON.stringify(value));
-    model.setData("pushToS3Interval", value);
+    model.setData("task.pushToS3Interval", value);
     setModel({...model});
   };
 

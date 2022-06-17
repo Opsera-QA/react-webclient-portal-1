@@ -69,10 +69,11 @@ function LogsBackupScheduledTasksTable(
         getTooltipTemplate,
         true,
       ),
-      getFormattedLabelWithFunctionColumnDefinition(
-        getField(fields, "task.pushToS3Interval"),
-        getSchedulerFrequencyLabel,
+      getTableTextColumn(
+        getField(fields, "task.awsBucketName"),
         "no-wrap-inline",
+        undefined,
+        undefined,
         getTooltipTemplate,
       ),
       getTableDateTimeColumnWithTimeZone(
