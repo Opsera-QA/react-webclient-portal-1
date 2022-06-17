@@ -1,6 +1,6 @@
-import React, {useMemo} from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
-import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
+import { scheduledTaskMetadata } from "components/settings/logs_backup/LogsBackupScheduledTask.metadata";
 import {
   getTableActiveBooleanIconColumn,
   getTableTextColumn,
@@ -15,8 +15,12 @@ import {
   getSchedulerFrequencyLabel
 } from "components/common/fields/scheduler/frequencies/schedulerFrequency.constants";
 import modelHelpers from "components/common/model/modelHelpers";
+import CreateLogsBackupScheduleOverlay from "components/settings/logs_backup/CreateLogsBackupScheduleOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import UpdateLogsBackupScheduleOverlay from "components/settings/logs_backup/UpdateLogsBackupScheduleOverlay";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function ScheduledTasksTable(
+function LogsBackupScheduledTasksTable(
   {
     scheduledTasks,
     isLoading,
@@ -24,21 +28,29 @@ function ScheduledTasksTable(
     setPaginationModel,
     loadDataFunction,
     isMounted,
-    setScheduledTaskModel,
-    createScheduledTaskFunction,
+    s3ToolId
   }) {
+  const toastContext = useContext(DialogToastContext);
   const fields = scheduledTaskMetadata.fields;
 
   const onRowSelect = (grid, row) => {
-    if (isMounted?.current === true) {
-      setScheduledTaskModel({...modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata)});
-    }
+    const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata);
+    console.log("row: " + JSON.stringify(row));
+
+    toastContext.showOverlayPanel(
+      <UpdateLogsBackupScheduleOverlay
+        loadData={loadDataFunction}
+        isMounted={isMounted}
+        scheduledTaskModel={scheduledTaskModel}
+        scheduledTasks={scheduledTasks}
+        s3ToolId={s3ToolId}
+      />
+    );
   };
 
   const getTooltipTemplate = () => {
     return "Click row to view/edit details";
   };
-
   const columns = useMemo(
     () => [
       getTableTextColumn(
@@ -56,10 +68,11 @@ function ScheduledTasksTable(
         getTooltipTemplate,
         true,
       ),
-      getFormattedLabelWithFunctionColumnDefinition(
-        getField(fields, "schedule.recurring"),
-        getSchedulerFrequencyLabel,
+      getTableTextColumn(
+        getField(fields, "task.awsBucketName"),
         "no-wrap-inline",
+        undefined,
+        undefined,
         getTooltipTemplate,
       ),
       getTableDateTimeColumnWithTimeZone(
@@ -79,6 +92,17 @@ function ScheduledTasksTable(
     [],
   );
 
+  const createScheduledTask = () => {
+    toastContext.showOverlayPanel(
+      <CreateLogsBackupScheduleOverlay
+        loadData={loadDataFunction}
+        isMounted={isMounted}
+        scheduledTasks={scheduledTasks}
+        s3ToolId={s3ToolId}
+      />
+    );
+  };
+
   const getScheduledTaskTable = () => {
     return (
       <VanityTable
@@ -87,7 +111,7 @@ function ScheduledTasksTable(
         loadData={loadDataFunction}
         data={scheduledTasks}
         isLoading={isLoading}
-        noDataMessage={"No Tasks Have Been Scheduled"}
+        noDataMessage={isMongoDbId(s3ToolId) === true ? "No Tasks Have Been Scheduled" : "Please select an S3 Tool to schedule a task."}
         setPaginationModel={setPaginationModel}
         paginationModel={paginationModel}
       />
@@ -106,22 +130,21 @@ function ScheduledTasksTable(
       type={"Scheduled Task"}
       title={"Scheduled Tasks"}
       metadata={scheduledTaskMetadata}
-      addRecordFunction={createScheduledTaskFunction}
+      addRecordFunction={isMongoDbId(s3ToolId) === true ? createScheduledTask : undefined}
       body={getScheduledTaskTable()}
       className={"mt-3 mx-3"}
     />
   );
 }
 
-ScheduledTasksTable.propTypes = {
+LogsBackupScheduledTasksTable.propTypes = {
   scheduledTasks: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
   isMounted: PropTypes.object,
-  setScheduledTaskModel: PropTypes.func,
-  createScheduledTaskFunction: PropTypes.func,
+  s3ToolId: PropTypes.string,
 };
 
-export default ScheduledTasksTable;
+export default LogsBackupScheduledTasksTable;

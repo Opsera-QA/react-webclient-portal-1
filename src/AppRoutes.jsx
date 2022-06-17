@@ -131,6 +131,7 @@ import CustomEnvironmentVariableManagement
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
+import LogsBackupManagement from "./components/settings/logs_backup/LogsBackupManagement";
 //import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
@@ -326,7 +327,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
           <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact component={UserDetailView} />
           <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
-
+          <SecureRoute path="/settings/logs-backup-management" exact component={LogsBackupManagement} />
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
