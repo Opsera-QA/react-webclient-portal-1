@@ -14,6 +14,14 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     toastContext.clearOverlayPanel();
   };
 
+  const getConnectionsTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.CONNECTION) === true) {
+      return (
+        <li><b>Connection</b> - Enter tool specific configuration information and test to see if connection succeeds. The settings applied will be used in pipelines.</li>
+      );
+    }
+  };
+
   const getVaultTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.VAULT) === true) {
       return (
@@ -118,6 +126,15 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  const getLicenseTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.LICENSES) === true) {
+      return (
+        <li><b>License</b> - Select License Type and its corresponding License Key.</li>
+      );
+    }
+  };
+
+
   const getHelpDocumentation = () => {
     return (
       <div>
@@ -126,8 +143,8 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <ul style={{listStyleType: "none"}}>
               <li><b>Summary</b> - Includes information added upon tool creation such as Tool Name, Tool Identifier, Cost Center, Tags, Classification, Description and user Access Roles.</li>
               <li><b>Attributes</b> - Includes Organizations, Contacts, Licensing, Locations, Applications and Compliance.</li>
-              <li><b>Connection</b> - Enter tool specific configuration information and test to see if connection succeeds. The settings applied will be used in pipelines.</li>
               {getVaultTabInformation()}
+              {getConnectionsTabInformation()}
               {getValidationRulesTabInformation()}
               {getApplicationsTabInformation()}
               {getStorageTabInformation()}
@@ -141,6 +158,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               {getOrganizationsTabInformation()}
               {getWorkspacesTabInformation()}
               <li><b>Usage</b> - View and navigate to all pipelines in which this tool is being used.</li>
+              {getLicenseTabInformation()}
             </ul>
           </div>
       </div>
