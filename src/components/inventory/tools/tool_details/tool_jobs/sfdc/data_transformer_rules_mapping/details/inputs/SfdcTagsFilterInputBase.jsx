@@ -182,7 +182,7 @@ function SfdcTagsFilterInputBase({ fieldName, model, setModel, helpComponent, di
   };
 
   const getTagFilterMessage = () => {
-    return (`If a Tag Filter level is not assigned, any hits at that level will be ignored.`);
+    return (`If a Tag Filter level is not assigned, any hits at that level will be ignored. When multiple Tag Filters are used, a logical AND will be applied.`);
   };
 
   if (field == null) {
