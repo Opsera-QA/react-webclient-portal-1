@@ -187,34 +187,18 @@ function VanityMetricContainer(
     );
   };
 
-  const getDashboardTagsBadge = () => {
+  const getAllTags = () => {
     const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
     const kpiConfigDashboardTags = getMetricFilterValue(dashboardData?.getData("filters"), "tags");
-
-    if (useDashboardTags === true) {
-      return (
-        <MetricTagBadge
-          type={"Dashboard"}
-          tags={kpiConfigDashboardTags}
-          showNoTagsAppliedBadge={true}
-        />
-      );
-    }
-  };
-
-  const getKpiTagsBadge = () => {
     const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
     const kpiConfigTags = getMetricFilterValue(kpiConfiguration?.filters, "tags");
 
-    if (useKpiTags === true) {
-      return (
-        <MetricTagBadge
-          type={"KPI"}
-          tags={kpiConfigTags}
-          showNoTagsAppliedBadge={true}
-        />
-      );
-    }
+    return (<MetricTagBadge
+      type={"Dashboard"}
+      kpiTags={useKpiTags ? kpiConfigTags : null}
+      showNoTagsAppliedBadge={true}
+      dashboardTags={useDashboardTags ? kpiConfigDashboardTags : null}
+    />);
   };
 
   const getDateBadge = () => {
@@ -241,8 +225,7 @@ function VanityMetricContainer(
           {getDateBadge()}
         </div>
         <div className={"d-flex"}>
-          <div className={"mr-2"}>{getKpiTagsBadge()}</div>
-          <div>{getDashboardTagsBadge()}</div>
+          {getAllTags()}
         </div>
       </div>
     </div>
