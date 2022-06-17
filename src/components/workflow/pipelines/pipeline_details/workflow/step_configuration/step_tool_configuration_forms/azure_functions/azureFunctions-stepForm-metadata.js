@@ -14,7 +14,9 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Region",
       id: "azureRegion",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === false;
+      },
     },
     {
       label: "Deployment Type",
@@ -24,15 +26,20 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Application Type",
       id: "applicationType",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === false;
+      },
     },
     {
       label: "Artifact Tool",
       id: "artifactToolId"
     },
     {
-      label: "Artifact Step",
+      label: "Azure Push Step",
       id: "artifactStepId",
-      formText: "Docker based function deployments will keep created resources occupied at all times unless manually destroyed by the user."
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
     {
       label: "Service Name",
@@ -54,11 +61,24 @@ const azureFunctionsStepFormMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroupName",
-      formText: "Resource group is mandatory if the Specify Resource Group toggle is selected"
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
     {
       label: "Specify Resource Group",
       id: "useCustomResourceGroup"
+    },
+    {
+      label: "Use Existing Azure Function?",
+      id: "existingFunctionName"
+    },
+    {
+      label: "Azure Function",
+      id: "azureFunctionName",
+      isRequiredFunction: (model) => {
+        return model?.getData("existingFunctionName") === true;
+      },
     },
   ],
   newObjectFields: {
@@ -71,7 +91,9 @@ const azureFunctionsStepFormMetadata = {
     resourceGroupName: "",
     useCustomResourceGroup: false,
     deploymentType: "",
-    applicationType: ""
+    applicationType: "",
+    existingFunctionName: false,
+    azureFunctionName: ""
   }
 };
 

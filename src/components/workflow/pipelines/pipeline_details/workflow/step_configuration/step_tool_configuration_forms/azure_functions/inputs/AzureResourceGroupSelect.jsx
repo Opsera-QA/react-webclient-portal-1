@@ -49,7 +49,6 @@ function AksResourceGroupSelectInput(
     } catch (error) {
       setPlaceholderText("There was an error pulling Resource Groups");
       setErrorMessage("No Resource Groups available.");
-      toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -127,8 +126,8 @@ AksResourceGroupSelectInput.propTypes = {
 
 AksResourceGroupSelectInput.defaultProps = {
   fieldName: "resourceGroupName",
-  textField: "resourceGroup",
-  valueField: "resourceGroup",
+  textField: "name",
+  valueField: "name",
 };
 
 export default AksResourceGroupSelectInput;
