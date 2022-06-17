@@ -59,7 +59,7 @@ export const scheduledTaskMetadata = {
     },
     {
       label: "S3 Tool",
-      id: "s3ToolId"      
+      id: "s3ToolId"    
     },
     {
       label: "Backup Interval",
@@ -67,11 +67,13 @@ export const scheduledTaskMetadata = {
     },
     {
       label: "File Name",
-      id: "task.s3FileName"
+      id: "task.s3FileName",
+      isRequired: true
     },
     {
       label: "Path",
-      id: "task.pushToS3Path"
+      id: "task.pushToS3Path",
+      isRequired: true
     },
     {
       label: "Region",
@@ -79,7 +81,8 @@ export const scheduledTaskMetadata = {
     },
     {
       label: "AWS Bucket Name",
-      id: "task.awsBucketName"
+      id: "task.awsBucketName",
+      isRequired: true
     }
   ],
   newObjectFields: {
@@ -91,14 +94,14 @@ export const scheduledTaskMetadata = {
     task: {
       taskType: "pipeline-log-s3-push",
       s3ToolId: "",
-      pushToS3Interval: "",
+      pushToS3Interval: "24",
       awsBucketName: "",
       s3FileName: "",
       region: "",
       pushToS3Path: ""
     },
     schedule: {
-      recurring: "NONE",
+      recurring: "DAY",
       executionDate: new Date()
     },
   }
