@@ -10,7 +10,8 @@ import PipelineStatusFilter from "components/common/filters/pipelines/status/Pip
 import InlinePipelineStatusFilter from "components/common/filters/pipelines/status/InlinePipelineStatusFilter";
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
-import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import PipelineActivityFilterModel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivity.filter.model";
 import axios from "axios";
 import pipelineActivityLogsActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
@@ -28,7 +29,7 @@ function PipelineActivityLogTreeTable(
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineFilterModel());
+  const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
   const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
