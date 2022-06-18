@@ -1,31 +1,4 @@
-// TODO: Keep this in line with Node's /src/metadata/tasks/tasks.types.js
-import {
-  mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
-import sfdxCertGenTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
-import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
-import {
-  salesforceBulkMigrationTaskConfigurationMetadata
-} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import salesforceQuickDeployTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
-import branchToBranchGitTaskConfigurationMetadata
-  from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
-import gitscraperTaskConfigurationMetadata from "components/tasks/details/tasks/gitscraper/gitscraper-metadata";
-import ec2ClusterCreationTaskConfigurationMetadata
-  from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
-import awsLambdaFunctionTaskConfigurationMetadata
-  from "components/tasks/details/tasks/aws-lambda-creation/aws-lambda-metadata";
-import ec2ServiceCreationTaskConfigurationMetadata
-  from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
-import azureAksClusterTaskConfigurationMetadata
-  from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
-import snaplogicTaskConfigurationMetadata
-  from "components/tasks/details/tasks/snaplogic/snaplogicTaskConfigurationMetadata";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const TASK_TYPES = {
   // Salesforce
@@ -50,7 +23,7 @@ export const TASK_TYPES = {
   AZURE_CLUSTER_CREATION: "azure_cluster_creation",
 
   //snaplogic
-  SNAPLOGIC_TASK: "snaplogic"
+  SNAPLOGIC_TASK: "snaplogic",
 };
 
 export const TASK_TYPE_LABELS = {
@@ -76,7 +49,7 @@ export const TASK_TYPE_LABELS = {
   AZURE_CLUSTER_CREATION: "Azure AKS Cluster Creation",
 
   //snaplogic
-  SNAPLOGIC_TASK: "Snaplogic Task"
+  SNAPLOGIC_TASK: "Snaplogic Task",
 };
 
 export const getTaskTypeLabel = (taskType) => {
@@ -122,4 +95,122 @@ export const getTaskTypeLabel = (taskType) => {
     default:
       return taskType;
   }
+};
+
+export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
+  // AWS
+  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS" },
+  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS" },
+  { text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION, value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION, category: "AWS" },
+
+  // Azure
+  { text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure" },
+
+  // Git
+  { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
+  { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
+
+  // Salesforce
+  {
+    text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+    value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+    category: "Salesforce",
+  },
+  { text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION,
+    value: TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+    category: "Salesforce",
+  },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC,
+    value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
+    category: "Salesforce",
+  },
+  { text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce" },
+
+  //snaplogic
+  { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
+];
+
+export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
+  // AWS
+  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS" },
+  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS" },
+  { text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION, value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION, category: "AWS" },
+
+  // Azure
+  { text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure" },
+
+  // Git
+  { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
+  { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
+
+  // Salesforce
+  {
+    text: TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+    value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+    category: "Salesforce",
+  },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION,
+    value: TASK_TYPES.SALESFORCE_BULK_MIGRATION,
+    category: "Salesforce",
+  },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION,
+    value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION,
+    category: "Salesforce",
+  },
+  { text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC,
+    value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
+    category: "Salesforce",
+  },
+  { text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce" },
+
+  //snaplogic
+  { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
+];
+
+export const isTaskTypeOfCategory = (taskType, category) => {
+  if (
+    hasStringValue(category) !== true
+    || hasStringValue(taskType) !== true
+    || category === "owner"
+  ) {
+    return true;
+  }
+
+  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find((taskTypeDefinition) => {
+    return taskTypeDefinition.value === taskType;
+  });
+  const taskTypeDefinitionCategory = taskTypeDefinition.category;
+
+  return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category;
+};
+
+export const getProductionTaskTypesForCategory = (category) => {
+  if (hasStringValue(category) !== true || category === "owner") {
+    return PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
+  }
+
+  return PRODUCTION_TASK_TYPE_SELECT_OPTIONS.filter((taskTypeDefinition) => {
+    const taskTypeDefinitionCategory = taskTypeDefinition.category;
+    return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase();
+  });
+};
+
+export const getNonProductionTaskTypesForCategory = (category) => {
+  if (hasStringValue(category) !== true || category === "owner") {
+    return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
+  }
+
+  return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.filter((taskTypeDefinition) => {
+    const taskTypeDefinitionCategory = taskTypeDefinition.category;
+    return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase();
+  });
 };
