@@ -16,6 +16,8 @@ function PaginationContainer(
     nextGeneration,
     data,
     loadingMessage,
+    paginationStyle,
+    topPaginationStyle
   }) {
   const getTopPaginator = () => {
     return (
@@ -24,6 +26,7 @@ function PaginationContainer(
         setPaginationDto={setFilterDto}
         isLoading={isLoading}
         loadData={loadData}
+        topPaginationStyle={topPaginationStyle}
       />
     );
   };
@@ -36,6 +39,7 @@ function PaginationContainer(
         setPaginationDto={setFilterDto}
         isLoading={isLoading}
         loadData={loadData}
+        paginationStyle={paginationStyle}
       />
     );
   };
@@ -50,7 +54,7 @@ function PaginationContainer(
       );
     }
 
-    return (children);
+    return (<div className={'h-100'} style={{flex: "1 1 auto", overflow: "scroll"}}>{children}</div>);
   };
 
   if (filterDto == null) {
@@ -67,7 +71,7 @@ function PaginationContainer(
   }
 
   return (
-    <div className="pagination-container">
+    <div className="pagination-container h-100" style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
       {getTopPaginator()}
       {getBody()}
       {getBottomPaginator()}
@@ -85,6 +89,8 @@ PaginationContainer.propTypes = {
   nextGeneration: PropTypes.bool,
   data: PropTypes.array,
   loadingMessage: PropTypes.string,
+  paginationStyle: PropTypes.string,
+  topPaginationStyle: PropTypes.string,
 };
 
 PaginationContainer.defaultProps = {
