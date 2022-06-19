@@ -26,6 +26,8 @@ import ToolWorkspacesPanel from "components/inventory/tools/tool_details/ToolWor
 import ToolEndpointsPanel from "components/inventory/tools/details/endpoints/ToolEndpointsPanel";
 import ToolProvidersPanel from "components/inventory/tools/tool_details/ToolProvidersPanel";
 import ToolLicensePanel from "../../tool_details/ToolLicensePanel";
+import ToolDataTransformerRulesMappingPanel 
+  from "components/inventory/tools/tool_details/ToolDataTransformerRulesMappingPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -119,7 +121,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <ToolJobsPanel
             toolData={toolData}
-            toolIdentifier={toolData?.tool_identifier}
+            toolIdentifier={toolData?.getData("tool_identifier")}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.LOGS:
@@ -233,6 +235,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <ToolLicensePanel
                 toolData={toolData}
             />
+        );
+      case TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER:
+        return (
+          <ToolDataTransformerRulesMappingPanel 
+            toolData={toolData}
+            setToolData={setToolData}
+            loadData={loadData}
+          />
         );
       default:
         return null;
