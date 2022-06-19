@@ -1592,6 +1592,14 @@ div.data-blocks-ellipses {
         min-width: 150px;
     }
 
+    .vertical-tab-container-search .inline-search-filter {
+        min-width: 55px;
+    }
+
+    .stacked-vertical-tab .inline-select-filter {
+        min-width: 80px;
+    }
+
     .inline-select-filter {
         min-width: 100px;
     }
@@ -1602,8 +1610,16 @@ div.data-blocks-ellipses {
         min-width: 150px;
     }
 
+    .vertical-tab-container-search .inline-search-filter {
+        min-width: 107px;
+    }
+
     .inline-search-filter {
         min-width: 350px;
+    }
+
+    .stacked-vertical-tab .inline-select-filter {
+        min-width: 110px;
     }
 
     .inline-select-filter {
