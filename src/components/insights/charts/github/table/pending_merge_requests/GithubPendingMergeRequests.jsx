@@ -14,7 +14,8 @@ import githubPendingMergeRequestsMetadata from "components/insights/charts/githu
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ModalLogs from "components/common/modal/modalLogs";
+import PendingMergeRequestCardView from "../../card/PendingMergeRequestCardView";
+import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubPendingMergeRequestsMetadata.fields;
@@ -26,22 +27,6 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
-  );
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
-
-  const noDataMessage = "No Data is available for this chart at this time";
-
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "AssigneeName")),
-      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
-      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
-      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
-      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-    ],
-    []
   );
 
   useEffect(() => {
@@ -102,32 +87,36 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       }
     }
   };
-  const onRowSelect = (rowData) => {
-    setModalData(rowData.original);
-    setShowModal(true);
-  };
 
-  const getChartTable = () => {
+  const getCardView = () => {
     return (
-      <CustomTable
-        columns={columns}
-        data={metrics}
-        noDataMessage={noDataMessage}
-        paginationDto={tableFilterDto}
-        setPaginationDto={setTableFilterDto}
-        loadData={loadData}
-        scrollOnLoad={false}
-        onRowSelect={onRowSelect}
-      />
+        <PendingMergeRequestCardView
+            mergeRequestDataFilterDto={tableFilterDto}
+            setMergeRequestDataFilterDto={setTableFilterDto}
+            isLoading={isLoading}
+            data={metrics}
+            loadData={loadData}
+        />
     );
   };
-
+  const getFilterContainer = () => {
+    return (
+        <FilterContainer
+            filterDto={tableFilterDto}
+            setFilterDto={setTableFilterDto}
+            body={getCardView()}
+            isLoading={isLoading}
+            loadData={loadData}
+            supportSearch={true}
+        />
+    );
+  };
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         tableChart={true}
@@ -135,14 +124,6 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-      />
-      <ModalLogs
-        header="Bitbucket Pending Pull Requests"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
       />
     </div>
   );
