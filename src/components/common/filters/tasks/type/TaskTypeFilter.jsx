@@ -1,13 +1,13 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import {
-  nonProductionTaskTypes,
-  productionTaskTypes
-} from "components/common/list_of_values_input/tasks/TaskTypeSelectInputBase";
+  getNonProductionTaskTypesForCategory,
+  getProductionTaskTypesForCategory,
+} from "components/tasks/task.types";
 
-function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, className, fieldName, inline}) {
+function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, className, fieldName, inline }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   if (filterModel == null) {
@@ -24,7 +24,11 @@ function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, classNam
       groupBy={"category"}
       placeholderText={"Select Task Type"}
       dataObject={filterModel}
-      selectOptions={featureFlagHideItemInProd() !== false ? productionTaskTypes : nonProductionTaskTypes}
+      selectOptions={
+        featureFlagHideItemInProd() !== false
+          ? getProductionTaskTypesForCategory(filterModel?.getData("category"))
+          : getNonProductionTaskTypesForCategory(filterModel?.getData("category"))
+      }
     />
   );
 }
@@ -39,7 +43,7 @@ TaskTypeFilter.propTypes = {
 };
 
 TaskTypeFilter.defaultProps = {
-  fieldName: "type"
+  fieldName: "type",
 };
 
 export default TaskTypeFilter;
