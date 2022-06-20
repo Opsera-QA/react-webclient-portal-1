@@ -32,8 +32,9 @@ import GitToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
 import SalesforceToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
-import vaultActions from "components/vault/vault.actions";
-import TaskModel from "components/tasks/task.model";
+import modelHelpers from "components/common/model/modelHelpers";
+import SfdcQuickDeployTaskHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -74,20 +75,22 @@ function TaskEditorPanel({ taskData, handleClose }) {
     taskModel.setData("configuration", configuration);
     const newTaskResponse = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, taskModel);
     const taskId = newTaskResponse?.data?._id;
+    const updatedTaskData = newTaskResponse?.data;
+    const newTaskModel = modelHelpers.parseObjectIntoModel(updatedTaskData, taskModel.getMetaData());
 
     if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && configuration?.iValidatorScan && typeof configuration?.validationToken === "string") {
       const keyName = `${taskId}-${taskModel?.getData("type")}-validationToken`;
-      const response = await vaultActions.saveRecordToVault (
+      const response = await taskActions.saveRecordToVault(
         getAccessToken,
         cancelTokenSource,
         keyName,
-        configuration?.validationToken
+        configuration?.validationToken,
+        taskId,
       );
       configuration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
-      taskModel.setData("_id", taskId);
       taskModel.setData("configuration", configuration);
 
-      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+      return await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newTaskModel);
     }
     return newTaskResponse;
   };
@@ -96,11 +99,12 @@ function TaskEditorPanel({ taskData, handleClose }) {
     const newConfiguration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
     if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && newConfiguration?.iValidatorScan && typeof newConfiguration?.validationToken === "string") {
       const keyName = `${taskModel?.getData("_id")}-${taskModel?.getData("type")}-validationToken`;
-      const response = await vaultActions.saveRecordToVault (
+      const response = await taskActions.saveRecordToVault(
         getAccessToken,
         cancelTokenSource,
         keyName,
-        newConfiguration?.validationToken
+        newConfiguration?.validationToken,
+        taskModel?.getData("_id"),
       );
       newConfiguration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
     }
@@ -128,11 +132,11 @@ function TaskEditorPanel({ taskData, handleClose }) {
         return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return <SfdcQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GITSCRAPER:
         break;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        break;
-      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         break;
