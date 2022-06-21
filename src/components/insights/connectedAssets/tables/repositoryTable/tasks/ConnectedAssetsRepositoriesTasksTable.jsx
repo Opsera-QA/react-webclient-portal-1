@@ -13,6 +13,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
 function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +85,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "taskInfoFromSelectedRepository",
+      constants.REPOSITORIES_LIST.SELECTED_REPO_TASKS_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,

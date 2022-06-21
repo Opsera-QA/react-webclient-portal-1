@@ -15,6 +15,7 @@ import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
 import ConnectedAssetsRepositoriesAnalyticsTable from "./ConnetedAssetsRepositoriesAnalyticsTable";
 import PaginationContainer from "../../../../../common/pagination/PaginationContainer";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
 function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -54,7 +55,7 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
       const response = await connectedAssetsActions.getListOfRepositories(
         getAccessToken,
         cancelSource,
-        "listOfRepositoriesFromAnalytics",
+        constants.REPOSITORIES_LIST.REPOSITORIES_LIST_FROM_ANALYTICS,
         dateRange?.startDate,
         dateRange?.endDate,
         filterDto
