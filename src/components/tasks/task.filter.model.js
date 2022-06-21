@@ -67,8 +67,8 @@ export class TaskFilterModel extends FilterModelBase {
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
     this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
-    // this.enableUrlUpdatesWithQueryParameters();
-    // this.unpackUrlParameters();
+    this.enableUrlUpdatesWithQueryParameters();
+    this.unpackUrlParameters();
   }
 
   canSearch = () => {
