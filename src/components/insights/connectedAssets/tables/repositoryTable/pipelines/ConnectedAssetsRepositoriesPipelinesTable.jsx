@@ -13,6 +13,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
 function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +85,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "pipelineInfoFromSelectedRepository",
+      constants.REPOSITORIES_LIST.SELECTED_REPO_PIPELINE_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
