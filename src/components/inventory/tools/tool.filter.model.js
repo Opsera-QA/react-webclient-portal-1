@@ -72,8 +72,8 @@ export class ToolFilterModel extends FilterModelBase {
   constructor() {
     super(toolFilterMetadata);
     this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
-    // this.enableUrlUpdatesWithQueryParameters();
-    // this.unpackUrlParameters();
+    this.enableUrlUpdatesWithQueryParameters();
+    this.unpackUrlParameters();
   }
 
   canSearch = () => {
