@@ -40,6 +40,7 @@ function DashboardsTable({dashboards, dashboardFilterModel, setDashboardFilterMo
       paginationDto={dashboardFilterModel}
       setPaginationDto={setDashboardFilterModel}
       loadData={loadData}
+      nextGeneration={true}
     />
   );
 }
