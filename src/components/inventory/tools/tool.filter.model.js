@@ -142,11 +142,12 @@ export class ToolFilterModel extends FilterModelBase {
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", value: "oldest"},
-        {text: "Newest", value: "newest"},
-        {text: "Tool Name (A-Za-z)", value: "name"},
-        {text: "Tool Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Oldest Tools", value: "oldest"},
+        {text: "Newest Tools", value: "newest"},
+        {text: "Tool Name (A-Z a-z)", value: "name"},
+        {text: "Tool Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };
