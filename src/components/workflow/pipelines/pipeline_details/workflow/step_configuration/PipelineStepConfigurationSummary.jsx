@@ -214,6 +214,8 @@ import SapCpqPipelineStepConfigurationSummaryPanel
 import sapCpqStepFormMetadata from "./step_tool_configuration_forms/sap_cpq/sap-cpq-stepForm-metadata";
 import AzureWebappsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfigurationSummaryPanel";
 import azureWebappsStepFormMetadata from "./step_tool_configuration_forms/azure_webapps/azureWebapps-stepForm-metadata";
+import BoomiStepConfigurationSummary from "./step_tool_configuration_forms/boomi/BoomiStepConfigurationSummary";
+import boomiMetadata from "./step_tool_configuration_forms/boomi/boomi.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -679,6 +681,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             azureWebappsPipelineDataObject={getModelWrappedObject(azureWebappsStepFormMetadata)}
           />
+      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return (
+            <BoomiStepConfigurationSummary
+                pipelineData={pipelineData}
+                boomiPipelineDataObject={getModelWrappedObject(boomiMetadata)}
+            />
         );
       default:
         return (

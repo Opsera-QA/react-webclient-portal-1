@@ -81,5 +81,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   GITHUB_DEPLOY_KEY: "github-deploykey",
   GIT_OPERATION: "git-operation",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
-  PROVAR: "provar"
+  PROVAR: "provar",
+  BOOMI: "boomi"
 };
