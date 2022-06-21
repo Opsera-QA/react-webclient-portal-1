@@ -43,8 +43,6 @@ LogsBackupManagementAwsStorageAccountSelectInput.propTypes = {
 };
 
 LogsBackupManagementAwsStorageAccountSelectInput.defaultProps = {
-  valueField: "_id",
-  textField: "name",
   fieldName: "task.awsBucketName",
 };
 

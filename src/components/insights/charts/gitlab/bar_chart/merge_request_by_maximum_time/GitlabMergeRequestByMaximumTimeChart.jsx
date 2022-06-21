@@ -7,8 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+import { defaultConfig, assignStandardColors, adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+
 function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -71,12 +73,12 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
     }
 
   return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
+    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
           <ResponsiveBar
             data={metrics}
             {...defaultConfig("Time (Hours)", "Project", 
                         false, false, "values", "cutoffString")}
-            {...config(getColorByData)}
+            {...config()}
             {...adjustBarWidth(metrics)}
             onClick={() => setShowModal(true)}
           />
