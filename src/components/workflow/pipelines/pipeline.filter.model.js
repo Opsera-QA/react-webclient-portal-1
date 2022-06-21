@@ -1,7 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
-import { getTaskTypeLabel } from "components/tasks/task.types";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -68,8 +67,8 @@ export class PipelineFilterModel extends FilterModelBase {
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
     this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.PIPELINE_FILTER_MODEL_DATA;
-    // this.enableUrlUpdatesWithQueryParameters();
-    // this.unpackUrlParameters();
+    this.enableUrlUpdatesWithQueryParameters();
+    this.unpackUrlParameters();
   }
 
   canSearch = () => {
