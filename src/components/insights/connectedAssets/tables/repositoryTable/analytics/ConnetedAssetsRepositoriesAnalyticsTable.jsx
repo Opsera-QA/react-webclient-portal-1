@@ -84,13 +84,13 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "analyticInfoFromSelectedRepository",
+      "analyticsInfoFromSelectedRepository",
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
       repository
     );
-    let dataObject = response?.data?.data?.analyticInfo?.data?.[0];
+    let dataObject = response?.data?.data?.analyticsInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
