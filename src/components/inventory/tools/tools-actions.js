@@ -162,7 +162,11 @@ toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, 
 // TODO: This should be removed and updated to use updateToolV2
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData?.getData("_id")}/update`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
+  const postBody = {
+    ...toolData.getPersistData()
+  };
+
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 // TODO: This should be moved to a Jira helper function
