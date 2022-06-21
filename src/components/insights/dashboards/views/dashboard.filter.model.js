@@ -60,8 +60,8 @@ export class DashboardFilterModel extends FilterModelBase {
     super(dashboardFilterMetadata);
     this.getAccessToken = getAccessToken;
     this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.DASHBOARD_FILTER_MODEL_DATA;
-    // this.enableUrlUpdatesWithQueryParameters();
-    // this.unpackUrlParameters();
+    this.enableUrlUpdatesWithQueryParameters();
+    this.unpackUrlParameters();
   }
 
   canSearch = () => {
