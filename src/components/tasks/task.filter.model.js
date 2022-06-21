@@ -135,9 +135,10 @@ export class TaskFilterModel extends FilterModelBase {
       [
         {text: "Oldest Tasks", value: "oldest"},
         {text: "Newest Tasks", value: "newest"},
-        {text: "Task Name (A-Za-z)", value: "name"},
-        {text: "Task Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Task Name (A-Z a-z)", value: "name"},
+        {text: "Task Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };
