@@ -7,12 +7,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, assignStandardColors,
          adjustBarWidth } from '../../../charts-views';
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -80,7 +77,7 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
         data={metrics}
         {...defaultConfig("Author", "Merge Requests", 
                   true, false, "cutoffString", "wholeNumbers")}
-        {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+        {...config()}
         {...adjustBarWidth(metrics, false)}
         onClick={() => setShowModal(true)}
       />

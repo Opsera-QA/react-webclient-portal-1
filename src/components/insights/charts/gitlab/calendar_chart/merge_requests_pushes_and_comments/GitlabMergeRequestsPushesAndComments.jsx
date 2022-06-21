@@ -9,10 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GitlabMergeRequestsPushesAndComments({
   kpiConfiguration,
@@ -91,7 +88,7 @@ function GitlabMergeRequestsPushesAndComments({
         <ResponsiveCalendar
           data={metrics}
           {...defaultConfig("", "", false, false, "", "", true)}
-          {...config(METRIC_THEME_CHART_PALETTE_COLORS, new Date())}
+          {...config(new Date())}
           onClick={() => setShowModal(true)}
           tooltip={({ day, value, color }) => (
             <ChartTooltip

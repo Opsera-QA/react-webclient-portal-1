@@ -10,10 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, assignStandardColors,
          adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 
 function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -83,7 +80,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
             data={metrics}
             {...defaultConfig("Reviewer", "Time (Hours)", 
                   true, false, "cutoffString", "wholeNumbers")}
-            {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
+            {...config()}
             {...adjustBarWidth(metrics, false)}
             onClick={() => setShowModal(true)}
             tooltip={({ indexValue, color, value }) => <ChartTooltip 

@@ -1,13 +1,9 @@
-export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+
+export default () => ({
   keys: ["Merge Requests"],
   indexBy: "_id",
   colorBy: "id",
   layout: "horizontal",
-  colors: [
-    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
-    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
-    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3,
-    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
-    METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5,
-  ],
+  colors: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY ,
 });
