@@ -3,7 +3,7 @@ const boomiMetadata = {
     fields: [
         {
             label: "Boomi Tool",
-            id: "toolConfigId",
+            id: "boomiToolId",
             isRequired: true
         },
         {
@@ -58,10 +58,22 @@ const boomiMetadata = {
             label: "File Name",
             id: "fileName",
         },
+        {
+            label: "Job Description",
+            id: "jobDescription",
+        },
+        {
+            label: "Environment",
+            id: "environmentName",
+        },
+        {
+            label: "Environment",
+            id: "environmentId",
+        },
     ],
     newObjectFields: {
-        toolConfigId: "",
-        jobType: "CREATE_PACKAGE_COMPONENT",
+        boomiToolId: "",
+        jobType: "",
         gitToolId: "",
         repoId: "",
         projectId: "",
@@ -73,7 +85,10 @@ const boomiMetadata = {
         repository: "",
         gitBranch: "",
         filePath: "",
-        fileName: ""
+        fileName: "",
+        jobDescription : "PACKAGEXML_CREATION",
+        environmentName: "",
+        environmentId: ""
     }
 };
 

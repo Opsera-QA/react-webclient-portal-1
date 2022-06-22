@@ -12,6 +12,9 @@ import ProvarSourceControlManagementToolSelectInput from "./inputs/BoomiStepSour
 import BoomiBitbucketWorkspaceInput from "./inputs/BoomiBitbucketWorkspaceInput";
 import BoomiGitRepositoryInput from "./inputs/BoomiGitRepositoryInput";
 import BoomiGitBranchInput from "./inputs/BoomiGitBranchInput";
+import BoomiSCMRepoFilesSelectInput from "./inputs/BoomiSCMRepoFiles";
+import CreatePackageJobSubform from "./sub_forms/CreatePackageJobSubform";
+import DeployPackageJobSubform from "./sub_forms/DeployPackageJobSubform";
 
 function BoomiStepConfiguration({
   pipelineId,
@@ -66,7 +69,7 @@ function BoomiStepConfiguration({
       <RoleRestrictedToolByIdentifierInputBase
         toolIdentifier={"boomi"}
         toolFriendlyName={"Boomi"}
-        fieldName={"toolConfigId"}
+        fieldName={"boomiToolId"}
         model={boomiStepConfigurationDto}
         setModel={setBoomiStepConfigurationDataDto}
       />
@@ -74,36 +77,13 @@ function BoomiStepConfiguration({
         dataObject={boomiStepConfigurationDto}
         setDataObject={setBoomiStepConfigurationDataDto}
       />
-      <BoomiSCMToolTypeSelectInput
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-      />
-      <ProvarSourceControlManagementToolSelectInput
+      <CreatePackageJobSubform
         model={boomiStepConfigurationDto}
         setModel={setBoomiStepConfigurationDataDto}
-        disabled={boomiStepConfigurationDto.getData("service").length === 0}
       />
-      <BoomiBitbucketWorkspaceInput
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-      />
-      <BoomiGitRepositoryInput
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-      />
-      <BoomiGitBranchInput
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-      />
-      <TextInputBase
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-        fieldName={"filePath"}
-      />
-      <TextInputBase
-        dataObject={boomiStepConfigurationDto}
-        setDataObject={setBoomiStepConfigurationDataDto}
-        fieldName={"fileName"}
+      <DeployPackageJobSubform
+        model={boomiStepConfigurationDto}
+        setModel={setBoomiStepConfigurationDataDto}
       />
     </PipelineStepEditorPanelContainer>
   );

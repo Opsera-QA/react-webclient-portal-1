@@ -24,7 +24,7 @@ function BoomiStepConfigurationSummary({
         <Col lg={6}>
           <ToolNameField
             model={boomiPipelineDataObject}
-            fieldName={"toolConfigId"}
+            fieldName={"boomiToolId"}
           />
         </Col>
         <Col lg={6}>

@@ -42,11 +42,11 @@ function BoomiToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
+          <ApiTypeSelectInput dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} />
           <TextInputBase dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} fieldName={"toolURL"} />
           <TextInputBase dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} fieldName={"accountId"} />
           <TextInputBase dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} fieldName={"accountUsername"} />
           <VaultTextInput dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} fieldName={"accountPassword"}/>
-          <ApiTypeSelectInput dataObject={boomiConfigurationDto} setDataObject={setBoomiConfigurationDto} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

@@ -5,22 +5,31 @@ const BoomiConnectionMetadata = {
     {
       label: "Tool URL",
       id: "toolURL",
+      isRequiredFunction: (model) => {
+        return model?.getData("apiType") === "custom";
+      },
     },
     {
       label: "Account ID",
       id: "accountId",
+      isRequiredFunction: (model) => {
+        return model?.getData("apiType") === "native";
+      },
     },
     {
       label: "Username",
       id: "accountUsername",
+      isRequired: true
     },
     {
       label: "Password",
       id: "accountPassword",
+      isRequired: true
     },
     {
       label: "API Type",
       id: "apiType",
+      isRequired: true
     },
   ],
   newObjectFields:
