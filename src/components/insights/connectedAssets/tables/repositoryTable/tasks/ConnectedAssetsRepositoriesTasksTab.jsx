@@ -15,6 +15,7 @@ import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
 import ConnectedAssetsRepositoriesTasksTable from "./ConnectedAssetsRepositoriesTasksTable";
 import PaginationContainer from "../../../../../common/pagination/PaginationContainer";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
 function ConnectedAssetsRepositoriesTasksTab({ dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -54,7 +55,7 @@ function ConnectedAssetsRepositoriesTasksTab({ dashboardData }) {
       const response = await connectedAssetsActions.getListOfRepositories(
         getAccessToken,
         cancelSource,
-        "listOfRepositoriesFromTasks",
+        constants.REPOSITORIES_LIST.REPOSITORIES_LIST_FROM_TASKS,
         dateRange?.startDate,
         dateRange?.endDate,
         filterDto

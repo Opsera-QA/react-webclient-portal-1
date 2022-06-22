@@ -117,9 +117,10 @@ export class DashboardFilterModel extends FilterModelBase {
       [
         {text: "Oldest Dashboards", value: "oldest"},
         {text: "Newest Dashboards", value: "newest"},
-        {text: "Dashboard Name (A-Za-z)", value: "name"},
-        {text: "Dashboard Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Dashboard Name (A-Z a-z)", value: "name"},
+        {text: "Dashboard Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };

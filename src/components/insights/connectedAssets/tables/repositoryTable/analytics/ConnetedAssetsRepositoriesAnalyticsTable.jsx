@@ -13,6 +13,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
 function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -84,13 +85,13 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "analyticInfoFromSelectedRepository",
+      constants.REPOSITORIES_LIST.SELECTED_REPO_ANALYTICS_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
       repository
     );
-    let dataObject = response?.data?.data?.analyticInfo?.data?.[0];
+    let dataObject = response?.data?.data?.analyticsInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
