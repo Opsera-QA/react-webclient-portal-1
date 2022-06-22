@@ -105,6 +105,10 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     }
   };
 
+  const onRowSelect = (rowData) => {
+    window.open(rowData.original.pipeline_url, "_blank");
+  };
+
   const getTable = () => {
     return (
       <CustomTable
@@ -115,6 +119,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };

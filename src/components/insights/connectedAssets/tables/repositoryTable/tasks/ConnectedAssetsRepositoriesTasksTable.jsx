@@ -105,6 +105,10 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     }
   };
 
+  const onRowSelect = (rowData) => {
+    window.open(rowData.original.task_url, "_blank");
+  };
+
   const getTable = () => {
     return (
       <CustomTable
@@ -115,6 +119,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };
