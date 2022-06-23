@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import CardView from "components/common/card/CardView";
-import RecentMergeRequestSummaryCard from "./RecentMergeRequestSummaryCard";
+import PendingMergeRequestSummaryCard from "./PendingMergeRequestSummaryCard";
 
 function PendingMergeRequestCardView({ data, mergeRequestDataFilterDto, setMergeRequestDataFilterDto, loadData, isLoading }) {
   const getCards = () => {
@@ -17,7 +17,7 @@ function PendingMergeRequestCardView({ data, mergeRequestDataFilterDto, setMerge
         {metrics.map((metric, index) => {
           return (
             <Col lg={12} className={"px-0"} key={index}>
-              <RecentMergeRequestSummaryCard mergeRequestData={metric} loadData={loadData} />
+              <PendingMergeRequestSummaryCard mergeRequestData={metric} loadData={loadData} />
             </Col>
           );
         })}
