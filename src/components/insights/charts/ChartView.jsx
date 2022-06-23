@@ -1092,7 +1092,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1140,7 +1140,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}

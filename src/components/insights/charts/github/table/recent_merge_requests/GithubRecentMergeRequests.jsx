@@ -10,20 +10,23 @@ import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ModalLogs from "components/common/modal/modalLogs";
 import RecentMergeRequestCardView from "../../card/RecentMergeRequestCardView";
+import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import FilterContainer from "../../../../../common/table/FilterContainer";
+import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import GithubRecentMergeRequestVerticalTabContainer from "./GithubRecentMergeRequestVerticalTabContainer";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState();
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...githubRecentMergeRequestsMetadata.newObjectFields }, githubRecentMergeRequestsMetadata, false)
   );
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -34,11 +37,13 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if(activeTab){
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -54,6 +59,10 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let projectName;
+      if(!filterDto.getData('search')){
+        projectName =filterDto.getData('projectName') ;
+      }
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -61,8 +70,16 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
-        dashboardOrgs
+          null,
+          dashboardOrgs,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          projectName,
       );
       let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
@@ -86,11 +103,33 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       }
     }
   };
-  // const onRowSelect = (rowData) => {
-  //   setModalData(rowData.original);
-  //   setShowModal(true);
-  // };
 
+
+  const getVerticalTabContainer = () => {
+    return <GithubRecentMergeRequestVerticalTabContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        dashboardData={dashboardData}
+        setKpis={setKpis}
+        metric={metrics}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}/>;
+  };
+
+  const getTabContentContainer = () => {
+    return (
+        <VanitySetTabViewContainer className={"mb-3"}>
+          <FilterContainer
+              filterDto={tableFilterDto}
+              setFilterDto={setTableFilterDto}
+              body={getCardView()}
+              isLoading={isLoading}
+              loadData={loadData}
+              supportSearch={true}
+          />
+        </VanitySetTabViewContainer>
+    );
+  };
   const getCardView = () => {
     return (
       <RecentMergeRequestCardView
@@ -103,12 +142,34 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     );
   };
 
+  const handleTabClick = async (projectName) => {
+    let newFilterDto = tableFilterDto;
+    newFilterDto.setDefaultValue("search");
+    newFilterDto.setData("projectName",projectName);
+    setTableFilterDto({ ...tableFilterDto });
+    setActiveTab(projectName);
+    await loadData(cancelTokenSource,newFilterDto);
+  };
+  const getFilterContainer = () => {
+    return (
+        <TabAndViewContainer
+            verticalTabContainer={getVerticalTabContainer()}
+            currentView={getTabContentContainer()}
+            defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+            bodyClassName="mx-0"
+            minimumHeight="calc(100vh - 264px)"
+            maximumHeight="calc(100vh - 264px)"
+            overflowYContainerStyle={"hidden"}
+            overflowYBodyStyle="auto"
+        />
+    );
+  };
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getCardView()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
@@ -116,14 +177,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
-      />
-      <ModalLogs
-        header="Github Recent Pull Requests"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
       />
     </div>
   );
