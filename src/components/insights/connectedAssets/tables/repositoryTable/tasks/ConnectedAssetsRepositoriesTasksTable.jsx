@@ -82,6 +82,10 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
+    let repo = {
+      name: repository?.repository_name,
+      url: repository?.repository_url
+    };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
@@ -89,7 +93,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repository
+      repo
     );
     let dataObject = response?.data?.data?.taskInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;

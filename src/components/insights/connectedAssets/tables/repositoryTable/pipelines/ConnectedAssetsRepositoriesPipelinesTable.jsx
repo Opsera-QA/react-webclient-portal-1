@@ -36,7 +36,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableDateTimeColumn(getField(fields, "pipeline_created_at"), "pipeline_created_at"),
-      getTableTextColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
+      getTableDateTimeColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
       getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name")
     ],
     []
@@ -82,6 +82,10 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
+    let repo = {
+      name: repository?.repository_name,
+      url: repository?.repository_url
+    };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
@@ -89,7 +93,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repository
+      repo
     );
     let dataObject = response?.data?.data?.pipelineInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;

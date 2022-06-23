@@ -82,6 +82,10 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
+    let repo = {
+      name : repository?._id,
+      url: repository?.repoUrl?.[0]
+    };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
@@ -89,7 +93,7 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repository
+      repo
     );
     let dataObject = response?.data?.data?.analyticsInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
