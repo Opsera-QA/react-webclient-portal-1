@@ -50,6 +50,26 @@ const connectedAssetsMetadata = {
          id: "task_owner_name",
        },
        {
+          label: "Task URL",
+          id: "task_url",
+       },
+       {
+          label: "Repository URL",
+          id: "repo_url",
+       },
+       {
+          label: "Repository Last Used",
+          id: "repo_last_used"
+       },
+       {
+         label: "Branch Name",
+         id: "branch"
+       },
+       {
+         label: "Rollback Branch",
+         id: "rollback_branch"
+       },
+       {
          label: "Sort Option",
          id: "sortOption",
        },

@@ -34,10 +34,8 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
-      getTableDateTimeColumn(getField(fields, "pipeline_created_at"), "pipeline_created_at"),
-      getTableTextColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
-      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name")
+      getTableTextColumn(getField(fields, "repo_url"), "repo_url"),
+      getTableDateTimeColumn(getField(fields, "repo_last_used"), "repo_last_used"),
     ],
     []
   );
