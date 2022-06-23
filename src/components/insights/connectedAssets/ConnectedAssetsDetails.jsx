@@ -11,7 +11,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import connectedAssetsActions from "./connectedAssets.actions";
 import {parseError} from "../../common/helpers/error-helpers";
 import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/ConnectedAssetsRepositoryTabContainer";
-
+import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
 
 function ConnectedAssetsDetails({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -94,7 +94,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
         break;
       case branchesDataBlock:
         toggleDynamicPanel(branchesDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsBranchesTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case collaboratorsDataBlock:
