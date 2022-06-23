@@ -129,7 +129,7 @@ function ScheduledTaskTasksOverlay(
 
   return (
     <CenterOverlayContainer
-      titleText={"Scheduled Task Tasks"}
+      titleText={"Scheduled Tasks"}
       closePanel={closePanel}
       titleIcon={faCalendarAlt}
       showPanel={true}
