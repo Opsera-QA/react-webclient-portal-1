@@ -6,6 +6,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 
 export const PROJECT_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   "jira",
 ];
 
