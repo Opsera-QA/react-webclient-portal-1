@@ -127,7 +127,7 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
     for(let i = 0; i <= responseData.length - 1; i++) {
       tabs.push(
         <VanitySetVerticalTab
-          tabText={responseData[i]?._id}
+          tabText={responseData[i]?.repository_name}
           tabName={responseData[i]?._id}
         />
       );
