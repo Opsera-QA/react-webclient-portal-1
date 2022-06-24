@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useContext, useRef, useReducer} from "react";
+import PropTypes from 'prop-types';
 import {DateRangePicker} from "react-date-range";
 import {addDays, format} from "date-fns";
-import {Button, Popover, Overlay, Container, Row, Col, Alert, ListGroup} from "react-bootstrap";
+import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
 import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import Multiselect from "react-widgets/Multiselect";
-import {faBug} from "@fortawesome/pro-light-svg-icons";
 import axios from 'axios';
 
 import './lookup.css';
@@ -14,15 +14,13 @@ import {NODE_ANALYTICS_API_SERVER_URL} from "config";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import FilterContainer from "components/common/table/FilterContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
-import LookupTableTotals from "./LookupTableTotals";
-import LookupTablePipelines from "./LookupTablePipelines";
 import LoadingDialog from "components/common/status_notifications/loading";
+import LookupResults from "./LookupResults";
 
 const cleanUrlPath = ({url}) => {
 	let returnUrl = url;
@@ -441,41 +439,31 @@ const Lookup = () => {
         <hr className="lookup-hr" />
         <Row>
           <Col className="table-results">
-            
-            {isLoading && <LoadingDialog size={"sm"} message={"Loading Customer Onboard Editor"} />}
-
-            {activeTables.map(tableData => {
-
-              const {
-                totals,
-                pipelines,
-                componentName
-              } = tableData;
-
-              return (
-                <>
-                  <FilterContainer
-                    className="mt-2 lookup-table"
-                    showBorder={false}
-                    body={<LookupTableTotals data={totals} />}
-                    titleIcon={faBug}
-                    title={`${componentName}: Totals`}
-                  />
-                  <FilterContainer
-                    className="mt-2 lookup-table lookup-pipelines"
-                    showBorder={false}
-                    body={<LookupTablePipelines data={pipelines} />}
-                    titleIcon={faBug}
-                    title={`${componentName}: Pipelines`}
-                  />
-                </>
-              );
-            })}
+            <ResultsContainer isLoading={isLoading} activeTables={activeTables} />
           </Col>
         </Row>
       </Container>
     </ScreenContainer>
   );
+};
+            
+const ResultsContainer = ({ loading, activeTables }) => {
+  if (loading) {
+    return (
+      <LoadingDialog size={"sm"} message={"Loading Customer Onboard Editor"} />
+    );
+  }
+
+  return (
+    <>
+      {activeTables.map((data, index) => ( <LookupResults key={`${data.componentName}-${index}`} {...data} /> ))}
+    </>
+  );
+};
+
+ResultsContainer.propTypes = {
+  loading: PropTypes.bool,
+  activeTables: PropTypes.array
 };
 
 export default Lookup;
