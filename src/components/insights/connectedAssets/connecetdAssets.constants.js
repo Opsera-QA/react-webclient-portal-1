@@ -8,3 +8,10 @@ CONNECTED_ASSETS_CONSTANTS.REPOSITORIES_LIST = {
   SELECTED_REPO_TASKS_INFO : "taskInfoFromSelectedRepository",
   SELECTED_REPO_ANALYTICS_INFO : "analyticsInfoFromSelectedRepository",
 };
+
+CONNECTED_ASSETS_CONSTANTS.BRANCHES_LIST = {
+  REPOSITORIES_LIST_FROM_PIPELINES : "listOfRepositoriesFromPipelines",
+  REPOSITORIES_LIST_FROM_TASKS : "listOfRepositoriesFromTasks",
+  SELECTED_REPO_PIPELINE_INFO : "branchInfoFromPipelineSelectedRepository",
+  SELECTED_REPO_TASKS_INFO : "branchInfoFromTaskSelectedRepository",
+};
