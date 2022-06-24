@@ -19,7 +19,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
-import LoadingDialog from "components/common/status_notifications/loading";
 import LookupResults from "./LookupResults";
 
 const cleanUrlPath = ({url}) => {
@@ -393,6 +392,8 @@ const Lookup = () => {
 
   const screenReady = !isLoading && !isPreloading;
 
+  console.log('Lookup', { activeTables });
+
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"lookup"} />}
@@ -439,31 +440,12 @@ const Lookup = () => {
         <hr className="lookup-hr" />
         <Row>
           <Col className="table-results">
-            <ResultsContainer isLoading={isLoading} activeTables={activeTables} />
+            <LookupResults isLoading={isLoading} activeTables={activeTables} />
           </Col>
         </Row>
       </Container>
     </ScreenContainer>
   );
-};
-            
-const ResultsContainer = ({ loading, activeTables }) => {
-  if (loading) {
-    return (
-      <LoadingDialog size={"sm"} message={"Loading Customer Onboard Editor"} />
-    );
-  }
-
-  return (
-    <>
-      {activeTables.map((data, index) => ( <LookupResults key={`${data.componentName}-${index}`} {...data} /> ))}
-    </>
-  );
-};
-
-ResultsContainer.propTypes = {
-  loading: PropTypes.bool,
-  activeTables: PropTypes.array
 };
 
 export default Lookup;
