@@ -63,8 +63,8 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
           "",
         );
 
-        if (hasStringValue(parsedValue) === true) {
-          return parsedValue;
+        if (hasStringValue(parsedValue) === true || typeof parsedValue === "number") {
+          return `${parsedValue}`;
         }
       }
 

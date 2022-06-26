@@ -13,7 +13,7 @@ function MarketplaceChartCardView({ marketplaceCharts, marketplaceChartFilterMod
     }
 
     if (!Array.isArray(marketplaceCharts) || marketplaceCharts.length === 0) {
-      return (<InlineInformation message={"No Marketplace Items Found"} />);
+      return (<InlineInformation message={"No Marketplace Items Found"} className={"mt-1 mb-3"} />);
     }
 
     return (
