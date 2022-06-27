@@ -438,11 +438,7 @@ const Lookup = () => {
           </Col>
         </Row>
         <hr className="lookup-hr" />
-        <Row>
-          <Col className="table-results">
-            <LookupResults isLoading={isLoading} activeTables={activeTables} />
-          </Col>
-        </Row>
+        <LookupResults isLoading={isLoading} activeTables={activeTables} />
       </Container>
     </ScreenContainer>
   );
