@@ -5,7 +5,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import FilterContainer from "components/common/table/FilterContainer";
 import LookupTableTotals from "./LookupTableTotals";
 import LookupTablePipelines from "./LookupTablePipelines";
-import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 
@@ -76,13 +76,11 @@ const LookupResults = ({ isLoading, results }) => {
     );
     
     return (
-        <VanitySetTabAndViewContainer
-            isLoading={isLoading}
-            title={"Results"}
-            defaultActiveKey={0}
-            tabColumnSize={3}
+        <TabTreeAndViewContainer
             verticalTabContainer={getTabContainer()}
             currentView={getCurrentView()}
+            tabColumnSize={3}
+            defaultActiveKey={0}
         />
     );
 };
