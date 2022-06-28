@@ -23,6 +23,10 @@ import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/fr
 import QuickDeployTotalComponentsDataBlock from "./data_blocks/QuickDeployTotalComponentsDataBlock";
 import QuickDeployTotalExecutionsDataBlock from "./data_blocks/QuickDeployTotalExecutionsDataBlock";
 import QuickDeploySuccessRateDataBlock from "./data_blocks/QuickDeploySuccessRateDataBlock";
+import SuccessRateDataBlockContainer from "./data_blocks/SuccessRateDataBlockContainer";
+import GithubCommitsActionableInsightOverlay
+    from "../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 
 const DEFAULT_GOALS = {
     build_success_rate: 90,
@@ -44,6 +48,7 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
     const [quickDeployChartDataPoint, setQuickDeployChartDataPoint] = useState(undefined);
     const [quickDeployExecutionsDataPoint, setQuickDeployExecutionsDataPoint] = useState(undefined);
     const [quickDeployComponentsDataPoint, setQuickDeployComponentsDataPoint] = useState(undefined);
+    const toastContext = useContext(DialogToastContext);
 
     // TODO: Wire up data pull and pass relevant data down
     useEffect(() => {
@@ -94,7 +99,7 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
-                "pipelineBuildAndDeploymentStatistics",
+                "quickDeployChartandStatistics",
                 kpiConfiguration,
                 dashboardTags,
                 null,
@@ -102,7 +107,9 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
                 dashboardOrgs
             );
 
-            const metrics = response?.data?.data[0]?.pipelineBuildAndDeploymentStatistics?.data;
+            console.log("response", response);
+
+            const metrics = response?.data?.data[0]?.quickDeployChartandStatistics?.data;
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setBuildAndDeployMetricData(metrics[0]?.statisticsData);
@@ -174,6 +181,16 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
         }
     };
 
+    const onRowSelect = () => {
+        toastContext.showOverlayPanel(
+            <GithubCommitsActionableInsightOverlay
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                highestMergesMetric={highestMergesMetric}
+            />
+        );
+    };
+
     const loadDataPoints = async () => {
         const dataPoints = kpiConfiguration?.dataPoints;
         const quickDeployDataPoint1 = dataPointHelpers.getDataPoint(dataPoints, constants.SUPPORTED_DATA_POINT_IDENTIFIERS.QUICK_DEPLOY_SUCCESS);
@@ -190,11 +207,12 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
         if (!buildAndDeployMetricData || !buildAndDeployChartData) {
             return null;
         }
+        console.log("chartdate", buildAndDeployMetricData);
         return (
             <Row className={"mx-0 p-2 justify-content-between"}>
                 {dataPointHelpers.isDataPointVisible(quickDeploySuccessDataPoint) &&
                     <Col>
-                        <DeploymentStatisticsDataBlockContainer
+                        <SuccessRateDataBlockContainer
                             metricData={buildAndDeployMetricData}
                             chartData={buildAndDeployChartData}
                             kpiConfiguration={kpiConfiguration}
