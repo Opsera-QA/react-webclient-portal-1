@@ -392,8 +392,6 @@ const Lookup = () => {
 
   const screenReady = !isLoading && !isPreloading;
 
-  console.log('Lookup', { activeTables });
-
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"lookup"} />}
