@@ -186,7 +186,6 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
             <GithubCommitsActionableInsightOverlay
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
-                highestMergesMetric={highestMergesMetric}
             />
         );
     };

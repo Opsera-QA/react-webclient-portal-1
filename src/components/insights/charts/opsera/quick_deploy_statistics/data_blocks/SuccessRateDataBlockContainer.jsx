@@ -18,26 +18,21 @@ import QuickDeploySuccessRateDataBlock from "../../quick_deploy_statistics/data_
 import QuickDeployTotalComponentsDataBlock
     from "../../quick_deploy_statistics/data_blocks/QuickDeployTotalComponentsDataBlock";
 import {faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import QuickDeployTotalSuccessActionableOverlay from "../actionable_insights/QuickDeployTotalSuccessActionableOverlay";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
-    // const toastContext = useContext(DialogToastContext);
-    //
-    // const onRowSelect = () => {
-    //     toastContext.showOverlayPanel(
-    //         <FullScreenCenterOverlayContainer
-    //             closePanel={closePanel}
-    //             showPanel={true}
-    //             showToasts={true}
-    //             titleIcon={faTable}
-    //             isLoading={false}
-    //         >
-    //             <div className={"p-3"}>
-    //                 <DeploymentStatisticsActionableInsightsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
-    //             </div>
-    //         </FullScreenCenterOverlayContainer>
-    //     );
-    // };
+     const toastContext = useContext(DialogToastContext);
+
+    const onRowSelect = () => {
+        toastContext.showOverlayPanel(
+            <QuickDeployTotalSuccessActionableOverlay
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+            />
+        );
+    };
     //
     // const closePanel = () => {
     //     toastContext.removeInlineMessage();
@@ -50,52 +45,6 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
             "data": chartData?.deploySuccess
         }
     ];
-
-    const getLeftDataBlock = () => {
-        return (
-            <ThreeLineDataBlockBase
-                className={"build-and-deployment-statistics-kpi"}
-                topText={"Total Executions"}
-                middleText={
-                    <MetricScoreText
-                        score={metricData?.deploy?.successPercent}
-                        dataPoint={dataPoint}
-                        className={"metric-block-content-text"}
-                    />}
-                dataPoint={dataPoint}
-            />
-        );
-    };
-    const getmiddleDataBlock = () => {
-        return (
-            <ThreeLineDataBlockBase
-                className={"build-and-deployment-statistics-kpi"}
-                topText={"Success Rate"}
-                middleText={
-                    <MetricPercentageText
-                        percentage={metricData?.deploy?.successPercent}
-                        dataPoint={dataPoint}
-                        className={"metric-block-content-text"}
-                    />}
-                dataPoint={dataPoint}
-            />
-        );
-    };
-    const getRightDataBlock = () => {
-        return (
-            <ThreeLineDataBlockBase
-                className={"build-and-deployment-statistics-kpi"}
-                topText={"Total Components"}
-                middleText={
-                    <MetricScoreText
-                        score={metricData?.deploy?.successPercent}
-                        dataPoint={dataPoint}
-                        className={"metric-block-content-text"}
-                    />}
-                dataPoint={dataPoint}
-            />
-        );
-    };
 
     const getSuccessTrendChart = () => {
         return(
@@ -154,6 +103,7 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
                             icon={faArrowCircleUp}
                             className={"green"}
                             lastScore={0}
+                            onSelect={() => onRowSelect()}
                             //iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
                         />
                     </Row>
