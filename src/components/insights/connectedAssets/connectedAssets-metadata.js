@@ -51,7 +51,11 @@ const connectedAssetsMetadata = {
        },
        {
          label: "Last Run (in days)",
-         id: "updatedAt"
+         id: "pipeline_updatedAt"
+       },
+       {
+         label: "Last Run (in days)",
+         id: "tasks_updatedAt"
        },
        {
          label: "Created At",

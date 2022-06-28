@@ -37,7 +37,7 @@ function ConnectedAssetsTasksDeletedTable({ dashboardData }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
-      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run"),
+      getTableDateTimeColumn(getField(fields, "tasks_updatedAt"), "tasks_updatedAt"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name"),
     ],
     []
