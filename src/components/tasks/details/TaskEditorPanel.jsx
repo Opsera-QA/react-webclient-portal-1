@@ -35,6 +35,7 @@ import SalesforceToGitMergeSyncTaskHelpDocumentation
 import modelHelpers from "components/common/model/modelHelpers";
 import SfdxQuickDeployTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
+import GitCustodianTaskHelpDocumentation from "../../common/help/documentation/tasks/GitCustodianTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -135,7 +136,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return <SfdxQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GITSCRAPER:
-        break;
+        return <GitCustodianTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
