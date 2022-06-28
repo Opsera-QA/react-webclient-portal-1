@@ -51,18 +51,6 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
         };
     }, []);
 
-    const calculateTrend = (maintainibility) => {
-        if (maintainibility.currentScanIssuesCount || !maintainibility.previousScanIssuesCount) {
-            return "";
-        } else if (maintainibility.currentScanIssuesCount > maintainibility.previousScanIssuesCount) {
-            return "Green";
-        } else if (maintainibility.currentScanIssuesCount < maintainibility.previousScanIssuesCount) {
-            return "Red";
-        } else {
-            return "Neutral";
-        }
-    };
-
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {
             setIsLoading(true);
@@ -86,11 +74,7 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
                 undefined
             );
 
-            console.log("actionable", response);
-
             const metrics = response?.data?.data[0][0]?.data;
-
-            console.log("metrics", metrics);
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
@@ -133,7 +117,7 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
             linkTooltipText={"View Full Blueprint"}
         >
             <div className={"p-3"}>
-                {/*<div className={"mb-4"} >{getDateBadge()}</div>*/}
+                <div className={"mb-4"} >{getDateBadge()}</div>
                 <QuickDeployTotalSuccessActionableTable
                     isLoading={isLoading}
                     data={actionableData}
