@@ -33,8 +33,9 @@ import GitToGitMergeSyncTaskHelpDocumentation
 import SalesforceToGitMergeSyncTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
 import modelHelpers from "components/common/model/modelHelpers";
-import SfdcQuickDeployTaskHelpDocumentation
+import SfdxQuickDeployTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
+import GitCustodianTaskHelpDocumentation from "../../common/help/documentation/tasks/GitCustodianTaskHelpDocumentation";
 
 function TaskEditorPanel({ taskData, handleClose }) {
   const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
@@ -81,11 +82,11 @@ function TaskEditorPanel({ taskData, handleClose }) {
     if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && configuration?.iValidatorScan && typeof configuration?.validationToken === "string") {
       const keyName = `${taskId}-${taskModel?.getData("type")}-validationToken`;
       const response = await taskActions.saveRecordToVault(
-        getAccessToken,
-        cancelTokenSource,
-        keyName,
-        configuration?.validationToken,
-        taskId,
+          getAccessToken,
+          cancelTokenSource,
+          keyName,
+          configuration?.validationToken,
+          taskId,
       );
       configuration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
       taskModel.setData("configuration", configuration);
@@ -100,11 +101,11 @@ function TaskEditorPanel({ taskData, handleClose }) {
     if(taskModel?.getData("type") === TASK_TYPES.SNAPLOGIC_TASK && newConfiguration?.iValidatorScan && typeof newConfiguration?.validationToken === "string") {
       const keyName = `${taskModel?.getData("_id")}-${taskModel?.getData("type")}-validationToken`;
       const response = await taskActions.saveRecordToVault(
-        getAccessToken,
-        cancelTokenSource,
-        keyName,
-        newConfiguration?.validationToken,
-        taskModel?.getData("_id"),
+          getAccessToken,
+          cancelTokenSource,
+          keyName,
+          newConfiguration?.validationToken,
+          taskModel?.getData("_id"),
       );
       newConfiguration.validationToken = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
     }
@@ -133,9 +134,9 @@ function TaskEditorPanel({ taskData, handleClose }) {
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-        return <SfdcQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+        return <SfdxQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GITSCRAPER:
-        break;
+        return <GitCustodianTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
         break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
@@ -150,48 +151,48 @@ function TaskEditorPanel({ taskData, handleClose }) {
   const getDynamicFields = () => {
     if (taskModel?.isNew() && !isSassUser()) {
       return (
-        <Col lg={12} className="mb-4">
-          <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
-        </Col>
+          <Col lg={12} className="mb-4">
+            <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
+          </Col>
       );
     }
   };
 
   const getBody = () => {
     return (
-      <>
-        <Row>
-          <Col lg={6}>
-            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel} fieldName={"name"}/>
-          </Col>
-          <Col lg={6}>
-            <TasksTaskTypeSelectInput
-              model={taskModel}
-              setModel={setTaskModel}
-              setTaskConfigurationModel={setTaskConfigurationModel}
-            />
-          </Col>
-          {/* <Col lg={6}>
+        <>
+          <Row>
+            <Col lg={6}>
+              <TextInputBase setDataObject={setTaskModel} dataObject={taskModel} fieldName={"name"}/>
+            </Col>
+            <Col lg={6}>
+              <TasksTaskTypeSelectInput
+                  model={taskModel}
+                  setModel={setTaskModel}
+                  setTaskConfigurationModel={setTaskConfigurationModel}
+              />
+            </Col>
+            {/* <Col lg={6}>
           <ActivityToggleInput dataObject={taskModel} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col> */}
 
-          <Col lg={12}>
-            <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
-                           fieldName={"description"}/>
-          </Col>
-          <Col lg={12}>
-            <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
-          </Col>
-          {getDynamicFields()}
-        </Row>
-        <TaskConfigurationPanel
-          taskConfigurationModel={taskConfigurationModel}
-          taskModel={taskModel}
-          setTaskModel={setTaskModel}
-          setTaskConfigurationModel={setTaskConfigurationModel}
-          taskType={taskModel?.getData("type")}
-        />
-      </>
+            <Col lg={12}>
+              <TextInputBase setDataObject={setTaskModel} dataObject={taskModel}
+                             fieldName={"description"}/>
+            </Col>
+            <Col lg={12}>
+              <TagManager type={"task"} setDataObject={setTaskModel} dataObject={taskModel}/>
+            </Col>
+            {getDynamicFields()}
+          </Row>
+          <TaskConfigurationPanel
+              taskConfigurationModel={taskConfigurationModel}
+              taskModel={taskModel}
+              setTaskModel={setTaskModel}
+              setTaskConfigurationModel={setTaskConfigurationModel}
+              taskType={taskModel?.getData("type")}
+          />
+        </>
     );
   };
 
@@ -200,21 +201,21 @@ function TaskEditorPanel({ taskData, handleClose }) {
   }
 
   return (
-    <div>
-      <EditorPanelContainer
-        handleClose={handleClose}
-        recordDto={taskModel}
-        createRecord={createGitTask}
-        updateRecord={updateGitTask}
-        setRecordDto={setTaskModel}
-        getHelpComponent={getHelpDocumentation}
-        isIncomplete={taskModel.checkCurrentValidity() !== true || taskConfigurationModel == null || taskConfigurationModel.checkCurrentValidity() !== true}
-        lenient={true}
-        disable={taskModel.checkCurrentValidity() !== true || taskModel?.getData("status") === "running"}
-      >
-        {getBody()}
-      </EditorPanelContainer>
-    </div>
+      <div>
+        <EditorPanelContainer
+            handleClose={handleClose}
+            recordDto={taskModel}
+            createRecord={createGitTask}
+            updateRecord={updateGitTask}
+            setRecordDto={setTaskModel}
+            getHelpComponent={getHelpDocumentation}
+            isIncomplete={taskModel.checkCurrentValidity() !== true || taskConfigurationModel == null || taskConfigurationModel.checkCurrentValidity() !== true}
+            lenient={true}
+            disable={taskModel.checkCurrentValidity() !== true || taskModel?.getData("status") === "running"}
+        >
+          {getBody()}
+        </EditorPanelContainer>
+      </div>
   );
 }
 
