@@ -40,6 +40,8 @@ const LookupResults = ({ isLoading, results }) => {
         return null;
     }
 
+    const activeTabText = results[activeTabIndex].componentName;
+
     const getTabContainer = () => (
         <VanitySetVerticalTabContainer>
             {results && results.map(({ componentName }, index) => (
@@ -48,7 +50,7 @@ const LookupResults = ({ isLoading, results }) => {
                     tabText={componentName}
                     tabName={componentName}
                     handleTabClick={handleTabClick}
-                    activeTab={activeTabIndex}
+                    activeTab={activeTabText}
                 />
             ))}
         </VanitySetVerticalTabContainer>
