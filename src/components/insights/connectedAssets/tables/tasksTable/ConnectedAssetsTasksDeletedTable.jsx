@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faDiagramSuccessor } from "@fortawesome/free-solid-svg-icons";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../connectedAssets-metadata";
@@ -14,9 +14,10 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
 import {parseError} from "../../../../common/helpers/error-helpers";
 
-function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
+function ConnectedAssetsTasksDeletedTable({ dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,13 +31,14 @@ function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
       false
     )
   );
-  const noDataMessage = 'No pipelines found.';
+  const history = useHistory();
+  const noDataMessage = 'No tasks found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
-      getTableDateTimeColumn(getField(fields, "updatedAt"), "updatedAt"),
-      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
+      getTableTextColumn(getField(fields, "task_name"), "task_name"),
+      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run"),
+      getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name"),
     ],
     []
   );
@@ -81,15 +83,15 @@ function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
   const loadRecentPipelineData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
-    const response = await connectedAssetsActions.getPipelinesInfo(
+    const response = await connectedAssetsActions.getTasksInfo(
       getAccessToken,
       cancelSource,
-      constants.PIPELINES_LIST.DELETED_PIPELINES,
+      constants.TASKS_LIST.DELETED_TASKS,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
     );
-    let dataObject = response?.data?.data?.pipelineInfo?.data?.[0];
+    let dataObject = response?.data?.data?.taskInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
@@ -127,8 +129,8 @@ function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
     <div className={"p-2"}>
       <FilterContainer
         isLoading={isLoading}
-        title={'List Of Deleted Pipelines'}
-        titleIcon={faDiagramSuccessor}
+        title={'List Of Deleted Tasks'}
+        titleIcon={faListCheck}
         body={getTable()}
         className={"px-2 pb-2"}
         loadData={loadData}
@@ -140,7 +142,7 @@ function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
     </div>
   );
 }
-ConnectedAssetsPipelinesDeletedTable.propTypes = {
+ConnectedAssetsTasksDeletedTable.propTypes = {
   dashboardData: PropTypes.object,
 };
-export default ConnectedAssetsPipelinesDeletedTable;
+export default ConnectedAssetsTasksDeletedTable;

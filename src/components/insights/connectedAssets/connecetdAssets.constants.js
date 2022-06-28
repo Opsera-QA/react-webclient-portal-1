@@ -21,3 +21,9 @@ CONNECTED_ASSETS_CONSTANTS.PIPELINES_LIST = {
   INACTIVE_PIPELINES: "inactivePipelineInfo",
   DELETED_PIPELINES: "deletedPipelineInfo"
 };
+
+CONNECTED_ASSETS_CONSTANTS.TASKS_LIST = {
+  RECENT_TASKS: "recentTaskInfo",
+  INACTIVE_TASKS: "inactiveTaskInfo",
+  DELETED_TASKS: "deletedTaskInfo"
+};

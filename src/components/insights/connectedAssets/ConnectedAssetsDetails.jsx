@@ -13,6 +13,7 @@ import {parseError} from "../../common/helpers/error-helpers";
 import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/ConnectedAssetsRepositoryTabContainer";
 import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
 import ConnectedAssetsPipelinesTabContainer from "./tables/pipelinesTable/ConnectedAssetsPipelinesTabContainer";
+import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAssetsTasksTabContainer";
 
 function ConnectedAssetsDetails({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -110,7 +111,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
         break;
       case tasksDataBlock:
         toggleDynamicPanel(tasksDataBlock,() => {
-          return null;
+          return (<ConnectedAssetsTasksTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case jobsDataBlock:
