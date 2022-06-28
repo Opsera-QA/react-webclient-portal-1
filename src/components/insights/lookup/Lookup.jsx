@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useContext, useRef, useReducer} from "react";
-import PropTypes from 'prop-types';
 import {DateRangePicker} from "react-date-range";
 import {addDays, format} from "date-fns";
 import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
@@ -436,7 +435,7 @@ const Lookup = () => {
           </Col>
         </Row>
         <hr className="lookup-hr" />
-        <LookupResults isLoading={isLoading} activeTables={activeTables} />
+        <LookupResults isLoading={isLoading} results={activeTables} />
       </Container>
     </ScreenContainer>
   );
