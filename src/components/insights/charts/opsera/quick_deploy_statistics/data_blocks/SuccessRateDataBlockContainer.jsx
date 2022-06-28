@@ -20,18 +20,40 @@ import QuickDeployTotalComponentsDataBlock
 import {faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import QuickDeployTotalSuccessActionableOverlay from "../actionable_insights/QuickDeployTotalSuccessActionableOverlay";
+import QuickDeployTotalExecutionsActionableOverlay
+    from "../actionable_insights/QuickDeployTotalExecutionsActionableOverlay";
+import QuickDeployTotalComponentsActionableOverlay
+    from "../actionable_insights/QuickDeployTotalComponentsActionableOverlay";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
      const toastContext = useContext(DialogToastContext);
 
-    const onRowSelect = () => {
-        toastContext.showOverlayPanel(
-            <QuickDeployTotalSuccessActionableOverlay
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-            />
-        );
+    const onRowSelect = (stat) => {
+        if(stat === "success") {
+            toastContext.showOverlayPanel(
+                <QuickDeployTotalSuccessActionableOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                />
+            );
+        }
+        else if(stat === "executions") {
+            toastContext.showOverlayPanel(
+                <QuickDeployTotalExecutionsActionableOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                />
+            );
+        }
+        else if(stat === "components") {
+            toastContext.showOverlayPanel(
+                <QuickDeployTotalComponentsActionableOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                />
+            );
+        }
     };
     //
     // const closePanel = () => {
@@ -92,6 +114,7 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
                             icon={faArrowCircleUp}
                             className={"green"}
                             lastScore={0}
+                            onSelect={() => onRowSelect("executions")}
                             //iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
                         />
                     </Row>
@@ -103,7 +126,7 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
                             icon={faArrowCircleUp}
                             className={"green"}
                             lastScore={0}
-                            onSelect={() => onRowSelect()}
+                            onSelect={() => onRowSelect("success")}
                             //iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
                         />
                     </Row>
@@ -115,6 +138,7 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
                             icon={faArrowCircleUp}
                             className={"green"}
                             lastScore={0}
+                            onSelect={() => onRowSelect("components")}
                             //iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
                         />
                     </Row>
