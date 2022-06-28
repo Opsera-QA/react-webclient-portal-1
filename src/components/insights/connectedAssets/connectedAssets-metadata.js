@@ -21,6 +21,18 @@ const connectedAssetsMetadata = {
         label: "Pipeline URL",
         id: "pipeline_url",
       },
+      {
+        label: "Pipeline Last Status",
+        id: "pipeline_last_status",
+      },
+      {
+        label: "Number Of Runs",
+        id: "pipeline_run_count",
+      },
+      {
+        label: "Number Of Runs",
+        id: "task_run_count",
+      },
        {
          label: "Created At",
          id: "pipeline_created_at",
@@ -36,6 +48,14 @@ const connectedAssetsMetadata = {
        {
          label: "Task Name",
          id: "task_name",
+       },
+       {
+         label: "Last Run (in days)",
+         id: "pipeline_updatedAt"
+       },
+       {
+         label: "Last Run (in days)",
+         id: "tasks_updatedAt"
        },
        {
          label: "Created At",

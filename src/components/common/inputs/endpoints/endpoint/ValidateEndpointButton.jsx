@@ -5,25 +5,24 @@ import {faPlug} from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ToolRegistryConnectionLogOverlay from "components/common/buttons/connection/tool/ToolRegistryConnectionLogOverlay";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function TestExternalEndpointUrlConnectionButton(
+function ValidateEndpointButton(
   {
-    endpointUrl,
+    setLogs,
+    toolId,
+    endpointId,
     disabled,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isTesting, setIsTesting] = useState(false);
   const [successfulConnection, setSuccessfulConnection] = useState(false);
   const [failedConnection, setFailedConnection] = useState(false);
-  const [showConnectionLog, setShowConnectionLog] = useState(false);
-  const [logs, setLogs] = useState(["Starting connection test...\n"]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -43,35 +42,37 @@ function TestExternalEndpointUrlConnectionButton(
   }, []);
 
   const testConnection = async () => {
+    const newLogs = ["Starting endpoint validation test...\n"];
+
     try {
-      setShowConnectionLog(true);
+      setLogs(newLogs);
       setIsTesting(true);
       setSuccessfulConnection(false);
       setFailedConnection(false);
+      const response = await externalApiIntegratorEndpointsActions.testConnectionValidationEndpoint(
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        endpointId,
+      );
 
-      const response = await externalApiIntegratorEndpointsActions.testEndpointConnection(getAccessToken, cancelTokenSource, endpointUrl);
+      const success = response?.data?.successful;
+      const message = JSON.stringify(response?.data?.data);
 
-      if (response?.status === 200) {
-        const message = JSON.stringify(response?.data);
-        const status = response?.status;
+      if (success === true) {
+        setLogs([
+          ...newLogs,
+          "Endpoint Validation Succeeded!\n",
+          `Message: ${message}\n`,
+          `Test Complete.\nPlease close this window to proceed.\n`,
+        ]);
 
-      setLogs([
-        ...logs,
-        "Connection Succeeded!\n",
-        `Status: ${status}\n`,
-        `Message: ${message}\n`,
-        `Test Complete.\nPlease close this window to proceed.\n`,
-      ]);
         setSuccessfulConnection(true);
       }
       else {
-        const message = JSON.stringify(response?.data);
-        let status = response?.status;
-
         setLogs([
-          ...logs,
-          `Connection Failed!\n`,
-          `Status : ${status}\n`,
+          ...newLogs,
+          `Endpoint Validation Failed!\n`,
           `Message: ${message}\n`,
           `Test Complete. \nPlease close this panel, address the issue and try again.\n`,
         ]);
@@ -83,8 +84,8 @@ function TestExternalEndpointUrlConnectionButton(
       const parsedError = parseError(error);
 
       setLogs([
-        ...logs,
-        `Connection Failed!\n`,
+        ...newLogs,
+        `Endpoint Validation Failed!\n`,
         `Error: ${parsedError}\n`,
         `Test Complete.  Please close this panel, address the issue and try again.\n`,
       ]);
@@ -115,7 +116,7 @@ function TestExternalEndpointUrlConnectionButton(
       return (
         <span>
           <IconBase isLoading={isTesting} className={"mr-2"}/>
-          Testing Connection
+          Validating Endpoint
         </span>
       );
     }
@@ -124,7 +125,7 @@ function TestExternalEndpointUrlConnectionButton(
       return (
         <span>
           <IconBase icon={faExclamationTriangle} className={"mr-2"}/>
-          Connection Failed!
+          Endpoint Validation Failed!
         </span>
       );
     }
@@ -133,7 +134,7 @@ function TestExternalEndpointUrlConnectionButton(
       return (
         <span>
           <IconBase icon={faPlug} className={"mr-2"} />
-          Connection Succeeded!
+          Endpoint Validation Succeeded!
         </span>
       );
     }
@@ -141,47 +142,37 @@ function TestExternalEndpointUrlConnectionButton(
     return (
       <span>
         <IconBase icon={faPlug} className={"mr-2"}/>
-        Test Connection
+        Validate Endpoint
       </span>
     );
   };
 
-  const getConnectionLogOverlay = () => {
-    if (showConnectionLog === true) {
-      return (
-        <ToolRegistryConnectionLogOverlay
-          isLoading={false}
-          handleCloseFunction={() => {
-            setShowConnectionLog(false);
-          }}
-          logs={logs}
-        />
-      );
-    }
-  };
-
   return (
-    <div>
-      <TooltipWrapper
-        innerText={`This tool must be saved before testing connection.`}
+    <TooltipWrapper
+      innerText={`This Endpoint must be saved before testing it.`}
+    >
+      <Button
+        variant={getVariant()}
+        // TODO: Do harder check on url
+        disabled={
+          isTesting === true
+          || disabled === true
+          || isMongoDbId(endpointId) !== true
+          || isMongoDbId(toolId) !== true
+        }
+        onClick={() => testConnection()}
       >
-        <Button
-          variant={getVariant()}
-          // TODO: Do harder check on url
-          disabled={isTesting === true || disabled === true || hasStringValue(endpointUrl) !== true}
-          onClick={() => testConnection()}
-        >
-          {getLabel()}
-        </Button>
-      </TooltipWrapper>
-      {getConnectionLogOverlay()}
-    </div>
+        {getLabel()}
+      </Button>
+    </TooltipWrapper>
   );
 }
 
-TestExternalEndpointUrlConnectionButton.propTypes = {
-  endpointUrl: PropTypes.string,
+ValidateEndpointButton.propTypes = {
+  toolId: PropTypes.string,
+  endpointId: PropTypes.string,
   disabled: PropTypes.bool,
+  setLogs: PropTypes.func,
 };
 
-export default TestExternalEndpointUrlConnectionButton;
+export default ValidateEndpointButton;

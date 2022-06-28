@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
-function InlineInformation ({ message }) {
+function InlineInformation ({ message, className }) {
   const [messageBody, setMessageBody] = useState(undefined);
 
   useEffect(() => {
@@ -9,7 +9,7 @@ function InlineInformation ({ message }) {
   }, [message]);
 
   return (
-    <div className="mt-1 mb-3">
+    <div className={className}>
       <div className="info-text p-1">
         {messageBody}
       </div>
@@ -19,8 +19,7 @@ function InlineInformation ({ message }) {
 
 InlineInformation.propTypes = {
   message: PropTypes.string,
-  setInformationMessage: PropTypes.func,
-  alignment: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default InlineInformation;
