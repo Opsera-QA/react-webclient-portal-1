@@ -31,6 +31,7 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
 
     const onRowSelect = (stat) => {
         if(stat === "success") {
+            console.log("here");
             toastContext.showOverlayPanel(
                 <QuickDeployTotalSuccessActionableOverlay
                     kpiConfiguration={kpiConfiguration}
