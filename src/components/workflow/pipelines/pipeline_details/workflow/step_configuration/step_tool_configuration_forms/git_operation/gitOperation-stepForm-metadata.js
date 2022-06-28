@@ -74,6 +74,18 @@ const gitOperationStepFormMetadata = {
       isRequired: true,
       lowercase: true,
     },
+    {
+      label: "Add Reviewer",
+      id: "addReviewers",
+      maxLength: 50,
+      isRequired: true,
+      lowercase: true,
+    },
+    {
+      label: "Select Reviewers",
+      id: "prReviewers",
+      maxLength: 10,
+    },
   ],
   newObjectFields: {
     gitBranch: "",
@@ -88,6 +100,8 @@ const gitOperationStepFormMetadata = {
     targetBranch: "",
     description: "",
     tag: "",
+    addReviewers: false,
+    prReviewers: [],
   }
 };
 
