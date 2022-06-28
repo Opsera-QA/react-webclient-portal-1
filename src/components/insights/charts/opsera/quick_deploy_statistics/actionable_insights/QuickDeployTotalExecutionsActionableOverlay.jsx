@@ -21,15 +21,11 @@ import { getMetricFilterValue } from "components/common/helpers/metrics/metricFi
 import QuickDeployTotalSuccessActionableTable from "./QuickDeployTotalSuccessActionableTable";
 import GithubCommitsActionableInsightOpenTab
     from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOpenTab";
-import GithubCommitsActionableInsightClosedTab
-    from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightClosedTab";
-import GithubCommitsActionableInsightMergedTab
-    from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightMergedTab";
-import GithubCommitsActionableInsightContributorsTab
-    from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightContributorsTab";
+
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
+import QuickDeployTotalExecutionsTab from "./QuickDeployTotalExecutionsTab";
 
 function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboardData }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -44,6 +40,7 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
     const toastContext = useContext(DialogToastContext);
     const [isLoading, setIsLoading] = useState(false);
     const [actionableData, setActionableData] = useState([]);
+    const [taskData, setTasksData] = useState([]);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
     const isMounted = useRef(false);
     const [error, setError] = useState(undefined);
@@ -72,33 +69,33 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {
             setIsLoading(true);
-            let dashboardTags =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-            let dashboardOrgs =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-                    ?.value;
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
                 "quickDeployTotalExecutionsActionableInsights",
                 kpiConfiguration,
-                dashboardTags,
+                undefined,
                 filterDto,
                 undefined,
-                dashboardOrgs,
+                undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined
             );
 
-            const metrics = response?.data?.data[0][0]?.data;
+            console.log("response", response);
+
+            const metrics = response?.data?.data[0]?.metrics?.data;
+            console.log("metrics",metrics);
+            const tasks = response?.data?.data[0]?.tasks;
+            console.log("tasks", tasks);
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
-
+                setTasksData(tasks);
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.metrics?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {
@@ -127,8 +124,9 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
     const getBody = () => {
         if (activeTab == "main") {
             return (
-                <GithubCommitsActionableInsightOpenTab
-                    highestMergesMetric={highestMergesMetric}
+                <QuickDeployTotalExecutionsTab
+                    data={actionableData}
+                    tasks={taskData}
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                 />

@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import GithubCommitsVerticalTabContainer from "./GithubCommitsVerticalTabContainer";
-import GithubClosedCommitsTab from "./tableData/GithubClosedCommitsTab";
+import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
+import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
 
-function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboardData, kpiConfiguration,icon}) {
+function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfiguration,icon}) {
 
     const getTabContentContainer = () => {
         return (
             <VanitySetTabViewContainer className={"mb-3"}>
-                {highestMergesMetric.map((item,index)=>(
+                {tasks.map((item,index)=>(
                     <VanitySetTabView key={index} tabKey={item.id} >
-                        <GithubClosedCommitsTab
-                            repository={item.id}
+                        <QuickDeployTotalExecutionsActionableTable
+                            data={data}
                             dashboardData={dashboardData}
                             kpiConfiguration={kpiConfiguration}
                             icon={icon}
@@ -30,17 +30,18 @@ function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboard
     return (
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Executions`}
-            defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]?.id && highestMergesMetric[0]?.id}
-            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
+            defaultActiveKey={tasks && Array.isArray(tasks) && tasks[0]?.id && tasks[0]?.id}
+            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={tasks} />}
             currentView={getTabContentContainer()}
         />
     );
 
 }
-GithubCommitsActionableInsightClosedTab.propTypes = {
-    highestMergesMetric: PropTypes.array,
+QuickDeployTotalExecutionsTab.propTypes = {
+    data: PropTypes.array,
+    tasks: PropTypes.array,
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
     icon: PropTypes.object
 };
-export default GithubCommitsActionableInsightClosedTab;
+export default QuickDeployTotalExecutionsTab;

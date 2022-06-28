@@ -29,6 +29,10 @@ const QuickDeploymentActionableMetadata = {
         {
             label: "Run Count",
             id: "runCount",
+        },
+        {
+            label: "Timestamp",
+            id: "timestamp",
         }
     ],
     newObjectFields: {},

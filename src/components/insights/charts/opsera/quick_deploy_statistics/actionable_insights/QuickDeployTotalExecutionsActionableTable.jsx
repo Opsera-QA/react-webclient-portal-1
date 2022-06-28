@@ -12,7 +12,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
-function QuickDeployTotalSuccessActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
+function QuickDeployTotalExecutionsActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
     const toastContext = useContext(DialogToastContext);
     const fields = QuickDeploymentActionableMetadata.fields;
     const tableTitle = "Quick Deploy Success Report";
@@ -65,7 +65,7 @@ function QuickDeployTotalSuccessActionableTable({ data, isLoading, loadData, fil
     );
 }
 
-QuickDeployTotalSuccessActionableTable.propTypes = {
+QuickDeployTotalExecutionsActionableTable.propTypes = {
     data: PropTypes.array,
     isLoading: PropTypes.bool,
     loadData: PropTypes.func,
@@ -74,4 +74,4 @@ QuickDeployTotalSuccessActionableTable.propTypes = {
     title: PropTypes.string,
 };
 
-export default QuickDeployTotalSuccessActionableTable;
+export default QuickDeployTotalExecutionsActionableTable;
