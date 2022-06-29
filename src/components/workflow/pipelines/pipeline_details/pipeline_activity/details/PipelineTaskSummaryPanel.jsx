@@ -20,6 +20,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import ExternalRestApiIntegrationTaskSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationTaskSummaryPanel";
 import axios from "axios";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -90,6 +91,8 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
       return (
         <ExternalRestApiIntegrationTaskSummaryPanel
           externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+          endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+          endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
         />
       );
     }
@@ -103,6 +106,8 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
         return (
           <ExternalRestApiIntegrationTaskSummaryPanel
             externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+            endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+            endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
           />
         );
       default:
