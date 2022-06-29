@@ -4,7 +4,7 @@ const QuickDeploymentActionableMetadata = {
     fields: [
         {
             label: "Task",
-            id: "task",
+            id: "taskName",
         },
         {
             label: "Success Rate %",

@@ -32,7 +32,7 @@ function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfigura
     return (
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Executions Report`}
-            defaultActiveKey={tasks && Array.isArray(tasks)}
+            defaultActiveKey={tasks && Array.isArray(tasks) && tasks[0] && tasks[0]}
             verticalTabContainer={<QuickDeployVerticalTabContainer highestMergesMetric={tasks} />}
             currentView={getTabContentContainer()}
         />

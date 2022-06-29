@@ -25,7 +25,7 @@ function QuickDeployTotalComponentsActionableTable({ data, component, isLoading,
 
     const columns = useMemo(
         () => [
-            getTableTextColumn(getField(fields, "task"), "task"),
+            getTableTextColumn(getField(fields, "taskName"), "taskName"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
             getTableTextColumn(getField(fields, "timestamp"), "timestamp"),
             getTableBooleanIconColumn(getField(fields, "validation"), "validation"),

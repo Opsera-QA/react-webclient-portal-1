@@ -32,7 +32,7 @@ function QuickDeployTotalComponentsTab({data, components, dashboardData, kpiConf
     return (
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Components Report`}
-            defaultActiveKey={components && Array.isArray(components)}
+            defaultActiveKey={components && Array.isArray(components) && components[0] && components[0]}
             verticalTabContainer={<QuickDeployVerticalTabContainer highestMergesMetric={components} />}
             currentView={getTabContentContainer()}
         />

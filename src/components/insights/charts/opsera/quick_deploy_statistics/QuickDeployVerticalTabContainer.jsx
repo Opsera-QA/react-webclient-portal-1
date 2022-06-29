@@ -7,8 +7,8 @@ import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 function QuickDeployVerticalTabContainer({ highestMergesMetric }) {
     const [activeTab, setActiveTab] = useState();
     useEffect(() => {
-        if (highestMergesMetric && Array.isArray(highestMergesMetric)) {
-            setActiveTab(highestMergesMetric);
+        if (highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]) {
+            setActiveTab(highestMergesMetric[0]);
         }
     }, [highestMergesMetric]);
 
