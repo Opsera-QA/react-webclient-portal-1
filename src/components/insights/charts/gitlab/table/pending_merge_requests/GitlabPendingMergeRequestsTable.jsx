@@ -8,14 +8,19 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {
   getLimitedTableTextColumn,
   getTableTextColumn,
-  getTableDateTimeColumn
+  getTableDateTimeColumn,
 } from "components/common/table/table-column-helpers";
-import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
+import DeploymentAnalyticsMetadata from "./gitlab-recent-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import FilterContainer from "components/common/table/FilterContainer";
 
-function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardData }) {
+function GitlabPendingMergeRequestsTable({
+  kpiConfiguration,
+  ProjectName,
+  dashboardData,
+}) {
   const fields = DeploymentAnalyticsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -24,7 +29,11 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false,
+    ),
   );
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(undefined);
@@ -33,16 +42,14 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
 
   const columns = useMemo(
     () => [
-      getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
-      getTableTextColumn(getField(fields,"pipelineName")),
-      getTableTextColumn(getField(fields,"runCount")),
-      getTableDateTimeColumn(getField(fields,"timeStamp")),
-      getTableTextColumn(getField(fields,"status")),
-      getTableTextColumn(getField(fields,"version")),
-      getLimitedTableTextColumn(getField(fields,"destination"),30),
-      getTableTextColumn(getField(fields,"namespace")),
+      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "AssigneeName")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -66,34 +73,50 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value;
+        ]?.value;
       let dashboardOrgs =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex(
             (obj) => obj.type === "organizations",
           )
-          ]?.value;
-      
-      const response = await chartsActions.getDeploymentAnalytics(
-        kpiConfiguration,
+        ]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        metadataName,
-        filterDto,
+        "gitlabPendingMergeRequests",
+        kpiConfiguration,
         dashboardTags,
-        dashboardOrgs
+        filterDto,
+        null,
+        dashboardOrgs,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        ProjectName,
       );
-      let dataObject = response?.data?.data[0]?.data;
+      let dataObject =
+        response?.data?.data[0]?.gitlabPendingMergeRequests?.data;
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.count[0].count);
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.gitlabPendingMergeRequests?.count,
+        );
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
@@ -112,27 +135,37 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
     setShowModal(true);
   };
 
-  
+  const getTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+        onRowSelect={onRowSelect}
+      />
+    );
+  };
 
   return (
-    <CustomTable
-    columns={columns}
-    data={metrics}
-    noDataMessage={noDataMessage}
-    paginationDto={tableFilterDto}
-    setPaginationDto={setTableFilterDto}
-    loadData={loadData}
-    scrollOnLoad={false}
-    onRowSelect={onRowSelect}
-  />
+    <FilterContainer
+      filterDto={tableFilterDto}
+      setFilterDto={setTableFilterDto}
+      body={getTable()}
+      isLoading={isLoading}
+      loadData={loadData}
+      supportSearch={true}
+    />
   );
 }
 
-DeploymentAnalyticsTable.propTypes = {
- metadataName:PropTypes.string.isRequired,
- kpiConfiguration: PropTypes.object,
- dashboardData: PropTypes.object,
-
+GitlabPendingMergeRequestsTable.propTypes = {
+  ProjectName: PropTypes.string.isRequired,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
-export default DeploymentAnalyticsTable;
+export default GitlabPendingMergeRequestsTable;
