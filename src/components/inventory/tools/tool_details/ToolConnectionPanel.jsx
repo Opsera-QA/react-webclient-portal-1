@@ -83,6 +83,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY,
   toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
