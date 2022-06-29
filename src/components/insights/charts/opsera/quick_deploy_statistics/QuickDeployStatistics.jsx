@@ -11,18 +11,7 @@ import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/da
 import {
     QUICK_DEPLOY_STATISTICS_CONSTANTS as constants
 } from "./quickDeploy_kpi_datapoint_identifiers";
-import CoverityIssuesOverallLowTrendDataBlock
-    from "../../coverity/CoverityIssuesByCategory/data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
-import CoverityIssuesOverallMediumTrendDataBlock
-    from "../../coverity/CoverityIssuesByCategory/data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
-import CoverityIssuesOverallHighTrendDataBlock
-    from "../../coverity/CoverityIssuesByCategory/data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
-import Context from "../../../../platform/context";
-import {Container} from "@nivo/core";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
-import QuickDeployTotalComponentsDataBlock from "./data_blocks/QuickDeployTotalComponentsDataBlock";
-import QuickDeployTotalExecutionsDataBlock from "./data_blocks/QuickDeployTotalExecutionsDataBlock";
-import QuickDeploySuccessRateDataBlock from "./data_blocks/QuickDeploySuccessRateDataBlock";
 import SuccessRateDataBlockContainer from "./data_blocks/SuccessRateDataBlockContainer";
 import GithubCommitsActionableInsightOverlay
     from "../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
@@ -110,6 +99,7 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
             console.log("response", response);
 
             const metrics = response?.data?.data[0]?.quickDeployChartandStatistics?.data;
+            console.log("mainMetrics", metrics);
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setBuildAndDeployMetricData(metrics[0]?.statisticsData);
@@ -209,7 +199,6 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
         console.log("chartdate", buildAndDeployMetricData);
         return (
             <Row className={"mx-0 p-2 justify-content-between"}>
-                {dataPointHelpers.isDataPointVisible(quickDeploySuccessDataPoint) &&
                     <Col>
                         <SuccessRateDataBlockContainer
                             metricData={buildAndDeployMetricData}
@@ -217,9 +206,12 @@ function QuickDeployStatistics({ kpiConfiguration, setKpiConfiguration, dashboar
                             kpiConfiguration={kpiConfiguration}
                             dashboardData={dashboardData}
                             goalsData={goalsData?.deployment_success_rate}
-                            dataPoint={quickDeploySuccessDataPoint}
+                            dataPoint1={quickDeploySuccessDataPoint}
+                            dataPoint2={quickDeployExecutionsDataPoint}
+                            dataPoint3={quickDeployChartDataPoint}
+                            dataPoint4={quickDeployComponentsDataPoint}
                         />
-                    </Col> }
+                    </Col>
             </Row>
         );
     };

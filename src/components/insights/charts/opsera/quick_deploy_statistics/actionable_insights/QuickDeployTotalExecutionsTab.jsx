@@ -5,6 +5,7 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
+import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
 
 function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfiguration,icon}) {
 
@@ -32,7 +33,7 @@ function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfigura
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Executions Report`}
             defaultActiveKey={tasks && Array.isArray(tasks)}
-            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={tasks} />}
+            verticalTabContainer={<QuickDeployVerticalTabContainer highestMergesMetric={tasks} />}
             currentView={getTabContentContainer()}
         />
     );

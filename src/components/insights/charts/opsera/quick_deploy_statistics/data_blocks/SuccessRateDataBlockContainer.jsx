@@ -6,27 +6,25 @@ import { defaultConfig } from 'components/insights/charts/charts-views';
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../QuickDeployLineChartConfig";
-import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
-import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
-import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
 import QuickDeployTotalExecutionsDataBlock
     from "../../quick_deploy_statistics/data_blocks/QuickDeployTotalExecutionsDataBlock";
 import QuickDeploySuccessRateDataBlock from "../../quick_deploy_statistics/data_blocks/QuickDeploySuccessRateDataBlock";
 import QuickDeployTotalComponentsDataBlock
     from "../../quick_deploy_statistics/data_blocks/QuickDeployTotalComponentsDataBlock";
-import {faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import QuickDeployTotalSuccessActionableOverlay from "../actionable_insights/QuickDeployTotalSuccessActionableOverlay";
 import QuickDeployTotalExecutionsActionableOverlay
     from "../actionable_insights/QuickDeployTotalExecutionsActionableOverlay";
 import QuickDeployTotalComponentsActionableOverlay
     from "../actionable_insights/QuickDeployTotalComponentsActionableOverlay";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
+function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint1, dataPoint2,dataPoint3,dataPoint4 }) {
      const toastContext = useContext(DialogToastContext);
 
     const onRowSelect = (stat) => {
@@ -103,50 +101,70 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
         );
     };
 
+    const getIcon = (severity) => {
+        switch (severity) {
+            case "red":
+                return faArrowCircleDown;
+            case "green":
+                return faArrowCircleUp;
+            case "light-gray-text-secondary":
+                return faMinusCircle;
+            default:
+                break;
+        }
+    };
+
     return (
         <Container>
             <Row className="align-items-center">
                 <Col sm={3} className={"p-2"}>
+                    {dataPointHelpers.isDataPointVisible(dataPoint2) &&
                     <Row lg={12} className={"my-3"}>
                         <QuickDeployTotalExecutionsDataBlock
                             score={
                                 metricData?.total
                             }
-                            icon={faArrowCircleUp}
-                            className={"green"}
-                            lastScore={0}
+                            icon={getIcon(metricData?.executionsTrend?.trend)}
+                            className={metricData?.executionsTrend?.trend}
+                            lastScore={metricData?.prevTotal}
                             onSelect={() => onRowSelect("executions")}
                             //iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
                         />
-                    </Row>
-                    <Row lg={12} className={"my-3"}>
-                        <QuickDeploySuccessRateDataBlock
-                            score={
-                                metricData?.success
-                            }
-                            icon={faArrowCircleUp}
-                            className={"green"}
-                            lastScore={0}
-                            onSelect={() => onRowSelect("success")}
-                            //iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
-                        />
-                    </Row>
-                    <Row lg={12} className={"mb-3"}>
-                        <QuickDeployTotalComponentsDataBlock
-                            score={
-                                metricData?.totalComponents
-                            }
-                            icon={faArrowCircleUp}
-                            className={"green"}
-                            lastScore={0}
-                            onSelect={() => onRowSelect("components")}
-                            //iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
-                        />
-                    </Row>
+                    </Row>}
+                    {dataPointHelpers.isDataPointVisible(dataPoint1) &&
+                        <Row lg={12} className={"my-3"}>
+                            <QuickDeploySuccessRateDataBlock
+                                score={
+                                    metricData?.success
+                                }
+                                icon={getIcon(metricData?.successTrend?.trend)}
+                                className={metricData?.successTrend?.trend}
+                                lastScore={metricData?.prevSuccess}
+                                onSelect={() => onRowSelect("success")}
+                                //iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
+                            />
+                        </Row>
+                    }
+                    {dataPointHelpers.isDataPointVisible(dataPoint4) &&
+                        <Row lg={12} className={"mb-3"}>
+                            <QuickDeployTotalComponentsDataBlock
+                                score={
+                                    metricData?.totalComponents
+                                }
+                                icon={getIcon(metricData?.componentsTrend?.trend)}
+                                className={metricData?.componentsTrend?.trend}
+                                lastScore={metricData?.prevComponents}
+                                onSelect={() => onRowSelect("components")}
+                                //iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
+                            />
+                        </Row>
+                    }
                 </Col>
-                <Col sm={9} className={"p-2"}>
-                    {getSuccessTrendChart()}
-                </Col>
+                {dataPointHelpers.isDataPointVisible(dataPoint3) &&
+                    <Col sm={9} className={"p-2"}>
+                        {getSuccessTrendChart()}
+                    </Col>
+                }
             </Row>
         </Container>
     );
@@ -158,7 +176,10 @@ SuccessRateDataBlockContainer.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     goalsData: PropTypes.number,
-    dataPoint: PropTypes.object
+    dataPoint1: PropTypes.object,
+    dataPoint2: PropTypes.object,
+    dataPoint3: PropTypes.object,
+    dataPoint4: PropTypes.object
 };
 
 export default SuccessRateDataBlockContainer;

@@ -17,13 +17,6 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
-
-import QuickDeployTotalSuccessActionableTable from "./QuickDeployTotalSuccessActionableTable";
-import GithubCommitsActionableInsightOpenTab
-    from "../../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOpenTab";
-
-import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../../../common/tabs/CustomTab";
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 import QuickDeployTotalExecutionsTab from "./QuickDeployTotalExecutionsTab";
 
@@ -65,6 +58,8 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
             isMounted.current = false;
         };
     }, []);
+
+    console.log("filter model", filterModel);
 
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {

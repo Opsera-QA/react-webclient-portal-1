@@ -5,6 +5,7 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import QuickDeployTotalComponentsActionableTable from "./QuickDeployTotalComponentsActionableTable";
+import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
 
 function QuickDeployTotalComponentsTab({data, components, dashboardData, kpiConfiguration,icon}) {
 
@@ -32,7 +33,7 @@ function QuickDeployTotalComponentsTab({data, components, dashboardData, kpiConf
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Components Report`}
             defaultActiveKey={components && Array.isArray(components)}
-            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={components} />}
+            verticalTabContainer={<QuickDeployVerticalTabContainer highestMergesMetric={components} />}
             currentView={getTabContentContainer()}
         />
     );
