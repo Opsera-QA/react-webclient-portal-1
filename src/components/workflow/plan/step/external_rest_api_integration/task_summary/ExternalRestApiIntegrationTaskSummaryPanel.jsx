@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import PipelineTaskSummaryPanelBase
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
-import Row from "react-bootstrap/Row";
-import ExternalRestApiIntegrationEndpointResponseField
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointResponseField";
-import ExternalRestApiIntegrationEndpointRequestField
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointRequestField";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import ExternalRestApiIntegrationEndpointSummary
+  , {
+  EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES,
+} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel, endpoint, endpoints }) {
@@ -16,64 +15,40 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
     const parsedEndpoints = dataParsingHelper.parseObject(endpoints, false);
 
     if (parsedEndpoints) {
-      return JSON.stringify(parsedEndpoints);
-      // return (
-      //   <>
-      //     <Row>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointRequestField
-      //           endpointObject={endpoints}
-      //         />
-      //       </Col>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointResponseField
-      //           responseObject={endpoint?.response}
-      //         />
-      //       </Col>
-      //     </Row>
-      //     <Row>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointRequestField
-      //           endpointObject={endpoint}
-      //         />
-      //       </Col>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointResponseField
-      //           responseObject={endpoint?.response}
-      //         />
-      //       </Col>
-      //     </Row>
-      //     <Row>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointRequestField
-      //           endpointObject={endpoint}
-      //         />
-      //       </Col>
-      //       <Col xs={6}>
-      //         <ExternalRestApiIntegrationEndpointResponseField
-      //           responseObject={endpoint?.response}
-      //         />
-      //       </Col>
-      //     </Row>
-      //   </>
-      // );
+      const connectionCheckEndpoint = parsedEndpoints?.connectionCheckEndpoint;
+      const headerTokenEndpoint = parsedEndpoints?.headerTokenEndpoint;
+      const statusCheckEndpoint = parsedEndpoints?.statusCheckEndpoint;
+      const callOperationEndpoint = parsedEndpoints?.callOperationEndpoint;
+
+      return (
+        <div>
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={connectionCheckEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CONNECTION_VALIDATION}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={headerTokenEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.HEADER_TOKEN}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={statusCheckEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.STATUS_CHECK}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={callOperationEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CALL_OPERATION}
+          />
+        </div>
+      );
     }
 
 
     if (endpoint) {
       return (
-        <Row>
-          <Col xs={6}>
-            <ExternalRestApiIntegrationEndpointRequestField
-              endpointObject={endpoint}
-            />
-          </Col>
-          <Col xs={6}>
-            <ExternalRestApiIntegrationEndpointResponseField
-              responseObject={endpoint?.response}
-            />
-          </Col>
-        </Row>
+        <ExternalRestApiIntegrationEndpointSummary
+          endpoint={endpoint}
+          requestType={"External"}
+        />
       );
     }
   };

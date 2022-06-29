@@ -92,7 +92,7 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
         <ExternalRestApiIntegrationTaskSummaryPanel
           externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
           endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
-          endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+          endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
         />
       );
     }
