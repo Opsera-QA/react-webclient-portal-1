@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import JenkinsDependencyMultiSelectInput
   from "components/common/list_of_values_input/tools/jenkins/dependencies/JenkinsDependencyMultiSelectInput";
 
+const excludeArr = ["SFDC DATA TRANSFORM"];
+
 function JenkinsStepDependencyTypeInput({model, setModel, disabled}) {
   const setDependencyTypes = (fieldName, selectedOption) => {
     let newDataObject = {...model};
@@ -16,6 +18,10 @@ function JenkinsStepDependencyTypeInput({model, setModel, disabled}) {
     newDataObject.setData("dependencies", dependenciesObj);
     setModel({...newDataObject});
   };
+
+  if (excludeArr.includes(model?.getData("jobType"))) {
+    return null;
+  }
 
   return (
     <JenkinsDependencyMultiSelectInput

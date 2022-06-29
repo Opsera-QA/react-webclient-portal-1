@@ -9,7 +9,6 @@ sfdcDataTransformerRulesActions.getDataTransformerRules = async (getAccessToken,
 
 sfdcDataTransformerRulesActions.createDataTransformerRule = async (getAccessToken, cancelTokenSource, toolID, model) => {
   const postBody = model.getPersistData();
-  delete postBody.isXml;
   const apiUrl = `/tools/${toolID}/sfdc/dataTransformerRules`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

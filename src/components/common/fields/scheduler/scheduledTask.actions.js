@@ -32,6 +32,12 @@ scheduledTaskActions.updateScheduledTaskV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+scheduledTaskActions.getScheduledLogPush = async (getAccessToken, cancelTokenSource, s3ToolId) => {
+  const apiUrl = `/scheduler/s3-push/${s3ToolId}`;
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 scheduledTaskActions.deleteScheduledTaskV2 = async (getAccessToken, cancelTokenSource, scheduledTaskId) => {
   let apiUrl = `/scheduler/${scheduledTaskId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);

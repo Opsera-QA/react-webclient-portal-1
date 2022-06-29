@@ -122,7 +122,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <ToolJobsPanel
             toolData={toolData}
-            toolIdentifier={toolData?.tool_identifier}
+            toolIdentifier={toolData?.getData("tool_identifier")}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.LOGS:

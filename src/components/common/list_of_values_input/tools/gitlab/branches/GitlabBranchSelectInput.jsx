@@ -1,12 +1,14 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
+import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
+import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+
 
 function GitlabBranchSelectInput(
   {
@@ -55,7 +57,7 @@ function GitlabBranchSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadGitlabBranches(cancelSource);
+      await loadGitlabBranches("", toolId, repositoryId, cancelSource);
     } catch (error) {
       setError(error);
     } finally {
@@ -63,8 +65,9 @@ function GitlabBranchSelectInput(
     }
   };
 
-  const loadGitlabBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+  const loadGitlabBranches = async (searchTerm, toolId, repositoryId, cancelSource = cancelTokenSource) => {
+    // const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelSource, toolId, repositoryId, searchTerm);
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
@@ -73,9 +76,14 @@ function GitlabBranchSelectInput(
     }
   };
 
+  const delayedSearchQuery = useCallback(
+      _.debounce((searchTerm, repositoryId, toolId) => loadGitlabBranches(searchTerm, toolId, repositoryId), 600),
+      [],
+  );
+
   if (multi) {
     return (
-      <MultiSelectInputBase
+      <LazyLoadMultiSelectInputBase
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
@@ -90,12 +98,14 @@ function GitlabBranchSelectInput(
         error={error}
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
+        onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+        useToggle={true}
       />
     );
   }
 
   return (
-    <SelectInputBase
+    <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -110,6 +120,8 @@ function GitlabBranchSelectInput(
       error={error}
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+      useToggle={true}
     />
   );
 }

@@ -16,18 +16,55 @@ import EndpointRequestHeaderConfigurationInput
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import { ENDPOINT_TYPES } from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
+import EndpointApiConfigurationInputBase
+  from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
+import EndpointResponseEvaluationRulesInputBase
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
+import ValidateEndpointPanel from "components/common/inputs/endpoints/endpoint/response/test/ValidateEndpointPanel";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
     externalApiIntegratorModel,
     setExternalApiIntegratorModel,
     disabled,
+    toolId,
   }) {
   const [activeTab, setActiveTab] = useState("requestHeaderConfiguration");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
       setActiveTab(newTab);
+    }
+  };
+
+  const getDynamicTabsForEndpointType = () => {
+    switch (externalApiIntegratorModel?.getData("type")) {
+      case ENDPOINT_TYPES.ACCESS_TOKEN_GENERATION:
+      case ENDPOINT_TYPES.CONNECTION_VALIDATION:
+        return (
+          <>
+            <VanitySetVerticalTab
+              tabText={"API Configuration"}
+              tabName={"apiConfiguration"}
+              handleTabClick={handleTabClick}
+              activeTab={activeTab}
+            />
+            <VanitySetVerticalTab
+              tabText={"Evaluation Rules"}
+              tabName={"evaluationRules"}
+              handleTabClick={handleTabClick}
+              activeTab={activeTab}
+            />
+            <VanitySetVerticalTab
+              tabText={"Test Endpoint"}
+              tabName={"endpointTest"}
+              handleTabClick={handleTabClick}
+              activeTab={activeTab}
+              visible={externalApiIntegratorModel?.isNew() !== true}
+            />
+          </>
+        );
     }
   };
 
@@ -72,6 +109,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
+          {getDynamicTabsForEndpointType()}
         </div>
       </VanitySetVerticalTabContainer>
     );
@@ -85,6 +123,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             model={externalApiIntegratorModel}
             setModel={setExternalApiIntegratorModel}
             disabled={disabled}
+            toolId={toolId}
           />
         );
       case "queryParameters":
@@ -114,6 +153,47 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             disabled={disabled}
           />
         );
+      case "apiConfiguration":
+        return (
+          <div className={"mx-3 mt-3"}>
+            <EndpointApiConfigurationInputBase
+              fieldName={"requestParameters"}
+              model={externalApiIntegratorModel}
+              setModel={setExternalApiIntegratorModel}
+              disabled={disabled}
+              endpoint={{...externalApiIntegratorModel?.getPersistData()}}
+              height={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_CONFIGURATION_PANEL_HEIGHT}
+              endpointParameterInputHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              endpointParameterArrayInputHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_EVALUATION_RULE_ARRAY_INPUT_HEIGHT}
+            />
+          </div>
+        );
+      case "evaluationRules":
+        return (
+          <div className={"mx-3"}>
+            <EndpointResponseEvaluationRulesInputBase
+              model={externalApiIntegratorModel}
+              setModel={setExternalApiIntegratorModel}
+              fieldName={"responseEvaluationRules"}
+              evaluationRuleFieldName={"success_rule"}
+              endpoint={{...externalApiIntegratorModel?.getPersistData()}}
+              disabled={disabled}
+              evaluationRulesInputHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_EVALUATION_RULE_INPUT_HEIGHT}
+              responseParameterInputHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+              responseParameterArrayInputHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_EVALUATION_RULE_ARRAY_INPUT_HEIGHT}
+            />
+          </div>
+        );
+      case "endpointTest":
+        return (
+          <div className={"mx-3 mt-3"}>
+            <ValidateEndpointPanel
+              endpoint={{...externalApiIntegratorModel?.getPersistData()}}
+              endpointId={externalApiIntegratorModel?.getMongoDbId()}
+              toolId={toolId}
+            />
+          </div>
+        );
     }
   };
 
@@ -138,6 +218,7 @@ ExternalApiIntegratorEndpointParametersVerticalTabContainer.propTypes = {
   externalApiIntegratorModel: PropTypes.object,
   setExternalApiIntegratorModel: PropTypes.func,
   disabled: PropTypes.bool,
+  toolId: PropTypes.string,
 };
 
 export default ExternalApiIntegratorEndpointParametersVerticalTabContainer;

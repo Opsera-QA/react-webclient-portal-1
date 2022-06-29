@@ -220,8 +220,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
       maxLength: 500
     },
     {
-      label: "Data Transformer Rule",
+      label: "MetaData Transformer Rule",
       id: "ruleIds",
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === "SFDC DATA TRANSFORM";
+      },
     }
   ],
   newObjectFields: {

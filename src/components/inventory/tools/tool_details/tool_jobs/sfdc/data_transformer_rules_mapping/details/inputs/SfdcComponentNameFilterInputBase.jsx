@@ -1,11 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faClipboardListCheck} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import SfdcComponentNameFilterInputRow from "./SfdcComponentNameFilterInputRow";
+import {matchesRegex} from "utils/helpers";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function SfdcComponentNameFilterInputBase({ fieldName, model, setModel, helpComponent, disabled, className }) {
   const [field] = useState(model.getFieldById(fieldName));
@@ -81,7 +82,12 @@ function SfdcComponentNameFilterInputBase({ fieldName, model, setModel, helpComp
 
   const updateText = (index, innerField, newValue) => {
     let newPropertyList = filterRows;
-    if (newPropertyList[index][innerField] !== newValue) {
+    
+    let regex = newPropertyList[index]["filter"] === "equals" ? /^\*$|^[A-Za-z][A-Za-z0-9-% _.]*$/ : /^[A-Za-z][A-Za-z0-9-% _.]*$/ ;
+
+    console.log(matchesRegex(regex, newValue));
+
+    if ((newValue.length === 0 || matchesRegex(regex, newValue)) && newPropertyList[index][innerField] !== newValue) {
       newPropertyList[index][innerField] = newValue;
       validateAndSetData(newPropertyList);
     }
@@ -155,7 +161,7 @@ function SfdcComponentNameFilterInputBase({ fieldName, model, setModel, helpComp
   };
 
   const getFilterMessage = () => {
-    return (`Please use * in the value field to select all components`);
+    return (`Letters, numbers, spaces, dashes, underscores, percentage and periods are allowed. Please select 'Equals' filter and enter * in the value field to select all components.`);
   };
 
   if (field == null) {
@@ -164,14 +170,10 @@ function SfdcComponentNameFilterInputBase({ fieldName, model, setModel, helpComp
 
   return (
     <div className={className}>
-      <PropertyInputContainer
+      <InfoContainer
         titleIcon={faClipboardListCheck}
         field={field}
-        titleText={field?.label}
-        errorMessage={errorMessage}
-        type={"Component Name Filter"}
         helpComponent={getHelpComponent()}
-        incompleteRowMessage={getIncompleteFiltersMessage()}
       >
         <div>
           <div className={"filter-bg-white"}>
@@ -181,7 +183,7 @@ function SfdcComponentNameFilterInputBase({ fieldName, model, setModel, helpComp
             {getFieldBody()}
           </div>
         </div>
-      </PropertyInputContainer>
+      </InfoContainer>
       <InfoText customMessage={getFilterMessage()} />
     </div>
   );

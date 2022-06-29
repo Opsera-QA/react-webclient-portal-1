@@ -24,17 +24,20 @@ function ExportGitCustodianVulnerabilitiesDataModal({ showModal, closeModal, for
     return pdfExporter;
   };
 
-  // const getCsvData = () => {
-  //   return [["Project", "Severity", "Line", "Message"],
-  //     ...formattedData.map(item =>
-  //       [
-  //         item.projects, 
-  //         item.severity, 
-  //         item.line, 
-  //         item.message
-  //       ]
-  //     )];
-  // };
+  const getCsvData = () => {
+    return [["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Jira Ticket"],
+      ...formattedData.map(item =>
+        [
+          item.commitDate.substring(0, 10), 
+          item.repository, 
+          item.author, 
+          item.path, 
+          item.lineNumber, 
+          item.service, 
+          item.type, 
+          item?.jiraTicket?.key]
+      )];
+  };
 
   return (
     <ExportDataModalBase
@@ -43,7 +46,7 @@ function ExportGitCustodianVulnerabilitiesDataModal({ showModal, closeModal, for
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
-      // getCsvData={getCsvData}
+      getCsvData={getCsvData}
     />
   );
 }

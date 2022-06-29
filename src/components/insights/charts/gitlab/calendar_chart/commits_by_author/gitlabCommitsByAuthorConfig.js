@@ -1,6 +1,8 @@
-export default (keys, colors) => ({
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+
+export default (keys) => ({
   keys,
-  colors,
+  colors: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
   indexBy: "date",
   forceSquare: true,
   cellOpacity: 1,

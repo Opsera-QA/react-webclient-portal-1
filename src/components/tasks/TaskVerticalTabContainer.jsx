@@ -5,11 +5,21 @@ import { faTasks, faClipboardListCheck, faUser } from "@fortawesome/pro-light-sv
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
+import { isTaskTypeOfCategory } from "components/tasks/task.types";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
-  const handleTabClick = (tab) => {
-    taskFilterModel?.setData("category", tab);
-    taskFilterModel?.setData("type", "");
+  const handleTabClick = (category) => {
+    taskFilterModel?.setData("category", category);
+    const type = taskFilterModel?.getData("type");
+
+    if (
+      hasStringValue(type) === true
+      && ["", "owner"].includes(category) !== true
+      && isTaskTypeOfCategory(type, category) !== true
+    ) {
+      taskFilterModel?.setData("type", "");
+    }
     loadData(taskFilterModel);
   };
 

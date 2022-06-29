@@ -7,19 +7,22 @@ import StandaloneJsonField from "components/common/fields/json/StandaloneJsonFie
 import FieldContainer from "components/common/fields/FieldContainer";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
-function ExternalRestApiIntegrationEndpointRequestField({
-  endpointObject,
-  height,
-}) {
+function ExternalRestApiIntegrationEndpointRequestField(
+  {
+    endpointObject,
+    height,
+  }) {
   const getQueryParameterField = () => {
     const queryParameters = dataParsingHelper.parseJson(endpointObject?.queryParameters, false);
 
     if (queryParameters) {
       return (
-        <StandaloneJsonField
-          titleText={"Query Parameters"}
-          json={queryParameters}
-        />
+        <FieldContainer>
+          <StandaloneJsonField
+            titleText={"Query Parameters"}
+            json={queryParameters}
+          />
+        </FieldContainer>
       );
     }
   };
@@ -29,10 +32,12 @@ function ExternalRestApiIntegrationEndpointRequestField({
 
     if (requestBody) {
       return (
-        <StandaloneJsonField
-          titleText={"Request Body"}
-          json={requestBody}
-        />
+        <FieldContainer>
+          <StandaloneJsonField
+            titleText={"Request Body"}
+            json={requestBody}
+          />
+        </FieldContainer>
       );
     }
   };

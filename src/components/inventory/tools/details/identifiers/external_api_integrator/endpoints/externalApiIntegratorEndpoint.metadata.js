@@ -9,6 +9,11 @@ const externalApiIntegratorEndpointMetadata = {
       isRequired: true,
     },
     {
+      label: "Type",
+      id: "type",
+      isRequired: true,
+    },
+    {
       label: "Description",
       id: "description",
       maxLength: 1000,
@@ -37,6 +42,14 @@ const externalApiIntegratorEndpointMetadata = {
       id: "requestBodyFields",
     },
     {
+      label: "Request Parameters",
+      id: "requestParameters",
+    },
+    {
+      label: "Response Evaluation Rules",
+      id: "responseEvaluationRules",
+    },
+    {
       label: "Response Body Type",
       id: "responseBodyType",
       isRequired: true,
@@ -48,14 +61,17 @@ const externalApiIntegratorEndpointMetadata = {
   ],
   newObjectFields: {
     name: "",
+    type: "",
     description: "",
     requestType: "get",
     url: "",
     headerConfiguration: {},
     queryParameterFields: [],
     requestBodyFields: [],
+    requestParameters: {},
     responseBodyType: "object",
     responseBodyFields: [],
+    responseEvaluationRules: {},
   }
 };
 

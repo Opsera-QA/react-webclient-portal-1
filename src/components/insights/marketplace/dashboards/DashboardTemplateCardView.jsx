@@ -16,6 +16,7 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
       return (
         <div className={"py-5"}>
           <InlineInformation
+            className={"mt-1 mb-3"}
             message={
               `
                 No Dashboard Templates Found. 
