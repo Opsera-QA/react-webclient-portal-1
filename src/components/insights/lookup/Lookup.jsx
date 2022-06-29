@@ -430,7 +430,7 @@ const Lookup = () => {
               disabled={false}
               onClick={() => onSearch()}
             >
-              Search
+              Filter
           </Button>
           </Col>
         </Row>
