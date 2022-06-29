@@ -401,7 +401,7 @@ const Lookup = () => {
       Currently applicable only for Salesforce Pipelines. This Component based search provides details on when selected components have been deployed along with pipeline details. Also provides summary on validations and unit tests.
       `}
     >
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
             {state.modal &&
