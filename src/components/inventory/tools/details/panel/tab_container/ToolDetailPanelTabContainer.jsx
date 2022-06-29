@@ -25,6 +25,8 @@ import ToolEndpointsTab, {
 import ToolProvidersTab, { PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
 import ToolLicenseTab, {LICENSE_SUPPORTED_TOOL_IDENTIFIERS} from "../../../tool_details/ToolLicenseTab";
 import { CONNECTION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/tool_details/ToolConnectionPanel";
+import ToolDataTransformerRulesMappingTab, {DATA_TRANSFORMER_RULES_SUPPORTED_TOOL_IDENTIFIERS} 
+  from "components/inventory/tools/details/panel/tab_container/tabs/ToolDataTransformerRulesMappingTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -48,7 +50,8 @@ export const TOOL_DETAIL_PANEL_TABS = {
   SUMMARY: "summary",
   USAGE: "usage",
   VAULT: "vault",
-  LICENSES: "license"
+  LICENSES: "license",
+  DATA_TRANSFORMER: "data_transformer"
 };
 
 export const getTabSupportedTools = (toolDetailPanelTab) => {
@@ -75,6 +78,8 @@ export const getTabSupportedTools = (toolDetailPanelTab) => {
       return PROJECT_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.MAPPING:
       return SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS;
+    case TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER:
+      return DATA_TRANSFORMER_RULES_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.STORAGE:
       return STORAGE_SUPPORTED_TOOL_IDENTIFIERS;
     case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
@@ -161,6 +166,11 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         handleTabClick={handleTabClick}
       />
       <ToolServiceTypeMappingTab
+        toolModel={toolModel}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+      />
+      <ToolDataTransformerRulesMappingTab
         toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}

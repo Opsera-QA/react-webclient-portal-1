@@ -218,6 +218,13 @@ const jenkinsPipelineStepConfigurationMetadata = {
       regexDefinitionName: "argumentList",
       formText: "A newline-separated list of Runtime Arguments",
       maxLength: 500
+    },
+    {
+      label: "Data Transformer Rule",
+      id: "ruleIds",
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === "SFDC DATA TRANSFORM";
+      },
     }
   ],
   newObjectFields: {
@@ -272,6 +279,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     runtimeArguments: "",
     dependencies: {},
     dependencyType:"",
+    ruleIds: [],
   }
 };
 
