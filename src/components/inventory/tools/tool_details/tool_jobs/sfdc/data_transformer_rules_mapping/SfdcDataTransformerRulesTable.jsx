@@ -71,8 +71,8 @@ function SfdcDataTransformerRulesTable({
     <FilterContainer
       loadData={loadData}
       isLoading={isLoading}
-      title={"SFDC Data Transformer Rules"}
-      type={"SFDC Data Transformer Rules"}
+      title={"Salesforce MetaData Transformer Rules"}
+      type={"Salesforce MetaData Transformer Rules"}
       titleIcon={faBrowser}
       addRecordFunction={
         toolData?.data?.configuration ? createDataTransformerRule : undefined
