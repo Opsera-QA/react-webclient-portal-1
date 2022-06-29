@@ -48,7 +48,7 @@ function AzureDevOpsBranchMultiSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

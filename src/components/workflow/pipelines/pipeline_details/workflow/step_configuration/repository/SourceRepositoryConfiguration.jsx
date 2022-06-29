@@ -108,7 +108,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       return true;
     }
 
-    if (branch.length === 0 || accountId.length === 0 || username.length === 0 ) {
+    if (branch?.length === 0 || accountId?.length === 0 || username?.length === 0 ) {
       toastContext.showWarningDialog("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
       return true;
     }
