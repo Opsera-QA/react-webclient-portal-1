@@ -81,6 +81,7 @@ const LookupResults = ({ isLoading, results }) => {
             currentView={getCurrentView()}
             tabColumnSize={3}
             defaultActiveKey={0}
+            hideBorder
         />
     );
 };

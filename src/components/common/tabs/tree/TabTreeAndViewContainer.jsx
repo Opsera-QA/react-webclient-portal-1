@@ -16,6 +16,7 @@ function TabAndViewContainer(
     overflowYBodyStyle,
     overflowXBodyStyle,
     overflowYContainerStyle,
+    hideBorder
   }) {
   const getTabColumnSize = () => {
     if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
@@ -55,7 +56,7 @@ function TabAndViewContainer(
       <Row className={bodyClassName} style={getContainerStylingObject()}>
         <Col
           xs={getTabColumnSize()}
-          className={"px-0 makeup-tree-container"}
+          className={`px-0 ${!hideBorder ? "makeup-tree-container" : ""}`}
         >
           <div style={getBodyStylingObject()} className={"h-100"}>
             {verticalTabContainer}
@@ -85,10 +86,12 @@ TabAndViewContainer.propTypes = {
   overflowYBodyStyle: PropTypes.string,
   overflowXBodyStyle: PropTypes.string,
   overflowYContainerStyle: PropTypes.string,
+  hideBorder: PropTypes.bool
 };
 
 TabAndViewContainer.defaultProps = {
   bodyClassName: "mx-0",
+  hideBorder: false
 };
 
 export default TabAndViewContainer;
