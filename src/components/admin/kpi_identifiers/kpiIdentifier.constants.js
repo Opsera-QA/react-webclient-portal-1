@@ -99,6 +99,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   OPSERA_STATUS_BY_PIPELINE: "opsera-status-by-pipeline",
 
   QA_MANUAL_TEST: "qa-manual-test",
+  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
 
   SALESFORCE_DURATION_BY_STAGE: "salesforce-duration-by-stage",
   SDLC_DURATION_STATISTICS: "sdlc-duration-statistics",
