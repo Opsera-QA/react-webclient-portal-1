@@ -12,7 +12,7 @@ const QuickDeploymentActionableMetadata = {
         },
         {
             label: "Total Components Deployed",
-            id: "component",
+            id: "componentsDeployed",
         },
         {
             label: "Status",

@@ -84,12 +84,8 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
                 undefined
             );
 
-            console.log("response", response);
-
             const metrics = response?.data?.data[0]?.metrics?.data;
-            console.log("metrics",metrics);
             const tasks = response?.data?.data[0]?.tasks;
-            console.log("tasks", tasks);
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
@@ -140,31 +136,19 @@ function QuickDeployTotalExecutionsActionableOverlay({ kpiConfiguration, dashboa
         setActiveTab(tabSelection);
     };
 
-    const getTabContainer = () => {
-        return (
-            <CustomTabContainer>
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"Total Executions"}
-                    handleTabClick={handleTabClick}
-                    tabName={"main"}
-                />
-            </CustomTabContainer>
-        );
-    };
 
     return (
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Github Total Commits"}
+            titleText={"Quick Deploy Total Executions"}
             showToasts={true}
             titleIcon={faTable}
             // isLoading={isLoading}
             linkTooltipText={"View Full Blueprint"}
         >
             <div className={"p-3"}>
-                <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+                <TabPanelContainer currentView={getBody()} />
             </div>
         </FullScreenCenterOverlayContainer>
     );

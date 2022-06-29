@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import QuickDeploymentActionableMetadata from "./quick-deploy-actionable-insights-metadata";
 import {
+    getTableBooleanIconColumn,
     getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -12,22 +13,23 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
-function QuickDeployTotalExecutionsActionableTable({ data, task, isLoading, loadData, filterModel, setFilterModel, title }) {
+function QuickDeployTotalComponentsActionableTable({ data, component, isLoading, loadData, filterModel, setFilterModel, title }) {
     const toastContext = useContext(DialogToastContext);
     const fields = QuickDeploymentActionableMetadata.fields;
-    const tableTitle = "Quick Deploy Total Executions Table";
+    const tableTitle = "Quick Deploy Total Components Table";
     const noDataMessage = "Quick Deploy report is currently unavailable at this time";
     let history = useHistory();
 
     const newData = [];
-    data.forEach((obj) => {if(obj?.task == task){newData.push(obj);}});
+    data.forEach((obj) => {if(obj?.component == component){newData.push(obj);}});
 
     const columns = useMemo(
         () => [
+            getTableTextColumn(getField(fields, "task"), "task"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
             getTableTextColumn(getField(fields, "timestamp"), "timestamp"),
-            getTableTextColumn(getField(fields, "status"), "status"),
-            getTableTextColumn(getField(fields, "componentsDeployed"), "componentsDeployed"),
+            getTableBooleanIconColumn(getField(fields, "validation"), "validation"),
+            getTableBooleanIconColumn(getField(fields, "unitTests"), "unitTests"),
         ],
         []
     );
@@ -68,9 +70,9 @@ function QuickDeployTotalExecutionsActionableTable({ data, task, isLoading, load
     );
 }
 
-QuickDeployTotalExecutionsActionableTable.propTypes = {
+QuickDeployTotalComponentsActionableTable.propTypes = {
     data: PropTypes.array,
-    task: PropTypes.string,
+    component: PropTypes.string,
     isLoading: PropTypes.bool,
     loadData: PropTypes.func,
     filterModel: PropTypes.object,
@@ -78,4 +80,4 @@ QuickDeployTotalExecutionsActionableTable.propTypes = {
     title: PropTypes.string,
 };
 
-export default QuickDeployTotalExecutionsActionableTable;
+export default QuickDeployTotalComponentsActionableTable;

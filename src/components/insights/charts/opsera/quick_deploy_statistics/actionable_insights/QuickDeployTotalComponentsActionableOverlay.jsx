@@ -13,9 +13,13 @@ import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDa
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 
 import QuickDeployTotalSuccessActionableTable from "./QuickDeployTotalSuccessActionableTable";
+import QuickDeployTotalExecutionsTab from "./QuickDeployTotalExecutionsTab";
+import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
+import QuickDeployTotalComponentsTab from "./QuickDeployTotalComponentsTab";
 
 function QuickDeployTotalComponentsActionableOverlay({ kpiConfiguration, dashboardData }) {
     const { getAccessToken } = useContext(AuthContext);
+    const [activeTab, setActiveTab] = useState("main");
     const [filterModel, setFilterModel] = useState(
         new Model(
             { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
@@ -26,6 +30,7 @@ function QuickDeployTotalComponentsActionableOverlay({ kpiConfiguration, dashboa
     const toastContext = useContext(DialogToastContext);
     const [isLoading, setIsLoading] = useState(false);
     const [actionableData, setActionableData] = useState([]);
+    const [componentsData, setComponentsData] = useState([]);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
     const isMounted = useRef(false);
     const [error, setError] = useState(undefined);
@@ -74,13 +79,16 @@ function QuickDeployTotalComponentsActionableOverlay({ kpiConfiguration, dashboa
                 undefined
             );
 
-            const metrics = response?.data?.data[0][0]?.data;
+            const metrics = response?.data?.data[0]?.metrics?.data;
+            console.log("metrics",metrics);
+            const components = response?.data?.data[0]?.tasks;
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
+                setComponentsData(components);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.metrics?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {
@@ -106,25 +114,38 @@ function QuickDeployTotalComponentsActionableOverlay({ kpiConfiguration, dashboa
         toastContext.clearOverlayPanel();
     };
 
+    const getBody = () => {
+        if (activeTab == "main") {
+            return (
+                <QuickDeployTotalComponentsTab
+                    data={actionableData}
+                    components={componentsData}
+                    dashboardData={dashboardData}
+                    kpiConfiguration={kpiConfiguration}
+                />
+            );
+        }
+
+    };
+
+    const handleTabClick = (tabSelection) => (e) => {
+        e.preventDefault();
+        setActiveTab(tabSelection);
+    };
+
+
     return (
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={`Quick Deploy Success Actionable Insights`}
+            titleText={"Quick Deploy Total Components"}
             showToasts={true}
             titleIcon={faTable}
-            isLoading={false}
+            // isLoading={isLoading}
             linkTooltipText={"View Full Blueprint"}
         >
             <div className={"p-3"}>
-                <div className={"mb-4"} >{getDateBadge()}</div>
-                <QuickDeployTotalSuccessActionableTable
-                    isLoading={isLoading}
-                    data={actionableData}
-                    filterModel={filterModel}
-                    setFilterModel={setFilterModel}
-                    loadData={loadData}
-                />
+                <TabPanelContainer currentView={getBody()} />
             </div>
         </FullScreenCenterOverlayContainer>
     );

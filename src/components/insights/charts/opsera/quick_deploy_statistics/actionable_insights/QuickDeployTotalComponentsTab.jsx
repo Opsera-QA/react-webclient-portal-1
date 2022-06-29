@@ -4,18 +4,18 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
-import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
+import QuickDeployTotalComponentsActionableTable from "./QuickDeployTotalComponentsActionableTable";
 
-function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfiguration,icon}) {
+function QuickDeployTotalComponentsTab({data, components, dashboardData, kpiConfiguration,icon}) {
 
     const getTabContentContainer = () => {
         return (
             <VanitySetTabViewContainer className={"mb-3"}>
-                {tasks.map((item,index)=>(
+                {components.map((item,index)=>(
                     <VanitySetTabView key={index} tabKey={item} >
-                        <QuickDeployTotalExecutionsActionableTable
+                        <QuickDeployTotalComponentsActionableTable
                             data={data}
-                            task={item}
+                            component={item}
                             dashboardData={dashboardData}
                             kpiConfiguration={kpiConfiguration}
                             icon={icon}
@@ -30,19 +30,19 @@ function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfigura
 
     return (
         <VanitySetTabAndViewContainer
-            title={`Quick Deploy Total Executions Report`}
-            defaultActiveKey={tasks && Array.isArray(tasks)}
-            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={tasks} />}
+            title={`Quick Deploy Total Components Report`}
+            defaultActiveKey={components && Array.isArray(components)}
+            verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={components} />}
             currentView={getTabContentContainer()}
         />
     );
 
 }
-QuickDeployTotalExecutionsTab.propTypes = {
+QuickDeployTotalComponentsTab.propTypes = {
     data: PropTypes.array,
-    tasks: PropTypes.array,
+    components: PropTypes.array,
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
     icon: PropTypes.object
 };
-export default QuickDeployTotalExecutionsTab;
+export default QuickDeployTotalComponentsTab;

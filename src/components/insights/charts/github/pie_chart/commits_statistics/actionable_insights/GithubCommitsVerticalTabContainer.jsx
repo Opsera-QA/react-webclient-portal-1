@@ -7,15 +7,15 @@ import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 function GithubCommitsVerticalTabContainer({ highestMergesMetric }) {
   const [activeTab, setActiveTab] = useState();
   useEffect(() => {
-    if (highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]) {
-      setActiveTab(highestMergesMetric[0].id);
+    if (highestMergesMetric && Array.isArray(highestMergesMetric)) {
+      setActiveTab(highestMergesMetric);
     }
   }, [highestMergesMetric]);
 
   return (
     <VanitySetVerticalTabContainer className={"h-100"}>
       {highestMergesMetric.map((item, index) => {
-        return <VanitySetVerticalTab key={index} icon={faFileCode} tabText={item.label} tabName={item.id} />;
+        return <VanitySetVerticalTab key={index} icon={faFileCode} tabText={item} tabName={item} />;
       })}
     </VanitySetVerticalTabContainer>
   );
