@@ -7,8 +7,8 @@ import EndpointResponseField
 import EndpointRequestField
   from "components/common/inputs/endpoints/endpoint/request/EndpointRequestField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES = {
   CALL_OPERATION: "Call Operation",
@@ -18,7 +18,15 @@ export const EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES = {
 };
 
 function ExternalRestApiIntegrationEndpointSummary({ endpoint, requestType, className }) {
-  if (dataParsingHelper.hasObjectProperties(endpoint) !== true || hasStringValue(requestType) !== true) {
+  const getRequestType = () => {
+    if (hasStringValue(requestType) === true) {
+      return `${requestType} `;
+    }
+
+    return "";
+  };
+
+  if (dataParsingHelper.hasObjectProperties(endpoint) !== true) {
     return null;
   }
 
@@ -28,14 +36,14 @@ function ExternalRestApiIntegrationEndpointSummary({ endpoint, requestType, clas
       <Row>
         <Col xs={6}>
           <EndpointRequestField
-            titleText={`${requestType} API Request`}
+            titleText={`${getRequestType()}API Request`}
             endpointObject={endpoint}
           />
         </Col>
         <Col xs={6}>
           <EndpointResponseField
             responseObject={endpoint?.response}
-            titleText={`${requestType} API Response`}
+            titleText={`${getRequestType()}API Response`}
           />
         </Col>
       </Row>

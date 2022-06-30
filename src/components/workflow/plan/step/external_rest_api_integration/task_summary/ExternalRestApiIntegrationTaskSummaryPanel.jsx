@@ -47,7 +47,6 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
       return (
         <ExternalRestApiIntegrationEndpointSummary
           endpoint={endpoint}
-          requestType={"External"}
         />
       );
     }
