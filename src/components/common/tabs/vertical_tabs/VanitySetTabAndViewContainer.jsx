@@ -22,7 +22,6 @@ function VanitySetTabAndViewContainer(
     overflowXBodyStyle,
     overflowYContainerStyle,
   }) {
-    console.log("default", defaultActiveKey);
   return (
     <InfoContainer
       titleText={title}
