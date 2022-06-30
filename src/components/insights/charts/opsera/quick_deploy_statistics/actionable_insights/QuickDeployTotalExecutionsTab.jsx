@@ -4,6 +4,7 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
 import {hasStringValue} from "../../../../../common/helpers/string-helpers";
 import QuickDeployTotalComponentsActionableTable from "./QuickDeployTotalComponentsActionableTable";
+import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
 
 function QuickDeployTotalExecutionsTab({ data, tasks, dashboardData, kpiConfiguration, icon }) {
 
@@ -21,7 +22,7 @@ function QuickDeployTotalExecutionsTab({ data, tasks, dashboardData, kpiConfigur
 
             if (component) {
                 return (
-                    <QuickDeployTotalComponentsActionableTable
+                    <QuickDeployTotalExecutionsActionableTable
                         data={data}
                         component={component}
                         dashboardData={dashboardData}
