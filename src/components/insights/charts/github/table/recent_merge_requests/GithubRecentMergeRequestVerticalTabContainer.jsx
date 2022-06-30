@@ -39,7 +39,7 @@ function GithubRecentMergeRequestVerticalTabContainer ({ handleTabClick, dashboa
             source.cancel();
             isMounted.current = false;
         };
-    }, []);
+    }, [JSON.stringify(dashboardData)]);
     const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
         try {
             setIsLoading(true);
@@ -82,6 +82,7 @@ function GithubRecentMergeRequestVerticalTabContainer ({ handleTabClick, dashboa
         for(let i = 0; i <= responseData.length - 1; i++) {
             tabs.push(
                 <VanitySetVerticalTab
+                    key = {i}
                     tabText={responseData[i]?._id}
                     tabName={responseData[i]?._id}
                     handleTabClick={handleTabClick}
@@ -92,9 +93,8 @@ function GithubRecentMergeRequestVerticalTabContainer ({ handleTabClick, dashboa
     }
 
     return (
-        <div className={"h-100"}>
+        <div>
             <VanitySetVerticalTabContainer
-                className={"h-100"}
                 title={
                     <div>
                         <IconBase icon={faDatabase} className={'pr-2'}/>
@@ -114,6 +114,7 @@ function GithubRecentMergeRequestVerticalTabContainer ({ handleTabClick, dashboa
                     loadData={loadData}
                     paginationStyle={"stackedVerticalTab"}
                     topPaginationStyle={"stackedVerticalTab"}
+                    scrollOnLoad={false}
                 >
                     {tabs}
                 </PaginationContainer>

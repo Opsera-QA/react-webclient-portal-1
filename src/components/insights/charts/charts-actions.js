@@ -547,6 +547,7 @@ chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSou
     size: tableFilterDto?.getData("pageSize"),
     search: tableFilterDto?.getData("search"),
     type: tableFilterDto?.getData("type"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
