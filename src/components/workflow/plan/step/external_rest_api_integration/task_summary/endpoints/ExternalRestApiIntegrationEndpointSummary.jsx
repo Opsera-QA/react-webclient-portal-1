@@ -18,7 +18,7 @@ export const EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES = {
 };
 
 function ExternalRestApiIntegrationEndpointSummary({ endpoint, requestType, className }) {
-  if (!dataParsingHelper.hasObjectProperties(endpoint) !== true || hasStringValue(requestType) !== true) {
+  if (dataParsingHelper.hasObjectProperties(endpoint) !== true || hasStringValue(requestType) !== true) {
     return null;
   }
 
