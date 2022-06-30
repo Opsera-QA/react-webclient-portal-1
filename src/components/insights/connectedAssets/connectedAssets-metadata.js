@@ -33,6 +33,10 @@ const connectedAssetsMetadata = {
         label: "Number Of Runs",
         id: "task_run_count",
       },
+      {
+        label: "Number Of Runs",
+        id: "run_count"
+      },
        {
          label: "Created At",
          id: "pipeline_created_at",
@@ -58,12 +62,32 @@ const connectedAssetsMetadata = {
          id: "tasks_updatedAt"
        },
        {
+         label: "Last Triggered On",
+         id: "last_triggered"
+       },
+       {
          label: "Created At",
          id: "task_created_at",
        },
        {
          label: "Last Run (in days)",
          id: "task_last_run",
+       },
+       {
+         label: "Repository Name",
+         id: "repositoryName"
+       },
+       {
+        label: "Activity Date",
+        id: "activityDate"
+       },
+       {
+         label: "Event Type",
+         id: "event"
+       },
+       {
+         label: "Commit Title",
+         id: "commit_or_mr_title"
        },
        {
          label: "User Created",

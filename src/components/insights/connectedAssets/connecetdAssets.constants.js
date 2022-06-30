@@ -27,3 +27,11 @@ CONNECTED_ASSETS_CONSTANTS.TASKS_LIST = {
   INACTIVE_TASKS: "inactiveTaskInfo",
   DELETED_TASKS: "deletedTaskInfo"
 };
+
+CONNECTED_ASSETS_CONSTANTS.COLLABORATORS_LIST = {
+  LIST_OF_USERS: "listOfUsers",
+  PIPELINE_ACTIVITY: "pipelineActivity",
+  TASK_ACTIVITY: "taskActivity",
+  LIST_OF_USERS_FROM_ANALYTICS: "listOfUsersFromAnalytics",
+  ANALYTICS_ACTIVITY: "analyticsActivity"
+};
