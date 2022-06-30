@@ -14,6 +14,8 @@ import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/Conn
 import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
 import ConnectedAssetsPipelinesTabContainer from "./tables/pipelinesTable/ConnectedAssetsPipelinesTabContainer";
 import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAssetsTasksTabContainer";
+import ConnectedAssetsCollaboratorsTabContainer
+  from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
 
 function ConnectedAssetsDetails({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -101,7 +103,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
         break;
       case collaboratorsDataBlock:
         toggleDynamicPanel(collaboratorsDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsCollaboratorsTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case pipelinesDataBlock:

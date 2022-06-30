@@ -115,6 +115,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
       const data = response?.data?.data[0];
       const actionableInsightsTableData = response?.data?.data[0]?.actionableInsightsReport;
       let newFilterDto = Object.assign([], tableFilterDto);
+      console.log(actionableInsightsTableData);
       for(let i = 0; i <= actionableInsightsTableData.length - 1; i++) {
         if(!newFilterDto[i]) {
           newFilterDto.push(new Model({ ...SuccessExecutionsActionableInsightsMetaData.newObjectFields }, SuccessExecutionsActionableInsightsMetaData, false));
@@ -246,7 +247,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-3"
-              score={responseData?.totalSecurity}
+              score={responseData?.totalFailedScans}
               subtitle={'Total Security'}
             />
           </DataBlockBoxContainer>
@@ -255,7 +256,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalQuality}
+              score={responseData?.totalFailedTests}
               subtitle={'Total Quality'}
             />
           </DataBlockBoxContainer>
@@ -264,7 +265,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE1FailedDeploy?.[0]?.failureCount}
+              score={responseData?.totalE1FailedDeploy}
               subtitle={'Total E1 Deployments'}
             />
           </DataBlockBoxContainer>
@@ -273,7 +274,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE2FailedDeploy?.[0]?.failureCount}
+              score={responseData?.totalE2FailedDeploy}
               subtitle={'Total E2 Deployments'}
             />
           </DataBlockBoxContainer>
@@ -282,7 +283,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE3FailedDeploy?.[0]?.failureCount}
+              score={responseData?.totalE3FailedDeploy}
               subtitle={'Total E3 Deployments'}
             />
           </DataBlockBoxContainer>

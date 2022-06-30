@@ -52,7 +52,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
       <VanitySetVerticalTabContainer>
         <div className={"tab-tree scroll-y"}>
           <H5FieldSubHeader
-            subheaderText={"Connection Check"}
+            subheaderText={"Connection Validation"}
             className={"mb-3"}
           />
           <VanitySetVerticalTab
@@ -62,13 +62,13 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
             activeTab={activeTab}
           />
           <VanitySetVerticalTab
-            tabText={"Successful Connection Evaluation Rules"}
+            tabText={"Connection Validation Evaluation Rules"}
             tabName={EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
           <H5FieldSubHeader
-            subheaderText={"Run Trigger"}
+            subheaderText={"Call Operation"}
             className={"mt-4 mb-3"}
           />
           <VanitySetVerticalTab

@@ -5,7 +5,7 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
-import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
+import QuickDeployVerticalTabContainer from "./QuickDeployVerticalTabContainer";
 
 function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfiguration,icon}) {
 
