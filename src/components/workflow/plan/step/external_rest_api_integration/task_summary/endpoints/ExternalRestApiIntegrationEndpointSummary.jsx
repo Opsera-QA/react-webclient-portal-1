@@ -8,6 +8,7 @@ import EndpointRequestField
   from "components/common/inputs/endpoints/endpoint/request/EndpointRequestField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export const EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES = {
   CALL_OPERATION: "Call Operation",
@@ -17,7 +18,7 @@ export const EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES = {
 };
 
 function ExternalRestApiIntegrationEndpointSummary({ endpoint, requestType, className }) {
-  if (endpoint == null || hasStringValue(requestType) !== true) {
+  if (!dataParsingHelper.hasObjectProperties(endpoint) !== true || hasStringValue(requestType) !== true) {
     return null;
   }
 
