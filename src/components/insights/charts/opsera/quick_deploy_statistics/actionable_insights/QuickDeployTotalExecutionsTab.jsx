@@ -1,49 +1,65 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
-import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import GithubCommitsVerticalTabContainer from "components/insights/charts/github/pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
-import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
 import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
+import {hasStringValue} from "../../../../../common/helpers/string-helpers";
+import QuickDeployTotalComponentsActionableTable from "./QuickDeployTotalComponentsActionableTable";
 
-function QuickDeployTotalExecutionsTab({data, tasks, dashboardData, kpiConfiguration,icon}) {
+function QuickDeployTotalExecutionsTab({ data, tasks, dashboardData, kpiConfiguration, icon }) {
 
-    const getTabContentContainer = () => {
-        return (
-            <VanitySetTabViewContainer className={"mb-3"}>
-                {tasks.map((item,index)=>(
-                    <VanitySetTabView key={index} tabKey={item} >
-                        <QuickDeployTotalExecutionsActionableTable
-                            data={data}
-                            task={item}
-                            dashboardData={dashboardData}
-                            kpiConfiguration={kpiConfiguration}
-                            icon={icon}
-                        />
-                    </VanitySetTabView>
-                ))}
+    const [activeTab, setActiveTab] = useState(undefined);
 
-            </VanitySetTabViewContainer>
-        );
+    useEffect(() => {
+        if (Array.isArray(tasks) && tasks.length > 0) {
+            setActiveTab(`0`);
+        }
+    }, [tasks]);
+
+    const getCurrentView = () => {
+        if (hasStringValue(activeTab) === true) {
+            const component = tasks[activeTab];
+
+            if (component) {
+                return (
+                    <QuickDeployTotalComponentsActionableTable
+                        data={data}
+                        component={component}
+                        dashboardData={dashboardData}
+                        kpiConfiguration={kpiConfiguration}
+                        icon={icon}
+                        className={"m-2"}
+                    />
+                );
+            }
+        }
     };
 
+    const getVerticalTabContainer = () => {
+        return (
+            <QuickDeployVerticalTabContainer
+                highestMergesMetrics={tasks}
+                activeTab={activeTab}
+                handleTabClick={setActiveTab}
+            />
+        );
+    };
 
     return (
         <VanitySetTabAndViewContainer
             title={`Quick Deploy Total Executions Report`}
-            defaultActiveKey={tasks && Array.isArray(tasks) && tasks[0] && tasks[0]}
-            verticalTabContainer={<QuickDeployVerticalTabContainer highestMergesMetric={tasks} />}
-            currentView={getTabContentContainer()}
+            verticalTabContainer={getVerticalTabContainer()}
+            currentView={getCurrentView()}
+            tabColumnSize={3}
         />
     );
-
 }
+
 QuickDeployTotalExecutionsTab.propTypes = {
     data: PropTypes.array,
     tasks: PropTypes.array,
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
-    icon: PropTypes.object
+    icon: PropTypes.object,
 };
+
 export default QuickDeployTotalExecutionsTab;
