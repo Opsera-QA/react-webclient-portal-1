@@ -21,6 +21,7 @@ function VanitySetTabAndViewContainer(
     overflowYBodyStyle,
     overflowXBodyStyle,
     overflowYContainerStyle,
+    titleClassName
   }) {
   return (
     <InfoContainer
@@ -30,6 +31,7 @@ function VanitySetTabAndViewContainer(
       isLoading={isLoading}
       loadDataFunction={loadDataFunction}
       titleRightSideButton={titleRightSideButton}
+      titleClassName={titleClassName}
     >
       <TabAndViewContainer
         verticalTabContainer={verticalTabContainer}
@@ -65,6 +67,7 @@ VanitySetTabAndViewContainer.propTypes = {
   overflowYBodyStyle: PropTypes.string,
   overflowXBodyStyle: PropTypes.string,
   overflowYContainerStyle: PropTypes.string,
+  titleClassName: PropTypes.string,
 };
 
 VanitySetTabAndViewContainer.defaultProps = {
