@@ -202,8 +202,12 @@ import SnaplogicPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
 import SnaplogicStepFormMetadata 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
+import SapCpqPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/sap_cpq/SapCpqPipelineStepConfigurationSummaryPanel";
+import sapCpqStepFormMetadata from "./step_tool_configuration_forms/sap_cpq/sap-cpq-stepForm-metadata";
 import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
 import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
+
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
@@ -633,6 +637,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             snaplogicPipelineDataObject={getModelWrappedObject(SnaplogicStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+            <SapCpqPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                sapCpqPipelineDataObject={getModelWrappedObject(sapCpqStepFormMetadata)}
+            />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
         return (
