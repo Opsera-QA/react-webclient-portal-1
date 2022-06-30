@@ -21,7 +21,7 @@ function QuickDeployTotalSuccessActionableTable({ data, isLoading, loadData, fil
 
     const columns = useMemo(
         () => [
-            getTableTextColumn(getField(fields, "task"), "task"),
+            getTableTextColumn(getField(fields, "taskName"), "taskName"),
             getTableTextColumn(getField(fields, "successRate"), "successRate"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
         ],
