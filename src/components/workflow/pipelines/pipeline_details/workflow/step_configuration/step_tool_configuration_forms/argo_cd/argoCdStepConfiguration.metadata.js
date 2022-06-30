@@ -4,22 +4,30 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Source Code Management Tool Type",
       id: "type",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
     },
     {
       label: "Source Code Management Tool",
       id: "gitToolId",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
     },
     {
       label: "Repository",
       id: "gitRepository",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
     },
     {
       label: "Branch",
       id: "defaultBranch",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
     },
     {
       label: "Docker/ECR Step",
@@ -55,7 +63,9 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
     },
     {
       label: "Git Workspace",
@@ -97,6 +107,11 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Blue Green Deployment",
       id: "isBlueGreenDeployment"
+    },
+    {
+      label: "Kustomization",
+      id: "kustomizeFlag",
+      helpTooltipText: "ArgoCD supports Kustomize and has the ability to read a kustomization. yaml file to enable deployment with Kustomize and allow ArgoCD to manage the state of the YAML files."
     }
   ],
   newObjectFields: {
@@ -117,6 +132,10 @@ export const ArgoCdStepConfigurationMetadata = {
     gitRepositoryID: "",
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
-    isBlueGreenDeployment: false
+    rollbackEnabled: false,
+    repositoryTag: "",
+    kustomizeFlag: false,
+    imageUrl: "",
+    isBlueGreenDeployment: false,
   },
 };

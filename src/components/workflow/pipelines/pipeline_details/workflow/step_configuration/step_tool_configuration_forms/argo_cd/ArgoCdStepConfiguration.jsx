@@ -30,6 +30,7 @@ import ArgoCdRepositoryTagSelectInput
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import ArgoBlueGreenDeploymentHelpDocumentation 
   from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
+import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -119,6 +120,45 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     }
   };
 
+  const getSCMInputs = () => {
+    if (!argoCdModel?.getData("kustomizeFlag")) {
+      return (
+        <>
+          <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
+              model={argoCdModel}
+              setModel={setArgoCdModel}
+          />
+          <ArgoCdStepSourceControlManagementToolSelectInput
+            gitYamlTool={argoCdModel?.getData("type")}
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+          <ArgoCdStepBitbucketWorkspaceInput
+            gitToolId={argoCdModel?.getData("gitToolId")}
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+          <ArgoCdStepGitRepositorySelectInput
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+          <ArgoCdStepGitBranchSelectInput
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+          <TextInputBase
+            setDataObject={setArgoCdModel}
+            dataObject={argoCdModel}
+            fieldName={"gitFilePath"}
+            disabled={
+              hasStringValue(argoCdModel?.getData("defaultBranch")) !== true
+            }
+          />
+        </>
+      );
+    }
+  };
+
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;
   }
@@ -144,43 +184,22 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         setModel={setArgoCdModel}
         stepId={stepId}
         plan={plan}
-        disabled={hasStringValue(argoCdModel?.getData("applicationName")) !== true}
+        disabled={
+          hasStringValue(argoCdModel?.getData("applicationName")) !== true
+        }
       />
-      <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
-        model={argoCdModel}
-        setModel={setArgoCdModel}
+      <ArgoCdStepKustomizeBooleanInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
       />
-      <ArgoCdStepSourceControlManagementToolSelectInput
-        gitYamlTool={argoCdModel?.getData("type")}
-        model={argoCdModel}
-        setModel={setArgoCdModel}
-      />
-      <ArgoCdStepBitbucketWorkspaceInput
-        gitToolId={argoCdModel?.getData("gitToolId")}
-        model={argoCdModel}
-        setModel={setArgoCdModel}
-      />
-      <ArgoCdStepGitRepositorySelectInput
-        model={argoCdModel}
-        setModel={setArgoCdModel}
-      />
-      <ArgoCdStepGitBranchSelectInput
-        model={argoCdModel}
-        setModel={setArgoCdModel}
-      />
-      <TextInputBase
-        setDataObject={setArgoCdModel}
-        dataObject={argoCdModel}
-        fieldName={"gitFilePath"}
-        disabled={hasStringValue(argoCdModel?.getData("defaultBranch")) !== true}
-      />
+      {getSCMInputs()}
       {getRollbackInputs()}
       {getDynamicFields()}
       <BooleanToggleInput
         fieldName={"isBlueGreenDeployment"}
         dataObject={argoCdModel}
         setDataObject={setArgoCdModel}
-        inputHelpOverlay={<ArgoBlueGreenDeploymentHelpDocumentation/>}
+        inputHelpOverlay={<ArgoBlueGreenDeploymentHelpDocumentation />}
       />
     </PipelineStepEditorPanelContainer>
   );
