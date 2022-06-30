@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import QuickDeployVerticalTabContainer from "../QuickDeployVerticalTabContainer";
 import {hasStringValue} from "../../../../../common/helpers/string-helpers";
-import QuickDeployTotalComponentsActionableTable from "./QuickDeployTotalComponentsActionableTable";
 import QuickDeployTotalExecutionsActionableTable from "./QuickDeployTotalExecutionsActionableTable";
 
 function QuickDeployTotalExecutionsTab({ data, tasks, dashboardData, kpiConfiguration, icon }) {
@@ -18,13 +17,13 @@ function QuickDeployTotalExecutionsTab({ data, tasks, dashboardData, kpiConfigur
 
     const getCurrentView = () => {
         if (hasStringValue(activeTab) === true) {
-            const component = tasks[activeTab];
+            const task = tasks[activeTab];
 
-            if (component) {
+            if (task) {
                 return (
                     <QuickDeployTotalExecutionsActionableTable
                         data={data}
-                        component={component}
+                        task={task}
                         dashboardData={dashboardData}
                         kpiConfiguration={kpiConfiguration}
                         icon={icon}
