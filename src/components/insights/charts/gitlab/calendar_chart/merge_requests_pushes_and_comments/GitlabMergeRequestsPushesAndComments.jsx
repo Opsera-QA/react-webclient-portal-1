@@ -87,7 +87,7 @@ function GitlabMergeRequestsPushesAndComments({
       <div className="new-chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
         <ResponsiveCalendar
           data={metrics}
-          {...defaultConfig("", "", false, false, "", "", true)}
+          {...defaultConfig("Date", "", false, false, "", "", true)}
           {...config(new Date())}
           onClick={() => setShowModal(true)}
           tooltip={({ day, value, color }) => (
