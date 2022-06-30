@@ -14,32 +14,23 @@ function InsightsHelpDocumentation({dashboardRoleDefinitions}) {
 
   const getHelpDocumentation = () => {
     return (
-      <div>
-        <div>Manage your dashboards, which serve as your organization&rsquo;s repository of customized logging and analytics. Dashboards contain charts measuring pipeline, planning, security, quality and operations data, all which can be used to formulate your organization&rsquo;s KPIs (key performance indicators).
+      <div className={"ml-2"}>
+        <div className={"mb-2"}>Dashboards serve as your organization&rsquo;s repository of customized logging and analytics. You can either create a custom dashboard or create one from an existing template. Dashboards contain charts measuring pipeline, planning, security, quality and operations data, all which can be used to formulate your organization&rsquo;s KPIs (key performance indicators). Apply tags to individual charts or at the dashboard level to apply them to every chart within a dashboard.
         </div>
-        <div className={"mt-2 ml-4"}><h6><b>Manage an existing dashboard:</b></h6>
-        <div className={"ml-4"}>Select a dashboard from the table to navigate to the Dashboard Viewer. Apply KPI tags to an individual chart within the dashboard by accessing the settings or apply dashboard tags to apply them to every chart within the selected dashboard.</div></div>
-        <div className={"mt-2 ml-4"}><h6><b>Create a new dashboard from a template:</b></h6>
-          <div className={"ml-4"}>To create a dashboard from an existing template, navigate to Marketplace and select the Dashboards tab. Choose from the following templates:
-            <div className={"ml-4"}>
-              <div><b>Public Marketplace</b> offers a catalog of predefined dashboards focused on topics and personas.</div>
-              <div><b>Private Catalog</b> contains dashboards accessible to your organization only. </div>
-            </div>
-          </div>
-        </div>
-        <div className={"mt-2 ml-4"}><h6><b>Create a new customized dashboard:</b></h6>
-          <div className={"ml-4"}>Create a customized dashboard by selecting <b>+ New Dashboard</b> button and providing values for the following fields:
-            <div className={"ml-4"}>
-              <div><b>Name</b> - Create a custom name for your dashboard.</div>
-              <div><b>Type</b> - Select type based on the data the charts in your dashboard will measure. Choose from pipeline, planning, security, quality or operations.</div>
-              <div><b>Persona</b> - Select developer, manager or executive.</div>
-              <div><b>Visibility</b> - Select private if you wish for the dashboard to only be available to you or &lsquo;My Organization&lsquo; if you wish to make the pipeline accessible to users within your organization.</div>
-              <div><b>Description</b> - Write a description for your dashboard.</div>
-              <div><b>Tags</b> - Tags selected will be applied to all charts in the dashboard. You can edit, remove, or add KPI-specific tags in Dashboard Viewer once the dashboard has been created.</div>
-            </div>
-          </div>
-          <div className={"ml-4"}>Select the <b>Create</b> button and the dashboard will now be accessible in My Dashboards.</div>
-        </div>
+        <div className={"ml-4"}><b>Dashboard Templates</b> - Create a dashboard from an existing template. Navigate to <b>Marketplace</b> and select the <b>Dashboards</b> tab. Choose from the following templates:</div>
+          <ul style={{listStyleType: "none"}}>
+              <li><b>Public Marketplace</b> -  A catalog of predefined dashboards focused on topics and personas.</li>
+              <li><b>Private Catalog</b> - A catalog of dashboards accessible to your organization only. </li>
+          </ul>
+          <div className={"ml-4"}><b>Custom Dashboard</b> - Create a customized dashboard by clicking the <b>+ New Dashboard</b> button and providing values for the following fields:</div>
+            <ul style={{listStyleType: "none"}}>
+              <li><b>Name</b> - Create a custom name for your dashboard.</li>
+              <li><b>Type</b> - Select type based on the data the charts in your dashboard will measure. Choose from pipeline, planning, security, quality or operations.</li>
+              <li><b>Persona</b> - Select developer, manager or executive.</li>
+              <li><b>Visibility</b> - Select private if you wish for the dashboard to only be available to you or <b>My Organization</b> if you wish to make the template accessible to users within your organization.</li>
+              <li><b>Description</b> - Provide a description for your dashboard.</li>
+              <li><b>Tags</b> - Tags selected will be applied to all charts in the dashboard. You can edit, remove, or add KPI-specific tags in Dashboard Viewer once the dashboard has been created.</li>
+            </ul>
       </div>
     );
   };

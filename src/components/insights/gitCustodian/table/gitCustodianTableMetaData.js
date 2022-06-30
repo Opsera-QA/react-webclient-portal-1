@@ -117,27 +117,26 @@ const GitCustodianTableMetaData = {
      let activeFilters = [];
 
      if (filterDto.getData("repositories") != null) {
-       activeFilters.push({filterId: "repositories", ...filterDto.getData("repositories")});
+      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({filterId: "repositories", ...filter}))];
      }
 
-     if (filterDto.getData("authors") != null) {
-       activeFilters.push({filterId: "authors", ...filterDto.getData("authors")});
+     if (filterDto.getData("authors") != null) {      
+      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({filterId: "authors", ...filter}))];      
      }
 
      if (filterDto.getData("status") != null) {
-        activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+      activeFilters = [...activeFilters, ...filterDto.getData("status").map(filter => ({filterId: "status", ...filter}))];
      }
 
      if (filterDto.getData("service") != null) {
-       activeFilters.push({filterId: "service", ...filterDto.getData("service")});
+      activeFilters = [...activeFilters, ...filterDto.getData("service").map(filter => ({filterId: "service", ...filter}))];
      }
-
      return activeFilters;
   },
   newObjectFields: {
      pageSize: 10,
      currentPage: 1,
-     // sortOption: {text: "Newest", value: ""}, //TBD - Sort logic to be fixed
+     sortOption: {text: "Newest", value: ""},
      search: "",
      activeFilters: [],
      date: {
@@ -146,14 +145,12 @@ const GitCustodianTableMetaData = {
        key: "selection",
      }
   },
-  // TBD - sort logic to be fixed in next release.
-  //   sortOptions: [
-  //    {text: "Newest", option: ""},
-  //    {text: "Oldest", option: "oldest"},
-  //    {text: "Date Created", option: "commitDate"},
-  //    {text: "Author", option: "author"},
-  //    {text: "Origin", option: "service"}
-  // ]
+    sortOptions: [
+     {text: "Newest", option: ""},
+     {text: "Oldest", option: "oldest"},
+     {text: "Author", option: "author"},
+     {text: "Type", option: "type"}
+  ]
 };
 
 export default GitCustodianTableMetaData;

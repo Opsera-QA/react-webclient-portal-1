@@ -15,6 +15,8 @@ import EndpointRequestTypeSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
 import ExternalApiIntegratorEndpointParametersVerticalTabContainer
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointParametersVerticalTabContainer";
+import EndpointTypeSelectInput
+  from "components/common/list_of_values_input/inventory/endpoints/type/EndpointTypeSelectInput";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {
@@ -110,11 +112,17 @@ function ExternalApiIntegratorEndpointEditorPanel(
       className={"mx-2 mt-2"}
     >
       <Row>
-        <Col lg={12}>
+        <Col lg={8} sm={6}>
           <TextInputBase
             fieldName={"name"}
             dataObject={externalApiIntegratorModel}
             setDataObject={setExternalApiIntegratorModel}
+          />
+        </Col>
+        <Col lg={4} sm={6}>
+          <EndpointTypeSelectInput
+            model={externalApiIntegratorModel}
+            setModel={setExternalApiIntegratorModel}
           />
         </Col>
         <Col xs={12} sm={2}>
@@ -135,6 +143,7 @@ function ExternalApiIntegratorEndpointEditorPanel(
           <ExternalApiIntegratorEndpointParametersVerticalTabContainer
             externalApiIntegratorModel={externalApiIntegratorModel}
             setExternalApiIntegratorModel={setExternalApiIntegratorModel}
+            toolId={toolId}
           />
         </Col>
         <Col lg={12}>

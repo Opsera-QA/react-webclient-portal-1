@@ -11,6 +11,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
+import { pluralize } from "components/common/helpers/string-helpers";
 
 function GitScraperLogSummaryTable({ gitScraperObj }) {
   const fields = gitScraperReportMetaData?.fields;
@@ -51,7 +52,7 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
       showBorder={false}
       body={getComponentResultsTable()}
       titleIcon={faExclamationCircle}
-      title={`Report`}
+      title={`${pluralize(gitScraperObj?.length, 'Report')} Found`}
       className={"mt-2"}
     />
   );

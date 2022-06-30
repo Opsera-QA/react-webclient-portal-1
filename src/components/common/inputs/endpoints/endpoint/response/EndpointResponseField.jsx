@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { faCodeSimple } from "@fortawesome/pro-light-svg-icons";
+import { faCode } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import FieldContainer from "components/common/fields/FieldContainer";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 
-function ExternalRestApiIntegrationEndpointResponseField({
+function EndpointResponseField({
   responseObject,
   height,
+  titleText,
 }) {
   const getResponseBodyField = () => {
     const response = responseObject?.message;
@@ -38,8 +39,8 @@ function ExternalRestApiIntegrationEndpointResponseField({
   return (
     <FieldContainer>
       <InfoContainer
-        titleIcon={faCodeSimple}
-        titleText={`External API Response`}
+        titleIcon={faCode}
+        titleText={titleText}
         minimumHeight={height}
         maximumHeight={height}
       >
@@ -55,9 +56,10 @@ function ExternalRestApiIntegrationEndpointResponseField({
   );
 }
 
-ExternalRestApiIntegrationEndpointResponseField.propTypes = {
+EndpointResponseField.propTypes = {
   responseObject: PropTypes.object,
   height: PropTypes.string,
+  titleText: PropTypes.string,
 };
 
-export default ExternalRestApiIntegrationEndpointResponseField;
+export default EndpointResponseField;
