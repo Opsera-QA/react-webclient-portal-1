@@ -162,7 +162,7 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       <div className={"h-100"}>
         <div
           style={{ backgroundColor: "#F3F3F1", border: "1px solid #e4e4e4" }}
-          className={"py-2 w-100 px-2"}
+          className={"py-2 pl-4 w-100 pr-2"}
         >
           <div>Project Name</div>
         </div>
@@ -173,10 +173,6 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     );
   };
 
-  const onRowSelect = (rowData) => {
-    setModalData(rowData.original);
-    setShowModal(true);
-  };
 
   
   const getData = () => {

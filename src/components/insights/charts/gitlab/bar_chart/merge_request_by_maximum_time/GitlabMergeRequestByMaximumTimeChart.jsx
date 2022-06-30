@@ -76,7 +76,7 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
     <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
           <ResponsiveBar
             data={metrics}
-            {...defaultConfig("Time (Hours)", "Project", 
+            {...defaultConfig("Merge Request Time Taken (Hours)", "Project Name", 
                         false, false, "values", "cutoffString")}
             {...config()}
             {...adjustBarWidth(metrics)}

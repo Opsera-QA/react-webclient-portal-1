@@ -39,9 +39,6 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const [projectInfo, setProjectInfo] = useState([]);
   const [activeTab,setActiveTab] =useState();
 
-  const noDataMessage = "No Data is available for this chart at this time";
-
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -155,7 +152,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       <div className={"h-100"}>
         <div
           style={{ backgroundColor: "#F3F3F1", border: "1px solid #e4e4e4" }}
-          className={"py-2 w-100 px-2"}
+          className={"py-2 pl-4 w-100 pr-2"}
         >
           <div>Project Name</div>
         </div>
@@ -177,6 +174,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTable()}
         minimumHeight={'400px'}
+        titleClassName={'d-none'}
       />
     );
   };
