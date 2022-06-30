@@ -10,7 +10,7 @@ function QuickDeployTotalComponentsTab({ data, components, dashboardData, kpiCon
 
   useEffect(() => {
     if (Array.isArray(components) && components.length > 0) {
-      setActiveTab(components[0]);
+      setActiveTab(`0`);
     }
   }, [components]);
 
@@ -26,24 +26,29 @@ function QuickDeployTotalComponentsTab({ data, components, dashboardData, kpiCon
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             icon={icon}
+            className={"m-2"}
           />
         );
       }
     }
   };
 
+  const getVerticalTabContainer = () => {
+    return (
+      <QuickDeployVerticalTabContainer
+        highestMergesMetrics={components}
+        activeTab={activeTab}
+        handleTabClick={setActiveTab}
+      />
+    );
+  };
+
   return (
     <VanitySetTabAndViewContainer
       title={`Quick Deploy Total Components Report`}
-      defaultActiveKey={Array.isArray(components) && components.length > 0 ? components[0] : undefined}
-      verticalTabContainer={
-        <QuickDeployVerticalTabContainer
-          highestMergesMetrics={components}
-          activeTab={activeTab}
-          handleTabClick={setActiveTab}
-        />
-      }
+      verticalTabContainer={getVerticalTabContainer()}
       currentView={getCurrentView()}
+      tabColumnSize={3}
     />
   );
 }

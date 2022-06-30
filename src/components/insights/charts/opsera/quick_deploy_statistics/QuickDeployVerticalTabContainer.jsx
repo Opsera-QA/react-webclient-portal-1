@@ -15,7 +15,7 @@ function QuickDeployVerticalTabContainer({ activeTab, handleTabClick, highestMer
             handleTabClick={handleTabClick}
             icon={faFileCode}
             tabText={item}
-            tabName={index}
+            tabName={`${index}`}
           />
         );
       })}
