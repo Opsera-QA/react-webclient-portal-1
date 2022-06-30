@@ -10,6 +10,7 @@ import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
 import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
+import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 
@@ -26,32 +27,44 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
   };
 
   const getSummaryReportPanel = () => {
-    console.log(pipelineTaskData);
-    switch(pipelineTaskData?.api_response?.stepIdentifier) {
+    // console.log(pipelineTaskData);
+    switch (pipelineTaskData?.api_response?.stepIdentifier) {
       case "informatica":
         return (
-          <InformaticaLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+          <InformaticaLogSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
         );
       case "gitscraper":
         return (
-          <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+          <GitScraperLogSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
         );
       case "apigee":
         return (
-          <ApigeeLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+          <ApigeeLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
         );
       case "jenkins":
         return getJenkinsReport();
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
         return (
-            <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+          <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+          <SapCpqLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
         return (
             <ProvarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
-        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+        return (
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+          />
+        );
     }
   };
 
