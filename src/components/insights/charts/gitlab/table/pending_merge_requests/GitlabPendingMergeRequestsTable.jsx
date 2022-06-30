@@ -30,7 +30,7 @@ function GitlabPendingMergeRequestsTable({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
+      { ...genericChartFilterMetadata.newObjectFields, pageSize:10 },
       genericChartFilterMetadata,
       false,
     ),
