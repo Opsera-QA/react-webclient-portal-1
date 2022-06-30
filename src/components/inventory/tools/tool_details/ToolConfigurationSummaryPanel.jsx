@@ -103,12 +103,6 @@ import FlywayDatabaseToolConnectionSummaryPanel
 import {
   flywayDatabaseToolConnectionMetadata
 } from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
-import ExternalApiIntegratorToolConnectionSummaryPanel
-  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionSummaryPanel";
-import {
-  externalApiIntegratorToolConnectionMetadata
-} from "components/inventory/tools/details/identifiers/external_api_integrator/connection/externalApiIntegratorToolConnection.metadata";
-
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
     if (toolIdentifier == null || toolIdentifier === "" || toolConfiguration == null) {
@@ -118,9 +112,9 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     switch (toolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
-          <ExternalApiIntegratorToolConnectionSummaryPanel
-            externalApiIntegratorModel={modelHelpers.parseObjectIntoModel(toolConfiguration, externalApiIntegratorToolConnectionMetadata)}
-          />
+          <div className={"text-center p-5 text-muted mt-5"}>
+            Connection configuration is handled using Endpoints.
+          </div>
         );
       case "jenkins":
         return (

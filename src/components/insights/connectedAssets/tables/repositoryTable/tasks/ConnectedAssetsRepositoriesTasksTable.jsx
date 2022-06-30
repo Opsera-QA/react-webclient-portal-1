@@ -14,6 +14,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
 
 function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
       false
     )
   );
-
+  const history = useHistory();
   const noDataMessage = 'No tasks found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
@@ -105,6 +106,10 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     }
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/task/details/${(rowData.original?._id)}`);
+  };
+
   const getTable = () => {
     return (
       <CustomTable
@@ -115,6 +120,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };

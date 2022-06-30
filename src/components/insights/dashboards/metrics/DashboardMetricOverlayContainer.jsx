@@ -30,6 +30,8 @@ import LeadTimeAndReleaseTracebilityEditorPanel
   from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
+import QuickDeployStatisticsEditorPanel
+  from "../../charts/opsera/quick_deploy_statistics/QuickDeployStatisticsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -186,6 +188,16 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+        return (
+            <QuickDeployStatisticsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };

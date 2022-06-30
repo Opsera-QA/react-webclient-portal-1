@@ -21,6 +21,22 @@ const connectedAssetsMetadata = {
         label: "Pipeline URL",
         id: "pipeline_url",
       },
+      {
+        label: "Pipeline Last Status",
+        id: "pipeline_last_status",
+      },
+      {
+        label: "Number Of Runs",
+        id: "pipeline_run_count",
+      },
+      {
+        label: "Number Of Runs",
+        id: "task_run_count",
+      },
+      {
+        label: "Number Of Runs",
+        id: "run_count"
+      },
        {
          label: "Created At",
          id: "pipeline_created_at",
@@ -38,6 +54,18 @@ const connectedAssetsMetadata = {
          id: "task_name",
        },
        {
+         label: "Last Run (in days)",
+         id: "pipeline_updatedAt"
+       },
+       {
+         label: "Last Run (in days)",
+         id: "tasks_updatedAt"
+       },
+       {
+         label: "Last Triggered On",
+         id: "last_triggered"
+       },
+       {
          label: "Created At",
          id: "task_created_at",
        },
@@ -46,8 +74,44 @@ const connectedAssetsMetadata = {
          id: "task_last_run",
        },
        {
+         label: "Repository Name",
+         id: "repositoryName"
+       },
+       {
+        label: "Activity Date",
+        id: "activityDate"
+       },
+       {
+         label: "Event Type",
+         id: "event"
+       },
+       {
+         label: "Commit Title",
+         id: "commit_or_mr_title"
+       },
+       {
          label: "User Created",
          id: "task_owner_name",
+       },
+       {
+          label: "Task URL",
+          id: "task_url",
+       },
+       {
+          label: "Repository URL",
+          id: "repo_url",
+       },
+       {
+          label: "Repository Last Used",
+          id: "repo_last_used"
+       },
+       {
+         label: "Branch Name",
+         id: "branch"
+       },
+       {
+         label: "Rollback Branch",
+         id: "rollback_branch"
        },
        {
          label: "Sort Option",

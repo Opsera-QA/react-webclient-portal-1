@@ -14,6 +14,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
 
 function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
       false
     )
   );
-
+  const history = useHistory();
   const noDataMessage = 'No pipelines found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
@@ -105,6 +106,10 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     }
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/workflow/details/${(rowData.original?._id)}/summary`);
+  };
+
   const getTable = () => {
     return (
       <CustomTable
@@ -115,6 +120,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };

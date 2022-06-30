@@ -19,7 +19,7 @@ function ToolDataTransformerRulesMappingTab({ toolModel, handleTabClick, activeT
       tabName={"data_transformer"}
       handleTabClick={handleTabClick}
       activeTab={activeTab}
-      tabText={"Data Transformer Rules"}
+      tabText={"MetaData Transformer Rules"}
       accessRestricted={!toolModel.canPerformAction("update_tool_applications")}
     />
   );
