@@ -41,7 +41,7 @@ const dashboardMetadata = {
     },
     {
       label: "Filters",
-      id: "amexFilters",
+      id: "hierarchyFilters",
     },
     {
       label: "Attributes",
@@ -137,7 +137,7 @@ export const dashboardFiltersMetadata = {
     },
     {
       label: "Filters",
-      id: "amexFilters",
+      id: "hierarchyFilters",
     },
     {
       label: "Date",
@@ -147,7 +147,7 @@ export const dashboardFiltersMetadata = {
   newObjectFields: {
     tags: [],
     organizations: [],
-    amexFilters: {},
+    hierarchyFilters: {},
     date: {
       startDate: null,
       endDate: null,

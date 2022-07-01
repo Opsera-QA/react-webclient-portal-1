@@ -66,7 +66,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
       let dashboardFilters =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
             ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -92,32 +92,6 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
       );
 
       const deploymentMetrics = deploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
-
-      // const applicationDeploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-      //   getAccessToken,
-      //   cancelSource,
-      //   "githubActionsApplicationDeploymentFrequency",
-      //   kpiConfiguration,
-      //   dashboardTags,
-      //   null,
-      //   null,
-      //   dashboardOrgs
-      // );
-
-      // const applicationDeploymentMetrics = applicationDeploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
-
-      // const applicationLeadTimeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-      //   getAccessToken,
-      //   cancelSource,
-      //   "githubActionsApplicationLeadTime",
-      //   kpiConfiguration,
-      //   dashboardTags,
-      //   null,
-      //   null,
-      //   dashboardOrgs
-      // );
-
-      // const applicationLeadTimeMetrics = applicationLeadTimeResponse?.data?.data[0]?.leadTime?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
@@ -256,47 +230,6 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               </div>
             </Col>}
           </Row>
-          {/*<Row className={"mt-5"}>*/}
-          {/*  <Col xs={12}>*/}
-          {/*    <H4MetricSubHeader subheaderText={'Top Applications'} />*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"High Lead Time"}*/}
-          {/*        content={"oswestry"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"High Deployment Frequency"}*/}
-          {/*        content={"grosmont"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row style={{marginTop:'1rem'}}>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"Minimal/No activity in last few weeks"}*/}
-          {/*        content={"oswestry"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"Highest Commits"}*/}
-          {/*        content={""}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
         </div>
       </>
     );
