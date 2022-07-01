@@ -161,9 +161,14 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     let newFilterDto = tableFilterDto;
     newFilterDto.setData("projectName",projectName);
     newFilterDto.setDefaultValue("search");
-    setTableFilterDto({ ...tableFilterDto });
-    setActiveTab(projectName);
-    await loadData(cancelTokenSource,newFilterDto);
+    setTableFilterDto({ ...newFilterDto });
+    // if no projectName then right side table will be empty and api will not be called
+    if(!projectName){
+      setMetrics([]);
+    } else {
+      setActiveTab(projectName);
+      await loadData(cancelTokenSource,newFilterDto);
+    }
   };
   const getFilterContainer = () => {
     return (

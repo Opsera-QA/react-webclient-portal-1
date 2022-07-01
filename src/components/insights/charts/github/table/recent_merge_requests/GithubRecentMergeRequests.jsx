@@ -163,11 +163,16 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
-    newFilterDto.setDefaultValue("search");
     newFilterDto.setData("projectName",projectName);
-    setTableFilterDto({ ...tableFilterDto });
-    setActiveTab(projectName);
-    await loadData(cancelTokenSource,newFilterDto);
+    newFilterDto.setDefaultValue("search");
+    setTableFilterDto({ ...newFilterDto });
+    // if no projectName then right side table will be empty and api will not be called
+    if(!projectName){
+      setMetrics([]);
+    } else {
+      setActiveTab(projectName);
+      await loadData(cancelTokenSource,newFilterDto);
+    }
   };
   const getFilterContainer = () => {
     return (
