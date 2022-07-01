@@ -661,7 +661,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ProvarStepConfigSummary
             pipelineData={pipelineData}
-            gitScraperPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
+            provarPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
