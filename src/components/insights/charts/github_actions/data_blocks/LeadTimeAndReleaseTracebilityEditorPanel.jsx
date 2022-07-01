@@ -8,7 +8,7 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import {leadTimeAndReleaseTraceabilityMetadata} from "./leadTimeAndReleaseTracebility.metadata";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import {amexFiltersMetadata} from "components/insights/dashboards/amex-filters-metadata.js";
+import {hierarchyFiltersMetadata} from "components/insights/dashboards/hierarchy-filters-metadata.js";
 import chartsActions from "components/insights/charts/charts-actions";
 function LeadTimeAndReleaseTracebilityEditorPanel(
   {
@@ -21,16 +21,16 @@ function LeadTimeAndReleaseTracebilityEditorPanel(
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [applicationOptions, setApplicationOptions] = useState([]);
-  const [directorOptions, setDirectorOptions] = useState([]);
-  const [vp1Options, setVP1Options] = useState([]);
-  const [vp2Options, setVP2Options] = useState([]);
-  const [svpOptions, setSVPOptions] = useState([]);
-  const [actionOptions, setActionOptions] = useState([]);
+  const [filter1Options, setFilter1Options] = useState([]);
+  const [filter2Options, setFilter2Options] = useState([]);
+  const [filter3Options, setFilter3Options] = useState([]);
+  const [filter4Options, setFilter4Options] = useState([]);
+  const [filter5Options, setFilter5Options] = useState([]);
+  const [filter6Options, setFilter6Options] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const [amexFiltersDto, setAmexFiltersDto] = useState(
-    new Model({ ...amexFiltersMetadata.newObjectFields }, amexFiltersMetadata, false)
+  const [hierarchyFiltersDto, setHierarchyFiltersDto] = useState(
+    new Model({ ...hierarchyFiltersMetadata.newObjectFields }, hierarchyFiltersMetadata, false)
   );
 
   useEffect(() => {
@@ -77,14 +77,14 @@ function LeadTimeAndReleaseTracebilityEditorPanel(
 
     if (unpackedFilterData) {
       let newUnpackedFilterData = unpackedFilterData;
-      newUnpackedFilterData.amexFilters = amexFiltersDto?.data;
+      newUnpackedFilterData.hierarchyFilters = hierarchyFiltersDto?.data;
       setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, leadTimeAndReleaseTraceabilityMetadata));
     }
 
-  }, [unpackedFilterData, amexFiltersDto]);
+  }, [unpackedFilterData, hierarchyFiltersDto]);
 
   const getFilters = async (cancelSource = cancelTokenSource) => {
-    setAmexFiltersDto(new Model(metricModel.getData("filters")[metricModel.getData("filters").findIndex((obj) => obj.type === "amexFilters")]?.value, amexFiltersMetadata, false));
+    setHierarchyFiltersDto(new Model(metricModel.getData("filters")[metricModel.getData("filters").findIndex((obj) => obj.type === "hierarchyFilters")]?.value, hierarchyFiltersMetadata, false));
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getAllActionsFilterOptions");
     let filters = response?.data?.data[0];
     filters = filters.reduce((acc, cur) => {
@@ -92,12 +92,12 @@ function LeadTimeAndReleaseTracebilityEditorPanel(
       return acc;
     }, {});
     if (isMounted?.current === true) {
-      setApplicationOptions(filters["Application"]);
-      setDirectorOptions(filters["Director"]);
-      setVP1Options(filters["VP1"]);
-      setVP2Options(filters["VP2"]);
-      setSVPOptions(filters["SVP"]);
-      setActionOptions(filters["Action"]);
+      setFilter1Options(filters["SVP"]);
+      setFilter2Options(filters["VP2"]);
+      setFilter3Options(filters["VP1"]);
+      setFilter4Options(filters["Director"]);
+      setFilter5Options(filters["Application"]);
+      setFilter6Options(filters["Action"]);
     }
   };
 
@@ -117,41 +117,41 @@ function LeadTimeAndReleaseTracebilityEditorPanel(
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
       />
-      <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"svp"}
-        selectOptions={svpOptions}
+     <MultiSelectInputBase
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter1"}
+        selectOptions={filter1Options}
       />
       <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"vp2"}
-        selectOptions={vp2Options}
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter2"}
+        selectOptions={filter2Options}
       />
       <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"vp1"}
-        selectOptions={vp1Options}
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter3"}
+        selectOptions={filter3Options}
       />
       <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"director"}
-        selectOptions={directorOptions}
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter4"}
+        selectOptions={filter4Options}
       />
       <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"application"}
-        selectOptions={applicationOptions}
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter5"}
+        selectOptions={filter5Options}
       />
       <MultiSelectInputBase
-        dataObject={amexFiltersDto}
-        setDataObject={setAmexFiltersDto}
-        fieldName={"action"}
-        selectOptions={actionOptions}
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter6"}
+        selectOptions={filter6Options}
       />
     </div>
   );
