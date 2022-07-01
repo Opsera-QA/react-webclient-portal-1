@@ -32,6 +32,8 @@ import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 import QuickDeployStatisticsEditorPanel
   from "../../charts/opsera/quick_deploy_statistics/QuickDeployStatisticsEditorPanel";
+import SalesforceComponentsEditorPanel
+  from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -192,6 +194,16 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
         return (
             <QuickDeployStatisticsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
+        return (
+            <SalesforceComponentsEditorPanel
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
