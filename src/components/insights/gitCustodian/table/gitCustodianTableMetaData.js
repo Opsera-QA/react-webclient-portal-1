@@ -21,8 +21,8 @@ const GitCustodianTableMetaData = {
       id: "service",
     },
     {
-    label: "Exposed For",
-    id: "exposedHours"
+      label: "Exposed For",
+      id: "exposedHours"
     },
     {
       label: "Library",
@@ -114,46 +114,40 @@ const GitCustodianTableMetaData = {
     },
   ],
   getActiveFilters(filterDto) {
-     let activeFilters = [];
+    let activeFilters = [];
 
-     if (filterDto.getData("repositories") != null) {
-       activeFilters.push({filterId: "repositories", ...filterDto.getData("repositories")});
-     }
+    if (filterDto.getData("repositories") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({filterId: "repositories", ...filter}))];
+    }
 
-     if (filterDto.getData("authors") != null) {
-       activeFilters.push({filterId: "authors", ...filterDto.getData("authors")});
-     }
+    if (filterDto.getData("authors") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({filterId: "authors", ...filter}))];
+    }
 
-     if (filterDto.getData("status") != null) {
-        activeFilters.push({filterId: "status", ...filterDto.getData("status")});
-     }
+    if (filterDto.getData("type") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("type").map(filter => ({filterId: "type", ...filter}))];
+    }
 
-     if (filterDto.getData("service") != null) {
-       activeFilters.push({filterId: "service", ...filterDto.getData("service")});
-     }
-
-     return activeFilters;
+    return activeFilters;
   },
   newObjectFields: {
-     pageSize: 10,
-     currentPage: 1,
-     // sortOption: {text: "Newest", value: ""}, //TBD - Sort logic to be fixed
-     search: "",
-     activeFilters: [],
-     date: {
-       startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-       endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-       key: "selection",
-     }
+    pageSize: 10,
+    currentPage: 1,
+    sortOption: {text: "Newest", value: ""},
+    search: "",
+    activeFilters: [],
+    date: {
+      startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      key: "selection",
+    }
   },
-  // TBD - sort logic to be fixed in next release.
-  //   sortOptions: [
-  //    {text: "Newest", option: ""},
-  //    {text: "Oldest", option: "oldest"},
-  //    {text: "Date Created", option: "commitDate"},
-  //    {text: "Author", option: "author"},
-  //    {text: "Origin", option: "service"}
-  // ]
+  sortOptions: [
+    {text: "Newest", option: ""},
+    {text: "Oldest", option: "oldest"},
+    {text: "Author", option: "author"},
+    {text: "Type", option: "type"}
+  ]
 };
 
 export default GitCustodianTableMetaData;

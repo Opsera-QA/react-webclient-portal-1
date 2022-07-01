@@ -192,6 +192,8 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      sortOption: tableFilterDto?.getData("sortOption")?.value,
+      search: filterModel?.getData("search"),
       filters: {
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
