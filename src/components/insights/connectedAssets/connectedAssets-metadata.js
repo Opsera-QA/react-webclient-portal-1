@@ -58,6 +58,14 @@ const connectedAssetsMetadata = {
          id: "pipeline_updatedAt"
        },
        {
+         label: "Success Count",
+         id: "success_count",
+       },
+       {
+         label: "Failed Count",
+         id: "failed_count",
+       },
+       {
          label: "Last Run (in days)",
          id: "tasks_updatedAt"
        },

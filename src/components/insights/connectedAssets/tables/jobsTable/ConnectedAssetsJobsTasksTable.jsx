@@ -2,22 +2,23 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import {faCircleInfo, faDiagramSuccessor} from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faListCheck} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
-import connectedAssetsActions from "../../../connectedAssets.actions";
-import connectedAssetsMetadata from "../../../connectedAssets-metadata";
-import FilterContainer from "../../../../../common/table/FilterContainer";
-import CustomTable from "../../../../../common/table/CustomTable";
+import connectedAssetsActions from "../../connectedAssets.actions";
+import connectedAssetsMetadata from "../../connectedAssets-metadata";
+import FilterContainer from "../../../../common/table/FilterContainer";
+import CustomTable from "../../../../common/table/CustomTable";
 import {
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../connecetdAssets.constants";
 import {useHistory} from "react-router-dom";
-import IconBase from "../../../../../common/icons/IconBase";
+import {parseError} from "../../../../common/helpers/error-helpers";
+import IconBase from "../../../../common/icons/IconBase";
 
-function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
+function ConnectedAssetsJobsTasksTable({ dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -36,10 +37,11 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
-      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "task_url"), "task_url"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
+      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "success_count"), "success_count"),
+      getTableTextColumn(getField(fields, "failed_count", "failed_count"))
     ],
     []
   );
@@ -68,7 +70,7 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      await loadTasksData();
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -81,23 +83,18 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
     }
   };
 
-  const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadTasksData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
-    let userData = {
-      user_id: user?._id,
-      user_email: user?.email
-    };
-    const response = await connectedAssetsActions.getSelectedUserDetailedInfo(
+    const response = await connectedAssetsActions.getJobsInfo(
       getAccessToken,
       cancelSource,
-      constants.COLLABORATORS_LIST.PIPELINE_ACTIVITY,
+      constants.JOBS_LIST.TASK_JOBS,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      userData
     );
-    let dataObject = response?.data?.data?.pipelineActivity?.data?.[0];
+    let dataObject = response?.data?.data?.jobsInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
@@ -108,10 +105,20 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
   };
 
   const onRowSelect = (rowData) => {
-    history.push(`/workflow/details/${(rowData.original?.pipeline_id)}/summary`);
+    history.push(`/task/details/${(rowData.original?._id)}`);
   };
 
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -128,11 +135,11 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
 
   return (
     <div className={"p-2"}>
-      <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective pipeline.</div>
+      <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective task.</div>
       <FilterContainer
         isLoading={isLoading}
-        title={'List Of Pipelines'}
-        titleIcon={faDiagramSuccessor}
+        title={'List Of Jobs from Tasks'}
+        titleIcon={faListCheck}
         body={getTable()}
         className={"px-2 pb-2"}
         loadData={loadData}
@@ -144,8 +151,7 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
     </div>
   );
 }
-ConnectedAssetsCollaboratorsPipelinesTable.propTypes = {
-  user: PropTypes.object,
+ConnectedAssetsJobsTasksTable.propTypes = {
   dashboardData: PropTypes.object,
 };
-export default ConnectedAssetsCollaboratorsPipelinesTable;
+export default ConnectedAssetsJobsTasksTable;
