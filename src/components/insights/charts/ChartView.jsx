@@ -163,6 +163,7 @@ import SalesforceComponentsDataBlockChart
   from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
+import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1544,6 +1545,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+            return (
+                <Col md={12} className="p-2">
+                    <QuickDeployStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       // GitSrapperMetrics
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
