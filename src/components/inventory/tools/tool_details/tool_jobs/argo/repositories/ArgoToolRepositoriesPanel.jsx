@@ -31,7 +31,7 @@ function ArgoToolRepositoriesPanel({ toolData, loadData, isLoading, toolActions 
   };
 
   const onRowSelect = (grid, row) => {
-    const argoRepository = toolData?.getArrayData("repositories")[row?.index];
+    const argoRepository = toolData?.getArrayData("repositories", row?.index)?.configuration;
     setArgoModel({...modelHelpers.parseObjectIntoModel(argoRepository, argoRepositoryMetadata)});
   };
 

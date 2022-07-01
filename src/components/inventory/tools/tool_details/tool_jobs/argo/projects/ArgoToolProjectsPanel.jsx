@@ -34,7 +34,7 @@ function ArgoToolProjectsPanel({ toolData, loadData, isLoading, toolActions }) {
   };
 
   const onRowSelect = (grid, row) => {
-    const argoProject = toolData?.getArrayData("projects")[row?.index];
+    const argoProject = toolData?.getArrayData("projects", row?.index)?.configuration;
     setArgoModel({...modelHelpers.parseObjectIntoModel(argoProject, argoProjectMetadata)});
   };
 
