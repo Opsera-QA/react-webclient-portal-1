@@ -1473,7 +1473,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "salesforce-components-chart":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
         return (
           <Col md={12} className="p-2">
             <SalesforceComponentsDataBlockChart
