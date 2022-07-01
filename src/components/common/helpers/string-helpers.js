@@ -127,3 +127,5 @@ export function csvStringToObj  (csvString) {
   // console.log(list);
   return list;
 }
+
+export const pluralize = (count, noun, suffix = 's') => `${count} ${noun}${count !== 1 ? suffix : ''}`;
