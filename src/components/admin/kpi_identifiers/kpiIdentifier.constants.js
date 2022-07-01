@@ -102,6 +102,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_DURATION_BY_STAGE: "salesforce-duration-by-stage",
   SDLC_DURATION_STATISTICS: "sdlc-duration-statistics",
 
+  //Quick Deploy
+  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
+
   // Selenium
   SELENIUM_TEST_RESULTS: "selenium-test-results",
   SELENIUM_TEST_SUMMARY_PERCENTAGES: "selenium-test-summary-percentages",
