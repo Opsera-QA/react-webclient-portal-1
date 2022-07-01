@@ -34,7 +34,7 @@ const JobTypeSFDC = {
         value: "SFDC PUSH ARTIFACTS"
       },
       {
-        name: "Salesforce Data Transformer",
+        name: "Salesforce MetaData Transformer",
         value: "SFDC DATA TRANSFORM",
       },
     ],

@@ -35,7 +35,7 @@ function ToolDataTransformerRulesMappingPanel({ toolData, loadData, isLoading })
   return (
     <>
       <div className="text-muted p-3">
-        <div className="h6">Manage Data Transformer Rules</div>        
+        <div className="h6">Manage MetaData Transformer Rules</div>        
         {getBody()}
       </div>
     </>
