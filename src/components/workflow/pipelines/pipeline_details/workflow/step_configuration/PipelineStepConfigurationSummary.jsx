@@ -649,7 +649,7 @@ function PipelineStepConfigurationSummary({
         return (
           <ProvarStepConfigSummary
             pipelineData={pipelineData}
-            gitScraperPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
+            provarPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
         );
       default:
