@@ -14,16 +14,13 @@ import {
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {faDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "../../../common/tooltip/TooltipWrapper";
-import Button from "react-bootstrap/Button";
-import IconBase from "../../../common/icons/IconBase";
 import FilterContainer from "../../../common/table/FilterContainer";
 import GitCustodianNewJiraTicketModal from "../modal/GitCustodianNewJiraTicketModal";
 import chartsActions from "../../charts/charts-actions";
 import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
 import Model from "../../../../core/data_model/model";
 import ExportGitCustodianVulnerabilitiesButton from "./ExportGitCustodianVulnerabilitiesButton";
+import GitCustodianVulnerabilityDetailsOverlay from "../GitCustodianVulnerabilityDetailsOverlay";
 
 function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -91,8 +88,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         let newFilterDto = tableFilterDto;
         newFilterDto.setData("totalCount", tableResponse?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        let sortOption = filterDto.getData("sortOption");
-        newFilterDto.setData("sortOption", sortOption);
         setTableFilterDto({...newFilterDto});
       }
     } catch (error) {
@@ -106,17 +101,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
     }
   };
 
-  const exportData = async () => {
-    try {
-      await chartsActions.exportGitCustodianData(getAccessToken, cancelTokenSource, gitCustodianData);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const createNewJiraTicket = () => {
     toastContext.showOverlayPanel(
       <GitCustodianNewJiraTicketModal
@@ -125,6 +109,10 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         isMounted={isMounted}
       />
     );
+  };
+
+  const onRowSelect = (rowData) => {
+    toastContext.showOverlayPanel(<GitCustodianVulnerabilityDetailsOverlay vulnerabilityData={rowData?.original} />);    
   };
 
   const getBody = () => {
@@ -146,6 +134,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         loadData={loadData}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
+        onRowSelect={onRowSelect}
       />
     );
   };
