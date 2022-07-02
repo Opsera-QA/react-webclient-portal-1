@@ -21,6 +21,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
+import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashboardFiltersIcon";
 import TransferDashboardOwnershipButton
   from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
@@ -33,10 +34,11 @@ function DashboardScreenContainer(
     isLoading,
     loadData,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
   const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
   const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
+  const [user, setUser] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -49,11 +51,18 @@ function DashboardScreenContainer(
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    getUserDetails();
+
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
+
+  const getUserDetails = async () => {
+    let userObject = await getUserRecord();
+    setUser(userObject);
+  };
 
   const handleClose = async () => {
     setActiveTab("viewer");
@@ -97,7 +106,14 @@ function DashboardScreenContainer(
             className={"ml-3"}
           />
           <PublishDashboardToPublicMarketplaceIcon
+            dashboardData={dashboardModel}
+            className={"ml-3"}
+          />
+          <EditDashboardFiltersIcon
             dashboardModel={dashboardModel}
+            setDashboardModel={setDashboardModel}
+            loadData={loadData}
+            user={user}
             className={"ml-3"}
           />
           {getSettingsIcon()}

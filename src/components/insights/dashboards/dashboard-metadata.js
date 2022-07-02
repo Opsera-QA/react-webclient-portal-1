@@ -40,6 +40,10 @@ const dashboardMetadata = {
       id: "organizations",
     },
     {
+      label: "Filters",
+      id: "hierarchyFilters",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
@@ -125,11 +129,15 @@ export const dashboardFiltersMetadata = {
   fields: [
     {
       label: "Tags",
-      id: "value"
+      id: "tags"
     },
     {
       label: "Organizations",
       id: "organizations"
+    },
+    {
+      label: "Filters",
+      id: "hierarchyFilters",
     },
     {
       label: "Date",
@@ -137,8 +145,9 @@ export const dashboardFiltersMetadata = {
     }
   ],
   newObjectFields: {
-    value: [],
+    tags: [],
     organizations: [],
+    hierarchyFilters: {},
     date: {
       startDate: null,
       endDate: null,

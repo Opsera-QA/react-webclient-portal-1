@@ -26,6 +26,7 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_SERVICE_OFFERINGS: "servicenow-service-offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "servicenow-configuration-items",
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
+  HIERARCHY_FILTERS: "hierarchyFilters"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -56,6 +57,7 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_SERVICE_OFFERINGS: "Service Now Service Offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "Service Now Configuration Items",
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
+  HIERARCHY_FILTERS: "Hierarchy Filters"
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -114,6 +116,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.SERVICE_NOW_CONFIGURATION_ITEMS;
     case KPI_FILTER_TYPES.SERVICE_NOW_BUSINESS_SERVICES:
       return KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES;
+    case KPI_FILTER_TYPES.HIERARCHY_FILTERS:
+      return KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS;
     default:
       return kpiFilterType;
   }
@@ -249,5 +253,17 @@ export const KPI_FILTER_SELECT_OPTIONS = [
     type: KPI_FILTER_TYPES.SERVICE_NOW_BUSINESS_SERVICES,
     text: KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES,
     value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.HIERARCHY_FILTERS,
+    text: KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS,
+    value: {
+      filter1: [],
+      filter2: [],
+      filter3: [],
+      filter4: [],
+      filter5: [],
+      filter6: [],
+    },
   },
 ];
