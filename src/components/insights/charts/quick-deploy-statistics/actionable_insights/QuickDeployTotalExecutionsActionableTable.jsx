@@ -20,7 +20,7 @@ function QuickDeployTotalExecutionsActionableTable({ data, task, isLoading, load
     let history = useHistory();
 
     const newData = [];
-    data.forEach((obj) => {if(obj?.task == task){newData.push(obj);}});
+    data.forEach((obj) => {if(obj?.taskName == task){newData.push(obj);}});
 
     const columns = useMemo(
         () => [
