@@ -67,7 +67,6 @@ function ToastContextProvider({children, navBar}) {
   const addOverlayPanel = useCallback((overlayPanel) => {
       if (overlayPanel != null) {
         document.body.style.overflow = 'hidden';
-        window.scrollTo(0, 0);
       }
 
       setOverlayPanel(overlayPanel);
