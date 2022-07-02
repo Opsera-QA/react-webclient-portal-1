@@ -30,6 +30,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const isMounted = useRef(false);
   const [metrics, setMetrics] = useState([]);
   const [deploymentMetrics, setDeploymentMetrics] = useState([]);
+  const [timeToCommitMetrics, setTimeToCommitMetrics] = useState([]);
   const [applicationDeploymentMetrics, setApplicationDeploymentMetrics] = useState([]);
   const [applicationLeadTimeMetrics, setApplicationLeadTimeMetrics] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -90,14 +91,26 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardFilters,
         dashboardOrgs
       );
-
       const deploymentMetrics = deploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
+
+      const timeToCommitResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubBranchCreationToFirstCommit",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        dashboardFilters,
+        dashboardOrgs
+      );
+      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.timeToCommit?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
         setDeploymentMetrics(deploymentMetrics[0]);
-        setApplicationDeploymentMetrics(applicationDeploymentMetrics);
-        setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
+        // setTimeToCommitMetrics(timeToCommitMetrics[0]);
+        // setApplicationDeploymentMetrics(applicationDeploymentMetrics);
+        // setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -218,7 +231,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
                       className={`${getIconColor(metrics?.trend)}`}
-                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
+                      numberData={getTimeDisplay(metrics?.timeToCommit)}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
                       bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
