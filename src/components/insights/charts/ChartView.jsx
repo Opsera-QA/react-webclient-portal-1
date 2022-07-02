@@ -944,7 +944,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-total-commits-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -956,7 +956,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -968,7 +968,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
