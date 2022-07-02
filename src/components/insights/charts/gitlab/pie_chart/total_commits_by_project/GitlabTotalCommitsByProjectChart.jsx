@@ -7,8 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+
 function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -71,11 +73,11 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
     }
 
   return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
+    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
       <ResponsivePie
         data={metrics}
         {...defaultConfig()}
-        {...config(getColorByData)}
+        {...config()}
         onClick={() => setShowModal(true)}
       />
     </div>

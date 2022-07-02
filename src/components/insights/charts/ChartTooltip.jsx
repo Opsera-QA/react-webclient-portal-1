@@ -12,7 +12,7 @@ function ChartTooltip({titles, values, color, style=true}) {
     >
       {titles.map((title, i) => (
         <div key={i}>
-          {i !== 0 && <br></br>}
+           {/* {i !== 0 && <br></br>} */}
           <strong style={{ color }}> {title}: </strong> {values[i]}
         </div>
       ))}

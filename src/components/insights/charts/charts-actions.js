@@ -415,6 +415,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   runCount,
   pipelineId
 ) => {
+  console.log(projectName,'((((( &&&& (((((_____');
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),

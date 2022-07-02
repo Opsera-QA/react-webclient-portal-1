@@ -7,8 +7,9 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from "../../../charts-views";
+import { defaultConfig } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GitlabMergeRequestsPushesAndComments({
   kpiConfiguration,
@@ -83,11 +84,11 @@ function GitlabMergeRequestsPushesAndComments({
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
+      <div className="new-chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
         <ResponsiveCalendar
           data={metrics}
-          {...defaultConfig("", "", false, false, "", "", true)}
-          {...config(gradationalColors, new Date())}
+          {...defaultConfig("Date", "", false, false, "", "", true)}
+          {...config(new Date())}
           onClick={() => setShowModal(true)}
           tooltip={({ day, value, color }) => (
             <ChartTooltip
