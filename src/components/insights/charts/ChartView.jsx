@@ -86,6 +86,10 @@ import GithubRecentMergeRequests from "./github/table/recent_merge_requests/Gith
 import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time_taken_to_complete_merge_request_review/GithubTimeTakenToCompleteMergeRequestReview";
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
+import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
+import LeadTimeAndReleaseTraceabilityDataBlock
+    from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
+
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
@@ -1162,6 +1166,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "all-github-actions-data-block":
+        return(
+          <Col md={12} className="p-2">
+            <AllGithubActionsDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );  
       case "github-commit-statistics":
         return (
           <Col md={12} className="p-2">
@@ -1171,6 +1187,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+            />
+          </Col>
+        );
+      case "lead-time-and-release-traceability-data-block":
+        return(
+          <Col md={12} className="p-2">
+            <LeadTimeAndReleaseTraceabilityDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
             />
           </Col>
         );

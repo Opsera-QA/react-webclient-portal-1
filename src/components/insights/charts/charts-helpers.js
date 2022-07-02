@@ -15,7 +15,7 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   }
   return {
     start: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)).toISOString(),
-    end: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString()
+    end: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
   };
 }
 
@@ -311,6 +311,18 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
   ) {
     return kpiConfiguration.filters[
       kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")
+    ].value;
+  }
+  return null;
+}
+
+export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+      ?.value
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "hierarchyFilters")
     ].value;
   }
   return null;
