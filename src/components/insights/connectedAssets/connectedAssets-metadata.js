@@ -74,6 +74,14 @@ const connectedAssetsMetadata = {
          id: "last_triggered"
        },
        {
+         label: "Last Action",
+         id: "last_action"
+       },
+       {
+         label: "Webhook Status",
+         id: "status"
+       },
+       {
          label: "Created At",
          id: "task_created_at",
        },

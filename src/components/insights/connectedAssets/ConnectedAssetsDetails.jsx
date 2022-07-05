@@ -17,6 +17,7 @@ import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAsset
 import ConnectedAssetsCollaboratorsTabContainer
   from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
 import ConnectedAssetsJobsTabContainer from "./tables/jobsTable/ConnectedAssetsJobsTabContainer";
+import ConnectedAssetsWebhooksTabContainer from "./tables/webhooksTable/ConnectedAssetsWebhooksTabContainer";
 import sessionHelper from "utils/session.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
@@ -137,7 +138,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
       case webhooksDataBlock:
         sessionHelper.replaceStoredUrlParameter("view", webhooksDataBlock);
         toggleDynamicPanel(webhooksDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsWebhooksTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case packagesDataBlock:
@@ -269,7 +270,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
               <DataBlockBoxContainer
                 showBorder={true}
                 className={selectedDataBlock === webhooksDataBlock ? "selected-data-block" : undefined}
-                //onClickFunction={() => onDataBlockSelect(webhooksDataBlock)}
+                onClickFunction={() => onDataBlockSelect(webhooksDataBlock)}
               >
                 <ThreeLineIconDataBlockBase
                   icon={faCompressArrowsAlt}
