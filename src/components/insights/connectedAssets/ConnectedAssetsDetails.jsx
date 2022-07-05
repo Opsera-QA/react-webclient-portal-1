@@ -18,6 +18,7 @@ import ConnectedAssetsCollaboratorsTabContainer
   from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
 import ConnectedAssetsJobsTabContainer from "./tables/jobsTable/ConnectedAssetsJobsTabContainer";
 import ConnectedAssetsWebhooksTabContainer from "./tables/webhooksTable/ConnectedAssetsWebhooksTabContainer";
+import ConnectedAssetsPackagesPipelinesTab from "./tables/packageTable/pipelines/ConnectedAssetsPackagesPipelinesTab";
 import sessionHelper from "utils/session.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
@@ -144,7 +145,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
       case packagesDataBlock:
         sessionHelper.replaceStoredUrlParameter("view", packagesDataBlock);
         toggleDynamicPanel(packagesDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsPackagesPipelinesTab dashboardData={dashboardData}/>);
         });
         break;
     }
@@ -284,7 +285,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
               <DataBlockBoxContainer
                 showBorder={true}
                 className={selectedDataBlock === packagesDataBlock ? "selected-data-block" : undefined}
-                //onClickFunction={() => onDataBlockSelect(packagesDataBlock)}
+                onClickFunction={() => onDataBlockSelect(packagesDataBlock)}
               >
                 <ThreeLineIconDataBlockBase
                   icon={faBox}

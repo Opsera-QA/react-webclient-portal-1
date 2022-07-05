@@ -45,3 +45,8 @@ CONNECTED_ASSETS_CONSTANTS.WEBHHOOKS_LIST = {
   PIPELINE_INFO: "pipelineInfo",
   ANALYTICS_INFO: "analyticsInfo",
 };
+
+CONNECTED_ASSETS_CONSTANTS.PACKAGES_LIST = {
+  PIPELINE_LIST: "listOfPipelines",
+  SELECTED_PIPELINE_INFO: "packageInfoForSelectedPipeline",
+};
