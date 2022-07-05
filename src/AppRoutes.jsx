@@ -133,6 +133,7 @@ import HelpDocumentationScreen from "components/about/help_documentation/HelpDoc
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
+import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -325,7 +326,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
           <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact component={UserDetailView} />
           <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
-
+          
+          <SecureRoute path="/settings/logs-export-management" exact component={LogsExportManagement} />
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />

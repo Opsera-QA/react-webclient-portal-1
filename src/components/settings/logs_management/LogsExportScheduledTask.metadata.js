@@ -1,4 +1,4 @@
-export const scheduledTaskMetadata = {
+export const logsExportScheduledTaskMetadata = {
   idProperty: "_id",
   type: "Scheduled Task",
   fields: [
@@ -57,10 +57,9 @@ export const scheduledTaskMetadata = {
       label: "Last Run",
       id: "lastRun"
     },
-
     {
       label: "S3 Tool",
-      id: "s3ToolId"      
+      id: "s3ToolId"    
     },
     {
       label: "Backup Interval",
@@ -68,11 +67,13 @@ export const scheduledTaskMetadata = {
     },
     {
       label: "File Name",
-      id: "task.s3FileName"
+      id: "task.s3FileName",
+      isRequired: true
     },
     {
       label: "Path",
-      id: "task.pushToS3Path"
+      id: "task.pushToS3Path",
+      isRequired: true
     },
     {
       label: "Region",
@@ -80,7 +81,8 @@ export const scheduledTaskMetadata = {
     },
     {
       label: "AWS Bucket Name",
-      id: "task.awsBucketName"
+      id: "task.awsBucketName",
+      isRequired: true
     }
   ],
   newObjectFields: {
@@ -89,7 +91,18 @@ export const scheduledTaskMetadata = {
     notes: "",
     active: true,
     roles: [],
-    task: {},
-    schedule: { recurring: "NONE", executionDate: new Date() },
+    task: {
+      taskType: "pipeline-log-s3-push",
+      s3ToolId: "",
+      pushToS3Interval: "24",
+      awsBucketName: "",
+      s3FileName: "",
+      region: "",
+      pushToS3Path: ""
+    },
+    schedule: {
+      recurring: "DAY",
+      executionDate: new Date()
+    },
   }
 };

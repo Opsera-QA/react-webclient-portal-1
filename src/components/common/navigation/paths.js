@@ -72,6 +72,7 @@ paths.accountSettings = "settings";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
+paths.logsExportManagement = paths.accountSettings + "/logs-export-management";
 paths.activeUserDetailView = paths.userManagement;
 paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
