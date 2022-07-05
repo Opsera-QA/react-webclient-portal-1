@@ -42,6 +42,10 @@ const connectedAssetsMetadata = {
          id: "pipeline_created_at",
        },
        {
+         label: "Create At",
+         id: "createdAt"
+       },
+       {
          label: "Last Run (in days)",
          id: "pipeline_last_run",
        },
@@ -72,6 +76,10 @@ const connectedAssetsMetadata = {
        {
          label: "Last Triggered On",
          id: "last_triggered"
+       },
+       {
+         label: "Artifact Name",
+         id: "artifactName"
        },
        {
          label: "Last Action",
@@ -108,6 +116,10 @@ const connectedAssetsMetadata = {
        {
          label: "User Created",
          id: "task_owner_name",
+       },
+       {
+         label: "User Created",
+         id: "owner_name"
        },
        {
           label: "Task URL",
