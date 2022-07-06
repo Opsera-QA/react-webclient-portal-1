@@ -73,6 +73,43 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   };
 };
 
+ 
+export const getTableHyperLinkTextColumn = (field, hyperlinkProperty, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
+  let header = getColumnHeader(field);
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    class: className,
+    maxWidth: maxWidth,
+    template: function (value, row, col) {
+      const property = col?.id;
+      if (hasStringValue(property) === true) {
+        const parsedValue = dataParsingHelper.safeObjectPropertyParser(
+            row,
+            property,
+            "",
+        );
+        const hyperlink = dataParsingHelper.safeObjectPropertyParser(
+            row,
+            hyperlinkProperty,
+            "",
+        );
+        if (hasStringValue(parsedValue) === true || typeof parsedValue === "number") {
+          if(hyperlink.length > 0) {
+            return  `<a href=${hyperlink}  target="_blank" rel="noreferrer">${parsedValue}</a>`;
+          }
+          return `${parsedValue}`;
+        }
+      }
+      return "";
+    },
+  };
+};
+
 export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
   let header = getColumnHeader(field);
 
