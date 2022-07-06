@@ -9,7 +9,7 @@ function GitHubCommitsTotalMergesDataBlock({ data }) {
             <TwoLineScoreDataBlock
                 className={"p-3"}
                 score={data}
-                subtitle={"Total Pull Requests"}
+                subtitle={"Merged Pull Requests"}
             />
         </DataBlockBoxContainer>
     );

@@ -78,6 +78,9 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -85,7 +88,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.githubMostActiveUsers?.data;

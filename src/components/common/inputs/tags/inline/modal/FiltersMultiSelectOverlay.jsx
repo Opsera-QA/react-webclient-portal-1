@@ -37,7 +37,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   const [dashboardFiltersDto, setDashboardFiltersDto] = useState(
     new Model({ ...dashboardFiltersMetadata.newObjectFields }, dashboardFiltersMetadata, false)
   );
-  const featureFlaggedOrgs = ["org-128"];
+  const featureFlaggedOrgs = ["org128"];
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

@@ -6,6 +6,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   // Github Actions
   ALL_GITHUB_ACTIONS_DATA_BLOCK: "all-github-actions-data-block",
+  LEAD_TIME_AND_RELEASE_TRACEABILITY: "lead-time-and-release-traceability-data-block",
 
   ANCHORE_VULNERABILITIES_BY_DATE: "anchore-vulnerabilities-by-date",
   AUTOMATED_TEST_RESULTS: "automated-test-results",
@@ -144,5 +145,5 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
    // GitScrapper
-   GIT_SCRAPER_METRICS: "git-scraper",
+  GIT_SCRAPER_METRICS: "git-scraper",
 };

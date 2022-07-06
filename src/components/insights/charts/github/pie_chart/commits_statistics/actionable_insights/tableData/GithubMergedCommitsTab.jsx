@@ -66,11 +66,15 @@ function GithubMergedCommitsTab({ repository, dashboardData, kpiConfiguration, i
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
+    let dashboardFilters =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+        ?.value;
     const response = await chartsActions.getGithubPullRequestsMetrics(
       kpiConfiguration,
       getAccessToken,
       cancelSource,
       dashboardTags,
+      dashboardFilters,
       dashboardOrgs,
       filterDto,
       "merged",

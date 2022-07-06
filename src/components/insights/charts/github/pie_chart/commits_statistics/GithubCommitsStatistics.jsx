@@ -65,11 +65,15 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.getGithubTotalCommitsMetrics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
         dashboardTags,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
@@ -152,10 +156,10 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
           <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
         </Col>
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
         </Col>
       </Row>
     );
@@ -264,7 +268,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             </div>
             <div className="text-center col-12">
               <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Declined Pull Requests
+                Completed Pull Requests
               </div>
             </div>
           </Col>

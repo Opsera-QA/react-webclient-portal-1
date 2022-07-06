@@ -72,10 +72,11 @@ chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, dashboardTags, 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, type, repository)=>{
+chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardFilters, dashboardOrgs, tableFilterDto, type, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubcommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -93,6 +94,8 @@ chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessTo
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
+    projectTags: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     type: type,
@@ -102,10 +105,11 @@ chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessTo
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, repository)=>{
+chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardFilters, dashboardOrgs, tableFilterDto, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubTotalCommitsPerContributorsAndRepositories";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -123,6 +127,8 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiCon
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
+    projectTags: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     repository,
@@ -131,10 +137,11 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiCon
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
+chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardFilters, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubTotalCommits";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -151,6 +158,9 @@ chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessTo
     startDate: date.start,
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    projectTags: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+
     dashboardOrgs: dashboardOrgs
   };
 
@@ -436,7 +446,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   runCount,
   pipelineId
 ) => {
-  console.log(projectName,'((((( &&&& (((((_____');
+
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
@@ -523,10 +533,11 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto)=>{
+chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardFilters, dashboardOrgs, tableFilterDto)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubListOfRepositories";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -544,6 +555,8 @@ chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSou
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
+    projectTags: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     search: tableFilterDto?.getData("search"),

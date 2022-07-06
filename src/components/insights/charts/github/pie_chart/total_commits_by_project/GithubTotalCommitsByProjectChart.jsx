@@ -47,6 +47,9 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -54,7 +57,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsChart?.data : [];

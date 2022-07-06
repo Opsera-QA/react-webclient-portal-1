@@ -59,7 +59,6 @@ function AllGithubActionsDataBlock({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      // await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -230,7 +229,9 @@ function AllGithubActionsDataBlock({
   };
 
   const getChartBody = () => {
-    const successPercent = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "all-github-actions-success-data-point");
+    const successPercent = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "workflow-success-percentage");
+    const successfulWorkflows = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "number-of-successful-workflows");
+    const failedWorkflows = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "number-of-failed-workflows");
     return (
       <>
         <div className="new-chart m-3 p-0 all-github-actions-data-block">
@@ -244,7 +245,7 @@ function AllGithubActionsDataBlock({
                     dataPoint={successPercent}
                     percentage={metrics?.successPercentage}
                     topText={"Success %"}
-                    bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage : "No previous result"}
+                    bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage + "%" : "No previous result"}
                     icon={getIcon(metrics?.trend)}
                     iconOverlayBody={getDescription(metrics?.trend)}
                   />
@@ -255,6 +256,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
+                  dataPoint={successfulWorkflows}
                   score={metrics?.successCount}
                   subtitle={"Total Successful Executions"}
                 />
@@ -264,6 +266,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
+                  dataPoint={failedWorkflows}
                   score={metrics?.failureCount}
                   subtitle={"Total Failed Executions"}
                 />

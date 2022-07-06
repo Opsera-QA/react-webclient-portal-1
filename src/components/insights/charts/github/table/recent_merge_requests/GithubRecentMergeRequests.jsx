@@ -75,6 +75,9 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       let projectName;
       if(!filterDto.getData('search')){
         projectName =filterDto.getData('projectName') ;
@@ -86,7 +89,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         undefined,
         undefined,
