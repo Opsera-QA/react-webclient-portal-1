@@ -38,7 +38,8 @@ connectedAssetsActions.getListOfRepositories = async (
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -61,7 +62,8 @@ connectedAssetsActions.getSelectedRepoDetailedInfo = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     selectedRepository: repository,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -82,7 +84,8 @@ connectedAssetsActions.getPipelinesInfo = async (
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -103,7 +106,8 @@ connectedAssetsActions.getTasksInfo = async (
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -124,7 +128,8 @@ connectedAssetsActions.getUsersInfo = async (
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -147,7 +152,8 @@ connectedAssetsActions.getSelectedUserDetailedInfo = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     selectedUser: user,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -170,7 +176,8 @@ connectedAssetsActions.getSelectedUserDetailedInfoForAnalytics = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     selectedUserAndTool: user,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -191,7 +198,8 @@ connectedAssetsActions.getJobsInfo = async (
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
-    search: tableFilterDto?.getData("search")
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -214,7 +222,8 @@ connectedAssetsActions.getWebhooksInfo = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
-    selectedRepository: repository
+    selectedRepository: repository,
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -237,7 +246,8 @@ connectedAssetsActions.getPackagesInfo = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
-    selectedPipeline: pipeline
+    selectedPipeline: pipeline,
+    sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);

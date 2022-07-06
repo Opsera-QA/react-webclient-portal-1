@@ -38,7 +38,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableDateTimeColumn(getField(fields, "task_created_at"), "task_created_at"),
-      getTableTextColumn(getField(fields, "task_last_run"), "task_last_run"),
+      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name")
     ],
     []

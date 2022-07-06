@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import {faCircleInfo, faDiagramSuccessor} from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faCompressArrowsAlt} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -32,7 +32,7 @@ function ConnectedAssetsWebhooksPipelinesTable({ repository, dashboardData, icon
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No webhooks found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
@@ -130,8 +130,8 @@ function ConnectedAssetsWebhooksPipelinesTable({ repository, dashboardData, icon
       <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective pipeline.</div>
       <FilterContainer
         isLoading={isLoading}
-        title={'List Of Pipelines'}
-        titleIcon={faDiagramSuccessor}
+        title={'List Of Webhooks'}
+        titleIcon={faCompressArrowsAlt}
         body={getTable()}
         className={"px-2 pb-2"}
         loadData={loadData}

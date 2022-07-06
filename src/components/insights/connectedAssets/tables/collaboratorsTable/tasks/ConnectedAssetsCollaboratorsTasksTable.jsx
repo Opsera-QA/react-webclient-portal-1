@@ -32,7 +32,7 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No tasks found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [

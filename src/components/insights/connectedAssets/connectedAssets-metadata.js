@@ -166,7 +166,7 @@ const connectedAssetsMetadata = {
     newObjectFields: {
        pageSize: 10,
        currentPage: 1,
-       sortOption: {text: "Newest", value: ""},
+       sortOption: {text: "Newest", value: "newest"},
        search: "",
        activeFilters: [],
        date: {
@@ -176,7 +176,7 @@ const connectedAssetsMetadata = {
        }
     },
       sortOptions: [
-       {text: "Newest", option: ""},
+       {text: "Newest", option: "newest"},
        {text: "Oldest", option: "oldest"}
 
     ]

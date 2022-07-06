@@ -38,8 +38,7 @@ function ConnectedAssetsBranchesPipelinesTable({ repository, dashboardData, icon
     () => [
       getTableTextColumn(getField(fields, "branch"), "branch"),
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
-      getTableDateTimeColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
-      getTableTextColumn(getField(fields, "rollback_branch"), "rollback_branch")
+      getTableDateTimeColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run")
     ],
     []
   );
