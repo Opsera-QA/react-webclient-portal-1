@@ -42,7 +42,7 @@ const connectedAssetsMetadata = {
          id: "pipeline_created_at",
        },
        {
-         label: "Create At",
+         label: "Created At",
          id: "createdAt"
        },
        {
@@ -110,6 +110,10 @@ const connectedAssetsMetadata = {
          id: "event"
        },
        {
+         label: "User",
+         id: "userName"
+       },
+       {
          label: "Commit Title",
          id: "commit_or_mr_title"
        },
@@ -132,6 +136,10 @@ const connectedAssetsMetadata = {
        {
           label: "Repository Last Used",
           id: "repo_last_used"
+       },
+       {
+          label: "Repository Name",
+          id: "repo_name",
        },
        {
          label: "Branch Name",
