@@ -1,32 +1,32 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
+import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import InfoText from "components/common/inputs/info_text/InfoText";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
-import EndpointApiConfigurationInputBase
-  from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
 
-function ExternalApiIntegrationStepRunEndpointRequestInputBase(
+function EndpointResponseBodyFieldSelectInput(
   {
+    fieldName,
     model,
     setModel,
-    fieldName,
     toolId,
     endpointId,
     disabled,
+    setDataFunction,
+    clearDataFunction,
+    valueField,
+    textField,
   }) {
-  const {getAccessToken} = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [endpoint, setEndpoint] = useState(undefined);
-  const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const [endpoint, setEndpoint] = useState([]);
+  const [endpointResponseBodyFields, setEndpointResponseBodyFields] = useState([]);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,6 +36,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
+    setEndpointResponseBodyFields([]);
     setEndpoint(undefined);
 
     if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
@@ -48,7 +49,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [fieldName, toolId, endpointId]);
+  }, [toolId, endpointId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -73,38 +74,55 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
       toolId,
       endpointId,
     );
-    const newEndpoint = response?.data?.data;
+    const endpoint = response?.data?.data;
 
-    if (isMounted?.current === true && newEndpoint) {
-      setEndpoint(newEndpoint);
+    if (isMounted?.current === true && endpoint) {
+      setEndpoint(endpoint);
+      const responseBodyFields = endpoint?.responseBodyFields;
+
+      if (Array.isArray(responseBodyFields)) {
+        setEndpointResponseBodyFields(responseBodyFields);
+      }
     }
   };
 
+  if (endpoint == null || endpoint?.responseBodyType !== "object") {
+    return null;
+  }
+
   return (
-    <div>
-      <InfoText errorMessage={error} />
-      <EndpointApiConfigurationInputBase
-        fieldName={fieldName}
-        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
-        endpointParameterInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}
-        endpointParameterArrayInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
-        isLoading={isLoading}
-        model={model}
-        setModel={setModel}
-        disabled={disabled}
-        endpoint={endpoint}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={endpointResponseBodyFields}
+      busy={isLoading}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      valueField={valueField}
+      textField={textField}
+      disabled={disabled}
+      error={error}
+    />
   );
 }
 
-ExternalApiIntegrationStepRunEndpointRequestInputBase.propTypes = {
+EndpointResponseBodyFieldSelectInput.propTypes = {
+  fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  fieldName: PropTypes.string,
-  toolId: PropTypes.string,
-  endpointId: PropTypes.string,
+  toolId: PropTypes.string.isRequired,
+  endpointId: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
 };
 
-export default ExternalApiIntegrationStepRunEndpointRequestInputBase;
+EndpointResponseBodyFieldSelectInput.defaultProps = {
+  valueField: "fieldName",
+  textField: "fieldName",
+};
+
+export default EndpointResponseBodyFieldSelectInput;

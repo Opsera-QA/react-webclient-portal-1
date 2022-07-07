@@ -35,15 +35,9 @@ externalApiIntegratorEndpointsActions.deleteExternalApiIntegratorEndpointV2 = as
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-externalApiIntegratorEndpointsActions.testEndpointConnection = async (getAccessToken, cancelTokenSource, endpointUrl) => {
-  const apiUrl = `/tool/external-api-integrator/connection-check`;
-  const urlParams = {
-    params: {
-      endpointUrl: endpointUrl,
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+externalApiIntegratorEndpointsActions.testConnectionValidationEndpoint = async (getAccessToken, cancelTokenSource, toolId, endpointId) => {
+  const apiUrl = `/tool/external-api-integrator/connection-check/${toolId}/endpoints/${endpointId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default externalApiIntegratorEndpointsActions;

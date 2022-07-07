@@ -25,6 +25,9 @@ function EndpointResponseEvaluationRuleInput(
     updateRuleFunction,
     endpoint,
     rule,
+    evaluationRulesInputHeight,
+    responseParameterInputHeight,
+    responseParameterArrayInputHeight,
   }) {
   const [evaluationRuleModel, setEvaluationRuleModel] = useState(undefined);
 
@@ -86,6 +89,9 @@ function EndpointResponseEvaluationRuleInput(
                 setDataFunction={(newFields) => updateMainModelFunction("field_rules", newFields)}
                 responseBodyFields={Array.isArray(endpoint?.responseBodyFields) ? [...endpoint?.responseBodyFields] : undefined}
                 disabled={disabled}
+                height={evaluationRulesInputHeight}
+                responseParameterArrayInputHeight={responseParameterArrayInputHeight}
+                responseParameterInputHeight={responseParameterInputHeight}
               />
             </Col>
           </>
@@ -159,6 +165,9 @@ EndpointResponseEvaluationRuleInput.propTypes = {
   endpoint: PropTypes.object,
   rule: PropTypes.object,
   disabled: PropTypes.bool,
+  evaluationRulesInputHeight: PropTypes.string,
+  responseParameterInputHeight: PropTypes.string,
+  responseParameterArrayInputHeight: PropTypes.string,
 };
 
 export default EndpointResponseEvaluationRuleInput;

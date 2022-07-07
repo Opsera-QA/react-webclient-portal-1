@@ -1,24 +1,26 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import InfoText from "components/common/inputs/info_text/InfoText";
 import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import InfoText from "components/common/inputs/info_text/InfoText";
+import {AuthContext} from "contexts/AuthContext";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import EndpointResponseEvaluationRulesInputBase
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
-import EndpointApiConfigurationInputBase
-  from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
 
-function ExternalApiIntegrationStepRunEndpointRequestInputBase(
+function EndpointResponseEvaluationRulesInput(
   {
-    model,
-    setModel,
-    fieldName,
     toolId,
     endpointId,
+    fieldName,
+    evaluationRuleFieldName,
+    model,
+    setModel,
     disabled,
   }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -48,7 +50,7 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [fieldName, toolId, endpointId]);
+  }, [toolId, endpointId, fieldName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -80,31 +82,47 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     }
   };
 
+  if (isMongoDbId(endpointId) !== true) {
+    return (
+      <CenteredContentWrapper>
+        <div className={"my-5"}>
+          An External API Integrator Tool and Endpoint must be selected before you can configure evaluation rules.
+        </div>
+      </CenteredContentWrapper>
+    );
+  }
+
+  if (endpoint == null) {
+    return null;
+  }
+
   return (
-    <div>
-      <InfoText errorMessage={error} />
-      <EndpointApiConfigurationInputBase
-        fieldName={fieldName}
-        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
-        endpointParameterInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}
-        endpointParameterArrayInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
-        isLoading={isLoading}
+    <div className={"mx-2"}>
+      <EndpointResponseEvaluationRulesInputBase
         model={model}
         setModel={setModel}
-        disabled={disabled}
+        isLoading={isLoading}
+        fieldName={fieldName}
+        evaluationRuleFieldName={evaluationRuleFieldName}
         endpoint={endpoint}
+        disabled={disabled}
+        evaluationRulesInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
+        responseParameterArrayInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
+        responseParameterInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}
       />
+      <InfoText errorMessage={error} />
     </div>
   );
 }
 
-ExternalApiIntegrationStepRunEndpointRequestInputBase.propTypes = {
+EndpointResponseEvaluationRulesInput.propTypes = {
+  fieldName: PropTypes.string,
+  evaluationRuleFieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  fieldName: PropTypes.string,
+  disabled: PropTypes.bool,
   toolId: PropTypes.string,
   endpointId: PropTypes.string,
-  disabled: PropTypes.bool,
 };
 
-export default ExternalApiIntegrationStepRunEndpointRequestInputBase;
+export default EndpointResponseEvaluationRulesInput;

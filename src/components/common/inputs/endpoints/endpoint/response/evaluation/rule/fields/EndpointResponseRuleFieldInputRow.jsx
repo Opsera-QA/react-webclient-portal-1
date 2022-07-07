@@ -6,7 +6,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointResponseFieldEvaluationRuleMetadata
 } from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
-import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
@@ -15,10 +14,6 @@ import CustomParameterComboBoxInput
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function EndpointResponseRuleFieldInputRow(
@@ -26,6 +21,8 @@ function EndpointResponseRuleFieldInputRow(
     disabled,
     updateFieldFunction,
     endpointBodyField,
+    responseParameterInputHeight,
+    responseParameterArrayInputHeight,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -58,7 +55,7 @@ function EndpointResponseRuleFieldInputRow(
         case "string":
           if (isSensitiveData === true) {
             return (
-              <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
+              <div style={{minHeight: responseParameterInputHeight}}>
                 <CustomParameterSelectInput
                   model={endpointFieldModel}
                   setModel={setEndpointFieldModel}
@@ -73,7 +70,7 @@ function EndpointResponseRuleFieldInputRow(
           }
 
           return (
-            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
+            <div style={{minHeight: responseParameterInputHeight}}>
               <CustomParameterComboBoxInput
                 model={endpointFieldModel}
                 setModel={setEndpointFieldModel}
@@ -95,13 +92,13 @@ function EndpointResponseRuleFieldInputRow(
               disabled={disabled}
               singularTopic={"Value"}
               pluralTopic={"Values"}
-              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
-              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_ARRAY_INPUT_HEIGHT}
+              minimumHeight={responseParameterArrayInputHeight}
+              maximumHeight={responseParameterArrayInputHeight}
             />
           );
         case "date":
           return (
-            <div style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_INPUT_HEIGHT}}>
+            <div style={{minHeight: responseParameterInputHeight}}>
               <DateTimeInput
                 dataObject={endpointFieldModel}
                 setDataObject={setEndpointFieldModel}
@@ -127,16 +124,10 @@ function EndpointResponseRuleFieldInputRow(
   const getBody = () => {
     return (
       <Row>
-        <Col xs={12}>
-          {getValueInput()}
+        <Col xs={12} className={"mb-2"}>
+          This field will meet the requirements if {endpointFieldModel?.getData("fieldName")}
         </Col>
-      </Row>
-    );
-  };
-
-  const getRuleFilterInput = () => {
-    return (
-        <div style={{minWidth: "400px"}}>
+        <Col xs={12} className={"mb-2"}>
           <ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
             model={endpointFieldModel}
             setModel={setEndpointFieldModel}
@@ -147,7 +138,11 @@ function EndpointResponseRuleFieldInputRow(
             isSensitiveData={endpointBodyField?.isSensitiveData === true || endpointBodyField?.type === "object"}
             updateMainModelFunction={updateMainModel}
           />
-        </div>
+        </Col>
+        <Col xs={12}>
+          {getValueInput()}
+        </Col>
+      </Row>
     );
   };
 
@@ -156,15 +151,9 @@ function EndpointResponseRuleFieldInputRow(
   }
 
   return (
-    <VanitySetTabContentContainer
-      titleIcon={faBracketsCurly}
-      title={`This field will meet the requirements if ${endpointFieldModel.getData("fieldName")}`}
-      titleBarInput={getRuleFilterInput()}
-    >
-      <div className={"mx-3 mt-2"}>
-        {getBody()}
-      </div>
-    </VanitySetTabContentContainer>
+    <div className={"mx-3 mt-2"}>
+      {getBody()}
+    </div>
   );
 }
 
@@ -172,6 +161,8 @@ EndpointResponseRuleFieldInputRow.propTypes = {
   endpointBodyField: PropTypes.object,
   updateFieldFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  responseParameterInputHeight: PropTypes.string,
+  responseParameterArrayInputHeight: PropTypes.string,
 };
 
 export default EndpointResponseRuleFieldInputRow;

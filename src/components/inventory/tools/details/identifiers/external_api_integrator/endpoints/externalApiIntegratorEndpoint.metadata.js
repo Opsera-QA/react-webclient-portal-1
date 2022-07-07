@@ -2,10 +2,19 @@ const externalApiIntegratorEndpointMetadata = {
   type: "External API Integrator Endpoint",
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Name",
       id: "name",
       maxLength: 50,
       regexDefinitionName: "generalTextWithSpaces",
+      isRequired: true,
+    },
+    {
+      label: "Type",
+      id: "type",
       isRequired: true,
     },
     {
@@ -25,7 +34,7 @@ const externalApiIntegratorEndpointMetadata = {
       isRequired: true,
     },
     {
-      label: "Headers",
+      label: "Request Header Configuration",
       id: "headerConfiguration",
     },
     {
@@ -35,6 +44,14 @@ const externalApiIntegratorEndpointMetadata = {
     {
       label: "Request Body Fields",
       id: "requestBodyFields",
+    },
+    {
+      label: "Request Parameters",
+      id: "requestParameters",
+    },
+    {
+      label: "Response Evaluation Rules",
+      id: "responseEvaluationRules",
     },
     {
       label: "Response Body Type",
@@ -48,14 +65,17 @@ const externalApiIntegratorEndpointMetadata = {
   ],
   newObjectFields: {
     name: "",
+    type: "",
     description: "",
     requestType: "get",
     url: "",
     headerConfiguration: {},
     queryParameterFields: [],
     requestBodyFields: [],
+    requestParameters: {},
     responseBodyType: "object",
     responseBodyFields: [],
+    responseEvaluationRules: {},
   }
 };
 

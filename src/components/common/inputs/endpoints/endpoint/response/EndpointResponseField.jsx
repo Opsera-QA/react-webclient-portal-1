@@ -7,9 +7,10 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
 
-function ExternalRestApiIntegrationEndpointResponseField({
+function EndpointResponseField({
   responseObject,
   height,
+  titleText,
 }) {
   const getResponseBodyField = () => {
     const response = responseObject?.message;
@@ -39,7 +40,7 @@ function ExternalRestApiIntegrationEndpointResponseField({
     <FieldContainer>
       <InfoContainer
         titleIcon={faCode}
-        titleText={`External API Response`}
+        titleText={titleText}
         minimumHeight={height}
         maximumHeight={height}
       >
@@ -55,9 +56,10 @@ function ExternalRestApiIntegrationEndpointResponseField({
   );
 }
 
-ExternalRestApiIntegrationEndpointResponseField.propTypes = {
+EndpointResponseField.propTypes = {
   responseObject: PropTypes.object,
   height: PropTypes.string,
+  titleText: PropTypes.string,
 };
 
-export default ExternalRestApiIntegrationEndpointResponseField;
+export default EndpointResponseField;
