@@ -49,7 +49,7 @@ const azureWebappsStepFormMetadata = {
       },
     },
     {
-      label: "Azure Push Step",
+      label: "Artifact Step",
       id: "artifactStepId",
       isRequired: true
     },            
