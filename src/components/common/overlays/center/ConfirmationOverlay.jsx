@@ -42,7 +42,7 @@ function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPa
     return children;
   };
 
-  if (!showPanel) {
+  if (showPanel === false) {
     return null;
   }
 
