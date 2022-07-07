@@ -24,6 +24,10 @@ dataParsingHelper.parseObject = (object, defaultValue = {}) => {
   return object != null && typeof object === "object" && Object.keys(object).length > 0 ? object : defaultValue;
 };
 
+dataParsingHelper.hasObjectProperties = (object) => {
+  return object != null && typeof object === "object" && Object.keys(object).length > 0;
+};
+
 dataParsingHelper.parseDate = (date, defaultValue) => {
   if (!date) {
     return defaultValue;

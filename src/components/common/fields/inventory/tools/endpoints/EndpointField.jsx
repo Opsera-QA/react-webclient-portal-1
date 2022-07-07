@@ -12,6 +12,9 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import modelHelpers from "components/common/model/modelHelpers";
 import externalApiIntegratorEndpointMetadata
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import ExternalApiIntegratorEndpointSummaryCard
+  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointSummaryCard";
 
 function EndpointField({ model, fieldName, endpointId, toolId, className }) {
   const toastContext = useContext(DialogToastContext);
@@ -74,8 +77,12 @@ function EndpointField({ model, fieldName, endpointId, toolId, className }) {
     }
   };
 
-  const getEndpointName = () => {
-    if (isLoading) {
+  const getBody = () => {
+    if (hasStringValue(model?.getData(fieldName)) !== true) {
+      return "";
+    }
+
+    if (isLoading === true || endpointModel == null) {
       return (
         <span>
           <LoadingIcon className={"mr-1"}/>
@@ -84,25 +91,12 @@ function EndpointField({ model, fieldName, endpointId, toolId, className }) {
       );
     }
 
-    if (endpointModel) {
-      return endpointModel?.getData("name");
-    }
-
-    return (`
-      Endpoint could not be found with ID: [${model?.getData(fieldName)}]. 
-      The Endpoint or Tool may have been deleted or the Tool's access rules may have changed.
-    `);
-  };
-
-  const getBody = () => {
-    if (model?.getData(fieldName) == null || model?.getData(fieldName) === "") {
-      return null;
-    }
-
     return (
-      <span>
-        <span>{getEndpointName()}</span>
-      </span>
+      <div className={"mt-2"}>
+        <ExternalApiIntegratorEndpointSummaryCard
+          endpointModel={endpointModel}
+        />
+      </div>
     );
   };
 

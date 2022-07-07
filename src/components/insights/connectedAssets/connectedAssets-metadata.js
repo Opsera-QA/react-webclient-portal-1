@@ -33,9 +33,17 @@ const connectedAssetsMetadata = {
         label: "Number Of Runs",
         id: "task_run_count",
       },
+      {
+        label: "Number Of Runs",
+        id: "run_count"
+      },
        {
          label: "Created At",
          id: "pipeline_created_at",
+       },
+       {
+         label: "Create At",
+         id: "createdAt"
        },
        {
          label: "Last Run (in days)",
@@ -51,7 +59,35 @@ const connectedAssetsMetadata = {
        },
        {
          label: "Last Run (in days)",
-         id: "updatedAt"
+         id: "pipeline_updatedAt"
+       },
+       {
+         label: "Success Count",
+         id: "success_count",
+       },
+       {
+         label: "Failed Count",
+         id: "failed_count",
+       },
+       {
+         label: "Last Run (in days)",
+         id: "tasks_updatedAt"
+       },
+       {
+         label: "Last Triggered On",
+         id: "last_triggered"
+       },
+       {
+         label: "Artifact Name",
+         id: "artifactName"
+       },
+       {
+         label: "Last Action",
+         id: "last_action"
+       },
+       {
+         label: "Webhook Status",
+         id: "status"
        },
        {
          label: "Created At",
@@ -62,8 +98,28 @@ const connectedAssetsMetadata = {
          id: "task_last_run",
        },
        {
+         label: "Repository Name",
+         id: "repositoryName"
+       },
+       {
+        label: "Activity Date",
+        id: "activityDate"
+       },
+       {
+         label: "Event Type",
+         id: "event"
+       },
+       {
+         label: "Commit Title",
+         id: "commit_or_mr_title"
+       },
+       {
          label: "User Created",
          id: "task_owner_name",
+       },
+       {
+         label: "User Created",
+         id: "owner_name"
        },
        {
           label: "Task URL",
@@ -110,7 +166,7 @@ const connectedAssetsMetadata = {
     newObjectFields: {
        pageSize: 10,
        currentPage: 1,
-       sortOption: {text: "Newest", value: ""},
+       sortOption: {text: "Newest", value: "newest"},
        search: "",
        activeFilters: [],
        date: {
@@ -120,7 +176,7 @@ const connectedAssetsMetadata = {
        }
     },
       sortOptions: [
-       {text: "Newest", option: ""},
+       {text: "Newest", option: "newest"},
        {text: "Oldest", option: "oldest"}
 
     ]

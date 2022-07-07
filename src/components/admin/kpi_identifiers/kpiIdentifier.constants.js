@@ -99,6 +99,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   OPSERA_STATUS_BY_PIPELINE: "opsera-status-by-pipeline",
 
   QA_MANUAL_TEST: "qa-manual-test",
+  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
 
   SALESFORCE_DURATION_BY_STAGE: "salesforce-duration-by-stage",
   SDLC_DURATION_STATISTICS: "sdlc-duration-statistics",
@@ -116,6 +117,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_MANUAL_TEST: "sfdc-manual-test",
   SALESFORCE_PROFILE_MIGRATIONS: "sfdc-profile-migrations",
   SALESFORCE_UNIT_TESTING: "sfdc-unit-testing",
+  SALESFORCE_COMPONENTS_CHART :  "salesforce-components-chart",
 
   // Sonar
   SONAR_BUGS: "sonar-bugs",

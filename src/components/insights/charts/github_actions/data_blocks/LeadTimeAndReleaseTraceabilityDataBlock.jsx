@@ -30,6 +30,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const isMounted = useRef(false);
   const [metrics, setMetrics] = useState([]);
   const [deploymentMetrics, setDeploymentMetrics] = useState([]);
+  const [timeToCommitMetrics, setTimeToCommitMetrics] = useState([]);
   const [applicationDeploymentMetrics, setApplicationDeploymentMetrics] = useState([]);
   const [applicationLeadTimeMetrics, setApplicationLeadTimeMetrics] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -66,7 +67,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
       let dashboardFilters =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
             ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -90,40 +91,26 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardFilters,
         dashboardOrgs
       );
-
       const deploymentMetrics = deploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
 
-      // const applicationDeploymentResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-      //   getAccessToken,
-      //   cancelSource,
-      //   "githubActionsApplicationDeploymentFrequency",
-      //   kpiConfiguration,
-      //   dashboardTags,
-      //   null,
-      //   null,
-      //   dashboardOrgs
-      // );
-
-      // const applicationDeploymentMetrics = applicationDeploymentResponse?.data?.data[0]?.deploymentFrequency?.data;
-
-      // const applicationLeadTimeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
-      //   getAccessToken,
-      //   cancelSource,
-      //   "githubActionsApplicationLeadTime",
-      //   kpiConfiguration,
-      //   dashboardTags,
-      //   null,
-      //   null,
-      //   dashboardOrgs
-      // );
-
-      // const applicationLeadTimeMetrics = applicationLeadTimeResponse?.data?.data[0]?.leadTime?.data;
+      const timeToCommitResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubBranchCreationToFirstCommit",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        dashboardFilters,
+        dashboardOrgs
+      );
+      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.timeToCommit?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
         setDeploymentMetrics(deploymentMetrics[0]);
-        setApplicationDeploymentMetrics(applicationDeploymentMetrics);
-        setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
+        // setTimeToCommitMetrics(timeToCommitMetrics[0]);
+        // setApplicationDeploymentMetrics(applicationDeploymentMetrics);
+        // setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -244,7 +231,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineNumberDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
                       className={`${getIconColor(metrics?.trend)}`}
-                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
+                      numberData={getTimeDisplay(metrics?.timeToCommit)}
                       supportingText={"minutes"}
                       topText={"Average Time to First Commit"}
                       bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
@@ -256,47 +243,6 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               </div>
             </Col>}
           </Row>
-          {/*<Row className={"mt-5"}>*/}
-          {/*  <Col xs={12}>*/}
-          {/*    <H4MetricSubHeader subheaderText={'Top Applications'} />*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"High Lead Time"}*/}
-          {/*        content={"oswestry"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"High Deployment Frequency"}*/}
-          {/*        content={"grosmont"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
-          {/*<Row style={{marginTop:'1rem'}}>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"Minimal/No activity in last few weeks"}*/}
-          {/*        content={"oswestry"}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*  <Col md={6}>*/}
-          {/*    <DataBlockBoxContainer showBorder={true}>*/}
-          {/*      <MetricContentDataBlockBase*/}
-          {/*        title={"Highest Commits"}*/}
-          {/*        content={""}*/}
-          {/*      />*/}
-          {/*    </DataBlockBoxContainer>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
         </div>
       </>
     );

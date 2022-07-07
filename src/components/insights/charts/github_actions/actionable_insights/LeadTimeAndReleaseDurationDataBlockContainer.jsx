@@ -10,10 +10,7 @@ import DeploymentFrequencyStatisticsDataBlockContainer
 import LeadTimeAndReleaseDurationDeployMetric from "../bar_chart/metrics/deploy/LeadTimeAndReleaseDurationDeployMetric";
 
 function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, dashboardData, meanData, countData, metric, statisticsData, chartData }) {
-  // console.log('LeadTimeAndReleaseDurationDataBlockContainer data', data);
-  console.log('LeadTimeAndReleaseDurationDataBlockContainer', data, meanData, countData, metric, statisticsData, chartData);
   let className = `p-2 dark-gray-text-primary`;
-  console.log(data);
   return (
     <>
       <HorizontalDataBlocksContainer title={"Metrics Total"} className="mt-4">
@@ -31,7 +28,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
             <DataBlockBoxContainer showBorder={true}>
               <TwoLineScoreDataBlock
                 score={data.total_repo_changes}
-                subtitle={"Total Repo Changes"}
+                subtitle={"Total Repos Changed"}
                 className={className}
               />
             </DataBlockBoxContainer>

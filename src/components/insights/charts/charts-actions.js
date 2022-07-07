@@ -24,7 +24,7 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
-  getAmexFiltersFromKpiConfiguration,
+  getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
@@ -461,7 +461,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let amexFilters = getAmexFiltersFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
@@ -513,7 +513,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
     headCommitSha: headCommitSha,
-    amexFilters: useKpiTags ? amexFilters : null,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
@@ -547,6 +547,7 @@ chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSou
     size: tableFilterDto?.getData("pageSize"),
     search: tableFilterDto?.getData("search"),
     type: tableFilterDto?.getData("type"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

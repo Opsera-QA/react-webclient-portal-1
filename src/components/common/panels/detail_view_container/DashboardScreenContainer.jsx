@@ -34,10 +34,11 @@ function DashboardScreenContainer(
     isLoading,
     loadData,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
   const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
   const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
+  const [user, setUser] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -50,11 +51,18 @@ function DashboardScreenContainer(
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    getUserDetails();
+
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
+
+  const getUserDetails = async () => {
+    let userObject = await getUserRecord();
+    setUser(userObject);
+  };
 
   const handleClose = async () => {
     setActiveTab("viewer");
@@ -105,6 +113,7 @@ function DashboardScreenContainer(
             dashboardModel={dashboardModel}
             setDashboardModel={setDashboardModel}
             loadData={loadData}
+            user={user}
             className={"ml-3"}
           />
           {getSettingsIcon()}

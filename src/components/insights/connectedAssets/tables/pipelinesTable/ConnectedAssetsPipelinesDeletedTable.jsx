@@ -35,7 +35,8 @@ function ConnectedAssetsPipelinesDeletedTable({ dashboardData }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
-      getTableDateTimeColumn(getField(fields, "updatedAt"), "updatedAt"),
+      getTableDateTimeColumn(getField(fields, "pipeline_updatedAt"), "pipeline_updatedAt"),
+      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
     ],
     []
   );

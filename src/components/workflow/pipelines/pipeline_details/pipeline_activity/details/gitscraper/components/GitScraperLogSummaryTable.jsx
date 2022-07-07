@@ -5,15 +5,20 @@ import gitScraperReportMetaData
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
   getColumnHeader, getColumnId,
-  getTableTextColumn
+  getTableTextColumn, getTableHyperLinkTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
+import { pluralize } from "components/common/helpers/string-helpers";
 
 function GitScraperLogSummaryTable({ gitScraperObj }) {
   const fields = gitScraperReportMetaData?.fields;
+
+  const getTooltipTemplate = () => {
+    return "Click to view details";
+  };
   
   const columns = useMemo(
     () => [
@@ -21,7 +26,14 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
       getTableTextColumn(getField(fields, "commit")),
       getTableTextColumn(getField(fields, "commitHash")),
       getTableTextColumn(getField(fields, "path")),
-      getTableTextColumn(getField(fields, "lineNumber")),
+      getTableHyperLinkTextColumn(
+        getField(fields, "lineNumber"),
+        "linkToSecret",
+        "no-wrap-inline",
+        undefined,
+        undefined,
+        getTooltipTemplate,
+      ),
       getTableTextColumn(getField(fields, "reason")),
     ],
     []
@@ -51,7 +63,7 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
       showBorder={false}
       body={getComponentResultsTable()}
       titleIcon={faExclamationCircle}
-      title={`Report`}
+      title={`${pluralize(gitScraperObj?.length, 'Report')} Found`}
       className={"mt-2"}
     />
   );

@@ -3,33 +3,51 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import PipelineTaskSummaryPanelBase
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
-import pipelineHelpers from "components/workflow/pipelineHelpers";
-import Row from "react-bootstrap/Row";
-import ExternalRestApiIntegrationEndpointResponseField
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointResponseField";
-import ExternalRestApiIntegrationEndpointRequestField
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointRequestField";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import ExternalRestApiIntegrationEndpointSummary
+  , {
+  EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES,
+} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 
 // TODO: Make fully fleshed out report.
-function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel }) {
+function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel, endpoint, endpoints }) {
   const getEndpointFields = () => {
-    const data = externalRestApiIntegrationStepTaskModel?.getPersistData();
-    const endpoint = pipelineHelpers.parseSummaryLogApiResponseValue(data, "endpoint");
+    const parsedEndpoints = dataParsingHelper.parseObject(endpoints, false);
+
+    if (parsedEndpoints) {
+      const connectionCheckEndpoint = parsedEndpoints?.connectionCheckEndpoint;
+      const headerTokenEndpoint = parsedEndpoints?.headerTokenEndpoint;
+      const statusCheckEndpoint = parsedEndpoints?.statusCheckEndpoint;
+      const callOperationEndpoint = parsedEndpoints?.callOperationEndpoint;
+
+      return (
+        <div>
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={connectionCheckEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CONNECTION_VALIDATION}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={headerTokenEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.HEADER_TOKEN}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={statusCheckEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.STATUS_CHECK}
+          />
+          <ExternalRestApiIntegrationEndpointSummary
+            endpoint={callOperationEndpoint}
+            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CALL_OPERATION}
+          />
+        </div>
+      );
+    }
+
 
     if (endpoint) {
       return (
-        <Row>
-          <Col xs={6}>
-            <ExternalRestApiIntegrationEndpointRequestField
-              endpointObject={endpoint}
-            />
-          </Col>
-          <Col xs={6}>
-            <ExternalRestApiIntegrationEndpointResponseField
-              responseObject={endpoint?.response}
-            />
-          </Col>
-        </Row>
+        <ExternalRestApiIntegrationEndpointSummary
+          endpoint={endpoint}
+        />
       );
     }
   };
@@ -49,6 +67,8 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
 
 ExternalRestApiIntegrationTaskSummaryPanel.propTypes = {
   externalRestApiIntegrationStepTaskModel: PropTypes.object,
+  endpoint: PropTypes.object,
+  endpoints: PropTypes.object,
 };
 
 
