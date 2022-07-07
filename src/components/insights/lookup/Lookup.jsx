@@ -444,6 +444,7 @@ const Lookup = () => {
           setFilterDto={onFilterChange}
           dropdownFilters={getDropdownFilters()}
           body={<LookupResults isLoading={isLoading} results={activeTables} />}
+          hideFiltersOnTrigger={false}
         />
       </Container>
     </ScreenContainer>

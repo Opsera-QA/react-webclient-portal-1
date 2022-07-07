@@ -16,7 +16,8 @@ function FilterButtons({
   isLoading,
   filterBtnClassName,
   includeButtonText,
-  filterDropdownTitle
+  filterDropdownTitle,
+  hideFiltersOnTrigger
 }) {
   const loadFilters = async () => {
     if (isLoading === true) {
@@ -111,7 +112,7 @@ function FilterButtons({
   return (
     <div className={className}>
       <div className="d-flex">
-        <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
+        <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose={hideFiltersOnTrigger} placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
             <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
               <span><IconBase icon={faFilter}/></span>
@@ -138,7 +139,8 @@ FilterButtons.propTypes = {
   className: PropTypes.string,
   filterBtnClassName: PropTypes.string,
   includeButtonText: PropTypes.bool,
-  filterDropdownTitle: PropTypes.string
+  filterDropdownTitle: PropTypes.string,
+  hideFiltersOnTrigger: PropTypes.bool
 };
 
 export default FilterButtons;

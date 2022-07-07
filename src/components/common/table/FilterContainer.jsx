@@ -29,6 +29,7 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
+    hideFiltersOnTrigger,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -53,6 +54,7 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
+        hideFiltersOnTrigger={hideFiltersOnTrigger}
       />
     );
   };
@@ -132,12 +134,14 @@ FilterContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
+  hideFiltersOnTrigger: PropTypes.bool
 };
 
 FilterContainer.defaultProps = {
   showRefreshButton: true,
-  disableNewRecordButton: false
+  disableNewRecordButton: false,
+  hideFiltersOnTrigger: true,
 };
 
 export default FilterContainer;

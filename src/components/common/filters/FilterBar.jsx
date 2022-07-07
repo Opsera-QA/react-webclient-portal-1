@@ -29,7 +29,8 @@ function FilterBar(
     handleExportFunction,
     handleImportFunction,
     showRefreshButton,
-    disableNewRecordButton
+    disableNewRecordButton,
+    hideFiltersOnTrigger
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -127,6 +128,7 @@ function FilterBar(
             loadData={loadData}
             dropdownFilters={dropdownFilters}
             filterDto={filterModel}
+            hideFiltersOnTrigger={hideFiltersOnTrigger}
           />
           {exportButton}
         </div>
@@ -154,7 +156,8 @@ FilterBar.propTypes = {
   handleExportFunction: PropTypes.func,
   handleImportFunction: PropTypes.func,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
+  hideFiltersOnTrigger: PropTypes.bool
 };
 
 FilterBar.defaultProps = {
