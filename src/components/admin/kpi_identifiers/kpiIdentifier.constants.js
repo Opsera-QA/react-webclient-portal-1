@@ -118,6 +118,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_MANUAL_TEST: "sfdc-manual-test",
   SALESFORCE_PROFILE_MIGRATIONS: "sfdc-profile-migrations",
   SALESFORCE_UNIT_TESTING: "sfdc-unit-testing",
+  SALESFORCE_COMPONENTS_CHART :  "salesforce-components-chart",
 
   // Sonar
   SONAR_BUGS: "sonar-bugs",
