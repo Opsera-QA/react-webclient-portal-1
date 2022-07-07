@@ -42,7 +42,7 @@ function ExternalApiRestIntegrationStepSummaryVerticalTabContainer(
             tabName={EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_VALIDATION_CONFIGURATION}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tooltipText={"This is the an optional prerequisite operation that validates the connectivity of the external tool before making the call operation request."}
+            tooltipText={"This is an optional prerequisite operation that validates the connectivity of the external tool before making the call operation request."}
           />
           <VanitySetVerticalTab
             tabText={"Call Operation"}
