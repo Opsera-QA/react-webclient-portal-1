@@ -13,11 +13,11 @@ function GithubCommitsVerticalTabContainer({ highestMergesMetric }) {
   }, [highestMergesMetric]);
 
   return (
-    <VanitySetVerticalTabContainer className={"h-100"}>
-      {highestMergesMetric.map((item, index) => {
-        return <VanitySetVerticalTab key={index} icon={faFileCode} tabText={item.label} tabName={item.id} />;
-      })}
-    </VanitySetVerticalTabContainer>
+      <VanitySetVerticalTabContainer className={"h-100"}>
+        {highestMergesMetric.map((item, index) => {
+          return <VanitySetVerticalTab key={index} icon={faFileCode} tabText={item.label} tabName={item.id} />;
+        })}
+      </VanitySetVerticalTabContainer>
   );
 }
 GithubCommitsVerticalTabContainer.propTypes = {

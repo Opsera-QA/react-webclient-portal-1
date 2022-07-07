@@ -5,7 +5,6 @@ import ValidateEndpointButton
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-// TODO: Build
 function ValidateEndpointPanel(
   {
     endpoint,

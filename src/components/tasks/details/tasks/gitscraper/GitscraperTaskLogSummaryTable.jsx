@@ -4,15 +4,20 @@ import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-ico
 import gitScraperReportMetaData
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
-    getTableDateTimeColumn, getTableTextColumn,
+    getTableDateTimeColumn, getTableTextColumn, getTableHyperLinkTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
+import {pluralize} from "../../../../common/helpers/string-helpers";
 
 function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
   const fields = gitScraperReportMetaData?.fields;
+
+  const getTooltipTemplate = () => {
+    return "Click to view details";
+  };
 
   const columns = useMemo(
     () => [
@@ -20,7 +25,14 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
       getTableTextColumn(getField(fields, "commit")),
       getTableTextColumn(getField(fields, "commitHash")),
       getTableTextColumn(getField(fields, "path")),
-      getTableTextColumn(getField(fields, "lineNumber")),
+      getTableHyperLinkTextColumn(
+        getField(fields, "lineNumber"),
+        "linkToSecret",
+        "no-wrap-inline",
+        undefined,
+        undefined,
+        getTooltipTemplate,
+      ),
       getTableTextColumn(getField(fields, "reason")),
       getTableTextColumn(getField(fields, "repository")),
       getTableDateTimeColumn(getField(fields, "scannedOn")),
@@ -52,7 +64,7 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
       showBorder={false}
       body={getComponentResultsTable()}
       titleIcon={faExclamationCircle}
-      title={`Report`}
+      title={`${pluralize(gitScraperObj?.length, 'Report')} Found`}
       className={"mt-2"}
     />
   );

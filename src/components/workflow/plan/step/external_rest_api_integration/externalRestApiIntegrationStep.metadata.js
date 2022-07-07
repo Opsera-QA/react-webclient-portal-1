@@ -7,36 +7,36 @@ export const externalRestApiIntegrationStepMetadata = {
       isRequired: true,
     },
     {
-      label: "Connection Check Endpoint",
+      label: "Connection Validation Endpoint",
       id: "connectionCheckEndpointId",
       isRequired: true,
     },
     {
-      label: "Use Connection Check",
+      label: "Validate Connection",
       id: "useConnectionCheck",
     },
     {
-      label: "Connection Check Request Parameters",
+      label: "Connection Validation Request Parameters",
       id: "connectionCheckRequestParameters",
       isRequired: true,
     },
     {
-      label: "Connection Check Response Evaluation Rules",
+      label: "Connection Validation Response Evaluation Rules",
       id: "connectionCheckResponseEvaluationRules",
       isRequired: true,
     },
     {
-      label: "Run Trigger Endpoint",
+      label: "Call Operation Endpoint",
       id: "runEndpointId",
       isRequired: true,
     },
     {
-      label: "Run Trigger Request Parameters",
+      label: "Call Operation Request Parameters",
       id: "runEndpointRequestParameters",
       isRequired: true,
     },
     {
-      label: "Run Trigger Response Evaluation Rules",
+      label: "Call Operation Response Evaluation Rules",
       id: "runEndpointResponseEvaluationRules",
       isRequired: true,
     },

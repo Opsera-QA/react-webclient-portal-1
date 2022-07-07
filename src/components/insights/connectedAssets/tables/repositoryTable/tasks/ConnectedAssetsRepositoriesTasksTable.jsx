@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faListCheck } from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faListCheck} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -15,6 +15,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 import {useHistory} from "react-router-dom";
+import IconBase from "../../../../../common/icons/IconBase";
 
 function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +38,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableDateTimeColumn(getField(fields, "task_created_at"), "task_created_at"),
-      getTableTextColumn(getField(fields, "task_last_run"), "task_last_run"),
+      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name")
     ],
     []
@@ -127,6 +128,7 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
 
   return (
     <div className={"p-2"}>
+      <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective task.</div>
       <FilterContainer
         isLoading={isLoading}
         title={'List Of Tasks'}

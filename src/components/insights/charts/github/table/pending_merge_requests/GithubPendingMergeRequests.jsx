@@ -6,11 +6,17 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import githubPendingMergeRequestsMetadata from "components/insights/charts/github/table/pending_merge_requests/github-pending-merge-requests-metadata.js";
 import Model from "core/data_model/model";
-import PendingMergeRequestCardView from "../../card/PendingMergeRequestCardView";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import GithubPendingMergeRequestVerticalTabContainer from "./GithubPendingMergeRequestVerticalTabContainer";
 import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers";
+import CustomTable from "../../../../../common/table/CustomTable";
+import { getField } from "components/common/metadata/metadata-helpers";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubPendingMergeRequestsMetadata.fields;
@@ -23,6 +29,20 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...githubPendingMergeRequestsMetadata.newObjectFields  }, githubPendingMergeRequestsMetadata, false)
+  );
+
+  const noDataMessage = "No Data is available for this chart at this time";
+
+  const columns = useMemo(
+      () => [
+        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+        getTableTextColumn(getField(fields, "AssigneeName")),
+        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      ],
+      []
   );
 
   useEffect(() => {
@@ -98,7 +118,6 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       }
     }
   };
-  
   const getVerticalTabContainer = () => {
     return <GithubPendingMergeRequestVerticalTabContainer
         kpiConfiguration={kpiConfiguration}
@@ -116,7 +135,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
           <FilterContainer
               filterDto={tableFilterDto}
               setFilterDto={setTableFilterDto}
-              body={getCardView()}
+              body={getBody()}
               isLoading={isLoading}
               loadData={loadData}
               supportSearch={true}
@@ -124,25 +143,32 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         </VanitySetTabViewContainer>
     );
   };
-  const getCardView = () => {
+  const getBody = () => {
     return (
-        <PendingMergeRequestCardView
-            mergeRequestDataFilterDto={tableFilterDto}
-            setMergeRequestDataFilterDto={setTableFilterDto}
-            isLoading={isLoading}
-            data={metrics}
-            loadData={loadData}
-        />
-    );
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
+  );
   };
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
     newFilterDto.setData("projectName",projectName);
     newFilterDto.setDefaultValue("search");
-    setTableFilterDto({ ...tableFilterDto });
-    setActiveTab(projectName);
-    await loadData(cancelTokenSource,newFilterDto);
+    setTableFilterDto({ ...newFilterDto });
+    // if no projectName then right side table will be empty and api will not be called
+    if(!projectName){
+      setMetrics([]);
+    } else {
+      setActiveTab(projectName);
+      await loadData(cancelTokenSource,newFilterDto);
+    }
   };
   const getFilterContainer = () => {
     return (
@@ -151,7 +177,6 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
             currentView={getTabContentContainer()}
             defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
             bodyClassName="mx-0"
-            minimumHeight="calc(100vh - 264px)"
             maximumHeight="calc(100vh - 264px)"
             overflowYContainerStyle={"hidden"}
             overflowYBodyStyle="auto"

@@ -61,14 +61,16 @@ const pipelineFilterMetadata = {
 };
 
 export class PipelineFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData) {
+  constructor(
+    useUrlParameters = true,
+  ) {
     super(pipelineFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.PIPELINE_FILTER_MODEL_DATA;
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (useUrlParameters === true) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.PIPELINE_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {

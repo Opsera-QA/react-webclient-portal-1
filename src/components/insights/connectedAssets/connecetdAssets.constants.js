@@ -27,3 +27,26 @@ CONNECTED_ASSETS_CONSTANTS.TASKS_LIST = {
   INACTIVE_TASKS: "inactiveTaskInfo",
   DELETED_TASKS: "deletedTaskInfo"
 };
+
+CONNECTED_ASSETS_CONSTANTS.COLLABORATORS_LIST = {
+  LIST_OF_USERS: "listOfUsers",
+  PIPELINE_ACTIVITY: "pipelineActivity",
+  TASK_ACTIVITY: "taskActivity",
+  LIST_OF_USERS_FROM_ANALYTICS: "listOfUsersFromAnalytics",
+  ANALYTICS_ACTIVITY: "analyticsActivity"
+};
+
+CONNECTED_ASSETS_CONSTANTS.JOBS_LIST = {
+  PIPELINE_JOBS: "pipelineJobs",
+  TASK_JOBS: "taskJobs",
+};
+
+CONNECTED_ASSETS_CONSTANTS.WEBHHOOKS_LIST = {
+  PIPELINE_INFO: "pipelineInfo",
+  ANALYTICS_INFO: "analyticsInfo",
+};
+
+CONNECTED_ASSETS_CONSTANTS.PACKAGES_LIST = {
+  PIPELINE_LIST: "listOfPipelines",
+  SELECTED_PIPELINE_INFO: "packageInfoForSelectedPipeline",
+};

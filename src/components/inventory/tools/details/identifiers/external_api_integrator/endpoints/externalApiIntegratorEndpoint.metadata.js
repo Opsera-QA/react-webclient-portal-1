@@ -2,6 +2,10 @@ const externalApiIntegratorEndpointMetadata = {
   type: "External API Integrator Endpoint",
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Name",
       id: "name",
       maxLength: 50,
@@ -30,7 +34,7 @@ const externalApiIntegratorEndpointMetadata = {
       isRequired: true,
     },
     {
-      label: "Headers",
+      label: "Request Header Configuration",
       id: "headerConfiguration",
     },
     {

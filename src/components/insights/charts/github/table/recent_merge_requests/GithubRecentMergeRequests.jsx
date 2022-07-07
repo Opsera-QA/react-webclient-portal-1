@@ -7,13 +7,17 @@ import chartsActions from "components/insights/charts/charts-actions";
 
 import githubRecentMergeRequestsMetadata from "components/insights/charts/github/table/recent_merge_requests/github-recent-merge-requests-metadata.js";
 import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ModalLogs from "components/common/modal/modalLogs";
-import RecentMergeRequestCardView from "../../card/RecentMergeRequestCardView";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
 import GithubRecentMergeRequestVerticalTabContainer from "./GithubRecentMergeRequestVerticalTabContainer";
+import CustomTable from "../../../../../common/table/CustomTable";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
@@ -28,6 +32,19 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     new Model({ ...githubRecentMergeRequestsMetadata.newObjectFields }, githubRecentMergeRequestsMetadata, false)
   );
 
+  const noDataMessage = "No Data is available for this chart at this time";
+
+  const columns = useMemo(
+      () => [
+        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+        getTableTextColumn(getField(fields, "AssigneeName")),
+        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      ],
+      []
+  );
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -122,7 +139,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
           <FilterContainer
               filterDto={tableFilterDto}
               setFilterDto={setTableFilterDto}
-              body={getCardView()}
+              body={getBody()}
               isLoading={isLoading}
               loadData={loadData}
               supportSearch={true}
@@ -130,25 +147,32 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         </VanitySetTabViewContainer>
     );
   };
-  const getCardView = () => {
+  const getBody = () => {
     return (
-      <RecentMergeRequestCardView
-        mergeRequestDataFilterDto={tableFilterDto}
-        setMergeRequestDataFilterDto={setTableFilterDto}
-        isLoading={isLoading}
+      <CustomTable
+        columns={columns}
         data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
         loadData={loadData}
+        scrollOnLoad={false}
       />
     );
   };
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
-    newFilterDto.setDefaultValue("search");
     newFilterDto.setData("projectName",projectName);
-    setTableFilterDto({ ...tableFilterDto });
-    setActiveTab(projectName);
-    await loadData(cancelTokenSource,newFilterDto);
+    newFilterDto.setDefaultValue("search");
+    setTableFilterDto({ ...newFilterDto });
+    // if no projectName then right side table will be empty and api will not be called
+    if(!projectName){
+      setMetrics([]);
+    } else {
+      setActiveTab(projectName);
+      await loadData(cancelTokenSource,newFilterDto);
+    }
   };
   const getFilterContainer = () => {
     return (
@@ -157,7 +181,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
             currentView={getTabContentContainer()}
             defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
             bodyClassName="mx-0"
-            minimumHeight="calc(100vh - 264px)"
             maximumHeight="calc(100vh - 264px)"
             overflowYContainerStyle={"hidden"}
             overflowYBodyStyle="auto"

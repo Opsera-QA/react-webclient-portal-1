@@ -19,12 +19,20 @@ function FilterButtons({
   filterDropdownTitle
 }) {
   const loadFilters = async () => {
+    if (isLoading === true) {
+      return;
+    }
+
     filterDto?.setData("currentPage", 1);
     loadData(filterDto);
     document.body.click();
   };
 
   const resetFilters = async () => {
+    if (isLoading === true) {
+      return;
+    }
+
     let newFilterModel;
 
     if (filterDto?.getNewInstance) {
@@ -103,7 +111,7 @@ function FilterButtons({
   return (
     <div className={className}>
       <div className="d-flex">
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
+        <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
             <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
               <span><IconBase icon={faFilter}/></span>
