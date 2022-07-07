@@ -69,6 +69,9 @@ function SuccessExecutionsDetailedActionableInsights({ repositoryName, actionNam
           ?.value;
       const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -76,7 +79,7 @@ function SuccessExecutionsDetailedActionableInsights({ repositoryName, actionNam
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
