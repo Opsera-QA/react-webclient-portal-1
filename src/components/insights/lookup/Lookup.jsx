@@ -19,6 +19,7 @@ import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import LookupResults from "./LookupResults";
+import FilterContainer from "components/common/table/FilterContainer";
 
 const cleanUrlPath = ({url}) => {
 	let returnUrl = url;
@@ -325,69 +326,94 @@ const Lookup = () => {
 
   const getDateRangeButton = () => {
     return (
-      <Overlay
-        show={calendar}
-        target={target}
-        placement="bottom"
-        container={ref.current}
-        containerPadding={20}
-      >
-        <Popover className="max-content-width">
-          <Popover.Title>
-            <div style={{ display: "flex" }}>
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                type="button"
-                style={{ marginRight: "auto" }}
-                onClick={clearCalendar}
-              >
-                Clear
-              </Button>
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                type="button"
-                style={{ marginLeft: "auto" }}
-                onClick={closeCalender}
-              >
-                X
-              </Button>
-            </div>
-          </Popover.Title>
-          <Popover.Content ref={node}>
-            <DateRangePicker
-              startDatePlaceholder="Start Date"
-              endDatePlaceholder="End Date"
-              onChange={dateChange}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              months={1}
-              ranges={date}
-              direction="horizontal"
-            />
-            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} /> */}
-          </Popover.Content>
-        </Popover>
-      </Overlay>
+      <>
+        <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+          <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
+          {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+        </Button>
+        <Overlay
+          show={calendar}
+          target={target}
+          placement="bottom"
+          container={ref.current}
+          containerPadding={20}
+        >
+          <Popover className="max-content-width">
+            <Popover.Title>
+              <div style={{ display: "flex" }}>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  type="button"
+                  style={{ marginRight: "auto" }}
+                  onClick={clearCalendar}
+                >
+                  Clear
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  type="button"
+                  style={{ marginLeft: "auto" }}
+                  onClick={closeCalender}
+                >
+                  X
+                </Button>
+              </div>
+            </Popover.Title>
+            <Popover.Content ref={node}>
+              <DateRangePicker
+                startDatePlaceholder="Start Date"
+                endDatePlaceholder="End Date"
+                onChange={dateChange}
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={date}
+                direction="horizontal"
+              />
+              {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} /> */}
+            </Popover.Content>
+          </Popover>
+        </Overlay>
+      </>
     );
   };
 
-  const getConnectedAssetsActionBar = () => {
-    return (
-      <div>
-        <ActionBarContainer>
-          <div className="d-flex">
-            <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-              <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-            </Button>
-            {getDateRangeButton()}
-          </div>
-        </ActionBarContainer>
-      </div>
-    );
+  const [filterDto, setFilterDto] = useState({
+    getType(input) {
+      console.log('getType', input);
+      return "apple";
+    },
+    getData(type) {
+      console.log('getData', { type });
+      return [];
+    },
+    setData(data) {
+      console.log('setData', { data });
+    }
+  });
+
+  const onFilterChange = event => {
+    console.log('onFilterChange', event);
+    setFilterDto(event);
   };
+
+  const getDropdownFilters = () => (
+    <Row>
+      <Col>
+        {getDateRangeButton()}
+      </Col>
+      <Col>
+        <Multiselect
+          className="select-component"
+          data={componentList}
+          value={searchArr}
+          onChange={value => setSearchArr(value)}
+        />
+      </Col>
+    </Row>
+  );
 
   const screenReady = !isLoading && !isPreloading;
 
@@ -411,31 +437,14 @@ const Lookup = () => {
             }
           </Col>
         </Row>
-        <Row>
-          <Col>
-            {getConnectedAssetsActionBar()}
-          </Col>
-          <Col xs={6}>
-            <Multiselect
-              className="select-component"
-              data={componentList}
-              value={searchArr}
-              onChange={value => setSearchArr(value)}
-            />
-          </Col>
-          <Col xs={2}>
-            <Button
-              variant="primary"
-              className="btn-search"
-              disabled={false}
-              onClick={() => onSearch()}
-            >
-              Filter
-          </Button>
-          </Col>
-        </Row>
-        <hr className="lookup-hr" />
-        <LookupResults isLoading={isLoading} results={activeTables} />
+        <FilterContainer
+          title="Salesforce Lookup"
+          isLoading={isLoading}
+          filterDto={filterDto}
+          setFilterDto={onFilterChange}
+          dropdownFilters={getDropdownFilters()}
+          body={<LookupResults isLoading={isLoading} results={activeTables} />}
+        />
       </Container>
     </ScreenContainer>
   );
