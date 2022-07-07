@@ -16,16 +16,22 @@ function AzureWebappsStepConfigurationSummaryPanel({ azureWebappsPipelineDataObj
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"azureRegion"}/>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"deploymentType"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"applicationType"}/>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"azureToolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <BooleanField dataObject={azureWebappsPipelineDataObject} fieldName={"dynamicServiceName"}/>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"azureCredentialId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"namePretext"}/>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"resourceGroupName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"webappName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={azureWebappsPipelineDataObject} fieldName={"artifactStepId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
