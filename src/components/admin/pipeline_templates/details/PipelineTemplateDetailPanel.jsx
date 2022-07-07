@@ -45,7 +45,12 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 PipelineTemplateDetailPanel.propTypes = {

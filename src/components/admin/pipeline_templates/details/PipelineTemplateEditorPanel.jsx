@@ -20,18 +20,18 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
   const { getAccessToken } = useContext(AuthContext);
   const { cancelTokenSource } = useComponentStateReference();
 
-  const createTemplate = async (cancelToken = cancelTokenSource) => {
+  const createTemplate = async () => {
     return await pipelineTemplateActions.createTemplateV2(
       getAccessToken,
-      cancelToken,
+      cancelTokenSource,
       templateModel
     );
   };
 
-  const updateTemplate = async (cancelToken = cancelTokenSource) => {
+  const updateTemplate = async () => {
     return await pipelineTemplateActions.updateTemplateV2(
       getAccessToken,
-      cancelToken,
+      cancelTokenSource,
       templateModel
     );
   };

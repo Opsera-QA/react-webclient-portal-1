@@ -91,6 +91,7 @@ function NewPipelineTemplateWizard({ loadData } ) {
       closePanel={closePanel}
       loadData={loadData}
       titleText={`Create New Pipeline Template`}
+      showToasts={true}
     >
       {getCurrentScreen()}
     </FullScreenCenterOverlayContainer>
