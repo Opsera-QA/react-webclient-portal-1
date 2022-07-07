@@ -73,7 +73,7 @@ function FilterButtons({
     <Popover id="popover-basic" className="popover-filter">
       <Popover.Title as="h3" className="filter-title">
         <Row>
-          <Col sm={10} className="my-auto">{filterDropdownTitle ? filterDropdownTitle : 'Filters'}</Col>
+          <Col sm={10} className="my-auto">{filterDropdownTitle}</Col>
           <Col sm={2} className="text-right">
             <IconBase
               icon={faTimes}
@@ -141,6 +141,10 @@ FilterButtons.propTypes = {
   includeButtonText: PropTypes.bool,
   filterDropdownTitle: PropTypes.string,
   hideFiltersOnTrigger: PropTypes.bool
+};
+
+FilterButtons.defaultProps = {
+  filterDropdownTitle: 'Filters'
 };
 
 export default FilterButtons;
