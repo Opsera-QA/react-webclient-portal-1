@@ -1,19 +1,18 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import axios from "axios";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
-  const toastContext = useContext(DialogToastContext);
+function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const [bucketList, setBucketList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const isMounted = useRef(false);
+  const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   
   useEffect(() => {
@@ -23,9 +22,10 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObjec
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
-    if ( awsToolId && awsToolId !== "") {
+    setError(undefined);
+
+    if (hasStringValue(awsToolId) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -41,17 +41,19 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObjec
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getBucketList(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showFormErrorBanner(error);
-        console.error(error);
+        setError(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -66,30 +68,24 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObjec
     }
   };
 
-  if (!visible) {
-    return <></>;
+  if (visible === false) {
+    return null;
   }
-
-  const getNoBucketsMessage = () => {
-    if (!isLoading && (bucketList == null || bucketList.length === 0) && awsToolId !== "") {
-      return ("No Buckets Found!");
-    }
-  };
 
   return (
     <div>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
         selectOptions={bucketList}
         busy={isLoading}
-        placeholderText={getNoBucketsMessage()}
         clearDataFunction={clearDataFunction}
-        valueField="name"
-        textField="name"
-        disabled={disabled || isLoading || bucketList.length === 0}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled}
+        error={error}
       />
     </div>
   );
@@ -98,16 +94,12 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObjec
 AWSBucketNameSelectionInput.propTypes = {
   awsToolId: PropTypes.string,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   clearDataFunction: PropTypes.func
-};
-
-AWSBucketNameSelectionInput.defaultProps = {
-  visible: true,
 };
 
 export default AWSBucketNameSelectionInput;
