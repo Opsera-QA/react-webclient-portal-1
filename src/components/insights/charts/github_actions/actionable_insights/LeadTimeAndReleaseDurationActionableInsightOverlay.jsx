@@ -169,6 +169,21 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         actionableInsightsQueryData
       );
       summary["mean_time_to_build"] = averageTimeToBuildResponse?.data?.data[0];
+      let averageTimeToMergeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsAverageTimeToMerge",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        dashboardFilters,
+        dashboardOrgs,
+        null,
+        null,
+        null,
+        actionableInsightsQueryData
+      );
+      summary["mean_time_to_merge"] = averageTimeToMergeResponse?.data?.data[0];
       let averageTimeToDeployResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
