@@ -334,7 +334,7 @@ const Lookup = () => {
         <Overlay
           show={calendar}
           target={target}
-          placement="bottom"
+          placement="left"
           container={ref.current}
           containerPadding={20}
         >
