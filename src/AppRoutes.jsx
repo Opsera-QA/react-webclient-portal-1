@@ -37,8 +37,6 @@ import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import ApiConnectionTest from "components/admin/api_demo/ApiConnectionTest";
-import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
-import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
 import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";

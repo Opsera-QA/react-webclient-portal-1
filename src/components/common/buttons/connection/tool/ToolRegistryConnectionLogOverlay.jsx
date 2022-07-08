@@ -6,7 +6,13 @@ import { parseError } from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { TEST_TOOL_CONNECTION_STATES } from "components/common/buttons/connection/tool/TestToolConnectionButton";
 
-function ToolRegistryConnectionLogOverlay({ setCurrentState, toolModel, toolName }) {
+function ToolRegistryConnectionLogOverlay(
+  {
+    currentState,
+    setCurrentState,
+    toolModel,
+    toolName,
+  }) {
   const [logs, setLogs]  = useState([]);
   const {
     cancelTokenSource,
@@ -76,6 +82,10 @@ function ToolRegistryConnectionLogOverlay({ setCurrentState, toolModel, toolName
   };
 
   const handleCloseFunction = () => {
+    if (currentState === TEST_TOOL_CONNECTION_STATES.TESTING) {
+      setCurrentState(TEST_TOOL_CONNECTION_STATES.READY);
+    }
+
     setLogs([]);
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -97,6 +107,7 @@ function ToolRegistryConnectionLogOverlay({ setCurrentState, toolModel, toolName
   );
 }
 ToolRegistryConnectionLogOverlay.propTypes = {
+  currentState: PropTypes.string,
   setCurrentState: PropTypes.func.isRequired,
   toolModel: PropTypes.object.isRequired,
   toolName: PropTypes.string.isRequired,

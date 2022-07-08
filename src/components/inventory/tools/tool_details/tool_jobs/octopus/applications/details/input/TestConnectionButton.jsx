@@ -11,6 +11,7 @@ import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";
 import IconBase from "components/common/icons/IconBase";
+import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 
 function TestConnectionButton({ toolDataDto, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -131,12 +132,11 @@ function TestConnectionButton({ toolDataDto, disable }) {
   const getConnectionModal = () => {    
     if(showConnectionLog){
       return(
-        <ToolRegistryConnectionLogOverlay
-          isLoading={false}
-          handleClose={() => {
+        <ConsoleLogOverlay
+          handleCloseFunction={() => {
             setShowConnectionLog(false);
           }}
-          data={log}
+          body={log}
         />
       );
     }    

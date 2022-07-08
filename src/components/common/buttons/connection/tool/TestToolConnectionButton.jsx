@@ -71,6 +71,7 @@ function TestToolConnectionButton({ toolModel, disabled, toolName }) {
     setCurrentState(TEST_TOOL_CONNECTION_STATES.TESTING);
     toastContext.showOverlayPanel(
       <ToolRegistryConnectionLogOverlay
+        currentState={currentState}
         toolModel={toolModel}
         setCurrentState={setCurrentState}
         toolName={toolName}
