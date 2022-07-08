@@ -200,7 +200,7 @@ function ConnectedAssets() {
               endDatePlaceholder="End Date"
               onChange={dateChange}
               minDate={new Date(addDays(new Date(), -7300).setHours(0, 0, 0, 0))}
-              maxDate={new Date(addDays(new Date(), 365).setHours(0, 0, 0, 0))}
+              maxDate={new Date}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               months={1}

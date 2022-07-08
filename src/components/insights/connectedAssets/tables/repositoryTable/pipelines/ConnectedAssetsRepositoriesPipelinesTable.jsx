@@ -65,6 +65,7 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     };
   }, [JSON.stringify(dashboardData)]);
 
+
   const loadData = async () => {
     try {
       setIsLoading(true);

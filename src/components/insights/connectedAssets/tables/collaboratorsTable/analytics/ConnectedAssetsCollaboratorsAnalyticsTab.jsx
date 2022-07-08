@@ -155,6 +155,7 @@ function ConnectedAssetsCollaboratorsAnalyticsTab({ dashboardData }) {
             loadData={loadData}
             paginationStyle={"stackedVerticalTab"}
             topPaginationStyle={"stackedVerticalTab"}
+            bodyClassName={'connected-assets-modal-body'}
           >
             {tabs}
           </PaginationContainer>
