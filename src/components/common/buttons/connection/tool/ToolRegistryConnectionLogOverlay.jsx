@@ -1,17 +1,93 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
+import toolsActions from "components/inventory/tools/tools-actions";
+import { parseError } from "components/common/helpers/error-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { TEST_TOOL_CONNECTION_STATES } from "components/common/buttons/connection/tool/TestToolConnectionButton";
 
-function ToolRegistryConnectionLogOverlay({ handleCloseFunction, logs }) {
+function ToolRegistryConnectionLogOverlay({ setCurrentState, toolModel, toolName }) {
+  const [logs, setLogs]  = useState([]);
+  const {
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+    isMounted,
+  } = useComponentStateReference();
+
+  useEffect(() => {
+    setLogs([]);
+    testConnection().catch((error) => {
+      if (isMounted?.current === true) {
+        console.error(error);
+      }
+    });
+  }, []);
+
+  const testConnection = async () => {
+    const newLogs = ["Starting connection test of tool...\n"];
+
+    try {
+      setLogs([...newLogs]);
+      const response = await toolsActions.checkToolConnectivityV2(getAccessToken, cancelTokenSource, toolModel?.getData("_id"), toolName);
+
+      if (isMounted.current === true) {
+        if (response?.status === 200) {
+          const message = JSON.stringify(response?.data?.message);
+          const status = response?.status;
+
+          newLogs.push(
+            "Connection Succeeded!\n",
+            `Status: ${status}\n`,
+            `Message: ${message}\n`,
+            `Test Complete.\nPlease close this window to proceed.\n`,
+          );
+
+          setLogs(newLogs);
+          setCurrentState(TEST_TOOL_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
+        } else {
+          const message = JSON.stringify(response?.data?.message);
+          const status = response?.status;
+          newLogs.push(
+            `Connection Failed!\n`,
+            `Status : ${status}\n`,
+            `Message: ${message}\n`,
+            `Test Complete. \nPlease close this panel, address the issue and try again.\n`,
+          );
+
+          setLogs(newLogs);
+          setCurrentState(TEST_TOOL_CONNECTION_STATES.FAILED_CONNECTION);
+        }
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        newLogs.push(
+          `Connection Failed!\n`,
+          `Error: ${parsedError}\n`,
+          `Test Complete.  Please close this panel, address the issue and try again.\n`,
+        );
+
+        setLogs(newLogs);
+        setCurrentState(TEST_TOOL_CONNECTION_STATES.FAILED_CONNECTION);
+      }
+    }
+  };
+
+  const handleCloseFunction = () => {
+    setLogs([]);
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
   const formatData = () => {
     if (Array.isArray(logs)) {
       return (logs);
     }
-  };
 
-  if (!Array.isArray(logs)) {
-    return null;
-  }
+    return [];
+  };
 
   return (
     <ConsoleLogOverlay
@@ -21,8 +97,9 @@ function ToolRegistryConnectionLogOverlay({ handleCloseFunction, logs }) {
   );
 }
 ToolRegistryConnectionLogOverlay.propTypes = {
-  handleCloseFunction: PropTypes.func.isRequired,
-  logs: PropTypes.array,
+  setCurrentState: PropTypes.func.isRequired,
+  toolModel: PropTypes.object.isRequired,
+  toolName: PropTypes.string.isRequired,
 };
 
 export default ToolRegistryConnectionLogOverlay;
