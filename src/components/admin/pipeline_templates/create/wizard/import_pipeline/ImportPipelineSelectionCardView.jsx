@@ -3,29 +3,30 @@ import PropTypes from "prop-types";
 import { Button, Col } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import PipelineCard from "components/workflow/pipelines/PipelineCard";
-import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
-import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import modelHelpers from "components/common/model/modelHelpers";
 
-function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
-  let history = useHistory();
+// TODO: Combine with the one in pipelines if we can make it generic
+function ImportPipelineSelectionCardView(
+  {
+    pipelines,
+    pipelineFilterModel,
+    loadData,
+    isLoading,
+    subscribedPipelineIds,
+    onSelectFunction,
+  }) {
 
-  const handleDetailsClick = param => e => {
-    e.preventDefault();
-    history.push(`/workflow/details/${param}/summary`);
-  };
-
-  const getSelectButton = (pipeline) => {
+  const getSelectButtonFunction = (pipeline) => {
     return (
       <Button
         variant={"primary"}
         size={"sm"}
-        className={"w-50"}
-        onClick={handleDetailsClick(pipeline?._id)}>
-        <IconBase icon={faSearch} className={"mr-1"}/>View
+        onClick={() => onSelectFunction(pipeline)}>
+        <IconBase icon={faCheckCircle} className={"mr-1"}/>Import Settings
       </Button>
     );
   };
@@ -42,8 +43,8 @@ function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading,
             <PipelineCard
               pipeline={pipeline}
               subscribedPipelineIds={subscribedPipelineIds}
-              pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
-              selectButton={getSelectButton}
+              pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
+              getSelectButtonFunction={getSelectButtonFunction}
             />
           </Col>
         ))}
@@ -61,12 +62,13 @@ function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading,
   );
 }
 
-PipelineCardView.propTypes = {
+ImportPipelineSelectionCardView.propTypes = {
   pipelines: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   subscribedPipelineIds: PropTypes.array,
+  onSelectFunction: PropTypes.func,
 };
 
-export default PipelineCardView;
+export default ImportPipelineSelectionCardView;

@@ -70,7 +70,7 @@ const templateEditorMetadata = {
     {
       label: "Single Use",
       id: "singleUse",
-      formText: "If enabled will prevent user from using this template, but it will be visible in the catalog list."
+      formText: "If enabled, user can only have one copy of this template in use at a time.  They will not be allowed to create a second pipeline while another one exists with this template.",
     },
     {
       label: "Access",

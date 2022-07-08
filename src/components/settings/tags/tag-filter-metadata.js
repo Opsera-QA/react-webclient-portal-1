@@ -36,7 +36,6 @@ const tagFilterMetadata = {
   getActiveFilters(filterModel) {
     const activeFilters = [];
 
-
     const status = filterModel.getData("status");
 
     if (hasStringValue(status) === true) {
@@ -49,7 +48,7 @@ const tagFilterMetadata = {
       activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(type)}`});
     }
 
-    const search = filterModel?.getData(search);
+    const search = filterModel?.getData("search");
 
     if (hasStringValue(search) === true) {
       activeFilters.push({filterId: "search", text: `Keywords: ${search}`});

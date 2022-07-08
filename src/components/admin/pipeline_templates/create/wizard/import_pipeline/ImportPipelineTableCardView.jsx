@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoDialog from "components/common/status_notifications/info";
-import PipelineWelcomeView from "./PipelineWelcomeView";
 import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/PipelinesTableBase";
 import InformationDialog from "components/common/status_notifications/info";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineSummaryMetadata
@@ -14,11 +12,17 @@ import PipelineStatusFilter from "components/common/filters/pipelines/status/Pip
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TableCardView from "components/common/table/TableCardView";
-import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import ImportPipelineSelectionCardView
+  from "components/admin/pipeline_templates/create/wizard/import_pipeline/ImportPipelineSelectionCardView";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import {
+  NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS
+} from "components/admin/pipeline_templates/create/wizard/NewPipelineTemplateWizard";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
-function PipelineTableCardView(
+function ImportPipelineTableCardView(
   {
     pipelines,
     isLoading,
@@ -26,9 +30,10 @@ function PipelineTableCardView(
     setPipelineFilterModel,
     loadData,
     subscribedPipelineIds,
+    pipelineTemplateModel,
+    setPipelineTemplateModel,
+    setPipelineTemplateWizardScreen,
   }) {
-  const history = useHistory();
-
   const getDropdownFilters = () => {
     return (
       <>
@@ -51,48 +56,50 @@ function PipelineTableCardView(
     );
   };
 
-  const addPipeline = () => {
-    history.push(`/workflow/catalog/library`);
+  const setDataFunction = (pipeline) => {
+    pipelineTemplateModel.setData("name", pipeline?.name);
+    pipelineTemplateModel.setData("tags", pipeline?.tags);
+    pipelineTemplateModel.setData("plan", pipeline?.workflow?.plan || []);
+    setPipelineTemplateModel({...pipelineTemplateModel});
+    setPipelineTemplateWizardScreen(NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.PIPELINE_TEMPLATE_EDITOR_PANEL);
   };
 
-  const onRowSelect = (rowData) => {
-    history.push(`/workflow/details/${rowData.original._id}/summary`);
+  const onTableRowSelectFunction = (rowData) => {
+    setDataFunction(rowData?.original);
   };
 
   const getCardView = () => {
     return (
-      <PipelineCardView
-        isLoading={isLoading}
-        loadData={loadData}
-        pipelines={pipelines}
-        pipelineFilterModel={pipelineFilterModel}
-        subscribedPipelineIds={subscribedPipelineIds}
-      />
+      <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
+        <ImportPipelineSelectionCardView
+          pipelines={pipelines}
+          onSelectFunction={setDataFunction}
+          pipelineFilterModel={pipelineFilterModel}
+          subscribedPipelineIds={subscribedPipelineIds}
+          toolIdentifierMetadata={pipelineMetadata}
+          isLoading={isLoading}
+          loadData={loadData}
+        />
+      </div>
     );
   };
 
   const getTableView = () => {
     return (
-      <PipelinesTableBase
-        isLoading={isLoading}
-        paginationModel={pipelineFilterModel}
-        setPaginationModel={setPipelineFilterModel}
-        pipelines={pipelines}
-        loadData={loadData}
-        onRowClickFunction={onRowSelect}
-      />
+      <div className={"full-screen-overlay-selection-container hide-x-overflow"}>
+        <PipelinesTableBase
+          isLoading={isLoading}
+          paginationModel={pipelineFilterModel}
+          setPaginationModel={setPipelineFilterModel}
+          pipelines={pipelines}
+          loadData={loadData}
+          onRowClickFunction={onTableRowSelectFunction}
+        />
+      </div>
     );
   };
 
   const getTableCardView = () => {
-    if (Array.isArray(pipelines) && pipelines.count === 0 && pipelineFilterModel?.getData("type") === "owner" && (pipelineFilterModel?.getActiveFilters() == null || pipelineFilterModel?.getActiveFilters()?.length === 0) ) {
-      return (
-        <div className={"p-3"}>
-          <PipelineWelcomeView />
-        </div>
-      );
-    }
-
     return (
       <Row className={"mx-0"}>
         <Col sm={2} className={"px-0 makeup-tree-container"}>
@@ -148,33 +155,48 @@ function PipelineTableCardView(
 
   return (
     <div style={{minWidth: "505px"}}>
+      <InlineWarning
+        className={"ml-2"}
+        warningMessage={`
+          WARNING: This action will only import the pipeline step settings, name and tags but it does not include the specific tools associated with a given pipeline step.  
+          Customers will always have to first create their tools in Registry and then edit their pipeline to use the tools.
+        `}
+      />
+      <InlineWarning
+        className={"ml-2"}
+        warningMessage={`
+          Please note: This only pulls the Pipeline Name, Tags, and Plan into the new Template. 
+        `}
+      />
       <FilterContainer
         loadData={loadData}
         filterDto={pipelineFilterModel}
         setFilterDto={setPipelineFilterModel}
-        addRecordFunction={addPipeline}
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
         metadata={pipelineSummaryMetadata}
         type={"Pipeline"}
-        className={"px-2 pb-2"}
+        className={"p-2"}
         body={getPipelinesBody()}
         dropdownFilters={getDropdownFilters()}
         titleIcon={faDraftingCompass}
-        title={"Pipelines"}
+        title={"Select a Pipeline to import its settings into a new Pipeline Template"}
       />
     </div>
   );
 }
 
-PipelineTableCardView.propTypes = {
+ImportPipelineTableCardView.propTypes = {
   pipelines: PropTypes.array,
   isLoading: PropTypes.bool,
   pipelineFilterModel: PropTypes.object,
   setPipelineFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   subscribedPipelineIds: PropTypes.array,
+  pipelineTemplateModel: PropTypes.object,
+  setPipelineTemplateModel: PropTypes.func,
+  setPipelineTemplateWizardScreen: PropTypes.func,
 };
 
-export default PipelineTableCardView;
+export default ImportPipelineTableCardView;

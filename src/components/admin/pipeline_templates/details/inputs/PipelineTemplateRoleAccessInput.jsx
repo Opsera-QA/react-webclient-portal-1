@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import templateActions from "components/admin/template_editor/template-actions";
+import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 
 function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -10,7 +10,7 @@ function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, 
   const saveData = async (newRoles) => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, newRoles);
-    let response = await templateActions.updateTemplate(dataObject, getAccessToken);
+    let response = await pipelineTemplateActions.updateTemplate(dataObject, getAccessToken);
     setDataObject({...newDataObject});
     return response;
   };

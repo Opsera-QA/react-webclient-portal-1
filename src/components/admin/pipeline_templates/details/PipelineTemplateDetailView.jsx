@@ -1,23 +1,23 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
-import templateActions from "components/admin/template_editor/template-actions";
+import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import templateEditorMetadata from "components/admin/template_editor/pipelineTemplate.metadata";
+import templateEditorMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import TemplateDetailPanel from "components/admin/template_editor/details/TemplateDetailPanel";
+import PipelineTemplateDetailPanel from "components/admin/pipeline_templates/details/PipelineTemplateDetailPanel";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineTemplateManagementSubNavigationBar
-  from "components/admin/template_editor/PipelineTemplateManagementSubNavigationBar";
+  from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
-function TemplateDetailView() {
+function PipelineTemplateDetailView() {
   const {templateId} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -79,7 +79,7 @@ function TemplateDetailView() {
   };
 
   const getTemplate = async (cancelSource = cancelTokenSource) => {
-    const response = await templateActions.getTemplateByIdV2(getAccessToken, cancelSource, templateId);
+    const response = await pipelineTemplateActions.getTemplateByIdV2(getAccessToken, cancelSource, templateId);
     // TODO: remove grabbing first when it only sends object instead of array
     if (isMounted?.current === true && response?.data?.length > 0) {
       setTemplateData(new Model(response.data[0], templateEditorMetadata, false));
@@ -96,7 +96,7 @@ function TemplateDetailView() {
         <div>
           <ActionBarBackButton path={"/admin/templates"} />
         </div>
-        <div>
+        <div className={"d-flex"}>
           <ActionBarShowJsonButton dataObject={templateData} />
           {accessRoleData?.OpseraAdministrator === true
             && <ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deleteTemplate}/>}
@@ -106,7 +106,7 @@ function TemplateDetailView() {
   };
 
   const deleteTemplate = () => {
-    return templateActions.deleteTemplateV2(getAccessToken, cancelTokenSource, templateData);
+    return pipelineTemplateActions.deleteTemplateV2(getAccessToken, cancelTokenSource, templateData);
   };
 
   return (
@@ -123,9 +123,9 @@ function TemplateDetailView() {
           activeTab={"pipelineTemplateViewer"}
         />
       }
-      detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
+      detailPanel={<PipelineTemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
     />
   );
 }
 
-export default TemplateDetailView;
+export default PipelineTemplateDetailView;

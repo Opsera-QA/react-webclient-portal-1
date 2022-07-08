@@ -12,9 +12,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import PipelineTemplateRoleAccessInput
-  from "components/admin/template_editor/details/inputs/PipelineTemplateRoleAccessInput";
+  from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 
-function TemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
+function PipelineTemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
   if (templateData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -66,10 +66,10 @@ function TemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
   );
 }
 
-TemplateSummaryPanel.propTypes = {
+PipelineTemplateSummaryPanel.propTypes = {
   templateData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setTemplateData: PropTypes.func
 };
 
-export default TemplateSummaryPanel;
+export default PipelineTemplateSummaryPanel;

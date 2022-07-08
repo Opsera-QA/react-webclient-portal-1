@@ -8,17 +8,17 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import NewTemplateOverlay from "components/admin/template_editor/NewTemplateOverlay";
-import templateEditorMetadata from "components/admin/template_editor/pipelineTemplate.metadata";
+import templateEditorMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faStream} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import NewPipelineTemplateWizard from "components/admin/pipeline_templates/create/wizard/NewPipelineTemplateWizard";
 
-function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTemplateFilterDto, isMounted }) {
+function PipelineTemplatesTable({ pipelineTemplates, loadData, isLoading }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = templateEditorMetadata.fields;
+  const fields = templateEditorMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -40,12 +40,17 @@ function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTempla
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const onRowSelect = (rowData, type) => {
+  const onRowSelect = (rowData) => {
     history.push(`/admin/templates/details/${rowData.original._id}`);
   };
 
   const createTemplate = () => {
-    toastContext.showOverlayPanel(<NewTemplateOverlay loadData={loadData} isMounted={isMounted} />);
+    // toastContext.showOverlayPanel(<NewPipelineTemplateOverlay loadData={loadData} />);
+    toastContext.showOverlayPanel(
+      <NewPipelineTemplateWizard
+        loadData={loadData}
+      />
+    );
   };
 
   const getTemplateTable = () => {
@@ -54,7 +59,7 @@ function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTempla
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         noDataMessage={noDataMessage}
-        data={data}
+        data={pipelineTemplates}
         columns={columns}
         rowStyling={rowStyling}
       />
@@ -75,13 +80,10 @@ function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTempla
   );
 }
 
-TemplateTable.propTypes = {
-  data: PropTypes.array,
+PipelineTemplatesTable.propTypes = {
+  pipelineTemplates: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.object,
-  templateFilterDto: PropTypes.object,
-  setTemplateFilterDto: PropTypes.func
 };
 
-export default TemplateTable;
+export default PipelineTemplatesTable;

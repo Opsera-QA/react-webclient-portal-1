@@ -1,9 +1,9 @@
 import {axiosApiService} from "../../../api/apiService";
 import baseActions from "utils/actionsBase";
 
-const templateActions = {};
+const pipelineTemplateActions = {};
 
-templateActions.createTemplate = async (templateDataDto, getAccessToken) => {
+pipelineTemplateActions.createTemplate = async (templateDataDto, getAccessToken) => {
   let postData = {
     ...templateDataDto.getPersistData()
   };
@@ -19,7 +19,7 @@ templateActions.createTemplate = async (templateDataDto, getAccessToken) => {
   return response;
 };
 
-templateActions.createTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
+pipelineTemplateActions.createTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
   let postBody = {
     ...templateDataDto.getPersistData(),
   };
@@ -27,7 +27,7 @@ templateActions.createTemplateV2 = async (getAccessToken, cancelTokenSource, tem
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
+pipelineTemplateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   const postBody = {
     ...templateDataDto.getPersistData()
   };
@@ -43,7 +43,7 @@ templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   return response;
 };
 
-templateActions.updateTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
+pipelineTemplateActions.updateTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
   let postBody = {
     ...templateDataDto.getPersistData(),
   };
@@ -51,19 +51,19 @@ templateActions.updateTemplateV2 = async (getAccessToken, cancelTokenSource, tem
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-templateActions.deleteTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
+pipelineTemplateActions.deleteTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
   const apiUrl = `/pipelines/workflows/${templateDataDto.getData("_id")}/delete`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-templateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
+pipelineTemplateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/pipelines/workflows?hidden=true";
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-templateActions.getTemplateByIdV2 = async (getAccessToken, cancelTokenSource, templateId) => {
+pipelineTemplateActions.getTemplateByIdV2 = async (getAccessToken, cancelTokenSource, templateId) => {
   const apiUrl = `/pipelines/workflows/${templateId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-export default templateActions;
+export default pipelineTemplateActions;
