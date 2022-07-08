@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef, useContext} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { faDatabase } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import Model from "../../../../../../core/data_model/model";
 import LoadingIcon from "../../../../../common/icons/LoadingIcon";
@@ -13,11 +13,11 @@ import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/
 import IconBase from "../../../../../common/icons/IconBase";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
-import ConnectedAssetsRepositoriesAnalyticsTable from "./ConnetedAssetsRepositoriesAnalyticsTable";
+import ConnectedAssetsCollaboratorsAnalyticsTable from "./ConnectedAssetsCollaboratorsInsightsTable";
 import PaginationContainer from "../../../../../common/pagination/PaginationContainer";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 
-function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
+function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
@@ -52,15 +52,15 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
     try {
       setIsLoading(true);
       let dateRange = dashboardData?.getData("date");
-      const response = await connectedAssetsActions.getListOfRepositories(
+      const response = await connectedAssetsActions.getUsersInfo(
         getAccessToken,
         cancelSource,
-        constants.REPOSITORIES_LIST.REPOSITORIES_LIST_FROM_ANALYTICS,
+        constants.COLLABORATORS_LIST.LIST_OF_USERS_FROM_ANALYTICS,
         dateRange?.startDate,
         dateRange?.endDate,
         filterDto
       );
-      const responseData1 = response?.data?.data?.listOfRepositoriesFromAnalytics?.data?.[0];
+      const responseData1 = response?.data?.data?.usersList?.data?.[0];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", responseData1?.count?.[0]?.count ? responseData1?.count?.[0]?.count : 0);
       setTableFilterDto(newFilterDto);
@@ -91,7 +91,7 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
       <>
         <VanitySetTabAndViewContainer
           className={"mb-3"}
-          title={`List of Repositories from Analytics`}
+          title={`List of Users from Insights`}
           defaultActiveKey={responseData?.[0]?._id}
           verticalTabContainer={getVerticalTabContainer()}
           currentView={getTabContentContainer()}
@@ -105,8 +105,8 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
       <VanitySetTabViewContainer>
         {responseData.map((item, index) => (
           <VanitySetTabView key={index} tabKey={item._id}>
-            <ConnectedAssetsRepositoriesAnalyticsTable
-              repository={item}
+            <ConnectedAssetsCollaboratorsAnalyticsTable
+              user={item}
               dashboardData={dashboardData}
             />
           </VanitySetTabView>
@@ -118,8 +118,8 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
   const getVerticalTabContainer = () => {
     if(!responseData || responseData.length === 0) {
       return (<div className={"h-100"}>
-        <VanitySetVerticalTabContainer className={"h-100"} title={<div><IconBase icon={faDatabase} className={'pr-2'}/>List Of Repositories</div>}>
-          <div>No repositories found.</div>
+        <VanitySetVerticalTabContainer className={"h-100"} title={<div><IconBase icon={faUsers} className={'pr-2'}/>List Of Users</div>}>
+          <div>No users found.</div>
         </VanitySetVerticalTabContainer>
       </div>);
     }
@@ -127,7 +127,7 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
     for(let i = 0; i <= responseData.length - 1; i++) {
       tabs.push(
         <VanitySetVerticalTab
-          tabText={responseData[i]?.repository_name}
+          tabText={responseData[i]?.userName}
           tabName={responseData[i]?._id}
         />
       );
@@ -138,8 +138,8 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
           className={"h-100"}
           title={
             <div>
-              <IconBase icon={faDatabase} className={'pr-2'}/>
-              List Of Repositories
+              <IconBase icon={faUsers} className={'pr-2'}/>
+              List Of Users
             </div>
           }
           supportSearch={true}
@@ -167,8 +167,8 @@ function ConnectedAssetsRepositoriesAnalyticsTab({ dashboardData }) {
   return <div className={"p-3"}>{getBody()}</div>;
 }
 
-ConnectedAssetsRepositoriesAnalyticsTab.propTypes = {
+ConnectedAssetsCollaboratorsInsightsTab.propTypes = {
   dashboardData: PropTypes.object,
 };
 
-export default ConnectedAssetsRepositoriesAnalyticsTab;
+export default ConnectedAssetsCollaboratorsInsightsTab;
