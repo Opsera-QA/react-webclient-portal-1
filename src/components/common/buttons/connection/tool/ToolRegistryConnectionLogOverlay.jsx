@@ -4,12 +4,13 @@ import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay"
 import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { TEST_TOOL_CONNECTION_STATES } from "components/common/buttons/connection/tool/TestToolConnectionButton";
+import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/tool/TestToolConnectionButton";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 function ToolRegistryConnectionLogOverlay(
   {
-    currentStateRef,
+    currentState,
+    setCurrentState,
     toolModel,
     toolName,
   }) {
@@ -23,6 +24,7 @@ function ToolRegistryConnectionLogOverlay(
 
   useEffect(() => {
     setLogs([]);
+    setCurrentState(TEST_CONNECTION_STATES.TESTING);
     testConnection().catch((error) => {
       if (isMounted?.current === true) {
         console.error(error);
@@ -50,8 +52,7 @@ function ToolRegistryConnectionLogOverlay(
           );
 
           setLogs(newLogs);
-          currentStateRef.current =
-            currentStateRef.current = TEST_TOOL_CONNECTION_STATES.SUCCESSFUL_CONNECTION;
+          setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -63,10 +64,11 @@ function ToolRegistryConnectionLogOverlay(
           );
 
           setLogs(newLogs);
-          currentStateRef.current = TEST_TOOL_CONNECTION_STATES.FAILED_CONNECTION;
+          setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
         }
       }
-    } catch (error) {
+    }
+    catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
         newLogs.push(
@@ -76,14 +78,14 @@ function ToolRegistryConnectionLogOverlay(
         );
 
         setLogs(newLogs);
-        currentStateRef.current = TEST_TOOL_CONNECTION_STATES.FAILED_CONNECTION;
+        setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
       }
     }
   };
 
   const handleCloseFunction = () => {
-    if (currentStateRef?.current === TEST_TOOL_CONNECTION_STATES.TESTING) {
-      currentStateRef.current = TEST_TOOL_CONNECTION_STATES.READY;
+    if (currentState === TEST_CONNECTION_STATES.TESTING) {
+      setCurrentState(TEST_CONNECTION_STATES.READY);
     }
 
     setLogs([]);
@@ -99,7 +101,8 @@ function ToolRegistryConnectionLogOverlay(
   );
 }
 ToolRegistryConnectionLogOverlay.propTypes = {
-  currentStateRef: PropTypes.object,
+  currentState: PropTypes.string,
+  setCurrentState: PropTypes.func,
   toolModel: PropTypes.object.isRequired,
   toolName: PropTypes.string.isRequired,
 };
