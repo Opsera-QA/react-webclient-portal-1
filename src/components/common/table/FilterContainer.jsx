@@ -59,14 +59,6 @@ function FilterContainer(
     );
   };
 
-  const getContainerStylingObject = () => {
-    return ({
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: "hidden",
-    });
-  };
-
   const getBodyStylingObject = () => {
     return ({
       minHeight: minimumHeight,
