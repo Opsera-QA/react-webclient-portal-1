@@ -3,29 +3,23 @@ import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ToolRegistryConnectionLogOverlay from "components/common/buttons/connection/tool/ToolRegistryConnectionLogOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TestConnectionButtonBase from "components/common/buttons/connection/TestConnectionButtonBase";
-
-export const TEST_CONNECTION_STATES = {
-  CANCELLED: "canceled",
-  FAILED_CONNECTION: "failed_connection",
-  READY: "ready",
-  SUCCESSFUL_CONNECTION: "successful_connection",
-  TESTING: "testing",
-};
+import TestConnectionButtonBase, {
+  TEST_CONNECTION_STATES,
+} from "components/common/buttons/connection/TestConnectionButtonBase";
+import { generateUUID } from "components/common/helpers/string-helpers";
 
 function TestToolConnectionButton({ toolModel, disabled, toolName }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const { toastContext } = useComponentStateReference();
 
   const launchConnectionLogOverlay = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
     toastContext.showOverlayPanel(
       <ToolRegistryConnectionLogOverlay
         currentState={currentState}
         setCurrentState={setCurrentState}
         toolModel={toolModel}
         toolName={toolName}
+        instanceId={generateUUID()}
       />
     );
   };

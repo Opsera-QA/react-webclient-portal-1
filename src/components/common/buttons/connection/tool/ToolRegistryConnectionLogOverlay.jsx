@@ -4,8 +4,8 @@ import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay"
 import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/tool/TestToolConnectionButton";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/TestConnectionButtonBase";
 
 function ToolRegistryConnectionLogOverlay(
   {
@@ -13,6 +13,7 @@ function ToolRegistryConnectionLogOverlay(
     setCurrentState,
     toolModel,
     toolName,
+    instanceId,
   }) {
   const [logs, setLogs]  = useState([]);
   const {
@@ -30,14 +31,19 @@ function ToolRegistryConnectionLogOverlay(
         console.error(error);
       }
     });
-  }, []);
+  }, [instanceId]);
 
   const testConnection = async () => {
     const newLogs = ["Starting connection test of tool...\n"];
 
     try {
       setLogs([...newLogs]);
-      const response = await toolsActions.checkToolConnectivityV2(getAccessToken, cancelTokenSource, toolModel?.getData("_id"), toolName);
+      const response = await toolsActions.checkToolConnectivityV2(
+        getAccessToken,
+        cancelTokenSource,
+        toolModel?.getData("_id"),
+        toolName,
+      );
 
       if (isMounted.current === true) {
         if (response?.status === 200) {
@@ -105,6 +111,7 @@ ToolRegistryConnectionLogOverlay.propTypes = {
   setCurrentState: PropTypes.func,
   toolModel: PropTypes.object.isRequired,
   toolName: PropTypes.string.isRequired,
+  instanceId: PropTypes.string,
 };
 
 export default ToolRegistryConnectionLogOverlay;
