@@ -85,7 +85,7 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
     let repo = {
-      name : repository?._id,
+      name : repository?.repository_name,
       url: repository?.repoUrl?.[0]
     };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(

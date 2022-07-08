@@ -80,15 +80,13 @@ function ConnectedAssetsDetails({ dashboardData }) {
         if (hasStringValue(selectedDataBlockUrlParameter) == true) {
           onDataBlockSelect(selectedDataBlockUrlParameter);
         }
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
         setIsLoading(false);
+        setError(error);
       }
     }
   };
@@ -173,7 +171,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
       return (
         <div className="mx-2" >
           <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+            <span className={"-5"}>An error has occurred during loading: {parseError(error?.message)}.</span>
           </div>
         </div>
       );
