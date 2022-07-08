@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { faDiagramSuccessor, faListCheck, faAnalytics} from "@fortawesome/pro-light-svg-icons";
+import { faDiagramSuccessor, faListCheck, faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import ConnectedAssetsBranchesPipelinesTab from "./pipelines/ConnectedAssetsCollaboratorsPipelinesTab";
 import ConnectedAssetsBranchesTasksTab from "./tasks/ConnectedAssetsCollaboratorsTasksTab";
-import ConnectedAssetsCollaboratorsAnalyticsTab from "./analytics/ConnectedAssetsCollaboratorsAnalyticsTab";
+import ConnectedAssetsCollaboratorsInsightsTab from "./insights/ConnectedAssetsCollaboratorsInsightsTab";
 
 function ConnectedAssetsCollaboratorsTabContainer({ dashboardData }) {
   const [activeTab, setActiveTab] = useState("pipelines");
@@ -26,11 +26,11 @@ function ConnectedAssetsCollaboratorsTabContainer({ dashboardData }) {
           icon={faListCheck}
         />
       );
-    } else if (activeTab == "analytics") {
+    } else if (activeTab == "insights") {
       return (
-        <ConnectedAssetsCollaboratorsAnalyticsTab
+        <ConnectedAssetsCollaboratorsInsightsTab
           dashboardData={dashboardData}
-          icon={faAnalytics}
+          icon={faChartNetwork}
         />
       );
     }
@@ -60,10 +60,10 @@ function ConnectedAssetsCollaboratorsTabContainer({ dashboardData }) {
         />
         <CustomTab
           activeTab={activeTab}
-          tabText={"Analytics"}
+          tabText={"Insights"}
           handleTabClick={handleTabClick}
-          tabName={"analytics"}
-          icon={faAnalytics}
+          tabName={"insights"}
+          icon={faChartNetwork}
         />
       </CustomTabContainer>
     );

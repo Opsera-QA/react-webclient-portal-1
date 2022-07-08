@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faAnalytics } from "@fortawesome/pro-solid-svg-icons";
+import { faChartNetwork} from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -14,8 +14,9 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
 
-function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, icon }) {
+function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -29,17 +30,15 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
       false
     )
   );
-
-  const noDataMessage = 'No analytics found.';
+  const history = useHistory();
+  const noDataMessage = 'No pipelines found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "repo_name"), "repo_name"),
-      getTableDateTimeColumn(getField(fields, "repo_last_used"), "repo_last_used"),
+      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
+      getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
       getTableTextColumn(getField(fields, "event"), "event"),
-      getTableTextColumn(getField(fields, "userName"), "userName"),
-      getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title"),
-      getTableTextColumn(getField(fields, "branch"), "branch"),
+      getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title")
     ],
     []
   );
@@ -84,20 +83,20 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
-    let repo = {
-      name : repository?.repository_name,
-      url: repository?.repoUrl?.[0]
+    let userData = {
+      user_name: user?.userName,
+      tool: user?.scm_tool
     };
-    const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
+    const response = await connectedAssetsActions.getSelectedUserDetailedInfoForAnalytics(
       getAccessToken,
       cancelSource,
-      constants.REPOSITORIES_LIST.SELECTED_REPO_ANALYTICS_INFO,
+      constants.COLLABORATORS_LIST.ANALYTICS_ACTIVITY,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repo
+      userData
     );
-    let dataObject = response?.data?.data?.analyticsInfo?.data?.[0];
+    let dataObject = response?.data?.data?.analyticsActivity?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
@@ -125,8 +124,8 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     <div className={"p-2"}>
       <FilterContainer
         isLoading={isLoading}
-        title={'List Of Analytics'}
-        titleIcon={faAnalytics}
+        title={'List Of Insights'}
+        titleIcon={faChartNetwork}
         body={getTable()}
         className={"px-2 pb-2"}
         loadData={loadData}
@@ -138,10 +137,8 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     </div>
   );
 }
-ConnectedAssetsRepositoriesAnalyticsTable.propTypes = {
-  repository: PropTypes.object,
+ConnectedAssetsCollaboratorsTasksTable.propTypes = {
+  user: PropTypes.object,
   dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object,
-  icon: PropTypes.object
 };
-export default ConnectedAssetsRepositoriesAnalyticsTable;
+export default ConnectedAssetsCollaboratorsTasksTable;

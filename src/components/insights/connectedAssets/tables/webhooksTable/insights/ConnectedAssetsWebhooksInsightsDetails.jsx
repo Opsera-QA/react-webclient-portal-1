@@ -15,7 +15,7 @@ import Col from "react-bootstrap/Col";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
 
-function ConnectedAssetsWebhooksAnalyticsDetails({ dashboardData }) {
+function ConnectedAssetsWebhooksInsightsDetails({ dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -133,7 +133,7 @@ function ConnectedAssetsWebhooksAnalyticsDetails({ dashboardData }) {
     </div>
   );
 }
-ConnectedAssetsWebhooksAnalyticsDetails.propTypes = {
+ConnectedAssetsWebhooksInsightsDetails.propTypes = {
   dashboardData: PropTypes.object,
 };
-export default ConnectedAssetsWebhooksAnalyticsDetails;
+export default ConnectedAssetsWebhooksInsightsDetails;
