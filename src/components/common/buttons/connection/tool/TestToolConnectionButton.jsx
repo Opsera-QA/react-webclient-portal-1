@@ -18,6 +18,8 @@ function TestToolConnectionButton({ toolModel, disabled, toolName }) {
   const { toastContext } = useComponentStateReference();
 
   const launchConnectionLogOverlay = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
     toastContext.showOverlayPanel(
       <ToolRegistryConnectionLogOverlay
         currentState={currentState}
