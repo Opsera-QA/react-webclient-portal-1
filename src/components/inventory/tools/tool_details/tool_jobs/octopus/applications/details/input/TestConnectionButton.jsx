@@ -1,12 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { faSpinner, faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
+import { faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import ToolRegistryConnectionLogOverlay from "components/common/buttons/connection/tool/ToolRegistryConnectionLogOverlay";
 import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";
