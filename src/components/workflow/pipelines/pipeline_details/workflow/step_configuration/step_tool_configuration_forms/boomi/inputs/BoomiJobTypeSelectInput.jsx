@@ -14,11 +14,11 @@ function BoomiJobTypeSelectInput({
       value: "CREATE_PACKAGE_COMPONENT",
       jobDescription: "PACKAGEXML_CREATION",
     },
-    {
-      name: "Deploy Package Component",
-      value: "DEPLOY_PACKAGE_COMPONENT",
-      jobDescription: "DEPLOY PACKAGE",
-    },
+    // {
+    //   name: "Deploy Package Component",
+    //   value: "DEPLOY_PACKAGE_COMPONENT",
+    //   jobDescription: "DEPLOY PACKAGE",
+    // },
   ];
 
   const setDataFunction = async (fieldName, value) => {

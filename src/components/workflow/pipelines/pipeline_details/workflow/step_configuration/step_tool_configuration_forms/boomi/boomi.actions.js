@@ -20,11 +20,8 @@ BoomiActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelTokenSou
 };
 
 BoomiActions.getEnvironments = async (dataObject, getAccessToken, cancelTokenSource) => {
-    const apiUrl = `/tools/boomi/environments`;
-    const postBody = {
-        toolId: dataObject?.getData("boomiToolId"),
-    };
-    let response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    const apiUrl = `/tools/${dataObject?.getData("boomiToolId")}/boomi/environments`;
+    let response = await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
     if (response && response.status === 200) {
         return response.data;
     }
