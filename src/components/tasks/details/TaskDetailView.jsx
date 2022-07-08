@@ -36,6 +36,8 @@ import SalesforceToGitMergeSyncTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SalesforceToGitMergeSyncTaskDetailsHelpDocumentation";
 import SfdxQuickDeployTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
+import GitCustodianTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
 
 function TaskDetailView() {
   const location = useLocation();
@@ -140,6 +142,8 @@ function TaskDetailView() {
         return <AwsLambdaFunctionCreationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.GITSCRAPER:
+        return <GitCustodianTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
