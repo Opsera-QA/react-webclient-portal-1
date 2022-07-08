@@ -144,6 +144,9 @@ FilterButtons.propTypes = {
 };
 
 FilterButtons.defaultProps = {
+  className: '',
+  filterBtnClassName: '',
+  includeButtonText: false,
   filterDropdownTitle: 'Filters'
 };
 
