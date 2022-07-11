@@ -113,19 +113,15 @@ function FilterButtons({
     <div className={className}>
       <div className="d-flex">
         <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose={hideFiltersOnTrigger} placement="bottom" overlay={getPopover()} className="filter-popover">
-          <div>
-            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
-              <span><IconBase icon={faFilter}/></span>
-              {includeButtonText && <span>Filter Results</span>}
-            </Button>
-          </div>
-        </OverlayTrigger>
-        <div>
-          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
-            <StackedFilterRemovalIcon />
-            {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
+          <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
+            <span><IconBase icon={faFilter}/></span>
+            {includeButtonText && <span>Filter Results</span>}
           </Button>
-        </div>
+        </OverlayTrigger>
+        <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <StackedFilterRemovalIcon />
+          {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
+        </Button>
       </div>
     </div>
   );
