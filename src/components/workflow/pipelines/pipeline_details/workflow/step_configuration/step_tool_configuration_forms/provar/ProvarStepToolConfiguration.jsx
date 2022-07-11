@@ -11,7 +11,8 @@ import ProvarBitbucketWorkspaceInput from "components/workflow/pipelines/pipelin
 import ProvarSCMToolTypeSelectInput from "./inputs/ProvarSCMToolTypeSelectInput";
 import ProvarSourceControlManagementToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/provar/inputs/ProvarStepSourceControlManagementToolSelectInput";
 import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
-
+import ProvarEnvironmentVariablesInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/provar/inputs/ProvarEnvironmentVariablesInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 function ProvarConfiguration({
   pipelineId,
   stepTool,
@@ -114,6 +115,17 @@ function ProvarConfiguration({
         setDataObject={setProvarConfigurationDataDto}
         dataObject={provarStepConfigurationDto}
         fieldName={"buildXmlPath"}
+      />
+      <BooleanToggleInput
+          setDataObject={setProvarConfigurationDataDto}
+          dataObject={provarStepConfigurationDto}
+          fieldName={"isEnvironmentVariables"}
+      />
+      <ProvarEnvironmentVariablesInput
+        setDataObject={setProvarConfigurationDataDto}
+        dataObject={provarStepConfigurationDto}
+        fieldName={"environmentVariables"}
+        visible={provarStepConfigurationDto?.getData("isEnvironmentVariables")}
       />
       {/*<ProvarSCMRepoFiles*/}
       {/*    setDataObject={setProvarConfigurationDataDto}*/}
