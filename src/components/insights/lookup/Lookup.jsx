@@ -345,9 +345,9 @@ const Lookup = () => {
     onSearch();
   };
 
-  const getDateRangeButton = () => {
-    return (
-      <>
+  const getDropdownFilters = () => (
+    <Row>
+      <Col>
         <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
           <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
           {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
@@ -397,14 +397,6 @@ const Lookup = () => {
             </Popover.Content>
           </Popover>
         </Overlay>
-      </>
-    );
-  };
-
-  const getDropdownFilters = () => (
-    <Row>
-      <Col>
-        {getDateRangeButton()}
       </Col>
       <Col>
         <Multiselect
