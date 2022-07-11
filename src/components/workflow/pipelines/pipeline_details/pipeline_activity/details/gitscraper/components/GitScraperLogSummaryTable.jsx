@@ -52,7 +52,7 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
       showBorder={false}
       body={getComponentResultsTable()}
       titleIcon={faExclamationCircle}
-      title={`${pluralize(gitScraperObj?.length, 'Report')} Found`}
+      title={`${pluralize(gitScraperObj?.length, 'Record')} Found`}
       className={"mt-2"}
     />
   );
