@@ -14,18 +14,6 @@ function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
     setShowExportModal(false);
   };
 
-  const rawDataResults = () =>{
-    return activityLogData ? activityLogData.map(item => JSON.stringify(item)) : "export failure";
-   };
-
-  const formatActivityLogData = () => {
-    let formattedData = activityLogData;
-
-    //any data formatting goes here
-
-    return formattedData;
-  };
-
   // TODO: Refine when more is complete
   return (
     <>
@@ -44,8 +32,7 @@ function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
         showModal={showExportModal}
         closeModal={closeModal}
         isLoading={isLoading}
-        formattedData={formatActivityLogData()}
-        rawData={rawDataResults()}
+        activityLogData={activityLogData}
       />
     </>
   );
