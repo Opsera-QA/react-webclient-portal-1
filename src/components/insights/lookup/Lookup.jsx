@@ -29,6 +29,7 @@ const cleanUrlPath = ({url}) => {
   }
   return returnUrl;
 };
+
 //.env params were different when going to server, trailing slash
 const ANALYTICS_API = cleanUrlPath({url: NODE_ANALYTICS_API_SERVER_URL});
 
@@ -55,8 +56,6 @@ const Lookup = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [activeTables, setActiveTables] = useState([]);
   const [searchArr, setSearchArr] = useState([]);
-  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [isPreloading, setIsPreloading] = useState(true);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -71,9 +70,7 @@ const Lookup = () => {
   const ref = useRef(null);
   const isMounted = useRef(false);
   const toastContext = useContext(DialogToastContext);
-
-  const Auth = useContext(AuthContext);
-  const { getAccessToken } = Auth;
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -240,10 +237,9 @@ const Lookup = () => {
     });
   };
 
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
       setDashboardData({...newDataObject});
     } catch (error) {
       if (isMounted.current === true) {
@@ -254,15 +250,6 @@ const Lookup = () => {
       if (isMounted.current === true) {
         setIsLoading(false);
       }
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
     }
   };
 
