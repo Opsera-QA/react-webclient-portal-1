@@ -17,12 +17,17 @@ const apigeeReportMetaData = {
       label: "Status",
       id: "state"
     },
+    {
+      label: "New Asset",
+      id: "isNew"
+    },
   ],
   newObjectFields: {
     name: "",
     type: "",
     revision: "",
     state: "",
+    isNew: false,
   }
 };
 
