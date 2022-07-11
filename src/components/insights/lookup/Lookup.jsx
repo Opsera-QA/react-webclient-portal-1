@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext, useRef, useReducer} from "react";
 import {DateRangePicker} from "react-date-range";
-import {addDays, format} from "date-fns";
+import {format, subDays} from "date-fns";
 import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
 import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
@@ -41,8 +41,8 @@ const Lookup = () => {
 
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: subDays(new Date(), 7),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
