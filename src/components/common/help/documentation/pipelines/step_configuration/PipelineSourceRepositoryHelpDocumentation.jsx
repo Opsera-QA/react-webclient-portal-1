@@ -12,15 +12,15 @@ function PipelineSourceRepositoryHelpDocumentation() {
   const getHelpDocumentation = () => {
       return (
         <div>
-          <div className={"ml-2 mb-2"}>Opsera Pipelines support webhook based start events for projects in GitLab, GitHub and Bitbucket. Select a primary branch the trigger will occur off of, with the option to select an additional secondary branch. Use the following instructions to configure a webhook trigger event for this pipeline. For more detailed information on webhook trigger configurations, view the <b><a href="https://opsera.atlassian.net/l/c/uGkMZ0ZF" target="_blank" rel="noreferrer">Configure Single Pipeline for Multiple Webhook Events Help Documentation</a>.</b>
+          <div className={"ml-2 mb-2"}>Opsera Pipelines support webhook based start events for projects in GitLab, GitHub, Bitbucket and Azure Devops. Select a primary branch the trigger will occur off of, with the option to select an additional secondary branch. Use the following instructions to configure a webhook trigger event for this pipeline. For more detailed information on webhook trigger configurations, view the <b><a href="https://opsera.atlassian.net/l/c/uGkMZ0ZF" target="_blank" rel="noreferrer">Configure Single Pipeline for Multiple Webhook Events Help Documentation</a>.</b>
           </div>
           <div className={"ml-4 mb-2"}>
             <h6>Source Repository Configuration and Webhook Registration</h6>
             <ol>
-              <li>Restrict a webhook trigger to a particular project and branch (or 2 branches) by making the following selections from the drop downs:
+              <li>Restrict a webhook trigger to a particular project and by making the following selections from the drop downs:
                 <ul style={{listStyleType: "none"}}>
-                  <li><b>Platform</b> - Select the SCM (source control management) platform containing the project where your webhook will be enabled. Choose from Bitbucket, Github or Gitlab.</li>
-                  <li><b>Account</b> - Once a platform is selected, corresponding accounts stored in the Tool Registry are fetched. Select the account containing the project you wish to configure your webhook trigger events to. </li>
+                  <li><b>Platform</b> - Select the source control management platform containing the project where your webhook will be enabled. Choose from GitLab, GitHub, Bitbucket or Azure Devops.</li>
+                  <li><b>Account</b> - Select the account containing the project you wish to configure your webhook trigger events to. </li>
                   <li><b>Repository</b> -  Once an account is selected, a list of its repositories will be fetched. Select the particular Repository of your project.</li>
                   <li><b>Primary Branch</b> - Select the branch to add the webhook event trigger to. The pipeline will be bound to the selected branch activity.</li>
                   <li><b>Secondary Branch</b> - Optionally, select a second branch to add the webhook event trigger to. The pipeline will also be bound to this branch if selected.</li>
