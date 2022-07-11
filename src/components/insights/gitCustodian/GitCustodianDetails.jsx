@@ -10,7 +10,7 @@ import GitCustodianChartsView from "./charts/GitCustodianChartsView";
 import GitCustodianTable from "./table/gitCustodianTable";
 
 
-function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
+function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel, loadData }) {
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -25,11 +25,11 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    // loadData(source).catch((error) => {
+    //   if (isMounted?.current === true) {
+    //     throw error;
+    //   }
+    // });
 
     return () => {
       source.cancel();
@@ -37,20 +37,20 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
     };
   }, [JSON.stringify(gitCustodianData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = gitCustodianFilterModel) => {
-    try {
-      setIsLoading(true);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
+  // const loadData = async (cancelSource = cancelTokenSource, filterDto = gitCustodianFilterModel) => {
+  //   try {
+  //     setIsLoading(true);
+  //   } catch (error) {
+  //     if (isMounted?.current === true) {
+  //       console.error(error);
+  //       setError(error);
+  //     }
+  //   } finally {
+  //     if (isMounted?.current === true) {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
 
   const getTable = () => {
     return (
@@ -107,7 +107,8 @@ GitCustodianDetails.propTypes = {
   gitCustodianData: PropTypes.object,
   setGitCustodianData: PropTypes.func,
   gitCustodianFilterModel: PropTypes.object,
-  setGitCustodianFilterModel: PropTypes.func
+  setGitCustodianFilterModel: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default GitCustodianDetails;
