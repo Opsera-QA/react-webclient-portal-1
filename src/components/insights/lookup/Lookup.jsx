@@ -12,14 +12,15 @@ import {ApiService} from "api/apiService";
 import {NODE_ANALYTICS_API_SERVER_URL} from "config";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import Model from "core/data_model/model";
+import componentFilterMetadata from "./componentFitlerMetadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
-import LookupResults from "./LookupResults";
 import FilterContainer from "components/common/table/FilterContainer";
+import LookupResults from "./LookupResults";
 
 const cleanUrlPath = ({url}) => {
 	let returnUrl = url;
@@ -65,6 +66,7 @@ const Lookup = () => {
   const [eDate, setEDate] = useState("");
   const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
+  const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
   const node = useRef();
   const ref = useRef(null);
   const isMounted = useRef(false);
@@ -82,7 +84,7 @@ const Lookup = () => {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData({}, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -229,6 +231,15 @@ const Lookup = () => {
     });
   };
 
+  const clearErrorAlert = () => {
+    setState({
+      modal: false,
+      type: "",
+      title: "",
+      message: ""
+    });
+  };
+
   const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -288,18 +299,22 @@ const Lookup = () => {
   };
 
   const dateChange = (item) => {
+    console.log('dataChange, update filterDto');
     if (item.selection) {
       setDate([item.selection]);
       let startDate = format(item.selection.startDate, "MM/dd/yyyy");
+      filterDto.setData("startDate", startDate);
       setSDate(startDate);
 
-      if (item.selection.endDate === 0) {
-        setEDate(startDate);
-      } else {
-        let endDate = format(item.selection.endDate, "MM/dd/yyyy");
-        setEDate(endDate);
-        validate(startDate,endDate);
-      }
+      const endDate = item.selection.endDate === 0 ? startDate : format(item.selection.endDate, "MM/dd/yyyy");
+      filterDto.setData("endDate", endDate);
+      setEDate(endDate);
+
+      filterDto.setData("activeFilters", filterDto.getActiveFilters());
+
+      setFilterDto(filterDto);
+
+      validate(startDate,endDate);
     }
   };
 
@@ -322,6 +337,12 @@ const Lookup = () => {
     setSDate(undefined);
     setEDate(undefined);
     validate();
+  };
+
+  const onFilter = () => {
+    clearErrorAlert();
+    setCalendar(false);
+    onSearch();
   };
 
   const getDateRangeButton = () => {
@@ -380,25 +401,6 @@ const Lookup = () => {
     );
   };
 
-  const [filterDto, setFilterDto] = useState({
-    getType(input) {
-      console.log('getType', input);
-      return "apple";
-    },
-    getData(type) {
-      console.log('getData', { type });
-      return [];
-    },
-    setData(data) {
-      console.log('setData', { data });
-    }
-  });
-
-  const onFilterChange = event => {
-    console.log('onFilterChange', event);
-    setFilterDto(event);
-  };
-
   const getDropdownFilters = () => (
     <Row>
       <Col>
@@ -431,7 +433,7 @@ const Lookup = () => {
         <Row>
           <Col>
             {state.modal &&
-              <Alert className="mt-3" variant={state.type} onClose={() => setState({ modal: false, type: "", title: "", message: "" })} dismissible>
+              <Alert className="mt-3" variant={state.type} onClose={() => clearErrorAlert()} dismissible>
                 {state.title} {state.message}
               </Alert>
             }
@@ -441,7 +443,7 @@ const Lookup = () => {
           title="Salesforce Lookup"
           isLoading={isLoading}
           filterDto={filterDto}
-          setFilterDto={onFilterChange}
+          loadData={onFilter}
           dropdownFilters={getDropdownFilters()}
           body={<LookupResults isLoading={isLoading} results={activeTables} />}
           hideFiltersOnTrigger={false}
