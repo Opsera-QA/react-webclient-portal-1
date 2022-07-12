@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 import axios from "axios";
@@ -12,6 +12,9 @@ import OverviewLandingToolchainContentBlock from "components/landing/blocks/Over
 import OverviewLandingDeclarativePipelinesContentBlock
   from "components/landing/blocks/OverviewLandingDeclarativePipelinesContentBlock";
 import OverviewLandingInsightsContentBlock from "components/landing/blocks/OverviewLandingInsightsContentBlock";
+import { faEnvelope, faQuestion } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
+
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -213,8 +216,28 @@ function OverviewLanding() {
         </Col>
       </Row>
       <hr/>
-      <div className="h5 text-color">Need help?</div>
-      <div className="h6 mt-1 mb-5">Send an email to support@opsera.io</div>
+      <Row className="mt-3 mr-2">
+        <Col md={6}>
+          <div>
+            <div className="h5 text-color"><IconBase icon={faEnvelope} className={"text-muted mr-1"} />
+              Need help?
+            </div>
+            <div className="h6">
+              Send an email to support@opsera.io
+            </div>
+          </div>
+        </Col>
+        <Col md={6}>
+          <div>
+            <div className="h5 text-color"><IconBase icon={faQuestion} className={"text-muted mr-1"} />
+              Frequently Asked Questions
+            </div>
+            <div className="h6">
+              <Link to={"/faq"} >View our frequently asked questions.</Link>
+            </div>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 }
