@@ -625,13 +625,14 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getPageLink(row){
-      return (
+      return row?.value?.url ? 
+      (
         <PageLinkIcon
           pageLink={row?.value?.url}
           externalLink={true}
           pageLinkText={row?.value?.key}
         />
-      );
+      ) : (row?.value?.key || "");
     },
     class: className ? className : undefined
   };
