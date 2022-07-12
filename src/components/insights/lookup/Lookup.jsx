@@ -4,13 +4,11 @@ import {format, subDays} from "date-fns";
 import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
 import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 import Multiselect from "react-widgets/Multiselect";
-import axios from 'axios';
 
 import './lookup.css';
 import {ApiService} from "api/apiService";
 import {NODE_ANALYTICS_API_SERVER_URL} from "config";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import componentFilterMetadata from "./componentFitlerMetadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
@@ -50,35 +48,11 @@ const Lookup = () => {
   const [searchArr, setSearchArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [target, setTarget] = useState(null);
   const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
   const node = useRef();
   const ref = useRef(null);
-  const isMounted = useRef(false);
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
 
   useEffect(async() => {
     // load in component names for search dropdown
@@ -95,6 +69,9 @@ const Lookup = () => {
       })
       .catch((e) => {
         setErrorMessage(e.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -138,22 +115,6 @@ const Lookup = () => {
 
   const clearErrorAlert = () => {
     setErrorMessage(null);
-  };
-
-  const loadData = async () => {
-    console.log('loadData');
-    try {
-      setIsLoading(true);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
   };
 
   const toggleCalendar = (event) => {
