@@ -7,6 +7,7 @@ for the OpsERA platform
 
 ---
 #####Legacy Library Install Issue:
+
 If you run into a problem performing npm install on the project, you will need to use the syntax:
 
 `npm install --legacy-peer-deps`
