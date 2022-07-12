@@ -14,7 +14,8 @@ import userActions from "../user/user-actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-const OktaSignIn = require("@okta/okta-signin-widget");
+//const OktaSignIn = require("@okta/okta-signin-widget");
+import OktaSignIn from '@okta/okta-signin-widget';
 
 const LoginForm = ({ authClient }) => {
   const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
