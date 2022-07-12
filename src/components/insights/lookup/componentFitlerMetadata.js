@@ -1,4 +1,6 @@
-const componentFilterMetadata = {
+import { formatDate, hasDateValue } from "components/common/helpers/date/date.helpers";
+
+export const insightsLookupMetadata = {
   idProperty: "_id",
   type: "Salesforce Component",
   fields: [
@@ -14,21 +16,31 @@ const componentFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
+    {
+      label: "Component Names",
+      id: "selectedComponentNames",
+    },
   ],
   getActiveFilters(filterDto) {
     const activeFilters = [];
+    const DATE_STRING_FORMAT = "MM/dd/yyyy";
 
-    if (filterDto.getData("startDate") != null) {
+    const startDate = filterDto.getData("startDate");
+
+    if (hasDateValue(startDate) === true) {
+      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
         activeFilters.push({
           filterId: "startDate",
-          text: `Start Date: ${filterDto.getData("startDate")}`
+          text: `Start Date: ${formattedStartDate}`
         });
     }
 
-    if (filterDto.getData("endDate") != null) {
+    const endDate = filterDto.getData("endDate");
+    if (hasDateValue(endDate) === true) {
+      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       activeFilters.push({
         filterId: "endDate",
-        text: `End Date: ${filterDto.getData("endDate")}`
+        text: `End Date: ${formattedEndDate}`
       });
     }
 
@@ -37,8 +49,7 @@ const componentFilterMetadata = {
   newObjectFields: {
     startDate: null,
     endDate: null,
+    selectedComponentNames: [],
     activeFilters: []
   }
 };
-
-export default componentFilterMetadata;
