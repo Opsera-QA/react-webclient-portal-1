@@ -1,9 +1,8 @@
-import React, {useEffect, useState, useContext, useRef, useReducer} from "react";
+import React, {useEffect, useState, useContext, useRef} from "react";
 import {DateRangePicker} from "react-date-range";
 import {format, subDays} from "date-fns";
 import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
 import {faCalendar} from "@fortawesome/pro-light-svg-icons";
-import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import Multiselect from "react-widgets/Multiselect";
 import axios from 'axios';
 
@@ -15,12 +14,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import componentFilterMetadata from "./componentFitlerMetadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import modelHelpers from "components/common/model/modelHelpers";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import FilterContainer from "components/common/table/FilterContainer";
 import LookupResults from "./LookupResults";
+
+const DATE_STRING_FORMAT = "MM/dd/yyyy";
 
 const cleanUrlPath = ({url}) => {
 	let returnUrl = url;
@@ -39,32 +39,18 @@ const ENDPOINTS = {
 };
 
 const Lookup = () => {
-
-  const [date, setDate] = useState([
-    {
-      startDate: subDays(new Date(), 7),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [startDate, setStartDate] = useState(subDays(new Date(), 7));
+  const [endDate, setEndDate] = useState(new Date());
   
   const [componentList, setComponentList] = useState([]);
-  const [state, setState] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    { modal: false }
-  );
-  const [searchResults, setSearchResults] = useState([]);
-  const [activeTables, setActiveTables] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const [searchArr, setSearchArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isPreloading, setIsPreloading] = useState(true);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [calendar, setCalendar] = useState(false);
   const [target, setTarget] = useState(null);
-  const [sDate, setSDate] = useState("");
-  const [eDate, setEDate] = useState("");
-  const [dashboardData, setDashboardData] = useState(undefined);
-  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
   const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
   const node = useRef();
   const ref = useRef(null);
@@ -81,7 +67,7 @@ const Lookup = () => {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData({}, source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -107,140 +93,52 @@ const Lookup = () => {
         setIsPreloading(false);
       })
       .catch((e) => {
-        showErrorAlert(e.message);
+        setErrorMessage(e.message);
       });
   }, []);
 
-  useEffect(() => {
-    const componentName = Object.keys(searchResults)[0];
-    if (componentName) {
-      updateTables({
-        searchResults
-      });
-    }
-  }, [searchResults]);
-
-  const updateTables = ({
-    searchResults
-  }) => {
-    
-    let tableUpdates = [];
-    const componentNames = Object.keys(searchResults);
-
-    for (let i = 0, l = componentNames.length; i < l; i++) {
-      const componentName = componentNames[i];
-      const componentData = searchResults[componentName];
-
-      const pipelineNames = Object.keys(componentData.pipelineData);
-      const totals = [{
-        deploy_count: componentData.totalTimesComponentDeployed,
-        validations_passed: componentData.totalValidationsPassed,
-        validations_failed: componentData.totalValidationsFailed,
-        unit_tests_passed: componentData.totalUnitTestsPassed,
-        unit_tests_failed: componentData.totalUnitTestsFailed,
-        pipelines: pipelineNames.length
-      }];
-
-      const pipelines = [];
-      for (let j = 0, k = pipelineNames.length; j < k; j++) {
-        const pipelineName = pipelineNames[j];
-        const pipeline = componentData.pipelineData[pipelineName];
-        pipelines.push({
-          pipeline: pipelineName,
-          deploy_count: pipeline.totalTimesComponentDeployed,
-          validations_passed: pipeline.totalValidationsPassed,
-          validations_failed: pipeline.totalValidationsFailed,
-          unit_tests_passed: pipeline.totalUnitTestsPassed,
-          unit_tests_failed: pipeline.totalUnitTestsFailed,
-          last_deploy: pipeline.customerName
-        });
-      }
-
-      tableUpdates.push({
-        componentName,
-        totals,
-        pipelines
-      });
-    }
-
-    setActiveTables(tableUpdates);
-  };
-
-  const onSearch = async() => {
-
-    if (!sDate || !eDate) {
-      return showErrorAlert('Please select start and end dates.');
+  const onSearch = async () => {
+    if (!startDate || !endDate) {
+      return setErrorMessage('Please select start and end dates.');
     }
 
     if (searchArr.length < 1) {
-      return showErrorAlert('Please enter search criteria.');
+      return setErrorMessage('Please enter search criteria.');
     }
 
     setIsLoading(true);
-    const accessToken = await getAccessToken();
-    const data = {
-      startDate: sDate,
-      endDate: eDate,
-      fullNameArr: searchArr
-    };
-    
-    new ApiService(
-      ANALYTICS_API + ENDPOINTS.componentSearch,
-      data,
-      accessToken
-    )
-    .get()
-    .then(res => {
+
+    try {
+      const accessToken = await getAccessToken();
+
+      const apiService = new ApiService(
+        ANALYTICS_API + ENDPOINTS.componentSearch,
+        {
+          startDate: format(startDate, DATE_STRING_FORMAT),
+          endDate: format(endDate, DATE_STRING_FORMAT),
+          fullNameArr: searchArr
+        },
+        accessToken
+      );
+
+      const response = await apiService.get();
       
-      const cleanedResults = {};
-      const searchRes = res.data.data.data;
-      const pipelineNames = Object.keys(searchRes);
-      for (let i = 0, l = pipelineNames.length; i < l; i++){ 
-        const pipelineName = pipelineNames[i];
-        if (pipelineName !== 'dateRanges') {
-          const pipelineData = searchRes[pipelineName].currentResults;
-          cleanedResults[pipelineName] = {
-            totalTimesComponentDeployed: pipelineData.totalTimesComponentDeployed,
-            totalUnitTestsFailed: pipelineData.totalUnitTestsFailed,
-            totalUnitTestsPassed: pipelineData.totalUnitTestsPassed,
-            totalValidationsFailed: pipelineData.totalValidationsFailed,
-            totalValidationsPassed: pipelineData.totalValidationsPassed,
-            pipelineData: pipelineData.pipelineData
-          };
-        }
-      }
-
-      setSearchResults(cleanedResults);
+      setSearchResults(response.data.data.data);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
       setIsLoading(false);
-    })
-    .catch(e => {
-      showErrorAlert(e.message);
-    });
-    
-  };
-
-  const showErrorAlert = (message) => {
-    setState({
-      modal: true,
-      type: "danger",
-      title: "Error!",
-      message: message
-    });
+    }
   };
 
   const clearErrorAlert = () => {
-    setState({
-      modal: false,
-      type: "",
-      title: "",
-      message: ""
-    });
+    setErrorMessage(null);
   };
 
-  const loadData = async (newDataObject) => {
+  const loadData = async () => {
+    console.log('loadData');
     try {
       setIsLoading(true);
-      setDashboardData({...newDataObject});
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -254,93 +152,56 @@ const Lookup = () => {
   };
 
   const toggleCalendar = (event) => {
-    setCalendar(!calendar);
+    setShowCalendar(!showCalendar);
     setTarget(event.target);
-    if (date[0].startDate && date[0].endDate) {
-      let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
-      if (date[0].endDate === 0) {
-        setEDate(startDate);
-      } else {
-        let endDate = format(new Date(date[0].endDate), "MM/dd/yyyy");
-        setEDate(endDate);
-      }
-
-      setSDate(startDate);
-    }
   };
 
   const closeCalender = () => {
-    setCalendar(false);
-
-    if (date[0].startDate && date[0].endDate) {
-      let startDate = format(new Date(date[0].startDate), "MM/dd/yyyy");
-      setSDate(startDate);
-
-      if (date[0].endDate === 0) {
-        setEDate(startDate);
-      } else {
-        let endDate = format(new Date(date[0].endDate), "MM/dd/yyyy");
-        setEDate(endDate);
-      }
-    }
-  };
-
-  const dateChange = (item) => {
-    console.log('dataChange, update filterDto');
-    if (item.selection) {
-      setDate([item.selection]);
-      let startDate = format(item.selection.startDate, "MM/dd/yyyy");
-      filterDto.setData("startDate", startDate);
-      setSDate(startDate);
-
-      const endDate = item.selection.endDate === 0 ? startDate : format(item.selection.endDate, "MM/dd/yyyy");
-      filterDto.setData("endDate", endDate);
-      setEDate(endDate);
-
-      filterDto.setData("activeFilters", filterDto.getActiveFilters());
-
-      setFilterDto(filterDto);
-
-      validate(startDate,endDate);
-    }
-  };
-
-  const validate = (startDate,endDate)=>{
-    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
-    let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
-    setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+    setShowCalendar(false);
   };
 
   const clearCalendar = () => {
-    setDate([
-      {
-        startDate: undefined,
-        endDate: undefined,
-        key: "selection",
-      },
-    ]);
-    setSDate(undefined);
-    setEDate(undefined);
-    validate();
+    filterDto.setData("startDate", format(subDays(new Date(), 7)));
+    filterDto.setData("endDate", format(new Date()));
+    filterDto.setData("activeFilters", filterDto.getActiveFilters());
   };
 
-  const onFilter = () => {
+  const onDateChange = ({ selection: { startDate, endDate } }) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
+
+  const onFilter = (newFilterDto) => {
     clearErrorAlert();
-    setCalendar(false);
+    setShowCalendar(false);
+
+    newFilterDto.setData("startDate", format(startDate, DATE_STRING_FORMAT));
+    newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
+    newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
+    setFilterDto(newFilterDto);
+
     onSearch();
   };
+
+  const datePickerButtonText = startDate && endDate ? `${format(startDate, DATE_STRING_FORMAT)} - ${format(endDate, DATE_STRING_FORMAT)}` : "Date Range";
+
+  const dateRange = [
+    {
+      startDate,
+      endDate,
+      key: "selection"
+    }
+  ];
 
   const getDropdownFilters = () => (
     <Row>
       <Col>
         <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
           <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-          {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+          {datePickerButtonText}
         </Button>
         <Overlay
-          show={calendar}
+          show={showCalendar}
           target={target}
           placement="left"
           container={ref.current}
@@ -373,14 +234,13 @@ const Lookup = () => {
               <DateRangePicker
                 startDatePlaceholder="Start Date"
                 endDatePlaceholder="End Date"
-                onChange={dateChange}
+                onChange={onDateChange}
                 showSelectionPreview={true}
                 moveRangeOnFirstSelection={false}
                 months={1}
-                ranges={date}
+                ranges={dateRange}
                 direction="horizontal"
               />
-              {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} /> */}
             </Popover.Content>
           </Popover>
         </Overlay>
@@ -411,9 +271,9 @@ const Lookup = () => {
       <Container fluid>
         <Row>
           <Col>
-            {state.modal &&
-              <Alert className="mt-3" variant={state.type} onClose={() => clearErrorAlert()} dismissible>
-                {state.title} {state.message}
+            {errorMessage &&
+              <Alert className="mt-3" variant="danger" onClose={clearErrorAlert} dismissible>
+                {errorMessage}
               </Alert>
             }
           </Col>
@@ -424,7 +284,7 @@ const Lookup = () => {
           filterDto={filterDto}
           loadData={onFilter}
           dropdownFilters={getDropdownFilters()}
-          body={<LookupResults isLoading={isLoading} results={activeTables} />}
+          body={<LookupResults isLoading={isLoading} searchResults={searchResults} />}
           hideFiltersOnTrigger={false}
         />
       </Container>

@@ -89,7 +89,7 @@ function FilterButtons({
         {getInnerFilters()}
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">
-            <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
+            <Button variant="primary" disabled={isLoading} size="sm" onClick={loadFilters} className="w-100">
               <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
             </Button>
           </div>
