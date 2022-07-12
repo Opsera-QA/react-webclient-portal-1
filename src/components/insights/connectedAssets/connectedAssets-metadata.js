@@ -82,6 +82,10 @@ const connectedAssetsMetadata = {
          id: "artifactName"
        },
        {
+        label: "Updated On",
+        id: "task_updatedAt"
+       },
+       {
          label: "Last Action",
          id: "last_action"
        },
