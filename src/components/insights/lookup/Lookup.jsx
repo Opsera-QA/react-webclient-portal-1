@@ -49,8 +49,6 @@ const Lookup = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [target, setTarget] = useState(null);
   const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
-  const node = useRef();
-  const ref = useRef(null);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -198,7 +196,6 @@ const Lookup = () => {
           show={showCalendar}
           target={target}
           placement="left"
-          container={ref.current}
           containerPadding={20}
         >
           <Popover className="max-content-width">
@@ -224,7 +221,7 @@ const Lookup = () => {
                 </Button>
               </div>
             </Popover.Title>
-            <Popover.Content ref={node}>
+            <Popover.Content>
               <DateRangePicker
                 startDatePlaceholder="Start Date"
                 endDatePlaceholder="End Date"
