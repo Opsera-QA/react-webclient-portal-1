@@ -17,7 +17,7 @@ import {
   faTimesCircle,
   faTrash,
   faBan,
-  faTerminal, faToolbox, faOctagon,
+  faTerminal, faToolbox, faOctagon, faCodeBranch
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
@@ -248,7 +248,24 @@ const PipelineWorkflowItem = (
     }
 
     return (
-      <div style={{ height: "26px" }} />
+      <div />
+    );
+  };
+
+  const getBranchField = () => {
+    if (item && item.tool) {
+      const { configuration } = item.tool;
+      if (configuration && (configuration.branch || configuration.gitBranch || configuration.defaultBranch)) {
+        return (
+          <div className="p-1 text-muted small">
+            <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"} />
+            Branch: {configuration.branch || configuration.gitBranch || configuration.defaultBranch}
+          </div>
+        );
+      }
+    }
+    return (
+      <div />
     );
   };
 
@@ -424,6 +441,8 @@ const PipelineWorkflowItem = (
           <IconBase icon={faIdBadge} iconSize={"sm"}
                            className={"mr-1"} />ID: {item._id}</div>
         {getToolField()}
+
+        {getBranchField()}
 
         <div className="ml-auto mt-auto">
         <div className="p-1 ml-auto d-flex">
