@@ -75,7 +75,9 @@ function ConnectedAssetsDetails({ dashboardData }) {
       );
       let responseData = response?.data?.data[0]?.connectedAssets?.data;
       if (isMounted?.current === true && responseData) {
-        setData(responseData);
+        if(responseData) {
+          setData(responseData);
+        }
         const selectedDataBlockUrlParameter = sessionHelper.getStoredUrlParameter('view');
         if (hasStringValue(selectedDataBlockUrlParameter) == true) {
           onDataBlockSelect(selectedDataBlockUrlParameter);

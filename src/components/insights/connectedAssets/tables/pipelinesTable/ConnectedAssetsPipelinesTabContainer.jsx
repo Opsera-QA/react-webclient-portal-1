@@ -2,15 +2,20 @@ import React, {useState, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import LoadingIcon from "../../../../common/icons/LoadingIcon";
 import VanitySetTabAndViewContainer from "../../../../common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import VanitySetTabViewContainer from "../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
-import VanitySetTabView from "../../../../common/tabs/vertical_tabs/VanitySetTabView";
 import VanitySetVerticalTabContainer from "../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import ConnectedAssetsPipelinesRecentTable from "./ConnectedAssetsPipelinesRecentTable";
 import ConnectedAssetsPipelinesInactiveTable from "./ConnectedAssetsPipelinesInactiveTable";
 import ConnectedAssetsPipelinesDeletedTable from "./ConnectedAssetsPipelinesDeletedTable";
 
+const CONNECTED_ASSETS_PIPELINES_TABS = {
+  RECENT: "recent",
+  INACTIVE: "inactive",
+  DELETED: "deleted",
+};
+
 function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
+  const [currentTab, setCurrentTab] = useState(CONNECTED_ASSETS_PIPELINES_TABS.RECENT);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,25 +51,26 @@ function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
   };
 
   const getTabContentContainer = () => {
-    return (
-      <VanitySetTabViewContainer>
-        <VanitySetTabView key={'recent'} tabKey={'recent'}>
+    switch (currentTab) {
+      case CONNECTED_ASSETS_PIPELINES_TABS.RECENT:
+        return (
           <ConnectedAssetsPipelinesRecentTable
             dashboardData={dashboardData}
           />
-        </VanitySetTabView>
-        <VanitySetTabView key={'inactive'} tabKey={'inactive'}>
-          <ConnectedAssetsPipelinesInactiveTable
-            dashboardData={dashboardData}
-          />
-        </VanitySetTabView>
-        <VanitySetTabView key={'deleted'} tabKey={'deleted'}>
+        );
+      case CONNECTED_ASSETS_PIPELINES_TABS.DELETED:
+        return (
           <ConnectedAssetsPipelinesDeletedTable
             dashboardData={dashboardData}
           />
-        </VanitySetTabView>
-      </VanitySetTabViewContainer>
-    );
+        );
+      case CONNECTED_ASSETS_PIPELINES_TABS.INACTIVE:
+        return (
+          <ConnectedAssetsPipelinesInactiveTable
+            dashboardData={dashboardData}
+          />
+        );
+    }
   };
 
   const getVerticalTabContainer = () => {
@@ -77,14 +83,20 @@ function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
             <VanitySetVerticalTab
               tabText={'Recent'}
               tabName={'recent'}
+              activeTab={currentTab}
+              handleTabClick={setCurrentTab}
             />
             <VanitySetVerticalTab
               tabText={'Inactive'}
               tabName={'inactive'}
+              activeTab={currentTab}
+              handleTabClick={setCurrentTab}
             />
             <VanitySetVerticalTab
               tabText={'Deleted'}
               tabName={'deleted'}
+              activeTab={currentTab}
+              handleTabClick={setCurrentTab}
             />
         </VanitySetVerticalTabContainer>
       </div>

@@ -8,14 +8,13 @@ import LoadingIcon from "../../../../../common/icons/LoadingIcon";
 import VanitySetTabAndViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetVerticalTab from "../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import VanitySetTabView from "../../../../../common/tabs/vertical_tabs/VanitySetTabView";
-import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import IconBase from "../../../../../common/icons/IconBase";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
 import ConnectedAssetsCollaboratorsAnalyticsTable from "./ConnectedAssetsCollaboratorsInsightsTable";
 import PaginationContainer from "../../../../../common/pagination/PaginationContainer";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
 function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -26,6 +25,7 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
   const [data, setData] = useState(undefined);
   const [responseData, setResponseData] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(new Model({ ...connectedAssetsMetadata.newObjectFields }, connectedAssetsMetadata, false));
+  const [activeTab,setActiveTab] =useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -67,6 +67,7 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
       setData(responseData1);
       if(Array.isArray(responseData1?.data)) {
         setResponseData(responseData1?.data);
+        setActiveTab(responseData1?.data[0]._id);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -80,9 +81,24 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
     }
   };
 
+  const handleTabClick = (newTab) => {
+    if (newTab !== activeTab) {
+      setActiveTab(newTab);
+    }
+  };
+
   const getBody = () => {
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
+    }
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
     }
     if(!data || data.length === 0) {
       return <div>No data found.</div>;
@@ -101,37 +117,18 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
   };
 
   const getTabContentContainer = () => {
+    const userDetails = responseData.filter(item => {
+      return item._id == activeTab;
+    });
     return (
-      <VanitySetTabViewContainer>
-        {responseData.map((item, index) => (
-          <VanitySetTabView key={index} tabKey={item._id}>
-            <ConnectedAssetsCollaboratorsAnalyticsTable
-              user={item}
-              dashboardData={dashboardData}
-            />
-          </VanitySetTabView>
-        ))}
-      </VanitySetTabViewContainer>
-    );
+      <ConnectedAssetsCollaboratorsAnalyticsTable
+        key={userDetails[0]._id}
+        user={userDetails[0]}
+        dashboardData={dashboardData}
+      />);
   };
 
   const getVerticalTabContainer = () => {
-    if(!responseData || responseData.length === 0) {
-      return (<div className={"h-100"}>
-        <VanitySetVerticalTabContainer className={"h-100"} title={<div><IconBase icon={faUsers} className={'pr-2'}/>List Of Users</div>}>
-          <div>No users found.</div>
-        </VanitySetVerticalTabContainer>
-      </div>);
-    }
-    const tabs = [];
-    for(let i = 0; i <= responseData.length - 1; i++) {
-      tabs.push(
-        <VanitySetVerticalTab
-          tabText={responseData[i]?.userName}
-          tabName={responseData[i]?._id}
-        />
-      );
-    }
     return (
       <div className={"h-100"}>
         <VanitySetVerticalTabContainer
@@ -157,7 +154,18 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
             topPaginationStyle={"stackedVerticalTab"}
             bodyClassName={'connected-assets-modal-body'}
           >
-            {tabs}
+            {responseData && responseData.length > 0
+              ? responseData?.map((data, index) => {
+                return (<VanitySetVerticalTab
+                  key={index}
+                  tabText={data?.userName}
+                  tabName={data?._id}
+                  handleTabClick={handleTabClick}
+                  activeTab={activeTab}
+                />);
+              })
+              : <div>No users found.</div>
+            }
           </PaginationContainer>
         </VanitySetVerticalTabContainer>
       </div>
