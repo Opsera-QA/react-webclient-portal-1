@@ -47,33 +47,34 @@ const Lookup = () => {
   const [searchResults, setSearchResults] = useState(null);
   const [searchArr, setSearchArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isPreloading, setIsPreloading] = useState(true);
   const [target, setTarget] = useState(null);
   const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
   const node = useRef();
   const ref = useRef(null);
   const { getAccessToken } = useContext(AuthContext);
 
-  useEffect(async() => {
+  useEffect(() => {
     // load in component names for search dropdown
-    const accessToken = await getAccessToken();
-    new ApiService(
-      ANALYTICS_API + ENDPOINTS.componentNames,
-      null,
-      accessToken)
-      .get()
-      .then(response => {
-        const {componentNames} = response.data.data;
-        setComponentList(componentNames);
-        setIsPreloading(false);
-      })
-      .catch((e) => {
-        setErrorMessage(e.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    getAccessToken()
+    .then(accessToken => {
+      const apiService = new ApiService(
+        ANALYTICS_API + ENDPOINTS.componentNames,
+        null,
+        accessToken
+      );
+
+      return apiService.get();
+    })
+    .then(({ data: { data: { componentNames }}}) => {
+      setComponentList(componentNames);
+    })
+    .catch(error => {
+      setErrorMessage(error.message);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  }, [getAccessToken]);
 
   const onSearch = async () => {
     if (!startDate || !endDate) {
@@ -249,12 +250,10 @@ const Lookup = () => {
     </Row>
   );
 
-  const screenReady = !isLoading && !isPreloading;
-
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"lookup"} />}
-      isLoading={!screenReady}
+      isLoading={isLoading}
       breadcrumbDestination={"lookup"}
       helpComponent={<SalesforceLookUpHelpDocumentation />}
       pageDescription={`
