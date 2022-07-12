@@ -65,7 +65,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path")),
-      getTableTextColumn(getField(fields, "lineNumber")),
+      getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
@@ -134,7 +134,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         loadData={loadData}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
-        onRowSelect={onRowSelect}
+        // onRowSelect={onRowSelect}
       />
     );
   };

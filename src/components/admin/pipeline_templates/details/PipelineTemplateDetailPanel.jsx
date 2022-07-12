@@ -33,13 +33,24 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
       case "summary":
         return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
       case "settings":
-        return <PipelineTemplateEditorPanel setTemplateData={setTemplateData} templateData={templateData} handleClose={toggleSummaryPanel} />;
+        return (
+          <PipelineTemplateEditorPanel
+            setTemplateModel={setTemplateData}
+            templateModel={templateData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 PipelineTemplateDetailPanel.propTypes = {

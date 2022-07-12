@@ -27,7 +27,7 @@ function Pipelines() {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    const newPipelineFilterModel = new PipelineFilterModel(getAccessToken, source, loadData);
+    const newPipelineFilterModel = new PipelineFilterModel();
 
     loadData(newPipelineFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {

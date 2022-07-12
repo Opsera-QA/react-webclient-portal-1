@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
@@ -20,18 +20,18 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
   const { getAccessToken } = useContext(AuthContext);
   const { cancelTokenSource } = useComponentStateReference();
 
-  const createTemplate = async (cancelToken = cancelTokenSource) => {
+  const createTemplate = async () => {
     return await pipelineTemplateActions.createTemplateV2(
       getAccessToken,
-      cancelToken,
+      cancelTokenSource,
       templateModel
     );
   };
 
-  const updateTemplate = async (cancelToken = cancelTokenSource) => {
+  const updateTemplate = async () => {
     return await pipelineTemplateActions.updateTemplateV2(
       getAccessToken,
-      cancelToken,
+      cancelTokenSource,
       templateModel
     );
   };

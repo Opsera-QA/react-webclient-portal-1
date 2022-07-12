@@ -16,6 +16,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 import {useHistory} from "react-router-dom";
 import IconBase from "../../../../../common/icons/IconBase";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
 function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [pipeline]);
 
   const loadData = async () => {
     try {
@@ -111,6 +112,15 @@ function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
   };
 
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
     return (
       <CustomTable
         isLoading={isLoading}

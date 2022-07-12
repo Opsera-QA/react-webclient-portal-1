@@ -34,6 +34,10 @@ primary analytics font*/
     font-weight: 500;
 }
 
+.connected-assets-modal-body {
+    min-height: 10rem;
+}
+
 .metric-sub-header-text-spacing {
     letter-spacing: 2px;
 }

@@ -13,6 +13,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
+import BoomiLogSummaryReportPanel from "./boomi/GitScraperLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -54,6 +55,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
         return (
           <SapCpqLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return (
+          <BoomiLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
         );
       default:
         return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);

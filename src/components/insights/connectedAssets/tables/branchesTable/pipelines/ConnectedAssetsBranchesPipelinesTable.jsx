@@ -16,6 +16,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 import {useHistory} from "react-router-dom";
 import IconBase from "../../../../../common/icons/IconBase";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
 function ConnectedAssetsBranchesPipelinesTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +63,7 @@ function ConnectedAssetsBranchesPipelinesTable({ repository, dashboardData, icon
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [repository]);
 
   const loadData = async () => {
     try {
@@ -80,7 +81,7 @@ function ConnectedAssetsBranchesPipelinesTable({ repository, dashboardData, icon
     }
   };
 
-  const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadOpenData = async (filterDto = filterModel, cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
     let repo = {
@@ -111,6 +112,15 @@ function ConnectedAssetsBranchesPipelinesTable({ repository, dashboardData, icon
   };
 
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
     return (
       <CustomTable
         isLoading={isLoading}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { faDiagramSuccessor, faAnalytics} from "@fortawesome/pro-light-svg-icons";
+import { faDiagramSuccessor, faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import ConnectedAssetsWebhooksAnalyticsDetails from "./analytics/ConnectedAssetsWebhooksAnalyticsDetails";
+import ConnectedAssetsWebhooksInsightsDetails from "./insights/ConnectedAssetsWebhooksInsightsDetails";
 import ConnectedAssetsWebhooksPipelinesTab from "./pipelines/ConnectedAssetsWebhooksPipelinesTab";
 
 function ConnectedAssetsWebhooksTabContainer({ dashboardData }) {
@@ -18,11 +18,11 @@ function ConnectedAssetsWebhooksTabContainer({ dashboardData }) {
           icon={faDiagramSuccessor}
         />
       );
-    } else if (activeTab == "analytics") {
+    } else if (activeTab == "insights") {
       return (
-        <ConnectedAssetsWebhooksAnalyticsDetails
+        <ConnectedAssetsWebhooksInsightsDetails
           dashboardData={dashboardData}
-          icon={faAnalytics}
+          icon={faChartNetwork}
         />
       );
     }
@@ -45,10 +45,10 @@ function ConnectedAssetsWebhooksTabContainer({ dashboardData }) {
         />
         <CustomTab
           activeTab={activeTab}
-          tabText={"Analytics"}
+          tabText={"Insights"}
           handleTabClick={handleTabClick}
-          tabName={"analytics"}
-          icon={faAnalytics}
+          tabName={"insights"}
+          icon={faChartNetwork}
         />
       </CustomTabContainer>
     );

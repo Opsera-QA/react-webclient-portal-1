@@ -155,7 +155,19 @@ function ImportPipelineTableCardView(
 
   return (
     <div style={{minWidth: "505px"}}>
-      <InlineWarning className={"ml-2"} warningMessage={"Please note: This only pulls the Pipeline Name, Tags, and Plan into the new Template."} />
+      <InlineWarning
+        className={"ml-2"}
+        warningMessage={`
+          WARNING: This action will only import the pipeline step settings, name and tags but it does not include the specific tools associated with a given pipeline step.  
+          Customers will always have to first create their tools in Registry and then edit their pipeline to use the tools.
+        `}
+      />
+      <InlineWarning
+        className={"ml-2"}
+        warningMessage={`
+          Please note: This only pulls the Pipeline Name, Tags, and Plan into the new Template. 
+        `}
+      />
       <FilterContainer
         loadData={loadData}
         filterDto={pipelineFilterModel}

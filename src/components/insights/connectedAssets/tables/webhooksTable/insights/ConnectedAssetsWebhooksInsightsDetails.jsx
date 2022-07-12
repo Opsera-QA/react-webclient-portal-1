@@ -14,8 +14,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
+import {parseError} from "../../../../../common/helpers/error-helpers";
+import LoadingDialog from "../../../../../common/status_notifications/loading";
 
-function ConnectedAssetsWebhooksAnalyticsDetails({ dashboardData }) {
+function ConnectedAssetsWebhooksInsightsDetails({ dashboardData }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -76,6 +78,20 @@ function ConnectedAssetsWebhooksAnalyticsDetails({ dashboardData }) {
     }
   };
 
+  if (isLoading) {
+    return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
+  }
+
+  if (error) {
+    return (
+      <div className="mx-2" >
+        <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <span className={"-5"}>An error has occurred during loading: {parseError(error?.message)}.</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={"mx-2"}>
@@ -133,7 +149,7 @@ function ConnectedAssetsWebhooksAnalyticsDetails({ dashboardData }) {
     </div>
   );
 }
-ConnectedAssetsWebhooksAnalyticsDetails.propTypes = {
+ConnectedAssetsWebhooksInsightsDetails.propTypes = {
   dashboardData: PropTypes.object,
 };
-export default ConnectedAssetsWebhooksAnalyticsDetails;
+export default ConnectedAssetsWebhooksInsightsDetails;

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faAnalytics} from "@fortawesome/pro-solid-svg-icons";
+import { faChartNetwork } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -14,9 +14,9 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
-import {useHistory} from "react-router-dom";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
-function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
+function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -30,15 +30,17 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
       false
     )
   );
-  const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+
+  const noDataMessage = 'No insights found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
-      getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
+      getTableTextColumn(getField(fields, "repo_name"), "repo_name"),
+      getTableDateTimeColumn(getField(fields, "repo_last_used"), "repo_last_used"),
       getTableTextColumn(getField(fields, "event"), "event"),
-      getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title")
+      getTableTextColumn(getField(fields, "userName"), "userName"),
+      getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title"),
+      getTableTextColumn(getField(fields, "branch"), "branch"),
     ],
     []
   );
@@ -62,7 +64,7 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [repository]);
 
   const loadData = async () => {
     try {
@@ -83,20 +85,20 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
-    let userData = {
-      user_name: user?.userName,
-      tool: user?.scm_tool
+    let repo = {
+      name : repository?.repository_name,
+      url: repository?.repository_url?.[0]
     };
-    const response = await connectedAssetsActions.getSelectedUserDetailedInfoForAnalytics(
+    const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      constants.COLLABORATORS_LIST.ANALYTICS_ACTIVITY,
+      constants.REPOSITORIES_LIST.SELECTED_REPO_ANALYTICS_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      userData
+      repo
     );
-    let dataObject = response?.data?.data?.analyticsActivity?.data?.[0];
+    let dataObject = response?.data?.data?.analyticsInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
@@ -107,6 +109,15 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   };
 
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
     return (
       <CustomTable
         isLoading={isLoading}
@@ -124,8 +135,8 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     <div className={"p-2"}>
       <FilterContainer
         isLoading={isLoading}
-        title={'List Of Analytics'}
-        titleIcon={faAnalytics}
+        title={'List Of Insights'}
+        titleIcon={faChartNetwork}
         body={getTable()}
         className={"px-2 pb-2"}
         loadData={loadData}
@@ -137,8 +148,10 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     </div>
   );
 }
-ConnectedAssetsCollaboratorsTasksTable.propTypes = {
-  user: PropTypes.object,
+ConnectedAssetsRepositoriesAnalyticsTable.propTypes = {
+  repository: PropTypes.object,
   dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  icon: PropTypes.object
 };
-export default ConnectedAssetsCollaboratorsTasksTable;
+export default ConnectedAssetsRepositoriesAnalyticsTable;

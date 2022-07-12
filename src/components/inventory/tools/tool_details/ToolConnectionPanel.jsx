@@ -42,6 +42,7 @@ import ApigeeToolConnectionEditorPanel
 import SnaplogicToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
+import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -83,7 +84,8 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY,
   toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
-  toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -179,6 +181,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <BlackduckToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
         return <SapCpqToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return <BoomiToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
