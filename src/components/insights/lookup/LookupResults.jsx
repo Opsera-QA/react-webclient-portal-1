@@ -9,20 +9,20 @@ import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewC
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 
-const generateCleanResults = results => {
-    const tableUpdates = [];
+const generateTransformedResults = searchResults => {
+    const results = [];
 
-    if (!results) {
-        return tableUpdates;
+    if (!searchResults) {
+        return results;
     }
 
     const cleanedResults = {};
-    const pipelineNames = Object.keys(results);
+    const pipelineNames = Object.keys(searchResults);
 
     for (let i = 0, l = pipelineNames.length; i < l; i++){ 
       const pipelineName = pipelineNames[i];
       if (pipelineName !== 'dateRanges') {
-        const pipelineData = results[pipelineName].currentResults;
+        const pipelineData = searchResults[pipelineName].currentResults;
         cleanedResults[pipelineName] = {
           totalTimesComponentDeployed: pipelineData.totalTimesComponentDeployed,
           totalUnitTestsFailed: pipelineData.totalUnitTestsFailed,
@@ -60,21 +60,21 @@ const generateCleanResults = results => {
           });
         }
   
-        tableUpdates.push({
+        results.push({
           componentName: name,
           totals,
           pipelines
         });
     });
 
-    return tableUpdates;
+    return results;
 };
 
 const LookupResults = ({ isLoading, searchResults }) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0); //default to 0th result
 
-    // clean search results from API
-    const results = generateCleanResults(searchResults);
+    // convert search results from API
+    const results = generateTransformedResults(searchResults);
 
     const handleTabClick = eventKey => {
         setActiveTabIndex(results.findIndex(({ componentName }) => componentName === eventKey));
