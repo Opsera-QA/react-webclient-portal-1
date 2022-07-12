@@ -19,6 +19,7 @@ import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import FilterContainer from "components/common/table/FilterContainer";
 import LookupResults from "./LookupResults";
+import { DataState } from "core/data_model/model";
 
 const DATE_STRING_FORMAT = "MM/dd/yyyy";
 
@@ -99,11 +100,15 @@ const Lookup = () => {
 
   const onSearch = async () => {
     if (!startDate || !endDate) {
-      return setErrorMessage('Please select start and end dates.');
+      setErrorMessage('Please select start and end dates.');
+      setSearchResults(null);
+      return null;
     }
 
     if (searchArr.length < 1) {
-      return setErrorMessage('Please enter search criteria.');
+      setErrorMessage('Please enter search criteria.');
+      setSearchResults(null);
+      return null;
     }
 
     setIsLoading(true);
@@ -176,30 +181,38 @@ const Lookup = () => {
     setShowCalendar(false);
 
     if (newFilterDto) {
-      console.log({ newFilterDto, dataState: newFilterDto.dataState });
-      if (newFilterDto.isChanged("startDate")) {
-        console.log('filterDto.startDate has changed');
-        const newStartDate = newFilterDto.getData("startDate");
-        setStartDate(new Date(newStartDate));
-      } else {
-        console.log('set filterDto.startDate');
-        newFilterDto.setData("startDate", format(startDate, DATE_STRING_FORMAT));
-        newFilterDto.clearChangeMap();
-      }
+      if (newFilterDto.dataState === DataState.LOADED) {
+        setStartDate(subDays(new Date(), 7));
+        setEndDate(new Date());
+        setSearchResults(null);
+        newFilterDto.setDefaultValue("startDate");
+        newFilterDto.setDefaultValue("endDate");
 
-      if (newFilterDto.isChanged("endDate")) {
-        const newEndDate = newFilterDto.getData("endDate");
-        setEndDate(new Date(newEndDate));
-      } else {
-        newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
+        newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
         newFilterDto.clearChangeMap();
-      }
+        setFilterDto(newFilterDto);
+      } else {
+        if (newFilterDto.isChanged("startDate")) {
+          const newStartDate = newFilterDto.getData("startDate");
+          setStartDate(newStartDate ? new Date(newStartDate) : null);
+        } else {
+          newFilterDto.setData("startDate", startDate ? format(startDate, DATE_STRING_FORMAT) : "");
+        }
+  
+        if (newFilterDto.isChanged("endDate")) {
+          const newEndDate = newFilterDto.getData("endDate");
+          setEndDate(newEndDate ? new Date(newEndDate) : null);
+        } else {
+          newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
+        }
 
-      newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
-      setFilterDto(newFilterDto);
+        newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
+        newFilterDto.clearChangeMap();
+        setFilterDto(newFilterDto);
+
+        onSearch();
+      }
     }
-
-    onSearch();
   };
 
   const datePickerButtonText = startDate && endDate ? `${format(startDate, DATE_STRING_FORMAT)} - ${format(endDate, DATE_STRING_FORMAT)}` : "Date Range";

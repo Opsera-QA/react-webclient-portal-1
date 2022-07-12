@@ -37,7 +37,7 @@ function FilterButtons({
     let newFilterModel;
 
     if (filterDto?.getNewInstance) {
-      newFilterModel = filterDto.getNewInstance();
+      newFilterModel = { ...filterDto };
     }
     else {
       newFilterModel = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
@@ -47,7 +47,7 @@ function FilterButtons({
     newFilterModel.setData("sortOption", filterDto.getData("sortOption"));
 
     document.body.click();
-    
+
     await loadData(newFilterModel);
   };
 
@@ -94,7 +94,7 @@ function FilterButtons({
             </Button>
           </div>
           <div className="w-50 ml-1">
-            <Button variant="outline-secondary" size="sm" onClick={() => resetFilters()} className="w-100"
+            <Button variant="outline-secondary" size="sm" onClick={resetFilters} className="w-100"
                     disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
               <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
             </Button>
