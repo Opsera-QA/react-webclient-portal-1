@@ -21,14 +21,14 @@ const componentFilterMetadata = {
     if (filterDto.getData("startDate") != null) {
         activeFilters.push({
           filterId: "startDate",
-          text: filterDto.getData("startDate")
+          text: `Start Date: ${filterDto.getData("startDate")}`
         });
     }
 
     if (filterDto.getData("endDate") != null) {
       activeFilters.push({
         filterId: "endDate",
-        text: filterDto.getData("endDate")
+        text: `End Date: ${filterDto.getData("endDate")}`
       });
     }
 
