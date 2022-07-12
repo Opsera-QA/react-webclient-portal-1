@@ -43,19 +43,19 @@ function WorkflowSubNavigationBar({currentTab}) {
     <NavigationTabContainer>
       <NavigationTab
         activeTab={currentTab}
-        tabText={"Pipelines"}
-        handleTabClick={handleTabClick}
-        tabName={"pipelines"}
-        toolTipText={"Pipelines"}
-        icon={faDraftingCompass}
-      />
-      <NavigationTab
-        activeTab={currentTab}
         tabText={"Catalog"}
         handleTabClick={handleTabClick}
         tabName={"catalog"}
         toolTipText={"Catalog"}
         icon={faHexagon}
+      />
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"Pipelines"}
+        handleTabClick={handleTabClick}
+        tabName={"pipelines"}
+        toolTipText={"Pipelines"}
+        icon={faDraftingCompass}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>
