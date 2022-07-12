@@ -43,11 +43,11 @@ function FilterButtons({
       newFilterModel = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     }
 
-    let pageSize = filterDto.getData("pageSize");
-    newFilterModel.setData("pageSize", pageSize);
-    let sortOption = filterDto.getData("sortOption");
-    newFilterModel.setData("sortOption", sortOption);
+    newFilterModel.setData("pageSize", filterDto.getData("pageSize"));
+    newFilterModel.setData("sortOption", filterDto.getData("sortOption"));
+
     document.body.click();
+    
     await loadData(newFilterModel);
   };
 

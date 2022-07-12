@@ -175,10 +175,29 @@ const Lookup = () => {
     clearErrorAlert();
     setShowCalendar(false);
 
-    newFilterDto.setData("startDate", format(startDate, DATE_STRING_FORMAT));
-    newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
-    newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
-    setFilterDto(newFilterDto);
+    if (newFilterDto) {
+      console.log({ newFilterDto, dataState: newFilterDto.dataState });
+      if (newFilterDto.isChanged("startDate")) {
+        console.log('filterDto.startDate has changed');
+        const newStartDate = newFilterDto.getData("startDate");
+        setStartDate(new Date(newStartDate));
+      } else {
+        console.log('set filterDto.startDate');
+        newFilterDto.setData("startDate", format(startDate, DATE_STRING_FORMAT));
+        newFilterDto.clearChangeMap();
+      }
+
+      if (newFilterDto.isChanged("endDate")) {
+        const newEndDate = newFilterDto.getData("endDate");
+        setEndDate(new Date(newEndDate));
+      } else {
+        newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
+        newFilterDto.clearChangeMap();
+      }
+
+      newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
+      setFilterDto(newFilterDto);
+    }
 
     onSearch();
   };
