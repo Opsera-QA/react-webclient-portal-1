@@ -6,13 +6,15 @@ This project is a ReactJS SPA bootstrapped with [Create React App](https://githu
 for the OpsERA platform
 
 ---
-#####Legacy Library Install Issue:
+*Legacy Library Install Issue:*
+
 If you run into a problem performing npm install on the project, you will need to use the syntax:
 
 `npm install --legacy-peer-deps`
 
 It is also advised that you remove your package-lock.json file that's local before running this command.  This is due to 
 a version incompatibility with the latest NPM verions and some older libraries in use in this project.
+
 ---
 
 ## Configuration Variables:
