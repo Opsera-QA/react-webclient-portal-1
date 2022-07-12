@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {subDays} from "date-fns";
 import {AuthContext} from "contexts/AuthContext";
-import { insightsLookupMetadata } from "./componentFitlerMetadata";
+import { insightsLookupMetadata } from "components/insights/lookup/insightsLookup.metadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
