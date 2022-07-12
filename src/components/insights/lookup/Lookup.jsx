@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {DateRangePicker} from "react-date-range";
 import {format, subDays} from "date-fns";
 import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
@@ -38,16 +38,15 @@ const ENDPOINTS = {
 };
 
 const Lookup = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [target, setTarget] = useState(null);
   const [startDate, setStartDate] = useState(subDays(new Date(), 7));
   const [endDate, setEndDate] = useState(new Date());
-  
+  const [searchArr, setSearchArr] = useState([]);
   const [componentList, setComponentList] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
-  const [searchArr, setSearchArr] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [target, setTarget] = useState(null);
   const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
   const { getAccessToken } = useContext(AuthContext);
 
