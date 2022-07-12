@@ -5,7 +5,6 @@ import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootst
 import {faCalendar} from "@fortawesome/pro-light-svg-icons";
 import Multiselect from "react-widgets/Multiselect";
 
-import './lookup.css';
 import {ApiService} from "api/apiService";
 import {NODE_ANALYTICS_API_SERVER_URL} from "config";
 import {AuthContext} from "contexts/AuthContext";
