@@ -163,6 +163,7 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
+import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1174,10 +1175,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case "lead-time-and-release-traceability-data-block":
-          return(
+        case "all-environments-lead-time":
+          return (
             <Col md={12} className="p-2">
-              <LeadTimeAndReleaseTraceabilityDataBlock
+              <IntermediateEnvironmentsLeadTimeChart
                 kpiConfiguration={kpiConfig}
                 setKpiConfiguration={setKpiConfig}
                 dashboardData={dashboardData}
@@ -1187,6 +1188,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
           );
+        case "lead-time-and-release-traceability-data-block":
+          return(
+            <Col md={12} className="p-2"> 
+              <LeadTimeAndReleaseTraceabilityDataBlock
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+                showViewDetailsToggle={true}
+              />
+            </Col>
+            );
       case "sonar-unit-testing":
         return (
           <Col xl={6} md={12} className="p-2">
