@@ -29,8 +29,6 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
-    hideFiltersOnTrigger,
-
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -54,9 +52,16 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
-        hideFiltersOnTrigger={hideFiltersOnTrigger}
       />
     );
+  };
+
+  const getContainerStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "hidden",
+    });
   };
 
   const getBodyStylingObject = () => {
@@ -126,14 +131,12 @@ FilterContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool,
-  hideFiltersOnTrigger: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool
 };
 
 FilterContainer.defaultProps = {
   showRefreshButton: true,
-  disableNewRecordButton: false,
-  hideFiltersOnTrigger: true,
+  disableNewRecordButton: false
 };
 
 export default FilterContainer;
