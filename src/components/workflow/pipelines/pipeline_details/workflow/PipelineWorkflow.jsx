@@ -216,20 +216,20 @@ function PipelineWorkflow({
           <div className="d-flex">
             <div className="upper-case-first pl-2">
             <span className="text-muted small">
-            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>
-              Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
+            {/*<IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>*/}
+              Pipeline Webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"} for:
             </span>
             </div>
           </div>}
 
-        {pipeline.workflow.source.service &&
+        {/*{pipeline.workflow.source.service &&
           <div className="d-flex">
             <div className="upper-case-first pl-2">
             <span className="text-muted small">
             <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
               Source Repository: {pipeline.workflow.source.service}</span>
             </div>
-          </div>}
+          </div>}*/}
 
         {pipeline?.workflow?.source?.repository &&
           <div className="d-flex">

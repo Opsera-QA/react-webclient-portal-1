@@ -93,8 +93,8 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         key: key,
         trigger_active: trigger_active,
       };
-      console.log("saving config: " + JSON.stringify(item));
-      console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
+      //console.log("saving config: " + JSON.stringify(item));
+      //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
       await parentCallback(item);
     }
   };
@@ -137,7 +137,16 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
     >
-      <div className="text-muted h6 mb-3">Configure Source Repository settings for this pipeline.</div>
+
+
+      <div className="text-muted h5 mt-2">Repository</div>
+      <div className={"text-muted mb-2"}>
+        Opsera uses the pipeline level Git Repository settings to define webhook activity{/*, where to read
+        YAML settings from as well as for pipeline revision history*/}.  Configure
+        the default repository settings below and then enable the additional Git functionality required.
+        <div className={"small text-muted mb-3 mt-1"}>Please note, individual pipeline steps still have their own Git Repo settings based
+          on the function of that step.  This value does NOT override those.</div>
+      </div>
       <PipelineSourceRepositoryToolIdentifierSelectInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
@@ -173,12 +182,31 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         setModel={setSourceRepositoryModel}
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
+
+      <div className="text-muted h5 mt-3">Webhook</div>
       <PipelineSourceRepositoryEventBasedTriggerInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
         pipeline={pipeline}
         savePipelineFunction={callbackFunction}
       />
+
+      {/*<hr />
+      <div className="text-muted h5 mt-3">Dynamic Controls</div>
+      <div className={"text-muted  mb-3"}>Enable YAML based pipeline settings to control variable
+        branches for pipeline runs.</div>
+
+      <div className={"p-3"} >COMING SOON</div>
+
+      <hr />
+      <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
+      <div className={"text-muted mb-3"}>Using the configured Git Repository above, Opsera can publish
+        a copy of the pipeline configuration for revision purposes before every run.</div>
+
+      <div className={"p-3"} >COMING SOON</div>*/}
+
+
+
     </PipelineStepEditorPanelContainer>
   );
 }

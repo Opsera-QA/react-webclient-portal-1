@@ -21,7 +21,7 @@ const commandLineStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Job ID",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
