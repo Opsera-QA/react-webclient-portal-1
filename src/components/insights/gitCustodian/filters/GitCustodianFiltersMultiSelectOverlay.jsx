@@ -99,6 +99,14 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
     closePanel();
   };
 
+  const getFilteredRepositories = () => {
+    const services = gitCustodianFilterModel?.getData("service");
+    if (!services?.length > 0) {
+      return [];
+    }
+    return repositoriesFilterData.filter(repo => services.includes(repo.service));
+  };
+
   const getFiltersInput = () => {
     if (isLoading) {
       return (<LoadingDialog />);
@@ -118,6 +126,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
           selectOptions={authorsFilterData}
           textField="author"
           valueField="author"
+          disabled={gitCustodianFilterModel?.getData("email")?.length > 0}
         />
         <MultiSelectInputBase
           fieldName={"email"}
@@ -127,6 +136,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
           selectOptions={emailFilterData}
           textField="email"
           valueField="email"
+          disabled={gitCustodianFilterModel?.getData("authors")?.length > 0}
         />
         <MultiSelectInputBase
           fieldName={"service"}
@@ -142,7 +152,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
           placeholderText={"Filter by Repository"}
           dataObject={gitCustodianFilterModel}
           setDataObject={setGitCustodianFilterModel}          
-          selectOptions={repositoriesFilterData}
+          selectOptions={getFilteredRepositories()}
           textField="repository"
           valueField="repository"
         />

@@ -147,6 +147,11 @@ const GitCustodianTableMetaData = {
      if (filterDto.getData("type") != null) {
       activeFilters = [...activeFilters, ...filterDto.getData("type").map(filter => ({filterId: "type", text: `Type: ${filter}`}))];
      }
+
+     if (filterDto.getData("tags") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("tags").map(filter => ({filterId: "tags", text: `${filter.type}: ${filter.value}`}))];
+     }
+
      return activeFilters;
   },
   newObjectFields: {

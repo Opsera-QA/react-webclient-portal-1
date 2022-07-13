@@ -168,6 +168,7 @@ chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSourc
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
@@ -188,6 +189,7 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
       sortOption: tableFilterDto?.getData("sortOption")?.value,
       search: tableFilterDto?.getData("search"),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
@@ -208,6 +210,7 @@ chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, 
   const postBody = {
     startDate: filterModel.getFilterValue('date').startDate,
     endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+    tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
     filters: {
       repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
       authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
