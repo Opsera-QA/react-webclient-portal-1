@@ -67,7 +67,7 @@ function ConnectedAssetsBranchesTasksTab({ dashboardData }) {
       setData(responseData1);
       if(Array.isArray(responseData1?.data)) {
         setResponseData(responseData1?.data);
-        setActiveTab(responseData1?.data[0]._id);
+        setActiveTab(responseData1?.data?.[0]?._id);
       }
     } catch (error) {
       if (isMounted?.current === true) {
