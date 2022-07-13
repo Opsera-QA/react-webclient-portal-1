@@ -29,7 +29,6 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
-
     // TODO: Remove after filters are used everywhere
     type
   }) {
