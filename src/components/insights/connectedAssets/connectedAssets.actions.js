@@ -8,14 +8,12 @@ const connectedAssetsActions = {};
 connectedAssetsActions.getConnectedAssetsData = async (
   getAccessToken,
   cancelTokenSource,
-  request,
   startDate,
   endDate,
 ) => {
-  const apiUrl = "/analytics/metrics";
+  const apiUrl = "/analytics/connectedAssets/v1/allQueries";
 
   const postBody = {
-    request: request,
     startDate: startDate ? startDate : new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)).toISOString(),
     endDate: endDate ? endDate : addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
   };
@@ -142,7 +140,8 @@ connectedAssetsActions.getSelectedUserDetailedInfo = async (
   startDate,
   endDate,
   tableFilterDto,
-  user
+  user,
+  item
 ) => {
 
   const apiURL = connectedAssetsBaseURL + 'users/' + request;
@@ -154,6 +153,7 @@ connectedAssetsActions.getSelectedUserDetailedInfo = async (
     selectedUser: user,
     search: tableFilterDto?.getData("search"),
     sort: tableFilterDto?.getData("sortOption")?.value,
+    item: item
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);

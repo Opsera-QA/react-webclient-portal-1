@@ -55,7 +55,7 @@ function ConnectedAssetsWebhooksPipelinesTab({ dashboardData }) {
       const response = await connectedAssetsActions.getListOfRepositories(
         getAccessToken,
         cancelSource,
-        constants.REPOSITORIES_LIST.REPOSITORIES_LIST_FROM_PIPELINES,
+        constants.WEBHHOOKS_LIST.REPOSITORIES_LIST_FROM_PIPELINES,
         dateRange?.startDate,
         dateRange?.endDate,
         filterDto
