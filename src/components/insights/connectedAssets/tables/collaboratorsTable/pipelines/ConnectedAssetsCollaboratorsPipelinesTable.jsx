@@ -39,7 +39,7 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
     ],
     []

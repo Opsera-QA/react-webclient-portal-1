@@ -39,7 +39,7 @@ function ConnectedAssetsJobsPipelinesTable({ dashboardData }) {
     () => [
       getTableTextColumn(getField(fields, "pipeline_url"), "pipeline_url"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "success_count"), "success_count"),
       getTableTextColumn(getField(fields, "failed_count", "failed_count"))
     ],

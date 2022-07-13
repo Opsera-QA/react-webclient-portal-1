@@ -39,7 +39,7 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
     ],
     []
