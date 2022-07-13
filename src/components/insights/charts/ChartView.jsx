@@ -91,6 +91,8 @@ import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubAct
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
+import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
+import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1188,6 +1190,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
           );
+      case "github-security-compliance":
+        return (
+            <Col md={12} className="p-2">
+                <GithubSecurityCompliance
+                    kpiConfiguration={kpiConfig}
+                    setKpiConfiguration={setKpiConfig}
+                    dashboardData={dashboardData}
+                    setKpis={setKpis}
+                    index={index}
+                />
+            </Col>
+        );
+      case "github-connected-assets":
+        return (
+            <Col xl={6} md={12} className="p-2">
+                <GithubConnectedAssets
+                    kpiConfiguration={kpiConfig}
+                    setKpiConfiguration={setKpiConfig}
+                    dashboardData={dashboardData}
+                    setKpis={setKpis}
+                    index={index}
+                />
+            </Col>
+        );
       case "sonar-unit-testing":
         return (
           <Col xl={6} md={12} className="p-2">
