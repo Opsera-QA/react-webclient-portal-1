@@ -171,7 +171,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         visible={
           sourceRepositoryModel?.getData("service") != null
           && sourceRepositoryModel?.getData("accountId") != null
-          && (sourceRepositoryModel?.getData("service" === "bitbucket") ? sourceRepositoryModel?.getData("workspace") != null && sourceRepositoryModel?.getData("workspace").length > 0 : true)}
+          && (sourceRepositoryModel?.getData("service") === "bitbucket" ? sourceRepositoryModel?.getData("workspace") != null && sourceRepositoryModel?.getData("workspace").length > 0 : true)}
       />
       <PipelineSourceRepositoryPrimaryBranchSelectInput
         model={sourceRepositoryModel}
