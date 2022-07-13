@@ -20,7 +20,9 @@ function TextHighlighter(
       return text;
     }
 
-    const lastIndex = text.lastIndexOf(textToHighlight);
+    const lowercaseText = text.toLowerCase();
+    const lowercaseHighlightText = textToHighlight.toLowerCase();
+    const lastIndex = lowercaseText.lastIndexOf(lowercaseHighlightText);
 
     if (lastIndex === -1) {
       return text;
