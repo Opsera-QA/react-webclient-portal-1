@@ -22,10 +22,10 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <StandaloneTextFieldBase text={pipelineData?.name} label={"Pipeline Step Name"}/>
+          <StandaloneTextFieldBase text={pipelineData?.name} label={"Step Name"}/>
         </Col>
-        <Col lg={6}>
-          <StandaloneTextFieldBase text={pipelineData?.tool?.tool_identifier} label={"Pipeline Step Tool Identifier"}/>
+        <Col lg={6} className={"upper-case-first"}>
+          <StandaloneTextFieldBase text={pipelineData?.tool_category} label={"Tool Category"}/>
         </Col>
       </Row>
       {/*TODO: Wire up threshold*/}
