@@ -25,8 +25,6 @@ import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-import PipelineStepDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 
@@ -218,20 +216,20 @@ function PipelineWorkflow({
           <div className="d-flex">
             <div className="upper-case-first pl-2">
             <span className="text-muted small">
-            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>
-              Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
+            {/*<IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>*/}
+              Pipeline Webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"} for:
             </span>
             </div>
           </div>}
 
-        {pipeline.workflow.source.service &&
+        {/*{pipeline.workflow.source.service &&
           <div className="d-flex">
             <div className="upper-case-first pl-2">
             <span className="text-muted small">
             <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
               Source Repository: {pipeline.workflow.source.service}</span>
             </div>
-          </div>}
+          </div>}*/}
 
         {pipeline?.workflow?.source?.repository &&
           <div className="d-flex">
@@ -329,7 +327,8 @@ function PipelineWorkflow({
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "View pipeline configuration" })}>
+            overlay={renderTooltip({ message: "" +
+                "View pipeline configuration" })}>
             <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
               handleViewPipelineClick(pipeline);
             }}>
