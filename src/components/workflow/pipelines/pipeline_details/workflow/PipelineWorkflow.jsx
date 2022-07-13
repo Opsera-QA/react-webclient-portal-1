@@ -212,16 +212,6 @@ function PipelineWorkflow({
             <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
         }
 
-        {pipeline.workflow.source.trigger_active &&
-          <div className="d-flex">
-            <div className="upper-case-first pl-2">
-            <span className="text-muted small">
-            {/*<IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>*/}
-              Pipeline Webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"} for:
-            </span>
-            </div>
-          </div>}
-
         {/*{pipeline.workflow.source.service &&
           <div className="d-flex">
             <div className="upper-case-first pl-2">
@@ -263,6 +253,17 @@ function PipelineWorkflow({
             </div>
           </div>
         }
+
+        {pipeline.workflow.source.trigger_active &&
+          <div className="d-flex">
+            <div className="upper-case-first pl-2">
+            <span className="text-muted small">
+            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1 green"}/>
+              Pipeline webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
+            </span>
+            </div>
+          </div>}
+
 
         <div className="d-flex align-items-end flex-row m-2">
           <div className="ml-auto d-flex">
