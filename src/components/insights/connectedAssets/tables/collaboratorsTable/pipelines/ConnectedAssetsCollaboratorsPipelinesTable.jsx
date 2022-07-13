@@ -96,7 +96,8 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      userData
+      userData,
+      "pipeline"
     );
     let dataObject = response?.data?.data?.pipelineActivity?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;

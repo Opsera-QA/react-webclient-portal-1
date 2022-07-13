@@ -1,8 +1,8 @@
 export const CONNECTED_ASSETS_CONSTANTS = {};
 
 CONNECTED_ASSETS_CONSTANTS.REPOSITORIES_LIST = {
-  REPOSITORIES_LIST_FROM_PIPELINES : "listOfRepositoriesFromPipelines",
-  REPOSITORIES_LIST_FROM_TASKS : "listOfRepositoriesFromTasks",
+  REPOSITORIES_LIST_FROM_PIPELINES : "repositories/listOfRepositoriesFromPipelines",
+  REPOSITORIES_LIST_FROM_TASKS : "repositories/listOfRepositoriesFromTasks",
   REPOSITORIES_LIST_FROM_ANALYTICS : "listOfRepositoriesFromAnalytics",
   SELECTED_REPO_PIPELINE_INFO : "pipelineInfoFromSelectedRepository",
   SELECTED_REPO_TASKS_INFO : "taskInfoFromSelectedRepository",
@@ -10,8 +10,8 @@ CONNECTED_ASSETS_CONSTANTS.REPOSITORIES_LIST = {
 };
 
 CONNECTED_ASSETS_CONSTANTS.BRANCHES_LIST = {
-  REPOSITORIES_LIST_FROM_PIPELINES : "listOfRepositoriesFromPipelines",
-  REPOSITORIES_LIST_FROM_TASKS : "listOfRepositoriesFromTasks",
+  REPOSITORIES_LIST_FROM_PIPELINES : "branches/listOfRepositoriesFromPipelines",
+  REPOSITORIES_LIST_FROM_TASKS : "branches/listOfRepositoriesFromTasks",
   SELECTED_REPO_PIPELINE_INFO : "branchInfoFromPipelineSelectedRepository",
   SELECTED_REPO_TASKS_INFO : "branchInfoFromTaskSelectedRepository",
 };
@@ -42,6 +42,7 @@ CONNECTED_ASSETS_CONSTANTS.JOBS_LIST = {
 };
 
 CONNECTED_ASSETS_CONSTANTS.WEBHHOOKS_LIST = {
+  REPOSITORIES_LIST_FROM_PIPELINES : "webhooks/listOfRepositoriesFromPipelines",
   PIPELINE_INFO: "pipelineInfo",
   ANALYTICS_INFO: "analyticsInfo",
 };
