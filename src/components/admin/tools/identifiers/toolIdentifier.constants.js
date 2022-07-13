@@ -14,6 +14,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_ACCOUNT: "azure_account",
   AZURE_ACR_PUSH: "azure_acr_push",
   AZURE_AKS_DEPLOY: "azure_aks_deploy",
+  AZURE_CLI: "azure_cli",
   AZURE_DEVOPS: "azure-devops",
   AZURE_FUNCTIONS: "azure-functions",
   AZURE_SCRIPTS: "azure_scripts",

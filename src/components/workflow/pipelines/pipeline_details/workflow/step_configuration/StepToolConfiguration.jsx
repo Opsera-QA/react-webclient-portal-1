@@ -96,6 +96,7 @@ import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/
 import SapCpqStepConfiguration from "./step_tool_configuration_forms/sap_cpq/SapCpqStepConfiguration";
 import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
+import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1361,6 +1362,21 @@ function StepToolConfiguration({
                 parentCallback={callbackFunction}
                 closeEditorPanel={closeEditorPanel}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
+        return (
+          <AzureCliStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
         );
     }
   };
