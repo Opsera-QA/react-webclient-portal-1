@@ -13,6 +13,10 @@ const GitCustodianTableMetaData = {
       id: "author",
     },
     {
+      label: "Email",
+      id: "email",
+    },
+    {
       label: "Path",
       id: "path",
     },
@@ -69,8 +73,8 @@ const GitCustodianTableMetaData = {
       id: "owner",
     },
     {
-      label: "Tag",
-      id: "tag",
+      label: "Tags",
+      id: "tags",
     },
     {
       label: "Search",
@@ -112,25 +116,42 @@ const GitCustodianTableMetaData = {
       label: "Summary",
       id: "summary"
     },
+    {
+      label: "Date Range",
+      id: "date"
+    }
   ],
   getActiveFilters(filterDto) {
      let activeFilters = [];
 
      if (filterDto.getData("repositories") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({filterId: "repositories", ...filter}))];
+      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({filterId: "repositories", text: `Repository: ${filter}`}))];
      }
 
      if (filterDto.getData("authors") != null) {      
-      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({filterId: "authors", ...filter}))];      
+      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({filterId: "authors", text: `Author: ${filter}`}))];
      }
 
      if (filterDto.getData("status") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("status").map(filter => ({filterId: "status", ...filter}))];
+      activeFilters = [...activeFilters, ...filterDto.getData("status").map(filter => ({filterId: "status", text: `Status: ${filter}`}))];
      }
 
      if (filterDto.getData("service") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("service").map(filter => ({filterId: "service", ...filter}))];
+      activeFilters = [...activeFilters, ...filterDto.getData("service").map(filter => ({filterId: "service", text: `Origin: ${filter}`}))];
      }
+
+     if (filterDto.getData("email") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("email").map(filter => ({filterId: "email", text: `Email: ${filter}`}))];
+     }
+
+     if (filterDto.getData("type") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("type").map(filter => ({filterId: "type", text: `Type: ${filter}`}))];
+     }
+
+     if (filterDto.getData("tags") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("tags").map(filter => ({filterId: "tags", text: `${filter.type}: ${filter.value}`}))];
+     }
+
      return activeFilters;
   },
   newObjectFields: {
@@ -139,6 +160,7 @@ const GitCustodianTableMetaData = {
      sortOption: {text: "Newest", value: ""},
      search: "",
      activeFilters: [],
+     tags: [],
      date: {
        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
