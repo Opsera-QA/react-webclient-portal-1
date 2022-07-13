@@ -68,7 +68,7 @@ function ConnectedAssetsCollaboratorsTasksTab({ dashboardData }) {
       setData(responseData1);
       if(Array.isArray(responseData1?.data)) {
         setResponseData(responseData1?.data);
-        setActiveTab(responseData1?.data[0]._id);
+        setActiveTab(responseData1?.data?.[0]?._id);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -118,15 +118,17 @@ function ConnectedAssetsCollaboratorsTasksTab({ dashboardData }) {
   };
 
   const getTabContentContainer = () => {
-    const userDetails = responseData.filter(item => {
-      return item._id == activeTab;
-    });
-    return (
-      <ConnectedAssetsCollaboratorsTasksTable
-        key={userDetails[0]._id}
-        user={userDetails[0]}
-        dashboardData={dashboardData}
-      />);
+    if(responseData && responseData.length > 0) {
+      const userDetails = responseData.filter(item => {
+        return item._id == activeTab;
+      });
+      return (
+        <ConnectedAssetsCollaboratorsTasksTable
+          key={userDetails[0]._id}
+          user={userDetails[0]}
+          dashboardData={dashboardData}
+        />);
+    }
   };
 
   const getVerticalTabContainer = () => {
