@@ -6,14 +6,14 @@ const BoomiConnectionMetadata = {
       label: "Tool URL",
       id: "toolURL",
       isRequiredFunction: (model) => {
-        return model?.getData("apiType") === "native";
+        return model?.getData("apiType") === "custom";
       },
     },
     {
       label: "Account ID",
       id: "accountId",
       isRequiredFunction: (model) => {
-        return model?.getData("apiType") === "custom";
+        return model?.getData("apiType") === "native";
       },
     },
     {
