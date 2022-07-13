@@ -183,7 +183,7 @@ const connectedAssetsMetadata = {
        activeFilters: [],
        date: {
          startDate: new Date(addDays(new Date(), -90)),
-         endDate: addDays(new Date, 1),
+         endDate: new Date(),
          key: "selection",
        }
     },

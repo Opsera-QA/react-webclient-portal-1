@@ -28,7 +28,7 @@ function ConnectedAssets() {
   const [date, setDate] = useState([
     {
       startDate: new Date(addDays(new Date(), -90)),
-      endDate: addDays(new Date, 1),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
