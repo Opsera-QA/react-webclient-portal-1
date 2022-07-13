@@ -291,7 +291,7 @@ export class Model {
     return this.metaData;
   };
 
-  // TODO: Make filterModel and move filter related options there
+  // TODO: Use filterModel and move filter related options there once all references are updated
   getActiveFilters = () => {
     return this.metaData.getActiveFilters(this);
   };

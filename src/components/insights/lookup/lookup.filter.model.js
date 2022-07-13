@@ -1,6 +1,7 @@
+import FilterModelBase from "core/data_model/filterModel.base";
 import { formatDate, hasDateValue } from "components/common/helpers/date/date.helpers";
 
-export const insightsLookupMetadata = {
+const insightsLookupMetadata = {
   idProperty: "_id",
   type: "Salesforce Component",
   fields: [
@@ -21,21 +22,34 @@ export const insightsLookupMetadata = {
       id: "selectedComponentNames",
     },
   ],
-  getActiveFilters(filterDto) {
+  newObjectFields: {
+    startDate: null,
+    endDate: null,
+    selectedComponentNames: [],
+    activeFilters: [],
+  },
+};
+
+export class LookupFilterModel extends FilterModelBase {
+  constructor() {
+    super(insightsLookupMetadata);
+  }
+
+  getActiveFilters = () => {
     const activeFilters = [];
     const DATE_STRING_FORMAT = "MM/dd/yyyy";
 
-    const startDate = filterDto.getData("startDate");
+    const startDate = this.getData("startDate");
 
     if (hasDateValue(startDate) === true) {
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
-        activeFilters.push({
-          filterId: "startDate",
-          text: `Start Date: ${formattedStartDate}`
-        });
+      activeFilters.push({
+        filterId: "startDate",
+        text: `Start Date: ${formattedStartDate}`
+      });
     }
 
-    const endDate = filterDto.getData("endDate");
+    const endDate = this.getData("endDate");
     if (hasDateValue(endDate) === true) {
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       activeFilters.push({
@@ -45,11 +59,13 @@ export const insightsLookupMetadata = {
     }
 
     return activeFilters;
-  },
-  newObjectFields: {
-    startDate: null,
-    endDate: null,
-    selectedComponentNames: [],
-    activeFilters: []
-  }
-};
+  };
+
+  areFilterBadgesReadOnly = () => {
+    return true;
+  };
+}
+
+export default LookupFilterModel;
+
+

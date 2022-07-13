@@ -1,12 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import {subDays} from "date-fns";
 import {AuthContext} from "contexts/AuthContext";
-import { insightsLookupMetadata } from "components/insights/lookup/insightsLookup.metadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import FilterContainer from "components/common/table/FilterContainer";
-import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AnalyticsSalesforceComponentNameMultiSelectInput
   from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
@@ -15,6 +13,7 @@ import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import { formatDate } from "components/common/helpers/date/date.helpers";
+import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +23,7 @@ function Lookup() {
   const { isMounted, cancelTokenSource, toastContext } = useComponentStateReference();
 
   useEffect(() => {
-    const newFilterModel = modelHelpers.parseObjectIntoModel({}, insightsLookupMetadata);
+    const newFilterModel = new LookupFilterModel();
     newFilterModel.setData("startDate", subDays(new Date(), 7));
     newFilterModel.setData("endDate", new Date());
     setFilterModel({...newFilterModel});
@@ -34,6 +33,7 @@ function Lookup() {
     try {
       setIsLoading(true);
       setSearchResults([]);
+      toastContext.removeInlineMessage();
       const startDate = newFilterModel?.getData("startDate");
       const endDate = newFilterModel?.getData("endDate");
       const componentNames = newFilterModel?.getArrayData("selectedComponentNames");
@@ -44,7 +44,7 @@ function Lookup() {
       }
 
       if (componentNames.length === 0) {
-        toastContext.showInlineErrorMessage('Please enter search criteria.');
+        toastContext.showInlineErrorMessage('Please select at least one Salesforce component.');
         return;
       }
 
