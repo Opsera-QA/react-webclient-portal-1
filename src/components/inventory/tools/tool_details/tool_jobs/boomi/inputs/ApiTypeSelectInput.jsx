@@ -15,12 +15,29 @@ function ApiTypeTypeSelectInput({dataObject, setDataObject, isLoading, disabled}
         },
     ];
 
-    return (
+    const setDataFunction = (fieldName, value) => {
+        let newDataObject = dataObject;
+        newDataObject.setData("apiType", value?.value);
+        newDataObject.setData("toolURL", "");
+        newDataObject.setData("accountId", "");
+        setDataObject({...newDataObject});
+    };
 
+    const clearDataFunction = () => {
+        let newModel = {...dataObject};
+        newModel.setDefaultValue("apiType");
+        newModel.setDefaultValue("toolURL");
+        newModel.setDefaultValue("accountId");
+        setDataObject({...newModel});
+    };
+
+    return (
         <SelectInputBase
             fieldName={"apiType"}
             dataObject={dataObject}
             setDataObject={setDataObject}
+            setDataFunction={setDataFunction}
+            clearDataFunction={clearDataFunction}
             selectOptions={API_TYPE_LIST}
             valueField={"value"}
             textField={"name"}
