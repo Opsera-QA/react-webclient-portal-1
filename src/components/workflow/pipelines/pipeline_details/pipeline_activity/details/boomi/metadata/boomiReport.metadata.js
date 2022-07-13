@@ -39,7 +39,7 @@ const boomiReportMetadata = {
     },
     {
       label: "Error Message",
-      id: "errorMessage",
+      id: "message",
     },
   ],
   newObjectFields: {
@@ -52,7 +52,7 @@ const boomiReportMetadata = {
     createdDate: "",
     createdBy: "",
     shareable: "",
-    errorMessage: ""
+    message: ""
   },
 };
 

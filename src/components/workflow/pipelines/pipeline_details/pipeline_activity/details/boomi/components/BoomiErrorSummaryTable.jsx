@@ -18,15 +18,8 @@ function BoomiErrorSummaryTable({ boomiObj }) {
     const columns = useMemo(
         () => [
             getTableTextColumn(getField(fields,"componentId")),
-            getTableTextColumn(getField(fields,"packageVersion"),undefined, 130),
-            getTableTextColumn(getField(fields,"notes")),
             getTableTextColumn(getField(fields,"packageId")),
-            getTableTextColumn(getField(fields,"componentVersion"),undefined, 150),
-            getTableTextColumn(getField(fields,"componentType"),undefined, 150),
-            getTableTextColumn(getField(fields,"createdDate")),
-            getTableTextColumn(getField(fields,"createdBy")),
-            getTableBooleanIconColumn(getField(fields,"shareable"),undefined, 80),
-            getTableTextColumn(getField(fields,"errorMessage")),
+            getTableTextColumn(getField(fields,"message")),
         ],
         []
     );
