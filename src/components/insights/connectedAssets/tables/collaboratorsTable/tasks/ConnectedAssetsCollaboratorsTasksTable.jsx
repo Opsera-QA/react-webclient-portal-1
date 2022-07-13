@@ -96,8 +96,7 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      userData,
-      "tasks"
+      userData
     );
     let dataObject = response?.data?.data?.taskActivity?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;

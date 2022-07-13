@@ -58,7 +58,8 @@ function ConnectedAssetsCollaboratorsTasksTab({ dashboardData }) {
         constants.COLLABORATORS_LIST.LIST_OF_USERS,
         dateRange?.startDate,
         dateRange?.endDate,
-        filterDto
+        filterDto,
+        "task"
       );
       const responseData1 = response?.data?.data?.usersList?.data?.[0];
       let newFilterDto = filterDto;

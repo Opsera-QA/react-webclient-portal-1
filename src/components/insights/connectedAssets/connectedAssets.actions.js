@@ -117,7 +117,8 @@ connectedAssetsActions.getUsersInfo = async (
   request,
   startDate,
   endDate,
-  tableFilterDto
+  tableFilterDto,
+  item
 ) => {
 
   const apiURL = connectedAssetsBaseURL + 'users/' + request;
@@ -128,6 +129,7 @@ connectedAssetsActions.getUsersInfo = async (
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
     sort: tableFilterDto?.getData("sortOption")?.value,
+    item: item
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
@@ -140,8 +142,7 @@ connectedAssetsActions.getSelectedUserDetailedInfo = async (
   startDate,
   endDate,
   tableFilterDto,
-  user,
-  item
+  user
 ) => {
 
   const apiURL = connectedAssetsBaseURL + 'users/' + request;
@@ -152,8 +153,7 @@ connectedAssetsActions.getSelectedUserDetailedInfo = async (
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     selectedUser: user,
     search: tableFilterDto?.getData("search"),
-    sort: tableFilterDto?.getData("sortOption")?.value,
-    item: item
+    sort: tableFilterDto?.getData("sortOption")?.value
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiURL, postBody);
