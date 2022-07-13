@@ -92,6 +92,8 @@ import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/Apig
 import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
 import SapCpqStepConfiguration from "./step_tool_configuration_forms/sap_cpq/SapCpqStepConfiguration";
 import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/ProvarStepToolConfiguration";
+import InformaticaIdqStepConfiguration
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1322,6 +1324,17 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
         return (
             <SapCpqStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqStepConfiguration
                 pipelineId={pipeline._id}
                 plan={pipeline.workflow.plan}
                 stepId={stepId}

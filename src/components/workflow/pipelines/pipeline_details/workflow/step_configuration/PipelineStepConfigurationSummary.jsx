@@ -207,6 +207,10 @@ import SapCpqPipelineStepConfigurationSummaryPanel
 import sapCpqStepFormMetadata from "./step_tool_configuration_forms/sap_cpq/sap-cpq-stepForm-metadata";
 import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
 import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
+import InformaticaIdqConnectionMetadata
+  from "../../../../../inventory/tools/tool_details/tool_jobs/informatica_idq/informatica-idq-connection-metadata";
+import InformaticaIdqPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqPipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -651,6 +655,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             provarPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                informaticaIdqPipelineDataObject={getModelWrappedObject(InformaticaIdqConnectionMetadata)}
+            />
         );
       default:
         return (
