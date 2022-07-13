@@ -1,0 +1,45 @@
+{
+    "plugins": [
+        "plugins/markdown",
+        "plugins/summarize",
+        "better-docs/component"
+    ],
+    "source": {
+        "include": ["./src/"],
+        "includePattern": ".+\\.j(s|sx)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "recurseDepth": 10,
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "templates": {
+        "better-docs": {
+           "name": "React Components"
+        },
+        "cleverLinks": true,
+        "monospaceLinks": true,
+        "systemName"            : "Opsera",
+        "footer"                : "Continuous Orchestration of DevOps Tools, Pipelines, and Insights",
+        "copyright"             :  "© Opsera.io",
+        "includeDate"           : true,
+        "navType"               : "vertical",   
+        "theme"                 : "slate",
+        "linenums"              : true,         
+        "collapseSymbols"       : true,         
+        "inverseNav"            : true,         
+        "outputSourceFiles"     : true,         
+        "outputSourcePath"      : true,         
+        "dateFormat"            : "L",   
+        "syntaxTheme"           : "default",   
+        "sort"                  : true,         
+        "search"                : true          
+    },
+    "opts": {
+        "destination": "./docs-codebase/",
+        "javascript.implicitProjectConfig.checkJs": true,
+        "recurse": true,
+        "package": "./package.json"
+    }
+}

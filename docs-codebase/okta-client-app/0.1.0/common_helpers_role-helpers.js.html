@@ -1,0 +1,555 @@
+<!DOCTYPE html><html lang="en" style="font-size:16px"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>common/helpers/role-helpers.js</title><!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--><script src="scripts/third-party/hljs.js" defer="defer"></script><script src="scripts/third-party/hljs-line-num.js" defer="defer"></script><script src="scripts/third-party/popper.js" defer="defer"></script><script src="scripts/third-party/tippy.js" defer="defer"></script><script src="scripts/third-party/tocbot.js"></script><script>var baseURL="/",locationPathname="",baseURL=(locationPathname=document.location.pathname).substr(0,locationPathname.lastIndexOf("/")+1)</script><link rel="stylesheet" href="styles/clean-jsdoc-theme.min.css"><svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><defs><symbol id="copy-icon" viewbox="0 0 488.3 488.3"><g><path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/><path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/></g></symbol><symbol id="search-icon" viewBox="0 0 512 512"><g><g><path d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z"/></g></g><g><g><path d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z"/></g></g></symbol><symbol id="font-size-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11.246 15H4.754l-2 5H.6L7 4h2l6.4 16h-2.154l-2-5zm-.8-2L8 6.885 5.554 13h4.892zM21 12.535V12h2v8h-2v-.535a4 4 0 1 1 0-6.93zM19 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></symbol><symbol id="add-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></symbol><symbol id="minus-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5 11h14v2H5z"/></symbol><symbol id="dark-theme-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol><symbol id="light-theme-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol><symbol id="reset-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M18.537 19.567A9.961 9.961 0 0 1 12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3a8 8 0 1 0-2.46 5.772l.997 1.795z"/></symbol><symbol id="down-icon" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"></path></symbol><symbol id="codepen-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M16.5 13.202L13 15.535v3.596L19.197 15 16.5 13.202zM14.697 12L12 10.202 9.303 12 12 13.798 14.697 12zM20 10.869L18.303 12 20 13.131V10.87zM19.197 9L13 4.869v3.596l3.5 2.333L19.197 9zM7.5 10.798L11 8.465V4.869L4.803 9 7.5 10.798zM4.803 15L11 19.131v-3.596l-3.5-2.333L4.803 15zM4 13.131L5.697 12 4 10.869v2.262zM2 9a1 1 0 0 1 .445-.832l9-6a1 1 0 0 1 1.11 0l9 6A1 1 0 0 1 22 9v6a1 1 0 0 1-.445.832l-9 6a1 1 0 0 1-1.11 0l-9-6A1 1 0 0 1 2 15V9z"/></symbol><symbol id="close-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></symbol><symbol id="menu-icon" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></symbol></defs></svg></head><body class="dark" data-theme="dark"><div class="sidebar-container"><div class="sidebar" id="sidebar"><a href="/" class="sidebar-title sidebar-title-anchor">Home</a><div class="sidebar-items-container"><div class="sidebar-section-title with-arrow" data-isopen="false" id="z9ltG51NxOSnrfY0PwzP-"><div>Global</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="global.html#ErrorDialog">ErrorDialog</a></div><div class="sidebar-section-children"><a href="global.html#isActionAllowed">isActionAllowed</a></div><div class="sidebar-section-children"><a href="global.html#SonarMetricByProjectLineChart">SonarMetricByProjectLineChart</a></div><div class="sidebar-section-children"><a href="global.html#SonarReliabilityRemediationEffortByProjectLineChart">SonarReliabilityRemediationEffortByProjectLineChart</a></div><div class="sidebar-section-children"><a href="global.html#SonarSecurityLineChart">SonarSecurityLineChart</a></div></div></div></div></div><div class="navbar-container" id="VuAckcnZhf"><nav class="navbar"><div class="navbar-left-items"></div><div class="navbar-right-items"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#light-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div><nav></nav></nav></div><div class="toc-container"><div class="toc-content"><span class="bold">On this page</span><div id="eed4d2a0bfd64539bb9df78095dec881"></div></div></div><div class="body-wrapper"><div class="main-content"><div class="main-wrapper"><section id="source-page" class="source-page"><header><h1 id="title" class="has-anchor">common_helpers_role-helpers.js</h1></header><article><pre class="prettyprint source lang-js"><code>export const ROLE_LEVELS = {
+  OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
+  ADMINISTRATORS: "ADMINISTRATORS",
+  ADMINISTRATORS_AND_SASS: "ADMINISTRATORS_AND_SASS",
+  POWER_USERS: "POWER_USERS",
+  POWER_USERS_AND_SASS: "POWER_USERS_AND_SASS",
+  USERS: "USERS",
+  USERS_AND_SASS: "USERS_AND_SASS"
+};
+
+export const SITE_ROLES = {
+  OPSERA_ADMINISTRATOR: "opsera_administrator",
+  ADMINISTRATOR: "site_administrator",
+  POWER_USER: "site_power_user",
+  USER: "site_user",
+  FREE_TRIAL_USER: "free_trial_user",
+  SAAS_USER: "saas_user",
+};
+
+export const ACCESS_ROLES = {
+  ORGANIZATION_OWNER: "organization_owner",
+  ORGANIZATION_ACCOUNT_OWNER: "organization_account_owner",
+  ADMINISTRATOR: "administrator",
+  OWNER: "owner",
+  SECOPS: "secops",
+  MANAGER: "manager",
+  USER: "user",
+  GUEST: "guest",
+  UNAUTHORIZED: "unauthorized",
+  READ_ONLY: "read_only",
+  NO_ACCESS_RULES: "no_access_rules",
+  NO_ROLES_ASSIGNED: "no_roles_assigned",
+};
+
+export const ACCESS_ROLES_FORMATTED_LABELS = {
+  opsera_administrator: "Opsera Administrator",
+  organization_owner: "Organization Owner",
+  organization_account_owner: "Organization Account Owner",
+  administrator: "Administrator",
+  saas_user: "User",
+  power_user: "Power User",
+  owner: "Owner",
+  secops: "Secops",
+  manager: "Manager",
+  user: "User",
+  guest: "Guest",
+  unauthorized: "UNAUTHORIZED",
+  no_access_rules: "No Access Rules On Item",
+  no_roles_assigned: "No Role Assigned to User",
+  free_trial_user: "User",
+  read_only: "Read Only Access",
+};
+
+export const meetsRequirements = (requirement, accessRoleData) => {
+  if (accessRoleData == null) {
+    return false;
+  }
+
+  switch (requirement) {
+    case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
+      return isOpseraAdministrator(accessRoleData);
+    case ROLE_LEVELS.ADMINISTRATORS:
+      return isAdministrator(accessRoleData);
+    case ROLE_LEVELS.ADMINISTRATORS_AND_SASS:
+      return isAdministratorOrSass(accessRoleData);
+    case ROLE_LEVELS.POWER_USERS:
+      return isPowerUser(accessRoleData);
+    case ROLE_LEVELS.POWER_USERS_AND_SASS:
+      return isPowerUserOrSass(accessRoleData);
+    case ROLE_LEVELS.USERS:
+      return isUser(accessRoleData);
+    case ROLE_LEVELS.USERS_AND_SASS:
+      return isUserOrSassUser(accessRoleData);
+  }
+};
+
+export const isOpseraAdministrator = (accessRoleData) => {
+  return accessRoleData?.OpseraAdministrator;
+};
+
+export const isAdministrator = (accessRoleData) => {
+  return accessRoleData?.OpseraAdministrator || accessRoleData?.Administrator;
+};
+
+export const isAdministratorOrSass = (accessRoleData) => {
+  return accessRoleData?.OpseraAdministrator || accessRoleData?.Administrator || accessRoleData?.SassPowerUser;
+};
+
+export const isPowerUser = (accessRoleData) => {
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator;
+};
+
+export const isPowerUserOrSass = (accessRoleData) => {
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.SassPowerUser;
+};
+
+export const isUser = (accessRoleData) => {
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User;
+};
+
+export const isUserOrSassUser = (accessRoleData) => {
+  return accessRoleData !== undefined;
+};
+
+export const ACCESS_ROLE_PERMISSION_MESSAGES = {
+  ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
+  POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
+  USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
+};
+
+export const getAccessRolePermissionMessage = (accessRole) => {
+  switch (accessRole?.Role) {
+    case "administrator":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
+    case "power_user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
+    case "user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
+    case "guest":
+    default:
+      return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
+  }
+};
+
+export const getAccessRoleRequirementMessage = (requirement) => {
+  switch (requirement) {
+    case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
+      return "Only Opsera Administrators can access this screen.";
+    case ROLE_LEVELS.ADMINISTRATORS:
+      return "You must have a Site Administrator role to access this screen.";
+    case ROLE_LEVELS.POWER_USERS:
+      return "You must have a Power User role to access this screen.";
+    case ROLE_LEVELS.POWER_USERS_AND_SASS:
+      return "You must have a Power User role to access this screen.";
+    case ROLE_LEVELS.USERS:
+      return "Any level User can access this screen.";
+    case ROLE_LEVELS.USERS_AND_SASS:
+      return "Any level User can access this screen.";
+    default:
+      return "UNKNOWN ROLE REQUIREMENTS";
+  }
+};
+
+export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
+  const roleLevel = calculateRoleLevel(accessRoleData, objectRoles, dataObject);
+  const prefix = "Your access role for this page is: ";
+
+  switch (roleLevel) {
+    case SITE_ROLES.OPSERA_ADMINISTRATOR:
+      return prefix + "Opsera Administrator";
+    case SITE_ROLES.ADMINISTRATOR:
+      return prefix + "Site Administrator";
+    case SITE_ROLES.POWER_USER:
+      return prefix + "Site Power User";
+    case ACCESS_ROLES.ADMINISTRATOR:
+      return prefix + "Administrator";
+    case ACCESS_ROLES.OWNER:
+      return prefix + "Owner";
+    case ACCESS_ROLES.SECOPS:
+      return prefix + "SecOps";
+    case ACCESS_ROLES.MANAGER:
+      return prefix + "Manager";
+    case ACCESS_ROLES.USER:
+      return prefix + "User";
+    case ACCESS_ROLES.GUEST:
+      return prefix + "Guest";
+    case ACCESS_ROLES.READ_ONLY:
+      return prefix + "Guest";
+    case ACCESS_ROLES.UNAUTHORIZED:
+      return "You are unauthorized to view this page.";
+    case ACCESS_ROLES.NO_ACCESS_RULES:
+      return "No Access Rules are currently applied.";
+    default:
+      return "UNKNOWN ROLE LEVEL";
+  }
+};
+
+export const roleAllowed = (accessRoles, roleLevel) => {
+  if (!Array.isArray(accessRoles) || accessRoles.length === 0) {
+    return false;
+  }
+
+  return accessRoles.includes(roleLevel) || accessRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES);
+};
+
+export const parseRoleDefinitionsIntoRbacTableRows =  (roleDefinitions) => {
+  let accessRoleRows = [];
+
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
+    return [];
+  }
+
+  try {
+    const roleDefinitionKeys = Object.keys(roleDefinitions);
+
+    if (Array.isArray(roleDefinitionKeys) &amp;&amp; roleDefinitionKeys.length > 0) {
+      roleDefinitionKeys.forEach((roleDefinitionKey) => {
+        const roleDefinition = roleDefinitions[roleDefinitionKey];
+
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition?.allowedRoles;
+        const tableRow = {
+          id: roleDefinition.id,
+          description: roleDefinition.description,
+          administrator: roleAllowed(accessRoles, ACCESS_ROLES.ADMINISTRATOR),
+          owner: roleAllowed(accessRoles, ACCESS_ROLES.OWNER),
+          manager: roleAllowed(accessRoles, ACCESS_ROLES.MANAGER),
+          user: roleAllowed(accessRoles, ACCESS_ROLES.USER),
+          guest: roleAllowed(accessRoles, ACCESS_ROLES.GUEST),
+          no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
+        };
+
+        accessRoleRows.push(tableRow);
+      });
+    }
+  }
+  catch (error) {
+    console.error(`Could not parse Role Definitions: ${error}`);
+  }
+
+  return accessRoleRows;
+};
+
+export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
+  let accessRoleRows = [];
+
+  if (roleDefinitions == null || typeof roleDefinitions !== "object") {
+    return [];
+  }
+
+  try {
+    const roleDefinitionKeys = Object.keys(roleDefinitions);
+
+    if (Array.isArray(roleDefinitionKeys) &amp;&amp; roleDefinitionKeys.length > 0) {
+      roleDefinitionKeys.forEach((roleDefinitionKey) => {
+        const roleDefinition = roleDefinitions[roleDefinitionKey];
+
+        if (roleDefinition == null || roleDefinition?.hideRoleDefinition === true) {
+          return;
+        }
+
+        const accessRoles = roleDefinition.allowedRoles;
+        const tableRow = {
+          id: roleDefinition.id,
+          description: roleDefinition.description,
+          administrator: roleAllowed(accessRoles, SITE_ROLES.ADMINISTRATOR),
+          power_user: roleAllowed(accessRoles, SITE_ROLES.POWER_USER),
+          user: roleAllowed(accessRoles, SITE_ROLES.USER),
+          no_access_rules: roleAllowed(accessRoles, ACCESS_ROLES.NO_ACCESS_RULES),
+        };
+
+        accessRoleRows.push(tableRow);
+      });
+    }
+  }
+  catch (error) {
+    console.error(`Could not parse Role Definitions: ${error}`);
+  }
+
+  return accessRoleRows;
+};
+
+export const getAllowedRoles = (actionName, roleDefinitions) => {
+  const roleDefinition = roleDefinitions[actionName];
+  return roleDefinition?.allowedRoles;
+};
+
+export const isAnLdapUser = (user, accessRole) => {
+  return accessRole?.Type !== "sass-user" &amp;&amp; user?.ldap?.domain != null;
+};
+
+/**
+ * Handles all authorization of actions.  It factors in the overall user roles and the individual object
+ * access roles. It will be customized based on roleDefinitions passed in.
+ *
+ * @param customerAccessRules
+ * @param action
+ * @param roleDefinitions
+ * @param owner
+ * @param objectRoles
+ * @param allowAllIfNoRolesAssigned
+ * @returns {boolean}
+ *
+ *
+ */
+export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions, allowAllIfNoRolesAssigned = true) => {
+  if (customerAccessRules == null || roleDefinitions == null) {
+    return false;
+  }
+
+  const allowedRoles = getAllowedRoles(action, roleDefinitions);
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  // TODO: These are the defaults for compatibility, but we should probably just use the defined Access Roles sent from Node:
+  if (customerAccessRules?.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules?.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules?.SassPowerUser) {
+    return true; //all  are authorized to Saas User
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return false; //all actions disabled for user?
+  }
+
+  if (owner &amp;&amp; customerAccessRules?.UserId === owner) {
+    return true; //owner can do all actions
+  }
+
+  // TODO: Should we remove this altogether and force role requirements?
+  // if allowAllIfNoRolesAssigned is true and no objectRole data passed, then allow ALL actions
+  if (allowAllIfNoRolesAssigned === true &amp;&amp; (!Array.isArray(objectRoles) || objectRoles.length === 0)) {
+    return true;
+  }
+  // END TODOs
+
+  if (customerAccessRules?.OpseraAdministrator === true &amp;&amp; allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OrganizationOwner === true &amp;&amp; allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OrganizationAccountOwner === true &amp;&amp; allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules?.Administrator === true &amp;&amp; allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules?.SassPowerUser === true &amp;&amp; allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
+    return true;
+  }
+
+  if (customerAccessRules?.PowerUser === true &amp;&amp; allowedRoles.includes(SITE_ROLES.POWER_USER)) {
+    return true;
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial" &amp;&amp; allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
+    return true;
+  }
+
+  if (owner &amp;&amp; customerAccessRules?.UserId === owner &amp;&amp; allowedRoles.includes(ACCESS_ROLES.OWNER)) {
+    return true;
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules?.Email, customerAccessRules?.Groups, objectRoles);
+  // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
+  return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
+};
+
+export const isFeatureActionAllowed = (customerAccessRules, roleDefinition) => {
+  if (customerAccessRules == null || roleDefinition == null) {
+    return false;
+  }
+
+  const allowedRoles = roleDefinition?.allowedRoles;
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
+    return true;
+  }
+
+  if (customerAccessRules?.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules?.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.OpseraAdministrator === true &amp;&amp; allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationOwner === true &amp;&amp; allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.OrganizationAccountOwner === true &amp;&amp; allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
+    return true;
+  }
+
+  if (customerAccessRules.Administrator === true &amp;&amp; allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
+    return true;
+  }
+
+  if (customerAccessRules.SassPowerUser === true &amp;&amp; allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
+    return true;
+  }
+
+  if (customerAccessRules.FreeTrialUser === true &amp;&amp; allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
+    return true;
+  }
+
+  return false;
+};
+
+//compares the user email to the objectRoles data to see if the user has a specific role
+// (either directly or through group membership)
+export const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
+  if (!objectRoles || objectRoles.length === 0 || !userEmail) {
+    return false;
+  }
+
+  //filter out only user records (groups null)
+  const userRoles = objectRoles.filter(function(item) {
+    if (!item.user || typeof item.user !== "string") {
+      return false;
+    }
+    return item.user.toLowerCase() === userEmail.toLowerCase();
+  });
+
+  if (userRoles.length > 0) {
+    return userRoles[0].role;
+  }
+
+  //filter out only user records (groups null)
+  const groupRoles = objectRoles.filter(function(item) {
+    return item.group;
+  });
+
+  let userGroupsRole = [];
+  groupRoles.forEach(function(item) {
+    if (userGroups &amp;&amp; userGroups.includes(item.group)) {
+      userGroupsRole.push(item.role);
+    }
+  });
+
+  if (userGroupsRole.length === 1) {
+    return userGroupsRole[0];
+  }
+
+  if (userGroupsRole.length >= 1) {
+    if (userGroupsRole.includes("administrator")) {
+      return "administrator";
+    }
+    if (userGroupsRole.includes("secops")) {
+      return "secops";
+    }
+    if (userGroupsRole.includes("manager")) {
+      return "manager";
+    }
+    if (userGroupsRole.includes("user")) {
+      return "user";
+    }
+    return userGroupsRole[0];
+  }
+
+  return false;
+};
+
+export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) => {
+  const userEmail = customerAccessRules.Email;
+  const userGroups = customerAccessRules.Groups;
+
+  if (!userEmail) {
+    return ACCESS_ROLES.UNAUTHORIZED;
+  }
+
+  if (!objectRoles || objectRoles.length === 0) {
+    return ACCESS_ROLES.NO_ACCESS_RULES;
+  }
+
+  if (dataModel?.getData("owner") === customerAccessRules.UserId) {
+    return ACCESS_ROLES.OWNER;
+  }
+
+  if (customerAccessRules.OpseraAdministrator) {
+    return SITE_ROLES.OPSERA_ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.Administrator) {
+    return SITE_ROLES.ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return SITE_ROLES.SAAS_USER;
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return SITE_ROLES.FREE_TRIAL_USER;
+  }
+
+  //filter out only user records (groups null)
+  const userRoles = objectRoles.filter(function(item) {
+    if (!item.user || typeof item.user !== "string") {
+      return false;
+    }
+    return item.user.toLowerCase() === userEmail.toLowerCase();
+  });
+
+  if (userRoles.length > 0) {
+    return userRoles[0].role;
+  }
+
+  //filter out only user records (groups null)
+  const groupRoles = objectRoles.filter(function(item) {
+    return item.group;
+  });
+
+  let userGroupsRole = [];
+  groupRoles.forEach(function(item) {
+    if (userGroups &amp;&amp; userGroups.includes(item.group)) {
+      userGroupsRole.push(item.role);
+    }
+  });
+
+  if (userGroupsRole.length === 1) {
+    return userGroupsRole[0];
+  }
+
+  if (userGroupsRole.length >= 1) {
+    if (userGroupsRole.includes("administrator")) {
+      return ACCESS_ROLES.ADMINISTRATOR;
+    }
+    if (userGroupsRole.includes("secops")) {
+      return ACCESS_ROLES.SECOPS;
+    }
+    if (userGroupsRole.includes("manager")) {
+      return ACCESS_ROLES.MANAGER;
+    }
+    if (userGroupsRole.includes("user")) {
+      return ACCESS_ROLES.USER;
+    }
+
+    return userGroupsRole[0];
+  }
+
+  return ACCESS_ROLES.GUEST;
+};
+</code></pre></article></section></div></div></div><div class="search-container" id="PkfLWpAbet" style="display:none"><div class="wrapper" id="iCxFxjkHbP"><button class="icon-button search-close-button" id="VjLlGakifb" aria-label="close search"><svg><use xlink:href="#close-icon"></use></svg></button><div class="search-box-c"><svg><use xlink:href="#search-icon"></use></svg> <input type="text" id="vpcKVYIppa" class="search-input" placeholder="Search..." autofocus></div><div class="search-result-c" id="fWwVHRuDuN">Type anything to view search result</div></div></div><div class="mobile-menu-icon-container"><button class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu"><svg><use xlink:href="#menu-icon"></use></svg></button></div><div id="mobile-sidebar" class="mobile-sidebar-container"><div class="mobile-sidebar-wrapper"><a href="/" class="sidebar-title sidebar-title-anchor">Home</a><div class="mobile-nav-links"></div><div class="mobile-sidebar-items-c"><div class="sidebar-section-title with-arrow" data-isopen="false" id="z9ltG51NxOSnrfY0PwzP-"><div>Global</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="global.html#ErrorDialog">ErrorDialog</a></div><div class="sidebar-section-children"><a href="global.html#isActionAllowed">isActionAllowed</a></div><div class="sidebar-section-children"><a href="global.html#SonarMetricByProjectLineChart">SonarMetricByProjectLineChart</a></div><div class="sidebar-section-children"><a href="global.html#SonarReliabilityRemediationEffortByProjectLineChart">SonarReliabilityRemediationEffortByProjectLineChart</a></div><div class="sidebar-section-children"><a href="global.html#SonarSecurityLineChart">SonarSecurityLineChart</a></div></div></div><div class="mobile-navbar-actions"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#light-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div></div></div><script type="text/javascript" src="scripts/core.min.js"></script><script src="scripts/search.min.js" defer="defer"></script><script src="scripts/third-party/fuse.js" defer="defer"></script><script type="text/javascript">tocbot.init({tocSelector:"#eed4d2a0bfd64539bb9df78095dec881",contentSelector:".main-content",headingSelector:"h1, h2, h3",hasInnerContainers:!0,scrollContainer:".main-content",headingsOffset:130,onClick:bringLinkToView})</script></body></html>
