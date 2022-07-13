@@ -39,7 +39,7 @@ function ConnectedAssetsBranchesTasksTable({ repository, dashboardData, icon }) 
     () => [
       getTableTextColumn(getField(fields, "branch"), "branch"),
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
-      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run")
+      getTableTextColumn(getField(fields, "task_last_run"), "task_last_run")
     ],
     []
   );
