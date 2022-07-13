@@ -1,249 +1,124 @@
-import React, {useEffect, useState, useContext} from "react";
-import {DateRangePicker} from "react-date-range";
-import {format, subDays} from "date-fns";
-import {Button, Popover, Overlay, Container, Row, Col, Alert} from "react-bootstrap";
-import {faCalendar} from "@fortawesome/pro-light-svg-icons";
-import Multiselect from "react-widgets/Multiselect";
-
-import {ApiService} from "api/apiService";
-import {NODE_ANALYTICS_API_SERVER_URL} from "config";
+import React, { useState, useContext, useEffect } from "react";
+import {subDays} from "date-fns";
 import {AuthContext} from "contexts/AuthContext";
-import Model from "core/data_model/model";
-import componentFilterMetadata from "./componentFitlerMetadata";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import ScreenContainer from 'components/common/panels/general/ScreenContainer';
-import IconBase from 'components/common/icons/IconBase';
 import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
 import FilterContainer from "components/common/table/FilterContainer";
-import LookupResults from "./LookupResults";
-import { DataState } from "core/data_model/model";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AnalyticsSalesforceComponentNameMultiSelectInput
+  from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
+import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
+import LookupResults from "components/insights/lookup/LookupResults";
+import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import { formatDate } from "components/common/helpers/date/date.helpers";
+import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
 
-const DATE_STRING_FORMAT = "MM/dd/yyyy";
-
-const cleanUrlPath = ({url}) => {
-	let returnUrl = url;
-  if (url.slice(-1) !== '/') {
-    returnUrl += '/';
-  }
-  return returnUrl;
-};
-
-//.env params were different when going to server, trailing slash
-const ANALYTICS_API = cleanUrlPath({url: NODE_ANALYTICS_API_SERVER_URL});
-
-const ENDPOINTS = {
-  componentNames: 'analytics/sfdc/v1/component/names',
-  componentSearch: 'analytics/sfdc/v1/component'
-};
-
-const Lookup = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [target, setTarget] = useState(null);
-  const [startDate, setStartDate] = useState(subDays(new Date(), 7));
-  const [endDate, setEndDate] = useState(new Date());
-  const [searchArr, setSearchArr] = useState([]);
-  const [componentList, setComponentList] = useState([]);
-  const [searchResults, setSearchResults] = useState(null);
-  const [filterDto, setFilterDto] = useState(new Model({}, componentFilterMetadata, true));
+function Lookup() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [filterModel, setFilterModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
+  const { isMounted, cancelTokenSource, toastContext } = useComponentStateReference();
 
   useEffect(() => {
-    // load in component names for search dropdown
-    getAccessToken()
-    .then(accessToken => {
-      const apiService = new ApiService(
-        ANALYTICS_API + ENDPOINTS.componentNames,
-        null,
-        accessToken
-      );
+    const newFilterModel = new LookupFilterModel();
+    newFilterModel.setData("startDate", subDays(new Date(), 7));
+    newFilterModel.setData("endDate", new Date());
+    setFilterModel({...newFilterModel});
+  }, []);
 
-      return apiService.get();
-    })
-    .then(({ data: { data: { componentNames }}}) => {
-      setComponentList(componentNames);
-    })
-    .catch(error => {
-      setErrorMessage(error.message);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-  }, [getAccessToken]);
-
-  const onSearch = async () => {
-    if (!startDate || !endDate) {
-      setErrorMessage('Please select start and end dates.');
-      setSearchResults(null);
-      return null;
-    }
-
-    if (searchArr.length < 1) {
-      setErrorMessage('Please enter search criteria.');
-      setSearchResults(null);
-      return null;
-    }
-
-    setIsLoading(true);
-
+  const loadData = async (newFilterModel = filterModel) => {
     try {
-      const accessToken = await getAccessToken();
+      setIsLoading(true);
+      setSearchResults([]);
+      toastContext.removeInlineMessage();
+      const startDate = newFilterModel?.getData("startDate");
+      const endDate = newFilterModel?.getData("endDate");
+      const componentNames = newFilterModel?.getArrayData("selectedComponentNames");
 
-      const apiService = new ApiService(
-        ANALYTICS_API + ENDPOINTS.componentSearch,
-        {
-          startDate: format(startDate, DATE_STRING_FORMAT),
-          endDate: format(endDate, DATE_STRING_FORMAT),
-          fullNameArr: searchArr
-        },
-        accessToken
+      if (!startDate || !endDate) {
+        toastContext.showInlineErrorMessage('Please select start and end dates.');
+        return;
+      }
+
+      if (componentNames.length === 0) {
+        toastContext.showInlineErrorMessage('Please select at least one Salesforce component.');
+        return;
+      }
+
+      // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
+      const DATE_STRING_FORMAT = "MM/dd/yyyy";
+      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+
+      const response = await insightsLookupActions.searchComponents(
+        getAccessToken,
+        cancelTokenSource,
+        formattedStartDate,
+        formattedEndDate,
+        newFilterModel.getData("selectedComponentNames"),
       );
+      const searchResults = insightsLookupActions.generateTransformedResults(response?.data?.data?.data);
 
-      const response = await apiService.get();
-      
-      setSearchResults(response.data.data.data);
+      if (isMounted?.current === true && Array.isArray(searchResults)) {
+        setSearchResults(searchResults);
+        newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
+        setFilterModel({...newFilterModel});
+      }
     } catch (error) {
-      setErrorMessage(error.message);
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error);
+      }
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const clearErrorAlert = () => {
-    setErrorMessage(null);
-  };
-
-  const toggleCalendar = (event) => {
-    setShowCalendar(!showCalendar);
-    setTarget(event.target);
-  };
-
-  const closeCalender = () => {
-    setShowCalendar(false);
-  };
-
-  const clearCalendar = () => {
-    filterDto.setData("startDate", format(subDays(new Date(), 7)));
-    filterDto.setData("endDate", format(new Date()));
-    filterDto.setData("activeFilters", filterDto.getActiveFilters());
-  };
-
-  const onDateChange = ({ selection: { startDate, endDate } }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
-  };
-
-  const onFilter = (newFilterDto) => {
-    clearErrorAlert();
-    setShowCalendar(false);
-
-    if (newFilterDto) {
-      if (newFilterDto.dataState === DataState.LOADED) {
-        setStartDate(subDays(new Date(), 7));
-        setEndDate(new Date());
-        setSearchResults(null);
-        newFilterDto.setDefaultValue("startDate");
-        newFilterDto.setDefaultValue("endDate");
-
-        newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
-        newFilterDto.clearChangeMap();
-        setFilterDto(newFilterDto);
-      } else {
-        if (newFilterDto.isChanged("startDate")) {
-          const newStartDate = newFilterDto.getData("startDate");
-          setStartDate(newStartDate ? new Date(newStartDate) : null);
-        } else {
-          newFilterDto.setData("startDate", startDate ? format(startDate, DATE_STRING_FORMAT) : "");
-        }
-  
-        if (newFilterDto.isChanged("endDate")) {
-          const newEndDate = newFilterDto.getData("endDate");
-          setEndDate(newEndDate ? new Date(newEndDate) : null);
-        } else {
-          newFilterDto.setData("endDate", format(endDate, DATE_STRING_FORMAT));
-        }
-
-        newFilterDto.setData("activeFilters", filterDto.getActiveFilters());
-        newFilterDto.clearChangeMap();
-        setFilterDto(newFilterDto);
-
-        onSearch();
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
-  const datePickerButtonText = startDate && endDate ? `${format(startDate, DATE_STRING_FORMAT)} - ${format(endDate, DATE_STRING_FORMAT)}` : "Date Range";
-
-  const dateRange = [
-    {
-      startDate,
-      endDate,
-      key: "selection"
-    }
-  ];
-
   const getDropdownFilters = () => (
-    <Row>
-      <Col>
-        <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-          <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-          {datePickerButtonText}
-        </Button>
-        <Overlay
-          show={showCalendar}
-          target={target}
-          placement="left"
-          containerPadding={20}
-        >
-          <Popover className="max-content-width">
-            <Popover.Title>
-              <div style={{ display: "flex" }}>
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  type="button"
-                  style={{ marginRight: "auto" }}
-                  onClick={clearCalendar}
-                >
-                  Clear
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  type="button"
-                  style={{ marginLeft: "auto" }}
-                  onClick={closeCalender}
-                >
-                  X
-                </Button>
-              </div>
-            </Popover.Title>
-            <Popover.Content>
-              <DateRangePicker
-                startDatePlaceholder="Start Date"
-                endDatePlaceholder="End Date"
-                onChange={onDateChange}
-                showSelectionPreview={true}
-                moveRangeOnFirstSelection={false}
-                months={1}
-                ranges={dateRange}
-                direction="horizontal"
-              />
-            </Popover.Content>
-          </Popover>
-        </Overlay>
-      </Col>
-      <Col>
-        <Multiselect
-          className="select-component"
-          data={componentList}
-          value={searchArr}
-          onChange={value => setSearchArr(value)}
-        />
-      </Col>
-    </Row>
+    <div>
+      <DateRangeInputBase
+        model={filterModel}
+        setModel={setFilterModel}
+      />
+      <AnalyticsSalesforceComponentNameMultiSelectInput
+        fieldName={"selectedComponentNames"}
+        model={filterModel}
+        setModel={setFilterModel}
+      />
+    </div>
   );
+
+  const getNoDataMessage = () => {
+    const startDate = filterModel?.getData("startDate");
+    const endDate = filterModel?.getData("endDate");
+    const componentNames = filterModel?.getArrayData("selectedComponentNames");
+
+    if (!startDate || !endDate) {
+      return 'Please select start and end dates.';
+    }
+
+    if (componentNames.length === 0) {
+      return 'Please select at least one Salesforce component.';
+    }
+  };
+
+  const getBody = () => {
+    return (
+      <LookupResults
+        isLoading={isLoading}
+        searchResults={searchResults}
+        noDataMessage={getNoDataMessage()}
+      />
+    );
+  };
+
+  if (filterModel == null) {
+    return null;
+  }
 
   return (
     <ScreenContainer
@@ -252,31 +127,22 @@ const Lookup = () => {
       breadcrumbDestination={"lookup"}
       helpComponent={<SalesforceLookUpHelpDocumentation />}
       pageDescription={`
-      Currently applicable only for Salesforce Pipelines. This Component based search provides details on when selected components have been deployed along with pipeline details. Also provides summary on validations and unit tests.
+      Currently applicable only for Salesforce Pipelines. 
+      This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
       `}
     >
-      <Container fluid>
-        <Row>
-          <Col>
-            {errorMessage &&
-              <Alert className="mt-3" variant="danger" onClose={clearErrorAlert} dismissible>
-                {errorMessage}
-              </Alert>
-            }
-          </Col>
-        </Row>
-        <FilterContainer
-          title="Salesforce Lookup"
-          isLoading={isLoading}
-          filterDto={filterDto}
-          loadData={onFilter}
-          dropdownFilters={getDropdownFilters()}
-          body={<LookupResults isLoading={isLoading} searchResults={searchResults} />}
-          hideFiltersOnTrigger={false}
-        />
-      </Container>
+      <FilterContainer
+        title={"Salesforce Lookup"}
+        titleIcon={faSearch}
+        isLoading={isLoading}
+        filterDto={filterModel}
+        loadData={loadData}
+        dropdownFilters={getDropdownFilters()}
+        body={getBody()}
+        className={"mx-2"}
+      />
     </ScreenContainer>
   );
-};
+}
 
 export default Lookup;

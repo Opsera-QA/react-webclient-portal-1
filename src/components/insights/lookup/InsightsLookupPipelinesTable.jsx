@@ -1,14 +1,16 @@
-import React, {useMemo} from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 
-import {getField} from "components/common/metadata/metadata-helpers";
-import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import MakeupTableBase from 'components/common/table/makeup/MakeupTableBase';
+import { getField } from "components/common/metadata/metadata-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
+import { faBug } from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 const fields = [
   {
     label: "Pipeline",
-    id: "pipeline"
+    id: "pipeline",
   },
   {
     label: "Deploy Count",
@@ -32,8 +34,8 @@ const fields = [
   },
   {
     label: "Deployed",
-    id: "last_deploy"
-  }
+    id: "last_deploy",
+  },
 ];
 
 const initialState = {
@@ -54,13 +56,15 @@ const initialState = {
     {
       id: "last_deploy",
       desc: true,
-    }
+    },
   ],
 };
 
-const LookupTablePipelines = ({
-  data
-}) => {
+const InsightsLookupPipelinesTable = (
+  {
+    pipelines,
+    componentName,
+  }) => {
   const columns = useMemo(() => [
     getTableTextColumn(getField(fields, "pipeline"), "no-wrap-inline"),
     getTableTextColumn(getField(fields, "deploy_count")),
@@ -71,17 +75,29 @@ const LookupTablePipelines = ({
     getTableTextColumn(getField(fields, "last_deploy")),
   ], []);
 
+  const getTable = () => {
+    return (
+      <MakeupTableBase
+        columns={columns}
+        data={pipelines}
+        initialState={initialState}
+      />
+    );
+  };
+
   return (
-    <MakeupTableBase
-      columns={columns}
-      data={data}
-      initialState={initialState}
+    <FilterContainer
+      showBorder={false}
+      body={getTable()}
+      titleIcon={faBug}
+      title={`${componentName}: Pipelines`}
     />
   );
 };
 
-LookupTablePipelines.propTypes = {
-  data: PropTypes.array
+InsightsLookupPipelinesTable.propTypes = {
+  pipelines: PropTypes.array,
+  componentName: PropTypes.string,
 };
 
-export default LookupTablePipelines;
+export default InsightsLookupPipelinesTable;

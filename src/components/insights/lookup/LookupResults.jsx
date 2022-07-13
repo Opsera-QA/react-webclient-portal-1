@@ -1,160 +1,96 @@
-import React, { useState } from "react";
-import {faBug} from "@fortawesome/pro-light-svg-icons";
-import PropTypes from 'prop-types';
-import LoadingDialog from "components/common/status_notifications/loading";
-import FilterContainer from "components/common/table/FilterContainer";
-import LookupTableTotals from "./LookupTableTotals";
-import LookupTablePipelines from "./LookupTablePipelines";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import LookupMetricTotalsDataBlocks from "components/insights/lookup/LookupMetricTotalsDataBlocks";
+import InsightsLookupPipelinesTable from "components/insights/lookup/InsightsLookupPipelinesTable";
 import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
-const generateTransformedResults = searchResults => {
-    const results = [];
+function LookupResults({ isLoading, searchResults, noDataMessage }) {
+  const [selectedComponentName, setSelectedComponentName] = useState(undefined);
 
-    if (!searchResults) {
-        return results;
+  useEffect(() => {
+    setSelectedComponentName(undefined);
+
+    if (Array.isArray(searchResults) && searchResults.length > 0) {
+      setSelectedComponentName(searchResults[0]?.componentName);
+    }
+  }, [searchResults]);
+
+  const handleTabClick = (componentName) => {
+    setSelectedComponentName(componentName);
+  };
+
+  const getTabContainer = () => {
+    if (!Array.isArray(searchResults) || searchResults.length === 0) {
+      return null;
     }
 
-    const cleanedResults = {};
-    const pipelineNames = Object.keys(searchResults);
-
-    for (let i = 0, l = pipelineNames.length; i < l; i++){ 
-      const pipelineName = pipelineNames[i];
-      if (pipelineName !== 'dateRanges') {
-        const pipelineData = searchResults[pipelineName].currentResults;
-        cleanedResults[pipelineName] = {
-          totalTimesComponentDeployed: pipelineData.totalTimesComponentDeployed,
-          totalUnitTestsFailed: pipelineData.totalUnitTestsFailed,
-          totalUnitTestsPassed: pipelineData.totalUnitTestsPassed,
-          totalValidationsFailed: pipelineData.totalValidationsFailed,
-          totalValidationsPassed: pipelineData.totalValidationsPassed,
-          pipelineData: pipelineData.pipelineData
-        };
-      }
-    }
-    
-    Object.entries(cleanedResults).forEach(([ name, data ]) => {
-        const pipelineNames = Object.keys(data.pipelineData);
-        const totals = [{
-          deploy_count: data.totalTimesComponentDeployed,
-          validations_passed: data.totalValidationsPassed,
-          validations_failed: data.totalValidationsFailed,
-          unit_tests_passed: data.totalUnitTestsPassed,
-          unit_tests_failed: data.totalUnitTestsFailed,
-          pipelines: pipelineNames.length
-        }];
-  
-        const pipelines = [];
-        for (let j = 0, k = pipelineNames.length; j < k; j++) {
-          const pipelineName = pipelineNames[j];
-          const pipeline = data.pipelineData[pipelineName];
-          pipelines.push({
-            pipeline: pipelineName,
-            deploy_count: pipeline.totalTimesComponentDeployed,
-            validations_passed: pipeline.totalValidationsPassed,
-            validations_failed: pipeline.totalValidationsFailed,
-            unit_tests_passed: pipeline.totalUnitTestsPassed,
-            unit_tests_failed: pipeline.totalUnitTestsFailed,
-            last_deploy: pipeline.customerName
-          });
-        }
-  
-        results.push({
-          componentName: name,
-          totals,
-          pipelines
-        });
-    });
-
-    return results;
-};
-
-const LookupResults = ({ isLoading, searchResults }) => {
-    const [activeTabIndex, setActiveTabIndex] = useState(0); //default to 0th result
-
-    // convert search results from API
-    const results = generateTransformedResults(searchResults);
-
-    const handleTabClick = eventKey => {
-        setActiveTabIndex(results.findIndex(({ componentName }) => componentName === eventKey));
-    };
-
-    if (isLoading) {
-        return (
-          <LoadingDialog size="sm" message="Loading" />
-        );
-    }
-
-    if (!searchResults) {
-        return null;
-    }
-
-    if (results.length < 1) {
-        return (
-            <h3 className="mt-2 text-center">No Results</h3>
-        );
-    }
-
-    let totals, componentName, pipelines;
-    
-    const currentActiveTable = results[activeTabIndex];
-
-    if (currentActiveTable) {
-        totals = currentActiveTable.totals;
-        componentName = currentActiveTable.componentName;
-        pipelines = currentActiveTable.pipelines;
-    }
-
-    const activeTabText = currentActiveTable ? currentActiveTable.componentName : null;
-
-    const getTabContainer = () => (
-        <VanitySetVerticalTabContainer>
-            {results && results.map(({ componentName }, index) => (
-                <VanitySetVerticalTab
-                    key={`${componentName}-${index}`}
-                    tabText={componentName}
-                    tabName={componentName}
-                    handleTabClick={handleTabClick}
-                    activeTab={activeTabText}
-                />
-            ))}
-        </VanitySetVerticalTabContainer>
-    );
-
-    const getCurrentView = () => (
-        <>
-            <FilterContainer
-                className="mt-2 lookup-table"
-                showBorder={false}
-                body={<LookupTableTotals data={totals} />}
-                titleIcon={faBug}
-                title={`${componentName}: Totals`}
-            />
-            <FilterContainer
-                className="mt-2 lookup-pipelines"
-                showBorder={false}
-                body={<LookupTablePipelines data={pipelines} />}
-                titleIcon={faBug}
-                title={`${componentName}: Pipelines`}
-            />
-        </>
-    );
-    
     return (
-        <TabTreeAndViewContainer
-            verticalTabContainer={getTabContainer()}
-            currentView={getCurrentView()}
-            tabColumnSize={3}
-            defaultActiveKey={0}
-            hideBorder
-        />
+    <VanitySetVerticalTabContainer>
+      {searchResults?.map((component, index) => {
+        const componentName = component?.componentName;
+
+        return (
+          <VanitySetVerticalTab
+            key={`${componentName}-${index}`}
+            tabText={componentName}
+            tabName={componentName}
+            handleTabClick={handleTabClick}
+            activeTab={selectedComponentName}
+          />
+        );
+      })}
+    </VanitySetVerticalTabContainer>
     );
 };
+
+  const getCurrentView = () => {
+    const selectedComponent = searchResults?.find((component) => component?.componentName === selectedComponentName);
+
+    if (selectedComponent) {
+      return (
+        <div className={"m-2"}>
+          <LookupMetricTotalsDataBlocks
+            metrics={selectedComponent?.totals?.[0]}
+            componentName={selectedComponentName}
+          />
+          <div className={"mt-2"} />
+          <InsightsLookupPipelinesTable
+            pipelines={selectedComponent?.pipelines}
+            componentName={selectedComponentName}
+          />
+        </div>
+      );
+    }
+  };
+
+  const getBody = () => {
+    return (
+      <TabTreeAndViewContainer
+        verticalTabContainer={getTabContainer()}
+        currentView={getCurrentView()}
+        tabColumnSize={3}
+        defaultActiveKey={0}
+      />
+    );
+  };
+
+  return (
+    <TableBodyLoadingWrapper
+      isLoading={isLoading}
+      data={searchResults}
+      noDataMessage={noDataMessage}
+      tableComponent={getBody()}
+    />
+  );
+}
 
 LookupResults.propTypes = {
-    isLoading: PropTypes.bool,
-    searchResults: PropTypes.object
+  isLoading: PropTypes.bool,
+  searchResults: PropTypes.array,
+  noDataMessage: PropTypes.string,
 };
 
 export default LookupResults;
