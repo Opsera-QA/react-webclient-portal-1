@@ -8,7 +8,6 @@ import ErrorDialog from "../../common/status_notifications/error";
 import { Alert } from "react-bootstrap";
 import { format } from "date-fns";
 import Modal from "../../common/modal/modal";
-import "./logs.css";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
