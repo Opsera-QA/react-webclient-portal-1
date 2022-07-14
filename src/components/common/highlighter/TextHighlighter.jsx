@@ -34,23 +34,23 @@ function TextHighlighter(
       const endStartIndex = currentIndex + matchTextLength;
       const matchedText = text.substring(currentIndex, endStartIndex);
       currentIndex = lowercaseText.indexOf(lowercaseHighlightText, endStartIndex);
+      const postUnmatchedText = text.substring(endStartIndex);
 
       if (currentIndex === -1) {
         instances.push(
           <span>
             <span>{unmatchedText}</span>
             <span style={{backgroundColor: "yellow", padding: "2px"}}>{matchedText}</span>
+            <span>{postUnmatchedText}</span>
           </span>
         );
         continue;
       }
 
-      const postUnmatchedText = text.substring(endStartIndex);
       instances.push(
         <span>
           <span>{unmatchedText}</span>
           <span style={{backgroundColor: "yellow", padding: "2px"}}>{matchedText}</span>
-          <span>{postUnmatchedText}</span>
         </span>
       );
     }
