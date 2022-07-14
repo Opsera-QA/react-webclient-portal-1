@@ -33,7 +33,7 @@ function ConnectedAssetsPipelinesRecentTable({ dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [

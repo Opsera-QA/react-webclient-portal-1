@@ -33,7 +33,7 @@ function ConnectedAssetsPipelinesInactiveTable({ dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [

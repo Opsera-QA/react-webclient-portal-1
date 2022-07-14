@@ -32,12 +32,12 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant data found';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
-      getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
+      getTableTextColumn(getField(fields, "activityDate"), "activityDate"),
       getTableTextColumn(getField(fields, "event"), "event"),
       getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title")
     ],
@@ -68,7 +68,9 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(user) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

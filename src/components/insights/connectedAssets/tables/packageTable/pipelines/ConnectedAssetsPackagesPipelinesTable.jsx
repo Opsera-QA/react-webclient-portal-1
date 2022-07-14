@@ -33,7 +33,7 @@ function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No packages found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
@@ -69,7 +69,9 @@ function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(pipeline) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

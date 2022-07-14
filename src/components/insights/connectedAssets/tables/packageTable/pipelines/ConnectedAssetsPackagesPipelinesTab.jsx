@@ -129,6 +129,11 @@ function ConnectedAssetsPackagesPipelinesTab({ dashboardData }) {
         />
       );
     }
+    return (
+      <ConnectedAssetsPackagesPipelinesTable
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getVerticalTabContainer = () => {
