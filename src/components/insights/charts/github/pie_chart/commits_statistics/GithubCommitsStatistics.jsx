@@ -20,6 +20,7 @@ import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommits
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
+import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -122,6 +123,17 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
+  const showGithubApprovedPullRequestModal = (node) => {
+    toastContext.showOverlayPanel(
+      <GithubApprovedPullRequestActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+        repository={node?.id}
+      />
+    );
+  };
+
   const showGithubDeclinedPullRequestModal = (node) => {
     toastContext.showOverlayPanel(
       <GithubDeclinedPullRequestActionableInsightOverlay
@@ -182,7 +194,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
           </Col>
@@ -233,7 +245,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
             <div className="text-center col-12">
@@ -268,7 +280,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             </div>
             <div className="text-center col-12">
               <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Completed Pull Requests
+              Declined Pull Requests
               </div>
             </div>
           </Col>

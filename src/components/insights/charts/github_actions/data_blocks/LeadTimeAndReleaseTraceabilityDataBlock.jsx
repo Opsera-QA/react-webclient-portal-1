@@ -195,7 +195,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       score={getTimeDisplay(metrics?.avgLeadTime)}
                       className={`${getIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
-                      bottomText={applicationLeadTimeMetrics?.previousResult ? "Previous result: " + applicationLeadTimeMetrics?.previousResult : "No previous result"}
+                      bottomText={metrics?.trendAvgLeadTime ? "Previous result: " + getTimeDisplay(metrics?.trendAvgLeadTime) : "No previous result"}
                       icon={getIcon(metrics?.trend)}
                       iconOverlayBody={getDescription(metrics?.trend)}
                     />
@@ -213,7 +213,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       className={`${getIconColor(deploymentMetrics?.trend)}`}
                       score={deploymentMetrics?.deploymentFrequency}
                       topText={"Deployment Frequency"}
-                      bottomText={deploymentMetrics?.previousResult ? "Previous result: " + deploymentMetrics?.previousResult : "No previous result"}
+                      bottomText={deploymentMetrics?.trendDeploymentFrequency ? "Previous result: " + deploymentMetrics?.trendDeploymentFrequency : "No previous result"}
                       icon={getIcon(deploymentMetrics?.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics?.trend)}
                     />

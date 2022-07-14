@@ -127,42 +127,42 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
         setDataObject={setDashboardFiltersDto}
         fieldName={"tags"}
       />
-     {featureFlaggedOrgs.includes(user?.ldap?.organization) && <MultiSelectInputBase
+     <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter1"}
         selectOptions={filter1Options}
-      />}
-      {featureFlaggedOrgs.includes(user?.ldap?.organization) && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter2"}
         selectOptions={filter2Options}
-      />}
-      {featureFlaggedOrgs.includes(user?.ldap?.organization) && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter3"}
         selectOptions={filter3Options}
-      />}
-      {featureFlaggedOrgs.includes(user?.ldap?.organization) && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter4"}
         selectOptions={filter4Options}
-      />}
-      {featureFlaggedOrgs.includes(user?.ldap?.organization) && <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter5"}
         selectOptions={filter5Options}
-      />}
-     {featureFlaggedOrgs.includes(user?.ldap?.organization) &&  <MultiSelectInputBase
+      />
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter6"}
         selectOptions={filter6Options}
-      />}
+      />
       </div>
     );
   };
