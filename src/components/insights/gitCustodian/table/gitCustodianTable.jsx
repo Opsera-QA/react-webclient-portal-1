@@ -69,6 +69,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "status")),
       getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "jiraTicket")),
     ],
     []
