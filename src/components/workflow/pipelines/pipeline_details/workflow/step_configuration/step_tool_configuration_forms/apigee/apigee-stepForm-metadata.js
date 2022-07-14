@@ -41,7 +41,7 @@ const ApigeeStepFormMetadata = {
     },
     {
       label: "Override Version",
-      id: "ovverride",      
+      id: "override",      
     },    
   ],
   newObjectFields: {
@@ -51,7 +51,7 @@ const ApigeeStepFormMetadata = {
     targetToolConfigId: "",
     environmentName: "",
     delayTime : 0,
-    ovverride: false,
+    override: false,
   }
 };
 
