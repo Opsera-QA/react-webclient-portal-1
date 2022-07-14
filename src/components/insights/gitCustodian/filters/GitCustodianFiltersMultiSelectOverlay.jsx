@@ -212,6 +212,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
       showCloseButton={false}
       showPanel={true}
       buttonContainer={getButtonContainer()}
+      size={"small"}
     >
       <div className="m-3">
         {toastContext.getInlineBanner()}
