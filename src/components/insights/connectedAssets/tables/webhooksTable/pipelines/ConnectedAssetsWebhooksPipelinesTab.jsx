@@ -129,6 +129,11 @@ function ConnectedAssetsWebhooksPipelinesTab({ dashboardData }) {
         />
       );
     }
+    return (
+      <ConnectedAssetsWebhooksPipelinesTable
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getVerticalTabContainer = () => {

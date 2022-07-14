@@ -106,7 +106,7 @@ const connectedAssetsMetadata = {
          id: "repositoryName"
        },
        {
-        label: "Activity Date",
+        label: "Last Run (in days)",
         id: "activityDate"
        },
        {
@@ -138,7 +138,7 @@ const connectedAssetsMetadata = {
           id: "repo_url",
        },
        {
-          label: "Repository Last Used",
+          label: "Last Run (in days)",
           id: "repo_last_used"
        },
        {

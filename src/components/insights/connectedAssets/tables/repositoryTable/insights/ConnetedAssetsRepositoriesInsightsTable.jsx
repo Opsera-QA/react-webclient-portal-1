@@ -31,12 +31,12 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
     )
   );
 
-  const noDataMessage = 'No insights found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "repo_name"), "repo_name"),
-      getTableDateTimeColumn(getField(fields, "repo_last_used"), "repo_last_used"),
+      getTableTextColumn(getField(fields, "repo_last_used"), "repo_last_used"),
       getTableTextColumn(getField(fields, "event"), "event"),
       getTableTextColumn(getField(fields, "userName"), "userName"),
       getTableTextColumn(getField(fields, "commit_or_mr_title"), "commit_or_mr_title"),
@@ -69,7 +69,9 @@ function ConnectedAssetsRepositoriesAnalyticsTable({ repository, dashboardData, 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(repository) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

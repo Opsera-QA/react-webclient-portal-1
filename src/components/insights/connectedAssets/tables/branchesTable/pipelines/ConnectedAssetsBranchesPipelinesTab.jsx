@@ -128,6 +128,11 @@ function ConnectedAssetsBranchesPipelinesTab({ dashboardData }) {
         />
       );
     }
+    return (
+      <ConnectedAssetsBranchesPipelinesTable
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getVerticalTabContainer = () => {

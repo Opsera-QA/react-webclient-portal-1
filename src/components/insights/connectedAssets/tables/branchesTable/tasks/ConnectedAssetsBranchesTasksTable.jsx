@@ -33,7 +33,7 @@ function ConnectedAssetsBranchesTasksTable({ repository, dashboardData, icon }) 
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No tasks found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
@@ -68,7 +68,9 @@ function ConnectedAssetsBranchesTasksTable({ repository, dashboardData, icon }) 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(repository) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

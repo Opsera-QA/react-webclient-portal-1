@@ -32,7 +32,7 @@ function ConnectedAssetsTasksDeletedTable({ dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No tasks found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [

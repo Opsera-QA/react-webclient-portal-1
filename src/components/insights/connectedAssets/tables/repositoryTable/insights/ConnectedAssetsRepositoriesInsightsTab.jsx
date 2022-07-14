@@ -129,6 +129,11 @@ function ConnectedAssetsRepositoriesInsightsTab({ dashboardData }) {
         />
       );
     }
+    return (
+      <ConnectedAssetsRepositoriesAnalyticsTable
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getVerticalTabContainer = () => {

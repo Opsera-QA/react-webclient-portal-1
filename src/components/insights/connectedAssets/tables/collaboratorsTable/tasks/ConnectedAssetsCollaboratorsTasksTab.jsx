@@ -129,6 +129,10 @@ function ConnectedAssetsCollaboratorsTasksTab({ dashboardData }) {
           dashboardData={dashboardData}
         />);
     }
+    return (
+      <ConnectedAssetsCollaboratorsTasksTable
+        dashboardData={dashboardData}
+      />);
   };
 
   const getVerticalTabContainer = () => {
