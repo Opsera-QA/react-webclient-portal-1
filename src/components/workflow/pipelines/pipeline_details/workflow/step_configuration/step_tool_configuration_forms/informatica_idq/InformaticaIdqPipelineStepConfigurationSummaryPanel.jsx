@@ -17,16 +17,13 @@ function InformaticaIdqPipelineStepConfigurationSummaryPanel({ informaticaIdqPip
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField dataObject={informaticaIdqPipelineDataObject} fieldName={"toolConfigId"}/>
+          <ToolNameField model={informaticaIdqPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"jobType"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"sourceProject"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"sourcePaths"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"exportStepId"}/>
@@ -41,7 +38,7 @@ function InformaticaIdqPipelineStepConfigurationSummaryPanel({ informaticaIdqPip
           <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"service"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={informaticaIdqPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={informaticaIdqPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={informaticaIdqPipelineDataObject} fieldName={"workspace"}/>
