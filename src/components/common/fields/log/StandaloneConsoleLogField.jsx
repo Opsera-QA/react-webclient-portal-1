@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import {faLaptopCode} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 
-function StandaloneConsoleLogField({title, consoleLog}) {
+function StandaloneConsoleLogField(
+  {
+    title,
+    consoleLog,
+    height,
+    maxHeight,
+  }) {
 
   useEffect(() => {
   }, [consoleLog]);
@@ -14,7 +20,14 @@ function StandaloneConsoleLogField({title, consoleLog}) {
       titleText={title}
       titleIcon={faLaptopCode}
     >
-      <div style={{ height: "500px", maxHeight: "500px", overflowY: "auto" }} className={"console-text"}>
+      <div
+        style={{
+          height: height,
+          maxHeight: maxHeight,
+          overflowY: "auto",
+        }}
+        className={"console-text"}
+      >
         <div>
           {consoleLog}
         </div>
@@ -27,10 +40,14 @@ function StandaloneConsoleLogField({title, consoleLog}) {
 StandaloneConsoleLogField.propTypes = {
   consoleLog: PropTypes.string,
   title: PropTypes.string,
+  height: PropTypes.string,
+  maxHeight: PropTypes.string,
 };
 
 StandaloneConsoleLogField.defaultProps = {
   title: "Console Log",
+  height: "500px",
+  maxHeight: "500px",
 };
 
 export default StandaloneConsoleLogField;
