@@ -20,10 +20,10 @@ const InformaticaIdqStepFormMetadata = {
       label: "Source Project",
       id: "sourceProject",
       isRequiredFunction: (model) => {
-        return model?.getData("jobType") === "import";
+        return model?.getData("jobType") === "export";
       },
       maxLength: 24,
-      regexDefinitionName: "mongoId",
+      regexDefinitionName: "generalTextWithSpacesSlash",
       formText:" "
     },    
     {

@@ -14,6 +14,7 @@ import SourceRepositoryPrimaryBranchSelectInput from "components/workflow/pipeli
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import InformaticaIdqConfigTypeSelectInput from "./inputs/InformaticaIdqConfigTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import MultiTextInputBase from "../../../../../../../common/inputs/text/MultiTextInputBase";
 
 function InformaticaIdqStepConfiguration({
   pipelineId,
@@ -134,6 +135,12 @@ function InformaticaIdqStepConfiguration({
               fieldName={"sourceProject"}
               dataObject={informaticaIdqStepConfigurationDto}
               setDataObject={setInformaticaIdqStepConfigurationDataDto}
+            />
+            <MultiTextInputBase
+                type={"sourcePaths"}
+                fieldName={"sourcePaths"}
+                setDataObject={setInformaticaIdqStepConfigurationDataDto}
+                dataObject={informaticaIdqStepConfigurationDto}
             />
           </div>
         );
