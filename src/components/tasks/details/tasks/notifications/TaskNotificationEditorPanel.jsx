@@ -20,6 +20,7 @@ import emailStepNotificationMetadata
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
 import TaskNotificationConfigurationHelpDocumentation
   from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 function TaskNotificationEditorPanel(
   {
@@ -141,8 +142,8 @@ function TaskNotificationEditorPanel(
   };
 
   const getTitleBar = () => {
-    const toolIdentifier = task?.tool?.tool_identifier;
-    const titleText = hasStringValue(task?.name) === true ? `${task?.name}: ${toolIdentifier}` : toolIdentifier;
+    const taskType = getTaskTypeLabel(task?.type);
+    const titleText = hasStringValue(task?.name) === true ? `${task?.name}: ${taskType}` : taskType;
     return (
       <div>
         <h6 className="upper-case-first">{titleText}</h6>

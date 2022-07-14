@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 
+export const DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT = "calc(100vh - 264px)";
+
 function VanitySetTabAndViewContainer(
   {
     verticalTabContainer,
@@ -72,8 +74,8 @@ VanitySetTabAndViewContainer.propTypes = {
 
 VanitySetTabAndViewContainer.defaultProps = {
   bodyClassName: "mx-0",
-  minimumHeight: "calc(100vh - 264px)",
-  maximumHeight: "calc(100vh - 264px)",
+  minimumHeight: DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
+  maximumHeight: DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
   overflowYBodyStyle: "auto",
   overflowYContainerStyle: "hidden",
 };
