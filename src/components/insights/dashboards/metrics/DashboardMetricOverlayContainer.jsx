@@ -28,6 +28,8 @@ import ServiceNowMeanTimeToResolutionEditorPanel
 import QuickDeployStatisticsEditorPanel from "../../charts/quick-deploy-statistics/QuickDeployStatisticsEditorPanel";
 import AllGithubActionsDataBlockEditorPanel from "../../charts/github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlockEditorPanel";
 import LeadTimeAndReleaseTracebilityEditorPanel from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
+import SalesforceComponentsEditorPanel
+  from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -197,6 +199,17 @@ function DashboardMetricOverlayContainer(
                 kpiConfiguration={kpiConfiguration}
             />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
+        return (
+            <SalesforceComponentsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+
     }
   };
 

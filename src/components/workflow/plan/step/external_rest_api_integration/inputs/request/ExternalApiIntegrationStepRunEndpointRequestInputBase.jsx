@@ -5,17 +5,12 @@ import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import externalApiIntegratorEndpointsActions
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import {
-  ENDPOINT_REQUEST_TYPES
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
-import EndpointRequestParametersInputBase
-  from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
-import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointRequestParametersMetadata
-} from "components/common/inputs/endpoints/endpoint/request/parameters/endpointRequestParameters.metadata";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import {
+  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
+} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import EndpointApiConfigurationInputBase
+  from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
 
 function ExternalApiIntegrationStepRunEndpointRequestInputBase(
   {
@@ -30,7 +25,6 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
   const [isLoading, setIsLoading] = useState(false);
   const [endpoint, setEndpoint] = useState(undefined);
   const [error, setError] = useState(undefined);
-  const [endpointRequestParametersModel, setEndpointRequestParametersModel] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -43,7 +37,6 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     setEndpoint(undefined);
-    setEndpointRequestParametersModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointRequestParametersMetadata));
 
     if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
       loadData(source).catch((error) => {
@@ -87,55 +80,20 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     }
   };
 
-  const setModelFunction = (updatedModel) => {
-    const newModel = {...model};
-    newModel.setData(fieldName, updatedModel.getPersistData());
-    setModel({...newModel});
-    setEndpointRequestParametersModel({...updatedModel});
-  };
-
-  const getDynamicInputsForRequestType = () => {
-    switch (endpoint?.requestType) {
-      case ENDPOINT_REQUEST_TYPES.GET:
-        return (
-          <EndpointRequestParametersInputBase
-            model={endpointRequestParametersModel}
-            setModel={setModelFunction}
-            parameterFields={endpoint?.queryParameterFields}
-            fieldName={"queryParameters"}
-            disabled={disabled}
-          />
-        );
-      case ENDPOINT_REQUEST_TYPES.PUT:
-      case ENDPOINT_REQUEST_TYPES.POST:
-        return (
-          <EndpointRequestParametersInputBase
-            model={endpointRequestParametersModel}
-            setModel={setModelFunction}
-            parameterFields={endpoint?.requestBodyFields}
-            fieldName={"requestBody"}
-            disabled={disabled}
-          />
-        );
-    }
-  };
-
-  if (isLoading === true) {
-    return (
-      <div className={"my-5"}>
-        <CenterLoadingIndicator />
-      </div>
-    );
-  }
-
-  if (endpoint == null) {
-    return null;
-  }
-
   return (
     <div>
       <InfoText errorMessage={error} />
-      {getDynamicInputsForRequestType()}
+      <EndpointApiConfigurationInputBase
+        fieldName={fieldName}
+        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        endpointParameterInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}
+        endpointParameterArrayInputHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+        isLoading={isLoading}
+        model={model}
+        setModel={setModel}
+        disabled={disabled}
+        endpoint={endpoint}
+      />
     </div>
   );
 }

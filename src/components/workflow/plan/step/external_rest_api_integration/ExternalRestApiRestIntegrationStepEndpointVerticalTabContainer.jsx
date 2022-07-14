@@ -6,8 +6,8 @@ import ExternalApiIntegrationStepRunTriggerEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/run_trigger/ExternalApiIntegrationStepRunTriggerEndpointSelectInput";
 import ExternalApiIntegrationStepRunEndpointRequestInputBase
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunEndpointRequestInputBase";
-import EndpointResponseEvaluationRulesInputBase
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
+import EndpointResponseEvaluationRulesInput
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInput";
 import ExternalApiIntegrationStepStatusCheckEndpointSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/status_check/ExternalApiIntegrationStepStatusCheckEndpointSelectInput";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
@@ -21,13 +21,11 @@ import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
   CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION: "connection-check-successful-evaluation-rules-configuration",
   RUN_TRIGGER_API_CONFIGURATION: "run-trigger-api-configuration",
-  // RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION: "run-trigger-in-progress-evaluation-rules-configuration",
   RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION: "run-trigger-successful-trigger-evaluation-rules-configuration",
   STATUS_CHECK_API_CONFIGURATION: "status-check-api-configuration",
   STATUS_CHECK_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION: "status-check-in-progress-evaluation-rules-configuration",
@@ -54,7 +52,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
       <VanitySetVerticalTabContainer>
         <div className={"tab-tree scroll-y"}>
           <H5FieldSubHeader
-            subheaderText={"Connection Check"}
+            subheaderText={"Connection Validation"}
             className={"mb-3"}
           />
           <VanitySetVerticalTab
@@ -64,13 +62,13 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
             activeTab={activeTab}
           />
           <VanitySetVerticalTab
-            tabText={"Successful Connection Evaluation Rules"}
+            tabText={"Connection Validation Evaluation Rules"}
             tabName={EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
           <H5FieldSubHeader
-            subheaderText={"Run Trigger"}
+            subheaderText={"Call Operation"}
             className={"mt-4 mb-3"}
           />
           <VanitySetVerticalTab
@@ -79,12 +77,6 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
-          {/*<VanitySetVerticalTab*/}
-          {/*  tabText={"In Progress Evaluation Rules"}*/}
-          {/*  tabName={EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION}*/}
-          {/*  handleTabClick={handleTabClick}*/}
-          {/*  activeTab={activeTab}*/}
-          {/*/>*/}
           <VanitySetVerticalTab
             tabText={"Successful Trigger Evaluation Rules"}
             tabName={EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION}
@@ -128,7 +120,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
                 <ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
                   model={externalRestApiIntegrationModel}
                   setModel={setExternalRestApiIntegrationModel}
-                  disabled={disabled || isMongoDbId(externalRestApiIntegrationModel?.getData("toolId")) !== true}
+                  disabled={disabled}
                 />
               </Col>
               <Col xs={6} md={9}>
@@ -151,7 +143,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION:
         return (
-          <EndpointResponseEvaluationRulesInputBase
+          <EndpointResponseEvaluationRulesInput
             fieldName={"connectionCheckResponseEvaluationRules"}
             evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}
@@ -179,21 +171,9 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
             />
           </div>
         );
-      // case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
-      //   return (
-      //     <EndpointResponseEvaluationRulesInputBase
-      //       fieldName={"runEndpointResponseEvaluationRules"}
-      //       evaluationRuleFieldName={"running_rule"}
-      //       model={externalRestApiIntegrationModel}
-      //       setModel={setExternalRestApiIntegrationModel}
-      //       toolId={externalRestApiIntegrationModel?.getData("toolId")}
-      //       endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-      //       disabled={disabled}
-      //     />
-      //   );
       case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION:
         return (
-          <EndpointResponseEvaluationRulesInputBase
+          <EndpointResponseEvaluationRulesInput
             fieldName={"runEndpointResponseEvaluationRules"}
             evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}
@@ -223,7 +203,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
         return (
-          <EndpointResponseEvaluationRulesInputBase
+          <EndpointResponseEvaluationRulesInput
             fieldName={"statusEndpointResponseEvaluationRules"}
             evaluationRuleFieldName={"running_rule"}
             model={externalRestApiIntegrationModel}
@@ -235,7 +215,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_SUCCESSFUL_COMPLETION_EVALUATION_RULES_CONFIGURATION:
         return (
-          <EndpointResponseEvaluationRulesInputBase
+          <EndpointResponseEvaluationRulesInput
             fieldName={"statusEndpointResponseEvaluationRules"}
             evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}

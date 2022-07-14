@@ -450,6 +450,17 @@ const breadcrumbs = {
     icon: faTags
   },
 
+  // Audit Logging 
+  logsExportManagement: {
+    parent: "accountSettings",
+    name: "logsExportManagement",
+    path: paths.logsExportManagement,
+    title: "Logs Export Management",
+    linkText: "Logs Export Management",
+    icon: faTags,
+    pageDescription: "Manage export of pipeline activity audit logs."
+  },
+
   // Organization Management
   organizationManagement: {
     parent: "accountSettings",

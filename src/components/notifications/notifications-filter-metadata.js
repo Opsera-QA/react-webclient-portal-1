@@ -55,7 +55,6 @@ const notificationsFilterMetadata = {
     }
 
     const type = filterModel.getData("type");
-    console.log("type: " + JSON.stringify(type));
 
     if (hasStringValue(type) === true) {
       activeFilters.push({filterId: "type", text: `Type: ${getNotificationTypeLabel(type)}`});

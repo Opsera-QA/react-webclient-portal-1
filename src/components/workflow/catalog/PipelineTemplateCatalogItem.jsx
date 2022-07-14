@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import { faPlus, faSearch, faHexagon } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
@@ -12,6 +12,7 @@ import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates }) => {
   let history = useHistory();
@@ -51,9 +52,9 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     try {
       setLoading(true);
       const result = await pipelineActions.deployTemplateV2(getAccessToken, cancelTokenSource, template?._id);
-      let newPipelineId = result?.data?._id;
+      const newPipelineId = result?.data?._id;
 
-      if (newPipelineId) {
+      if (isMongoDbId(newPipelineId) === true) {
         // check if its a free trial and then proceed
         // if (!template.tags.some(el => el.value === "freetrial")) {
           history.push(`/workflow/details/${newPipelineId}/summary`);
@@ -63,7 +64,6 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        setLoading(false);
       }
     } finally {
       if (isMounted?.current === true) {

@@ -25,8 +25,6 @@ import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-import PipelineStepDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 
@@ -214,24 +212,14 @@ function PipelineWorkflow({
             <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
         }
 
-        {pipeline.workflow.source.trigger_active &&
-          <div className="d-flex">
-            <div className="upper-case-first pl-2">
-            <span className="text-muted small">
-            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1"}/>
-              Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
-            </span>
-            </div>
-          </div>}
-
-        {pipeline.workflow.source.service &&
+        {/*{pipeline.workflow.source.service &&
           <div className="d-flex">
             <div className="upper-case-first pl-2">
             <span className="text-muted small">
             <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
               Source Repository: {pipeline.workflow.source.service}</span>
             </div>
-          </div>}
+          </div>}*/}
 
         {pipeline?.workflow?.source?.repository &&
           <div className="d-flex">
@@ -265,6 +253,17 @@ function PipelineWorkflow({
             </div>
           </div>
         }
+
+        {pipeline.workflow.source.trigger_active &&
+          <div className="d-flex">
+            <div className="upper-case-first pl-2">
+            <span className="text-muted small">
+            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1 green"}/>
+              Pipeline webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
+            </span>
+            </div>
+          </div>}
+
 
         <div className="d-flex align-items-end flex-row m-2">
           <div className="ml-auto d-flex">
@@ -329,7 +328,8 @@ function PipelineWorkflow({
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "View pipeline configuration" })}>
+            overlay={renderTooltip({ message: "" +
+                "View pipeline configuration" })}>
             <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
               handleViewPipelineClick(pipeline);
             }}>

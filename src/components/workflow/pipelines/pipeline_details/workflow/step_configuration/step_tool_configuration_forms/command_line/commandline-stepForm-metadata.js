@@ -2,17 +2,17 @@ const commandLineStepFormMetadata = {
   type: "Command Line Tool Configuration",
   fields: [
     {
-      label: "Jenkins Tool",
+      label: "Tool",
       id: "toolConfigId",
       isRequired: true
     },
     {
-      label: "Jenkins Tool Name",
+      label: "Tool Name",
       id: "toolName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job Name",
       id: "toolJobName",
       isRequired: true
     },
@@ -21,7 +21,7 @@ const commandLineStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -36,13 +36,13 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "SCM Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "Select Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true
     },
@@ -98,7 +98,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Want to specify the path for a script file?",
+      label: "Specify Script File Path",
       id: "sourceScript",
     },
     {
@@ -174,7 +174,7 @@ const commandLineStepFormMetadata = {
       id: "sonarScanFlag"
     },
     {
-      label: "Sonar Custom Params Mapping",
+      label: "Sonar Custom Parameters Mapping",
       id: "saveSonarParameters"
     },
     {
@@ -183,7 +183,7 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Sonar Tool Id",
+      label: "Sonar Tool",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
@@ -242,7 +242,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Select Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true
     },

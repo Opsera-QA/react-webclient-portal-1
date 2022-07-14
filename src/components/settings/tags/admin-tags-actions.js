@@ -49,16 +49,16 @@ adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
+adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterModel) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      sort: tagFilterDto.getFilterValue("sortOption"),
-      size: tagFilterDto.getFilterValue("pageSize"),
-      page: tagFilterDto.getFilterValue("currentPage"),
-      type: tagFilterDto.getFilterValue("type"),
-      status: tagFilterDto.getFilterValue("status"),
-      search: tagFilterDto.getData("search")
+      sort: tagFilterModel?.getFilterValue("sortOption"),
+      size: tagFilterModel?.getFilterValue("pageSize"),
+      page: tagFilterModel?.getFilterValue("currentPage"),
+      type: tagFilterModel?.getFilterValue("type"),
+      status: tagFilterModel?.getFilterValue("status"),
+      search: tagFilterModel?.getFilterValue("search")
     },
   };
 

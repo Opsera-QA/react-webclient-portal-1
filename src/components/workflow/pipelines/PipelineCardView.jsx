@@ -1,26 +1,49 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col} from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import PipelineCard from "components/workflow/pipelines/PipelineCard";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
+import { useHistory } from "react-router-dom";
+import IconBase from "components/common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
-function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
+function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
+  let history = useHistory();
+
+  const handleDetailsClick = param => e => {
+    e.preventDefault();
+    history.push(`/workflow/details/${param}/summary`);
+  };
+
+  const getSelectButton = (pipeline) => {
+    return (
+      <Button
+        variant={"primary"}
+        size={"sm"}
+        className={"w-50"}
+        onClick={handleDetailsClick(pipeline?._id)}>
+        <IconBase icon={faSearch} className={"mr-1"}/>View
+      </Button>
+    );
+  };
+
   const getCards = () => {
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!Array.isArray(pipelines) || pipelines.length === 0) {
       return null;
     }
 
     return (
       <Row className={"mx-0"}>
-        {data.map((pipeline, idx) => (
+        {pipelines.map((pipeline, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineCard
               pipeline={pipeline}
               subscribedPipelineIds={subscribedPipelineIds}
               pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
+              selectButton={getSelectButton}
             />
           </Col>
         ))}
@@ -39,7 +62,7 @@ function PipelineCardView({ data, pipelineFilterModel, loadData, isLoading, subs
 }
 
 PipelineCardView.propTypes = {
-  data: PropTypes.array,
+  pipelines: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

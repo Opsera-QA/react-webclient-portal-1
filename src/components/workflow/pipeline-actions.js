@@ -60,7 +60,7 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
     },
   };
 
-  let apiUrl = `/pipelines/v2`;
+  const apiUrl = `/pipelines/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

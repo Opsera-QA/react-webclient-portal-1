@@ -1,14 +1,11 @@
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
 import { format } from "date-fns";
 import React from "react";
-import PipelineActionBar from "./PipelineActionBar";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
    faFlag,
-  faSearch,
 } from "@fortawesome/pro-light-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
@@ -16,13 +13,13 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 
 // TODO: Rewrite
-const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
-  let history = useHistory();
-
-  const handleDetailsClick = param => e => {
-    e.preventDefault();
-    history.push(`/workflow/details/${param}/summary`);
-  };
+const PipelineCard = (
+  {
+    pipeline,
+    pipelineModel,
+    subscribedPipelineIds,
+    getSelectButtonFunction,
+  }) => {
 
   const getPendingApprovalField = () => {
     let pendingApproval = PipelineHelpers.getPendingApprovalStep(pipeline);
@@ -116,15 +113,13 @@ const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
           <Row>
             <Col />
             <Col className="text-right p-2">
-              <Button variant="primary" size="sm" className="w-50"
-                      onClick={handleDetailsClick(pipeline?._id)}>
-                <IconBase icon={faSearch} className={"mr-1"}/>View</Button>
+              {getSelectButtonFunction(pipeline)}
             </Col>
           </Row>
         </Card.Body>
         <Card.Footer>
           {/*TODO: Note, if you want the action icons to show up, pass in functions related and wire them up*/}
-          <PipelineActionBar pipeline={pipeline} handleViewClick={handleDetailsClick}/>
+          {/*<PipelineActionBar pipeline={pipeline} />*/}
         </Card.Footer>
       </Card>
   );
@@ -134,6 +129,7 @@ PipelineCard.propTypes = {
   pipeline: PropTypes.object,
   pipelineModel: PropTypes.object,
   subscribedPipelineIds: PropTypes.array,
+  getSelectButtonFunction: PropTypes.func,
 };
 
 export default PipelineCard;

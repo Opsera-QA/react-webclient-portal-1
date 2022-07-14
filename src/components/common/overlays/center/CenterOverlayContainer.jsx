@@ -5,16 +5,13 @@ import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const CENTER_OVERLAY_SIZES = {
   FULL_WIDTH: "full_width", // TODO: Remove?
   STANDARD: "standard",
   SMALL: "small",
-};
-
-const CENTER_OVERLAY_PANEL_HEIGHTS = {
-  CONTAINER: "calc(100% - 20px)",
-  BODY: "calc(100% - 48px)",
+  CUSTOM: "custom",
 };
 
 function CenterOverlayContainer(
@@ -23,7 +20,8 @@ function CenterOverlayContainer(
     actionBar,
     titleText,
     titleIcon,
-    showPanel,
+    containerClassName,
+    bodyClassName,
     closePanel,
     isLoading,
     showToasts,
@@ -39,7 +37,7 @@ function CenterOverlayContainer(
     if (showToasts) {
       toastContext.removeInlineMessage();
     }
-  }, [showPanel]);
+  }, []);
 
   const getButtons = () => {
     if (buttonContainer) {
@@ -56,6 +54,10 @@ function CenterOverlayContainer(
   };
 
   const getContainerStyling = () => {
+    if (hasStringValue(containerClassName, false) === true) {
+      return containerClassName;
+    }
+
     switch (size) {
       case (CENTER_OVERLAY_SIZES.FULL_WIDTH):
         return ("full-width-center-overlay");
@@ -80,10 +82,6 @@ function CenterOverlayContainer(
     return children;
   };
 
-  if (!showPanel) {
-    return null;
-  }
-
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className={getStyling()}>
@@ -96,7 +94,7 @@ function CenterOverlayContainer(
           linkTooltipText={linkTooltipText}
         />
         {actionBar}
-        <div className={"overlay-panel-body bg-white"}>
+        <div className={`bg-white ${bodyClassName}`}>
           {showToasts && toastContext?.getInlineBanner()}
           {getBody()}
         </div>
@@ -111,7 +109,7 @@ function CenterOverlayContainer(
 CenterOverlayContainer.propTypes = {
   children: PropTypes.any,
   titleText: PropTypes.string,
-  showPanel: PropTypes.bool,
+  bodyClassName: PropTypes.string,
   titleIcon: PropTypes.object,
   closePanel: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
@@ -122,6 +120,11 @@ CenterOverlayContainer.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   size: PropTypes.string,
+  containerClassName: PropTypes.string,
+};
+
+CenterOverlayContainer.defaultProps = {
+  bodyClassName: "overlay-panel-body",
 };
 
 export default CenterOverlayContainer;
