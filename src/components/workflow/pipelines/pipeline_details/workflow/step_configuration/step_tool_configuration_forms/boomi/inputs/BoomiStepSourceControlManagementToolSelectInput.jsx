@@ -7,7 +7,7 @@ function BoomiStepSourceControlManagementToolSelectInput({model, setModel, disab
   return (
      <RoleRestrictedToolByIdentifierInputBase
        fieldName={"gitToolId"}
-       toolFriendlyName={"gitToolId"}
+       toolFriendlyName={"SCM Tool"}
        toolIdentifier={model?.getData("service")}
        model={model}
        setModel={setModel}
