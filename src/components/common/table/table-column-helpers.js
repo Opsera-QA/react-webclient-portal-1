@@ -530,11 +530,19 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
     Header: "Info",
     accessor: accessor,
     Cell: function getInfoIcon(row) {
+      if (typeof showInformationFunction !== "function") {
+        return (
+          <IconBase
+            icon={faSearchPlus}
+          />
+        );
+      }
+
       return (
         <IconBase
           icon={faSearchPlus}
           className={"pointer"}
-          onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}
+          onClickFunction={() => {showInformationFunction(row?.data[row?.row?.index]); }}
         />
       );
     },
