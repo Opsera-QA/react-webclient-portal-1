@@ -45,6 +45,10 @@ const gitScraperReportMetaData = {
       label: "Tool",
       id: "gitToolId"
     },
+    {
+      label: "Link",
+      id: "linkToSecret"
+    },
   ],
   newObjectFields: {
     author: "",
@@ -56,7 +60,8 @@ const gitScraperReportMetaData = {
     scannedOn: "",
     branch: "",
     repository: "",
-    gitToolId: ""
+    gitToolId: "",
+    linkToSecret: ""
   }
 };
 
