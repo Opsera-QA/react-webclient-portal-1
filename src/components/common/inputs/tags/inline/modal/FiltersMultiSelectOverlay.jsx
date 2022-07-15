@@ -157,12 +157,12 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
         fieldName={"filter5"}
         selectOptions={filter5Options}
       />
-      <MultiSelectInputBase
+      {/* <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter6"}
         selectOptions={filter6Options}
-      />
+      /> */}
       </div>
     );
   };
