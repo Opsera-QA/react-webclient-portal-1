@@ -60,7 +60,7 @@ const GitCustodianLookUpHelpDocumentation = () => {
         <HelpOverlayBase
             closePanel={closePanel}
             showPanel={true}
-            helpTopic={"Git Custodian Lookup"}
+            helpTopic={"Git Custodian"}
             helpDocumentation={getHelpDocumentation()}
         >
         </HelpOverlayBase>

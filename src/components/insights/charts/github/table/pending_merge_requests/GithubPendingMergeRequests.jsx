@@ -17,6 +17,8 @@ import {
 } from "components/common/table/table-column-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
+import GithubPendingMergeRequestHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubPendingMergeRequestHelpDocumentation";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubPendingMergeRequestsMetadata.fields;
@@ -199,6 +201,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <GithubPendingMergeRequestHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

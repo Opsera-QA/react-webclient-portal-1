@@ -7,6 +7,8 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { Col, Row } from "react-bootstrap";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
+import GithubConnectedAssetsHelpDocumentation
+    from "../../../../common/help/documentation/insights/charts/github/GithubConnectedAssetsHelpDocumentation";
 
 function GithubConnectedAssets({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -121,6 +123,7 @@ function GithubConnectedAssets({ kpiConfiguration, setKpiConfiguration, dashboar
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
+                chartHelpComponent={(closeHelpPanel) => <GithubConnectedAssetsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
             />
         </div>
     );

@@ -17,6 +17,8 @@ import {
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import GithubRecentMergeRequestHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubRecentMergeRequestHelpDocumentation";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
@@ -201,6 +203,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
+        chartHelpComponent={(closeHelpPanel) => <GithubRecentMergeRequestHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

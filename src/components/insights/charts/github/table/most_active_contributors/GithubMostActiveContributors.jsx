@@ -12,6 +12,8 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
+import GithubMostActiveContributorsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubMostActiveContributorsHelpDocumentation";
 
 function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubMostActiveContributorsMetadata.fields;
@@ -138,6 +140,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <GithubMostActiveContributorsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

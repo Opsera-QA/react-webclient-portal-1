@@ -16,6 +16,8 @@ import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExec
 import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import GithubActionsChartHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubActionsChartHelpDocumentation";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -330,6 +332,7 @@ function AllGithubActionsDataBlock({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        chartHelpComponent={(closeHelpPanel) => <GithubActionsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Github Actions Statistics"

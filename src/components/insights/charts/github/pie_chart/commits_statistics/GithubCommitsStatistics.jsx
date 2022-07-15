@@ -21,6 +21,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
 import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
+import GithubCommitStatisticsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -317,6 +319,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         setKpis={setKpis}
         isLoading={isLoading}
         launchActionableInsightsFunction={onRowSelect}
+        chartHelpComponent={(closeHelpPanel) => <GithubCommitStatisticsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Github Commits Statistics"

@@ -13,6 +13,8 @@ import { getTimeDisplay } from "../github_actions-utility";
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import LeadTimeAndReleaseTraceabilityHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/github/LeadTimeAndReleaseTraceabilityHelpDocumentation";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -258,6 +260,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         showSettingsToggle={showSettingsToggle}
         showViewDetailsToggle={showViewDetailsToggle}
         launchActionableInsightsFunction={viewDetailsComponent}
+        chartHelpComponent={(closeHelpPanel) => <LeadTimeAndReleaseTraceabilityHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Lead Time And Release Traceability"

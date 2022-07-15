@@ -16,6 +16,8 @@ import {
     assignStandardColors,
     getColor
 } from "../../../charts-views";
+import GithubSecurityComplianceHelpDocumentation
+    from "../../../../../common/help/documentation/insights/charts/github/GithubSecurityComplianceHelpDocumentation";
 
 function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -130,6 +132,7 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
+                chartHelpComponent={(closeHelpPanel) => <GithubSecurityComplianceHelpDocumentation closeHelpPanel={closeHelpPanel} />}
             />
         </div>
     );
