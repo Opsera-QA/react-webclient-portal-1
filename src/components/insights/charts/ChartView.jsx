@@ -166,8 +166,11 @@ import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrappe
 import SalesforceComponentsDataBlockChart
   from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
+import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
+import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
+import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1190,6 +1193,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "all-environments-lead-time":
+        return (
+          <Col md={12} className="p-2">
+            <IntermediateEnvironmentsLeadTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
+            />
+          </Col>
+        );
       case "lead-time-and-release-traceability-data-block":
         return(
           <Col md={12} className="p-2">
@@ -1203,6 +1219,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "github-security-compliance":
+        return (
+          <Col md={12} className="p-2">
+              <GithubSecurityCompliance
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+          </Col>
+          );
+      case "github-connected-assets":
+        return (
+          <Col xl={6} md={12} className="p-2">
+              <GithubConnectedAssets
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+          </Col>
+          );
       case "sonar-unit-testing":
         return (
           <Col xl={6} md={12} className="p-2">
