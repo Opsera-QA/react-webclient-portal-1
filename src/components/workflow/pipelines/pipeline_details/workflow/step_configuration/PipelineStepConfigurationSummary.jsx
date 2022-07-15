@@ -211,6 +211,8 @@ import AzureWebappsStepConfigurationSummaryPanel from "./step_tool_configuration
 import azureWebappsStepFormMetadata from "./step_tool_configuration_forms/azure_webapps/azureWebapps-stepForm-metadata";
 import AzureCliStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfigurationSummaryPanel";
 import azureCliStepFormMetadata from "./step_tool_configuration_forms/azure_cli/azureCli-stepForm-metadata";
+import BoomiStepConfigurationSummary from "./step_tool_configuration_forms/boomi/BoomiStepConfigurationSummary";
+import boomiMetadata from "./step_tool_configuration_forms/boomi/boomi.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -669,6 +671,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             azureCliPipelineDataObject={getModelWrappedObject(azureCliStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return (
+            <BoomiStepConfigurationSummary
+                pipelineData={pipelineData}
+                boomiPipelineDataObject={getModelWrappedObject(boomiMetadata)}
+            />
         );
       default:
         return (
