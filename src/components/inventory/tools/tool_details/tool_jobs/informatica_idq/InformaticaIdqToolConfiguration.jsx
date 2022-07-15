@@ -37,7 +37,6 @@ function InformaticaIdqToolConfiguration({ toolData }) {
       setModel={setInformaticaIdqConfigurationDto}
       persistRecord={saveInformaticaIdqToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"informatica-idq"}
     >
       <Row>
         <Col sm={12}>
