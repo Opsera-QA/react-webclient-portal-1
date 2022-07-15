@@ -170,6 +170,7 @@ const RepoSelectionView = ({
     try {
       setIsLoading(true);
       setDisableSearch(true);
+      setRepositories([]);
       setError(undefined);
 
       switch (service) {
