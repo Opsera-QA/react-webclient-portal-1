@@ -35,6 +35,7 @@ function ListInputBase(
     customTitle,
     loadDataFunction,
     lazyLoadSearchFunction,
+    disableSearch,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -311,6 +312,7 @@ function ListInputBase(
           searchTerm={searchTerm}
           showSearchBar={searchFunction != null || lazyLoadSearchFunction != null}
           loadDataFunction={loadDataFunction}
+          disableSearch={disableSearch}
         />
         {getExtraRow()}
         {getBody()}
@@ -359,6 +361,7 @@ ListInputBase.propTypes = {
   customTitle: PropTypes.string,
   loadDataFunction: PropTypes.func,
   lazyLoadSearchFunction: PropTypes.func,
+  disableSearch: PropTypes.bool,
 };
 
 ListInputBase.defaultProps = {

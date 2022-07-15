@@ -39,6 +39,7 @@ const RepoSelectionView = ({
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(undefined);
+  const [disableSearch, setDisableSearch] = useState(false);
   const [repositories, setRepositories] = useState([]);
   const { isMounted, cancelTokenSource } = useComponentStateReference();
 
@@ -51,7 +52,12 @@ const RepoSelectionView = ({
       && isMongoDbId(gitToolId) === true
       && (service !== toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET || hasStringValue(workspace) === true)
     ) {
-      loadData(source).catch((error) => {
+      setIsLoading(true);
+      loadData(source).then((loaded) => {
+        if (isMounted?.current === true && loaded !== false) {
+          setIsLoading(false);
+        }
+      }).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -75,8 +81,7 @@ const RepoSelectionView = ({
           // await loadBitbucketRepositories(cancelSource);
           break;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-          await loadGitlabRepositories(cancelSource);
-          break;
+          return await loadGitlabRepositories(cancelSource);
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
           await loadAllGithubRepositories(cancelSource);
           // TODO: For when we support lazy loading on github
@@ -88,10 +93,6 @@ const RepoSelectionView = ({
         const parsedError = parseError(error);
         setError(parsedError);
         toastContext.showInlineErrorMessage(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
       }
     }
   };
@@ -156,6 +157,10 @@ const RepoSelectionView = ({
     );
     const repositories = response?.data?.data;
 
+    if (response == null) {
+      return false;
+    }
+
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setRepositories([...await formatRepoData(repositories)]);
     }
@@ -164,6 +169,7 @@ const RepoSelectionView = ({
   const loadAllData = async (cancelSource) => {
     try {
       setIsLoading(true);
+      setDisableSearch(true);
       setError(undefined);
 
       switch (service) {
@@ -186,6 +192,7 @@ const RepoSelectionView = ({
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
+        setDisableSearch(false);
       }
     }
   };
@@ -317,6 +324,7 @@ const RepoSelectionView = ({
           disabled={disabled}
           noDataMessage={"No Repositories Found"}
           lazyLoadSearchFunction={service !== toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined : lazyLoadSearchFunction}
+          disableSearch={disableSearch}
         />
       </Col>
       <Col lg={6}>
@@ -331,7 +339,6 @@ const RepoSelectionView = ({
           noDataMessage={"No Repositories Selected"}
           valueField={valueField}
           textField={textField}
-          isLoading={isLoading}
           searchFunction={searchFunction}
           icon={faGit}
           disabled={isLoading || dataObject?.getArrayData("reposToScan").length === 0}
