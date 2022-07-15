@@ -646,6 +646,24 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
   };
 };
 
+export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+
+      return (
+          <PageLinkIcon
+              pageLink={row?.value}
+              externalLink={true}
+              pageLinkText={""}
+          />
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
 export const getPathDefinition = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
