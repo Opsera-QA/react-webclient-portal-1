@@ -105,12 +105,12 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardFilters,
         dashboardOrgs
       );
-      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.timeToCommit?.data;
+      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.branchCreationToFirstCommit?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
         setDeploymentMetrics(deploymentMetrics[0]);
-        // setTimeToCommitMetrics(timeToCommitMetrics[0]);
+        setTimeToCommitMetrics(timeToCommitMetrics[0]);
         // setApplicationDeploymentMetrics(applicationDeploymentMetrics);
         // setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
       }
@@ -230,12 +230,12 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineScoreDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
-                      className={`${getIconColor(metrics?.trend)}`}
-                      score={getTimeDisplay(metrics?.timeToCommit)}
+                      className={`${getIconColor(timeToCommitMetrics?.trend)}`}
+                      score={getTimeDisplay(timeToCommitMetrics?.avgTimeToFirstCommit)}
                       topText={"Average Time to First Commit"}
-                      bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
-                      icon={getIcon(metrics?.trend)}
-                      iconOverlayBody={getDescription(metrics?.trend)}
+                      bottomText={timeToCommitMetrics?.trendAvgTimeToFirstCommit ? "Previous result: " + getTimeDisplay(timeToCommitMetrics?.trendAvgTimeToFirstCommit) : "No previous result"}
+                      icon={getIcon(timeToCommitMetrics?.trend)}
+                      iconOverlayBody={getDescription(timeToCommitMetrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
