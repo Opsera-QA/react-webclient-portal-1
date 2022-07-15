@@ -57,6 +57,9 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
             let dashboardOrgs =
                 dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                     ?.value;
+            let dashboardFilters =
+                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+                ?.value;
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
@@ -64,7 +67,7 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
                 kpiConfiguration,
                 dashboardTags,
                 null,
-                null,
+                dashboardFilters,
                 dashboardOrgs
             );
             let dataObject = response?.data ? response?.data?.data[0]?.securityCompliance?.data.workflowPercentage : [];

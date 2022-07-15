@@ -11,7 +11,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faMinusCircle,
-} from "@fortawesome/pro-light-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import { getTimeDisplay } from "../../github_actions/github_actions-utility";
@@ -79,7 +79,6 @@ function IntermediateEnvironmentsLeadTimeChart({
         dashboardFilters,
         dashboardOrgs
       );
-      console.log(codeCommitToE1Response);
       const codeCommitToE1 = codeCommitToE1Response?.data?.data[0]?.leadTimeCodeCommitToE1?.data;
 
       const e1ToE2Response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -125,9 +124,9 @@ function IntermediateEnvironmentsLeadTimeChart({
   };
   const getIcon = (severity) => {
     switch (severity) {
-      case "Red":
+      case "Up":
         return faArrowCircleUp;
-      case "Green":
+      case "Down":
         return faArrowCircleDown;
       case "Neutral":
         return faMinusCircle;
@@ -137,19 +136,19 @@ function IntermediateEnvironmentsLeadTimeChart({
   };
   const getDescription = (severity) => {
     switch (severity) {
-      case "Red":
-        return "This project's issues are trending upward";
-      case "Green":
-        return "This project's issues are trending downward";
+      case "Up":
+        return "The lead time has increased from the previous time range";
+      case "Down":
+        return "The lead time has decreased from the previous time range";
       case "Neutral":
-        return "Neutral: This project's issues have experienced no change";
+        return "The lead time has stayed the same from the previous time range";
     }
   };
   const getIconColor = (severity) => {
     switch (severity) {
-      case "Red":
+      case "Up":
         return "red";
-      case "Green":
+      case "Down":
         return "green";
       case "Neutral":
         return "light-gray-text-secondary";
@@ -182,16 +181,12 @@ function IntermediateEnvironmentsLeadTimeChart({
     // }
 
     return (
-      <div
-        className="new-chart mb-3"
-      >
-        <Container>
+      <div className="new-chart m-3 p-0 all-github-actions-data-block">
           <Row className="p-2 gray">
             <Col md={4}>{getMiddleDataBlock("Code Commit - E1", codeCommitToE1Metrics?.avgLeadTime, codeCommitToE1Metrics?.trendAvgLeadTime, codeCommitToE1Metrics?.trend)}</Col>
             <Col md={4}>{getMiddleDataBlock("E1 - E2", e1ToE2Metrics?.avgLeadTime, e1ToE2Metrics?.trendAvgLeadTime, e1ToE2Metrics?.trend)}</Col>
             <Col md={4}>{getMiddleDataBlock("E2 - E3", e2ToE3Metrics?.avgLeadTime, e2ToE3Metrics?.trendAvgLeadTime, e2ToE3Metrics?.trend)}</Col>
           </Row>
-        </Container>
       </div>
     );
   };

@@ -176,6 +176,58 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
     }
   };
 
+  const getLeadTimeIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "green";
+      case "Up":
+        return "red";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getLeadTimeDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "The lead time has increased from the previous time range";
+      case "Down":
+        return "The lead time has decreased from the previous time range";
+      case "Neutral":
+        return "The lead time is the same as the previous time range";
+    }
+  };
+
+  const getTimeToCommitIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "green";
+      case "Up":
+        return "red";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getTimeToCommitDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "The time for a developer to push their first commit has increased.";
+      case "Down":
+        return "The time for a developer to push their first commit has decreased.";
+      case "Neutral":
+        return "The time for a developer to push their first commit has stayed the same";
+    }
+  };
+
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
         "lead-time-and-release-traceability-duration-data-point");
@@ -195,11 +247,11 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                     <ThreeLineScoreDataBlock
                       dataPoint={durationDataPoint}
                       score={getTimeDisplay(metrics?.avgLeadTime)}
-                      className={`${getIconColor(metrics?.trend)}`}
+                      className={`${getLeadTimeIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
                       bottomText={metrics?.trendAvgLeadTime ? "Previous result: " + getTimeDisplay(metrics?.trendAvgLeadTime) : "No previous result"}
                       icon={getIcon(metrics?.trend)}
-                      iconOverlayBody={getDescription(metrics?.trend)}
+                      iconOverlayBody={getLeadTimeDescription(metrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -215,7 +267,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       className={`${getIconColor(deploymentMetrics?.trend)}`}
                       score={deploymentMetrics?.deploymentFrequency}
                       topText={"Deployment Frequency"}
-                      bottomText={deploymentMetrics?.trendDeploymentFrequency ? "Previous result: " + deploymentMetrics?.trendDeploymentFrequency : "No previous result"}
+                      bottomText={deploymentMetrics?.trendDeploymentFrequency ? "Previous result: " + deploymentMetrics?.trendDeploymentFrequency + " deployments/day" : "No previous result"}
                       icon={getIcon(deploymentMetrics?.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics?.trend)}
                     />
@@ -230,12 +282,12 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                   <div className={"p-3"}>
                     <ThreeLineScoreDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
-                      className={`${getIconColor(timeToCommitMetrics?.trend)}`}
+                      className={`${getTimeToCommitIconColor(timeToCommitMetrics?.trend)}`}
                       score={getTimeDisplay(timeToCommitMetrics?.avgTimeToFirstCommit)}
                       topText={"Average Time to First Commit"}
                       bottomText={timeToCommitMetrics?.trendAvgTimeToFirstCommit ? "Previous result: " + getTimeDisplay(timeToCommitMetrics?.trendAvgTimeToFirstCommit) : "No previous result"}
                       icon={getIcon(timeToCommitMetrics?.trend)}
-                      iconOverlayBody={getDescription(timeToCommitMetrics?.trend)}
+                      iconOverlayBody={getTimeToCommitDescription(timeToCommitMetrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>

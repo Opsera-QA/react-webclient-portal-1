@@ -201,11 +201,11 @@ function AllGithubActionsDataBlock({
   const getDescription = (severity) => {
     switch (severity) {
       case "Up":
-        return "This project is trending upward.";
+        return "The percentage of successful workflow executions has increased since the last time range";
       case "Down":
-        return "This project is trending downward.";
+        return "The percentage of successful workflow executions has decreased since the last time range";
       case "Neutral":
-        return "Neutral: This project has experienced no change";
+        return "The percentage of successful workflow executions has stayed the same since the last time range";
     }
   };
 

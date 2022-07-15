@@ -1233,7 +1233,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           );
       case "github-connected-assets":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
               <GithubConnectedAssets
                   kpiConfiguration={kpiConfig}
                   setKpiConfiguration={setKpiConfig}

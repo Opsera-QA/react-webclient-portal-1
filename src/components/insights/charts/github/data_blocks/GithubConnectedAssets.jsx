@@ -47,6 +47,9 @@ function GithubConnectedAssets({ kpiConfiguration, setKpiConfiguration, dashboar
             let dashboardOrgs =
                 dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                     ?.value;
+            let dashboardFilters =
+                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+                    ?.value;        
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
@@ -54,7 +57,7 @@ function GithubConnectedAssets({ kpiConfiguration, setKpiConfiguration, dashboar
                 kpiConfiguration,
                 dashboardTags,
                 null,
-                null,
+                dashboardFilters,
                 dashboardOrgs
             );
             let dataObject = response?.data ? response?.data?.data[0]?.connectedAssets?.data : [];
@@ -79,8 +82,8 @@ function GithubConnectedAssets({ kpiConfiguration, setKpiConfiguration, dashboar
             return null;
         }
         return (
-            <div className="new-chart m-3 p-0" style={{ minHeight: "300px", display: "flex" }}>
-                <Row>
+            <div className="new-chart m-3 p-0 all-github-actions-data-block">
+            <Row>
                     <Col xl={4} lg={6} className={"mb-3"}>
                         <DataBlockBoxContainer showBorder={true}>
                             <TwoLineScoreDataBlock
