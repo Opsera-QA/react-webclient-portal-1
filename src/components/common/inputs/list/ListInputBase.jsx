@@ -7,7 +7,6 @@ import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
-import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Make an actual base version and rename this VanityListInput
@@ -35,7 +34,7 @@ function ListInputBase(
     noDataMessage,
     customTitle,
     loadDataFunction,
-    callbackFunction
+    lazyLoadSearchFunction,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -56,14 +55,19 @@ function ListInputBase(
   }, [selectOptions, isLoading]);
 
   useEffect(() => {
-    if (list && searchFunction) {
-      if (searchTerm !== "") {
-        list.data.filter((item) => {
-          return searchFunction(item, searchTerm);
-        });
+    if (list) {
+      if (searchFunction) {
+        if (searchTerm !== "") {
+          list.data.filter((item) => {
+            return searchFunction(item, searchTerm);
+          });
+        } else {
+          list.data.filter();
+        }
       }
-      else {
-        list.data.filter();
+
+      if (lazyLoadSearchFunction) {
+        lazyLoadSearchFunction(searchTerm);
       }
     }
   }, [searchTerm]);
@@ -154,9 +158,6 @@ function ListInputBase(
     }
     else {
       validateAndSetData(field?.id, newArray);
-    }
-    if (callbackFunction) {
-      callbackFunction();
     }
   };
 
@@ -308,7 +309,7 @@ function ListInputBase(
           field={field}
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
-          showSearchBar={searchFunction != null}
+          showSearchBar={searchFunction != null || lazyLoadSearchFunction != null}
           loadDataFunction={loadDataFunction}
         />
         {getExtraRow()}
@@ -357,7 +358,7 @@ ListInputBase.propTypes = {
   noDataMessage: PropTypes.string,
   customTitle: PropTypes.string,
   loadDataFunction: PropTypes.func,
-  callbackFunction: PropTypes.func,
+  lazyLoadSearchFunction: PropTypes.func,
 };
 
 ListInputBase.defaultProps = {
