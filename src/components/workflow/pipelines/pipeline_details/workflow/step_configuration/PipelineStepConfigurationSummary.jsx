@@ -207,6 +207,10 @@ import SapCpqPipelineStepConfigurationSummaryPanel
 import sapCpqStepFormMetadata from "./step_tool_configuration_forms/sap_cpq/sap-cpq-stepForm-metadata";
 import ProvarStepConfigSummary from "./step_tool_configuration_forms/provar/ProvarStepConfigSummary";
 import provarStepFormMetadata from "./step_tool_configuration_forms/provar/provar-step-config";
+import AzureWebappsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfigurationSummaryPanel";
+import azureWebappsStepFormMetadata from "./step_tool_configuration_forms/azure_webapps/azureWebapps-stepForm-metadata";
+import AzureCliStepConfigurationSummaryPanel from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfigurationSummaryPanel";
+import azureCliStepFormMetadata from "./step_tool_configuration_forms/azure_cli/azureCli-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -650,6 +654,20 @@ function PipelineStepConfigurationSummary({
           <ProvarStepConfigSummary
             pipelineData={pipelineData}
             provarPipelineDataObject={getModelWrappedObject(provarStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
+        return (
+          <AzureWebappsStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            azureWebappsPipelineDataObject={getModelWrappedObject(azureWebappsStepFormMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
+        return (
+          <AzureCliStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            azureCliPipelineDataObject={getModelWrappedObject(azureCliStepFormMetadata)}
           />
         );
       default:

@@ -12,9 +12,13 @@ import ServiceNowStepNotificationEditorPanel
 import EmailStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
-import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import VanitySetTabAndViewContainer, {
+  DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
+} from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import TaskNotificationVerticalTabContainer
   from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
+
+const tabAndViewContainerHeight =`calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 50px)`;
 
 function TaskNotificationTabView(
   {
@@ -81,7 +85,7 @@ function TaskNotificationTabView(
     );
   };
 
-  const getVerticalTablContainer = () => {
+  const getVerticalTabContainer = () => {
     return (
       <TaskNotificationVerticalTabContainer
         handleTabClickFunction={setTabSelection}
@@ -94,8 +98,10 @@ function TaskNotificationTabView(
     <VanitySetTabAndViewContainer
       icon={faEnvelope}
       title={"Task Notification Configuration"}
-      verticalTabContainer={getVerticalTablContainer()}
+      verticalTabContainer={getVerticalTabContainer()}
       currentView={getCurrentView()}
+      minimumHeight={tabAndViewContainerHeight}
+      maximumHeight={tabAndViewContainerHeight}
     />
   );
 }
