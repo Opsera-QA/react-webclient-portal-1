@@ -168,11 +168,11 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const getDescription = (severity) => {
     switch (severity) {
       case "Up":
-        return "This project is trending upward.";
+        return "The number of deployments per day has increased";
       case "Down":
-        return "This project is trending downward.";
+        return "The number of deployments per day has decreased";
       case "Neutral":
-        return "Neutral: This project has experienced no change.";
+        return "The number of deployments per day has stayed the same";
     }
   };
 
