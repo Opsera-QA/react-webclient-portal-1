@@ -246,6 +246,10 @@ const RepoSelectionView = ({
   };
 
   const searchFunction = (item, newSearchTerm) => {
+    if (hasStringValue(newSearchTerm) !== true) {
+      return true;
+    }
+
     return item?.repository?.toLowerCase()?.includes(newSearchTerm?.toLowerCase());
   };
 
@@ -257,18 +261,26 @@ const RepoSelectionView = ({
     callbackFunction();
   };
 
-  const callbackFunction = () => {
-    let newModel = dataObject;
-    let setDataArray = [];
-    let reposToScan = dataObject?.getData("repositories");
-    for (let item in reposToScan) {
-      setDataArray.push(repositories.find(repo => repo?.repoId === reposToScan[item]));
+  const callbackFunction = (fieldName, newRepositoryList) => {
+    const reposToScan = dataObject?.getArrayData("reposToScan");
+
+    for (let selectedRepository of newRepositoryList) {
+      const inArray = reposToScan.find((repository) => repository?.repoId === selectedRepository);
+
+      if (inArray != null) {
+        continue;
+      }
+
+      const foundInRepositories = repositories.find((repository) => repository?.repoId === selectedRepository);
+
+      if (foundInRepositories != null) {
+        reposToScan.push(foundInRepositories);
+      }
     }
-    if (reposToScan?.length === setDataArray?.length) {
-      newModel.setData("reposToScan", setDataArray);
-      setDataObject({ ...newModel });
-    }
-    setRepositories([...repositories]);
+
+    dataObject.setData("repositories", newRepositoryList);
+    dataObject.setData("reposToScan", reposToScan);
+    setDataObject({ ...dataObject });
   };
 
   const getLimitationMessage = () => {
