@@ -74,7 +74,7 @@ export const gitCustodianFiltersMetadata = {
       id: "gitCustodianFilters",
     },
     {
-      label: "Date",
+      label: "Date Range",
       id: "date"
     }
   ],
