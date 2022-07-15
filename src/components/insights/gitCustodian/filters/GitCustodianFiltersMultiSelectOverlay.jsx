@@ -99,14 +99,6 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
     closePanel();
   };
 
-  const getFilteredRepositories = () => {
-    const services = gitCustodianFilterModel?.getData("service");
-    if (!services?.length > 0) {
-      return [];
-    }
-    return repositoriesFilterData.filter(repo => services.includes(repo.service));
-  };
-
   const getFiltersInput = () => {
     if (isLoading) {
       return (<LoadingDialog />);
@@ -152,7 +144,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
           placeholderText={"Filter by Repository"}
           dataObject={gitCustodianFilterModel}
           setDataObject={setGitCustodianFilterModel}          
-          selectOptions={getFilteredRepositories()}
+          selectOptions={repositoriesFilterData}
           textField="repository"
           valueField="repository"
         />
