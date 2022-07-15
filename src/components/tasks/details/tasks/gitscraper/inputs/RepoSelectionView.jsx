@@ -279,10 +279,10 @@ const RepoSelectionView = ({
       return (
         <>
           <Col xs={12}>
-            The initial list of repositories is limited to 100. To find a specific repository, use the search input.
+            The initial list of repositories is limited to 100. To find a specific repository, please use the search input.
             Use the button below to attempt to pull all repositories.
           </Col>
-          <Col xs={12}>
+          <Col xs={12} className={"mt-2"}>
             <Button
               variant={"secondary"}
               disabled={isLoading || disabled}
