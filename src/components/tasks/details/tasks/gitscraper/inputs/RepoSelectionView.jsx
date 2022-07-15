@@ -17,6 +17,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
 import { Button } from "react-bootstrap";
 import { faArrowDown } from "@fortawesome/pro-light-svg-icons";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import { parseError } from "components/common/helpers/error-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: This and the service work need to be completely refactored.
 //  We should not be manipulating objects on the front end.
@@ -35,6 +38,7 @@ const RepoSelectionView = ({
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(undefined);
   const [repositories, setRepositories] = useState([]);
   const { isMounted, cancelTokenSource } = useComponentStateReference();
 
@@ -42,7 +46,11 @@ const RepoSelectionView = ({
     const source = axios.CancelToken.source();
     setRepositories([]);
 
-    if (isMongoDbId(gitToolId) === true && !disabled) {
+    if (
+      !disabled
+      && isMongoDbId(gitToolId) === true
+      && (service !== toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET || hasStringValue(workspace) === true)
+    ) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -57,21 +65,28 @@ const RepoSelectionView = ({
 
   const loadData = async (cancelSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
 
       switch (service) {
         case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-          await loadBitbucketRepositories(cancelSource);
+          await loadAllBitbucketRepositories(cancelSource);
+          // TODO: For when we support lazy loading on bitbucket
+          // await loadBitbucketRepositories(cancelSource);
           break;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
           await loadGitlabRepositories(cancelSource);
           break;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-          await loadGithubRepositories(cancelSource);
+          await loadAllGithubRepositories(cancelSource);
+          // TODO: For when we support lazy loading on github
+          // await loadGithubRepositories(cancelSource);
           break;
       }
     } catch (error) {
       if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        setError(parsedError);
         toastContext.showInlineErrorMessage(error);
       }
     } finally {
@@ -101,15 +116,14 @@ const RepoSelectionView = ({
   const loadBitbucketRepositories = async (
     cancelSource,
   ) => {
-    const response =
-      await bitbucketActions.getRepositoriesFromBitbucketInstanceV3(
-        getAccessToken,
-        cancelSource,
-        gitToolId,
-        workspace,
-        searchTerm,
-        100,
-      );
+    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV3(
+      getAccessToken,
+      cancelSource,
+      gitToolId,
+      workspace,
+      searchTerm,
+      100,
+    );
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -150,6 +164,7 @@ const RepoSelectionView = ({
   const loadAllData = async (cancelSource) => {
     try {
       setIsLoading(true);
+      setError(undefined);
 
       switch (service) {
         case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
@@ -164,6 +179,8 @@ const RepoSelectionView = ({
       }
     } catch (error) {
       if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        setError(parsedError);
         toastContext.showInlineErrorMessage(error);
       }
     } finally {
@@ -246,6 +263,32 @@ const RepoSelectionView = ({
     setRepositories([...repositories]);
   };
 
+  const getLimitationMessage = () => {
+    if (
+      service === toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB // TODO: When wiring up support for other services, this one line needs to be removed.
+      && isMongoDbId(gitToolId) === true
+      && (service !== toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET || hasStringValue(workspace) === true)
+    ) {
+      return (
+        <>
+          <Col xs={12}>
+            The initial list of repositories is limited to 100. To find a specific repository, use the search input.
+            Use the button below to attempt to pull all repositories.
+          </Col>
+          <Col xs={12}>
+            <Button
+              variant={"secondary"}
+              disabled={isLoading || disabled}
+              onClick={() => loadAllData(cancelTokenSource)}
+            >
+              <span><IconBase icon={faArrowDown} className={"mr-1"}/>Pull All Repositories</span>
+            </Button>
+          </Col>
+        </>
+      );
+    }
+  };
+
   if (dataObject == null) {
     return (
       <LoadingDialog
@@ -269,10 +312,11 @@ const RepoSelectionView = ({
           valueField={valueField}
           textField={textField}
           isLoading={isLoading}
+          searchFunction={service === toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined :searchFunction}
           icon={faGit}
           disabled={disabled}
           noDataMessage={"No Repositories Found"}
-          lazyLoadSearchFunction={lazyLoadSearchFunction}
+          lazyLoadSearchFunction={service !== toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined : lazyLoadSearchFunction}
         />
       </Col>
       <Col lg={6}>
@@ -290,22 +334,13 @@ const RepoSelectionView = ({
           isLoading={isLoading}
           searchFunction={searchFunction}
           icon={faGit}
-          disabled={isLoading || dataObject.getArrayData("reposToScan").length === 0}
+          disabled={isLoading || dataObject?.getArrayData("reposToScan").length === 0}
         />
       </Col>
       <Col xs={12}>
-        The initial list of repositories is limited to 100. To find a specific repository, use the search input.
-        Use the button below to attempt to pull all repositories.
+        <InfoText errorMessage={error} />
       </Col>
-      <Col xs={12}>
-        <Button
-          variant={"secondary"}
-          disabled={isLoading || disabled}
-          onClick={() => loadAllData(cancelTokenSource)}
-        >
-          <span><IconBase icon={faArrowDown} className={"mr-1"}/>Pull All Repositories</span>
-        </Button>
-      </Col>
+      {getLimitationMessage()}
     </Row>
   );
 };
