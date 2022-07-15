@@ -40,12 +40,17 @@ const RepoSelectionView = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(undefined);
   const [disableSearch, setDisableSearch] = useState(false);
+  const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [repositories, setRepositories] = useState([]);
   const { isMounted, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     setRepositories([]);
+
+    if (dataObject) {
+      setSelectedRepositories(dataObject?.getArrayData("reposToScan"));
+    }
 
     if (
       !disabled
@@ -253,34 +258,33 @@ const RepoSelectionView = ({
     return item?.repository?.toLowerCase()?.includes(newSearchTerm?.toLowerCase());
   };
 
-  const handleRemoveFromSelected = (fieldName, valueArray) => {
-    let newModel = dataObject;
-    dataObject.setData(fieldName, valueArray);
-    setDataObject({ ...newModel });
-    setRepositories([...repositories]);
-    callbackFunction();
-  };
-
+  //TODO: We should be just passing the entire objects in ListInputBase BUT I don't want to break compatibility.
   const callbackFunction = (fieldName, newRepositoryList) => {
     const reposToScan = dataObject?.getArrayData("reposToScan");
+    const newReposToScan = [];
 
-    for (let selectedRepository of newRepositoryList) {
-      const inArray = reposToScan.find((repository) => repository?.repoId === selectedRepository);
+    if (Array.isArray(newRepositoryList)) {
+      for (let selectedRepository of newRepositoryList) {
+        const inArray = reposToScan.find((repository) => repository?.repoId === selectedRepository);
 
-      if (inArray != null) {
-        continue;
+        if (inArray != null) {
+          newReposToScan.push(inArray);
+          continue;
+        }
+
+        const foundInRepositories = repositories.find((repository) => repository?.repoId === selectedRepository);
+
+        if (foundInRepositories != null) {
+          newReposToScan.push(foundInRepositories);
+        }
       }
 
-      const foundInRepositories = repositories.find((repository) => repository?.repoId === selectedRepository);
-
-      if (foundInRepositories != null) {
-        reposToScan.push(foundInRepositories);
-      }
+      dataObject.setData("repositories", newRepositoryList);
+      dataObject.setData("reposToScan", newReposToScan);
+      setSelectedRepositories([...newReposToScan]);
+      setRepositories([...repositories]); //TODO: Investigate why side by side lists need to be forced to reload
+      setDataObject({ ...dataObject });
     }
-
-    dataObject.setData("repositories", newRepositoryList);
-    dataObject.setData("reposToScan", reposToScan);
-    setDataObject({ ...dataObject });
   };
 
   const getLimitationMessage = () => {
@@ -345,16 +349,16 @@ const RepoSelectionView = ({
           height={"40vh"}
           customTitle={"Selected Repositories"}
           fieldName={"repositories"}
-          selectOptions={dataObject?.getData("reposToScan")}
+          selectOptions={selectedRepositories}
           dataObject={dataObject}
           setDataObject={setDataObject}
-          setDataFunction={handleRemoveFromSelected}
+          setDataFunction={callbackFunction}
           noDataMessage={"No Repositories Selected"}
           valueField={valueField}
           textField={textField}
           searchFunction={searchFunction}
           icon={faGit}
-          disabled={isLoading || dataObject?.getArrayData("reposToScan").length === 0}
+          disabled={isLoading || dataObject?.getArrayData("reposToScan")?.length === 0}
         />
       </Col>
       <Col xs={12}>

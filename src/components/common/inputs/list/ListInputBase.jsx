@@ -8,6 +8,7 @@ import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -58,7 +59,7 @@ function ListInputBase(
   useEffect(() => {
     if (list) {
       if (searchFunction) {
-        if (searchTerm !== "") {
+        if (hasStringValue(searchTerm) === true) {
           list.data.filter((item) => {
             return searchFunction(item, searchTerm);
           });
