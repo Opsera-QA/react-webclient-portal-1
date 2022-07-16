@@ -83,7 +83,7 @@ function GitCustodianChartsView({ gitCustodianData }) {
   }];
   const getCharts = () => {
     return (
-      <div style={{overflow: 'scroll'}} className={"p-2"}>
+      <div style={{overflowX: 'auto'}} className={"p-2"}>
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
@@ -136,7 +136,7 @@ function GitCustodianChartsView({ gitCustodianData }) {
     }
 
     return (
-      <div>
+      <div className="mb-2">
         {getCharts()}
       </div>
     );

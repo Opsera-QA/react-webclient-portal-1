@@ -9,7 +9,8 @@ import {
   getTableDateTimeColumn,
   getGitCustodianOriginColumn,
   getPathDefinition,
-  getGitCustodianExternalLinkIconColumnDefinition
+  getGitCustodianExternalLinkIconColumnDefinition,
+  getTableInfoIconColumn
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
@@ -55,6 +56,10 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
     };
   }, []);
 
+  const showVulnerabilityDetails = (row) => {    
+    toastContext.showOverlayPanel(<GitCustodianVulnerabilityDetailsOverlay vulnerabilityData={row} />);
+  };
+
   const noDataMessage = "No data found";
 
   const fields = GitCustodianTableMetaData.fields;
@@ -65,11 +70,13 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path")),
-      getTableTextColumn(getField(fields, "lineNumber")),
+      getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "status")),
       getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "jiraTicket")),
+      getTableInfoIconColumn(showVulnerabilityDetails),
     ],
     []
   );
@@ -111,10 +118,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
     );
   };
 
-  const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(<GitCustodianVulnerabilityDetailsOverlay vulnerabilityData={rowData?.original} />);    
-  };
-
   const getBody = () => {
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading Data</div>;
@@ -134,7 +137,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         loadData={loadData}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
-        onRowSelect={onRowSelect}
       />
     );
   };
@@ -151,7 +153,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       supportSearch={false}
       className={"px-2 pb-2"}
       showRefreshButton={false}
-      disableNewRecordButton={responseData?.length === 0}      
+      disableNewRecordButton={responseData?.length === 0}
       exportButton={<ExportGitCustodianVulnerabilitiesButton className={"ml-2"} gitCustodianData={gitCustodianData} data={responseData} isLoading={isLoading} />}
     />
   );
