@@ -7,12 +7,14 @@ gitlabActions.getRepositoriesFromGitlabInstanceV2 = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-gitlabActions.getRepositoriesFromGitlabInstanceV3 = async (getAccessToken, cancelTokenSource, searchTerm, toolId) => {
+gitlabActions.getRepositoriesFromGitlabInstanceV3 = async (getAccessToken, cancelTokenSource, searchTerm, toolId, pageSize = 100, currentPage) => {
   const apiUrl = `/tools/${toolId}/gitlab/v2/repositories`;
 
   const urlParams = {
     params: {
-      searchTerm: searchTerm ? searchTerm : "",
+      searchTerm: searchTerm,
+      pageSize: pageSize,
+      currentPage: currentPage,
     }
   };
 
