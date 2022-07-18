@@ -88,7 +88,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker Dynamic Tag",
       id: "dockerDynamicTagName",
-      formText: "date, timestamp, run_count text can be used to make it dynamic",
+      formText: "date, timestamp, run_count, commit_sha text can be used to make it dynamic",
       regexDefinitionName: "dockerName",
       maxLength: 50,
       lowercase: true,
