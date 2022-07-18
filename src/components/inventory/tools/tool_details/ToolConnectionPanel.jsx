@@ -87,6 +87,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
+  "informatica-idq"
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
