@@ -42,10 +42,7 @@ import ApigeeToolConnectionEditorPanel
 import SnaplogicToolConfiguration
   from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
-<<<<<<< HEAD
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
-=======
->>>>>>> 17ef8602b9d9f7506c805083d8ceb0cdf4b7358a
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
 
 //TODO: Use constants, alphabetize
@@ -89,15 +86,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
-<<<<<<< HEAD
-<<<<<<< HEAD
-  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI
-=======
-  toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
->>>>>>> ed8482d10 (added tool registry for informatica IDQ)
-=======
-  toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
->>>>>>> 17ef8602b9d9f7506c805083d8ceb0cdf4b7358a
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
