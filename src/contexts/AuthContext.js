@@ -5,16 +5,18 @@ import {useHistory} from "react-router-dom";
 import commonActions from "components/common/common.actions";
 import axios from "axios";
 import accountsActions from "components/admin/accounts/accounts-actions";
+import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 
 const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
   const history = useHistory();
+  const [userAccessRoles, setUserAccessRoles] = useState(undefined);
+  const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
+  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [userAccessRoles, setUserAccessRoles] = useState(undefined);
-  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -268,6 +270,8 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
+      viewMode: viewMode,
+      setViewMode: setViewMode,
       // getWebsocketClient: getWebSocketClient,
     }}>
       {children}

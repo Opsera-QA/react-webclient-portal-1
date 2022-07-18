@@ -1,5 +1,5 @@
 FROM node:lts-alpine3.9 as build
-ARG build_env=kube-generic
+ARG build_env=production
 RUN echo ${build_env}
 RUN apk add curl
 RUN mkdir -p /usr/src/app
@@ -15,7 +15,7 @@ RUN npm run build:${build_env}
 RUN mv build* code
 RUN ls -lrt
 
-FROM httpd:2.4.52-alpine
+FROM httpd:latest
 COPY apache-configs/my-httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY apache-configs/my-htaccess /usr/local/apache2/htdocs/.htaccess
 COPY --from=build /usr/src/app/code /usr/local/apache2/htdocs/

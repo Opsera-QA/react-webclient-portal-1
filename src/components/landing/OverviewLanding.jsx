@@ -14,6 +14,7 @@ import OverviewLandingDeclarativePipelinesContentBlock
 import OverviewLandingInsightsContentBlock from "components/landing/blocks/OverviewLandingInsightsContentBlock";
 import { faEnvelope, faQuestion } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 
 function OverviewLanding() {
@@ -165,7 +166,8 @@ function OverviewLanding() {
   };
 
   const getWelcomeText = () => {
-    let welcomeText = "Welcome Back";
+    const firstNameText = hasStringValue(userInfo?.firstName) ? `, ${userInfo.firstName}` : "";
+    let welcomeText = `Welcome Back to Opsera Free Trial${firstNameText}!  COMING SOON!!!!`;
 
     if (userInfo?.firstName) {
       welcomeText += ` ${userInfo?.firstName}`;

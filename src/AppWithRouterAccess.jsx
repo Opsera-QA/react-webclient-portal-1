@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import Navbar from "./Navbar";
 import ToastContextProvider from "./contexts/DialogToastContext";
 import { axiosApiService } from "api/apiService";
-
+import AppRoutes from "./AppRoutes";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import {generateUUID} from "components/common/helpers/string-helpers";
+import HeaderNavigationBar from "components/header/HeaderNavigationBar";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
-import AppRoutes from "./AppRoutes";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import {generateUUID} from "components/common/helpers/string-helpers";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -140,10 +139,6 @@ const AppWithRouterAccess = () => {
     await loadUsersData(tokens.accessToken.value, false);
   };
 
-  const getNavBar = () => {
-    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
-  };
-
   const getError = () => {
     if (
       error &&
@@ -170,7 +165,9 @@ const AppWithRouterAccess = () => {
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-        <ToastContextProvider navBar={getNavBar()}>
+        <ToastContextProvider
+          navBar={<HeaderNavigationBar hideAuthComponents={hideSideBar} />}
+        >
 
           <AppRoutes
             authenticatedState={authenticatedState}

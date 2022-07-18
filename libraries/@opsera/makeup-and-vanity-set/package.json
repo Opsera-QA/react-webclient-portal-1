@@ -1,0 +1,40 @@
+{
+  "name": "@opsera/makeup-and-vanity-set",
+  "version": "0.1.0",
+  "type": "module",
+  "source": "src/index.js",
+  "exports": {
+    "require": "./dist/makeup-and-vanity-set.cjs",
+    "default": "./dist/makeup-and-vanity-set.modern.js"
+  },
+  "main": "./dist/makeup-and-vanity-set.cjs",
+  "module": "./dist/makeup-and-vanity-set.js",
+  "unpkg": "./dist/makeup-and-vanity-set.umd.js",
+  "scripts": {
+    "build": "microbundle --jsx React.createElement --jsxFragment React.Fragment --jsxImportSource react",
+    "dev": "microbundle watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "publishConfig": {
+    "source": "./src/index.js",
+    "main": "./dist/makeup-and-vanity-set.module.js"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.1",
+    "react-bootstrap": "^1.6.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack4": "^6.5.9",
+    "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.2.5",
+    "microbundle": "^0.15.0"
+  }
+}
