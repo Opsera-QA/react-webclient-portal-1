@@ -6,6 +6,9 @@ import commonActions from "components/common/common.actions";
 import axios from "axios";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
+import { THEMES } from "temp-library-components/theme/theme.constants";
+import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
+import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -14,6 +17,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const history = useHistory();
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
+  const [theme, setTheme] = useState(THEMES.NIGHT);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -249,6 +253,17 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.domain === "opsera.io" && Array.isArray(groups) && groups?.includes("Administrators");
   };
 
+  const getThemeConstants = () => {
+    switch (theme) {
+      case THEMES.LIGHT:
+        return lightThemeConstants;
+      case THEMES.NIGHT:
+        return darkThemeConstants;
+      default:
+        return lightThemeConstants;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -272,6 +287,9 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isOpseraAdministrator: isOpseraAdministrator,
       viewMode: viewMode,
       setViewMode: setViewMode,
+      theme: theme,
+      setTheme: setTheme,
+      themeConstants: getThemeConstants(),
       // getWebsocketClient: getWebSocketClient,
     }}>
       {children}

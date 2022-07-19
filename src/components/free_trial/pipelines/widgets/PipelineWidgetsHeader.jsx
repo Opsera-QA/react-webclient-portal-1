@@ -3,13 +3,13 @@ import PipelineWidgetsPipelineSelectInput
   from "components/free_trial/pipelines/widgets/PipelineWidgetsPipelineSelectInput";
 
 function PipelineWidgetsHeader() {
-  const [selectedPipeline, setSelectedPipeline] = useState(undefined);
+  const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
 
   return (
     <div>
       <PipelineWidgetsPipelineSelectInput
-        selectedPipeline={selectedPipeline}
-        setSelectedPipeline={setSelectedPipeline}
+        selectedPipelineId={selectedPipelineId}
+        setSelectedPipelineId={setSelectedPipelineId}
       />
     </div>
   );

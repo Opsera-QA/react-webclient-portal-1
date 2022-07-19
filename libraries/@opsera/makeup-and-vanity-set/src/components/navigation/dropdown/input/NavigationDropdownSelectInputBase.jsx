@@ -69,17 +69,32 @@ function NavigationDropdownSelectInputBase(
     });
   };
 
+  const getTitle = () => {
+    return (
+      <span
+        className={getTitleClassName()}
+      >
+        {title}
+      </span>
+    );
+  };
+
   if (selectOptions == null) {
     return null;
   }
 
   return (
     <NavDropdown
-      title={<span className={getTitleClassName()}>{title}</span>}
+      title={getTitle()}
       id={id}
       className={className}
     >
-      {getSelectOptions()}
+      <div style={{
+        maxHeight: "100px",
+        overflowY: "auto",
+      }}>
+        {getSelectOptions()}
+      </div>
     </NavDropdown>
   );
 }

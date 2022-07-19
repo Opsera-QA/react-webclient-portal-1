@@ -4,8 +4,9 @@ import {NavigationDropdownSelectInputBase} from "@opsera/makeup-and-vanity-set/d
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PipelineWidgetsPipelineSelectInput({ selectedPipeline, setSelectedPipeline}) {
+function PipelineWidgetsPipelineSelectInput({ selectedPipelineId, setSelectedPipelineId}) {
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -47,8 +48,24 @@ function PipelineWidgetsPipelineSelectInput({ selectedPipeline, setSelectedPipel
 
     if (isMounted.current === true && Array.isArray(pipelines)) {
       setPipelines(pipelines);
-      setSelectedPipeline(pipelines[0]);
+      setSelectedPipelineId(pipelines[0]?._id);
     }
+  };
+
+  const getSelectedPipelineName = () => {
+    if (isMongoDbId(selectedPipelineId) === true) {
+      if (Array.isArray(pipelines) && pipelines.length > 0) {
+        const foundPipeline = pipelines?.find((pipeline) => pipeline?._id === selectedPipelineId);
+
+        if (foundPipeline) {
+          return foundPipeline?.name;
+        }
+      }
+
+      return selectedPipelineId;
+    }
+
+    return "Select a Pipeline";
   };
 
   if (isLoading) {
@@ -62,10 +79,10 @@ function PipelineWidgetsPipelineSelectInput({ selectedPipeline, setSelectedPipel
 
   return (
     <NavigationDropdownSelectInputBase
-      selectedOption={selectedPipeline?._id}
+      selectedOption={selectedPipelineId}
       selectOptions={pipelines}
-      setDataFunction={setSelectedPipeline}
-      title={`${selectedPipeline?.name}`}
+      setDataFunction={setSelectedPipelineId}
+      title={getSelectedPipelineName()}
       textField={"name"}
       valueField={"_id"}
     />
@@ -73,8 +90,8 @@ function PipelineWidgetsPipelineSelectInput({ selectedPipeline, setSelectedPipel
 }
 
 PipelineWidgetsPipelineSelectInput.propTypes = {
-  selectedPipeline: PropTypes.object,
-  setSelectedPipeline: PropTypes.func,
+  selectedPipelineId: PropTypes.object,
+  setSelectedPipelineId: PropTypes.func,
 };
 
 export default PipelineWidgetsPipelineSelectInput;
