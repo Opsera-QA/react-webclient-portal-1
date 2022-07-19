@@ -178,7 +178,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
   return (
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
-        <Sidebar userData={userData} hideSideBar={hideSideBar} />
+        {/*<Sidebar userData={userData} hideSideBar={hideSideBar} />*/}
 
         <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
