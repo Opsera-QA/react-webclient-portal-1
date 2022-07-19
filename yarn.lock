@@ -1917,6 +1917,9 @@
 "@opsera/makeup-and-vanity-set@file:libraries/@opsera/makeup-and-vanity-set":
   "resolved" "file:libraries/@opsera/makeup-and-vanity-set"
   "version" "0.1.0"
+  dependencies:
+    "bootstrap" "^4.6.1"
+    "react-bootstrap" "^1.6.4"
 
 "@peculiar/asn1-schema@^2.0.27", "@peculiar/asn1-schema@^2.0.38":
   "integrity" "sha512-zZ64UpCTm9me15nuCpPgJghSdbEm8atcDQPCyK+bKXjZAQ1735NCZXCSCfbckbQ4MH36Rm9403n/qMq77LFDzQ=="

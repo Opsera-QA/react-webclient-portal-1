@@ -14,6 +14,8 @@ function NavigationDropdownSelectInputBase(
     selectedOption,
     setDataFunction,
     disabled,
+    textField,
+    valueField,
   }) {
   const getTitleClassName = () => {
     // const parsedTitleClassName = DataParsingHelper.parseString(titleClassName);
@@ -49,8 +51,8 @@ function NavigationDropdownSelectInputBase(
         <NavigationDropdownSelectOption
           setDataFunction={setDataFunction}
           selectedOption={selectedOption}
-          text={selectOption?.text}
-          value={selectOption?.value}
+          text={selectOption?.[textField]}
+          value={selectOption?.[valueField]}
           disabled={disabled}
         />
       );
@@ -86,11 +88,18 @@ NavigationDropdownSelectInputBase.propTypes = {
   title: PropTypes.string,
   id: PropTypes.string,
   className: PropTypes.string,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
   titleClassName: PropTypes.string,
   selectedOption: PropTypes.string,
   selectOptions: PropTypes.array,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+};
+
+NavigationDropdownSelectInputBase.defaultProps = {
+  textField: "text",
+  valueField: "value",
 };
 
 export default NavigationDropdownSelectInputBase;
