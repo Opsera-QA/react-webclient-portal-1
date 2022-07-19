@@ -6,6 +6,7 @@ const dockerTagTypes = [
     {name: "Run Count", value: "run_count"},
     {name: "Date", value: "date"},
     {name: "Timestamp", value: "timestamp"},
+    {name: "Commit SHA", value: "commit_sha"},
     {name: "Custom Tag", value: "other"},
   ];
 
