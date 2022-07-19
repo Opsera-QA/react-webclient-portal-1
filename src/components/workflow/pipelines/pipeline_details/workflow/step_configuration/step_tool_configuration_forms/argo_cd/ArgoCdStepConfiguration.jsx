@@ -31,6 +31,7 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import ArgoBlueGreenDeploymentHelpDocumentation 
   from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
+import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -120,6 +121,18 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     }
   };
 
+  const getCommandLineSpecificInput = () => {
+    if(argoCdModel?.getData("dockerStepType") === "command-line") {
+      return (
+          <CustomParameterSelectInput
+              model={argoCdModel}
+              setModel={setArgoCdModel}
+              fieldName={"customParameterId"}
+          />
+      );
+    }
+  };
+
   const getSCMInputs = () => {
     if (!argoCdModel?.getData("kustomizeFlag")) {
       return (
@@ -188,6 +201,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
           hasStringValue(argoCdModel?.getData("applicationName")) !== true
         }
       />
+      {getCommandLineSpecificInput()}
       <ArgoCdStepKustomizeBooleanInput
           model={argoCdModel}
           setModel={setArgoCdModel}
