@@ -164,6 +164,7 @@ import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sona
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1509,6 +1510,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                 index={index}
               />
             </Col>
+          );
+      case "boomi-pipeline-executions":
+        return (
+          <Col md={12} className="p-2">
+            <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
           );
       // Service Now
       case "servicenow-mean-time-to-resolution":
