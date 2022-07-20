@@ -6,7 +6,15 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 function useComponentStateReference() {
   const isMounted = useRef(false);
   const [cancelTokenSource] = useState(axios.CancelToken.source());
-  const { getAccessToken, userAccessRoles, themeConstants, isSassUser, } = useContext(AuthContext);
+  const {
+    getAccessToken,
+    userAccessRoles,
+    themeConstants,
+    isSassUser,
+    isOpseraAdministrator,
+    featureFlagHideItemInProd,
+    featureFlagHideItemInTest,
+  } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -25,6 +33,9 @@ function useComponentStateReference() {
     toastContext: toastContext,
     accessRoleData: userAccessRoles,
     themeConstants: themeConstants,
+    isOpseraAdministrator: isOpseraAdministrator(),
+    isProductionEnvironment: featureFlagHideItemInProd(),
+    isTestEnvironment: featureFlagHideItemInTest(),
     isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
   });
 }

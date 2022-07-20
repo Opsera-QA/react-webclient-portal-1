@@ -1,19 +1,36 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import sessionHelper from "utils/session.helper";
 import userActions from "components/user/user-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
+import { ACCESS_ROLE_PERMISSION_MESSAGES } from "components/common/helpers/role-helpers";
+import { renderTooltip } from "utils/helpers";
+import IconBase from "components/common/icons/IconBase";
+import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
+
+const EXTERNAL_LINKS = {
+  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
+};
 
 function HeaderNavigationBar({ hideAuthComponents, userData }) {
   const {
     loginUserContext,
     logoutUserContext,
   } = useContext(AuthContext);
-  const { toastContext, isLdapUser, accessRoleData, getAccessToken, } = useComponentStateReference();
+  const {
+    toastContext,
+    isLdapUser,
+    accessRoleData,
+    getAccessToken,
+    themeConstants,
+    isOpseraAdministrator,
+    isTestEnvironment,
+    isProductionEnvironment,
+  } = useComponentStateReference();
   const history = useHistory();
   const [currentScreen, setCurrentScreen] = useState("pipelines");
 
@@ -76,8 +93,78 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
     }
   };
 
+  const getFrequentlyAskedQuestionsLink = () => {
+    return (
+      <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
+        Frequently Asked Questions
+      </Link>
+    );
+  };
+
+  const getHelpDocumentationLink = () => {
+    if (isProductionEnvironment === false && isTestEnvironment === false) {
+      return (
+        <Link to={"/help-documentation"} id={"help-button"} className={"dropdown-item nav-drop-down-item"}>
+          Help Documentation
+        </Link>
+      );
+    }
+  };
+
   const getUserIconDropdown = () => {
-    
+    return (
+      <NavDropdown
+        title={getUserIconTitle()}
+        id={"basic-nav-dropdown"}
+        className={"top-nav-dropdown"}
+      >
+        <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
+        {/*{isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
+
+        <NavDropdown.Divider/>
+
+        <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
+                          className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
+        <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
+                          className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
+        {getFrequentlyAskedQuestionsLink()}
+        {getHelpDocumentationLink()}
+        <NavDropdown.Divider/>
+
+        <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
+                          id="about-opsera">Opsera.io</NavDropdown.Item>
+        <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
+                          id="logout-button">Logout</NavDropdown.Item>
+      </NavDropdown>
+    );
+  };
+
+  const getUserIconTitle = () => {
+    return (
+      <IconBase
+        icon={faUserCircle}
+        iconSize={"lg"}
+        // iconStyling={{
+        //   backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+        //   // borderRadius: "38px",
+        //   color: themeConstants.COLOR_PALETTE.WHITE,
+        // }}
+      />
+    );
+  };
+
+  const getSettingsLink = () => {
+    if (isOpseraAdministrator === true) {
+      return (
+        <Navbar.Collapse id={"basic-navbar-nav"}>
+          <span className={"mr-3"}>
+            <Link to={"/settings"}>
+              Settings
+            </Link>
+          </span>
+        </Navbar.Collapse>
+      );
+    }
   };
 
 
@@ -108,7 +195,9 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
       return (
         <Navbar.Collapse id={"basic-navbar-nav"}>
           <Nav className={"ml-auto"}>
+            {getUserIconDropdown()}
             {getViewTypeDropdown()}
+            {getSettingsLink()}
           </Nav>
         </Navbar.Collapse>
       );
