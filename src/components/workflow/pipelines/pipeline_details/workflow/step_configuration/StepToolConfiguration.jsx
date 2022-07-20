@@ -731,18 +731,15 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "docker-push":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
         return (
           <DockerPushStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
