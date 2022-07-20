@@ -7,7 +7,7 @@ import PipelineWidgetsBody from "components/free_trial/pipelines/widgets/Pipelin
 
 function PipelinesLanding() {
   return (
-    <div className={"max-content-width"} style={{height: "1000px"}}>
+    <div className={"max-content-width"}>
       <div className={"mt-3"}>
         <PipelineLandingDataBlockWidgets />
       </div>
