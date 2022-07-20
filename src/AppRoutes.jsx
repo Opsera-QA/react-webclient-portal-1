@@ -133,6 +133,8 @@ import SonarPipelineScanReport from "components/insights/reports/SonarPipelineSc
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -178,10 +180,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
   // Authenticated routes
   return (
     <div className={"container-fluid m-0"}>
-      <div className={"d-flex flex-row"}>
+      <Row className={"d-flex flex-row mx-6"}>
+        <Col xs={0} sm={0} md={1} />
         {/*<Sidebar userData={userData} hideSideBar={hideSideBar} />*/}
 
-        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
+        <Col xs={12} sm={12} md={10} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />
@@ -341,13 +344,14 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 
           {/*{getFreeTrialRoutes()}*/}
-        </div>
-      </div>
-      <div className="row fixed-row-footer-bottom">
-        <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>
+        </Col>
+        <Col xs={0} sm={0} md={1} />
+      </Row>
+      <Row className={"fixed-row-footer-bottom"}>
+        <Col className={"text-center m-1 p-0"} style={{ fontSize: ".6em" }}>
           <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 
