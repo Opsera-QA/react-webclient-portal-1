@@ -249,9 +249,13 @@ export function formatDateWithTime(date) {
   }
 }
 
-export function formatDate(date) {
+export function formatDate(date, dateFormat = "MMM dd yyyy") {
   try {
-    return format(new Date(date), "MMM dd yyyy");
+    if (hasDateValue(date) !== true) {
+      return date;
+    }
+
+    return format(new Date(date), dateFormat);
   } catch (error) {
     const parsedError = parseError(error);
     console.error(`Could not format date: ${parsedError}`);
