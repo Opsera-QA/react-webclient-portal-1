@@ -294,7 +294,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     }}>
       <div
         style={{
-          backgroundColor: getThemeConstants()?.BACKGROUND_COLORS.BACKGROUND_GRAY,
+          backgroundColor: getThemeConstants()?.COLOR_PALETTE.BACKGROUND_GRAY,
         }}
       >
       </div>

@@ -15,8 +15,8 @@ function PipelineLandingDataBlockWidgets() {
       <Col xs={3}>
         <WidgetDataBlockBaseContainer
           fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-          fontColor={themeConstants.GENERAL_COLORS.WHITE}
-          backgroundColor={themeConstants.BACKGROUND_COLORS.LIGHT_PURPLE}
+          fontColor={themeConstants.COLOR_PALETTE.WHITE}
+          backgroundColor={themeConstants.COLOR_PALETTE.LIGHT_PURPLE}
         >
           <PipelineDataBlock
             title={"Successful Builds"}
@@ -28,8 +28,8 @@ function PipelineLandingDataBlockWidgets() {
       <Col xs={3}>
         <WidgetDataBlockBaseContainer
           fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-          fontColor={themeConstants.GENERAL_COLORS.WHITE}
-          backgroundColor={themeConstants.BACKGROUND_COLORS.LIGHT_GOLD}
+          fontColor={themeConstants.COLOR_PALETTE.WHITE}
+          backgroundColor={themeConstants.COLOR_PALETTE.LIGHT_GOLD}
         >
           <PipelineDataBlock
             title={"Average Lead Time"}
@@ -41,8 +41,8 @@ function PipelineLandingDataBlockWidgets() {
       <Col xs={3}>
         <WidgetDataBlockBaseContainer
           fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-          fontColor={themeConstants.GENERAL_COLORS.WHITE}
-          backgroundColor={themeConstants.BACKGROUND_COLORS.LIGHT_SALMON}
+          fontColor={themeConstants.COLOR_PALETTE.WHITE}
+          backgroundColor={themeConstants.COLOR_PALETTE.LIGHT_SALMON}
         >
           <PipelineDataBlock
             title={"Daily Development"}
@@ -53,8 +53,8 @@ function PipelineLandingDataBlockWidgets() {
       <Col xs={3}>
         <WidgetDataBlockBaseContainer
           fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-          fontColor={themeConstants.GENERAL_COLORS.WHITE}
-          backgroundColor={themeConstants.BACKGROUND_COLORS.LIGHT_MINT}
+          fontColor={themeConstants.COLOR_PALETTE.WHITE}
+          backgroundColor={themeConstants.COLOR_PALETTE.LIGHT_MINT}
         >
           <PipelineDataBlock
             title={"Failure Rates"}

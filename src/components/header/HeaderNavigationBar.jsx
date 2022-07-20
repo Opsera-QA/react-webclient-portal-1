@@ -64,15 +64,53 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
     );
   };
 
-
   // TODO: There might be multiple versions of this depending on how we build it--
-  //  different areas might have different views.
+  //  different areas might have different views. If we only use one version, move this inline
   const getViewTypeDropdown = () => {
     if (hideAuthComponents === false && accessRoleData) {
       return (
         <div className={"mr-5"}>
           <SiteViewModeNavigationSelectInput />
         </div>
+      );
+    }
+  };
+
+  const getUserIconDropdown = () => {
+    
+  };
+
+
+  const getAuthenticationComponents = () => {
+    if (hideAuthComponents !== true) {
+      if (!accessRoleData) {
+        return (
+          <Navbar.Collapse id={"basic-navbar-nav"}>
+            <Nav className={"ml-auto"}>
+              <Button
+                variant={"warning"}
+                className="mr-2"
+                onClick={gotoSignUp}
+              >
+                Sign Up
+              </Button>
+              <Button
+                variant={"outline-success"}
+                onClick={login}
+              >
+                Login
+              </Button>
+            </Nav>
+          </Navbar.Collapse>
+        );
+      }
+
+      return (
+        <Navbar.Collapse id={"basic-navbar-nav"}>
+          <Nav className={"ml-auto"}>
+            {getViewTypeDropdown()}
+          </Nav>
+        </Navbar.Collapse>
       );
     }
   };
@@ -89,14 +127,7 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
         />
       </Navbar.Brand>
       {getSubNavigationBar()}
-      <Navbar.Collapse id={"basic-navbar-nav"}>
-        {!hideAuthComponents && <Nav className="ml-auto">
-          {!accessRoleData && <Button variant="warning" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
-          {!accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
-          {getViewTypeDropdown()}
-        </Nav>}
-
-      </Navbar.Collapse>
+      {getAuthenticationComponents()}
     </Navbar>
   );
 }

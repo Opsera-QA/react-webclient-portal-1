@@ -9,7 +9,7 @@ function PipelineWidgetsBody({selectedPipelineId}) {
   return (
     <div>
       <WidgetDataBlockBaseContainer
-        backgroundColor={themeConstants.GENERAL_COLORS.WHITE}
+        backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
         borderColor={themeConstants.BORDER_COLORS.GRAY}
         heightSize={5}
       >

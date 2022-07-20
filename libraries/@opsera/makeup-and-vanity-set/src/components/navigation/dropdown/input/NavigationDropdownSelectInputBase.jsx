@@ -100,7 +100,7 @@ function NavigationDropdownSelectInputBase(
 }
 
 NavigationDropdownSelectInputBase.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.any,
   id: PropTypes.string,
   className: PropTypes.string,
   textField: PropTypes.string,
