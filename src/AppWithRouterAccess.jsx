@@ -168,7 +168,6 @@ const AppWithRouterAccess = () => {
         <ToastContextProvider
           navBar={<HeaderNavigationBar hideAuthComponents={hideSideBar} />}
         >
-
           <AppRoutes
             authenticatedState={authenticatedState}
             authClient={authClient}
@@ -177,7 +176,6 @@ const AppWithRouterAccess = () => {
             userData={data}
             hideSideBar={hideSideBar}
           />
-
         </ToastContextProvider>
       </AuthContextProvider>
     </Security>
