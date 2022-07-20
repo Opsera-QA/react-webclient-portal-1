@@ -17,7 +17,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const history = useHistory();
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
-  const [theme, setTheme] = useState(THEMES.NIGHT);
+  const [theme, setTheme] = useState(THEMES.LIGHT);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -292,6 +292,12 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       themeConstants: getThemeConstants(),
       // getWebsocketClient: getWebSocketClient,
     }}>
+      <div
+        style={{
+          backgroundColor: getThemeConstants()?.BACKGROUND_COLORS.BACKGROUND_GRAY,
+        }}
+      >
+      </div>
       {children}
     </AuthContext.Provider>
   );

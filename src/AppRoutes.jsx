@@ -135,7 +135,6 @@ import LogsExportManagement from "./components/settings/logs_management/LogsExpo
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
-  const {themeConstants} = useComponentStateReference();
 
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 
@@ -178,11 +177,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
   // Authenticated routes
   return (
-    <div className={"container-fluid m-0"}
-      style={{
-        backgroundColor: themeConstants.BACKGROUND_COLORS.BACKGROUND_GRAY,
-      }}
-    >
+    <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
         {/*<Sidebar userData={userData} hideSideBar={hideSideBar} />*/}
 
