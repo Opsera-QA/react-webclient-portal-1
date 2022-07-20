@@ -135,7 +135,11 @@ userActions.createAwsMarketplaceOpseraAccount = async (registrationModel) => {
 };
 
 
-
+/***
+ * Calls the Opsera logout route which expires the User object cache in Redis
+ * @param getAccessToken
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 userActions.logout = async (getAccessToken) => {
   const postBody = {};
   const accessToken = await getAccessToken();
@@ -149,6 +153,32 @@ userActions.logout = async (getAccessToken) => {
     });
   return response;
 };
+
+
+/***
+ * Calls an explicit Okta Revoke Access Token command to invalidate the current bearer token
+ * @param getAccessToken
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+userActions.revokeAuthToken = async (getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/token/okta/revoke";
+  const queryParams = {
+    params: {
+      token: accessToken
+    }
+  };
+
+  const response = await axiosApiService(accessToken).put(apiUrl, null, queryParams)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      throw error;
+    });
+  return response;
+};
+
 
 
 userActions.syncUser = async (getAccessToken, cancelTokenSource) => {

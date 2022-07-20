@@ -7,8 +7,8 @@ import sessionHelper from "utils/session.helper";
 const Logout = () => {
   const { getAccessToken, logoutUserContext } = useContext(AuthContext);
 
-  useEffect(() => {
-    logout();
+  useEffect(async () => {
+    await logout();
   }, []);
 
   const logout = async function() {
@@ -16,6 +16,7 @@ const Logout = () => {
     try {
       sessionHelper.clearOutSessionStorage();
       await userActions.logout(getAccessToken);
+      await userActions.revokeAuthToken(getAccessToken);
       logoutUserContext();
     }
     catch (error) {
@@ -23,7 +24,7 @@ const Logout = () => {
     }
   };
 
-  return (<InformationDialog message="You have been successfully logged out." />);
+  return (<InformationDialog message="You have been successfully logged out." alignment={"top"} />);
 };
 
 export default Logout;
