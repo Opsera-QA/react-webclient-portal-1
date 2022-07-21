@@ -161,7 +161,7 @@ function SuccessExecutionsDetailedActionableInsights({ repositoryName, actionNam
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Success Executions Detail`}
+      titleText={`Successful Executions Detail`}
       showToasts={true}
       isLoading={isLoading}
     >
