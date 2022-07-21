@@ -7,57 +7,12 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import axios from "axios";
 import SourceRepositoryActions from "./step_configuration/repository/source-repository-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineExportToGitPanel({ pipeline, handleClose }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken, getUserRecord } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    if (isMounted?.current === true) {
-      setIsLoading(true);
-      const user = await getUserRecord();
-      console.log(user);
-      setIsLoading(false);
-    }
-  };
-
+  const [isLoading, setIsLoading] = useState(false);
+  const { isMounted, cancelTokenSource} = useComponentStateReference();
   const service = pipeline?.workflow?.source?.service;
-  const gitToolId = pipeline?.workflow?.source?.accountId;
-
-  const exportToGit = async () => {
-    try {
-      await SourceRepositoryActions.exportToGitlab(getAccessToken, cancelTokenSource, pipeline._id, service, gitToolId);
-      toastContext.showSuccessDialog(`Pipeline configuration has been commited to ${service}`);
-      handleClose();
-    } catch (error) {
-      toastContext.showErrorDialog(`Unable to export pipeline configuration to ${service}. Please check your repository configuration and try again.`);
-      handleClose();
-  }
-  };
 
   const fullPath = service === "gitlab" ? `${pipeline?.workflow?.source?.repository}/${pipeline?.workflow?.source?.gitExportPath}` :
   service === "github" ? `${pipeline?.workflow?.source?.gitUrl}/${pipeline?.workflow?.source?.gitExportPath}` :
