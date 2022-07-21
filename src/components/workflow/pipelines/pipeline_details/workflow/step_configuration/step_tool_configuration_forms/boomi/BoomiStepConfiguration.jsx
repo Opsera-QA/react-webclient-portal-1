@@ -3,18 +3,12 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import boomiMetadata from "./boomi.metadata";
 import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import BoomiJobTypeSelectInput from "./inputs/BoomiJobTypeSelectInput";
-import BoomiSCMToolTypeSelectInput from "./inputs/BoomiSCMToolTypeSelectInput";
-import ProvarSourceControlManagementToolSelectInput from "./inputs/BoomiStepSourceControlManagementToolSelectInput";
-import BoomiBitbucketWorkspaceInput from "./inputs/BoomiBitbucketWorkspaceInput";
-import BoomiGitRepositoryInput from "./inputs/BoomiGitRepositoryInput";
-import BoomiGitBranchInput from "./inputs/BoomiGitBranchInput";
-import BoomiSCMRepoFilesSelectInput from "./inputs/BoomiSCMRepoFiles";
 import CreatePackageJobSubform from "./sub_forms/CreatePackageJobSubform";
 import DeployPackageJobSubform from "./sub_forms/DeployPackageJobSubform";
+import MigratePackageSubform from "./sub_forms/MigratePackageSubform";
 
 function BoomiStepConfiguration({
   pipelineId,
@@ -82,6 +76,10 @@ function BoomiStepConfiguration({
         setModel={setBoomiStepConfigurationDataDto}
       />
       <DeployPackageJobSubform
+        model={boomiStepConfigurationDto}
+        setModel={setBoomiStepConfigurationDataDto}
+      />
+      <MigratePackageSubform
         model={boomiStepConfigurationDto}
         setModel={setBoomiStepConfigurationDataDto}
       />
