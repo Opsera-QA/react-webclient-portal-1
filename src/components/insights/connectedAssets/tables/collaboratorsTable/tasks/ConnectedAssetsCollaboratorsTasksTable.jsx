@@ -111,7 +111,7 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   };
 
   const onRowSelect = (rowData) => {
-    history.push(`/task/details/${(rowData.original?.task_id)}`);
+    history.push(`/task/details/${(rowData.original?._id)}`);
   };
 
   const getTable = () => {
