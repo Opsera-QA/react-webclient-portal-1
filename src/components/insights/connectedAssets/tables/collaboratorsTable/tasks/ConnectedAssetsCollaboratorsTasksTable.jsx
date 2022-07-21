@@ -33,13 +33,13 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No tasks found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
     ],
     []
@@ -69,7 +69,9 @@ function ConnectedAssetsCollaboratorsTasksTable({ user, dashboardData }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(user) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

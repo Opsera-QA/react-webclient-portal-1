@@ -105,6 +105,25 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
+      label: "App Variables",
+      id: "dynamicVariables",
+      helpTooltipText: "App varibales can be used to change the Application properties."
+    },
+    {
+      label: "Application Cluster",
+      id: "applicationCluster",
+      isRequiredFunction: (model) => {
+        return model?.getData("dynamicVariables") === true;
+      },
+    },
+    {
+      label: "Application YAML Path",
+      id: "yamlPath",
+      isRequiredFunction: (model) => {
+        return model?.getData("dynamicVariables") === true;
+      },
+    },
+    {
       label: "Blue Green Deployment",
       id: "isBlueGreenDeployment"
     },
@@ -112,6 +131,14 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Kustomization",
       id: "kustomizeFlag",
       helpTooltipText: "ArgoCD supports Kustomize and has the ability to read a kustomization. yaml file to enable deployment with Kustomize and allow ArgoCD to manage the state of the YAML files."
+    },
+    {
+      label: "dockerStepType",
+      id: "dockerStepType"
+    },
+    {
+      label: "Custom Parameter",
+      id: "customParameterId"
     }
   ],
   newObjectFields: {
@@ -134,8 +161,13 @@ export const ArgoCdStepConfigurationMetadata = {
     bitbucketWorkspaceName: "",
     rollbackEnabled: false,
     repositoryTag: "",
+    dynamicVariables: false,
+    applicationCluster: "",
+    yamlPath: "",
     kustomizeFlag: false,
     imageUrl: "",
     isBlueGreenDeployment: false,
+    dockerStepType: "",
+    customParameterId: ""
   },
 };

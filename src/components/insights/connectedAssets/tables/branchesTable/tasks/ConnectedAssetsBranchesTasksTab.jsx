@@ -128,6 +128,10 @@ function ConnectedAssetsBranchesTasksTab({ dashboardData }) {
           dashboardData={dashboardData}
         />);
     }
+    return (
+      <ConnectedAssetsBranchesTasksTable
+        dashboardData={dashboardData}
+      />);
   };
 
   const getVerticalTabContainer = () => {

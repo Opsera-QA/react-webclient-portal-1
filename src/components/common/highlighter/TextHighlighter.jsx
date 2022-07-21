@@ -2,9 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-// TODO: This will only highlight the last instance.
-//  It was written as a quick replacement for a vulnerable library. If we want to support highlighting multiple instances,
-//  talk to Noah and he will implement that support.
 function TextHighlighter(
   {
     textToHighlight,
@@ -20,21 +17,47 @@ function TextHighlighter(
       return text;
     }
 
-    const lastIndex = text.lastIndexOf(textToHighlight);
+    const lowercaseText = text.toLowerCase();
+    const lowercaseHighlightText = textToHighlight.toLowerCase();
+    const firstIndex = lowercaseText.indexOf(lowercaseHighlightText);
 
-    if (lastIndex === -1) {
+    if (firstIndex === -1) {
       return text;
     }
 
-    const endStartIndex = lastIndex + textToHighlight.length;
-    const firstString = text.substring(0, lastIndex);
-    const secondString = text.substring(endStartIndex);
+    const matchTextLength = textToHighlight.length;
+    let currentIndex = firstIndex;
+    const instances = [];
+
+    while (currentIndex !== -1) {
+      const unmatchedText = text.substring(0, currentIndex);
+      const endStartIndex = currentIndex + matchTextLength;
+      const matchedText = text.substring(currentIndex, endStartIndex);
+      currentIndex = lowercaseText.indexOf(lowercaseHighlightText, endStartIndex);
+      const postUnmatchedText = text.substring(endStartIndex);
+
+      if (currentIndex === -1) {
+        instances.push(
+          <span>
+            <span>{unmatchedText}</span>
+            <span style={{backgroundColor: "yellow", padding: "2px"}}>{matchedText}</span>
+            <span>{postUnmatchedText}</span>
+          </span>
+        );
+        continue;
+      }
+
+      instances.push(
+        <span>
+          <span>{unmatchedText}</span>
+          <span style={{backgroundColor: "yellow", padding: "2px"}}>{matchedText}</span>
+        </span>
+      );
+    }
 
     return (
       <div>
-        <span>{firstString}</span>
-        <span style={{backgroundColor: "yellow", padding: "2px"}}>{textToHighlight}</span>
-        <span>{secondString}</span>
+        {instances}
       </div>
     );
   };

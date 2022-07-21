@@ -109,8 +109,18 @@ const AppWithRouterAccess = () => {
       const response = await axiosApiService(token).get(apiUrl, {});
       setData(response.data);
     } catch (error) {
-      console.error(error);
-      setError(error);
+      //console.log(error.response.data); //Forbidden
+      //console.log(error.response.status); //403
+      if (error.response && error.response.status === 403) {
+        //this means user doesn't have access so clearing sessiong and logging user out
+        let errorMsg = "Access denied when trying to retrieve user details.  This could indicate an expired or revoked token.  Please log back in before proceeding.";
+        console.error(errorMsg + "Service Response:" + error.response.data);
+        history.push("/logout");
+        setError(errorMsg);
+      } else {
+        console.error(error);
+        setError(error);
+      }
     } finally {
       setLoading(false);
     }

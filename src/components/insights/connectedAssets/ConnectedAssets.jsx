@@ -10,7 +10,7 @@ import ConnectedAssetsDetails from "./ConnectedAssetsDetails";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import { format, addDays } from "date-fns";
+import {format, addDays, isSameDay} from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";
@@ -133,19 +133,16 @@ function ConnectedAssets() {
       } else {
         let endDate = format(item.selection.endDate, "MM/dd/yyyy");
         setEDate(endDate);
-        validate(startDate,endDate);
+        validate(item.selection.startDate,item.selection.endDate);
       }
     }
   };
 
   const validate = (startDate,endDate)=>{
-    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    newDashboardFilterTagsModel.setData( "date" , { startDate: startDate , endDate: endDate, key: "selection" } );
     setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
-
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardFilterTagsModel, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardFilterTagsModel, "date", { startDate: startDate , endDate: endDate, key: "selection" });
     loadData(newDataModel);
   };
 

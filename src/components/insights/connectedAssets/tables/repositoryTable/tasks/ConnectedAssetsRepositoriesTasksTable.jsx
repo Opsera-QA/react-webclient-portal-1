@@ -33,13 +33,13 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No tasks found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableDateTimeColumn(getField(fields, "task_created_at"), "task_created_at"),
-      getTableDateTimeColumn(getField(fields, "task_last_run"), "task_last_run"),
+      getTableTextColumn(getField(fields, "task_last_run"), "task_last_run"),
       getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name")
     ],
     []
@@ -69,7 +69,9 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(repository) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

@@ -8,6 +8,8 @@ function GitScraperScmToolSelectInput({model, setModel, className, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = model;
     newModel.setData("gitToolId", selectedOption?._id);
+    newModel.setDefaultValue("bitbucketWorkspaceName");
+    newModel.setDefaultValue("workspace");
     newModel.setData("repositories", []);
     newModel.setData("reposToScan", []);
     setModel({...newModel});

@@ -13,7 +13,7 @@ const externalApiIntegratorEndpointMetadata = {
       isRequired: true,
     },
     {
-      label: "Type",
+      label: "Endpoint Type",
       id: "type",
       isRequired: true,
     },

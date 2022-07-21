@@ -13,7 +13,7 @@ function InputTitleBar(
     searchTerm,
     setSearchTerm,
     showSearchBar,
-    disabled,
+    disableSearch,
     customTitle,
     loadDataFunction,
     rightSideButton,
@@ -56,7 +56,7 @@ function InputTitleBar(
       return (
         <input
           placeholder={"Search"}
-          disabled={isLoading || disabled}
+          disabled={disableSearch}
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           className={"input-search-filter"}
@@ -100,7 +100,7 @@ InputTitleBar.propTypes = {
   setSearchTerm: PropTypes.func,
   searchTerm: PropTypes.string,
   showSearchBar: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disableSearch: PropTypes.bool,
   customTitle: PropTypes.string,
   helpComponent: PropTypes.object,
   loadDataFunction: PropTypes.func,

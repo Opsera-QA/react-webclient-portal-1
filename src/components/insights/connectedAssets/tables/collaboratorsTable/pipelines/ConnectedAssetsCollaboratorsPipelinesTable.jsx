@@ -33,13 +33,13 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
     ],
     []
@@ -69,7 +69,9 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(user) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

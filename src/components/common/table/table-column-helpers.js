@@ -529,11 +529,19 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
     Header: "Info",
     accessor: accessor,
     Cell: function getInfoIcon(row) {
+      if (typeof showInformationFunction !== "function") {
+        return (
+          <IconBase
+            icon={faSearchPlus}
+          />
+        );
+      }
+
       return (
         <IconBase
           icon={faSearchPlus}
           className={"pointer"}
-          onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}
+          onClickFunction={() => {showInformationFunction(row?.data[row?.row?.index]); }}
         />
       );
     },
@@ -633,6 +641,24 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
           pageLinkText={row?.value?.key}
         />
       ) : (row?.value?.key || "");
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+
+      return (
+          <PageLinkIcon
+              pageLink={row?.value}
+              externalLink={true}
+              pageLinkText={""}
+          />
+      );
     },
     class: className ? className : undefined
   };

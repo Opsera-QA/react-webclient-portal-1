@@ -33,13 +33,13 @@ function ConnectedAssetsPipelinesInactiveTable({ dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableDateTimeColumn(getField(fields, "pipeline_created_at"), "pipeline_created_at"),
-      getTableDateTimeColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
+      getTableTextColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
       getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
       getTableTextColumn(getField(fields, "pipeline_run_count"), "pipeline_run_count"),
       getTableTextColumn(getField(fields, "pipeline_last_status", "pipeline_last_status"))

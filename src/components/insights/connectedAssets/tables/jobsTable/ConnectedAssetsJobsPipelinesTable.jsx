@@ -33,13 +33,13 @@ function ConnectedAssetsJobsPipelinesTable({ dashboardData }) {
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No pipelines found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipeline_url"), "pipeline_url"),
+      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "success_count"), "success_count"),
       getTableTextColumn(getField(fields, "failed_count", "failed_count"))
     ],

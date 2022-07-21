@@ -129,6 +129,11 @@ function ConnectedAssetsRepositoriesTasksTab({ dashboardData }) {
         />
       );
     }
+    return (
+      <ConnectedAssetsRepositoriesTasksTable
+        dashboardData={dashboardData}
+      />
+    );
   };
 
   const getVerticalTabContainer = () => {

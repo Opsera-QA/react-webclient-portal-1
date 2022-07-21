@@ -34,12 +34,13 @@ function ConnectedAssetsWebhooksPipelinesTable({ repository, dashboardData, icon
     )
   );
   const history = useHistory();
-  const noDataMessage = 'No webhooks found.';
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
+      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableTextColumn(getField(fields, "status"), "status"),
-      getTableDateTimeColumn(getField(fields, "last_triggered"), "last_triggered"),
+      getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "last_action"), "last_action")
     ],
     []
@@ -69,7 +70,9 @@ function ConnectedAssetsWebhooksPipelinesTable({ repository, dashboardData, icon
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadPipelineData();
+      if(repository) {
+        await loadPipelineData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

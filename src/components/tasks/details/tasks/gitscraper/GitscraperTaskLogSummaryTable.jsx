@@ -6,23 +6,18 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import gitScraperReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers-v2";
+    getTableTextColumn,
+    getTableDateTimeColumn,
+    getGitCustodianScmLinkIconColumnDefinition,
+} from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
 import { pluralize } from "components/common/helpers/string-helpers";
+import CustomTable from "components/common/table/CustomTable";
 
 function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
   const fields = gitScraperReportMetaData?.fields;
-
-  const onRowSelect = (data, selectedRow) => {
-    if (selectedRow?.linkToSecret) {
-      window.open(selectedRow?.linkToSecret, "_blank");
-    }
-  };
 
   const columns = useMemo(
     () => [
@@ -31,6 +26,9 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
       getTableTextColumn(getField(fields, "commitHash")),
       getTableTextColumn(getField(fields, "path")),
       getTableTextColumn(getField(fields, "lineNumber")),
+      getGitCustodianScmLinkIconColumnDefinition(
+        getField(fields, "linkToSecret"),
+      ),
       getTableTextColumn(getField(fields, "reason")),
       getTableTextColumn(getField(fields, "repository")),
       getTableDateTimeColumn(getField(fields, "scannedOn")),
@@ -40,10 +38,10 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
 
   const getComponentResultsTable = () => {
     return (
-      <VanityTable
+      <CustomTable
         data={gitScraperObj}
         columns={columns}
-        onRowSelect={onRowSelect}
+        // onRowSelect={onRowSelect}
         // tableHeight={"28.2vh"}
       />
     );

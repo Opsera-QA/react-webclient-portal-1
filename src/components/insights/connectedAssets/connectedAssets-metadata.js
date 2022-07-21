@@ -58,7 +58,7 @@ const connectedAssetsMetadata = {
          id: "task_name",
        },
        {
-         label: "Last Run (in days)",
+         label: "Updated On",
          id: "pipeline_updatedAt"
        },
        {
@@ -74,7 +74,7 @@ const connectedAssetsMetadata = {
          id: "tasks_updatedAt"
        },
        {
-         label: "Last Triggered On",
+         label: "Last Run (in days)",
          id: "last_triggered"
        },
        {
@@ -106,7 +106,7 @@ const connectedAssetsMetadata = {
          id: "repositoryName"
        },
        {
-        label: "Activity Date",
+        label: "Last Run (in days)",
         id: "activityDate"
        },
        {
@@ -138,7 +138,7 @@ const connectedAssetsMetadata = {
           id: "repo_url",
        },
        {
-          label: "Repository Last Used",
+          label: "Last Run (in days)",
           id: "repo_last_used"
        },
        {

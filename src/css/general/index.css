@@ -36,6 +36,7 @@ primary analytics font*/
 
 .connected-assets-modal-body {
     min-height: 10rem;
+    overflow: scroll;
 }
 
 .metric-sub-header-text-spacing {

@@ -128,6 +128,10 @@ function ConnectedAssetsCollaboratorsInsightsTab({ dashboardData }) {
           dashboardData={dashboardData}
         />);
     }
+    return (
+      <ConnectedAssetsCollaboratorsAnalyticsTable
+        dashboardData={dashboardData}
+      />);
   };
 
   const getVerticalTabContainer = () => {

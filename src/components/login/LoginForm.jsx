@@ -129,13 +129,16 @@ const LoginForm = ({ authClient }) => {
     //console.log("IdP ID: ", federatedIdpIdentifier);
 
     let idpValues = [];
+    let signInToolTip = "Sign in using your email address.";
     if (federatedIdpIdentifier && federatedIdpIdentifier !== "0") {
       idpValues = [
-        { text: ldapOrgName + " SSO", id: federatedIdpIdentifier },//IDP of LDAP object
+        { text: "Click here to sign in!", id: federatedIdpIdentifier },//IDP of LDAP object
         //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
         //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
         //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
       ];
+
+      signInToolTip = ldapOrgName + " Users: click the above button to sign in.";
     }
 
     const signIn = new OktaSignIn({
@@ -158,13 +161,16 @@ const LoginForm = ({ authClient }) => {
       },
       logoText: ldapOrgName + " Sign in",
       logo: '/img/logos/opsera_bird_infinity_171_126.png',
+      colors: {
+        brand: '#352F54',
+      },
       language: 'en',
       username: lookupAccountEmail,
       i18n: {
         en: {
-          'primaryauth.title': ldapOrgName + " Account Activation",
+          'primaryauth.title': ldapOrgName + " User Access",
           'primaryauth.username.placeholder': "Email Address",
-          'primaryauth.username.tooltip': "The login form below follows your organizations defined sign in flow once your account is activated."
+          'primaryauth.username.tooltip': signInToolTip
         }
       },
     });
