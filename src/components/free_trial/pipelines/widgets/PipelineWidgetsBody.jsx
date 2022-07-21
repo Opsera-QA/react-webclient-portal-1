@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WidgetDataBlockBaseContainer from "temp-library-components/metrics/data_blocks/WidgetDataBlockBaseContainer";
+import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineWidgetsBody({selectedPipelineId}) {
