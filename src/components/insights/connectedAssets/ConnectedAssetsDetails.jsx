@@ -69,8 +69,8 @@ function ConnectedAssetsDetails({ dashboardData }) {
       let response = await connectedAssetsActions.getConnectedAssetsData(
         getAccessToken,
         cancelSource,
-        dateRange?.startDate ? dateRange?.startDate : null,
-        dateRange?.endDate? dateRange?.endDate : null
+        dateRange?.startDate ? dateRange?.startDate?.toISOString() : null,
+        dateRange?.endDate? dateRange?.endDate?.toISOString() : null
       );
       let responseData = response?.data?.data?.connectedAssets?.data;
       if (isMounted?.current === true && responseData) {

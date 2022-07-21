@@ -38,6 +38,7 @@ function ConnectedAssetsWebhooksPipelinesTable({ repository, dashboardData, icon
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
+      getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableTextColumn(getField(fields, "status"), "status"),
       getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "last_action"), "last_action")

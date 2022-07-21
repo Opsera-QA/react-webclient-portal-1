@@ -37,7 +37,7 @@ function ConnectedAssetsJobsTasksTable({ dashboardData }) {
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "task_url"), "task_url"),
+      getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableTextColumn(getField(fields, "run_count"), "run_count"),
       getTableTextColumn(getField(fields, "last_triggered"), "last_triggered"),
       getTableTextColumn(getField(fields, "success_count"), "success_count"),
