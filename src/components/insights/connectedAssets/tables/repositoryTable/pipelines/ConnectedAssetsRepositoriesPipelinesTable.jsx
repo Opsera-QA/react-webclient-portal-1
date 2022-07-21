@@ -40,7 +40,8 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableDateTimeColumn(getField(fields, "pipeline_created_at"), "pipeline_created_at"),
       getTableTextColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
-      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name")
+      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
+      getTableTextColumn(getField(fields, "tool_registry_name"), "tool_registry_name")
     ],
     []
   );
