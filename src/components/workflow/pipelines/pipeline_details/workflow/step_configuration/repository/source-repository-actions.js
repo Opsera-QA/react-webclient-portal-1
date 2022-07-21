@@ -25,7 +25,7 @@ SourceRepositoryActions.exportToGitlab = async (getAccessToken, cancelTokenSourc
     pipelineId,
     gitToolId
   };
-  const apiUrl = `/git-operations/${service}/export-pipeline`;
+  const apiUrl = `tool/git-operations/${service}/export-pipeline`;
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
