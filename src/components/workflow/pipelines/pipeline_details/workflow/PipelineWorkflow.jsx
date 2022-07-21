@@ -16,6 +16,7 @@ import {
   faCode,
   faSearchMinus, faFolder, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
+import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
@@ -27,6 +28,7 @@ import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
+import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -118,6 +120,20 @@ function PipelineWorkflow({
       return;
     }
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
+  };
+
+  const handleExportToGitClick = () => {
+
+    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
+      setInfoModal({
+        show: true,
+        header: "Permission Denied",
+        message: "Viewing the pipeline configuration requires elevated privileges.",
+        button: "OK",
+      });
+      return;
+    }
+    toastContext.showOverlayPanel(<PipelineExportToGitOverlay pipeline={pipeline} />);
   };
 
   const callbackFunctionEditItem = async (item) => {
@@ -355,7 +371,7 @@ function PipelineWorkflow({
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
-                <Button variant="outline-secondary" size="sm"
+                <Button className="mr-1" variant="outline-secondary" size="sm"
                         onClick={() => {
                           handleEditWorkflowClick();
                         }}
@@ -363,6 +379,22 @@ function PipelineWorkflow({
                   <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
               </OverlayTrigger>
               }
+            </>}
+          </>}
+          {!editWorkflow &&
+          <>
+            {authorizedAction("view_pipeline_configuration", pipeline.owner) && <>
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "Export a copy of the pipeline configuration to configured repository." })}>
+                <Button variant="outline-secondary" size="sm"
+                        onClick={() => {
+                          handleExportToGitClick();
+                        }}
+                        disabled={(workflowStatus && workflowStatus !== "stopped")}>
+                  <IconBase icon={faGitAlt} className={"mr-1"}/>Export to Git</Button>
+              </OverlayTrigger>
             </>}
           </>}
         </div>
