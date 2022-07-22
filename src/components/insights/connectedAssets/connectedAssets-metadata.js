@@ -165,6 +165,10 @@ const connectedAssetsMetadata = {
         label: "Active Filters",
         id: "activeFilters",
       },
+      {
+        label: "Tool Registry",
+        id: "tool_registry_name"
+      }
     ],
     getActiveFilters(filterDto) {
        let activeFilters = [];

@@ -111,7 +111,7 @@ function ConnectedAssetsCollaboratorsPipelinesTable({ user, dashboardData }) {
   };
 
   const onRowSelect = (rowData) => {
-    history.push(`/workflow/details/${(rowData.original?.pipeline_id)}/summary`);
+    history.push(`/workflow/details/${(rowData.original?._id)}/summary`);
   };
 
   const getTable = () => {
