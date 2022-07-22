@@ -18,7 +18,7 @@ function PipelineExportToGitPanel({ pipeline, handleClose }) {
   service === "github" ? `${pipeline?.workflow?.source?.gitUrl}/${pipeline?.workflow?.source?.gitExportPath}` :
   "Unable to locate full path. Please check your repository configuration and try again.";
 
-  const fileName = `Opsera Pipeline ${pipeline._id}`;
+  const fileName = `Opsera_Pipeline_${pipeline._id}`;
   
   return (
     <EditorPanelContainer
