@@ -18,7 +18,7 @@ function PipelineExportToGitPanel({ pipeline, handleClose }) {
   service === "github" ? `${pipeline?.workflow?.source?.gitUrl}/${pipeline?.workflow?.source?.gitExportPath}` :
   "Unable to locate full path. Please check your repository configuration and try again.";
 
-  const fileName = `Opsera ${pipeline._id} ${pipeline.name.substring(0,25)}`;
+  const fileName = `Opsera Pipeline ${pipeline._id}`;
   
   return (
     <EditorPanelContainer
@@ -28,10 +28,10 @@ function PipelineExportToGitPanel({ pipeline, handleClose }) {
     >
       <Row>
         <Col md={12}>
-          <div className="h6 text-muted mb-2 mt-2"> A copy of the pipeline configuration is about to be exported to the configured git repository.</div>
+          <div className="h6 text-muted mb-4 mt-2"> Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline..</div>
         </Col>
         <Col md={12}>
-          <div className="h6 text-muted mb-2 mt-2"> Full Export Path: {fullPath}</div>
+          <div className="h6 text-muted mb-4 mt-2"> Full Export Path: {fullPath}</div>
         </Col>
         <Col md={12}>
           <div className="h6 text-muted mb-2 mt-2"> File Name: {fileName}</div>

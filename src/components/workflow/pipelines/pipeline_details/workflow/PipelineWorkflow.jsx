@@ -49,6 +49,7 @@ function PipelineWorkflow({
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
+  const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled; 
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -387,12 +388,14 @@ function PipelineWorkflow({
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Export a copy of the pipeline configuration to configured repository." })}>
+                overlay={gitExportEnabled ? 
+                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) : 
+                  renderTooltip({ message: "This feature allows users to push the current version of this pipeline to a configured git repository.  To use this feature go to workflow settings for this pipeline and enable Pipeline Git Revisions." }) }>
                 <Button variant="outline-secondary" size="sm"
                         onClick={() => {
                           handleExportToGitClick();
                         }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped")}>
+                        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled === false ? true : false}>
                   <IconBase icon={faGitAlt} className={"mr-1"}/>Export to Git</Button>
               </OverlayTrigger>
             </>}
