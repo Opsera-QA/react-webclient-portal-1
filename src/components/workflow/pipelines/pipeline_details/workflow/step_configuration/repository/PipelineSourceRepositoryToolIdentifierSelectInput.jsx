@@ -36,6 +36,7 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
     newModel?.setData("sshUrl", "");
     newModel?.setData("branch", "");
     newModel?.setData("trigger_active", false);
+    newModel?.setData("gitExportEnabled", false);
     newModel?.setData("secondary_branches", []);
     setModel({...newModel});
   };
