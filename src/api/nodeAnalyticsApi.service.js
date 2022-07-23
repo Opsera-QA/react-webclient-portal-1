@@ -1,3 +1,5 @@
+import { parseAxiosError } from "api/apiServiceV2";
+
 const axios = require("axios");
 const config = require("../config");
 
@@ -10,8 +12,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall = async (getAccessToken, c
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -23,8 +27,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall = async (getAccessToken, 
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -36,8 +42,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPutCall = async (getAccessToken, c
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -49,8 +57,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPatchCall = async (getAccessToken,
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -63,8 +73,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (getAccessTo
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };

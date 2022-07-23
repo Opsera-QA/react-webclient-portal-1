@@ -10,8 +10,10 @@ apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl,
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -23,32 +25,36 @@ apiServiceV2.axiosApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
 
 apiServiceV2.axiosCustomTokenApiPostCall = async (customToken, cancelTokenSource, apiUrl, postBody) => {
-
   try {
     return await getAxiosInstance(customToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
 
 apiServiceV2.axiosTokenlessApiGetCall = async (cancelTokenSource, apiUrl, postBody) => {
-
   try {
     return await getAxiosInstance(undefined, cancelTokenSource?.token).get(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -60,8 +66,10 @@ apiServiceV2.axiosApiPutCall = async (getAccessToken, cancelTokenSource, apiUrl,
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -73,8 +81,10 @@ apiServiceV2.axiosApiPatchCall = async (getAccessToken, cancelTokenSource, apiUr
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
   }
 };
@@ -86,9 +96,22 @@ apiServiceV2.axiosApiDeleteCall = async (getAccessToken, cancelTokenSource, apiU
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
   }
   catch (error) {
-    if (!axios.isCancel(error)) {
-      throw error;
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
     }
+  }
+};
+
+// TODO: Should this be in a base service file?
+export const parseAxiosError = (error) => {
+  if (!axios.isCancel(error)) {
+    if (typeof error === "object" && error?.message === "Network Error") {
+      return "Please check your network connectivity and try again.";
+    }
+
+    return error;
   }
 };
 
