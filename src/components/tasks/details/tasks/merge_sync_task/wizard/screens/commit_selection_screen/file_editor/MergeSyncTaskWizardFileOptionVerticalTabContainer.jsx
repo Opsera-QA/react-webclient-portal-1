@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import { faBracketsCurly, faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
-import axios from "axios";
+import { faBracketsCurly, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
@@ -12,8 +11,6 @@ import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/S
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MergeSyncTaskWizardSelectDeltaVersionButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import { xmlHelpers } from "utils/xml.helper";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
   {
@@ -76,8 +73,8 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
               isLoading={isLoading}
               maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
               minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-              leftSideTitleIcon={delta?.ignoreIncoming === true ? faCheckCircle : faTrash}
-              rightSideTitleIcon={delta?.ignoreIncoming === false ? faCheckCircle : faTrash}
+              leftSideTitleIcon={faQuestionCircle}
+              rightSideTitleIcon={faQuestionCircle}
               sourceCode={sourceContent}
               destinationCode={destinationContent}
             />
@@ -118,10 +115,10 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
     <VanitySetTabAndViewContainer
       icon={faBracketsCurly}
       title={`Diff Selection`}
-      tabColumnSize={1}
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
+      tabColumnSize={1}
       isLoading={isLoading}
       loadDataFunction={loadDataFunction}
       minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT}

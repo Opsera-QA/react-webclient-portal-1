@@ -10,6 +10,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall = async (getAccessToken, c
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -23,6 +27,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall = async (getAccessToken, 
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -36,6 +44,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPutCall = async (getAccessToken, c
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -49,6 +61,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPatchCall = async (getAccessToken,
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -63,6 +79,10 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (getAccessTo
     return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }

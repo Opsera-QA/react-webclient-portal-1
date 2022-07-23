@@ -10,6 +10,10 @@ apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl,
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -23,6 +27,10 @@ apiServiceV2.axiosApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -35,6 +43,10 @@ apiServiceV2.axiosCustomTokenApiPostCall = async (customToken, cancelTokenSource
     return await getAxiosInstance(customToken, cancelTokenSource?.token).post(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -47,6 +59,10 @@ apiServiceV2.axiosTokenlessApiGetCall = async (cancelTokenSource, apiUrl, postBo
     return await getAxiosInstance(undefined, cancelTokenSource?.token).get(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -60,6 +76,10 @@ apiServiceV2.axiosApiPutCall = async (getAccessToken, cancelTokenSource, apiUrl,
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -73,6 +93,10 @@ apiServiceV2.axiosApiPatchCall = async (getAccessToken, cancelTokenSource, apiUr
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
@@ -86,9 +110,24 @@ apiServiceV2.axiosApiDeleteCall = async (getAccessToken, cancelTokenSource, apiU
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
   }
   catch (error) {
+    if (error?.message === "Network Error") {
+      throw "Please check your network connectivity and try again.";
+    }
+
     if (!axios.isCancel(error)) {
       throw error;
     }
+  }
+};
+
+// TODO: Try to wire this up for all to keep it consistent
+const handleServiceError = (error) => {
+  if (error?.message === "Network Error") {
+    throw "Please check your network connectivity and try again.";
+  }
+
+  if (!axios.isCancel(error)) {
+    throw error;
   }
 };
 
