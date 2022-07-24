@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineExportToGitPanel from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitPanel";
-import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import PipelineExportToGitConfirmationOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitConfirmationOverlay";
 import PipelineExportToGitButtonContainer from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitButtonContainer";
 
 function PipelineExportToGitOverlay({ pipeline }) {
@@ -14,7 +14,7 @@ function PipelineExportToGitOverlay({ pipeline }) {
   };
 
   return (
-    <ConfirmationOverlay
+    <PipelineExportToGitConfirmationOverlay
       closePanel={closePanel}
       titleText={"Export Pipeline Configuration to Git"}
       buttonContainer={
@@ -27,7 +27,7 @@ function PipelineExportToGitOverlay({ pipeline }) {
         pipeline={pipeline}
         handleClose={closePanel}
       />
-    </ConfirmationOverlay>
+    </PipelineExportToGitConfirmationOverlay>
   );
 }
  
