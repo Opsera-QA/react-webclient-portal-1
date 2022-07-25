@@ -1,3 +1,5 @@
+import { hasStringValue } from "components/common/helpers/string-helpers";
+
 const axios = require("axios");
 const config = require("../config");
 
@@ -107,13 +109,22 @@ apiServiceV2.axiosApiDeleteCall = async (getAccessToken, cancelTokenSource, apiU
 // TODO: Should this be in a base service file?
 export const parseAxiosError = (error) => {
   if (!axios.isCancel(error)) {
-    if (typeof error === "object" && error?.message === "Network Error") {
-      return "Please check your network connectivity and try again.";
+    if (typeof error === "object" && hasStringValue(error?.message) === true) {
+      switch (error?.message) {
+        case "Network Error":
+          return "Please check your network connectivity and try again.";
+      }
     }
 
     return error;
   }
 };
+
+const axiosTimeoutErrorMessage = `
+    Access timeout reached. A timeout like this can occur due to intermittent networking or connectivity issues.  
+    Please try refreshing the page or waiting a few moments and trying again.  
+    If this issue persists for an extended period of time, please report it to Opsera for further investigation.
+`;
 
 const getAxiosInstance = (token, cancelToken) => {
   const configuration = {
@@ -124,11 +135,7 @@ const getAxiosInstance = (token, cancelToken) => {
 
   const axiosInstance = axios.create(configuration);
 
-  axiosInstance.defaults.timeoutErrorMessage = `
-    Access timeout reached. A timeout like this can occur due to intermittent networking or connectivity issues.  
-    Please try refreshing the page or waiting a few moments and trying again.  
-    If this issue persists for an extended period of time, please report it to Opsera for further investigation.
-  `;
+  axiosInstance.defaults.timeoutErrorMessage = axiosTimeoutErrorMessage;
 
   if (token) {
     axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
