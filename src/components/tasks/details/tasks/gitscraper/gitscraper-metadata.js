@@ -20,7 +20,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Maximum Allows Secrets Threshold",
       id: "threshold",
-      regexDefinitionName: "numbersOnly"
+      regexDefinitionName: "numbersOnly",
     },
     {
       label: "Permitted Secret Keys",
@@ -57,18 +57,18 @@ const gitscraperTaskConfigurationMetadata = {
   ],
   newObjectFields:
     {
-      repositories:[],
-      reposToScan:[],
-      type:"git_custodian",
-      commits:"",
-      threshold:0,
-      excludeSecrets:[],
-      secretsException:false,
+      repositories: [],
+      reposToScan: [],
+      type: "git_custodian",
+      commits: "",
+      threshold: 0,
+      excludeSecrets: [],
+      secretsException: false,
       service: "",
       gitToolId: "",
       workspace: "",
-      bitbucketWorkspaceName: ""
-    }
+      bitbucketWorkspaceName: "",
+    },
 };
 
 export default gitscraperTaskConfigurationMetadata;

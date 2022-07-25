@@ -31,6 +31,8 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import ArgoBlueGreenDeploymentHelpDocumentation 
   from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
+import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
+import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -107,6 +109,40 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     );
   };
 
+  const getAppVariablesInputFields = () => {
+    return (
+      <>
+        <BooleanToggleInput
+          fieldName={"dynamicVariables"}
+          dataObject={argoCdModel}
+          setDataObject={setArgoCdModel}
+        />
+        {getAppVariablesInput()}
+      </>
+    );
+  };
+
+  const getAppVariablesInput = () => {
+    if (argoCdModel?.getData("dynamicVariables") === true) {
+      return (
+        <>
+          <ArgoClusterSelectInput
+            fieldName={"applicationCluster"}
+            argoToolId={argoCdModel?.getData("toolConfigId")}
+            dataObject={argoCdModel}
+            setDataObject={setArgoCdModel}
+            disabled={!argoCdModel?.getData("toolConfigId")}
+          />
+          <TextInputBase
+            dataObject={argoCdModel}  
+            setDataObject={setArgoCdModel}        
+            fieldName={"yamlPath"}
+          />
+        </>
+      );      
+    }
+  };
+
   const getDynamicFields = () => {
     if (argoCdModel?.getData("type") === "bitbucket") {
       return (
@@ -116,6 +152,18 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
           fieldName={"gitWorkspace"}
           disabled={argoCdModel && argoCdModel.getData("gitFilePath").length === 0}
         />
+      );
+    }
+  };
+
+  const getCommandLineSpecificInput = () => {
+    if(argoCdModel?.getData("dockerStepType") === "command-line") {
+      return (
+          <CustomParameterSelectInput
+              model={argoCdModel}
+              setModel={setArgoCdModel}
+              fieldName={"customParameterId"}
+          />
       );
     }
   };
@@ -188,11 +236,13 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
           hasStringValue(argoCdModel?.getData("applicationName")) !== true
         }
       />
+      {getCommandLineSpecificInput()}
       <ArgoCdStepKustomizeBooleanInput
           model={argoCdModel}
           setModel={setArgoCdModel}
       />
       {getSCMInputs()}
+      {getAppVariablesInputFields()}
       {getRollbackInputs()}
       {getDynamicFields()}
       <BooleanToggleInput

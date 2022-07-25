@@ -639,7 +639,8 @@ const breadcrumbs = {
     path: paths.insightsConnectedAssets,
     title: "Git Custodian",
     linkText: "Git Custodian",
-    icon: faShieldKeyhole
+    icon: faShieldKeyhole,
+    isBeta: true,
   },
   reports: {
     parent: undefined,

@@ -178,11 +178,14 @@ chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSourc
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
       }
     };
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -195,12 +198,15 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
       sortOption: tableFilterDto?.getData("sortOption")?.value,
-      search: filterModel?.getData("search"),
+      search: tableFilterDto?.getData("search"),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
       },
       page: tableFilterDto?.getData("currentPage"),
       size: tableFilterDto?.getData("pageSize"),
@@ -214,11 +220,14 @@ chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, 
   const postBody = {
     startDate: filterModel.getFilterValue('date').startDate,
     endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+    tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
     filters: {
-      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+      email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+      type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
     }
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

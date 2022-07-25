@@ -73,7 +73,6 @@ function GitlabRepositorySelectInput({
   ) => {
     try {
       setIsLoading(true);
-      // const response = await gitlabActions.getRepositoriesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId);
       const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
         getAccessToken,
         cancelSource,

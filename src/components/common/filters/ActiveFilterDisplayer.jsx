@@ -9,18 +9,26 @@ function ActiveFilterDisplayer(
     filterModel,
     loadData,
   }) {
+    const getFilterCloseButton = (filterId) => {
+      if (filterModel?.areFilterBadgesReadOnly == null || filterModel?.areFilterBadgesReadOnly() !== true) {
+      return (
+        <span className="ml-1 pointer" onClick={() => {
+          removeFilter(filterId);
+        }}>
+          <IconBase icon={faTimes} />
+        </span>
+      );
+    }
+  };
+
   const getFilterActiveButton = (filter, key) => {
     if (hasStringValue(filter?.text) === true) {
       return (
         <span key={key} className="mx-1 badge badge-light filter-badge">
-        <span className="mr-1"><IconBase icon={faFilter} /></span>
-        <span>{filter?.text}</span>
-        <span className="ml-1 pointer" onClick={() => {
-          removeFilter(filter?.filterId);
-        }}>
-          <IconBase icon={faTimes} />
-        </span>
-      </span>
+          <span className="mr-1"><IconBase icon={faFilter} /></span>
+          <span>{filter?.text}</span>
+            {getFilterCloseButton(filter?.filterId)}
+       </span>
       );
     }
   };
@@ -36,7 +44,7 @@ function ActiveFilterDisplayer(
     const activeFilters = filterModel?.getData("activeFilters");
     if (Array.isArray(activeFilters) && activeFilters.length > 0) {
       return (
-        <div className={"active-filter-bar item-field py-2 px-1"}>
+        <div className={"active-filter-bar item-field py-3 px-1"}>
           {activeFilters.map((filter, key) =>  getFilterActiveButton(filter, key))}
         </div>
       );
