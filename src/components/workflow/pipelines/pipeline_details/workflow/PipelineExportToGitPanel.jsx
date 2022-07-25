@@ -13,8 +13,9 @@ function PipelineExportToGitPanel({ pipeline, handleClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const { isMounted, cancelTokenSource} = useComponentStateReference();
   const service = pipeline?.workflow?.source?.service;
+  const gitExportPath = pipeline?.workflow?.source?.gitExportPath ? pipeline.workflow.source.gitExportPath : "";
 
-  const fullPath = service === "gitlab" ? `${pipeline?.workflow?.source?.repository}/${pipeline?.workflow?.source?.gitExportPath}` :
+  const fullPath = service === "gitlab" ? `${pipeline?.workflow?.source?.repository}/${gitExportPath}` :
   service === "github" ? `${pipeline?.workflow?.source?.gitUrl}/${pipeline?.workflow?.source?.gitExportPath}` :
   "Unable to locate full path. Please check your repository configuration and try again.";
 
@@ -49,5 +50,3 @@ PipelineExportToGitPanel.propTypes = {
 };
 
 export default PipelineExportToGitPanel;
-
-
