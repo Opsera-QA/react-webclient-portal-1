@@ -4,6 +4,7 @@ import {isActionAllowed} from "components/common/helpers/role-helpers";
 import vaultActions from "components/vault/vault.actions";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export class ToolModel extends ModelBase {
   constructor(
@@ -70,6 +71,11 @@ export class ToolModel extends ModelBase {
 
   getDetailViewTitle = () => {
     return `${this?.getOriginalValue("name")} Tool Details`;
+  };
+
+  hasConfigurationDetailsSet = () => {
+    const configuration = dataParsingHelper.parseObject(this.getData("configuration"), null);
+    return configuration != null;
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
