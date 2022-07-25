@@ -270,6 +270,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
                       bottomText={deploymentMetrics?.trendDeploymentFrequency ? "Previous result: " + deploymentMetrics?.trendDeploymentFrequency + " deployments/day" : "No previous result"}
                       icon={getIcon(deploymentMetrics?.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics?.trend)}
+                      supportingText={" deployments/day"}
                     />
                   </div>
                 </DataBlockBoxContainer>

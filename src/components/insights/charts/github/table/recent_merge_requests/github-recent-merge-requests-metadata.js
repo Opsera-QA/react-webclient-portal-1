@@ -23,11 +23,19 @@ const githubRecentMergeRequestsMetadata = {
         id: "AuthorName",
       },
       {
+        label: "ID",
+        id: "_id",
+      },
+      {
+        label: "URL",
+        id: "mergeRequestUrl",
+      },
+      {
         label: "Reviewer",
         id: "AssigneeName",
       },
       {
-        label: "Merge Request Title",
+        label: "Pull Request Title",
         id: "MergeRequestTitle",
       },
       {
@@ -39,8 +47,12 @@ const githubRecentMergeRequestsMetadata = {
         id: "ProjectName",
       },
       {
-        label: "Time",
+        label: "Completed At",
         id: "mrCompletionTimeTimeStamp"
+      },
+      {
+        label: "Duration",
+        id: "MergeRequestTimeTaken"
       },
     ],
     newObjectFields: {

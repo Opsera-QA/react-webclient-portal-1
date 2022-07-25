@@ -245,7 +245,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
             <TwoLineScoreDataBlock
               className="p-3"
               score={responseData?.totalSuccessfulScans}
-              subtitle={'Total Security'}
+              subtitle={'Total Scans'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -254,7 +254,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.totalSuccessfulTests}
-              subtitle={'Total Quality'}
+              subtitle={'Total Tests'}
             />
           </DataBlockBoxContainer>
         </Col>

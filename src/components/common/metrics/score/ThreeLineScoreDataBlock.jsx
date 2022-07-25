@@ -11,7 +11,8 @@ function ThreeLineScoreDataBlock(
     dataPoint,
     bottomText,
     topText,
-    iconOverlayBody
+    iconOverlayBody,
+    supportingText
   }) {
   return (
     <ThreeLineDataBlockBase
@@ -22,6 +23,7 @@ function ThreeLineScoreDataBlock(
         <MetricScoreText
           dataPoint={dataPoint}
           score={score}
+          supportingText={supportingText}
         />
       }
       bottomText={bottomText}
@@ -39,6 +41,7 @@ ThreeLineScoreDataBlock.propTypes = {
   icon: PropTypes.object,
   dataPoint: PropTypes.object,
   iconOverlayBody: PropTypes.any,
+  supportingText: PropTypes.string
 };
 
 export default ThreeLineScoreDataBlock;

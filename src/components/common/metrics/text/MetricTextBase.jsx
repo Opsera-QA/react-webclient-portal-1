@@ -12,6 +12,7 @@ function MetricTextBase(
     formattedText,
     qualityLevel,
     className,
+    supportingText
   }) {
   const getQualityBasedClassName = () => {
     switch (qualityLevel) {
@@ -26,7 +27,7 @@ function MetricTextBase(
 
   return (
     <span className={`${getQualityBasedClassName()} ${className}`}>
-      {formattedText}
+      {formattedText}<span className="supporting-text">{supportingText}</span>
     </span>
   );
 }
@@ -35,6 +36,7 @@ MetricTextBase.propTypes = {
   formattedText: PropTypes.string,
   qualityLevel: PropTypes.string,
   className: PropTypes.string,
+  supportingText: PropTypes.string
 };
 
 MetricTextBase.defaultProps = {

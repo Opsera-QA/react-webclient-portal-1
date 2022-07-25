@@ -23,11 +23,19 @@ const githubPendingMergeRequestsMetadata = {
         id: "AuthorName",
       },
       {
+        label: "ID",
+        id: "_id",
+      },
+      {
+        label: "URL",
+        id: "mergeRequestUrl",
+      },
+      {
         label: "Reviewer",
         id: "AssigneeName",
       },
       {
-        label: "Merge Request Title",
+        label: "Pull Request Title",
         id: "MergeRequestTitle",
       },
       {
@@ -39,7 +47,7 @@ const githubPendingMergeRequestsMetadata = {
         id: "ProjectName",
       },
       {
-        label: "Time",
+        label: "Opened At",
         id: "mrCompletionTimeTimeStamp"
       },
     ],

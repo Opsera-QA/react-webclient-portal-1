@@ -248,7 +248,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
             <TwoLineScoreDataBlock
               className="p-3"
               score={responseData?.totalFailedScans}
-              subtitle={'Total Security'}
+              subtitle={'Total Scans'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -257,7 +257,7 @@ function FailedExecutionsActionableInsights({ kpiConfiguration, dashboardData })
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.totalFailedTests}
-              subtitle={'Total Quality'}
+              subtitle={'Total Tests'}
             />
           </DataBlockBoxContainer>
         </Col>
