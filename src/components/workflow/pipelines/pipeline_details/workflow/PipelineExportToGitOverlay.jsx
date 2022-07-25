@@ -2,8 +2,9 @@ import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineExportToGitPanel from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitPanel";
-import PipelineExportToGitButtonContainer from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitButtonContainer";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import PipelineExportToGitButtonContainer from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitButtonContainer";
+
 
 function PipelineExportToGitOverlay({ pipeline }) {
   const toastContext = useContext(DialogToastContext);
