@@ -5,7 +5,6 @@ import PipelineExportToGitPanel from "components/workflow/pipelines/pipeline_det
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import PipelineExportToGitButtonContainer from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitButtonContainer";
 
-
 function PipelineExportToGitOverlay({ pipeline }) {
   const toastContext = useContext(DialogToastContext);
 
