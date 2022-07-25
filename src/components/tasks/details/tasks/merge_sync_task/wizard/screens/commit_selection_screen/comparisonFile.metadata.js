@@ -29,6 +29,18 @@ export const comparisonFileMetadata = {
       label: "Latest Version on Destination Branch",
       id: "destinationContent",
     },
+    {
+      label: "Advanced Editing Mode",
+      id: "advancedEditingMode",
+    },
+    {
+      label: "Manual Code Content",
+      id: "manualContent",
+    },
+    {
+      label: "File Content Field Name",
+      id: "fileContentFieldName",
+    },
   ],
   newObjectFields: {
     customerId: "",
@@ -38,5 +50,8 @@ export const comparisonFileMetadata = {
     fullName: "",
     sourceContent: "",
     destinationContent: "",
+    advancedEditingMode: false,
+    fileContentFieldName: "",
+    manualContent: "",
   }
 };

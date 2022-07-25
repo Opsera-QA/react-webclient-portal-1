@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import styling from "react-syntax-highlighter/dist/cjs/styles/hljs/darcula";
 import { deltaDiffHelper } from "components/common/fields/file/diff/delta/deltaDiff.helper";
-import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import SyntaxHighlighterFieldBase from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterFieldBase";
 
 function StandaloneSourceDeltaDiffFieldBase(
   {
@@ -84,18 +82,15 @@ function StandaloneSourceDeltaDiffFieldBase(
   const getTopContextLineSyntaxHighlighter = () => {
     if (hasStringValue(topContextLinesString) === true) {
       return (
-        <SyntaxHighlighter
-          style={styling}
+        <SyntaxHighlighterFieldBase
+          code={topContextLinesString}
           language={language}
-          lineProps={deltaDiffHelper.getLineNumberStyling}
+          linePropsFunction={deltaDiffHelper.getLineNumberStyling}
           wrapLines={true}
           wrapLongLines={true}
           showLineNumbers={false}
           showInlineLineNumbers={false}
-
-        >
-          {topContextLinesString}
-        </SyntaxHighlighter>
+        />
       );
     }
   };
@@ -103,17 +98,15 @@ function StandaloneSourceDeltaDiffFieldBase(
   const getDestinationLinesSyntaxHighlighter = () => {
     if (hasStringValue(destinationLinesString) === true) {
       return (
-        <SyntaxHighlighter
-          style={styling}
+        <SyntaxHighlighterFieldBase
+          code={destinationLinesString}
           language={language}
-          lineProps={deltaDiffHelper.getRemovedLinesStyling}
+          linePropsFunction={deltaDiffHelper.getRemovedLinesStyling}
           wrapLines={true}
           wrapLongLines={true}
           showLineNumbers={false}
           showInlineLineNumbers={false}
-        >
-          {destinationLinesString}
-        </SyntaxHighlighter>
+        />
       );
     }
   };
@@ -121,17 +114,15 @@ function StandaloneSourceDeltaDiffFieldBase(
   const getSourceLinesSyntaxHighlighter = () => {
     if (hasStringValue(sourceLinesString) === true) {
       return (
-        <SyntaxHighlighter
-          style={styling}
+        <SyntaxHighlighterFieldBase
+          code={sourceLinesString}
           language={language}
-          lineProps={deltaDiffHelper.getAddedLinesStyling}
+          linePropsFunction={deltaDiffHelper.getAddedLinesStyling}
           wrapLines={true}
           wrapLongLines={true}
           showLineNumbers={false}
           showInlineLineNumbers={false}
-        >
-          {sourceLinesString}
-        </SyntaxHighlighter>
+        />
       );
     }
   };
@@ -139,17 +130,16 @@ function StandaloneSourceDeltaDiffFieldBase(
   const getBottomContextLineSyntaxHighlighter = () => {
     if (hasStringValue(bottomContextLinesString) === true) {
       return (
-        <SyntaxHighlighter
-          style={styling}
+
+        <SyntaxHighlighterFieldBase
+          code={bottomContextLinesString}
           language={language}
+          linePropsFunction={deltaDiffHelper.getLineNumberStyling}
           wrapLines={true}
           wrapLongLines={true}
           showLineNumbers={false}
           showInlineLineNumbers={false}
-          lineProps={deltaDiffHelper.getLineNumberStyling}
-        >
-          {bottomContextLinesString}
-        </SyntaxHighlighter>
+        />
       );
     }
   };

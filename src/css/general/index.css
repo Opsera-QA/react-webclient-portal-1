@@ -237,6 +237,7 @@ primary analytics font*/
 
 .small-label-text {
     font-size:.8rem;
+    padding: .5rem .5rem;
 }
 
 .pointer {
