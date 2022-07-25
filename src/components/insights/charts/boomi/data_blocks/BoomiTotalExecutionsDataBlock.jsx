@@ -17,6 +17,7 @@ function BoomiTotalExecutionsDataBlock({ data }) {
 
 BoomiTotalExecutionsDataBlock.propTypes = {
   data: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default BoomiTotalExecutionsDataBlock;

@@ -266,7 +266,7 @@ function BoomiBarChart({
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
       if (dataObject && dataObject.length) {
-        dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
+        dataObject.forEach((data) => (data.Count = data?.totalIncidents));
       }
       spaceOutServiceNowCountBySeverityLegend(barchart);
       if (isMounted?.current === true && dataObject) {
@@ -332,72 +332,7 @@ function BoomiBarChart({
     );
   };
 
-  const getMetricBottomRow = () => {
-    return (
-      <Row>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Resolved Tickets by Severity:`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={4}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-1: ${priorityOne}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-2: ${priorityTwo}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-3: ${priorityThree}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-4: ${priorityFour}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-5: ${priorityFive}`}
-          />
-        </Col>
-      </Row>
-    );
-  };
+  
   const getMetricTopRow = () => {
     return (
       <Row>
@@ -461,23 +396,18 @@ function BoomiBarChart({
     }
 
     const dataPoints = kpiConfiguration?.dataPoints;
-    const mttrChartDataPoint = dataPointHelpers.getDataPoint(
+    const boomiFrequencyPercentageDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT,
+      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BOOMI_SUCCESS_PERCENTAGE_DATA_POINT,
     );
-    const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .NUMBER_OF_INCIDENTS_DATA_POINT,
-    );
-    const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(
+    
+    const boomiSuccessPercentageDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .AVERAGE_MTTR_DATA_BLOCK_DATA_POINT,
+        .BOOMI_SUCCESS_PERCENTAGE_DATA_POINT,
     );
-    const isOneChartVisible =
-      dataPointHelpers.isDataPointVisible(mttrChartDataPoint) ||
-      dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
+
+    
     return (
       <>
         <div
@@ -498,22 +428,28 @@ function BoomiBarChart({
               md={3}
               className="h-100 p-3"
             >
-              <BoomiSuccessPercentageDataBlock
-                data={overallMean}
-                dataPoint={averageMTTRDataBlockDataPoint}
-              />
+              <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
+                <BoomiSuccessPercentageDataBlock
+                  data={overallMean}
+                  dataPoint={boomiSuccessPercentageDataPoint}
+                />
+              </DataPointVisibilityWrapper>
             </Col>
             <Col
               md={3}
               className="h-100 p-3"
             >
-              <BoomiTotalExecutionsDataBlock data={minMTTR} />
+                <BoomiTotalExecutionsDataBlock data={minMTTR} />
             </Col>
             <Col
               md={3}
               className="h-100 p-3"
             >
-              <BookiFrequencyDataBlock data={totalIncidents} />
+              <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
+                <BookiFrequencyDataBlock data={totalIncidents} 
+                  dataPoint={boomiFrequencyPercentageDataPoint}
+                />
+              </DataPointVisibilityWrapper>
             </Col>
             <Col
               md={3}

@@ -1,7 +1,6 @@
 export const BOOMI_CONSTANTS = {};
 
 BOOMI_CONSTANTS.SUPPORTED_DATA_POINT_IDENTIFIERS = {
-  MTTR_DATA_POINT: "mttr-in-hours-chart-data-point",
-  NUMBER_OF_INCIDENTS_DATA_POINT: "number-of-incidents-charts-data-point",
-  AVERAGE_MTTR_DATA_BLOCK_DATA_POINT: "average-mttr-data-block-data-point"
+  BOOMI_SUCCESS_PERCENTAGE_DATA_POINT: "boomi-success-percentage-data-point",
+  BOOMI_FREQUENCY_PERCENTAGE_DATA_POINT: "boomi-frequency-percentage-data-point",
 };

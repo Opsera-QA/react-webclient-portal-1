@@ -137,7 +137,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SONAR_SECURITY_SCORECARD: "sonar-security-scorecard",
   SONAR_VULNERABILITIES_BY_PROJECT: "sonar-vulnerabilities-by-project",
   SONAR_VULNERABILITIES_METRIC_SCORECARD: "sonar-vulnerabilities-metric-scorecard",
-
+  BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
   // XUnit
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
