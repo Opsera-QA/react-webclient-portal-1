@@ -10,12 +10,17 @@ import CreateArgoProjectOverlay
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoProjectTable({ toolData, argoProjects, loadData, onRowSelect, isLoading }) {
+function ArgoToolProjectsTable({ toolId, hasConfigurationDetails, argoProjects, loadData, onRowSelect, isLoading }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoProjectMetadata.fields;
 
   const createArgoProject = () => {
-    toastContext.showOverlayPanel(<CreateArgoProjectOverlay toolData={toolData} loadData={loadData} />);
+    toastContext.showOverlayPanel(
+      <CreateArgoProjectOverlay
+        toolId={toolId}
+        loadData={loadData}
+      />
+    );
   };
 
   const columns = useMemo(
@@ -45,19 +50,20 @@ function ArgoProjectTable({ toolData, argoProjects, loadData, onRowSelect, isLoa
       title={"Argo Projects"}
       type={"Argo Projects"}
       titleIcon={faBrowser}
-      addRecordFunction={toolData?.data?.configuration ? createArgoProject : undefined}
+      addRecordFunction={hasConfigurationDetails === true ? createArgoProject : undefined}
       body={getTable()}
       showBorder={false}
     />
   );
 }
 
-ArgoProjectTable.propTypes = {
-  toolData: PropTypes.object,
+ArgoToolProjectsTable.propTypes = {
+  toolId: PropTypes.string,
+  hasConfigurationDetails: PropTypes.bool,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
   argoProjects: PropTypes.array
 };
 
-export default ArgoProjectTable;
+export default ArgoToolProjectsTable;

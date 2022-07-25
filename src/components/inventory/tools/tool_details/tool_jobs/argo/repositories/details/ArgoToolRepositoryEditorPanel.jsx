@@ -29,7 +29,7 @@ function ArgoToolRepositoryEditorPanel({ argoRepositoryData, toolId, handleClose
   };
 
   const updateRepository = async () => {
-    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel?.getData("repoId"), argoRepositoryModel);
+    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
