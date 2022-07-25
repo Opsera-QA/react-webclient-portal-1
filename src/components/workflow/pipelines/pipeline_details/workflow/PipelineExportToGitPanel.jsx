@@ -28,13 +28,13 @@ function PipelineExportToGitPanel({ pipeline, handleClose }) {
     >
       <Row>
         <Col md={12}>
-          <div className="h6 text-muted mb-4 mt-2"> Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline..</div>
+          <div className="h6 mb-4 mt-2"> Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline.</div>
         </Col>
         <Col md={12}>
-          <div className="h6 text-muted mb-4 mt-2"> Full Export Path: {fullPath}</div>
+          <div className="h6 mb-4 mt-2"> Full Export Path: <span className="ml-2">{fullPath}</span> </div>
         </Col>
         <Col md={12}>
-          <div className="h6 text-muted mb-2 mt-2"> File Name: {fileName}</div>
+          <div className="h6 mb-2 mt-2"> File Name: <span className="ml-2">{fileName}</span> </div>
         </Col>
       </Row>
     </EditorPanelContainer>
