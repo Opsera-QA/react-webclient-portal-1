@@ -29,6 +29,8 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
+import modelHelpers from "components/common/model/modelHelpers";
+import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -50,6 +52,7 @@ function PipelineWorkflow({
   const [editWorkflow, setEditWorkflow] = useState(false);
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled; 
+  const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -395,7 +398,7 @@ function PipelineWorkflow({
                         onClick={() => {
                           handleExportToGitClick();
                         }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled === false ? true : false}>
+                        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}>
                   <IconBase icon={faGitAlt} className={"mr-1"}/>Export to Git</Button>
               </OverlayTrigger>
             </>}
