@@ -90,7 +90,7 @@ const connectedAssetsMetadata = {
          id: "last_action"
        },
        {
-         label: "Webhook Status",
+         label: "Pipeline Status",
          id: "status"
        },
        {
