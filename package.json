@@ -37,6 +37,7 @@
     "dotenv": "^8.2.0",
     "env-cmd": "^10.1.0",
     "file": "^0.2.2",
+    "fast-xml-parser": "^4.0.9",
     "jsonwebtoken": "^8.5.1",
     "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.14",
