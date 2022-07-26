@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState, useRef} from "react";
+import React, {useEffect, useContext, useState} from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
@@ -6,68 +6,38 @@ import argoActions from "../../argo-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoRepositoryScmTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/inputs/ArgoRepositoryScmTypeSelectInput";
 import ArgoRepositorySourceControlToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/inputs/ArgoRepositorySourceControlToolSelectInput";
 import ArgoBitbucketWorkspaceInput from "./inputs/ArgoBitbucketWorkspaceInput";
 import ArgoGitRepositoryInput from "./inputs/ArgoGitRepositoryInput";
 import ArgoRepositoriesArgoProjectSelectInput from "./inputs/ArgoRepositoriesArgoProjectSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handleClose }) {
+function ArgoToolRepositoryEditorPanel({ argoRepositoryData, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [argoRepositoryModel, setArgoRepositoryModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { cancelTokenSource} = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    if(argoRepositoryData) {
-      loadData();
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    setArgoRepositoryModel(argoRepositoryData);
   }, [argoRepositoryData]);
 
-  const loadData = () => {
-    try {
-      setIsLoading(true);
-      setArgoRepositoryModel(argoRepositoryData);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const createRepository = async () => {
-    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), argoRepositoryModel);
+    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
   };
 
   const updateRepository = async () => {
-    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId, argoRepositoryModel);
+    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
-    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId);
+    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel?.getData("repoId"));
     handleClose();
   };
 
-  if (isLoading || argoRepositoryModel == null) {
+  if (argoRepositoryModel == null) {
     return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
 
@@ -77,7 +47,6 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
       createRecord={createRepository}
       updateRecord={updateRepository}
       setRecordDto={setArgoRepositoryModel}
-      isLoading={isLoading}
       extraButtons={
         <DeleteButtonWithInlineConfirmation
           dataObject={argoRepositoryModel}
@@ -93,59 +62,56 @@ function ArgoRepositoryEditorPanel({ argoRepositoryData, toolData, repoId, handl
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
               fieldName={"name"}
-              disabled={!argoRepositoryData?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
           <Col lg={12}>
             <ArgoRepositoriesArgoProjectSelectInput 
-              argoToolId={toolData?.getData("_id")}
+              argoToolId={toolId}
               setModel={setArgoRepositoryModel}
               model={argoRepositoryModel}
               fieldName={"projectName"}
-              disabled={!argoRepositoryModel?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
           <Col lg={12}>
             <ArgoRepositoryScmTypeSelectInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
-              disabled={!argoRepositoryData?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
           <Col lg={12}>
             <ArgoRepositorySourceControlToolSelectInput
               setModel={setArgoRepositoryModel}
               model={argoRepositoryModel}
-              disabled={!argoRepositoryData?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
           <Col lg={12}>
             <ArgoBitbucketWorkspaceInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
-              disabled={!argoRepositoryData?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
           <Col lg={12}>
             <ArgoGitRepositoryInput
               setDataObject={setArgoRepositoryModel}
               dataObject={argoRepositoryModel}
-              disabled={!argoRepositoryData?.isNew()}
+              disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
-
         </Row>
       </div>
     </EditorPanelContainer>
   );
 }
 
-ArgoRepositoryEditorPanel.propTypes = {
+ArgoToolRepositoryEditorPanel.propTypes = {
   argoRepositoryData: PropTypes.object,
-  toolData: PropTypes.object,
-  loadData: PropTypes.func,
-  repoId: PropTypes.string,
+  toolId: PropTypes.string,
   handleClose: PropTypes.func
 };
 
-export default ArgoRepositoryEditorPanel;
+export default ArgoToolRepositoryEditorPanel;

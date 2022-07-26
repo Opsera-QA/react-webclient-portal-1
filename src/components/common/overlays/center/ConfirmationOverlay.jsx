@@ -1,12 +1,27 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 
-function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, pageLink, linkTooltipText }) {
+function ConfirmationOverlay(
+  {
+    children,
+    actionBar,
+    titleText,
+    titleIcon,
+    showPanel,
+    closePanel,
+    isLoading,
+    showToasts,
+    showCloseButton,
+    buttonContainer,
+    pageLink,
+    linkTooltipText,
+    height,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -59,7 +74,13 @@ function ConfirmationOverlay({ children, actionBar, titleText, titleIcon, showPa
             linkTooltipText={linkTooltipText}
           />
           {actionBar}
-          <div className={"confirmation-overlay-panel-body bg-white"}>
+          <div
+            className={"confirmation-overlay-panel-body bg-white"}
+            style={{
+              minHeight: height,
+              height: height,
+            }}
+          >
             {showToasts && toastContext?.getInlineBanner()}
             <div className={"d-flex p-3 confirmation-overlay-panel-body-text"}>
               {getBody()}
@@ -87,10 +108,12 @@ ConfirmationOverlay.propTypes = {
   buttonContainer: PropTypes.object,
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
+  height: PropTypes.string,
 };
 
 ConfirmationOverlay.defaultProps = {
   showCloseButton: true,
+  height: "250px",
 };
 
 export default ConfirmationOverlay;

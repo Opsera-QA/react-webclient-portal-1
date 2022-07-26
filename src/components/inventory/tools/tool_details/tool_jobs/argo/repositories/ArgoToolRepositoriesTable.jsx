@@ -5,17 +5,17 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ArgoRepositoryOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoRepositoryOverlay";
+import CreateArgoToolRepositoryOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/CreateArgoToolRepositoryOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoRepositoryTable({ toolData, argoRepositories, loadData, onRowSelect, isLoading }) {
+function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSelect, isLoading, hasConfigurationDetails }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoRepositoryMetadata.fields;
 
   const createArgoRepository = () => {
-    toastContext.showOverlayPanel(<ArgoRepositoryOverlay toolData={toolData} loadData={loadData} />);
+    toastContext.showOverlayPanel(<CreateArgoToolRepositoryOverlay toolId={toolId} loadData={loadData} />);
   };
 
   const columns = useMemo(
@@ -46,19 +46,20 @@ function ArgoRepositoryTable({ toolData, argoRepositories, loadData, onRowSelect
       title={"Argo Repositories"}
       type={"Argo Repositories"}
       titleIcon={faBrowser}
-      addRecordFunction={toolData?.data?.configuration ? createArgoRepository : undefined}
+      addRecordFunction={hasConfigurationDetails === true ? createArgoRepository : undefined}
       body={getTable()}
       showBorder={false}
     />
   );
 }
 
-ArgoRepositoryTable.propTypes = {
-  toolData: PropTypes.object,
+ArgoToolRepositoriesTable.propTypes = {
+  toolId: PropTypes.string,
+  hasConfigurationDetails: PropTypes.bool,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
   argoRepositories: PropTypes.array
 };
 
-export default ArgoRepositoryTable;
+export default ArgoToolRepositoriesTable;

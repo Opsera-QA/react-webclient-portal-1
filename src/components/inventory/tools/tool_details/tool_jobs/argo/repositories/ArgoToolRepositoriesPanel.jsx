@@ -1,12 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import ArgoRepositoryTable from "./ArgoRepositoryTable";
+import React, {useEffect, useState} from "react";
+import ArgoToolRepositoriesTable from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesTable";
 import PropTypes from "prop-types";
-import ArgoRepositoryOverlay from "./ArgoRepositoryOverlay";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import ArgoRepositoryEditorPanel from "./details/ArgoRepositoryEditorPanel";
+import ArgoToolRepositoryEditorPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/ArgoToolRepositoryEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 import argoRepositoryMetadata from "../argo-repository-metadata";
 
+// TODO: This whole section is very old and needs to be updated to current standards.
 function ArgoToolRepositoriesPanel({ toolData, loadData, isLoading, toolActions }) {
   const [argoRepositories, setArgoRepositorie] = useState([]);
   const [argoModel, setArgoModel] = useState(undefined);
@@ -31,8 +30,9 @@ function ArgoToolRepositoriesPanel({ toolData, loadData, isLoading, toolActions 
   };
 
   const onRowSelect = (grid, row) => {
-    const argoRepository = toolData?.getArrayData("repositories", row?.index)?.configuration;
-    setArgoModel({...modelHelpers.parseObjectIntoModel(argoRepository, argoRepositoryMetadata)});
+    const argoRepository = argoRepositories[row?.index];
+    const argoRepositoryModel = modelHelpers.parseObjectIntoModel(argoRepository, argoRepositoryMetadata);
+    setArgoModel({...argoRepositoryModel});
   };
 
   const closePanel = () => {
@@ -42,22 +42,21 @@ function ArgoToolRepositoriesPanel({ toolData, loadData, isLoading, toolActions 
 
   if (argoModel) {
     return (
-      <ArgoRepositoryEditorPanel
+      <ArgoToolRepositoryEditorPanel
         argoRepositoryData={argoModel}
-        toolData={toolData}
-        loadData={loadData}
+        toolId={toolData?.getMongoDbId()}
         handleClose={closePanel}
-        repoId={argoModel?.getMongoDbId()}
       />
     );
   }
 
   return (
-    <ArgoRepositoryTable
+    <ArgoToolRepositoriesTable
       isLoading={isLoading}
-      toolData={toolData}
+      toolId={toolData?.getMongoDbId()}
       loadData={loadData}
       onRowSelect={onRowSelect}
+      hasConfigurationDetails={toolData?.hasConfigurationDetailsSet()}
       argoRepositories={argoRepositories}
     />
   );

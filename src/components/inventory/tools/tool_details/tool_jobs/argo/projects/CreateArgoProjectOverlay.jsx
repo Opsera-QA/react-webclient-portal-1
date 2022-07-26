@@ -8,7 +8,7 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function CreateArgoProjectOverlay({ loadData, toolData, argoDataObject, projId }) {
+function CreateArgoProjectOverlay({ loadData, toolId}) {
   const toastContext = useContext(DialogToastContext);
   const [argoProjectData, setArgoProjectData] = useState(undefined);
   const isMounted = useRef(false);
@@ -29,15 +29,11 @@ function CreateArgoProjectOverlay({ loadData, toolData, argoDataObject, projId }
       source.cancel();
       isMounted.current = false;
     };
-  }, [argoDataObject]);
+  }, []);
 
   const initializeModel = () => {
-    let parsedModel = modelHelpers.parseObjectIntoModel(argoDataObject, argoProjectMetadata);
-
-    if (parsedModel?.isNew()) {
-      parsedModel.setData("toolId", toolData?.getData("_id"));
-    }
-
+    const parsedModel = modelHelpers.parseObjectIntoModel({}, argoProjectMetadata);
+    parsedModel.setData("toolId", toolId);
     setArgoProjectData({...parsedModel});
   };
 
@@ -54,20 +50,17 @@ function CreateArgoProjectOverlay({ loadData, toolData, argoDataObject, projId }
     <CreateCenterPanel closePanel={closePanel} objectType={argoProjectMetadata.type} loadData={loadData}>
       <ArgoProjectEditorPanel
         argoProjectData={argoProjectData}
-        toolData={toolData}
+        toolId={toolId}
         loadData={loadData}
         handleClose={closePanel}
-        projId={projId}
       />
     </CreateCenterPanel>
   );
 }
 
 CreateArgoProjectOverlay.propTypes = {
-  toolData: PropTypes.object,
-  argoDataObject: PropTypes.object,
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
-  projId: PropTypes.string,
 };
 
 export default CreateArgoProjectOverlay;

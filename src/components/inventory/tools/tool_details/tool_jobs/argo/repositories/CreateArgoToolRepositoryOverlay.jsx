@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import argoRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-repository-metadata";
-import ArgoRepositoryEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/ArgoRepositoryEditorPanel";
+import ArgoToolRepositoryEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/details/ArgoToolRepositoryEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function ArgoRepositoryOverlay({ loadData, toolData, argoDataObject, repoId }) {
+function CreateArgoToolRepositoryOverlay({ loadData, toolId }) {
   const toastContext = useContext(DialogToastContext);
   const [argoRepositoryData, setArgoRepositoryData] = useState(undefined);
   const isMounted = useRef(false);
@@ -29,15 +29,11 @@ function ArgoRepositoryOverlay({ loadData, toolData, argoDataObject, repoId }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [argoDataObject]);
+  }, []);
 
   const initializeModel = () => {
-    let parsedModel = modelHelpers.parseObjectIntoModel(argoDataObject, argoRepositoryMetadata);
-
-    if (parsedModel?.isNew()) {
-      parsedModel.setData("toolId", toolData?.getData("_id"));
-    }
-
+    const parsedModel = modelHelpers.parseObjectIntoModel(undefined, argoRepositoryMetadata);
+    parsedModel.setData("toolId", toolId);
     setArgoRepositoryData({...parsedModel});
   };
 
@@ -52,22 +48,19 @@ function ArgoRepositoryOverlay({ loadData, toolData, argoDataObject, repoId }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={argoRepositoryMetadata.type} loadData={loadData}>
-      <ArgoRepositoryEditorPanel
+      <ArgoToolRepositoryEditorPanel
         argoRepositoryData={argoRepositoryData}
-        toolData={toolData}
+        toolId={toolId}
         loadData={loadData}
         handleClose={closePanel}
-        repoId={repoId}
       />
     </CreateCenterPanel>
   );
 }
 
-ArgoRepositoryOverlay.propTypes = {
-  toolData: PropTypes.object,
-  argoDataObject: PropTypes.object,
+CreateArgoToolRepositoryOverlay.propTypes = {
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
-  repoId: PropTypes.string,
 };
 
-export default ArgoRepositoryOverlay;
+export default CreateArgoToolRepositoryOverlay;

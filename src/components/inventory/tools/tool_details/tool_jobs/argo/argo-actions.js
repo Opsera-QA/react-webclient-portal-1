@@ -54,8 +54,8 @@ argoActions.createArgoRepository = async (getAccessToken, cancelTokenSource, too
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, toolId, repoId, argoRepositoryModel) => {
-  const apiUrl = `/tools/${toolId}/argo/repo/${repoId}/update`;
+argoActions.updateArgoRepository = async (getAccessToken, cancelTokenSource, toolId, argoRepositoryModel) => {
+  const apiUrl = `/tools/${toolId}/argo/repo/${argoRepositoryModel?.getData("repoId")}/update`;
   const postBody = {
     ...argoRepositoryModel.getPersistData(),
   };
@@ -77,8 +77,8 @@ argoActions.createArgoProject = async (getAccessToken, cancelTokenSource, toolId
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-argoActions.updateArgoProject = async (getAccessToken, cancelTokenSource, toolId, projId, argoRepositoryModel) => {
-  const apiUrl = `/tools/${toolId}/argo/project/${projId}/update`;
+argoActions.updateArgoProject = async (getAccessToken, cancelTokenSource, toolId, argoRepositoryModel) => {
+  const apiUrl = `/tools/${toolId}/argo/project/${argoRepositoryModel?.getData("projId")}/update`;
   const postBody = {
     ...argoRepositoryModel.getPersistData(),
   };
@@ -86,8 +86,8 @@ argoActions.updateArgoProject = async (getAccessToken, cancelTokenSource, toolId
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-argoActions.deleteArgoProject = async (getAccessToken, cancelTokenSource, toolId, projId) => {
-  const apiUrl = `/tools/${toolId}/argo/project/${projId}`;
+argoActions.deleteArgoProject = async (getAccessToken, cancelTokenSource, toolId, projectId) => {
+  const apiUrl = `/tools/${toolId}/argo/project/${projectId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
