@@ -177,7 +177,7 @@ const AppWithRouterAccess = () => {
   };
 
   const getHeaderNavigationBar = () => {
-    if (history.location.pathname === PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
+    if (history.location.pathname !== PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
       return (
         <HeaderNavBar
           hideAuthComponents={hideSideBar}
