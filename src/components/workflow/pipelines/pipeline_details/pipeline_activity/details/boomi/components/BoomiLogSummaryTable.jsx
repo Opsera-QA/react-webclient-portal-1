@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import boomiReportMetaData
@@ -12,30 +12,60 @@ import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
 import {format} from "date-fns";
+import axios from "axios";
 
-function BoomiLogSummaryTable({ boomiObj }) {
+function BoomiLogSummaryTable({ boomiObj, jobType }) {
   const fields = boomiReportMetaData?.fields;
-  
-  const columns = useMemo(
-    () => [
-        getTableTextColumn(getField(fields,"componentId")),
-        getTableTextColumn(getField(fields,"packageVersion"),undefined, 130),
-        getTableTextColumn(getField(fields,"notes")),
-        getTableTextColumn(getField(fields,"packageId")),
-        getTableTextColumn(getField(fields,"componentVersion"),undefined, 150),
-        getTableTextColumn(getField(fields,"componentType"),undefined, 150),
-        getTableTextColumn(getField(fields,"createdDate")),
-        getTableTextColumn(getField(fields,"createdBy")),
-        getTableBooleanIconColumn(getField(fields,"shareable"),undefined, 80),
-    ],
-    []
-  );
+
+  const createPackageColumns = useMemo(() => [
+      getTableTextColumn(getField(fields, "componentId")),
+      getTableTextColumn(
+          getField(fields, "packageVersion"),
+          undefined,
+          130,
+      ),
+      getTableTextColumn(getField(fields, "notes")),
+      getTableTextColumn(getField(fields, "packageId")),
+      getTableTextColumn(
+          getField(fields, "componentVersion"),
+          undefined,
+          150,
+      ),
+      getTableTextColumn(getField(fields, "componentType"), undefined, 150),
+      getTableTextColumn(getField(fields, "createdDate")),
+      getTableTextColumn(getField(fields, "createdBy")),
+      getTableBooleanIconColumn(
+          getField(fields, "shareable"),
+          undefined,
+          80,
+      ),
+  ], []);
+
+  const deployMigrateColumns = useMemo(() => [
+      getTableTextColumn(getField(fields, "componentId")),
+      getTableTextColumn(
+          getField(fields, "packageVersion"),
+          undefined,
+          130,
+      ),
+      getTableTextColumn(getField(fields, "notes")),
+      getTableTextColumn(getField(fields, "packageId")),
+      getTableTextColumn(
+          getField(fields, "componentVersion"),
+          undefined,
+          150,
+      ),
+      getTableTextColumn(getField(fields, "componentType"), undefined, 150),
+      getTableTextColumn(getField(fields, "deployedDate")),
+      getTableTextColumn(getField(fields, "deployedBy")),
+      getTableTextColumn(getField(fields, "environmentName")),
+  ], []);
 
   const getComponentResultsTable = () => {
     return (
       <VanityTable
         data={boomiObj}
-        columns={columns}
+        columns={jobType === "CREATE_PACKAGE_COMPONENT" ? createPackageColumns : deployMigrateColumns}
         tableHeight={"14.1vh"}
       />
     );
@@ -63,6 +93,7 @@ function BoomiLogSummaryTable({ boomiObj }) {
 
 BoomiLogSummaryTable.propTypes = {
   boomiObj: PropTypes.array,
+  jobType: PropTypes.string
 };
 
 export default BoomiLogSummaryTable;

@@ -13,7 +13,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
-import BoomiLogSummaryReportPanel from "./boomi/GitScraperLogSummaryReportPanel";
+import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
