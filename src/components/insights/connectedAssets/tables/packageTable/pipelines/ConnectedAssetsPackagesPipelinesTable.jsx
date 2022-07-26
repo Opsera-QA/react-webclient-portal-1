@@ -39,6 +39,7 @@ function ConnectedAssetsPackagesPipelinesTable({ pipeline, dashboardData }) {
     () => [
       getTableTextColumn(getField(fields, "artifactName"), "artifactName"),
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
+      getTableTextColumn(getField(fields, "run_count"), "run_count"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "owner_name"), "owner_name")
     ],
