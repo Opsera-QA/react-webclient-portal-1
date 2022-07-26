@@ -1379,17 +1379,11 @@ function StepToolConfiguration({
   };
 
   const getTitleText = () => {
-    let titleText = "";
-
     if (hasStringValue(stepName) === true) {
-      titleText += `${stepName}: `;
+      return stepName;
     }
 
-    if (hasStringValue(stepTool?.tool_identifier)) {
-      titleText += stepTool.tool_identifier;
-    }
-
-    return titleText;
+    return "Pipeline Step Settings";
   };
 
   const getToolsAndAccountText = () => {
