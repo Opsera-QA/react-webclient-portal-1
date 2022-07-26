@@ -14,6 +14,15 @@ import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 import HeaderNavBar from "Navbar";
 
+const PUBLIC_PATHS = {
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  REGISTRATION: "/registration",
+  FREE_TRIAL_REGISTRATION: "/trial/registration",
+  LDAP_ACCOUNT_REGISTRATION: "/account/registration",
+  AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
+};
+
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -167,6 +176,17 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const getHeaderNavigationBar = () => {
+    if (history.location.pathname === PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
+      return (
+        <HeaderNavBar
+          hideAuthComponents={hideSideBar}
+          userData={data}
+        />
+      );
+    }
+  };
+
 
   if (!data && loading && !error) {
     return (<LoadingDialog />);
@@ -177,7 +197,7 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
         <ToastContextProvider
-          navBar={<HeaderNavBar hideAuthComponents={hideSideBar} userData={data} />}
+          navBar={getHeaderNavigationBar()}
         >
           <AppRoutes
             authenticatedState={authenticatedState}
