@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
-import PipelineDataBlock from "components/free_trial/pipelines/data_blocks/PipelineDataBlock";
+import PipelineDataBlock from "components/trial/pipelines/data_blocks/PipelineDataBlock";
 import Row from "react-bootstrap/Row";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";

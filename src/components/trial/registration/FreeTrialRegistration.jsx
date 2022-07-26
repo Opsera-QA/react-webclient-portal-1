@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { freeTrialRegistrationMetadata } from "components/free_trial/freeTrialRegistration.metadata";
-import Model from "../../core/data_model/model";
-import LoadingDialog from "../common/status_notifications/loading";
-import { DialogToastContext } from "../../contexts/DialogToastContext";
-import userActions from "../user/user-actions";
-import RegisterButton from "../common/buttons/saving/RegisterButton";
-import PasswordInput from "../common/inputs/text/PasswordInput";
+import { freeTrialRegistrationMetadata } from "components/trial/freeTrialRegistration.metadata";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import userActions from "components/user/user-actions";
+import RegisterButton from "components/common/buttons/saving/RegisterButton";
+import PasswordInput from "components/common/inputs/text/PasswordInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const FreeTrialRegistration = () => {

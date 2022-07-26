@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PipelineWidgetsPipelineSelectInput
-  from "components/free_trial/pipelines/widgets/PipelineWidgetsPipelineSelectInput";
+  from "components/trial/pipelines/widgets/PipelineWidgetsPipelineSelectInput";
 
 function PipelineWidgetsHeader() {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);

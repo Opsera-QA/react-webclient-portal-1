@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineLandingDataBlockWidgets
-  from "components/free_trial/pipelines/data_blocks/PipelineLandingDataBlockWidgets";
-import PipelineWidgetsHeader from "components/free_trial/pipelines/widgets/PipelineWidgetsHeader";
-import PipelineWidgetsBody from "components/free_trial/pipelines/widgets/PipelineWidgetsBody";
+  from "components/trial/pipelines/data_blocks/PipelineLandingDataBlockWidgets";
+import PipelineWidgetsHeader from "components/trial/pipelines/widgets/PipelineWidgetsHeader";
+import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
 
 function PipelinesLanding() {
   return (

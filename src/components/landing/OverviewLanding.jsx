@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import FreeTrialLandingView from "../free_trial/landing_page/Landing";
+import FreeTrialLandingView from "../trial/landing_page/Landing";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 import axios from "axios";
 import landingActions from "components/landing/landing.actions";

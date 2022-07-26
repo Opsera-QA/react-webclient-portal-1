@@ -127,14 +127,13 @@ import Faq from "components/about/faq/Faq";
 import CustomEnvironmentVariableManagement
   from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
-//import FreeTrialRegistration from "./components/free_trial/Registration";
 //import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -144,7 +143,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
     if (process.env.REACT_APP_STACK === "free-trial") {
       return (
         <>
-          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
           <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding} />
         </>
       );
@@ -188,6 +186,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <Route path="/implicit/callback" component={LoginCallback} />
           <Route path="/logout" exact component={Logout} />
 
+          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/faq" exact component={Faq} />
           <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
