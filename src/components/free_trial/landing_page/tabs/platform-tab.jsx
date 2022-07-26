@@ -1,7 +1,5 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
-
-import "../../freeTrial.css";
 import { useHistory } from "react-router-dom";
 
 function FreeTrialLandingPlatform() {

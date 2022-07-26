@@ -1,7 +1,5 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-
-import "../../freeTrial.css";
 import PropTypes from "prop-types";
 
 function FreeTrialLandingWelcome({ handleTabClick }) {

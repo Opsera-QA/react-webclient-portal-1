@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
 import PropTypes from "prop-types";
-import "../freeTrial.css";
 import FreeTrialLandingWelcome from "./tabs/welcome-tab";
 import FreeTrialLandingPlatform from "./tabs/platform-tab";
 import FreeTrialLandingPipeline from "./tabs/pipeline-tab";

@@ -1,5 +1,4 @@
-// TODO: This will be used for both the regular and free trial registration screens, but putting it here so I can check in this half first
-const registrationMetadata = {
+export const freeTrialRegistrationMetadata = {
   idProperty: "_id",
   fields: [
     {
@@ -84,5 +83,3 @@ const registrationMetadata = {
       company: "",
     }
 };
-
-export default registrationMetadata;
