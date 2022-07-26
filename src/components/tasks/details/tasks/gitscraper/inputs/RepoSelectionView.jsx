@@ -109,6 +109,7 @@ const RepoSelectionView = ({
       formattedRepos.push(
         {
           repository: selectedOption?.name,
+          nameSpacedPath: selectedOption?.nameSpacedPath || selectedOption?.name,
           repoId: selectedOption?.id || selectedOption?.repositoryId || "",
           projectId: selectedOption?.id || selectedOption?.repositoryId || "",
           sshUrl: selectedOption?.sshUrl || "",
@@ -322,6 +323,14 @@ const RepoSelectionView = ({
     );
   }
 
+  const customTemplate = (item) => {
+    return `
+        <div>
+            <div>${item?.nameSpacedPath ? item?.nameSpacedPath : item?.repository}</div>
+        </div>
+    `;
+  };
+
   return (
     <Row>
       <Col lg={6}>
@@ -338,6 +347,7 @@ const RepoSelectionView = ({
           isLoading={isLoading}
           searchFunction={service === toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined :searchFunction}
           icon={faGit}
+          customTemplate={customTemplate}
           disabled={disabled}
           noDataMessage={"No Repositories Found"}
           lazyLoadSearchFunction={service !== toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined : lazyLoadSearchFunction}
@@ -358,6 +368,7 @@ const RepoSelectionView = ({
           textField={textField}
           searchFunction={searchFunction}
           icon={faGit}
+          customTemplate={customTemplate}
           disabled={isLoading || dataObject?.getArrayData("reposToScan")?.length === 0}
         />
       </Col>
