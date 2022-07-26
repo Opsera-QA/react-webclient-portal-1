@@ -180,9 +180,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
   // Authenticated routes
   return (
     <div className={"container-fluid m-0"}>
-      <Row className={"d-flex flex-row mx-6"} style={{ marginBottom: "26px"}}>
-        <Col xs={12}>
-          <Sidebar userData={userData} hideSideBar={hideSideBar} />
+      <div className={"d-flex flex-row"}>
+        <Sidebar userData={userData} hideSideBar={hideSideBar} />
+        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />
@@ -342,8 +342,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 
           {/*{getFreeTrialRoutes()}*/}
-        </Col>
-      </Row>
+        </div>
+      </div>
       <Row className={"fixed-row-footer-bottom"}>
         <Col className={"text-center m-1 p-0"} style={{ fontSize: ".6em" }}>
           <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
