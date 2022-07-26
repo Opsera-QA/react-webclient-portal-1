@@ -38,7 +38,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "_id")),
+      // getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "AssigneeName")),
       getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
