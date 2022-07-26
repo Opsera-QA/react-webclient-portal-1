@@ -14,7 +14,7 @@ import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportP
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
-import BoomiLogSummaryReportPanel from "./boomi/GitScraperLogSummaryReportPanel";
+import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {

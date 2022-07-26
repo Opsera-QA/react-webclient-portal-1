@@ -23,6 +23,7 @@ function BoomiLogSummaryReportPanel({ pipelineTaskData }) {
   const [boomiObj, setBoomiObj] = useState(undefined);
   const [errorObj, setErrorObj] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [jobType, setJobType] = useState("");
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -42,13 +43,15 @@ function BoomiLogSummaryReportPanel({ pipelineTaskData }) {
   const initializeData = async () => {
     try {
       const jobDetails = pipelineTaskData?.api_response?.summaryResult;
+      const job_type = pipelineTaskData?.api_response?.jobType;
       const summaryStats = pipelineTaskData?.api_response?.summaryResult?.stats;
       const successfulPackages = Object.keys(jobDetails)?.length > 0 ? jobDetails.result : undefined;
       const errorPackages = Object.keys(jobDetails)?.length > 0 ? jobDetails?.errorResult : undefined;
       setBoomiObj(successfulPackages);
       setErrorObj(errorPackages);
-      if (summaryStats != null) {
+      if (summaryStats != null && job_type) {
         setBoomiReportModel(new Model(summaryStats, boomiSummaryLogResultMetaData, false));
+        setJobType(job_type);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -74,6 +77,7 @@ function BoomiLogSummaryReportPanel({ pipelineTaskData }) {
             <BoomiReportView
               boomiObj={boomiObj}
               errorObj={errorObj}
+              jobType={jobType}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
@@ -90,7 +94,7 @@ function BoomiLogSummaryReportPanel({ pipelineTaskData }) {
     );
   }
 
-  if (boomiReportModel == null) {
+  if (boomiReportModel === null && boomiObj === null) {
     return (
       <div className={"mt-3"}>
         <IconBase className={"mr-2"} icon={faCheckCircle} />
