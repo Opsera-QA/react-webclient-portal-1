@@ -180,11 +180,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
   // Authenticated routes
   return (
     <div className={"container-fluid m-0"}>
-      <Row className={"d-flex flex-row mx-6"}>
-        <Col xs={0} sm={0} md={1} />
-        {/*<Sidebar userData={userData} hideSideBar={hideSideBar} />*/}
-
-        <Col xs={12} sm={12} md={10} style={{ marginBottom: "26px"}}>
+      <Row className={"d-flex flex-row mx-6"} style={{ marginBottom: "26px"}}>
+        <Col xs={12}>
+          <Sidebar userData={userData} hideSideBar={hideSideBar} />
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />
@@ -345,7 +343,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           {/*{getFreeTrialRoutes()}*/}
         </Col>
-        <Col xs={0} sm={0} md={1} />
       </Row>
       <Row className={"fixed-row-footer-bottom"}>
         <Col className={"text-center m-1 p-0"} style={{ fontSize: ".6em" }}>
@@ -354,8 +351,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       </Row>
     </div>
   );
-
-
 };
 
 AppRoutes.propTypes = {
@@ -366,5 +361,6 @@ AppRoutes.propTypes = {
   userData: PropTypes.object,
   hideSideBar: PropTypes.bool,
 };
+
 export default AppRoutes;
 

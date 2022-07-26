@@ -12,6 +12,7 @@ import HeaderNavigationBar from "components/header/HeaderNavigationBar";
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
+import HeaderNavBar from "Navbar";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -176,7 +177,7 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
         <ToastContextProvider
-          navBar={<HeaderNavigationBar hideAuthComponents={hideSideBar} />}
+          navBar={<HeaderNavBar hideAuthComponents={hideSideBar} userData={data} />}
         >
           <AppRoutes
             authenticatedState={authenticatedState}
