@@ -13,6 +13,15 @@ import {generateUUID} from "components/common/helpers/string-helpers";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 
+const PUBLIC_PATHS = {
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  REGISTRATION: "/registration",
+  FREE_TRIAL_REGISTRATION: "/trial/registration",
+  LDAP_ACCOUNT_REGISTRATION: "/account/registration",
+  AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
+};
+
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -151,7 +160,9 @@ const AppWithRouterAccess = () => {
   };
 
   const getNavBar = () => {
-    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+    if (history.location.pathname !== PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
+      return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+    }
   };
 
   const getError = () => {
