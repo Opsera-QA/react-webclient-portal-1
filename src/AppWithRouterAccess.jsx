@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
@@ -17,6 +17,7 @@ import {generateUUID} from "components/common/helpers/string-helpers";
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
+  const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
   const [isPublicPathState, setIsPublicPathState] = useState(false);
@@ -83,9 +84,10 @@ const AppWithRouterAccess = () => {
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && !loading) {
-      await setLoading(true);
-      await loadUsersData(authState.accessToken["accessToken"],loading);
+    if (authState.isAuthenticated && !data && !error && authStateLoadingUser.current !== true) {
+      authStateLoadingUser.current = true;
+      await loadUsersData(authState.accessToken["accessToken"]);
+      authStateLoadingUser.current = false;
     }
 
   });
@@ -101,10 +103,9 @@ const AppWithRouterAccess = () => {
   }, [authenticatedState, history.location.pathname]);
 
   // TODO: We need to put this in an actions file and wire up cancel token
-  const loadUsersData = async (token, loading) => {
-    if (loading) { return; }
-
+  const loadUsersData = async (token) => {
     try {
+      setLoading(true);
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
       setData(response.data);
@@ -147,7 +148,7 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens.accessToken.value, false);
+    await loadUsersData(tokens.accessToken.value);
   };
 
   const getNavBar = () => {
@@ -171,7 +172,6 @@ const AppWithRouterAccess = () => {
     }
   };
 
-
   if (!data && loading && !error) {
     return (<LoadingDialog />);
   }
@@ -190,7 +190,6 @@ const AppWithRouterAccess = () => {
             userData={data}
             hideSideBar={hideSideBar}
           />
-
         </ToastContextProvider>
       </AuthContextProvider>
     </Security>
