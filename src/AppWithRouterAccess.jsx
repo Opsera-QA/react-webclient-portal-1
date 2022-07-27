@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
@@ -7,12 +7,11 @@ import { axiosApiService } from "api/apiService";
 import AppRoutes from "./AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import {generateUUID} from "components/common/helpers/string-helpers";
-import HeaderNavigationBar from "components/header/HeaderNavigationBar";
+import HeaderNavBar from "Navbar";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
-import HeaderNavBar from "Navbar";
 
 const PUBLIC_PATHS = {
   LOGIN: "/login",
@@ -25,7 +24,7 @@ const PUBLIC_PATHS = {
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
   const [isPublicPathState, setIsPublicPathState] = useState(false);
@@ -92,9 +91,10 @@ const AppWithRouterAccess = () => {
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && !loading) {
-      await setLoading(true);
-      await loadUsersData(authState.accessToken["accessToken"],loading);
+    if (authState.isAuthenticated && !data && !error && authStateLoadingUser?.current === false) {
+      authStateLoadingUser.current = true;
+      await loadUsersData(authState.accessToken["accessToken"]);
+      authStateLoadingUser.current = false;
     }
 
   });
@@ -110,9 +110,7 @@ const AppWithRouterAccess = () => {
   }, [authenticatedState, history.location.pathname]);
 
   // TODO: We need to put this in an actions file and wire up cancel token
-  const loadUsersData = async (token, loading) => {
-    if (loading) { return; }
-
+  const loadUsersData = async (token) => {
     try {
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
@@ -130,8 +128,6 @@ const AppWithRouterAccess = () => {
         console.error(error);
         setError(error);
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -156,7 +152,7 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens.accessToken.value, false);
+    await loadUsersData(tokens.accessToken.value);
   };
 
   const getError = () => {
@@ -188,7 +184,7 @@ const AppWithRouterAccess = () => {
   };
 
 
-  if (!data && loading && !error) {
+  if (!data && authStateLoadingUser.current === true && !error) {
     return (<LoadingDialog />);
   }
 
