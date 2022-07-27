@@ -13,7 +13,7 @@ import {generateUUID} from "components/common/helpers/string-helpers";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 
-const PUBLIC_PATHS = {
+export const PUBLIC_PATHS = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   REGISTRATION: "/registration",
@@ -191,7 +191,6 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
         <ToastContextProvider navBar={getNavBar()}>
-
           <AppRoutes
             authenticatedState={authenticatedState}
             authClient={authClient}

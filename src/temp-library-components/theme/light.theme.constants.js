@@ -15,6 +15,7 @@ lightThemeConstants.COLOR_PALETTE = {
   LIGHT_PURPLE_ALT: "#AC8EF8",
   PURPLE: "#7141DC",
   DEEP_PURPLE: "#46376F",
+  BACKGROUND_PURPLE: "#F7F6FB",
 
   // Gold
   LIGHT_GOLD: "#E5C27E",
@@ -29,7 +30,7 @@ lightThemeConstants.COLOR_PALETTE = {
 
   //Gray
   GRAY: "#6E6C78",
-  BACKGROUND_GRAY: "#F7F6FB",
+  BACKGROUND_GRAY: "#E5E5E5",
 
   // Black
   BLACK: "#000000",

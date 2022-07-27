@@ -9,6 +9,7 @@ import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constan
 import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
+import { PUBLIC_PATHS } from "AppWithRouterAccess";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -264,6 +265,16 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     }
   };
 
+  const getScreenBackgroundColor = () => {
+    const themeConstants = getThemeConstants();
+    switch (history.location.pathname) {
+      case PUBLIC_PATHS.FREE_TRIAL_REGISTRATION:
+        return themeConstants.COLOR_PALETTE.BACKGROUND_PURPLE;
+      default:
+        return themeConstants.COLOR_PALETTE.BACKGROUND_GRAY;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -294,7 +305,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     }}>
       <div
         style={{
-          backgroundColor: getThemeConstants()?.COLOR_PALETTE.BACKGROUND_GRAY,
+          backgroundColor: getScreenBackgroundColor(),
         }}
       >
       </div>
