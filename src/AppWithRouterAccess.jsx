@@ -2,25 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
+import Navbar from "./Navbar";
 import ToastContextProvider from "./contexts/DialogToastContext";
 import { axiosApiService } from "api/apiService";
 import AppRoutes from "./AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import {generateUUID} from "components/common/helpers/string-helpers";
-import HeaderNavBar from "Navbar";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
-
-const PUBLIC_PATHS = {
-  LOGIN: "/login",
-  SIGNUP: "/signup",
-  REGISTRATION: "/registration",
-  FREE_TRIAL_REGISTRATION: "/trial/registration",
-  LDAP_ACCOUNT_REGISTRATION: "/account/registration",
-  AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
-};
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -130,6 +121,8 @@ const AppWithRouterAccess = () => {
         console.error(error);
         setError(error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -178,18 +171,6 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const getHeaderNavigationBar = () => {
-    if (history.location.pathname !== PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
-      return (
-        <HeaderNavBar
-          hideAuthComponents={hideSideBar}
-          userData={data}
-        />
-      );
-    }
-  };
-
-
   if (!data && loading && !error) {
     return (<LoadingDialog />);
   }
@@ -198,9 +179,8 @@ const AppWithRouterAccess = () => {
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-        <ToastContextProvider
-          navBar={getHeaderNavigationBar()}
-        >
+        <ToastContextProvider navBar={getNavBar()}>
+
           <AppRoutes
             authenticatedState={authenticatedState}
             authClient={authClient}
