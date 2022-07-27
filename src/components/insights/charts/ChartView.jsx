@@ -163,6 +163,7 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -854,6 +855,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Gitlab KPIs
+      case "gitlab-deployment-frequency":
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <GitlabDeploymentFrequency
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "gitlab-most-active-contributors":
         return (
           <Col xl={6} md={12} className="p-2">

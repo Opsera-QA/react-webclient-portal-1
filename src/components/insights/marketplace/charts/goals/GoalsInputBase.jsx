@@ -19,6 +19,7 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
     case "sdlc-duration-statistics":
       return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
     case "build-deployment-statistics":
+    case "gitlab-deployment-frequency":
       return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
     case "servicenow-mean-time-to-resolution":
       return (

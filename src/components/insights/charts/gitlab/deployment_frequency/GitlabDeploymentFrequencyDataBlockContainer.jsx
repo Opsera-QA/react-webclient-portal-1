@@ -8,15 +8,15 @@ import { defaultConfig } from 'components/insights/charts/charts-views';
 import _ from "lodash";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
-import config from "../OpseraBuildAndDeployLineChartConfig";
+import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
-import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
+import { goalSuccessColor } from "../../charts-views";
 
 // TODO: Pass in relevant data and don't use hardcoded data
-function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
+function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -33,16 +33,15 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
       "data": chartData?.avgDeployments
     }  
   ];
-
+  console.log(dataPoint, metricData,'***** metricData33');
   const getLeftDataBlock = () => {
-    console.log(dataPoint, metricData,'***** metricData33333');
     return (      
       <ThreeLineDataBlockBase
         className={"build-and-deployment-statistics-kpi"}
-        topText={"Average Daily Deployments"}
+        topText={"Deployment Frequency"}
         middleText={
         <MetricScoreText
-          score={metricData?.deploy?.perDayAverage}
+          score={67}
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}
@@ -52,6 +51,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
   };
 
   const getTrendChart = () => {
+    console.log(goalsData,'***dailyDeploymentsChart');
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
@@ -111,7 +111,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
   );
 }
 
-DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
+GitlabDeploymentFrequencyDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
   chartData: PropTypes.object,
   goalsData: PropTypes.number,
@@ -119,4 +119,4 @@ DeploymentFrequencyStatisticsDataBlockContainer.propTypes = {
   dataPoint: PropTypes.object
 };
 
-export default DeploymentFrequencyStatisticsDataBlockContainer;
+export default GitlabDeploymentFrequencyDataBlockContainer;
