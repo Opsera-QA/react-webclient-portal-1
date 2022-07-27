@@ -304,12 +304,14 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       // getWebsocketClient: getWebSocketClient,
     }}>
       <div
+        className={"w-100"}
         style={{
+          height: "100vh",
           backgroundColor: getScreenBackgroundColor(),
         }}
       >
+        {children}
       </div>
-      {children}
     </AuthContext.Provider>
   );
 };
