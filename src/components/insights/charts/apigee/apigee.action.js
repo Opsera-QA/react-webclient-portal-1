@@ -6,7 +6,7 @@ import {
   getTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
-const apigeeBaseURL = "/apigee/v1/";
+const apigeeBaseURL = "analytics/apigee/v1/";
 
 const apigeeActions = {};
 

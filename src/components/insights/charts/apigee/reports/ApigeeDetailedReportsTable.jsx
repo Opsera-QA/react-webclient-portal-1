@@ -100,7 +100,7 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
       rowData?.environment,
       filterDto
     );
-    let dataObject =response?.data?.data?.[0];
+    let dataObject = response?.data?.data?.data?.[0];
     let dataCount = dataObject?.count ? dataObject?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
