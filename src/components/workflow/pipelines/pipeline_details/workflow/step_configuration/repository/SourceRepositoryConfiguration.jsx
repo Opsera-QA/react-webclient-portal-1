@@ -23,6 +23,8 @@ import PipelineSourceRepositoryToolSelectInput
 import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -75,7 +77,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches } = persistData;
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath  } = persistData;
       const item = {
         name: name,
         service: service,
@@ -92,6 +94,8 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         secondary_branches: secondary_branches,
         key: key,
         trigger_active: trigger_active,
+        gitExportEnabled: gitExportEnabled, 
+        gitExportPath: gitExportPath
       };
       //console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
@@ -197,13 +201,17 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         branches for pipeline runs.</div>
 
       <div className={"p-3"} >COMING SOON</div>
-
-      <hr />
+      
+        <hr />*/}
       <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
-      <div className={"text-muted mb-3"}>Using the configured Git Repository above, Opsera can publish
-        a copy of the pipeline configuration for revision purposes before every run.</div>
-
-      <div className={"p-3"} >COMING SOON</div>*/}
+        <PipelineSourceRepositoryGitExportEnabledInput
+          fieldName={"gitExportEnabled"}
+          model={sourceRepositoryModel}
+          setModel={setSourceRepositoryModel}
+          disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
+        />
+{console.log(sourceRepositoryModel)}
+      {/* <div className={"p-3"} >COMING SOON</div> */}
 
 
 
