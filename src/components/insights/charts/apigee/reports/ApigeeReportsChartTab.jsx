@@ -71,7 +71,7 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
         dashboardTags,
         filterDto
       );
-      const responseData1 = response?.data?.data?.[0];
+      const responseData1 = response?.data?.data?.data?.[0];
       let dataCount = responseData1?.count?.[0]?.count ? responseData1?.count?.[0]?.count : 0;
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
@@ -168,15 +168,6 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
     if(isLoading) {
       return <div className={"m-3"}><LoadingIcon className={"mr-2 my-auto"} />Loading</div>;
     }
-    if (error) {
-      return (
-        <div className="mx-2" >
-          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
-          </div>
-        </div>
-      );
-    }
     if(!responseData || responseData.length === 0) {
       return <div>No data found.</div>;
     }
@@ -204,6 +195,7 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        error={error}
       />
       <ModalLogs
         header="APIGEE Reports"
