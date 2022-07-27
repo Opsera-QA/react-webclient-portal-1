@@ -16,6 +16,7 @@ import {generateUUID} from "components/common/helpers/string-helpers";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
+  const [loading, setLoading] = useState(false);
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
@@ -83,7 +84,7 @@ const AppWithRouterAccess = () => {
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && authStateLoadingUser?.current === false) {
+    if (authState.isAuthenticated && !data && !error && authStateLoadingUser.current !== true) {
       authStateLoadingUser.current = true;
       await loadUsersData(authState.accessToken["accessToken"]);
       authStateLoadingUser.current = false;
@@ -104,6 +105,7 @@ const AppWithRouterAccess = () => {
   // TODO: We need to put this in an actions file and wire up cancel token
   const loadUsersData = async (token) => {
     try {
+      setLoading(true);
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
       setData(response.data);
@@ -120,6 +122,8 @@ const AppWithRouterAccess = () => {
         console.error(error);
         setError(error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -168,8 +172,7 @@ const AppWithRouterAccess = () => {
     }
   };
 
-
-  if (!data && authStateLoadingUser.current === true && !error) {
+  if (!data && loading && !error) {
     return (<LoadingDialog />);
   }
 
@@ -187,7 +190,6 @@ const AppWithRouterAccess = () => {
             userData={data}
             hideSideBar={hideSideBar}
           />
-
         </ToastContextProvider>
       </AuthContextProvider>
     </Security>
