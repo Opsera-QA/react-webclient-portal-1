@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { apigeeReportsMetadata } from "./apigeeReports-metadata";
 import FilterContainer from "../../../../common/table/FilterContainer";
@@ -11,13 +10,11 @@ import {
   getTableTextColumn, getTableBooleanIconColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import IconBase from "../../../../common/icons/IconBase";
 import {parseError} from "../../../../common/helpers/error-helpers";
 import apigeeActions from "../apigee.action";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import FullScreenCenterOverlayContainer from "../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import SuccessPercentActionableInsights
-  from "../../github_actions/data_blocks/AllGithubActions/SuccessPercent/SuccessPercentActionableInsights";
+import {getMetricFilterValue} from "../../../../common/helpers/metrics/metricFilter.helpers";
+import MetricDateRangeBadge from "../../../../common/badges/date/metrics/MetricDateRangeBadge";
 
 function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfiguration }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -110,9 +107,15 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
     }
   };
 
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
+  const getDateBadge = () => {
+    const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+
+    return (
+      <MetricDateRangeBadge
+        startDate={date?.startDate}
+        endDate={date?.endDate}
+      />
+    );
   };
 
   const getTable = () => {
@@ -140,17 +143,32 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
 
   return (
     <div className={"p-2"}>
+      <div className={"d-flex p-2 chart-footer-text"}>
+        <div className={'mr-4'}>
+          <b>Pipeline Name:</b> {pipeline.pipelineName}
+        </div>
+        <div className={'mr-4'}>
+          <b>Organization:</b> {rowData.organization}
+        </div>
+        <div className={'mr-4'}>
+          <b>Environment:</b> {rowData.environment}
+        </div>
+      </div>
       <FilterContainer
         isLoading={isLoading}
         body={getTable()}
-        className={"px-2 pb-2"}
+        className={"p-2"}
         loadData={loadData}
-        title={pipeline?.pipelineName ? pipeline?.pipelineName : ''}
         setFilterDto={setFilterModel}
         filterDto={filterModel}
         showRefreshButton={false}
         supportSearch={true}
       />
+      <div className={"d-flex p-2 justify-content-between chart-footer-text"}>
+        <div>
+          {getDateBadge()}
+        </div>
+      </div>
     </div>
   );
 }
