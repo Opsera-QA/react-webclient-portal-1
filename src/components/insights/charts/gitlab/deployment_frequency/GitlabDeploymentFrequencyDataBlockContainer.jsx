@@ -34,11 +34,11 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
   ];
   const getReverseIcon = (severity) => {
     switch (severity) {
-      case "Red":
+      case "red":
         return faArrowCircleDown;
-      case "Green":
+      case "green":
         return faArrowCircleUp;
-      case "Neutral":
+      case "light-gray-text-secondary":
         return faMinusCircle;
       default:
         break;
@@ -63,7 +63,7 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockBase
-        className={getIconColor(metricData.prevDeploymentTrend?.trend)}
+        className={metricData.prevDeploymentTrend?.trend}
         topText={"Deployments and Frequency"}
         icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
         bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
