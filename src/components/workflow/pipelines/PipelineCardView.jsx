@@ -43,7 +43,7 @@ function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading,
               pipeline={pipeline}
               subscribedPipelineIds={subscribedPipelineIds}
               pipelineModel={new Model({...pipeline}, pipelineMetadata, false)}
-              selectButton={getSelectButton}
+              getSelectButtonFunction={getSelectButton}
             />
           </Col>
         ))}

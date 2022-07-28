@@ -117,6 +117,10 @@ const pipelineSummaryMetadata = {
       id: "workflow",
     },
     {
+      label: "Last Run",
+      id: "workflow.last_run.completed",
+    },
+    {
       label: "Associated Pipeline Run",
       id: "runNumber",
     },
