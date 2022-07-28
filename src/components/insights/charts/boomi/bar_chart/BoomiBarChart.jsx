@@ -12,7 +12,7 @@ import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import BoomiActionableInsightOverlay from "./actionable_insights/BoomiActionableInsightOverlay";
 import { BOOMI_CONSTANTS as dataPointConstants } from "./Boomi_datapoint_identifiers";
-
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers.js";
 import DataPointVisibilityWrapper from "components/common/metrics/data_points/DataPointVisibilityWrapper.jsx";
 import ChartTooltip from "../../ChartTooltip.jsx";
@@ -23,11 +23,11 @@ import {
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../charts-views.js";
 import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock.jsx";
-import BoomiTotalExecutionsDataBlock from "../data_blocks/BoomiTotalExecutionsDataBlock.jsx";
 import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock.jsx";
-import BookiFrequencyDataBlock from "../data_blocks/BookiFrequencyDataBlock.jsx";
+import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -407,138 +407,116 @@ function BoomiBarChart({
         .BOOMI_SUCCESS_PERCENTAGE_DATA_POINT,
     );
 
+    const getIcon = (severity) => {
+      switch (severity) {
+        case "Green":
+          return faArrowCircleUp;
+        case "Red":
+          return faArrowCircleDown;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+  
+    const getIconColor = (severity) => {
+      switch (severity) {
+        case "Red":
+          return "red";
+        case "Green":
+          return "green";
+        case "Neutral":
+          return "light-gray-text-secondary";
+        case "-":
+          return "black";
+        default:
+          break;
+      }
+    };
+
+    const getDataBlocks = () =>{
+      return (<><Row className={'pb-2'}>
+        <Col>
+          <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
+            <BoomiSuccessPercentageDataBlock
+              data={overallMean}
+              dataPoint={boomiSuccessPercentageDataPoint}
+              icon={getIcon('Green')}
+              className={getIconColor('Green')}
+            />
+          </DataPointVisibilityWrapper>
+        </Col>
+        </Row><Row className={'pb-2 pt-2'}>
+        <Col>
+          <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
+            <BoomiFrequencyDataBlock data={totalIncidents} 
+              dataPoint={boomiFrequencyPercentageDataPoint}
+              icon={getIcon('Red')}
+              className={getIconColor('Red')}
+            />
+          </DataPointVisibilityWrapper>
+        </Col>
+        </Row><Row className={'pt-2'}>
+        <Col>
+          <BoomiAverageDurationDataBlock data={maxMTTR}  icon={getIcon('Neutral')}
+              className={getIconColor('Neutral')}/>
+        </Col>
+      </Row></>);
+    };
+    const getChart = () =>{
+      return(<Row>
+        <Col md={12} sm={12} lg={12} >
+          <div className="chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }} >
+            <ResponsiveLine
+              data={metrics}
+              {...defaultConfig(
+                "Number of incidents",
+                "Date",
+                false,
+                false,
+                "wholeNumbers",
+                "monthDate2",
+              )}
+              {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+              {...adjustBarWidth(metrics)}
+              // onClick={(data) => onRowSelect(data)}
+              tooltip={({ indexValue, value, data, color }) => (
+                <ChartTooltip
+                  titles={[
+                    "Date",
+                    "Mean Time to Resolution",
+                    "Number of Incidents",
+                  ]}
+                  values={[
+                    new Date(indexValue).toDateString(),
+                    `${value} hours`,
+                    data.Count,
+                  ]}
+                  style={false}
+                  // color={color}
+                />
+              )}
+              markers={[]}
+            />
+          </div>
+        </Col>
+      </Row>);
+    };
+
     
     return (
       <>
-        <div
-          className={"chart-footer-text"}
-          style={{ marginTop: "10px" }}
-        >
+        <div className={"chart-footer-text"} style={{ marginTop: "10px" }}>
           <MetricBadgeBase
             className={"mx-2"}
             badgeText={"Chart depicts recent 15 results"}
           />
         </div>
-        <div
-          className="new-chart m-3"
-          style={{ minHeight: "450px" }}
-        >
+        <div className="new-chart m-3">
           <Row>
-            <Col
-              md={3}
-              className="h-100 p-3"
-            >
-              <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
-                <BoomiSuccessPercentageDataBlock
-                  data={overallMean}
-                  dataPoint={boomiSuccessPercentageDataPoint}
-                />
-              </DataPointVisibilityWrapper>
-            </Col>
-            <Col
-              md={3}
-              className="h-100 p-3"
-            >
-                <BoomiTotalExecutionsDataBlock data={minMTTR} />
-            </Col>
-            <Col
-              md={3}
-              className="h-100 p-3"
-            >
-              <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
-                <BookiFrequencyDataBlock data={totalIncidents} 
-                  dataPoint={boomiFrequencyPercentageDataPoint}
-                />
-              </DataPointVisibilityWrapper>
-            </Col>
-            <Col
-              md={3}
-              className="h-100 p-3"
-            >
-              <BoomiAverageDurationDataBlock data={maxMTTR} />
-            </Col>
-          </Row>
-          <Row>
-            {/* {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && ( */}
-            <Col
-              md={6}
-              sm={12}
-              lg={6}
-            >
-              <div
-                className="chart mb-3"
-                style={{ height: "300px" }}
-              >
-                <ResponsiveLine
-                  data={metrics}
-                  {...defaultConfig(
-                    "Number of incidents",
-                    "Date",
-                    false,
-                    false,
-                    "wholeNumbers",
-                    "monthDate2",
-                  )}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                  {...adjustBarWidth(metrics)}
-                  // onClick={(data) => onRowSelect(data)}
-                  tooltip={({ indexValue, value, data, color }) => (
-                    <ChartTooltip
-                      titles={[
-                        "Date",
-                        "Mean Time to Resolution",
-                        "Number of Incidents",
-                      ]}
-                      values={[
-                        new Date(indexValue).toDateString(),
-                        `${value} hours`,
-                        data.Count,
-                      ]}
-                      style={false}
-                      // color={color}
-                    />
-                  )}
-                  markers={[]}
-                />
-              </div>
-            </Col>
-            {/* )} */}
-            {/* {dataPointHelpers.isDataPointVisible(
-                numberOfIncidentsDataPoint,
-              ) && ( */}
-            <Col
-              md={6}
-              sm={12}
-              lg={6}
-            >
-              <div
-                className="chart mb-3"
-                style={{ height: "300px" }}
-              >
-                <ResponsiveBar
-                  data={sevMetrics}
-                  {...defaultConfig(
-                    "Number of Incidents",
-                    "Severity",
-                    false,
-                    false,
-                    "wholeNumbers",
-                  )}
-                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                  {...adjustBarWidth(sevMetrics)}
-                  // onClick={(data) => onRowSelect(data)}
-                  // tooltip={({ indexValue, value }) => (
-                  //   <ChartTooltip
-                  //     titles={["Severity", "Number of Incidents"]}
-                  //     values={[indexValue, `${value}`]}
-                  //     style={false}
-                  //     // color={color}
-                  //   />
-                  // )}
-                />
-              </div>
-            </Col>
-            {/* // )} */}
+            <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>
+            <Col md={9} sm={6} lg={9}>{getChart()}</Col>
           </Row>
         </div>
         <div className="ml-2 p-0">{getMetricTopRow()}</div>
