@@ -10,7 +10,17 @@ import axios from "axios";
 import LoadingDialog from "../../common/status_notifications/loading";
 import connectedAssetsActions from "./connectedAssets.actions";
 import {parseError} from "../../common/helpers/error-helpers";
-
+import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/ConnectedAssetsRepositoryTabContainer";
+import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
+import ConnectedAssetsPipelinesTabContainer from "./tables/pipelinesTable/ConnectedAssetsPipelinesTabContainer";
+import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAssetsTasksTabContainer";
+import ConnectedAssetsCollaboratorsTabContainer
+  from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
+import ConnectedAssetsJobsTabContainer from "./tables/jobsTable/ConnectedAssetsJobsTabContainer";
+import ConnectedAssetsWebhooksTabContainer from "./tables/webhooksTable/ConnectedAssetsWebhooksTabContainer";
+import ConnectedAssetsPackagesPipelinesTab from "./tables/packageTable/pipelines/ConnectedAssetsPackagesPipelinesTab";
+import sessionHelper from "utils/session.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function ConnectedAssetsDetails({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -19,8 +29,19 @@ function ConnectedAssetsDetails({ dashboardData }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [data, setData] = useState([]);
+  const [selectedDataBlock, setSelectedDataBlock] = useState("");
+  const [dynamicPanel, setDynamicPanel] = useState(undefined);
+  const repositoriesDataBlock = "repository";
+  const branchesDataBlock = "branches";
+  const collaboratorsDataBlock = "collaborators";
+  const pipelinesDataBlock = "pipelines";
+  const tasksDataBlock = "tasks";
+  const jobsDataBlock = "jobs";
+  const webhooksDataBlock = "webhooks";
+  const packagesDataBlock = "packages";
 
   useEffect(() => {
+    resetData();
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -44,31 +65,97 @@ function ConnectedAssetsDetails({ dashboardData }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dateRange = dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "date"
-        )
-        ]?.value;
+      let dateRange = dashboardData?.getData("date");
       let response = await connectedAssetsActions.getConnectedAssetsData(
         getAccessToken,
         cancelSource,
-        "connectedAssets",
-        dateRange?.startDate ? dateRange?.startDate : null,
-        dateRange?.endDate? dateRange?.endDate : null
+        dateRange?.startDate ? dateRange?.startDate?.toISOString() : null,
+        dateRange?.endDate? dateRange?.endDate?.toISOString() : null
       );
-      let responseData = response?.data?.data[0]?.connectedAssets?.data;
-      if (isMounted?.current === true) {
-        setData(responseData);
+      let responseData = response?.data?.data?.connectedAssets?.data;
+      if (isMounted?.current === true && responseData) {
+        if(responseData) {
+          setData(responseData);
+        }
+        const selectedDataBlockUrlParameter = sessionHelper.getStoredUrlParameter('view');
+        if (hasStringValue(selectedDataBlockUrlParameter) == true) {
+          onDataBlockSelect(selectedDataBlockUrlParameter);
+        }
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
+        setIsLoading(false);
         setError(error);
       }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    }
+  };
+
+  const resetData = () => {
+    setSelectedDataBlock("");
+    setDynamicPanel(undefined);
+  };
+
+  const onDataBlockSelect = (selectedDataBlock) => {
+    switch(selectedDataBlock) {
+      case repositoriesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", repositoriesDataBlock);
+        toggleDynamicPanel(repositoriesDataBlock, () => {
+          return (<ConnectedAssetsRepositoryTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case branchesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", branchesDataBlock);
+        toggleDynamicPanel(branchesDataBlock, () => {
+          return (<ConnectedAssetsBranchesTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case collaboratorsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", collaboratorsDataBlock);
+        toggleDynamicPanel(collaboratorsDataBlock, () => {
+          return (<ConnectedAssetsCollaboratorsTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case pipelinesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", pipelinesDataBlock);
+        toggleDynamicPanel(pipelinesDataBlock, () => {
+          return (<ConnectedAssetsPipelinesTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case tasksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", tasksDataBlock);
+        toggleDynamicPanel(tasksDataBlock,() => {
+          return (<ConnectedAssetsTasksTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case jobsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", jobsDataBlock);
+        toggleDynamicPanel(jobsDataBlock, () => {
+          return (<ConnectedAssetsJobsTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case webhooksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", webhooksDataBlock);
+        toggleDynamicPanel(webhooksDataBlock, () => {
+          return (<ConnectedAssetsWebhooksTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case packagesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", packagesDataBlock);
+        toggleDynamicPanel(packagesDataBlock, () => {
+          return (<ConnectedAssetsPackagesPipelinesTab dashboardData={dashboardData}/>);
+        });
+        break;
+    }
+  };
+
+  const toggleDynamicPanel = (name, dynamicPanel) => {
+    if (selectedDataBlock === name) {
+      resetData();
+    } else {
+      setSelectedDataBlock(name);
+      setDynamicPanel(dynamicPanel);
     }
   };
 
@@ -77,11 +164,15 @@ function ConnectedAssetsDetails({ dashboardData }) {
       return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
     }
 
+    if(!data || data.length === 0) {
+      return <div className={"p-2"}>No data found.</div>;
+    }
+
     if (error) {
       return (
         <div className="mx-2" >
           <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+            <span className={"-5"}>An error has occurred during loading: {parseError(error?.message)}.</span>
           </div>
         </div>
       );
@@ -92,7 +183,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
         <div className={"mx-2"}>
           <Row className={"mx-0 p-2 justify-content-between"}>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === repositoriesDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(repositoriesDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faDatabase}
                   className={"p-2"}
@@ -102,7 +197,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === branchesDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(branchesDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faCodeBranch}
                   className={"p-2"}
@@ -112,7 +211,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === collaboratorsDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(collaboratorsDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faUsers}
                   className={"p-2"}
@@ -122,7 +225,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === pipelinesDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(pipelinesDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faDiagramSuccessor}
                   className={"p-2"}
@@ -132,7 +239,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === tasksDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(tasksDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faListCheck}
                   className={"p-2"}
@@ -142,7 +253,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === jobsDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(jobsDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faStopwatch}
                   className={"p-2"}
@@ -152,7 +267,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === webhooksDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(webhooksDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faCompressArrowsAlt}
                   className={"p-2"}
@@ -162,7 +281,11 @@ function ConnectedAssetsDetails({ dashboardData }) {
               </DataBlockBoxContainer>
             </Col>
             <Col md={3} className={"my-2"}>
-              <DataBlockBoxContainer showBorder={true}>
+              <DataBlockBoxContainer
+                showBorder={true}
+                className={selectedDataBlock === packagesDataBlock ? "selected-data-block" : undefined}
+                onClickFunction={() => onDataBlockSelect(packagesDataBlock)}
+              >
                 <ThreeLineIconDataBlockBase
                   icon={faBox}
                   className={"p-2"}
@@ -173,6 +296,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
             </Col>
           </Row>
         </div>
+        {dynamicPanel}
       </div>
     );
   };
