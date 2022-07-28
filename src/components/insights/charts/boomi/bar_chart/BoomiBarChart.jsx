@@ -18,7 +18,7 @@ import DataPointVisibilityWrapper from "components/common/metrics/data_points/Da
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
   adjustBarWidth,
-  assignStandardColors,
+  assignStandardColors, assignStandardLineColors,
   defaultConfig,
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../charts-views.js";
@@ -28,6 +28,7 @@ import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx"
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import chartsActions from "../../charts-actions";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -41,26 +42,12 @@ function BoomiBarChart({
   // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [sevMetrics, setSevMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [overallMean, setOverallMean] = useState(undefined);
-  const [minMTTR, setMinMTTR] = useState(undefined);
-  const [maxMTTR, setMaxMTTR] = useState(undefined);
+  const [dataBlockValues, setDataBlockValues] = useState([]);
   const [goalsData, setGoalsData] = useState(undefined);
-  const [totalIncidents, setTotalIncidents] = useState(0);
-  const [totalResolvedIncidents, setTotalResolvedIncidents] = useState(0);
-  const [lastFiveDays, setLastFiveDays] = useState(0);
-  const [fiveToFifteenDays, setFiveToFifteenDays] = useState(0);
-  const [fifteenToThirtyDays, setFifteenToThirtyDays] = useState(0);
-  const [beforeThirtyDays, setBeforeThirtyDays] = useState(0);
-  const [priorityOne, setPriorityOne] = useState(0);
-  const [priorityTwo, setPriorityTwo] = useState(0);
-  const [priorityThree, setPriorityThree] = useState(0);
-  const [priorityFour, setPriorityFour] = useState(0);
-  const [priorityFive, setPriorityFive] = useState(0);
   const toastContext = useContext(DialogToastContext);
   useEffect(() => {
     if (cancelTokenSource) {
@@ -99,217 +86,22 @@ function BoomiBarChart({
         goals =
           kpiConfiguration?.filters[
             kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
-          ]?.value,
-        response = {
-          data: {
-            data: [
-              {
-                boomi: {
-                  tool: "Boomi",
-                  data: [
-                    {
-                      totalResolvedIncidents: 35,
-                      minMTTR: 0.04,
-                      maxMTTR: 309.78,
-                      overallMttrHours: 28.02,
-                      docs: [
-                        {
-                          id: "Success",
-                          color: "#28B463",
-                          data: [
-                            {
-                              x: "2022-04-19",
-                              y: 4,
-                            },
-                            {
-                              x: "2022-04-20",
-                              y: 25,
-                            },
-                            {
-                              x: "2022-04-21",
-                              y: 4,
-                            },
-                            {
-                              x: "2022-04-22",
-                              y: 3,
-                            },
-                            {
-                              x: "2022-04-23",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-24",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-25",
-                              y: 1,
-                            },
-                            {
-                              x: "2022-04-26",
-                              y: 20,
-                            },
-                            {
-                              x: "2022-04-27",
-                              y: 30,
-                            },
-                            {
-                              x: "2022-04-28",
-                              y: 20,
-                            },
-                          ],
-                        },
-                        {
-                          id: "Failure",
-                          color: "#CB4335",
-                          data: [
-                            {
-                              x: "2022-04-19",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-20",
-                              y: 12,
-                            },
-                            {
-                              x: "2022-04-21",
-                              y: 5,
-                            },
-                            {
-                              x: "2022-04-22",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-23",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-24",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-25",
-                              y: 0,
-                            },
-                            {
-                              x: "2022-04-26",
-                              y: 4,
-                            },
-                            {
-                              x: "2022-04-27",
-                              y: 9,
-                            },
-                            {
-                              x: "2022-04-28",
-                              y: 0,
-                            },
-                          ],
-                        },
-                      ],
-                      totalIncidents: 50,
-                      lastFiveDays: 0,
-                      fiveToFifteenDays: 0,
-                      fifteenToThirtyDays: 0,
-                      beforeThirtyDays: 15,
-                      "Priority-1": 6,
-                      "Priority-2": 3,
-                      "Priority-3": 4,
-                      "Priority-4": 2,
-                      "Priority-5": 20,
-                      severityData: [
-                        {
-                          priority: 1,
-                          "Create Package": 4,
-                          "Migrate Package": 41,
-                          "Deploy Package": 32,
-                        },
-                        {
-                          priority: 2,
-                          "Create Package": 25,
-                          "Migrate Package": 41,
-                          "Deploy Package": 32,
-                        },
-                        {
-                          priority: 3,
-                          "Create Package": 4,
-                          "Migrate Package": 41,
-                          "Deploy Package": 32,
-                        },
-                        {
-                          priority: 4,
-                          "Create Package": 3,
-                          "Migrate Package": 41,
-                          "Deploy Package": 32,
-                        },
-                        {
-                          priority: 5,
-                          "Create Package": 10,
-                          "Migrate Package": 21,
-                          "Deploy Package": 2,
-                        },
-                      ],
-                    },
-                  ],
-                  length: 1,
-                  status: 200,
-                  status_text: "OK",
-                },
-              },
-            ],
-          },
-        },
-        dataObject = response?.data?.data[0]?.boomi?.data[0]?.docs,
-        barchart = response?.data?.data[0]?.boomi?.data[0]?.severityData,
-        overallMeanValue =
-          response?.data?.data[0]?.boomi?.data[0]?.overallMttrHours;
+          ]?.value;
+      setGoalsData(goals);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "boomiChartandBlocksData", kpiConfiguration, dashboardTags);
+      console.log("response", response);
+        let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
+        datablock = response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics?.data[0]?.statisticsData;
+      console.log("datablock1", datablock);
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
-      if (dataObject && dataObject.length) {
-        dataObject.forEach((data) => (data.Count = data?.totalIncidents));
-      }
-      spaceOutServiceNowCountBySeverityLegend(barchart);
+      spaceOutServiceNowCountBySeverityLegend(dataObject);
+      assignStandardLineColors(dataObject, true);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setSevMetrics(barchart);
-        setOverallMean(overallMeanValue);
-      }
-
-      if (!dataObject) {
-        setMetrics([]);
-        setSevMetrics([]);
-      }
-      const responseData = response?.data?.data[0]?.boomi?.data[0];
-      setTotalIncidents(
-        responseData?.totalIncidents ? responseData?.totalIncidents : 0,
-      );
-      setTotalResolvedIncidents(
-        responseData?.totalResolvedIncidents
-          ? responseData?.totalResolvedIncidents
-          : 0,
-      );
-      setMinMTTR(responseData?.minMTTR ? responseData?.minMTTR : 0);
-      setMaxMTTR(responseData?.maxMTTR ? responseData?.maxMTTR : 0);
-      setLastFiveDays(
-        responseData?.lastFiveDays ? responseData?.lastFiveDays : 0,
-      );
-      setFiveToFifteenDays(
-        responseData?.fiveToFifteenDays ? responseData?.fiveToFifteenDays : 0,
-      );
-      setFifteenToThirtyDays(
-        responseData?.fifteenToThirtyDays
-          ? responseData?.fifteenToThirtyDays
-          : 0,
-      );
-      setBeforeThirtyDays(
-        responseData?.beforeThirtyDays ? responseData?.beforeThirtyDays : 0,
-      );
-      if (responseData) {
-        setPriorityOne(responseData["Priority-1"] || 0);
-        setPriorityTwo(responseData["Priority-2"] || 0);
-        setPriorityThree(responseData["Priority-3"] || 0);
-        setPriorityFour(responseData["Priority-4"] || 0);
-        setPriorityFive(responseData["Priority-5"] || 0);
+        setDataBlockValues(datablock);
+        setGoalsData(goals);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -351,11 +143,11 @@ function BoomiBarChart({
 
     const getIcon = (severity) => {
       switch (severity) {
-        case "Green":
+        case "green":
           return faArrowCircleUp;
-        case "Red":
+        case "red":
           return faArrowCircleDown;
-        case "Neutral":
+        case "neutral":
           return faMinusCircle;
         default:
           break;
@@ -364,11 +156,11 @@ function BoomiBarChart({
   
     const getIconColor = (severity) => {
       switch (severity) {
-        case "Red":
+        case "red":
           return "red";
-        case "Green":
+        case "green":
           return "green";
-        case "Neutral":
+        case "neutral":
           return "light-gray-text-secondary";
         case "-":
           return "black";
@@ -376,33 +168,33 @@ function BoomiBarChart({
           break;
       }
     };
+    console.log("datablock2", dataBlockValues);
+    console.log("metrics", metrics);
 
     const getDataBlocks = () =>{
       return (<><Row className={'pb-2'}>
         <Col>
           <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
             <BoomiSuccessPercentageDataBlock
-              data={overallMean}
+              data={dataBlockValues?.SuccessPercentage}
               dataPoint={boomiSuccessPercentageDataPoint}
-              icon={getIcon('Green')}
-              className={getIconColor('Green')}
+              lastScore={ dataBlockValues?.prevSuccessPercentage}
+              icon={getIcon(dataBlockValues?.successPercentageTrend?.trend)}
+              className={getIconColor(dataBlockValues?.successPercentageTrend?.trend)}
             />
           </DataPointVisibilityWrapper>
         </Col>
         </Row><Row className={'pb-2 pt-2'}>
         <Col>
           <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
-            <BoomiFrequencyDataBlock data={totalIncidents} 
+            <BoomiFrequencyDataBlock
+              data={dataBlockValues?.freq}
               dataPoint={boomiFrequencyPercentageDataPoint}
-              icon={getIcon('Red')}
-              className={getIconColor('Red')}
+              lastScore={ dataBlockValues?.prevFreq}
+              icon={getIcon(dataBlockValues?.frequencyTrend?.trend)}
+              className={getIconColor(dataBlockValues?.frequencyTrend?.trend)}
             />
           </DataPointVisibilityWrapper>
-        </Col>
-        </Row><Row className={'pt-2'}>
-        <Col>
-          <BoomiAverageDurationDataBlock data={maxMTTR}  icon={getIcon('Neutral')}
-              className={getIconColor('Neutral')}/>
         </Col>
       </Row></>);
     };
@@ -423,23 +215,23 @@ function BoomiBarChart({
               {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
               {...adjustBarWidth(metrics)}
               // onClick={(data) => onRowSelect(data)}
-              tooltip={({ indexValue, value, data, color }) => (
-                <ChartTooltip
-                  titles={[
-                    "Date",
-                    "Mean Time to Resolution",
-                    "Number of Incidents",
-                  ]}
-                  values={[
-                    new Date(indexValue).toDateString(),
-                    `${value} hours`,
-                    data.Count,
-                  ]}
-                  style={false}
-                  // color={color}
-                />
-              )}
-              markers={[]}
+              // tooltip={({ indexValue, value, data, color }) => (
+              //   <ChartTooltip
+              //     titles={[
+              //       "Date",
+              //       "Mean Time to Resolution",
+              //       "Number of Incidents",
+              //     ]}
+              //     values={[
+              //       new Date(indexValue).toDateString(),
+              //       `${value} hours`,
+              //       data.Count,
+              //     ]}
+              //     style={false}
+              //     // color={color}
+              //   />
+              // )}
+              // markers={[]}
             />
           </div>
         </Col>
