@@ -316,13 +316,13 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
   return null;
 }
 
-export function getAmexFiltersFromKpiConfiguration(kpiConfiguration) {
+export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
   if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "amexFilters")]
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
       ?.value
   ) {
     return kpiConfiguration.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "amexFilters")
+      kpiConfiguration.filters.findIndex((obj) => obj.type === "hierarchyFilters")
     ].value;
   }
   return null;

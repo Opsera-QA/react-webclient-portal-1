@@ -365,4 +365,16 @@ input[disabled] {
     border-radius: 5px;
 }
 
+.custom-select-input {
+    padding-bottom: 10px;
+}
+
+.object-properties-input {
+    padding-bottom: 10px;
+}
+
+.input-container {
+    padding-bottom: 10px;
+}
+
 /* End Error State CSS */

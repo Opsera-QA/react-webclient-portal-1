@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   endpointRequestHeaderConfigurationMetadata
 } from "components/common/inputs/endpoints/endpoint/request/headers/endpointRequestHeaderConfiguration.metadata";
+import EndpointRequestHeaderTokenConfiguration
+  from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderTokenConfiguration";
 import EndpointRequestHeaderUseAuthorizationTokenToggleInput
   from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderUseAuthorizationTokenToggleInput";
-import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 
 function EndpointRequestHeaderConfigurationInput(
   {
     disabled,
     model,
     setModel,
+    toolId,
   }) {
   const [endpointRequestHeaderConfigurationModel, setEndpointRequestHeaderConfigurationModel] = useState(undefined);
 
@@ -30,10 +30,18 @@ function EndpointRequestHeaderConfigurationInput(
     setModel({...updatedModel});
   };
 
-  // TODO: Make separate input
-  const updateCustomParameterId = (fieldName, selectedOption) => {
-    endpointRequestHeaderConfigurationModel.setData(fieldName, selectedOption?._id);
-    updateMainModelFunction(endpointRequestHeaderConfigurationModel);
+  const getRequestHeaderTokenPanel = () => {
+    if (endpointRequestHeaderConfigurationModel?.getData("useAuthorizationToken") === true) {
+      return (
+        <EndpointRequestHeaderTokenConfiguration
+          endpointRequestHeaderConfigurationModel={endpointRequestHeaderConfigurationModel}
+          disabled={disabled}
+          setEndpointRequestHeaderConfigurationModel={setEndpointRequestHeaderConfigurationModel}
+          updateMainModelFunction={updateMainModelFunction}
+          toolId={toolId}
+        />
+      );
+    }
   };
 
   if (endpointRequestHeaderConfigurationModel == null) {
@@ -42,25 +50,15 @@ function EndpointRequestHeaderConfigurationInput(
 
   return (
     <div className={"mx-3 mb-3 mt-1 h-100"}>
-      <Row>
-        <Col xs={12}>
-          <EndpointRequestHeaderUseAuthorizationTokenToggleInput
-            model={endpointRequestHeaderConfigurationModel}
-            setModel={setEndpointRequestHeaderConfigurationModel}
-            updateMainModelFunction={updateMainModelFunction}
-            disabled={disabled}
-          />
-        </Col>
-        <Col xs={12}>
-          <CustomParameterSelectInput
-            model={endpointRequestHeaderConfigurationModel}
-            setModel={setEndpointRequestHeaderConfigurationModel}
-            setDataFunction={updateCustomParameterId}
-            disabled={disabled}
-            fieldName={"authorizationTokenCustomParameterId"}
-          />
-        </Col>
-      </Row>
+      <div>
+        <EndpointRequestHeaderUseAuthorizationTokenToggleInput
+          model={endpointRequestHeaderConfigurationModel}
+          setModel={setEndpointRequestHeaderConfigurationModel}
+          updateMainModelFunction={updateMainModelFunction}
+          disabled={disabled}
+        />
+      </div>
+      {getRequestHeaderTokenPanel()}
     </div>
   );
 }
@@ -69,6 +67,7 @@ EndpointRequestHeaderConfigurationInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  toolId: PropTypes.string,
 };
 
 export default EndpointRequestHeaderConfigurationInput;

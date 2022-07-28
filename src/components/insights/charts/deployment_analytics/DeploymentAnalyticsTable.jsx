@@ -90,7 +90,6 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
         dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.data;
-        console.log(response?.data?.data[0]?.data,'***Test table');
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;

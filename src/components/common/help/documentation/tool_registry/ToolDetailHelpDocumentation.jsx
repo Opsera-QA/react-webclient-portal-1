@@ -22,6 +22,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  const getEndpointsTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.ENDPOINTS) === true) {
+      return (
+        <li><b>Endpoints</b> - Configure external API integrator endpoints.</li>
+      );
+    }
+  };
   const getVaultTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.VAULT) === true) {
       return (
@@ -134,6 +141,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+
   const getHelpDocumentation = () => {
     return (
       <div>
@@ -144,6 +152,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               <li><b>Attributes</b> - Includes Organizations, Contacts, Licensing, Locations, Applications and Compliance.</li>
               {getVaultTabInformation()}
               {getConnectionsTabInformation()}
+              {getEndpointsTabInformation()}
               {getValidationRulesTabInformation()}
               {getApplicationsTabInformation()}
               {getStorageTabInformation()}

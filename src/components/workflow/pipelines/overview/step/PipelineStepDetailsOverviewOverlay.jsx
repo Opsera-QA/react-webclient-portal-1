@@ -2,8 +2,9 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import {faCog} from "@fortawesome/pro-light-svg-icons";
+//import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import PipelineStepTabPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepTabPanel";
 
@@ -37,10 +38,10 @@ function PipelineStepDetailsOverviewOverlay({ pipelineStepData }) {
   }
 
   return (
-    <FullScreenCenterOverlayContainer
+    <CenterOverlayContainer
       closePanel={closePanel}
-      titleText={`${pipelineStepData?.name} Pipeline Step Summary`}
-      titleIcon={faDraftingCompass}
+      titleText={`Pipeline Step Settings: ${pipelineStepData?.name}`}
+      titleIcon={faCog}
       showToasts={true}
     >
       <div className={"p-3"}>
@@ -48,7 +49,7 @@ function PipelineStepDetailsOverviewOverlay({ pipelineStepData }) {
           pipelineStepData={pipelineStepData}
         />
       </div>
-    </FullScreenCenterOverlayContainer>
+    </CenterOverlayContainer>
   );
 }
 

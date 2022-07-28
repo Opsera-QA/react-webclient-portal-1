@@ -21,6 +21,7 @@ function PositiveIntegerNumberPickerInput(
     maximum,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -76,6 +77,7 @@ function PositiveIntegerNumberPickerInput(
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <StandaloneNumberPickerInput
         placeholdertext={placeholderText}
@@ -110,6 +112,7 @@ PositiveIntegerNumberPickerInput.propTypes = {
   className: PropTypes.string,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 PositiveIntegerNumberPickerInput.defaultProps = {

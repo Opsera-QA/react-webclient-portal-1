@@ -11,19 +11,19 @@ export const allGithubActionsDataBlockMetadata = {
     },
     {
       label: "",
-      id: "amex-filters",
+      id: "hierarchy-filters",
     },
   ],
   newObjectFields: {
     tags: [],
     date: undefined,
-    amexFilters: {
-      application: [],
-      director: [],
-      vp1: [],
-      vp2: [],
-      svp: [],
-      action: [],
+    hierarchyFilters: {
+      filter1: [],
+      filter2: [],
+      filter3: [],
+      filter4: [],
+      filter5: [],
+      filter6: [],
     },
   },
 };

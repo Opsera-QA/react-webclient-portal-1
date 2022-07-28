@@ -91,6 +91,8 @@ import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubAct
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
+import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
+import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -165,6 +167,10 @@ import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrappe
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+import QuickDeployStatistics from "./opsera/quick_deploy_statistics/QuickDeployStatistics";
+
+//APIGEE KPIs
+import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -942,7 +948,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -954,8 +960,22 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      //APIGEE KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeReportsChartTab
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1094,7 +1114,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1142,7 +1162,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1191,7 +1211,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           );
         case "lead-time-and-release-traceability-data-block":
           return(
-            <Col md={12} className="p-2"> 
+            <Col md={12} className="p-2">
               <LeadTimeAndReleaseTraceabilityDataBlock
                 kpiConfiguration={kpiConfig}
                 setKpiConfiguration={setKpiConfig}
@@ -1200,6 +1220,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                 index={index}
                 showViewDetailsToggle={true}
               />
+            </Col>
+          );
+      case "github-security-compliance":
+        return (
+            <Col md={12} className="p-2">
+                <GithubSecurityCompliance
+                    kpiConfiguration={kpiConfig}
+                    setKpiConfiguration={setKpiConfig}
+                    dashboardData={dashboardData}
+                    setKpis={setKpis}
+                    index={index}
+                />
+            </Col>
+        );
+      case "github-connected-assets":
+        return (
+            <Col xl={6} md={12} className="p-2">
+                <GithubConnectedAssets
+                    kpiConfiguration={kpiConfig}
+                    setKpiConfiguration={setKpiConfig}
+                    dashboardData={dashboardData}
+                    setKpis={setKpis}
+                    index={index}
+                />
             </Col>
             );
       case "sonar-unit-testing":
@@ -1487,7 +1531,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "salesforce-components-chart":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
         return (
           <Col md={12} className="p-2">
             <SalesforceComponentsDataBlockChart
@@ -1597,6 +1641,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+            return (
+                <Col md={12} className="p-2">
+                    <QuickDeployStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       // GitSrapperMetrics
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (

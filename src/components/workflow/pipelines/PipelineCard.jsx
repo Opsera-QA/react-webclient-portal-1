@@ -1,28 +1,25 @@
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
-import { format } from "date-fns";
 import React from "react";
-import PipelineActionBar from "./PipelineActionBar";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
    faFlag,
-  faSearch,
 } from "@fortawesome/pro-light-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
+import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 
 // TODO: Rewrite
-const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
-  let history = useHistory();
-
-  const handleDetailsClick = param => e => {
-    e.preventDefault();
-    history.push(`/workflow/details/${param}/summary`);
-  };
+const PipelineCard = (
+  {
+    pipeline,
+    pipelineModel,
+    subscribedPipelineIds,
+    getSelectButtonFunction,
+  }) => {
 
   const getPendingApprovalField = () => {
     let pendingApproval = PipelineHelpers.getPendingApprovalStep(pipeline);
@@ -54,6 +51,14 @@ const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
     }
 
     return description;
+  };
+
+  const getLastRunEntry = () => {
+    const lastRunCompletionDate = pipeline?.workflow?.last_run?.completed;
+
+    if (lastRunCompletionDate != null) {
+      return getFormattedTimestamp(lastRunCompletionDate);
+    }
   };
 
   return (
@@ -92,19 +97,8 @@ const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
           </Row>
           <Row>
             <Col className="py-1">
-              <span className="text-muted mr-2 pb-1">Created:</span><span
-              className="">{pipeline?.updatedAt && format(new Date(pipeline?.createdAt), "yyyy-MM-dd'")}</span>
-            </Col>
-            <Col className="py-1">
-              {pipeline?.workflow?.last_run?.completed ?
-                <><span className="text-muted mr-2 pb-1">Last Run:</span><span
-                  className="">{format(new Date(pipeline?.workflow?.last_run?.completed), "yyyy-MM-dd'")}</span>
-                </>
-                :
-                <><span className="text-muted mr-2 pb-1">Updated:</span><span
-                  className="">{pipeline?.updatedAt && format(new Date(pipeline?.updatedAt), "yyyy-MM-dd'")}</span>
-                </>
-              }
+              <span className="text-muted mr-2 pb-1">Last Run:</span>
+              <span>{getLastRunEntry()}</span>
             </Col>
           </Row>
           <Row>
@@ -116,15 +110,13 @@ const PipelineCard = ({ pipeline, pipelineModel, subscribedPipelineIds }) => {
           <Row>
             <Col />
             <Col className="text-right p-2">
-              <Button variant="primary" size="sm" className="w-50"
-                      onClick={handleDetailsClick(pipeline?._id)}>
-                <IconBase icon={faSearch} className={"mr-1"}/>View</Button>
+              {getSelectButtonFunction(pipeline)}
             </Col>
           </Row>
         </Card.Body>
         <Card.Footer>
           {/*TODO: Note, if you want the action icons to show up, pass in functions related and wire them up*/}
-          <PipelineActionBar pipeline={pipeline} handleViewClick={handleDetailsClick}/>
+          {/*<PipelineActionBar pipeline={pipeline} />*/}
         </Card.Footer>
       </Card>
   );
@@ -134,6 +126,7 @@ PipelineCard.propTypes = {
   pipeline: PropTypes.object,
   pipelineModel: PropTypes.object,
   subscribedPipelineIds: PropTypes.array,
+  getSelectButtonFunction: PropTypes.func,
 };
 
 export default PipelineCard;

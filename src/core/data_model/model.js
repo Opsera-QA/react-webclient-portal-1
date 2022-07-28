@@ -281,9 +281,9 @@ export class Model {
   };
 
   getLabel = (fieldName) => {
-    let fields = this.metaData.fields;
+    const fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
-    let field = fields.find(field => { return field.id === fieldName;});
+    const field = fields.find(field => field.id === fieldName);
     return field ? field.label : "No label found in metadata";
   };
 
@@ -291,7 +291,7 @@ export class Model {
     return this.metaData;
   };
 
-  // TODO: Make filterModel and move filter related options there
+  // TODO: Use filterModel and move filter related options there once all references are updated
   getActiveFilters = () => {
     return this.metaData.getActiveFilters(this);
   };

@@ -13,9 +13,6 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import ExternalRestApiIntegrationEndpointParameterField
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointParameterField";
 
@@ -26,6 +23,9 @@ function EndpointRequestParametersInputBase(
     setModel,
     parameterFields,
     disabled,
+    height,
+    endpointParameterArrayInputHeight,
+    endpointParameterInputHeight,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
@@ -63,7 +63,7 @@ function EndpointRequestParametersInputBase(
         return;
       }
 
-      const value = dataParsingHelper.parseObjectValue(parameter.type, currentData[fieldName]);
+      const value = dataParsingHelper.parseObjectValue(parameter?.type, currentData?.[fieldName]);
 
       unpackedParameters.push({
         ...parameter,
@@ -143,6 +143,8 @@ function EndpointRequestParametersInputBase(
         endpointBodyField={fieldData}
         updateParameterFunction={(updatedParameter) => updateParameterFunction(index, updatedParameter)}
         disabled={disabled}
+        endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
+        endpointParameterInputHeight={endpointParameterInputHeight}
       />
     );
   };
@@ -153,8 +155,8 @@ function EndpointRequestParametersInputBase(
         <InfoContainer
           titleIcon={faCode}
           titleText={field?.label}
-          minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
-          maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+          minimumHeight={height}
+          maximumHeight={height}
         >
           <CenteredContentWrapper>
             <span>There are no Parameters to configure</span>
@@ -167,8 +169,8 @@ function EndpointRequestParametersInputBase(
       <VanitySetTabAndViewContainer
         icon={faCode}
         title={field?.label}
-        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
-        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        minimumHeight={height}
+        maximumHeight={height}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
@@ -197,7 +199,7 @@ function EndpointRequestParametersInputBase(
       <ExternalRestApiIntegrationEndpointParameterField
         model={model}
         fieldName={fieldName}
-        height={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_CONTAINER_HEIGHT}
+        height={height}
         titleRightSideButton={getRightSideButton()}
       />
     );
@@ -210,10 +212,10 @@ function EndpointRequestParametersInputBase(
   return (
     <div>
       <Row>
-        <Col xs={8} className={"pr-2"}>
+        <Col xs={7} className={"pr-2"}>
           {getParameterInputContainer()}
         </Col>
-        <Col xs={4} className={"pl-0"}>
+        <Col xs={5} className={"pl-0"}>
           {getConstructedParameterContainer()}
         </Col>
       </Row>
@@ -227,6 +229,9 @@ EndpointRequestParametersInputBase.propTypes = {
   setModel: PropTypes.func,
   parameterFields: PropTypes.array,
   disabled: PropTypes.bool,
+  height: PropTypes.string,
+  endpointParameterArrayInputHeight: PropTypes.string,
+  endpointParameterInputHeight: PropTypes.string,
 };
 
 export default EndpointRequestParametersInputBase;

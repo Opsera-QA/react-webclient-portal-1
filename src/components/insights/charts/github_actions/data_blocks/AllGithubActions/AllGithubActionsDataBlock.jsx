@@ -66,7 +66,7 @@ function AllGithubActionsDataBlock({
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
       let dashboardFilters =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
             ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -142,7 +142,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Success %`}
+        titleText={`Actionable Report: Execution Rate`}
         showToasts={true}
         isLoading={false}
       >
@@ -158,7 +158,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Success Runs`}
+        titleText={`Actionable Report: Successful Execution Application Details`}
         showToasts={true}
         isLoading={false}
       >
@@ -213,7 +213,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Failed Runs`}
+        titleText={`Actionable Report: Failed Execution Application Details`}
         showToasts={true}
         isLoading={false}
       >
@@ -243,7 +243,7 @@ function AllGithubActionsDataBlock({
                     className={`${getIconColor(metrics?.trend)} p-2`}
                     dataPoint={successPercent}
                     percentage={metrics?.successPercentage}
-                    topText={"Success %"}
+                    topText={"Successful Execution Rate"}
                     bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage : "No previous result"}
                     icon={getIcon(metrics?.trend)}
                     iconOverlayBody={getDescription(metrics?.trend)}

@@ -45,7 +45,8 @@
       "error",
       "always"
     ],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
+    "no-duplicate-imports": "warn",
     "react/prop-types": "error",
     "react/no-unescaped-entities": "error",
     "react/display-name": "error",

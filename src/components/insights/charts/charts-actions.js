@@ -24,7 +24,7 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
-  getAmexFiltersFromKpiConfiguration,
+  getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
@@ -168,11 +168,14 @@ chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSourc
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
       }
     };
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -184,11 +187,16 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
   const postBody = {
       startDate: filterModel.getFilterValue('date').startDate,
       endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      sortOption: tableFilterDto?.getData("sortOption")?.value,
+      search: tableFilterDto?.getData("search"),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
       filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
       },
       page: tableFilterDto?.getData("currentPage"),
       size: tableFilterDto?.getData("pageSize"),
@@ -202,11 +210,14 @@ chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, 
   const postBody = {
     startDate: filterModel.getFilterValue('date').startDate,
     endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+    tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
     filters: {
-      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
+      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+      email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+      type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
     }
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -459,7 +470,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let amexFilters = getAmexFiltersFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
@@ -511,10 +522,41 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
     headCommitSha: headCommitSha,
-    amexFilters: useKpiTags ? amexFilters : null,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/github/v1/githubListOfRepositories";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    type: tableFilterDto?.getData("type"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

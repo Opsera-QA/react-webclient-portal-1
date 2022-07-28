@@ -59,15 +59,18 @@ function TagManagement() {
   };
 
   const getTags = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getTags(getAccessToken, cancelSource, filterDto);
+    const response = await adminTagsActions.getTags(
+      getAccessToken,
+      cancelSource,
+      filterDto,
+    );
     const tagList = response?.data?.data;
 
-    if (isMounted?.current === true && tagList) {
+    if (isMounted?.current === true && Array.isArray(tagList)) {
       setTagList(tagList);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setTagFilterDto({...newFilterDto});
+      filterDto.setData("totalCount", response?.data?.count);
+      filterDto.setData("activeFilters", filterDto?.getActiveFilters());
+      setTagFilterDto({...filterDto});
     }
   };
 

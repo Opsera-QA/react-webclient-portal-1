@@ -14,6 +14,7 @@ function JenkinsSfdcInput({ dataObject, setDataObject, sfdcList, disabled, busy 
       newDataObject.setData('sfdcToolId', selectedOption.id);
       newDataObject.setData('accountUsername', selectedOption.configuration ? selectedOption.configuration.accountUsername : "");
       newDataObject.setData('sfdcUnitTestType', "");
+      newDataObject.setData('ruleIds', []);
       setDataObject({ ...newDataObject });
     }
   };

@@ -1,38 +1,53 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import FieldTitleBar from "components/common/fields/FieldTitleBar";
 import {faLaptopCode} from "@fortawesome/pro-light-svg-icons";
-import InputContainer from "components/common/inputs/InputContainer";
+import InfoContainer from "components/common/containers/InfoContainer";
 
-function StandaloneConsoleLogField({title, consoleLog}) {
+function StandaloneConsoleLogField(
+  {
+    title,
+    consoleLog,
+    height,
+    maxHeight,
+  }) {
 
   useEffect(() => {
   }, [consoleLog]);
 
   return (
-    <InputContainer>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <FieldTitleBar customTitle={title} icon={faLaptopCode}/>
-          <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
-            <div className="console-text">
-              {consoleLog}
-            </div>
-          </div>
+    <InfoContainer
+      className={"my-2"}
+      titleText={title}
+      titleIcon={faLaptopCode}
+    >
+      <div
+        style={{
+          height: height,
+          maxHeight: maxHeight,
+          overflowY: "auto",
+        }}
+        className={"console-text"}
+      >
+        <div>
+          {consoleLog}
         </div>
       </div>
-      <div className={"object-properties-footer"}/>
-    </InputContainer>
+      <div className={"object-properties-footer"} />
+    </InfoContainer>
   );
 }
 
 StandaloneConsoleLogField.propTypes = {
   consoleLog: PropTypes.string,
   title: PropTypes.string,
+  height: PropTypes.string,
+  maxHeight: PropTypes.string,
 };
 
 StandaloneConsoleLogField.defaultProps = {
   title: "Console Log",
+  height: "500px",
+  maxHeight: "500px",
 };
 
 export default StandaloneConsoleLogField;

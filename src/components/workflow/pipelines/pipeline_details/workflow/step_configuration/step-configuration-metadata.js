@@ -1,5 +1,5 @@
 const stepConfigurationMetadata = {
-  type: "Pipeline Step Configuration",
+  type: "Step Definition",
   fields: [
     {
       label: "Step Enabled",

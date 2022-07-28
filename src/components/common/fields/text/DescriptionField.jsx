@@ -19,7 +19,8 @@ DescriptionField.propTypes = {
 };
 
 DescriptionField.defaultProps = {
-  characterLimit: 150
+  characterLimit: 150,
+  fieldName: "description",
 };
 
 export default DescriptionField;

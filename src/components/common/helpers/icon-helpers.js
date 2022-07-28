@@ -31,8 +31,10 @@ export function getLargeVendorIconFromToolIdentifier (toolIdentifier, s3Bucket =
     case "git":
       return <Image src={`${vendorIconPrefix}/icons8-git-96.png`} />;
     case "azure":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
     case "azure-devops":
     case "azure-functions":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
     case "azure_account":
       return <Image src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
     case "octopus":

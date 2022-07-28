@@ -83,7 +83,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
       const dashboardTags =
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardFilters =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
             ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -244,7 +244,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-3"
-              score={responseData?.totalSecurity}
+              score={responseData?.totalSuccessfulScans}
               subtitle={'Total Security'}
             />
           </DataBlockBoxContainer>
@@ -253,7 +253,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalQuality}
+              score={responseData?.totalSuccessfulTests}
               subtitle={'Total Quality'}
             />
           </DataBlockBoxContainer>
@@ -262,7 +262,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE1SuccessfulDeploy?.[0]?.successCount}
+              score={responseData?.totalE1SuccessfulDeploy}
               subtitle={'Total E1 Deployments'}
             />
           </DataBlockBoxContainer>
@@ -271,7 +271,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE2SuccessfulDeploy?.[0]?.successCount}
+              score={responseData?.totalE2SuccessfulDeploy}
               subtitle={'Total E2 Deployments'}
             />
           </DataBlockBoxContainer>
@@ -280,7 +280,7 @@ function SuccessExecutionsActionableInsights({ kpiConfiguration, dashboardData }
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.totalE3SuccessfulDeploy?.[0]?.successCount}
+              score={responseData?.totalE3SuccessfulDeploy}
               subtitle={'Total E3 Deployments'}
             />
           </DataBlockBoxContainer>

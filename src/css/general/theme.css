@@ -1625,6 +1625,9 @@ div.data-blocks-ellipses {
     .inline-select-filter {
         min-width: 250px;
     }
+    .overlay-panel-body {
+        overflow-x: hidden;        
+    }    
 }
 
 @media (min-width: 1500px) {
@@ -1748,7 +1751,6 @@ div.data-blocks-ellipses {
 }
 
 .confirmation-overlay-panel-body {
-    min-height: 500px;
     max-height: calc(100% - 48px);
     min-width: 750px;
     max-width: 750px;

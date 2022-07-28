@@ -2,6 +2,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import { validateField } from "core/data_model/modelValidation";
 
 export class FilterModelBase {
   constructor(metaData) {
@@ -18,6 +19,26 @@ export class FilterModelBase {
     }
 
     return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+  };
+
+  getArrayData = (fieldName, index) => {
+    const currentValue = this.getData(fieldName);
+
+    if (currentValue == null) {
+      return [];
+    }
+
+    if (!Array.isArray(currentValue)) {
+      console.error(`Value was not saved as array. Returning in array.`);
+      console.error(`Value: ${JSON.stringify(currentValue)}`);
+      return [currentValue];
+    }
+
+    if (typeof index === "number") {
+      return currentValue.length >= index + 1 ? currentValue[index] : null;
+    }
+
+    return currentValue;
   };
 
   setData = (fieldName, newValue, updateQueryParameters = true) => {
@@ -182,6 +203,10 @@ export class FilterModelBase {
     return parsedBrowserStorage;
   };
 
+  isFieldValid = (fieldName) => {
+    return validateField(this, this.getFieldById(fieldName));
+  };
+
   getTotalCount = () => {
     return this.data?.totalCount;
   };
@@ -292,6 +317,10 @@ export class FilterModelBase {
   };
 
   canToggleView = () => {
+    return false;
+  };
+
+  areFilterBadgesReadOnly = () => {
     return false;
   };
 

@@ -8,23 +8,32 @@ import Popover from "react-bootstrap/Popover";
 import Model from "core/data_model/model";
 import IconBase from "components/common/icons/IconBase";
 
-function FilterButtons({
-  dropdownFilters,
-  filterDto,
-  loadData,
-  className,
-  isLoading,
-  filterBtnClassName,
-  includeButtonText,
-  filterDropdownTitle
-}) {
+function FilterButtons(
+  {
+    dropdownFilters,
+    filterDto,
+    loadData,
+    className,
+    isLoading,
+    filterBtnClassName,
+    includeButtonText,
+    filterDropdownTitle,
+  }) {
   const loadFilters = async () => {
+    if (isLoading === true) {
+      return;
+    }
+
     filterDto?.setData("currentPage", 1);
     loadData(filterDto);
     document.body.click();
   };
 
   const resetFilters = async () => {
+    if (isLoading === true) {
+      return;
+    }
+
     let newFilterModel;
 
     if (filterDto?.getNewInstance) {
@@ -61,38 +70,38 @@ function FilterButtons({
     }
 
     return (
-    <Popover id="popover-basic" className="popover-filter">
-      <Popover.Title as="h3" className="filter-title">
-        <Row>
-          <Col sm={10} className="my-auto">{filterDropdownTitle ? filterDropdownTitle : 'Filters'}</Col>
-          <Col sm={2} className="text-right">
-            <IconBase
-              icon={faTimes}
-              className={"pointer"}
-              onClickFunction={() => {
-                document.body.click();
-              }}
-            />
-          </Col>
-        </Row>
-      </Popover.Title>
-      <Popover.Content className="filter-body">
-        {getInnerFilters()}
-        <div className="d-flex justify-content-between">
-          <div className="w-50 mr-1">
-            <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
-              <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
-            </Button>
+      <Popover id="popover-basic" className="popover-filter">
+        <Popover.Title as="h3" className="filter-title">
+          <Row>
+            <Col sm={10} className="my-auto">{filterDropdownTitle ? filterDropdownTitle : 'Filters'}</Col>
+            <Col sm={2} className="text-right">
+              <IconBase
+                icon={faTimes}
+                className={"pointer"}
+                onClickFunction={() => {
+                  document.body.click();
+                }}
+              />
+            </Col>
+          </Row>
+        </Popover.Title>
+        <Popover.Content className="filter-body">
+          {getInnerFilters()}
+          <div className="d-flex justify-content-between">
+            <div className="w-50 mr-1">
+              <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
+                <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
+              </Button>
+            </div>
+            <div className="w-50 ml-1">
+              <Button variant="outline-secondary" size="sm" onClick={() => resetFilters()} className="w-100"
+                      disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
+                <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
+              </Button>
+            </div>
           </div>
-          <div className="w-50 ml-1">
-            <Button variant="outline-secondary" size="sm" onClick={() => resetFilters()} className="w-100"
-                    disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
-              <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
-            </Button>
-          </div>
-        </div>
-      </Popover.Content>
-    </Popover>
+        </Popover.Content>
+      </Popover>
     );
   };
 
@@ -103,7 +112,7 @@ function FilterButtons({
   return (
     <div className={className}>
       <div className="d-flex">
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
+        <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
             <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
               <span><IconBase icon={faFilter}/></span>

@@ -53,14 +53,15 @@ const kpiMarketplaceFilterMetadata = {
     pageSize: 25,
     currentPage: 1,
     search: "",
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Sort: KPI Name (A-Z a-z)", value: "name"},
     status: {text: "Status: Active", value: "active"},
     activeFilters: []
   },
   sortOptions: [
-    {text: "Oldest", option: "oldest"},
-    {text: "Newest", option: "newest"},
-    {text: "Name", option: "name"},
+    {text: "Oldest KPIs", option: "oldest"},
+    {text: "Newest KPIs", option: "newest"},
+    {text: "KPI Name (A-Z a-z)", option: "name"},
+    {text: "KPI Name (z-a Z-A)", value: "name-descending"},
   ]
 };
 

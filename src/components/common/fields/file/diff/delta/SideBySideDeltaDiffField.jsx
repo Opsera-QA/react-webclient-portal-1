@@ -53,7 +53,7 @@ function SideBySideDeltaDiffField(
             <Col xs={12} md={6} className={"pl-1"}>
               <StandaloneDeltaDiffField
                 isLoading={isLoading}
-                titleText={"Incoming Changes"}
+                titleText={"Incoming Changes from Source Branch"}
                 titleIcon={rightSideTitleIcon}
                 delta={delta}
                 visibleCodeOption={commitDiffConstants.VISIBLE_BRANCH_CODE_OPTIONS.SOURCE}

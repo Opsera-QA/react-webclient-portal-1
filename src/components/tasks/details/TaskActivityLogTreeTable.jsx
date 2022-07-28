@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
+import ExportTaskActivityLogButton from "../../common/buttons/export/tasks/ExportTaskActivityLogButton";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
@@ -114,7 +114,7 @@ function TaskActivityLogTreeTable(
       dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
-      exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData}/>}
+      exportButton={<ExportTaskActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData}/>}
     />
   );
 }

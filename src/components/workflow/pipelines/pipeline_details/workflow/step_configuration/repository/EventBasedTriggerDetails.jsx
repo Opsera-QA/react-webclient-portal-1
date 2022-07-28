@@ -28,7 +28,6 @@ function EventBasedTriggerDetails({ pipeline, model, savePipelineFunction }) {
           model={model}
           savePipelineFunction={savePipelineFunction}
           pipeline={pipeline}
-          branch={model?.getData("branch")}
         />
       </div>
     </FieldContainer>

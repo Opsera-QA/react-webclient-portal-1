@@ -9,21 +9,19 @@ import {
   getTableDateTimeColumn,
   getGitCustodianOriginColumn,
   getPathDefinition,
-  getGitCustodianExternalLinkIconColumnDefinition
+  getGitCustodianExternalLinkIconColumnDefinition,
+  getTableInfoIconColumn
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {faDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "../../../common/tooltip/TooltipWrapper";
-import Button from "react-bootstrap/Button";
-import IconBase from "../../../common/icons/IconBase";
 import FilterContainer from "../../../common/table/FilterContainer";
 import GitCustodianNewJiraTicketModal from "../modal/GitCustodianNewJiraTicketModal";
 import chartsActions from "../../charts/charts-actions";
 import GitCustodianTableMetaData from "./gitCustodianTableMetaData";
 import Model from "../../../../core/data_model/model";
 import ExportGitCustodianVulnerabilitiesButton from "./ExportGitCustodianVulnerabilitiesButton";
+import GitCustodianVulnerabilityDetailsOverlay from "../GitCustodianVulnerabilityDetailsOverlay";
 
 function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -58,6 +56,10 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
     };
   }, []);
 
+  const showVulnerabilityDetails = (row) => {    
+    toastContext.showOverlayPanel(<GitCustodianVulnerabilityDetailsOverlay vulnerabilityData={row} />);
+  };
+
   const noDataMessage = "No data found";
 
   const fields = GitCustodianTableMetaData.fields;
@@ -68,11 +70,13 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path")),
-      getTableTextColumn(getField(fields, "lineNumber")),
+      getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "lineNumber")),
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "status")),
       getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "jiraTicket")),
+      getTableInfoIconColumn(showVulnerabilityDetails),
     ],
     []
   );
@@ -91,8 +95,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
         let newFilterDto = tableFilterDto;
         newFilterDto.setData("totalCount", tableResponse?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        let sortOption = filterDto.getData("sortOption");
-        newFilterDto.setData("sortOption", sortOption);
         setTableFilterDto({...newFilterDto});
       }
     } catch (error) {
@@ -102,17 +104,6 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
-      }
-    }
-  };
-
-  const exportData = async () => {
-    try {
-      await chartsActions.exportGitCustodianData(getAccessToken, cancelTokenSource, gitCustodianData);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     }
   };
@@ -162,7 +153,7 @@ function GitCustodianTable({ gitCustodianData, gitCustodianFilterModel, setGitCu
       supportSearch={false}
       className={"px-2 pb-2"}
       showRefreshButton={false}
-      disableNewRecordButton={responseData?.length === 0}      
+      disableNewRecordButton={responseData?.length === 0}
       exportButton={<ExportGitCustodianVulnerabilitiesButton className={"ml-2"} gitCustodianData={gitCustodianData} data={responseData} isLoading={isLoading} />}
     />
   );

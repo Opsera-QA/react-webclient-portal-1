@@ -13,6 +13,10 @@ const GitCustodianTableMetaData = {
       id: "author",
     },
     {
+      label: "Email",
+      id: "email",
+    },
+    {
       label: "Path",
       id: "path",
     },
@@ -69,8 +73,8 @@ const GitCustodianTableMetaData = {
       id: "owner",
     },
     {
-      label: "Tag",
-      id: "tag",
+      label: "Tags",
+      id: "tags",
     },
     {
       label: "Search",
@@ -112,24 +116,40 @@ const GitCustodianTableMetaData = {
       label: "Summary",
       id: "summary"
     },
+    {
+      label: "Date Range",
+      id: "date"
+    }
   ],
   getActiveFilters(filterDto) {
      let activeFilters = [];
 
      if (filterDto.getData("repositories") != null) {
-       activeFilters.push({filterId: "repositories", ...filterDto.getData("repositories")});
+      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({filterId: "repositories", text: `Repository: ${filter}`}))];
      }
 
-     if (filterDto.getData("authors") != null) {
-       activeFilters.push({filterId: "authors", ...filterDto.getData("authors")});
+     if (filterDto.getData("authors") != null) {      
+      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({filterId: "authors", text: `Author: ${filter}`}))];
      }
 
      if (filterDto.getData("status") != null) {
-        activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+      activeFilters = [...activeFilters, ...filterDto.getData("status").map(filter => ({filterId: "status", text: `Status: ${filter}`}))];
      }
 
      if (filterDto.getData("service") != null) {
-       activeFilters.push({filterId: "service", ...filterDto.getData("service")});
+      activeFilters = [...activeFilters, ...filterDto.getData("service").map(filter => ({filterId: "service", text: `Origin: ${filter}`}))];
+     }
+
+     if (filterDto.getData("email") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("email").map(filter => ({filterId: "email", text: `Email: ${filter}`}))];
+     }
+
+     if (filterDto.getData("type") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("type").map(filter => ({filterId: "type", text: `Type: ${filter}`}))];
+     }
+
+     if (filterDto.getData("tags") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("tags").map(filter => ({filterId: "tags", text: `${filter.type}: ${filter.value}`}))];
      }
 
      return activeFilters;
@@ -137,23 +157,22 @@ const GitCustodianTableMetaData = {
   newObjectFields: {
      pageSize: 10,
      currentPage: 1,
-     // sortOption: {text: "Newest", value: ""}, //TBD - Sort logic to be fixed
+     sortOption: {text: "Newest", value: ""},
      search: "",
      activeFilters: [],
+     tags: [],
      date: {
        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
        key: "selection",
      }
   },
-  // TBD - sort logic to be fixed in next release.
-  //   sortOptions: [
-  //    {text: "Newest", option: ""},
-  //    {text: "Oldest", option: "oldest"},
-  //    {text: "Date Created", option: "commitDate"},
-  //    {text: "Author", option: "author"},
-  //    {text: "Origin", option: "service"}
-  // ]
+    sortOptions: [
+     {text: "Newest", option: ""},
+     {text: "Oldest", option: "oldest"},
+     {text: "Author", option: "author"},
+     {text: "Type", option: "type"}
+  ]
 };
 
 export default GitCustodianTableMetaData;

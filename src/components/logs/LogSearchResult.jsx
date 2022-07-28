@@ -5,8 +5,8 @@ import ModalLogs from "components/common/modal/modalLogs";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
-
-const Highlight = require("react-highlighter");
+import TextHighlighter from "components/common/highlighter/TextHighlighter";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
   const [showModal, setShowModal] = useState(false);
@@ -17,12 +17,24 @@ function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
     setShowModal(true);
   };
 
-  const handleHighlightText = (item) => {
-    let thisStringItem = JSON.stringify(item, null, 2);
-    return thisStringItem.substring(
-      thisStringItem.lastIndexOf(submittedSearchTerm) - 500,
-      thisStringItem.lastIndexOf(submittedSearchTerm) + 500
-    );
+  const getHighlighterText = (item) => {
+    const thisStringItem = JSON.stringify(item, null, 2);
+
+    if (hasStringValue(thisStringItem) === false) {
+      return "";
+    }
+
+    const lastIndex = thisStringItem.lastIndexOf(submittedSearchTerm);
+
+    if (lastIndex === -1) {
+      return thisStringItem;
+    }
+
+    const startIndex = Math.max(lastIndex - 500, 0);
+    const endStartIndex = lastIndex + submittedSearchTerm.length;
+    const endIndex = Math.min(endStartIndex + 500, thisStringItem.length - 1);
+
+    return thisStringItem.substring(startIndex, endIndex);
   };
 
   return (
@@ -66,10 +78,10 @@ function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
               )}
             </div>
             <div className="row ml-2" style={{ lineHeight: 2 }}>
-              <Highlight matchClass="react-highlighter-yellow" search={submittedSearchTerm}>
-                {/* {JSON.stringify(item, null, 2).substring(0, 1000)}*/}
-                {handleHighlightText(item)}
-              </Highlight>
+              <TextHighlighter
+                textToHighlight={submittedSearchTerm}
+                text={getHighlighterText(item)}
+              />
             </div>
           </Alert>
           <hr style={{ color: "#E5E7E9", backgroundColor: "#E5E7E9", borderColor: "#E5E7E9" }} />

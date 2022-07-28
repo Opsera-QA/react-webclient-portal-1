@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import apigeeReportMetaData
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/metadata/apigeeReport.metadata";
-import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getTableActiveBooleanIconColumn } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -17,7 +17,8 @@ function ApigeeLogSummaryTable({ apigeeObj }) {
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "revision")),
-      getTableTextColumn(getField(fields, "state"))      
+      getTableTextColumn(getField(fields, "state")),
+      getTableActiveBooleanIconColumn(getField(fields, "isNew"), "", 100)
     ],
     []
   );

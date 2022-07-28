@@ -21,13 +21,32 @@ function CommandLinePipelineStepConfigurationSummaryPanel({ commandLinePipelineD
         <Col lg={6}>
           <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"toolJobName"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={6} className={"upper-case-first"}>
           <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"type"}/>
         </Col>
+
+
+        <Col lg={6} className={"upper-case-first"}>
+          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"gitCredential"}/>
+        </Col>
+        <Col lg={6} className={"upper-case-first"}>
+          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"repository"}/>
+        </Col>
+        <Col lg={6} className={"upper-case-first"}>
+          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"workspace"}/>
+        </Col>
+        <Col lg={6} className={"upper-case-first"}>
+          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"workspaceName"}/>
+        </Col>
+        <Col lg={6} className={"upper-case-first"}>
+          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"gitBranch"}/>
+        </Col>
+
+
         {/* <Col lg={6}>
           <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"gitToolId"}/>
         </Col> */}
-        <Col lg={6}>
+        <Col lg={12}>
           <JsonField dataObject={commandLinePipelineDataObject} fieldName={"dependencyType"} />
         </Col>
         {/* <Col lg={6}>
