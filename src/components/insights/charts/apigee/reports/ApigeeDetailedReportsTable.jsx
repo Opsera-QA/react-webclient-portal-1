@@ -8,7 +8,7 @@ import { apigeeReportsMetadata } from "./apigeeReports-metadata";
 import FilterContainer from "../../../../common/table/FilterContainer";
 import CustomTable from "../../../../common/table/CustomTable";
 import {
-  getTableTextColumn
+  getTableTextColumn, getTableBooleanIconColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import IconBase from "../../../../common/icons/IconBase";
@@ -42,7 +42,7 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
       getTableTextColumn(getField(fields, "type"), "type"),
       getTableTextColumn(getField(fields, "revision"), "revision"),
       getTableTextColumn(getField(fields, "state"), "state"),
-      getTableTextColumn(getField(fields, "isNew"), "isNew")
+      getTableBooleanIconColumn(getField(fields, "isNew"))
     ],
     []
   );
@@ -115,22 +115,6 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
     toastContext.clearOverlayPanel();
   };
 
-  const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <FullScreenCenterOverlayContainer
-        closePanel={closePanel}
-        showPanel={true}
-        titleText={`Actionable APIGEE Detailed Report`}
-        showToasts={true}
-        isLoading={false}
-      >
-        <div className={"p-3"}>
-          <SuccessPercentActionableInsights kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
-        </div>
-      </FullScreenCenterOverlayContainer>
-    );
-  };
-
   const getTable = () => {
     if (error) {
       return (
@@ -150,7 +134,6 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
-        onRowSelect={onRowSelect}
       />
     );
   };
