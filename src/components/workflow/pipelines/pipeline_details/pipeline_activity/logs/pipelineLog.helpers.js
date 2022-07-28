@@ -14,7 +14,7 @@ pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount = (runCount) => {
   return sortTree(newTree);
 };
 
-pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipelineLogData) => {
+pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipelineLogData, triggeredBy) => {
   if (typeof runNumber !== "number" || !Array.isArray(pipelineTree) || !Array.isArray(pipelineLogData) || pipelineLogData.length === 0) {
     return pipelineTree;
   }
@@ -24,6 +24,8 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
   const currentValue = newTree.find((entry) => {
     return entry.id === `${runNumber}`;
   });
+
+  currentValue.value = `Run ${runNumber} triggered by ${triggeredBy}`;
 
   pipelineLogData.forEach((log) => {
     if (!log.run_count || log.step_name === "start pipeline") {

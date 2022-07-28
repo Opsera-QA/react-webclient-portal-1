@@ -7,7 +7,7 @@ pipelineActivityLogsActions.getPipelineActivityLogsV3 = async (getAccessToken, c
     params: {
       search:   pipelineActivityFilterModel?.getData("search"),
       runCount: currentRunNumber,
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index", "step_id"],
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index", "step_id", "user_id"],
       status: pipelineActivityFilterModel?.getFilterValue("status"),
     },
   };
