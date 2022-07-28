@@ -213,6 +213,10 @@ import AzureCliStepConfigurationSummaryPanel from "./step_tool_configuration_for
 import azureCliStepFormMetadata from "./step_tool_configuration_forms/azure_cli/azureCli-stepForm-metadata";
 import BoomiStepConfigurationSummary from "./step_tool_configuration_forms/boomi/BoomiStepConfigurationSummary";
 import boomiMetadata from "./step_tool_configuration_forms/boomi/boomi.metadata";
+import InformaticaIdqConnectionMetadata
+  from "../../../../../inventory/tools/tool_details/tool_jobs/informatica_idq/informatica-idq-connection-metadata";
+import InformaticaIdqPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqPipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -677,6 +681,13 @@ function PipelineStepConfigurationSummary({
             <BoomiStepConfigurationSummary
                 pipelineData={pipelineData}
                 boomiPipelineDataObject={getModelWrappedObject(boomiMetadata)}
+              />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                informaticaIdqPipelineDataObject={getModelWrappedObject(InformaticaIdqConnectionMetadata)}
             />
         );
       default:

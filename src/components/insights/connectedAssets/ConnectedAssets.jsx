@@ -7,15 +7,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ConnectedAssetsDetails from "./ConnectedAssetsDetails";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import { format, addDays } from "date-fns";
+import {format, addDays, isSameDay} from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";
+import connectedAssetsMetadata from "./connectedAssets-metadata";
 
 function ConnectedAssets() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -25,11 +24,11 @@ function ConnectedAssets() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(new Model({ ...connectedAssetsMetadata.newObjectFields }, connectedAssetsMetadata, false));
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: new Date(addDays(new Date(), -90)),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -45,7 +44,7 @@ function ConnectedAssets() {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-    let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
+    let newDataObject = new Model({...connectedAssetsMetadata.newObjectFields}, connectedAssetsMetadata, true);
     newDataObject.setData("filters", []);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
@@ -67,7 +66,7 @@ function ConnectedAssets() {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-      setDashboardData({...newDataObject});
+      setDashboardData(newDataObject);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -134,19 +133,16 @@ function ConnectedAssets() {
       } else {
         let endDate = format(item.selection.endDate, "MM/dd/yyyy");
         setEDate(endDate);
-        validate(startDate,endDate);
+        validate(item.selection.startDate,item.selection.endDate);
       }
     }
   };
 
   const validate = (startDate,endDate)=>{
-    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    newDashboardFilterTagsModel.setData( "date" , { startDate: startDate , endDate: endDate, key: "selection" } );
     setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
-
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardFilterTagsModel, "date", { startDate: startDate , endDate: endDate, key: "selection" });
     loadData(newDataModel);
   };
 
@@ -200,6 +196,8 @@ function ConnectedAssets() {
               startDatePlaceholder="Start Date"
               endDatePlaceholder="End Date"
               onChange={dateChange}
+              minDate={new Date(addDays(new Date(), -7300).setHours(0, 0, 0, 0))}
+              maxDate={new Date}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               months={1}
