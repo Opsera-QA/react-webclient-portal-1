@@ -10,7 +10,7 @@ import {
   faExclamationCircle,
 } from "@fortawesome/pro-light-svg-icons";
 
-function BoomiReportSummaryOverview({ boomiResultsModel }) {
+function BoomiReportSummaryOverview({ boomiResultsModel, jobType }) {
   if (boomiResultsModel == null) {
     return (
       <Row className={"my-3 p-2"}>
@@ -36,19 +36,19 @@ function BoomiReportSummaryOverview({ boomiResultsModel }) {
       <Col lg={6}>
         <TextFieldBase
           dataObject={boomiResultsModel}
-          fieldName={"numberOfComponentsTotal"}
+          fieldName={jobType === "CREATE_PACKAGE_COMPONENT" ? "numberOfComponentsTotal" : "numberOfPackagesTotal"}
         />
       </Col>
       <Col lg={6}>
         <TextFieldBase
           dataObject={boomiResultsModel}
-          fieldName={"numberOfComponentsSuccess"}
+          fieldName={jobType === "CREATE_PACKAGE_COMPONENT" ? "numberOfComponentsSuccess" : "numberOfPackagesSuccess"}
         />
       </Col>
       <Col lg={6}>
         <TextFieldBase
           dataObject={boomiResultsModel}
-          fieldName={"numberOfComponentsErrors"}
+          fieldName={jobType === "CREATE_PACKAGE_COMPONENT" ? "numberOfComponentsErrors" : "numberOfPackagesErrors"}
         />
       </Col>
     </Row>
@@ -57,6 +57,7 @@ function BoomiReportSummaryOverview({ boomiResultsModel }) {
 
 BoomiReportSummaryOverview.propTypes = {
   boomiResultsModel: PropTypes.object,
+  jobType: PropTypes.string
 };
 
 export default BoomiReportSummaryOverview;
