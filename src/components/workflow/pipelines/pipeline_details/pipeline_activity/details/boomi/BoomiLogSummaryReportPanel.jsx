@@ -73,6 +73,7 @@ function BoomiLogSummaryReportPanel({ pipelineTaskData }) {
           <SummaryPanelContainer className={"mx-3 mt-3"}>
             <BoomiReportSummaryOverview
               boomiResultsModel={boomiReportModel}
+              jobType={jobType}
             />
             <BoomiReportView
               boomiObj={boomiObj}

@@ -17,49 +17,36 @@ import axios from "axios";
 function BoomiLogSummaryTable({ boomiObj, jobType }) {
   const fields = boomiReportMetaData?.fields;
 
-  const createPackageColumns = useMemo(() => [
+  const createPackageColumns = useMemo(
+    () => [
       getTableTextColumn(getField(fields, "componentId")),
-      getTableTextColumn(
-          getField(fields, "packageVersion"),
-          undefined,
-          130,
-      ),
+      getTableTextColumn(getField(fields, "packageVersion")),
       getTableTextColumn(getField(fields, "notes")),
       getTableTextColumn(getField(fields, "packageId")),
-      getTableTextColumn(
-          getField(fields, "componentVersion"),
-          undefined,
-          150,
-      ),
-      getTableTextColumn(getField(fields, "componentType"), undefined, 150),
+      getTableTextColumn(getField(fields, "componentVersion")),
+      getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "createdDate")),
       getTableTextColumn(getField(fields, "createdBy")),
-      getTableBooleanIconColumn(
-          getField(fields, "shareable"),
-          undefined,
-          80,
-      ),
-  ], []);
+      getTableBooleanIconColumn(getField(fields, "shareable")),
+    ],
+    [],
+  );
 
-  const deployMigrateColumns = useMemo(() => [
+  const deployMigrateColumns = useMemo(
+    () => [
       getTableTextColumn(getField(fields, "componentId")),
-      getTableTextColumn(
-          getField(fields, "packageVersion"),
-          undefined,
-          130,
-      ),
+      getTableTextColumn(getField(fields, "packageVersion")),
       getTableTextColumn(getField(fields, "notes")),
       getTableTextColumn(getField(fields, "packageId")),
-      getTableTextColumn(
-          getField(fields, "componentVersion"),
-          undefined,
-          150,
-      ),
-      getTableTextColumn(getField(fields, "componentType"), undefined, 150),
+      getTableTextColumn(getField(fields, "componentVersion")),
+      getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "deployedDate")),
       getTableTextColumn(getField(fields, "deployedBy")),
-      getTableTextColumn(getField(fields, "environmentName")),
-  ], []);
+        getTableTextColumn(getField(fields, "deploymentId")),
+        getTableTextColumn(getField(fields, "environmentName")),
+    ],
+    [],
+  );
 
   const getComponentResultsTable = () => {
     return (
