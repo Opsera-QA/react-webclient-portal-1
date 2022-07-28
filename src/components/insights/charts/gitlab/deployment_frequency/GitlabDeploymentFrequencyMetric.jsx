@@ -11,11 +11,8 @@ import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDepl
 import GitlabDeploymentFrequencyDataBlockContainer from "./GitlabDeploymentFrequencyDataBlockContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
-const DEFAULT_GOALS = {
-  build_success_rate: 90,
-  average_builds: 1,
-  deployment_success_rate: 90,
-  average_deployments: 1,
+const DEFAULT_GOALS = {  
+  deployment_frequency_rate: 90,
 };
 
 function GitlabDeploymentFrequency({
@@ -95,7 +92,7 @@ function GitlabDeploymentFrequency({
               data: [
                 {
                   statisticsData: {
-                    deploy: { count: 1, type: "", perDayAverage: 0 },
+                    deploy: { count: 1, type: "", perDayAverage: 55,  },
                   },
                   chartData: {
                     deploySuccess: [
@@ -261,7 +258,7 @@ function GitlabDeploymentFrequency({
             <GitlabDeploymentFrequencyDataBlockContainer
               metricData={deploymentFrequencyMetricData}
               chartData={deploymentFrequencyChartData}
-              goalsData={goalsData?.average_deployments}
+              goalsData={goalsData?.deployment_frequency_rate}
               kpiConfiguration={kpiConfiguration}
               dataPoint={deploymentFrequencyDataPoint}
             />

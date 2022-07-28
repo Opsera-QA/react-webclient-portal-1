@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig } from 'components/insights/charts/charts-views';
@@ -12,10 +11,10 @@ import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../charts-views";
 
-// TODO: Pass in relevant data and don't use hardcoded data
 function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
@@ -33,15 +32,44 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
       "data": chartData?.avgDeployments
     }  
   ];
-  console.log(dataPoint, metricData,'***** metricData33');
+  const getReverseIcon = (severity) => {
+    switch (severity) {
+      case "Red":
+        return faArrowCircleDown;
+      case "Green":
+        return faArrowCircleUp;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "Red":
+        return "red";
+      case "Green":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockBase
-        className={"build-and-deployment-statistics-kpi"}
-        topText={"Deployment Frequency"}
+        className={getIconColor('Green')}
+        topText={"Deployments and Frequency"}
+        icon={getReverseIcon('Green')}
+        bottomText={"Previous Frequency: " + "30"}
         middleText={
         <MetricScoreText
-          score={67}
+          score={metricData?.deploy?.perDayAverage}
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}
@@ -51,7 +79,6 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
   };
 
   const getTrendChart = () => {
-    console.log(goalsData,'***dailyDeploymentsChart');
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
