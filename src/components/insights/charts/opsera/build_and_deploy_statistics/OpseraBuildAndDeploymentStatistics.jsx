@@ -159,7 +159,7 @@ function OpseraBuildAndDeploymentStatistics({ kpiConfiguration, setKpiConfigurat
           />
         </Col> }
         {dataPointHelpers.isDataPointVisible(deploymentFrequencyDataPoint) &&
-        <Col className={"px-0"} xl={6} md={12}>333
+        <Col className={"px-0"} xl={6} md={12}>
           <DeploymentFrequencyStatisticsDataBlockContainer
             metricData={buildAndDeployMetricData}
             chartData={buildAndDeployChartData}

@@ -30,6 +30,7 @@ import LeadTimeAndReleaseTracebilityEditorPanel
   from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
+import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -180,6 +181,16 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
         return (
           <ServiceNowMeanTimeToResolutionEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <GitlabDeploymentFrequencyEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

@@ -35,7 +35,6 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
   ];
 
   const getLeftDataBlock = () => {
-    console.log(dataPoint, metricData,'***** metricData33333');
     return (      
       <ThreeLineDataBlockBase
         className={"build-and-deployment-statistics-kpi"}

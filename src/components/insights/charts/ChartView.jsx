@@ -855,7 +855,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Gitlab KPIs
-      case "gitlab-deployment-frequency":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
         return (
           <Col xl={12} md={12} className="p-2">
             <GitlabDeploymentFrequency

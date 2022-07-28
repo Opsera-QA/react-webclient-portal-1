@@ -63,13 +63,13 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
   const getLeftDataBlock = () => {
     return (      
       <ThreeLineDataBlockBase
-        className={getIconColor('Green')}
+        className={getIconColor(metricData.prevDeploymentTrend?.trend)}
         topText={"Deployments and Frequency"}
-        icon={getReverseIcon('Green')}
-        bottomText={"Previous Frequency: " + "30"}
+        icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
+        bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
         middleText={
         <MetricScoreText
-          score={metricData?.deploy?.perDayAverage}
+          score={metricData?.averageDeployment}
           dataPoint={dataPoint}
           className={"metric-block-content-text"}
         />}

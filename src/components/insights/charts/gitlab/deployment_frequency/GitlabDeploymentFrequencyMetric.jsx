@@ -11,7 +11,7 @@ import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDepl
 import GitlabDeploymentFrequencyDataBlockContainer from "./GitlabDeploymentFrequencyDataBlockContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
-const DEFAULT_GOALS = {  
+const DEFAULT_GOALS = {
   deployment_frequency_rate: 90,
 };
 
@@ -72,7 +72,10 @@ function GitlabDeploymentFrequency({
       //       (obj) => obj.type === "organizations",
       //     )
       //   ]?.value;
-      let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
+      let goals =
+        kpiConfiguration?.filters[
+          kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
+        ]?.value;
       if (goals) {
         setGoalsData(goals);
       } else {
@@ -92,115 +95,53 @@ function GitlabDeploymentFrequency({
               data: [
                 {
                   statisticsData: {
-                    deploy: { count: 1, type: "", perDayAverage: 55,  },
+                    count: 3,
+                    type: "",
+                    averageDeployment: 2,
+                    prevDeployment: 0,
+                    prevDeploymentTrend: { trend: "Green" },
                   },
                   chartData: {
                     deploySuccess: [
                       {
-                        x: "2022-07-21",
-                        y: 0,
-                        range: "2022-07-21 to 2022-07-22",
-                        total: 34,
-                        success: 45,
-                      },
-                      {
-                        x: "2022-07-22",
-                        y: 0,
-                        range: "2022-07-22 to 2022-07-23",
-                        total: 60,
-                        success: 60,
-                      },
-                      {
-                        x: "2022-07-23",
-                        y: 0,
-                        range: "2022-07-23 to 2022-07-24",
-                        total: 60,
-                        success: 50,
-                      },
-                      {
-                        x: "2022-07-24",
-                        y: 0,
-                        range: "2022-07-24 to 2022-07-25",
-                        total: 40,
-                        success: 34,
-                      },
-                      {
-                        x: "2022-07-25",
-                        y: 0,
-                        range: "2022-07-25 to 2022-07-26",
-                        total: 0,
-                        success: 0,
-                      },
-                      {
-                        x: "2022-07-26",
-                        y: 0,
-                        range: "2022-07-26 to 2022-07-27",
-                        total: 0,
-                        success: 0,
-                      },
-                      {
-                        x: "2022-07-27",
-                        y: 100,
-                        range: "2022-07-27 to 2022-07-28",
-                        total: 1,
-                        success: 1,
-                      },
-                      {
                         x: "2022-07-28",
-                        y: 4,
+                        y: 37.5,
                         range: "2022-07-28 to 2022-07-29",
-                        total: 4,
-                        success: 5,
+                        total: 8,
+                        success: 3,
+                      },
+                      {
+                        x: "2022-07-29",
+                        y: 0,
+                        range: "2022-07-29 to 2022-07-30",
+                        total: 0,
+                        success: 0,
                       },
                     ],
                     avgDeployments: [
                       {
-                        x: "2022-07-21",
-                        y: 120,
-                        range: "2022-07-21 to 2022-07-22",
-                        total: 134,
-                      },
-                      {
-                        x: "2022-07-22",
-                        y: 120,
-                        range: "2022-07-22 to 2022-07-23",
-                        total: 220,
-                      },
-                      {
-                        x: "2022-07-23",
-                        y: 40,
-                        range: "2022-07-23 to 2022-07-24",
-                        total: 40,
-                      },
-                      {
-                        x: "2022-07-24",
-                        y: 30,
-                        range: "2022-07-24 to 2022-07-25",
-                        total: 50,
-                      },
-                      {
-                        x: "2022-07-25",
-                        y: 40,
-                        range: "2022-07-25 to 2022-07-26",
-                        total: 60,
-                      },
-                      {
-                        x: "2022-07-26",
-                        y: 50,
-                        range: "2022-07-26 to 2022-07-27",
-                        total: 70,
-                      },
-                      {
-                        x: "2022-07-27",
-                        y: 10,
-                        range: "2022-07-27 to 2022-07-28",
-                        total: 10,
-                      },
-                      {
                         x: "2022-07-28",
-                        y: 0,
+                        y: 188,
                         range: "2022-07-28 to 2022-07-29",
-                        total: 0,
+                        total: 190,
+                      },
+                      {
+                        x: "2022-07-29",
+                        y: 120,
+                        range: "2022-07-29 to 2022-07-30",
+                        total: 160,
+                      },
+                      {
+                        x: "2022-08-28",
+                        y: 188,
+                        range: "2022-07-28 to 2022-07-29",
+                        total: 190,
+                      },
+                      {
+                        x: "2022-09-29",
+                        y: 120,
+                        range: "2022-07-29 to 2022-07-30",
+                        total: 160,
                       },
                     ],
                   },
@@ -213,9 +154,7 @@ function GitlabDeploymentFrequency({
           },
         ],
       };
-
       const metrics = response?.data[0]?.gitlabDeploymentStatistics?.data[0];
-      console.log(metrics, response, "***");
       // if (isMounted?.current === true && Array.isArray(metrics)) {
       setDeploymentFrequencyMetricData(metrics?.statisticsData);
       setDeploymentFrequencyChartData(metrics?.chartData);
@@ -234,13 +173,12 @@ function GitlabDeploymentFrequency({
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
-    const buildFrequencyStatisticsDataPoint = dataPointHelpers.getDataPoint(
+    const dataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .BUILD_FREQUENCY_STATISTICS_DATA_POINT,
+        .DEPLOYMENT_FREQUENCY_DATA_POINT,
     );
-    console.log(buildFrequencyStatisticsDataPoint, "***** metricData33222");
-    setBuildFrequencyDataPoint(buildFrequencyStatisticsDataPoint);
+    setBuildFrequencyDataPoint(dataPoint);
   };
 
   const getChartBody = () => {
