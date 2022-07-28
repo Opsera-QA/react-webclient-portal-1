@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { config, config2 } from "./BoomiBarChartConfigs.js";
+import config from "./BoomiBarChartConfigs.js";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -214,24 +214,10 @@ function BoomiBarChart({
               )}
               {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
               {...adjustBarWidth(metrics)}
-              // onClick={(data) => onRowSelect(data)}
-              // tooltip={({ indexValue, value, data, color }) => (
-              //   <ChartTooltip
-              //     titles={[
-              //       "Date",
-              //       "Mean Time to Resolution",
-              //       "Number of Incidents",
-              //     ]}
-              //     values={[
-              //       new Date(indexValue).toDateString(),
-              //       `${value} hours`,
-              //       data.Count,
-              //     ]}
-              //     style={false}
-              //     // color={color}
-              //   />
-              // )}
-              // markers={[]}
+              tooltip={({point, color}) => <ChartTooltip
+                  titles = {["Date", "Number of Deployments"]}
+                  values = {[String(point.data.xFormatted), point.data.y]}
+                  color = {color} />}
             />
           </div>
         </Col>
