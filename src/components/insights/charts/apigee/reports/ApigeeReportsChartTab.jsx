@@ -72,13 +72,13 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
         filterDto
       );
       const responseData1 = response?.data?.data?.data?.[0];
-      let dataCount = responseData1?.count?.[0]?.count ? responseData1?.count?.[0]?.count : 0;
+      let dataCount = responseData1?.count?.[0]?.count ? responseData1.count[0].count : 0;
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
       if(Array.isArray(responseData1?.data)) {
         setResponseData(responseData1?.data);
-        setActiveTab(responseData1?.[0]?.pipelineId);
+        setActiveTab(responseData1?.data?.[0]?.pipelineId);
       }
     } catch (error) {
       if (isMounted?.current === true) {
