@@ -32,6 +32,7 @@ function LazyLoadMultiSelectInputBase({
   onToggleFunction,
   onSearchFunction,
   useToggle,
+  helpTooltipText,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -114,6 +115,7 @@ function LazyLoadMultiSelectInputBase({
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -175,6 +177,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
   useToggle: PropTypes.bool,
+  helpTooltipText: PropTypes.string,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

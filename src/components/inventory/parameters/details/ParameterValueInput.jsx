@@ -16,6 +16,7 @@ function ParameterValueTextInput(
     disabled,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field, setField] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -112,6 +113,7 @@ function ParameterValueTextInput(
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={"d-flex"}>
         <textarea
@@ -142,6 +144,7 @@ ParameterValueTextInput.propTypes = {
   parameterId: PropTypes.string,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default ParameterValueTextInput;

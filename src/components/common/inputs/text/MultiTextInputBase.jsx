@@ -23,6 +23,7 @@ function MultiTextInputBase(
     showLabel,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -92,6 +93,7 @@ function MultiTextInputBase(
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -140,6 +142,7 @@ MultiTextInputBase.propTypes = {
   showLabel: PropTypes.bool,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 MultiTextInputBase.defaultProps = {

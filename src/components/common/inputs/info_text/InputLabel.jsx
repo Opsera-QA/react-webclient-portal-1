@@ -26,6 +26,7 @@ function InputLabel(
     ellipsisTooltipText,
     inputHelpOverlay,
     hasError,
+    helpTooltipText,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -33,6 +34,18 @@ function InputLabel(
         <LaunchHelpIcon
           className={"ml-1 view-details-icon"}
           helpComponent={inputHelpOverlay}
+        />
+      );
+    }
+
+    if (hasStringValue(helpTooltipText) === true) {
+      return (
+        <HelpInfoOverlayIcon
+          infoOverlay={helpTooltipText}
+          title={`${field?.label} Help`}
+          className={"ml-1 view-details-icon"}
+          overlayPlacement={"top"}
+          overlayHeight={100}
         />
       );
     }
@@ -116,6 +129,7 @@ InputLabel.propTypes = {
   ellipsisTooltipText: PropTypes.string,
   inputHelpOverlay: PropTypes.any,
   hasError: PropTypes.bool,
+  helpTooltipText: PropTypes.string,
 };
 
 export default InputLabel;

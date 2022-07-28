@@ -27,6 +27,7 @@ function ComboBoxInputBase(
     pluralTopic,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -88,6 +89,7 @@ function ComboBoxInputBase(
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(internalErrorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <StandaloneComboBoxInput
         selectOptions={selectOptions}
@@ -129,6 +131,7 @@ ComboBoxInputBase.propTypes = {
   error: PropTypes.object,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default ComboBoxInputBase;
