@@ -7,7 +7,7 @@ import VanityTextInputBase from "components/common/inputs/text/VanityTextInputBa
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Rewrite? Combine with TextInputBase?
-function VanityTextInput({fieldName, className, dataObject, setDataObject, setDataFunction, showLabel, disabled, inputHelpOverlay, infoOverlay }) {
+function VanityTextInput({fieldName, className, dataObject, setDataObject, setDataFunction, showLabel, disabled, inputHelpOverlay, infoOverlay, helpTooltipText }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -56,6 +56,7 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <VanityTextInputBase
         setDataFunction={updateValue}
@@ -83,6 +84,7 @@ VanityTextInput.propTypes = {
   showLabel: PropTypes.bool,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default VanityTextInput;
