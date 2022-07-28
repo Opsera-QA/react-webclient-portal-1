@@ -143,7 +143,7 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
 
   return (
     <div className={"p-2"}>
-      <div className={"d-flex p-2 chart-footer-text"}>
+      <div className={"d-flex details-title-text"}>
         <div className={'mr-4'}>
           <b>Pipeline Name:</b> {pipeline.pipelineName}
         </div>
