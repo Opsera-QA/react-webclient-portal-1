@@ -36,14 +36,13 @@ import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfi
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import FlywayDatabaseToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionEditorPanel";
-import ExternalApiIntegratorToolConnectionEditorPanel
-  from "components/inventory/tools/details/identifiers/external_api_integrator/connection/ExternalApiIntegratorToolConnectionEditorPanel";
 import GithubDeploykeysToolConfigurationPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeploykeysToolConfigurationPanel";
 import ApigeeToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
 import SnaplogicToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
+import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -85,6 +84,8 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY,
   toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -97,10 +98,11 @@ function ToolConnectionPanel({ toolData, setToolData }) {
     switch (toolData?.getData("tool_identifier")) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
-          <ExternalApiIntegratorToolConnectionEditorPanel
-            toolModel={toolData}
-            setToolModel={setToolData}
-          />
+          <div className={"text-center p-5 text-muted mt-5"}>
+            Connection configuration is handled using Endpoints. For an API
+            Integration Pipeline Step, please create an endpoint to validate status
+            and configure it on the pipeline step.
+          </div>
         );
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
@@ -179,6 +181,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <BlackduckToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
         return <SapCpqToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return <BoomiToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }

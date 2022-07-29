@@ -9,9 +9,6 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
@@ -20,6 +17,9 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     responseBodyFields,
     setDataFunction,
     disabled,
+    height,
+    responseParameterInputHeight,
+    responseParameterArrayInputHeight,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [fields, setFields] = useState([]);
@@ -134,11 +134,12 @@ function EndpointResponseFieldEvaluationRulesInputBase(
           endpointBodyField={currentFieldData}
           updateFieldFunction={(newField) => updateFieldFunction(parseInt(activeTab), newField)}
           disabled={disabled}
+          responseParameterInputHeight={responseParameterInputHeight}
+          responseParameterArrayInputHeight={responseParameterArrayInputHeight}
         />
       );
     }
   };
-
 
   const getBody = () => {
     if (!Array.isArray(fields) || fields?.length === 0) {
@@ -158,8 +159,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
         icon={faBracketsCurly}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getCurrentView()}
-        minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
-        maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
+        minimumHeight={height}
+        maximumHeight={height}
         tabColumnSize={3}
         overflowXBodyStyle={"hidden"}
       />
@@ -183,6 +184,9 @@ EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   setDataFunction: PropTypes.func,
   responseBodyFields: PropTypes.array,
   disabled: PropTypes.bool,
+  height: PropTypes.string,
+  responseParameterInputHeight: PropTypes.string,
+  responseParameterArrayInputHeight: PropTypes.string,
 };
 
 export default EndpointResponseFieldEvaluationRulesInputBase;

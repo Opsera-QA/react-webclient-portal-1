@@ -1,13 +1,22 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import {useHistory} from "react-router-dom";
+import OptionCardBase from "components/common/card/option/OptionCardBase";
 
 function PageLinkCard({link, linkText, icon, visible, className, pageDescription}) {
   let history = useHistory();
 
-  const handlePageLink = () => {
+  const onClickFunction = () => {
     history.push(link);
+  };
+
+  const getBody = () => {
+    return (
+      <div>
+        <div className={"mr-3 page-link-card-title-text"}>{linkText}</div>
+        <div className={"text-muted mt-1"}>{pageDescription}</div>
+      </div>
+    );
   };
 
   if (visible === false) {
@@ -15,17 +24,13 @@ function PageLinkCard({link, linkText, icon, visible, className, pageDescription
   }
 
   return (
-    <div className={className}>
-      <div className={'mb-3 page-link-card'} onClick={handlePageLink}>
-        <div className={"page-link-card-body d-flex p-2"}>
-          <IconBase iconSize={"2x"} icon={icon} fixedWidth className="page-link-card-icon p-2 mr-3 mb-auto"/>
-          <div>
-            <div className={"mr-3 page-link-card-title-text"}>{linkText}</div>
-            <div className={"text-muted mt-1"}>{pageDescription}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <OptionCardBase
+      className={className}
+      body={getBody()}
+      onClickFunction={onClickFunction}
+      visible={visible}
+      icon={icon}
+    />
   );
 }
 

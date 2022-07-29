@@ -159,14 +159,14 @@ toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: This should be removed and updated to use updateToolV2
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData?.getData("_id")}/update`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
-};
+  const postBody = {
+    ...toolData.getPersistData()
+  };
 
-toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/registry/${toolData?.getData("_id")}/update`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 // TODO: This should be moved to a Jira helper function
@@ -179,7 +179,7 @@ toolsActions.installJiraApp = async (toolId, getAccessToken) => {
 // Note: This is used for three part vault keys (tool ID, identifier, and key)
 toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, fieldName, value, getAccessToken) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
-    const toolId = toolData.getData("_id");
+    const toolId = toolData?.getData("_id");
     const toolIdentifier = toolData.getData("tool_identifier");
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
@@ -188,7 +188,7 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
   }
 
   // Faseeh says all vault values MUST be objects and not strings
-  let currentValue = toolConfigurationData.getData(fieldName);
+  const currentValue = toolConfigurationData?.getData(fieldName);
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
@@ -263,17 +263,16 @@ toolsActions.saveSimpleVaultPasswordToVaultV2 = async (getAccessToken, cancelTok
   return typeof newValue === "string" ? {} : newValue;
 };
 
-// TODO: Make update route that just takes configuration and sets it into the mongo DB collection
+// TODO: Remove this and wire up updateToolConnectionDetails
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
-  let newToolData = toolData.getPersistData();
-  newToolData["configuration"] = configurationItem.configuration;
-  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
+  toolData.setData("configuration", configurationItem?.configuration);
+  return await toolsActions.updateToolConfiguration(toolData, getAccessToken);
 };
 
+// TODO: Remove this and wire up updateToolConnectionDetails
 toolsActions.saveToolConfigurationV2 = async (getAccessToken, cancelTokenSource, toolModel, newConfiguration) => {
-  const newToolData = toolModel?.getPersistData();
-  newToolData.configuration = newConfiguration;
-  return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
+  toolModel.setData("configuration", newConfiguration);
+  return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolModel);
 };
 
 toolsActions.updateToolConnectionDetails = async (getAccessToken, cancelTokenSource, toolId, newConfiguration) => {
@@ -281,10 +280,10 @@ toolsActions.updateToolConnectionDetails = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, newConfiguration);
 };
 
+// TODO: make node route specifically for updating this field
 toolsActions.saveToolActions = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
-  let newToolData = toolData.getPersistData();
-  newToolData["actions"] = configurationItem.actions;
-  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken, cancelTokenSource);
+  toolData.setData("actions", configurationItem?.actions);
+  return await toolsActions.updateToolConfiguration(toolData, getAccessToken, cancelTokenSource);
 };
 
 toolsActions.getToolCounts = async (getAccessToken) => {

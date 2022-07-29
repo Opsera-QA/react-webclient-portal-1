@@ -154,7 +154,7 @@ FilterBar.propTypes = {
   handleExportFunction: PropTypes.func,
   handleImportFunction: PropTypes.func,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
 };
 
 FilterBar.defaultProps = {

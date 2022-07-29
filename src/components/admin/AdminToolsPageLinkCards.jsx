@@ -13,7 +13,7 @@ import LdapOrganizationManagementPageLinkCard
 import LdapCustomerOnboardingPageLinkCard
   from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboardingPageLinkCard";
 import PipelineTemplateManagementPageLinkCard
-  from "components/admin/template_editor/PipelineTemplateManagementPageLinkCard";
+  from "components/admin/pipeline_templates/PipelineTemplateManagementPageLinkCard";
 import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPageLinkCard";
 import CustomEnvironmentVariableManagementPageLinkCard
   from "components/admin/environment_variables/CustomEnvironmentVariableManagementPageLinkCard";

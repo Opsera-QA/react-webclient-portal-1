@@ -51,6 +51,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     try {
       sessionHelper.clearOutSessionStorage();
       await userActions.logout(getAccessToken);
+      await userActions.revokeAuthToken(getAccessToken);
       logoutUserContext();
     } catch (error) {
       toastContext.showErrorDialog(error.message);

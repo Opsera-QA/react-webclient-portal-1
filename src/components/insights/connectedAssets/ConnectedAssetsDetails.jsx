@@ -11,7 +11,16 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import connectedAssetsActions from "./connectedAssets.actions";
 import {parseError} from "../../common/helpers/error-helpers";
 import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/ConnectedAssetsRepositoryTabContainer";
-
+import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
+import ConnectedAssetsPipelinesTabContainer from "./tables/pipelinesTable/ConnectedAssetsPipelinesTabContainer";
+import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAssetsTasksTabContainer";
+import ConnectedAssetsCollaboratorsTabContainer
+  from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
+import ConnectedAssetsJobsTabContainer from "./tables/jobsTable/ConnectedAssetsJobsTabContainer";
+import ConnectedAssetsWebhooksTabContainer from "./tables/webhooksTable/ConnectedAssetsWebhooksTabContainer";
+import ConnectedAssetsPackagesPipelinesTab from "./tables/packageTable/pipelines/ConnectedAssetsPackagesPipelinesTab";
+import sessionHelper from "utils/session.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function ConnectedAssetsDetails({ dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -22,14 +31,14 @@ function ConnectedAssetsDetails({ dashboardData }) {
   const [data, setData] = useState([]);
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [dynamicPanel, setDynamicPanel] = useState(undefined);
-  const repositoriesDataBlock = "repositories_data_block";
-  const branchesDataBlock = "branches_data_block";
-  const collaboratorsDataBlock = "collaborators_data_block";
-  const pipelinesDataBlock = "pipelines_data_block";
-  const tasksDataBlock = "tasks_data_block";
-  const jobsDataBlock = "jobs_data_block";
-  const webhooksDataBlock = "webhooks_data_block";
-  const packagesDataBlock = "packages_data_block";
+  const repositoriesDataBlock = "repository";
+  const branchesDataBlock = "branches";
+  const collaboratorsDataBlock = "collaborators";
+  const pipelinesDataBlock = "pipelines";
+  const tasksDataBlock = "tasks";
+  const jobsDataBlock = "jobs";
+  const webhooksDataBlock = "webhooks";
+  const packagesDataBlock = "packages";
 
   useEffect(() => {
     resetData();
@@ -60,22 +69,25 @@ function ConnectedAssetsDetails({ dashboardData }) {
       let response = await connectedAssetsActions.getConnectedAssetsData(
         getAccessToken,
         cancelSource,
-        "connectedAssets",
-        dateRange?.startDate ? dateRange?.startDate : null,
-        dateRange?.endDate? dateRange?.endDate : null
+        dateRange?.startDate ? dateRange?.startDate?.toISOString() : null,
+        dateRange?.endDate? dateRange?.endDate?.toISOString() : null
       );
-      let responseData = response?.data?.data[0]?.connectedAssets?.data;
+      let responseData = response?.data?.data?.connectedAssets?.data;
       if (isMounted?.current === true && responseData) {
-        setData(responseData);
+        if(responseData) {
+          setData(responseData);
+        }
+        const selectedDataBlockUrlParameter = sessionHelper.getStoredUrlParameter('view');
+        if (hasStringValue(selectedDataBlockUrlParameter) == true) {
+          onDataBlockSelect(selectedDataBlockUrlParameter);
+        }
+        setIsLoading(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
         setIsLoading(false);
+        setError(error);
       }
     }
   };
@@ -88,43 +100,51 @@ function ConnectedAssetsDetails({ dashboardData }) {
   const onDataBlockSelect = (selectedDataBlock) => {
     switch(selectedDataBlock) {
       case repositoriesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", repositoriesDataBlock);
         toggleDynamicPanel(repositoriesDataBlock, () => {
           return (<ConnectedAssetsRepositoryTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case branchesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", branchesDataBlock);
         toggleDynamicPanel(branchesDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsBranchesTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case collaboratorsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", collaboratorsDataBlock);
         toggleDynamicPanel(collaboratorsDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsCollaboratorsTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case pipelinesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", pipelinesDataBlock);
         toggleDynamicPanel(pipelinesDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsPipelinesTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case tasksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", tasksDataBlock);
         toggleDynamicPanel(tasksDataBlock,() => {
-          return null;
+          return (<ConnectedAssetsTasksTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case jobsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", jobsDataBlock);
         toggleDynamicPanel(jobsDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsJobsTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case webhooksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", webhooksDataBlock);
         toggleDynamicPanel(webhooksDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsWebhooksTabContainer dashboardData={dashboardData}/>);
         });
         break;
       case packagesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", packagesDataBlock);
         toggleDynamicPanel(packagesDataBlock, () => {
-          return null;
+          return (<ConnectedAssetsPackagesPipelinesTab dashboardData={dashboardData}/>);
         });
         break;
     }
@@ -152,7 +172,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
       return (
         <div className="mx-2" >
           <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+            <span className={"-5"}>An error has occurred during loading: {parseError(error?.message)}.</span>
           </div>
         </div>
       );
@@ -236,7 +256,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
               <DataBlockBoxContainer
                 showBorder={true}
                 className={selectedDataBlock === jobsDataBlock ? "selected-data-block" : undefined}
-                //onClickFunction={() => onDataBlockSelect(jobsDataBlock)}
+                onClickFunction={() => onDataBlockSelect(jobsDataBlock)}
               >
                 <ThreeLineIconDataBlockBase
                   icon={faStopwatch}
@@ -250,7 +270,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
               <DataBlockBoxContainer
                 showBorder={true}
                 className={selectedDataBlock === webhooksDataBlock ? "selected-data-block" : undefined}
-                //onClickFunction={() => onDataBlockSelect(webhooksDataBlock)}
+                onClickFunction={() => onDataBlockSelect(webhooksDataBlock)}
               >
                 <ThreeLineIconDataBlockBase
                   icon={faCompressArrowsAlt}
@@ -264,7 +284,7 @@ function ConnectedAssetsDetails({ dashboardData }) {
               <DataBlockBoxContainer
                 showBorder={true}
                 className={selectedDataBlock === packagesDataBlock ? "selected-data-block" : undefined}
-                //onClickFunction={() => onDataBlockSelect(packagesDataBlock)}
+                onClickFunction={() => onDataBlockSelect(packagesDataBlock)}
               >
                 <ThreeLineIconDataBlockBase
                   icon={faBox}

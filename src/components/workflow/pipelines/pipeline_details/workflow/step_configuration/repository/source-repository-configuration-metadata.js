@@ -25,7 +25,7 @@ const sourceRepositoryConfigurationMetadata = {
       id: "password",
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
       isRequired: true,
     },
@@ -67,14 +67,31 @@ const sourceRepositoryConfigurationMetadata = {
       formText: "Optional secret for manual registration in Git Repository if supported",
     },
     {
-      label: "Trigger Active",
+      label: "Enabled",
       id: "trigger_active",
       formText: `
-        Pipelines can be triggered by commit webhook events. 
-        To configure this pipeline to run anytime a commit occurs in the repository/branch, please complete the fields above. 
-        Then copy the webhook URL into your repository and configure it accordingly.
+        Allow this pipeline to be started by a webhook event based on above settings. Once enabled, copy the webhook URL supplied into your repository.
       `,
     },
+    {
+      label: "Enabled",
+      id: "gitExportEnabled",
+      // formText: `
+      // Using the configured Git Repository above, Opsera can publish
+      // a copy of the pipeline configuration for revision purposes before every run. 
+      // This feature is only available for GitHub and GitLab repositories.
+      // `,
+      formText: `
+      Using the configured Git Repository above, Opsera can publish
+      a copy of the pipeline configuration for revision purposes when export to git is pressed. 
+      This feature is only available for GitHub and GitLab repositories.
+      `,
+    },
+    {
+      label: "Path",
+      id: "gitExportPath",
+      formText: "Do not include ending /"
+    }
   ],
   newObjectFields: {
     name: "",

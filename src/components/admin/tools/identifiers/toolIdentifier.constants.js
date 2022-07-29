@@ -14,9 +14,11 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_ACCOUNT: "azure_account",
   AZURE_ACR_PUSH: "azure_acr_push",
   AZURE_AKS_DEPLOY: "azure_aks_deploy",
+  AZURE_CLI: "azure_cli",
   AZURE_DEVOPS: "azure-devops",
   AZURE_FUNCTIONS: "azure-functions",
   AZURE_SCRIPTS: "azure_scripts",
+  AZURE_WEBAPPS: "azure_webapps",
   AZURE_ZIP_DEPLOYMENT: "azure-zip-deployment",
   BITBUCKET: "bitbucket",
   BUILDKITE: "buildkite",
@@ -80,5 +82,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   GITHUB_DEPLOY_KEY: "github-deploykey",
   GIT_OPERATION: "git-operation",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
-  PROVAR: "provar"
+  PROVAR: "provar",
+  BOOMI: "boomi"
 };

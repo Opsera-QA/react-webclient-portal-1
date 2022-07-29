@@ -140,14 +140,14 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Synopsis"}
       />
       {getRelease360Tab()} */}
-       <NavigationTab
+      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
         icon={faLink}
         tabName={"connectedAssets"}
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Connected Assets"}
         isBeta={true}
-      />
+      /> }
       {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
         icon={faShieldKeyhole}
         tabName={"gitCustodian"}

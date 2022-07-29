@@ -1,5 +1,5 @@
 const sfdcDataTransformerRulesMapMetadata = {
-  type: "SFDC Data Transformer Rules",
+  type: "Salesforce MetaData Transformer Rules",
   fields: [
     {
       label: "Name",

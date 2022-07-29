@@ -7,28 +7,12 @@ notificationsActions.deleteNotification = async (dataObject, getAccessToken) => 
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
-notificationsActions.updateNotification = async (notificationDataDto, getAccessToken) => {
-  const postBody = {
-    ...notificationDataDto.getPersistData()
-  };
-  const apiUrl = `/notifications/${notificationDataDto.getData("_id")}/update`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 notificationsActions.updateNotificationV2 = async (getAccessToken, cancelTokenSource,notificationDataDto) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
   };
   const apiUrl = `/notifications/${notificationDataDto.getData("_id")}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-notificationsActions.createNotification = async (notificationDataDto, getAccessToken) => {
-  const postBody = {
-    ...notificationDataDto.getPersistData()
-  };
-  const apiUrl = "/notifications/create";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 notificationsActions.createNotificationV2 = async (getAccessToken, cancelTokenSource, notificationDataDto) => {
@@ -54,11 +38,6 @@ notificationsActions.getNotificationsListV2 = async (getAccessToken, cancelToken
   };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource,  apiUrl, urlParams);
-};
-
-notificationsActions.getNotificationById = async (id, getAccessToken) => {
-  const apiUrl = `/notifications/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 notificationsActions.getNotificationByIdV2 = async (getAccessToken, cancelTokenSource, id) => {

@@ -5,7 +5,7 @@ import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
+import { capitalizeFirstLetter, hasStringValue, truncateString } from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
@@ -53,7 +53,23 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
     id: getColumnId(field),
     tooltipTemplate: tooltipTemplateFunction,
     class: className,
-    maxWidth: maxWidth
+    maxWidth: maxWidth,
+    template: function (value, row, col) {
+      const property = col?.id;
+      if (hasStringValue(property) === true) {
+        const parsedValue = dataParsingHelper.safeObjectPropertyParser(
+          row,
+          property,
+          "",
+        );
+
+        if (hasStringValue(parsedValue) === true || typeof parsedValue === "number") {
+          return `${parsedValue}`;
+        }
+      }
+
+      return "";
+    },
   };
 };
 
@@ -199,7 +215,7 @@ export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175
   let header = getColumnHeader(field);
 
   if (showFilter) {
-    header.push({ content: "inputFilter" }); 
+    header.push({ content: "inputFilter" });
   }
 
   return {

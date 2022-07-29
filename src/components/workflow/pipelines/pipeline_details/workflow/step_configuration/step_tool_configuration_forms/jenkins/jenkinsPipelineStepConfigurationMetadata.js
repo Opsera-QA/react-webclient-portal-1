@@ -88,7 +88,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker Dynamic Tag",
       id: "dockerDynamicTagName",
-      formText: "date, timestamp, run_count text can be used to make it dynamic",
+      formText: "date, timestamp, run_count, commit_sha text can be used to make it dynamic",
       regexDefinitionName: "dockerName",
       maxLength: 50,
       lowercase: true,
@@ -220,7 +220,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       maxLength: 500
     },
     {
-      label: "Data Transformer Rule",
+      label: "MetaData Transformer Rule",
       id: "ruleIds",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "SFDC DATA TRANSFORM";

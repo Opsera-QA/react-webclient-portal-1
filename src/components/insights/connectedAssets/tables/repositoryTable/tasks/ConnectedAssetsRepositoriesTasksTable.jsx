@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faListCheck } from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faListCheck} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -13,6 +13,10 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
+import IconBase from "../../../../../common/icons/IconBase";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
 function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,15 +32,16 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
       false
     )
   );
-
-  const noDataMessage = 'No tasks found.';
+  const history = useHistory();
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "task_name"), "task_name"),
       getTableDateTimeColumn(getField(fields, "task_created_at"), "task_created_at"),
       getTableTextColumn(getField(fields, "task_last_run"), "task_last_run"),
-      getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name")
+      getTableTextColumn(getField(fields, "task_owner_name"), "task_owner_name"),
+      getTableTextColumn(getField(fields, "tool_registry_name"), "tool_registry_name")
     ],
     []
   );
@@ -60,12 +65,14 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [repository]);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(repository) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -81,14 +88,18 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
+    let repo = {
+      name: repository?.repository_name,
+      url: repository?.repository_url
+    };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "taskInfoFromSelectedRepository",
+      constants.REPOSITORIES_LIST.SELECTED_REPO_TASKS_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repository
+      repo
     );
     let dataObject = response?.data?.data?.taskInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
@@ -100,7 +111,21 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
     }
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/task/details/${(rowData.original?._id)}`);
+  };
+
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -110,12 +135,14 @@ function ConnectedAssetsRepositoriesTasksTable({ repository, dashboardData, icon
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };
 
   return (
     <div className={"p-2"}>
+      <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective task.</div>
       <FilterContainer
         isLoading={isLoading}
         title={'List Of Tasks'}

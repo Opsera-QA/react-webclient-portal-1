@@ -9,13 +9,13 @@ import { faFilter } from "@fortawesome/pro-light-svg-icons";
 import FiltersMultiSelectOverlay from "components/common/inputs/tags/inline/modal/FiltersMultiSelectOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData, className }) {
+function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData, className, user }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   const updateDashboardFilters = async (newDataModel) => {
-    let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "amexFilters", newDataModel?.getData("amexFilters"));
+    let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "hierarchyFilters", newDataModel?.getData("hierarchyFilters"));
     newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "tags", newDataModel?.getData("tags"));
     newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "organizations", newDataModel?.getData("organizations"));
     const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
@@ -27,9 +27,10 @@ function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData,
     toastContext.showOverlayPanel(
       <FiltersMultiSelectOverlay
         dataObject={dashboardModel}
-        fieldName={"amexFilters"}
+        fieldName={"hierarchyFilters"}
         saveDataFunction={updateDashboardFilters}
         showModal={true}
+        user={user}
       />
     );
   };
@@ -56,6 +57,7 @@ EditDashboardFiltersIcon.propTypes = {
   setDashboardModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
+  user: PropTypes.object
 };
 
 export default EditDashboardFiltersIcon;

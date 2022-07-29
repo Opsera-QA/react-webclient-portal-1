@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+//import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import PipelineSummaryAndWebhookOverviewDetailPanel
   from "components/workflow/pipelines/overview/PipelineSummaryAndWebhookOverviewDetailPanel";
 
@@ -37,16 +38,16 @@ function PipelineSourceConfigurationDetailsOverviewOverlay({ pipeline }) {
   }
 
   return (
-    <FullScreenCenterOverlayContainer
+    <CenterOverlayContainer
       closePanel={closePanel}
-      titleText={`${pipeline?.name} Pipeline Source Configuration Summary`}
+      titleText={`Pipeline Details`}
       titleIcon={faDraftingCompass}
       showToasts={true}
     >
       <div className={"p-3"}>
         <PipelineSummaryAndWebhookOverviewDetailPanel pipeline={pipeline} />
       </div>
-    </FullScreenCenterOverlayContainer>
+    </CenterOverlayContainer>
   );
 }
 

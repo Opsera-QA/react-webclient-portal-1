@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import AceEditor from "react-ace";
 
 import * as ace from 'ace-builds/src-noconflict/ace';
-import "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/theme-chrome";
 import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/mode-io";
@@ -37,17 +36,12 @@ function CodeInputBase(
     setDataFunction(newValue);
   };
 
-  if (setDataFunction == null && disabled !== true) {
-    console.log("set data function is null");
-    return null;
-  }
-
   return (
     <div id={inputId}>
       <AceEditor
         mode={mode}
         theme={theme}
-        readOnly={disabled === true || isLoading === true}
+        readOnly={disabled === true || setDataFunction == null || isLoading === true}
         onChange={(newValue) => handleData(newValue)}
         highlightActiveLine={true}
         name={inputId}

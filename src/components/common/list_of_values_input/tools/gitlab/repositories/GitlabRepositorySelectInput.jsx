@@ -73,7 +73,6 @@ function GitlabRepositorySelectInput({
   ) => {
     try {
       setIsLoading(true);
-      // const response = await gitlabActions.getRepositoriesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId);
       const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
         getAccessToken,
         cancelSource,
@@ -114,6 +113,10 @@ function GitlabRepositorySelectInput({
     }
   };
 
+  const getDataPullLimitMessage = () => {
+    return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
+  };
+
   const delayedSearchQuery = useCallback(
     _.debounce((searchTerm, toolId) => loadGitlabRepositories(searchTerm, toolId), 600),
     [],
@@ -123,6 +126,7 @@ function GitlabRepositorySelectInput({
     <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
+      helpTooltipText={getDataPullLimitMessage()}
       setDataObject={setModel}
       selectOptions={gitlabRepositories}
       busy={isLoading}
@@ -154,7 +158,7 @@ GitlabRepositorySelectInput.propTypes = {
 
 GitlabRepositorySelectInput.defaultProps = {
   valueField: "name",
-  textField: "name",
+  textField: "nameSpacedPath",
 };
 
 export default GitlabRepositorySelectInput;

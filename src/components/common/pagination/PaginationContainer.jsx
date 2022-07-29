@@ -17,7 +17,8 @@ function PaginationContainer(
     data,
     loadingMessage,
     paginationStyle,
-    topPaginationStyle
+    topPaginationStyle,
+    bodyClassName
   }) {
   const getTopPaginator = () => {
     return (
@@ -54,7 +55,7 @@ function PaginationContainer(
       );
     }
 
-    return (<div className={'h-100'} style={{flex: "1 1 auto", overflow: "scroll"}}>{children}</div>);
+    return (<div className={`h-100 ${bodyClassName}`} style={{flex: "1 1 auto"}}>{children}</div>);
   };
 
   if (filterDto == null) {
@@ -91,10 +92,12 @@ PaginationContainer.propTypes = {
   loadingMessage: PropTypes.string,
   paginationStyle: PropTypes.string,
   topPaginationStyle: PropTypes.string,
+  bodyClassName: PropTypes.string
 };
 
 PaginationContainer.defaultProps = {
   loadingMessage: "Loading Data",
+  bodyClassName: ""
 };
 
 export default PaginationContainer;

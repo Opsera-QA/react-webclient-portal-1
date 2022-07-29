@@ -81,7 +81,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   if (editItem.type === "source") {
     return (<>
-      {getTitleBar("Source Repository")}
+      {getTitleBar("Pipeline Settings")}
       <div className="p-3 bg-white step-settings-container">
         <SourceRepositoryConfiguration
           pipeline={pipeline}
@@ -93,7 +93,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   if (editItem.type === "step") {
     return (<>
-      {getTitleBar("Step Setup")}
+      {getTitleBar("Step Definition")}
       <div className="p-3 bg-white step-settings-container">
         <StepConfiguration
           plan={pipeline?.workflow?.plan}
@@ -106,7 +106,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   return (
     <>
-      {getTitleBar("Step Configuration")}
+      {getTitleBar("Step Settings")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration

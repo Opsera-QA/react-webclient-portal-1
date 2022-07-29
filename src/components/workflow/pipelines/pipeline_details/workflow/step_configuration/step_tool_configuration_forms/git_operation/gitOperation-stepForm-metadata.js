@@ -52,9 +52,6 @@ const gitOperationStepFormMetadata = {
     {
       label: "Description",
       id: "description",
-      // isRequiredFunction: (model) => {
-      //   return model?.getData("action") === "pr-creation";
-      // },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
       formText:"Description for PR"
@@ -77,6 +74,18 @@ const gitOperationStepFormMetadata = {
       isRequired: true,
       lowercase: true,
     },
+    {
+      label: "Add Reviewer",
+      id: "addReviewers",
+      maxLength: 50,
+      isRequired: true,
+      lowercase: true,
+    },
+    {
+      label: "Select Reviewers",
+      id: "prReviewers",
+      maxLength: 10,
+    },
   ],
   newObjectFields: {
     gitBranch: "",
@@ -91,6 +100,8 @@ const gitOperationStepFormMetadata = {
     targetBranch: "",
     description: "",
     tag: "",
+    addReviewers: false,
+    prReviewers: [],
   }
 };
 

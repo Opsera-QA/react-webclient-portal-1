@@ -53,7 +53,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
       const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardFilters =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "amexFilters")]
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
           ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
@@ -99,7 +99,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.successPercentage + "%"}
-              subtitle={'Success%'}
+              subtitle={'Successful Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -108,7 +108,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.failurePercentage + "%"}
-              subtitle={'Failed%'}
+              subtitle={'Failed Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -116,8 +116,8 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.cancelledPercentage}
-              subtitle={'Cancelled'}
+              score={responseData?.cancelledPercentage == null ? 'N/A' : responseData?.cancelledPercentage + "%"}
+              subtitle={'Cancelled Execution rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -125,8 +125,8 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className="p-2"
-              score={responseData?.skippedPercentage == null ? 'N/A' : responseData?.skippedPercentage}
-              subtitle={'Skipped'}
+              score={responseData?.skippedPercentage == null ? 'N/A' : responseData?.skippedPercentage + "%"}
+              subtitle={'Skipped Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>

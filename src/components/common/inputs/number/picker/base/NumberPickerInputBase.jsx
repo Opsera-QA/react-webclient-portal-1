@@ -21,6 +21,7 @@ function NumberPickerInputBase(
     className,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -54,6 +55,7 @@ function NumberPickerInputBase(
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <StandaloneNumberPickerInput
         placeholderText={placeholderText}
@@ -89,6 +91,7 @@ NumberPickerInputBase.propTypes = {
   precision: PropTypes.number,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default NumberPickerInputBase;

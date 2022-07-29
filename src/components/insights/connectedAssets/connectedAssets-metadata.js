@@ -21,9 +21,29 @@ const connectedAssetsMetadata = {
         label: "Pipeline URL",
         id: "pipeline_url",
       },
+      {
+        label: "Pipeline Last Status",
+        id: "pipeline_last_status",
+      },
+      {
+        label: "Number Of Runs",
+        id: "pipeline_run_count",
+      },
+      {
+        label: "Number Of Runs",
+        id: "task_run_count",
+      },
+      {
+        label: "Number Of Runs",
+        id: "run_count"
+      },
        {
          label: "Created At",
          id: "pipeline_created_at",
+       },
+       {
+         label: "Created At",
+         id: "createdAt"
        },
        {
          label: "Last Run (in days)",
@@ -38,6 +58,42 @@ const connectedAssetsMetadata = {
          id: "task_name",
        },
        {
+         label: "Updated On",
+         id: "pipeline_updatedAt"
+       },
+       {
+         label: "Success Count",
+         id: "success_count",
+       },
+       {
+         label: "Failed Count",
+         id: "failed_count",
+       },
+       {
+         label: "Last Run (in days)",
+         id: "tasks_updatedAt"
+       },
+       {
+         label: "Last Run (in days)",
+         id: "last_triggered"
+       },
+       {
+         label: "Artifact Name",
+         id: "artifactName"
+       },
+       {
+        label: "Updated On",
+        id: "task_updatedAt"
+       },
+       {
+         label: "Last Action",
+         id: "last_action"
+       },
+       {
+         label: "Pipeline Status",
+         id: "status"
+       },
+       {
          label: "Created At",
          id: "task_created_at",
        },
@@ -46,8 +102,56 @@ const connectedAssetsMetadata = {
          id: "task_last_run",
        },
        {
+         label: "Repository Name",
+         id: "repositoryName"
+       },
+       {
+        label: "Last Run (in days)",
+        id: "activityDate"
+       },
+       {
+         label: "Event Type",
+         id: "event"
+       },
+       {
+         label: "User",
+         id: "userName"
+       },
+       {
+         label: "Commit Title",
+         id: "commit_or_mr_title"
+       },
+       {
          label: "User Created",
          id: "task_owner_name",
+       },
+       {
+         label: "User Created",
+         id: "owner_name"
+       },
+       {
+          label: "Task URL",
+          id: "task_url",
+       },
+       {
+          label: "Repository URL",
+          id: "repo_url",
+       },
+       {
+          label: "Last Run (in days)",
+          id: "repo_last_used"
+       },
+       {
+          label: "Repository Name",
+          id: "repo_name",
+       },
+       {
+         label: "Branch Name",
+         id: "branch"
+       },
+       {
+         label: "Rollback Branch",
+         id: "rollback_branch"
        },
        {
          label: "Sort Option",
@@ -61,6 +165,10 @@ const connectedAssetsMetadata = {
         label: "Active Filters",
         id: "activeFilters",
       },
+      {
+        label: "Tool Registry",
+        id: "tool_registry_name"
+      }
     ],
     getActiveFilters(filterDto) {
        let activeFilters = [];
@@ -74,17 +182,17 @@ const connectedAssetsMetadata = {
     newObjectFields: {
        pageSize: 10,
        currentPage: 1,
-       sortOption: {text: "Newest", value: ""},
+       sortOption: {text: "Newest", value: "newest"},
        search: "",
        activeFilters: [],
        date: {
          startDate: new Date(addDays(new Date(), -90)),
-         endDate: addDays(new Date, 1),
+         endDate: new Date(),
          key: "selection",
        }
     },
       sortOptions: [
-       {text: "Newest", option: ""},
+       {text: "Newest", option: "newest"},
        {text: "Oldest", option: "oldest"}
 
     ]

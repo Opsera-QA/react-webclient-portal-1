@@ -14,7 +14,7 @@ pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount = (runCount) => {
   return sortTree(newTree);
 };
 
-pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipelineLogData) => {
+pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipelineLogData, triggeredBy) => {
   if (typeof runNumber !== "number" || !Array.isArray(pipelineTree) || !Array.isArray(pipelineLogData) || pipelineLogData.length === 0) {
     return pipelineTree;
   }
@@ -25,6 +25,8 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
     return entry.id === `${runNumber}`;
   });
 
+  currentValue.value = `Run ${runNumber} triggered by ${triggeredBy}`;
+
   pipelineLogData.forEach((log) => {
     if (!log.run_count || log.step_name === "start pipeline") {
       return;
@@ -32,9 +34,10 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
 
     const stepIndex = log.step_index >= 0 ? log.step_index : "other_logs";
     const stepName = log.step_name ? log.step_name : "Other Logs";
+    const stepId = log?.step_id || stepName;
     let stepNameText;
 
-    if (stepName === "registered webhook event") {
+    if (stepName === "registered webhook event" || stepName === "scheduled start") {
       stepNameText = `${capitalizeFirstLetter(log.step_name)}`;
     } else if (stepIndex === "other_logs" || !log.step_name) {
       stepNameText = `Step: ${capitalizeFirstLetter(log.step_name)}`;
@@ -45,12 +48,12 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
     if (currentValue != null) {
       const index = newTree.indexOf(currentValue);
       const existingStep = currentValue.items.find((item) => {
-        return item.id === `${runNumber}-${stepName}`;
+        return item.id === `${runNumber}-${stepId}`;
       });
 
       if (existingStep == null && stepIndex != null) {
         currentValue.items.push({
-          id: `${runNumber}-${stepName}`,
+          id: `${runNumber}-${stepId}`,
           runNumber: runNumber,
           stepName: stepName,
           value: stepNameText,

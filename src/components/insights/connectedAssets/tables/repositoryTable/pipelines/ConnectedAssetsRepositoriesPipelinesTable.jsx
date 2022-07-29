@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faDiagramSuccessor } from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo, faDiagramSuccessor} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
@@ -13,6 +13,10 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
+import {useHistory} from "react-router-dom";
+import IconBase from "../../../../../common/icons/IconBase";
+import {parseError} from "../../../../../common/helpers/error-helpers";
 
 function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,15 +32,16 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
       false
     )
   );
-
-  const noDataMessage = 'No pipelines found.';
+  const history = useHistory();
+  const noDataMessage = 'No relevant data found.';
   const fields = connectedAssetsMetadata.fields;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipeline_name"), "pipeline_name"),
       getTableDateTimeColumn(getField(fields, "pipeline_created_at"), "pipeline_created_at"),
       getTableTextColumn(getField(fields, "pipeline_last_run"), "pipeline_last_run"),
-      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name")
+      getTableTextColumn(getField(fields, "pipeline_owner_name"), "pipeline_owner_name"),
+      getTableTextColumn(getField(fields, "tool_registry_name"), "tool_registry_name")
     ],
     []
   );
@@ -60,12 +65,15 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [repository]);
+
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpenData();
+      if(repository) {
+        await loadOpenData();
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -81,14 +89,18 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
   const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
     let dateRange = dashboardData?.getData("date");
+    let repo = {
+      name: repository?.repository_name,
+      url: repository?.repository_url
+    };
     const response = await connectedAssetsActions.getSelectedRepoDetailedInfo(
       getAccessToken,
       cancelSource,
-      "pipelineInfoFromSelectedRepository",
+      constants.REPOSITORIES_LIST.SELECTED_REPO_PIPELINE_INFO,
       dateRange?.startDate,
       dateRange?.endDate,
       filterDto,
-      repository
+      repo
     );
     let dataObject = response?.data?.data?.pipelineInfo?.data?.[0];
     let dataCount = dataObject?.count?.[0]?.count ? dataObject?.count?.[0]?.count : 0;
@@ -100,7 +112,21 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
     }
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/workflow/details/${(rowData.original?._id)}/summary`);
+  };
+
   const getTable = () => {
+    if (error) {
+      return (
+        <div className="mx-2" >
+          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <span className={"-5"}>There was an error loading the data: {parseError(error?.message)}. Please check logs for more details.</span>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -110,12 +136,14 @@ function ConnectedAssetsRepositoriesPipelinesTable({ repository, dashboardData, 
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
       />
     );
   };
 
   return (
     <div className={"p-2"}>
+      <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row you will be redirected to the respective pipeline.</div>
       <FilterContainer
         isLoading={isLoading}
         title={'List Of Pipelines'}

@@ -126,7 +126,7 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
         setJenkinsJobConfigurationModel={setJenkinsJobConfigurationModel}
         jenkinsJobConfigurationModel={jenkinsJobConfigurationModel}
         jenkinsJobType={jenkinsJobModel?.getArrayData("type", 0)}
-        autoScalingEnabled={toolData?.configuration?.autoScaleEnable}
+        autoScalingEnabled={toolData?.getData("configuration.autoScaleEnable")}
       />
       <Row>
         <Col lg={12}>

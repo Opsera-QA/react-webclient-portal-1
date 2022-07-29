@@ -6,15 +6,30 @@ import InputContainer from "components/common/inputs/InputContainer";
 import VanityComboBoxInputBase from "components/common/inputs/select/VanityComboBoxInputBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-// TODO: This will replace select input base after it is verified
 function VanityComboBoxInput(
   {
-    fieldName, dataObject, setDataObject, groupBy,
-    selectOptions, valueField, textField, placeholderText,
-    setDataFunction, busy, disabled, clearDataFunction,
-    showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, formatItems, className, multiselect,
-    inputHelpOverlay, infoOverlay,
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    disabled,
+    clearDataFunction,
+    showClearValueButton,
+    errorMessage,
+    getCurrentValue,
+    showLabel,
+    formatItems,
+    className,
+    multiselect,
+    inputHelpOverlay,
+    infoOverlay,
+    helpTooltipText,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -87,6 +102,7 @@ function VanityComboBoxInput(
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <VanityComboBoxInputBase
         selectOptions={formatSelectOptions()}
@@ -138,6 +154,7 @@ VanityComboBoxInput.propTypes = {
   multiselect: PropTypes.bool,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 VanityComboBoxInput.defaultProps = {

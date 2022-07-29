@@ -31,19 +31,17 @@ import TagEditor from "./components/settings/tags/TagManagement";
 import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
 import KpiIdentifierManagement from "components/admin/kpi_identifiers/KpiIdentifierManagement";
 import KpiIdentifierDetailView from "components/admin/kpi_identifiers/details/KpiIdentifierDetailView";
-import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
+import PipelineTemplateManagement from "components/admin/pipeline_templates/PipelineTemplateManagement";
 import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
 import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import ApiConnectionTest from "components/admin/api_demo/ApiConnectionTest";
-import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
-import LdapUserDetailView from "./components/settings/ldap_users/users_detail_view/LdapUserDetailView";
 import AccountSettingsView from "./components/settings/AccountSettings";
 import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import TemplateDetailView from "./components/admin/template_editor/details/TemplateDetailView";
+import PipelineTemplateDetailView from "components/admin/pipeline_templates/details/PipelineTemplateDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ToolCategoryDetailView
   from "components/admin/tools/categories/details/ToolCategoryDetailView";
@@ -281,8 +279,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={ToolIdentifierDetailView} />
           <SecureRoute path="/admin/kpis" exact component={KpiIdentifierManagement} />
           <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
-          <SecureRoute path="/admin/templates" exact component={TemplateManagement} />
-          <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView} />
+          <SecureRoute path="/admin/templates" exact component={PipelineTemplateManagement} />
+          <SecureRoute path="/admin/templates/details/:templateId" exact component={PipelineTemplateDetailView} />
           <SecureRoute path="/admin/reports" exact component={Reports_Old} />
           <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
           <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />

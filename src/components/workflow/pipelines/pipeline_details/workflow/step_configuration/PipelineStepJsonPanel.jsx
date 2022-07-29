@@ -11,8 +11,8 @@ function PipelineStepJsonPanel({ pipelineStepData }) {
         enableClipboard={false}
         displayDataTypes={false}
         collapsed={false}
-        minimumHeight={"calc(100vh - 418px)"}
-        maximumHeight={"calc(100vh - 418px)"}
+        minimumHeight={"calc(100vh - 12px)"}
+        maximumHeight={"calc(100vh - 12px)"}
       />
     </div>
   );

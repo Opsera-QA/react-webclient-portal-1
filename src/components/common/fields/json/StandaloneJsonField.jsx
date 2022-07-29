@@ -38,7 +38,7 @@ function StandaloneJsonField(
 
 StandaloneJsonField.propTypes = {
   titleText: PropTypes.string,
-  json: PropTypes.object,
+  json: PropTypes.any,
   className: PropTypes.string,
   collapsed: PropTypes.bool,
   enableClipboard: PropTypes.bool,
