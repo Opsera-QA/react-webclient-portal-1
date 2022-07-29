@@ -16,7 +16,7 @@ function PipelineActivityLogTable(
     pipeline,
     pipelineActivityFilterDto,
     currentRunNumber,
-    currentStepName,
+    currentStepId,
   }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -60,12 +60,12 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
-    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || currentStepName == null) {
+    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || currentStepId == null) {
       return pipelineLogData;
     }
 
     return pipelineLogData.filter((item) => {
-      return item.step_name === currentStepName;
+      return item.step_id === currentStepId;
     });
   };
 
@@ -96,7 +96,7 @@ PipelineActivityLogTable.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  currentStepName: PropTypes.string,
+  currentStepId: PropTypes.string,
 };
 
 export default PipelineActivityLogTable;

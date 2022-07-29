@@ -36,6 +36,7 @@ import QuickDeployStatisticsEditorPanel
 import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
+import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -232,6 +233,17 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return(
+          <BoomiBarChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+  
     }
   };
 

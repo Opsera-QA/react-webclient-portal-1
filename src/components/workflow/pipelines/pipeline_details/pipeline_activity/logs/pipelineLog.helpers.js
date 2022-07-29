@@ -55,7 +55,9 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
         currentValue.items.push({
           id: `${runNumber}-${stepId}`,
           runNumber: runNumber,
-          stepName: stepName,
+          stepName: stepId,
+          stepId: stepName,
+          stepIndex: stepIndex,
           value: stepNameText,
           icon: {
             "folder": "fal fa-tasks opsera-primary",
