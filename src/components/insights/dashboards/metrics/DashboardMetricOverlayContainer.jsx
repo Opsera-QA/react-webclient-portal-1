@@ -29,6 +29,7 @@ import QuickDeployStatisticsEditorPanel from "../../charts/quick-deploy-statisti
 import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
+import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -198,6 +199,15 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <GitlabDeploymentFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />);
     }
   };
 
