@@ -14,11 +14,16 @@ function BoomiJobTypeSelectInput({
       value: "CREATE_PACKAGE_COMPONENT",
       jobDescription: "PACKAGEXML_CREATION",
     },
-    // {
-    //   name: "Deploy Package Component",
-    //   value: "DEPLOY_PACKAGE_COMPONENT",
-    //   jobDescription: "DEPLOY PACKAGE",
-    // },
+    {
+      name: "Deploy Package Component",
+      value: "DEPLOY_PACKAGE_COMPONENT",
+      jobDescription: "DEPLOY PACKAGE",
+    },
+    {
+      name: "Migrate Package Component",
+      value: "MIGRATE_PACKAGE_COMPONENT",
+      jobDescription: "MIGRATE DEPLOYMENT PACKAGE",
+    },
   ];
 
   const setDataFunction = async (fieldName, value) => {
@@ -39,6 +44,8 @@ function BoomiJobTypeSelectInput({
     newDataObject.setData("fileName", "");
     newDataObject.setData("environmentName", "");
     newDataObject.setData("environmentId", "");
+    newDataObject.setData("targetEnvironmentName", "");
+    newDataObject.setData("targetEnvironmentId", "");
     setDataObject({ ...newDataObject });
   };
 
@@ -60,6 +67,8 @@ function BoomiJobTypeSelectInput({
     newDataObject.setData("fileName", "");
     newDataObject.setData("environmentName", "");
     newDataObject.setData("environmentId", "");
+    newDataObject.setData("targetEnvironmentName", "");
+    newDataObject.setData("targetEnvironmentId", "");
     setDataObject({ ...newDataObject });
   };
 

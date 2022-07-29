@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import BoomiLogSummaryTable from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/boomi/components/BoomiLogSummaryTable";
 import BoomiErrorSummaryTable from "./BoomiErrorSummaryTable";
 
-function BoomiReportView({ boomiObj, errorObj }) {
+function BoomiReportView({ boomiObj, errorObj, jobType }) {
   if (boomiObj == null) {
     return (
       <LoadingDialog
@@ -17,8 +17,8 @@ function BoomiReportView({ boomiObj, errorObj }) {
 
   return (
     <>
-      <BoomiLogSummaryTable boomiObj={boomiObj} />
-      <BoomiErrorSummaryTable boomiObj={errorObj} />
+      <BoomiLogSummaryTable boomiObj={boomiObj} jobType={jobType} />
+      <BoomiErrorSummaryTable boomiObj={errorObj} jobType={jobType}/>
     </>
   );
 }
@@ -26,6 +26,7 @@ function BoomiReportView({ boomiObj, errorObj }) {
 BoomiReportView.propTypes = {
   boomiObj: PropTypes.array,
   errorObj: PropTypes.array,
+  jobType: PropTypes.string
 };
 
 export default BoomiReportView;
