@@ -103,6 +103,9 @@ import FlywayDatabaseToolConnectionSummaryPanel
 import {
   flywayDatabaseToolConnectionMetadata
 } from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
+import InformaticaIdqConnectionMetadata from "./tool_jobs/informatica_idq/informatica-idq-connection-metadata";
+import InformaticaIdqToolConfigurationSummaryPanel
+  from "./tool_jobs/informatica_idq/InformaticaIdqToolConfigurationSummaryPanel";
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
     if (toolIdentifier == null || toolIdentifier === "" || toolConfiguration == null) {
@@ -290,6 +293,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
       //     azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
       //   />
       // );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqToolConfigurationSummaryPanel
+                informaticaIdqToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaIdqConnectionMetadata)}
+            />
+        );
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }
