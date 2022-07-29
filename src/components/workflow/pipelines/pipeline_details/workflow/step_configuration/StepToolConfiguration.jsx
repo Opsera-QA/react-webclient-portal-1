@@ -97,6 +97,8 @@ import SapCpqStepConfiguration from "./step_tool_configuration_forms/sap_cpq/Sap
 import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
 import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
+import InformaticaIdqStepConfiguration
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1374,6 +1376,17 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
         );
     }
   };

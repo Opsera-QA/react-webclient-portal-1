@@ -34,6 +34,12 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         return (
           <InformaticaLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
+      case "informatica-idq":
+        return (
+            <InformaticaIdqLogSummaryReportPanel
+                pipelineTaskData={pipelineTaskData}
+            />
+        );
       case "gitscraper":
         return (
           <GitScraperLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>

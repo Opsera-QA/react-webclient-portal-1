@@ -85,7 +85,8 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
-  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -183,6 +184,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <SapCpqToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
         return <BoomiToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return <InformaticaIdqToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }

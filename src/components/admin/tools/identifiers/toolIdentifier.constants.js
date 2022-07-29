@@ -83,5 +83,6 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   GIT_OPERATION: "git-operation",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
   PROVAR: "provar",
-  BOOMI: "boomi"
+  BOOMI: "boomi",
+  INFORMATICA_IDQ: "informatica-idq"
 };
