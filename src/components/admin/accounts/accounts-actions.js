@@ -195,6 +195,17 @@ accountsActions.isEmailAvailableV2 = async (getAccessToken, cancelTokenSource, e
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+accountsActions.isNameAvailableForLdapUidV2 = async (getAccessToken, cancelTokenSource, organization, firstName, lastName,) => {
+  const apiUrl = "/users/account/is-name-available";
+  const postBody = {
+    organization: organization,
+    firstName: firstName,
+    lastName: lastName,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 accountsActions.getUserRegistrations = async (getAccessToken) => {
   const apiUrl = "/users/registrations";
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
