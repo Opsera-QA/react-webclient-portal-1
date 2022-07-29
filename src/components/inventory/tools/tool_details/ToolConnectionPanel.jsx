@@ -43,6 +43,7 @@ import SnaplogicToolConfiguration from "components/inventory/tools/tool_details/
 import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
+import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
