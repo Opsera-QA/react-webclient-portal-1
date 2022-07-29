@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Card, Col, Row } from "react-bootstrap";
 import PipelineHelpers from "../pipelineHelpers";
-import { format } from "date-fns";
 import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
@@ -11,6 +10,7 @@ import PipelineSubscriptionIcon from "components/common/icons/subscription/Pipel
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
+import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 
 // TODO: Rewrite
 const PipelineCard = (
@@ -53,6 +53,14 @@ const PipelineCard = (
     return description;
   };
 
+  const getLastRunEntry = () => {
+    const lastRunCompletionDate = pipeline?.workflow?.last_run?.completed;
+
+    if (lastRunCompletionDate != null) {
+      return getFormattedTimestamp(lastRunCompletionDate);
+    }
+  };
+
   return (
       <Card className={"h-100"}>
         <Card.Title className="pb-0">
@@ -89,19 +97,8 @@ const PipelineCard = (
           </Row>
           <Row>
             <Col className="py-1">
-              <span className="text-muted mr-2 pb-1">Created:</span><span
-              className="">{pipeline?.updatedAt && format(new Date(pipeline?.createdAt), "yyyy-MM-dd'")}</span>
-            </Col>
-            <Col className="py-1">
-              {pipeline?.workflow?.last_run?.completed ?
-                <><span className="text-muted mr-2 pb-1">Last Run:</span><span
-                  className="">{format(new Date(pipeline?.workflow?.last_run?.completed), "yyyy-MM-dd'")}</span>
-                </>
-                :
-                <><span className="text-muted mr-2 pb-1">Updated:</span><span
-                  className="">{pipeline?.updatedAt && format(new Date(pipeline?.updatedAt), "yyyy-MM-dd'")}</span>
-                </>
-              }
+              <span className="text-muted mr-2 pb-1">Last Run:</span>
+              <span>{getLastRunEntry()}</span>
             </Col>
           </Row>
           <Row>

@@ -4,8 +4,8 @@ import CustomTable from "components/common/table/CustomTable";
 import {
   getCustomTablePipelineStateColumnDefinition,
   getPipelineTypeColumn,
-  getTableDateColumn,
-  getTableTextColumn
+  getTableDateColumn, getTableDateTimeColumn,
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import pipelineMetadata from "./pipeline-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -21,8 +21,7 @@ function PipelinesTableBase({ pipelines, isLoading, paginationModel, setPaginati
       getTableTextColumn(getField(fields, "owner_name")),
       getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),
       getTableTextColumn(getField(fields, "workflow.run_count")),
-      getTableDateColumn(getField(fields, "createdAt")),
-      getTableDateColumn(getField(fields, "updatedAt")),
+      getTableDateTimeColumn(getField(fields, "workflow.last_run.completed")),
     ],
     [],
   );
