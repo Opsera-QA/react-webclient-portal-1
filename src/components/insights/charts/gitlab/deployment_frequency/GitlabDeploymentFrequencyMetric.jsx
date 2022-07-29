@@ -6,13 +6,14 @@ import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
-import BuildAndDeployChartHelpDocumentation from "components/common/help/documentation/insights/charts/BuildAndDeployChartHelpDocumentation";
 import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequency_kpi_datapoint_identifiers";
 import GitlabDeploymentFrequencyDataBlockContainer from "./GitlabDeploymentFrequencyDataBlockContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import GitlabDeployFrequencyChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 
 const DEFAULT_GOALS = {
-  deployment_frequency_rate: 90,
+  deployment_frequency_rate: 10,
 };
 
 function GitlabDeploymentFrequency({
@@ -35,7 +36,6 @@ function GitlabDeploymentFrequency({
   const [deploymentFrequencyDataPoint, setBuildFrequencyDataPoint] =
     useState(undefined);
 
-  // TODO: Wire up data pull and pass relevant data down
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -57,7 +57,6 @@ function GitlabDeploymentFrequency({
     };
   }, [JSON.stringify(dashboardData)]);
 
-  // TODO: Don't send this complicated object, just send the metric
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -79,9 +78,6 @@ function GitlabDeploymentFrequency({
       if (goals) {
         setGoalsData(goals);
       } else {
-        kpiConfiguration.filters[
-          kpiConfiguration.filters.findIndex((obj) => obj.type === "goals")
-        ].value = DEFAULT_GOALS;
         setGoalsData(DEFAULT_GOALS);
       }
 
@@ -96,7 +92,6 @@ function GitlabDeploymentFrequency({
           dashboardOrgs
       );
       const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
-      console.log(metrics);
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setDeploymentFrequencyMetricData(metrics[0]?.statisticsData);
         setDeploymentFrequencyChartData(metrics[0]?.chartData);
@@ -151,7 +146,7 @@ function GitlabDeploymentFrequency({
   return (
     <div>
       <VanityMetricContainer
-        title={"Build and deploy metrics"}
+        title={"Deploy metrics"}
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartBody()}
@@ -162,7 +157,7 @@ function GitlabDeploymentFrequency({
         setKpis={setKpis}
         isLoading={isLoading}
         chartHelpComponent={(closeHelpPanel) => (
-          <BuildAndDeployChartHelpDocumentation
+          <GitlabDeployFrequencyChartHelpDocumentation
             closeHelpPanel={closeHelpPanel}
           />
         )}

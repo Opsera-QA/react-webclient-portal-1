@@ -247,6 +247,19 @@ export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+        .value;
+  }
+  return null;
+}
+
 export function getServiceNowToolsFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")]?.value &&
