@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import BoomiActions from "../boomi.actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 
-function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool}) {
+function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool, idField}) {
     const toastContext = useContext(DialogToastContext);
     const [environments, setEnvs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +26,6 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
         const source = axios.CancelToken.source();
         setCancelTokenSource(source);
         isMounted.current = true;
-
         if (!disabled) {
             loadData(source).catch((error) => {
                 if (isMounted?.current === true) {
@@ -56,10 +55,21 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
 
     const loadEnvs = async (cancelSource = cancelTokenSource) => {
         try {
-            const res = await BoomiActions.getEnvironments(dataObject, getAccessToken, cancelSource);
-            if (res && res.status === 200) {
-                setEnvs(res?.data?.data);
-                return;
+            let res = await BoomiActions.getEnvironments(
+              dataObject,
+              getAccessToken,
+              cancelSource,
+            );
+            if (res && res?.data && res?.data?.length > 0) {
+              //remove selected environment if present for migrate step
+              if (fieldName === "targetEnvironmentName") {
+                const index = res?.data.findIndex(
+                  (x) => x?.name === dataObject?.getData("environmentName"),
+                );
+                if (index !== undefined) res?.data?.splice(index, 1);
+              }
+              setEnvs(res?.data);
+              return;
             }
             setEnvs([]);
             if (!isLoading && (environments == null || environments.length === 0)) {
@@ -72,21 +82,20 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
                 setErrorMessage("Boomi Environment information is missing or unavailable!");
             }
             console.error(error);
-            toastContext.showServiceUnavailableDialog();
         }
     };
 
     const setDataFunction = async (fieldName, value) => {
         let newDataObject = dataObject;
-        newDataObject.setData("environmentName", value.environmentName);
-        newDataObject.setData("environmentId", value.environmentId);
+        newDataObject.setData(fieldName, value.name);
+        newDataObject.setData(idField, value.id);
         setDataObject({ ...newDataObject });
     };
 
     const clearDataFunction = async (fieldName, value) => {
         let newDataObject = dataObject;
-        newDataObject.setData("environmentName", "");
-        newDataObject.setData("environmentId", "");
+        newDataObject.setData(fieldName, "");
+        newDataObject.setData(idField, "");
         setDataObject({ ...newDataObject });
     };
 
@@ -113,6 +122,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
 
 EnvironmentSelectInput.propTypes = {
     fieldName: PropTypes.string,
+    idField: PropTypes.string,
     dataObject: PropTypes.object,
     setDataObject: PropTypes.func,
     disabled: PropTypes.bool,
@@ -122,9 +132,11 @@ EnvironmentSelectInput.propTypes = {
 };
 
 EnvironmentSelectInput.defaultProps = {
-    valueField: "environmentName",
-    textField: "environmentName",
+    valueField: "name",
+    textField: "name",
     fieldName: "environmentName",
+    idField : "environmentId"
+
 };
 
 export default EnvironmentSelectInput;
