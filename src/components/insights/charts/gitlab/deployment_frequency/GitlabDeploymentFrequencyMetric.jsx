@@ -62,16 +62,16 @@ function GitlabDeploymentFrequency({
     try {
       setIsLoading(true);
       await loadDataPoints(cancelSource);
-      // let dashboardTags =
-      //   dashboardData?.data?.filters[
-      //     dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-      //   ]?.value;
-      // let dashboardOrgs =
-      //   dashboardData?.data?.filters[
-      //     dashboardData?.data?.filters.findIndex(
-      //       (obj) => obj.type === "organizations",
-      //     )
-      //   ]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
       let goals =
         kpiConfiguration?.filters[
           kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
@@ -84,81 +84,23 @@ function GitlabDeploymentFrequency({
         ].value = DEFAULT_GOALS;
         setGoalsData(DEFAULT_GOALS);
       }
-      const response = {
-        status: 200,
-        status_text: "ES Pipeline Summary Query Results",
-        message: "ES Query Response from Living Connection",
-        data: [
-          {
-            gitlabDeploymentStatistics: {
-              tool: "gitlab",
-              data: [
-                {
-                  statisticsData: {
-                    count: 3,
-                    type: "",
-                    averageDeployment: 2,
-                    prevDeployment: 0,
-                    prevDeploymentTrend: { trend: "Green" },
-                  },
-                  chartData: {
-                    deploySuccess: [
-                      {
-                        x: "2022-07-28",
-                        y: 37.5,
-                        range: "2022-07-28 to 2022-07-29",
-                        total: 8,
-                        success: 3,
-                      },
-                      {
-                        x: "2022-07-29",
-                        y: 0,
-                        range: "2022-07-29 to 2022-07-30",
-                        total: 0,
-                        success: 0,
-                      },
-                    ],
-                    avgDeployments: [
-                      {
-                        x: "2022-07-28",
-                        y: 188,
-                        range: "2022-07-28 to 2022-07-29",
-                        total: 190,
-                      },
-                      {
-                        x: "2022-07-29",
-                        y: 120,
-                        range: "2022-07-29 to 2022-07-30",
-                        total: 160,
-                      },
-                      {
-                        x: "2022-08-28",
-                        y: 188,
-                        range: "2022-07-28 to 2022-07-29",
-                        total: 190,
-                      },
-                      {
-                        x: "2022-09-29",
-                        y: 120,
-                        range: "2022-07-29 to 2022-07-30",
-                        total: 160,
-                      },
-                    ],
-                  },
-                },
-              ],
-              length: 1,
-              status: 200,
-              status_text: "OK",
-            },
-          },
-        ],
-      };
-      const metrics = response?.data[0]?.gitlabDeploymentStatistics?.data[0];
-      // if (isMounted?.current === true && Array.isArray(metrics)) {
-      setDeploymentFrequencyMetricData(metrics?.statisticsData);
-      setDeploymentFrequencyChartData(metrics?.chartData);
-      // }
+
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+          getAccessToken,
+          cancelSource,
+          "gitlabDeploymentStatistics",
+          kpiConfiguration,
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs
+      );
+      const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
+      console.log(metrics);
+      if (isMounted?.current === true && Array.isArray(metrics)) {
+        setDeploymentFrequencyMetricData(metrics[0]?.statisticsData);
+        setDeploymentFrequencyChartData(metrics[0]?.chartData);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
