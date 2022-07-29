@@ -170,6 +170,9 @@ import QuickDeployStatistics from "./opsera/quick_deploy_statistics/QuickDeployS
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 
+//Boomi KPI
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
@@ -1639,6 +1642,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return (
+          <Col md={12} className="p-2">
+            <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+  
       default:
         return null;
     }
