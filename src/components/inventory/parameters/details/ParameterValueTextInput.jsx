@@ -14,6 +14,7 @@ function ParameterValueTextInput(
     parameterId,
     setModel,
     disabled,
+    helpTooltipText,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -81,6 +82,7 @@ function ParameterValueTextInput(
         field={field}
         model={model}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <textarea
@@ -106,7 +108,8 @@ ParameterValueTextInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  parameterId: PropTypes.string
+  parameterId: PropTypes.string,
+  helpTooltipText: PropTypes.string,
 };
 
 export default ParameterValueTextInput;

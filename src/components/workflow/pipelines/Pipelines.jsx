@@ -48,7 +48,17 @@ function Pipelines() {
         setPipelines([]);
       }
 
-      const pipelineFields = ["type", "_id", "name", "owner", "workflow.last_step", "workflow.run_count", "createdAt", "updatedAt"];
+      const pipelineFields = [
+        "type",
+        "_id",
+        "name",
+        "owner",
+        "workflow.last_step",
+        "workflow.run_count",
+        "workflow.last_run",
+        "createdAt",
+        "updatedAt",
+      ];
       const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterModel, newPipelineFilterModel?.getData("type"), pipelineFields);
       const pipelines = response?.data?.data;
 

@@ -7,7 +7,16 @@ import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboar
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHelpOverlay, infoOverlay,}) {
+function TogglePasswordTextInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    inputHelpOverlay,
+    infoOverlay,
+    helpTooltipText,
+  }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [valueShown, setValueShown] = useState(false);
@@ -81,6 +90,7 @@ function TogglePasswordTextInput({fieldName, model, setModel, disabled, inputHel
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div>
         <input
@@ -111,6 +121,7 @@ TogglePasswordTextInput.propTypes = {
   disabled: PropTypes.bool,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default TogglePasswordTextInput;
