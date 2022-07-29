@@ -14,6 +14,7 @@ import IconBase from "components/common/icons/IconBase";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../charts-views";
+import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
 function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
@@ -44,37 +45,39 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
         break;
     }
   };
-
-  const getIconColor = (severity) => {
-    switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
-    }
-  };
+  // This could be removed if colors from the kpi directly gives the trend color.
+  // const getIconColor = (severity) => {
+  //   switch (severity) {
+  //     case "Red":
+  //       return "red";
+  //     case "Green":
+  //       return "green";
+  //     case "Neutral":
+  //       return "light-gray-text-secondary";
+  //     case "-":
+  //       return "black";
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const getLeftDataBlock = () => {
-    return (      
-      <ThreeLineDataBlockBase
-        className={metricData.prevDeploymentTrend?.trend}
-        topText={"Deployments and Frequency"}
-        icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
-        bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
-        middleText={
-        <MetricScoreText
-          score={metricData?.averageDeployment}
-          dataPoint={dataPoint}
-          className={"metric-block-content-text"}
-        />}
-        dataPoint={dataPoint}
-      />
+    return (
+      <DataBlockBoxContainer showBorder={true}>
+        <ThreeLineDataBlockBase
+            className={metricData.prevDeploymentTrend?.trend}
+            topText={"Deployment Frequency"}
+            icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
+            bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
+            middleText={
+              <MetricScoreText
+                  score={metricData?.averageDeployment}
+                  dataPoint={dataPoint}
+                  className={"metric-block-content-text"}
+              />}
+            dataPoint={dataPoint}
+        />
+      </DataBlockBoxContainer>
     );
   };
 
@@ -102,8 +105,8 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Deployments", "Avg Daily Deployments"]}
-              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+              titles={["Date Range", "Number of Deployments"]}
+              values={[node.point.data.range, node.point.data.total]}
             />
           )}
           markers={[
