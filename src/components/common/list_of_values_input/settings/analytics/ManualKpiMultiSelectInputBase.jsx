@@ -13,6 +13,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
   const [errorMessage, setErrorMessage] = useState("");
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
+  console.log(dataObject, fieldName,'***get d');
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +118,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
   };
 
   if (field == null) {
-    return <></>;
+    return <>11111</>;
   }
 
   return (
@@ -127,7 +128,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
         clearDataFunction={getClearDataFunction()}
         model={dataObject}
         hasError={hasStringValue(errorMessage) === true}
-      />
+      />22222
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           selectOptions={selectOptions}

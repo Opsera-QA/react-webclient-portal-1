@@ -95,6 +95,7 @@ function GitlabDeploymentFrequency({
           null,
           dashboardOrgs
       );
+      console.log(response, '**** response, api');
       const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
       console.log(metrics);
       if (isMounted?.current === true && Array.isArray(metrics)) {

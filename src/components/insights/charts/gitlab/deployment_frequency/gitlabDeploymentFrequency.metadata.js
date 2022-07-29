@@ -9,6 +9,10 @@ export const gitlabDeploymentFrequencyMetadata = {
       label: "Date Range",
       id: "date",
     },
+    {
+      label: "Deployment Stage",
+      id: "deployment-stage",
+    },
   ],
   newObjectFields: {
     tags: [],
