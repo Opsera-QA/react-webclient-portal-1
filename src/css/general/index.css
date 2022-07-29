@@ -744,6 +744,12 @@ a:hover, .active, .link-text:hover {
     padding: 5px;
 }
 
+.details-title-text {
+    font-family: 'Inter', sans-serif;
+    color: #3D3B36;
+    padding: 0.5rem;
+}
+
 .success-text {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: green;
