@@ -194,7 +194,7 @@ function BoomiBarChart({
             <ResponsiveLine
               data={metrics}
               {...defaultConfig(
-                "Counts",
+                "Count",
                 "Date",
                 false,
                 false,
