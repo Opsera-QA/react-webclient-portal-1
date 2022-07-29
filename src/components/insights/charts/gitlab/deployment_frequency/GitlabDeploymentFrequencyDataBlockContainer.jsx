@@ -45,27 +45,12 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
         break;
     }
   };
-  // This could be removed if colors from the kpi directly gives the trend color.
-  // const getIconColor = (severity) => {
-  //   switch (severity) {
-  //     case "Red":
-  //       return "red";
-  //     case "Green":
-  //       return "green";
-  //     case "Neutral":
-  //       return "light-gray-text-secondary";
-  //     case "-":
-  //       return "black";
-  //     default:
-  //       break;
-  //   }
-  // };
 
   const getLeftDataBlock = () => {
     return (
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
-            className={metricData.prevDeploymentTrend?.trend}
+            className={`${metricData.prevDeploymentTrend?.trend} p-2`}
             topText={"Deployment Frequency"}
             icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
             bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
