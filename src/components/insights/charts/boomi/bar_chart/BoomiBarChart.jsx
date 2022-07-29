@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import config from "./BoomiBarChartConfigs.js";
+import config from "./BoomiBarChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -11,21 +11,19 @@ import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import { BOOMI_CONSTANTS as dataPointConstants } from "./Boomi_datapoint_identifiers";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers.js";
-import DataPointVisibilityWrapper from "components/common/metrics/data_points/DataPointVisibilityWrapper.jsx";
-import ChartTooltip from "../../ChartTooltip.jsx";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import DataPointVisibilityWrapper from "components/common/metrics/data_points/DataPointVisibilityWrapper";
+import ChartTooltip from "../../ChartTooltip";
 import {
   adjustBarWidth,
   assignStandardColors, assignStandardLineColors,
   defaultConfig,
   spaceOutServiceNowCountBySeverityLegend,
-} from "../../charts-views.js";
-import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock.jsx";
-import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock.jsx";
-import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx";
-import { DialogToastContext } from "contexts/DialogToastContext.js";
+} from "../../charts-views";
+import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock";
+import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import { ResponsiveLine } from "@nivo/line";
-import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import chartsActions from "../../charts-actions";
 
 function BoomiBarChart({
@@ -201,7 +199,7 @@ function BoomiBarChart({
                 "wholeNumbers",
                 "monthDate2",
               )}
-              {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+              {...config()}
               {...adjustBarWidth(metrics)}
               tooltip={({point, color}) => <ChartTooltip
                   titles = {["Date", "Number of Deployments"]}
