@@ -51,7 +51,7 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
             className={`${metricData.prevDeploymentTrend?.trend} p-2`}
-            topText={"Deployment Frequency"}
+            topText={"Success Rate"}
             icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
             bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
             middleText={
