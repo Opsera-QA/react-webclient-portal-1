@@ -5,6 +5,7 @@ import SalesforceDurationByStageGoals from "components/insights/marketplace/char
 import BuildAndDeployGoals from "components/insights/marketplace/charts/goals/build_and_deploy_statistics/BuildAndDeployGoals";
 import ServicenowMeanTimeToResolutionGoals from "./servicenow_mean_time_to_resolution/ServicenowMeanTimeToResolutionGoals";
 import ServicenowMeanTimeToAcknowledgementGoals from "./servicenow_mean_time_to_acknowledge/ServicenowMeanTimeToAcknowledgementGoals";
+import DeploymentFrequencyGoals from "./gitlab_deployment_freqnency_statistics/DeploymentFrequencyGoals";
 
 function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
   switch (kpiName) {
@@ -20,7 +21,9 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
       return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
     case "build-deployment-statistics":
       return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
-    case "servicenow-mean-time-to-resolution":
+    case "gitlab-deployment-frequency":
+      return <DeploymentFrequencyGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
+      case "servicenow-mean-time-to-resolution":
       return (
         <ServicenowMeanTimeToResolutionGoals
           kpiConfigurationData={dataObject}

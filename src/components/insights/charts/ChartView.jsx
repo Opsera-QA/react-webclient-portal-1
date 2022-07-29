@@ -165,6 +165,7 @@ import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdenti
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 import QuickDeployStatistics from "./opsera/quick_deploy_statistics/QuickDeployStatistics";
 
 //APIGEE KPIs
@@ -863,6 +864,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Gitlab KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <GitlabDeploymentFrequency
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "gitlab-most-active-contributors":
         return (
           <Col xl={6} md={12} className="p-2">

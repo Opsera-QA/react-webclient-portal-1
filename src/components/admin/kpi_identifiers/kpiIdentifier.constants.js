@@ -53,6 +53,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_RECENT_MERGE_REQUESTS: "gitlab-recent-merge-requests",
   GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
+  GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
