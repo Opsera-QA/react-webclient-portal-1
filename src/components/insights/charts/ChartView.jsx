@@ -169,6 +169,9 @@ import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/Githu
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
 
+//APIGEE KPIs
+import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
+
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
@@ -970,6 +973,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={12} md={12} className="p-2">
             <GitlabPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      //APIGEE KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeReportsChartTab
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
