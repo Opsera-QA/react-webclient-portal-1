@@ -72,11 +72,9 @@ function GitlabDeploymentFrequency({
           )
         ]?.value;
       let goals =
-        kpiConfiguration?.filters[
-          kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
-        ]?.value;
+        kpiConfiguration?.dataPoints[0]?.strategic_criteria?.data_point_evaluation_rules?.success_rule?.primary_trigger_value;
       if (goals) {
-        setGoalsData(goals);
+        setGoalsData({deployment_frequency_rate: goals});
       } else {
         setGoalsData(DEFAULT_GOALS);
       }
