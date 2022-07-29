@@ -53,6 +53,10 @@ const boomiReportMetadata = {
       label: "Environment Name",
       id: "environmentName",
     },
+    {
+      label: "Deployment ID",
+      id: "deploymentId",
+    },
   ],
   newObjectFields: {
     componentId: "",
@@ -67,7 +71,8 @@ const boomiReportMetadata = {
     message: "",
     deployedDate: "",
     deployedBy: "" ,
-    environmentName: ""
+    environmentName: "",
+    deploymentId: ""
   },
 };
 
