@@ -11,7 +11,7 @@ function BoomiFrequencyDataBlock({ data, dataPoint, lastScore, icon, className }
                 icon={icon}
                 score={data}
                 bottomText={"Previous: " + lastScore}
-                topText={"Frequency"}
+                topText={"Average Frequency"}
                 dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>
