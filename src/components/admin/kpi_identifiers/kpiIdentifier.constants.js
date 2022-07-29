@@ -149,4 +149,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
    // GitScrapper
    GIT_SCRAPER_METRICS: "git-scraper",
+
+  //Boomi
+  BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
+  
 };
