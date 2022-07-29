@@ -84,7 +84,7 @@ function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboar
           <DeploymentStatisticsDataBlockContainer />
         </Col>
         <Col className={"px-0"} xl={5} md={12}>
-          111<DeploymentFrequencyStatisticsDataBlockContainer />
+          <DeploymentFrequencyStatisticsDataBlockContainer />
         </Col>
         <Col className={"px-0"} xl={7} lg={12}>
           <BuildStatisticsDataBlockContainer />
