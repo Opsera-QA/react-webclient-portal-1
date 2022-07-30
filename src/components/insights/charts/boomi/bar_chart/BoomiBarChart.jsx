@@ -159,8 +159,6 @@ function BoomiBarChart({
           break;
       }
     };
-    console.log("datablock2", dataBlockValues);
-    console.log("metrics", metrics);
 
     const getDataBlocks = () =>{
       return (<><Row className={'pb-2'}>
@@ -192,11 +190,11 @@ function BoomiBarChart({
     const getChart = () =>{
       return(<Row>
         <Col md={12} sm={12} lg={12} >
-          <div className="chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }} >
+          <div className="chart" style={{ height: "276px" }} >
             <ResponsiveLine
               data={metrics}
               {...defaultConfig(
-                "Number of incidents",
+                "Count",
                 "Date",
                 false,
                 false,
@@ -218,12 +216,6 @@ function BoomiBarChart({
     
     return (
       <>
-        <div className={"chart-footer-text"} style={{ marginTop: "10px" }}>
-          <MetricBadgeBase
-            className={"mx-2"}
-            badgeText={"Chart depicts recent 15 results"}
-          />
-        </div>
         <div className="new-chart m-3">
           <Row>
             <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>

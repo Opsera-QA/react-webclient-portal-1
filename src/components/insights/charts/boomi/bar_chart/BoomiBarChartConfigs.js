@@ -1,5 +1,6 @@
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 export default () => ({
+  margin: { top: 50, right: 20, bottom: 60, left: 60 },
   indexBy: "date",
   xScale: {
     type: "time",
