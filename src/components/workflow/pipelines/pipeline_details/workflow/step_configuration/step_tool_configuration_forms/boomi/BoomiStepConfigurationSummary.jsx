@@ -63,6 +63,18 @@ function BoomiStepConfigurationSummary({
             fieldName={"filePath"}
           />
         </Col>
+        <Col lg={6}>
+          <TextFieldBase
+            dataObject={boomiPipelineDataObject}
+            fieldName={"environmentName"}
+          />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase
+            dataObject={boomiPipelineDataObject}
+            fieldName={"targetEnvironmentName"}
+          />
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

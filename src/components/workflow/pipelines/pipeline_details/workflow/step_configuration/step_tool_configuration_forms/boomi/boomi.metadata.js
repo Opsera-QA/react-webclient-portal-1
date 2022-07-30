@@ -63,12 +63,20 @@ const boomiMetadata = {
             id: "jobDescription",
         },
         {
-            label: "Environment",
+            label: "Source Environment",
             id: "environmentName",
         },
         {
-            label: "Environment",
+            label: "Source Environment",
             id: "environmentId",
+        },
+        {
+            label: "Target Environment",
+            id: "targetEnvironmentName",
+        },
+        {
+            label: "Target Environment",
+            id: "targetEnvironmentId",
         },
     ],
     newObjectFields: {
@@ -88,7 +96,9 @@ const boomiMetadata = {
         fileName: "",
         jobDescription : "PACKAGEXML_CREATION",
         environmentName: "",
-        environmentId: ""
+        environmentId: "",
+        targetEnvironmentName: "",
+        targetEnvironmentId: ""
     }
 };
 

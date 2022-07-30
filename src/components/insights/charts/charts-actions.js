@@ -27,6 +27,7 @@ import {
   getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
+  getDeploymentStageFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -445,7 +446,6 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   runCount,
   pipelineId
 ) => {
-  console.log(projectName,'((((( &&&& (((((_____');
   const apiUrl = "/analytics/metrics",
     date = getDateObjectFromKpiConfiguration(kpiConfiguration),
     jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration),
@@ -469,7 +469,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration),
     serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
-    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
+    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
+    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -527,6 +528,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
+    deploymentStages:deploymentStages
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

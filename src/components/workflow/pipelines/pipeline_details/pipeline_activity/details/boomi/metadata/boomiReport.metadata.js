@@ -30,8 +30,16 @@ const boomiReportMetadata = {
       id: "createdDate",
     },
     {
+      label: "Deployment Date",
+      id: "deployedDate",
+    },
+    {
       label: "Created By",
       id: "createdBy",
+    },
+    {
+      label: "Deployed By",
+      id: "deployedBy",
     },
     {
       label: "Shareable",
@@ -40,6 +48,14 @@ const boomiReportMetadata = {
     {
       label: "Error Message",
       id: "message",
+    },
+    {
+      label: "Environment Name",
+      id: "environmentName",
+    },
+    {
+      label: "Deployment ID",
+      id: "deploymentId",
     },
   ],
   newObjectFields: {
@@ -52,7 +68,11 @@ const boomiReportMetadata = {
     createdDate: "",
     createdBy: "",
     shareable: "",
-    message: ""
+    message: "",
+    deployedDate: "",
+    deployedBy: "" ,
+    environmentName: "",
+    deploymentId: ""
   },
 };
 

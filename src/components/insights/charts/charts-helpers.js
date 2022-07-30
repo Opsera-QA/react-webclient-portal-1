@@ -316,6 +316,19 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
   return null;
 }
 
+export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+        .value;
+  }
+  return null;
+}
+
 export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "hierarchyFilters")]

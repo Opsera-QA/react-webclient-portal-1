@@ -11,6 +11,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   AUTOMATED_TEST_RESULTS: "automated-test-results",
   AUTOMATION_PERCENTAGE: "automation-percentage",
 
+  //APIGEE
+  APIGEE_REPORT: "apigee-report",
+
   // Bitbucket
   BITBUCKET_COMMITS_BY_AUTHOR: "bitbucket-commits-by-author",
   BITBUCKET_MERGE_REQUESTS_BY_MAXIMUM_TIME: "bitbucket-merge-request-by-maximum-time",
@@ -49,6 +52,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_RECENT_MERGE_REQUESTS: "gitlab-recent-merge-requests",
   GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
+  GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
@@ -146,4 +150,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
    // GitScrapper
    GIT_SCRAPER_METRICS: "git-scraper",
+
+  //Boomi
+  BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
+  
 };
