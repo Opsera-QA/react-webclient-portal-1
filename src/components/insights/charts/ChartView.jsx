@@ -150,6 +150,9 @@ import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_char
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
+// Boomi KPIs
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -1631,6 +1634,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       
+
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return (
+          <Col md={12} className="p-2">
+            <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       default:
         return null;
     }
