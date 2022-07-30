@@ -60,15 +60,15 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
               getAccessToken,
               cancelSource,
             );
-            if (res && res?.data && res?.data?.length > 0) {
+            if (res && res?.data?.data && res?.data?.data?.length > 0) {
               //remove selected environment if present for migrate step
               if (fieldName === "targetEnvironmentName") {
-                const index = res?.data.findIndex(
+                const index = res?.data?.data.findIndex(
                   (x) => x?.name === dataObject?.getData("environmentName"),
                 );
-                if (index !== undefined) res?.data?.splice(index, 1);
+                if (index !== undefined) res?.data?.data?.splice(index, 1);
               }
-              setEnvs(res?.data);
+              setEnvs(res?.data?.data);
               return;
             }
             setEnvs([]);
