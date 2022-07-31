@@ -37,9 +37,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     setUserAccessRoles(undefined);
 
     if (userData) {
-      if (userData?.email === "noah@opsera.io") {
-        websocketClient?.initializeWebsocket();
-      }
+        // websocketClient?.initializeWebsocket();
       setAccessRoles(userData).then((newUserAccessRoles) => {
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
@@ -51,7 +49,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       });
     }
     else {
-      websocketClient?.closeWebsocket();
+      // websocketClient?.closeWebsocket();
     }
   }, [userData]);
 
