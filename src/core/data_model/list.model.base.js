@@ -134,17 +134,16 @@ export class ListModelBase {
     const newData = [...this.dataArray];
     const deletedRecordId = liveMessage.message.data;
 
-    console.log("newDataLength: " + JSON.stringify(newData.length));
+    console.log("before delete length: " + JSON.stringify(newData.length));
     if (isMongoDbId(deletedRecordId) === true) {
       const index = newData.findIndex((item) => item._id === deletedRecordId);
 
       if (index !== -1) {
         newData.splice(index, 1);
+        console.log("after delete length: " + JSON.stringify(newData.length));
+        this.setDataArray(newData);
       }
     }
-
-    console.log("newDataLength: " + JSON.stringify(newData.length));
-    this.setDataArray(newData);
   };
 
   subscribe = () => {
