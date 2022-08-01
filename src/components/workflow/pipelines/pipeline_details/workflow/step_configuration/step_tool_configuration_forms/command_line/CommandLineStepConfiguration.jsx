@@ -36,7 +36,7 @@ import CommandLineSonarScannerToggleInput from "components/workflow/pipelines/pi
 import RoleRestrictedSonarToolSelectInput
   from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
-import CommandLineCustomOutputParametersInput from "./inputs/CommandLineCustomOutputParametersInput";
+import CommandLineInputParametersInput from "./inputs/CommandLineInputParametersInput";
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -158,6 +158,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <CommandLineBitbucketWorkspaceInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitRepositoryInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitBranchInput  dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+      <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
       {/* <AgentLabelsSelectInput
         dataObject={commandLineStepConfigurationDto}
         fieldName={"agentLabels"}
@@ -166,25 +167,12 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
-      <ParameterSelectListInputBase
-        titleIcon={faHandshake}
-        dataObject={commandLineStepConfigurationDto}
-        setDataObject={setCommandLineStepConfigurationDataDto}
-        fieldName={"customParameters"}
-        allowIncompleteItems={true}
-        type={"Parameter"}
-        regexValidationRequired={false}
-        titleText={"Parameter Selection"}
+      {getDynamicFields()}      
+      <CommandLineInputParametersInput
+        model={commandLineStepConfigurationDto}
+        setModel={setCommandLineStepConfigurationDataDto}
         plan={plan}
-        tool_prop={commandLineStepConfigurationDto?.getData("terraformStepId") && commandLineStepConfigurationDto?.getData("terraformStepId").length > 0 ?
-          commandLineStepConfigurationDto?.getData("terraformStepId") : ""}
       />
-      {getDynamicFields()}
-      <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-      <CommandLineSonarScannerToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sonarScanFlag"} />
-      {getSonarScannerInputFields()}
-      <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
-      <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
       <ParameterSelectListInputBase
         titleIcon={faHandshake}
         dataObject={commandLineStepConfigurationDto}
@@ -198,11 +186,11 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         tool_prop={commandLineStepConfigurationDto?.getData("terraformStepId") && commandLineStepConfigurationDto?.getData("terraformStepId").length > 0 ?
           commandLineStepConfigurationDto?.getData("terraformStepId") : ""}
       />
-      <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
-      <CommandLineCustomOutputParametersInput
-        model={commandLineStepConfigurationDto}
-        setModel={setCommandLineStepConfigurationDataDto}
-      />
+      <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
+      <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
+      <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+      <CommandLineSonarScannerToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sonarScanFlag"} />
+      {getSonarScannerInputFields()}
     </PipelineStepEditorPanelContainer>
   );
 }
