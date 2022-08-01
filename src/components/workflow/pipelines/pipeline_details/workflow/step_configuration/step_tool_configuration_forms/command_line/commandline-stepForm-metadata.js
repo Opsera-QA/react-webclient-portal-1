@@ -199,7 +199,7 @@ const commandLineStepFormMetadata = {
       },
     },
     {
-      label: "Save Dynamic Parameters",
+      label: "Input Parameters with Variable Mapping",
       id: "saveEnvironmentVariables"
     },
     {

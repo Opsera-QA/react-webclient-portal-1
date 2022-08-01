@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ParameterMappingInputBase from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
+import ParameterSelectListInputBase
+  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 
-function CommandLineCustomOutputParametersInput({ model, setModel, disabled, fieldName }) {    
+function CommandLineInputParametersInput({ model, setModel, disabled, fieldName, plan }) {    
   const setDataFunction = () => {
     let newDataObject = { ...model };
     newDataObject.setData("saveEnvironmentVariables", !model.getData("saveEnvironmentVariables"));
     newDataObject.setDefaultValue("environmentVariables");
+    newDataObject.setDefaultValue("customParameters");
     setModel({ ...newDataObject });
   };
 
@@ -21,12 +24,28 @@ function CommandLineCustomOutputParametersInput({ model, setModel, disabled, fie
           setDataObject={setModel}
           fieldName={fieldName}
           allowIncompleteItems={false}
-          type={"Dynamic Parameter Mappings"}
+          type={"Parameter"}
           regexValidationRequired={false}
-          titleText={"Dynamic Parameters Mapping"}
+          titleText={"Input Parameters Mapping"}
         />
       );
     }
+
+    return (
+      <ParameterSelectListInputBase
+        titleIcon={faHandshake}
+        dataObject={model}
+        setDataObject={setModel}
+        fieldName={"customParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Input Parameter Selection"}
+        plan={plan}
+        tool_prop={model?.getData("terraformStepId") && model?.getData("terraformStepId").length > 0 ? model?.getData("terraformStepId") : ""}
+      />
+    );
+
   };
 
   return (
@@ -43,18 +62,18 @@ function CommandLineCustomOutputParametersInput({ model, setModel, disabled, fie
   );
 }
 
-CommandLineCustomOutputParametersInput.propTypes = {
+CommandLineInputParametersInput.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  regexValidationRequired: PropTypes.bool,
+  plan: PropTypes.array,
 };
 
 
-CommandLineCustomOutputParametersInput.defaultProps = {
+CommandLineInputParametersInput.defaultProps = {
   fieldName: "environmentVariables",
   disabled: false
 };
 
-export default CommandLineCustomOutputParametersInput;
+export default CommandLineInputParametersInput;
