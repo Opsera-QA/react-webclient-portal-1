@@ -1,18 +1,25 @@
-import React, {useState} from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportTaskActivityLogDataModal from "../../../modal/export_data/ExportTaskActivityLogDataModal";
+import ExportTaskActivityLogDataOverlay from "components/tasks/activity_logs/ExportTaskActivityLogDataOverlay";
 import IconBase from "components/common/icons/IconBase";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
-  const [showExportModal, setShowExportModal] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
-  const closeModal = () => {
-    setShowExportModal(false);
+  const launchOverlay = () => {
+    toastContext.showOverlayPanel(
+      <ExportTaskActivityLogDataOverlay
+        isLoading={isLoading}
+        activityLogData={activityLogData}
+      />
+    );
   };
+
 
   // TODO: Refine when more is complete
   return (
@@ -23,17 +30,11 @@ function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
             variant={"outline-primary"}
             size={"sm"}
             disabled={isLoading}
-            onClick={() => setShowExportModal(true)}>
+            onClick={launchOverlay}>
             <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportTaskActivityLogDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        isLoading={isLoading}
-        activityLogData={activityLogData}
-      />
     </>
   );
 }
