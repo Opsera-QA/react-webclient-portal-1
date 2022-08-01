@@ -1,28 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Card, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { freeTrialRegistrationMetadata } from "components/trial/freeTrialRegistration.metadata";
-import LoadingDialog from "components/common/status_notifications/loading";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import userActions from "components/user/user-actions";
-import RegisterButton from "components/common/buttons/saving/RegisterButton";
-import PasswordInput from "components/common/inputs/text/PasswordInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
-import modelHelpers from "components/common/model/modelHelpers";
+import React from "react";
 import PropTypes from "prop-types";
-import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/FreeTrialRegistrationWelcomeScreen";
+import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
+import WizardCard from "temp-library-components/wizard/card/WizardCard";
+import WizardButton from "temp-library-components/wizard/button/WizardButton";
+import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
+import WizardSelectionOption from "temp-library-components/wizard/option/WizardSelectionOption";
+import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 
-const FreeTrialRegistrationSelectSignupOptionScreen = ({ registrationModel, setRegistrationModel}) => {
+const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
   return (
-    <div>
-      Select Signup option
+    <div className={"h-100 w-100 d-flex"}>
+      <div className={"mx-auto"}>
+        <FreeTrialSignupHeader />
+        <WizardCard>
+          <div className={"p-4"}>
+            <WizardSelectionOption
+              onClickFunction={() => setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN)}
+              className={"mt-3"}
+              icon={faGitlab}
+              text={"Select a method to sigin in to the free trial experience ."}
+            />
+            <div className={"mt-5"}>
+              <WizardButton
+                onClickFunction={() => setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN)}
+                buttonText={"Get Started"}
+              />
+              <div className={"d-flex mt-2"}>
+                <span className={"mx-auto "}>Learn More</span>
+              </div>
+            </div>
+          </div>
+        </WizardCard>
+      </div>
     </div>
   );
 };
 
 FreeTrialRegistrationSelectSignupOptionScreen.propTypes = {
-  registrationModel: PropTypes.object,
-  setRegistrationModel: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
 };
 
 export default FreeTrialRegistrationSelectSignupOptionScreen;

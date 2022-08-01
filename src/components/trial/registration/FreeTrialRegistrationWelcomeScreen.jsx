@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
-import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
@@ -10,8 +8,6 @@ import WizardButton from "temp-library-components/wizard/button/WizardButton";
 
 // TODO: Standardize styling
 const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
-  const { themeConstants } = useComponentStateReference();
-
   return (
     <div className={"h-100 w-100 d-flex"}>
       <div className={"mx-auto"}>
