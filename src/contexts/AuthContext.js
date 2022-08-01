@@ -37,7 +37,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     setUserAccessRoles(undefined);
 
     if (userData) {
-      websocketClient?.initializeWebsocket(userData);
+      // websocketClient?.initializeWebsocket(userData);
       setAccessRoles(userData).then((newUserAccessRoles) => {
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
@@ -48,9 +48,9 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
         }
       });
     }
-    else {
-      websocketClient?.closeWebsocket();
-    }
+    // else {
+    //   websocketClient?.closeWebsocket();
+    // }
   }, [userData]);
 
   const logoutUserContext = async () => {
