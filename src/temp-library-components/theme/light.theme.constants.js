@@ -6,6 +6,7 @@ lightThemeConstants.COLOR_PALETTE = {
 
   // Blue
   LIGHT_BLUE: "#67C1E3",
+  BLUE_HIGHLIGHT: "#5CBDE1",
 
   // Purple
   GRAY_PURPLE: "#DFD1FF",
@@ -30,6 +31,7 @@ lightThemeConstants.COLOR_PALETTE = {
 
   //Gray
   GRAY: "#6E6C78",
+  TEXT_GRAY: "#878787",
   BACKGROUND_GRAY: "#E5E5E5",
 
   // Black
