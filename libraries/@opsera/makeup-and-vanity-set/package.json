@@ -12,9 +12,7 @@
   "unpkg": "./dist/makeup-and-vanity-set.umd.js",
   "scripts": {
     "build": "microbundle --jsx React.createElement --jsxFragment React.Fragment --jsxImportSource react",
-    "dev": "microbundle watch",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "dev": "microbundle watch"
   },
   "publishConfig": {
     "source": "./src/index.js",

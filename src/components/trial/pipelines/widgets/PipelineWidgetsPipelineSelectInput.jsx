@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {NavigationDropdownSelectInputBase} from "@opsera/makeup-and-vanity-set/dist/makeup-and-vanity-set.module";
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { NavigationDropdownSelectInputBase } from "@opsera/makeup-and-vanity-set/dist/makeup-and-vanity-set.module";
 
 function PipelineWidgetsPipelineSelectInput({ selectedPipelineId, setSelectedPipelineId}) {
   const [pipelines, setPipelines] = useState([]);

@@ -7,8 +7,6 @@ import sessionHelper from "utils/session.helper";
 import userActions from "components/user/user-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
-import { ACCESS_ROLE_PERMISSION_MESSAGES } from "components/common/helpers/role-helpers";
-import { renderTooltip } from "utils/helpers";
 import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 

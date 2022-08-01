@@ -40,15 +40,33 @@ const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
         >
           Free Trial Experience
         </div>
-
         <div
           style={{
             backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
             minHeight: "575px",
             height: "575px",
             maxHeight: "575px",
+            width: "525px",
           }}
         >
+          <div>
+            <h2>Signup</h2>
+            <div>
+              Signup for Free Trial to understand how Opsera can enhance your development process.
+            </div>
+          </div>
+          <div>
+            <h2>Select a Pipeline</h2>
+            <div>
+              Select between a Software Development Life Cycle Pipeline and a Salesforce Pipeline
+            </div>
+          </div>
+          <div>
+            <h2>View Analytics</h2>
+            <div>
+              View key insights based on each action you take inside the platform.
+            </div>
+          </div>
         </div>
       </div>
     </div>
