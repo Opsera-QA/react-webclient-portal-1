@@ -63,7 +63,7 @@
     "react-widgets-simple-number": "^5.0.19",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
-    "socket.io-client": "^4.4.1",
+    "socket.io-client": "^4.5.1",
     "text-encoding": "^0.7.0",
     "websocket": "^1.0.34"
   },

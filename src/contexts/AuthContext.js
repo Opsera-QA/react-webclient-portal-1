@@ -37,7 +37,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     setUserAccessRoles(undefined);
 
     if (userData) {
-      websocketClient?.initializeWebsocket();
+      websocketClient?.initializeWebsocket(userData);
       setAccessRoles(userData).then((newUserAccessRoles) => {
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
@@ -219,7 +219,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   };
 
   const unsubscribeFromTopic = (topic, model) => {
-    websocketClient?.subscribeToTopic(topic, model);
+    websocketClient?.unsubscribeFromTopic(topic, model);
   };
 
   // TODO: Don't return as function, just return true/false when pulling from auth context

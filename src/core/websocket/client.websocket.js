@@ -36,11 +36,13 @@ export class ClientWebsocket {
   }
 
   // TODO: Check if logged in
-  initializeWebsocket = () => {
+  initializeWebsocket = (userData) => {
     if (this.websocketClient != null) {
       console.log("websocket already initialized");
       return;
     }
+
+    this.user = userData;
 
     try {
       const websocketUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
@@ -49,6 +51,7 @@ export class ClientWebsocket {
 
       newClient.on("connect", () => {
         console.log(`WebSocket Client Connected: ${newClient.id}`);
+        this.websocketClient.emit("userData", userData);
       });
 
       newClient.on("disconnect", () => {
