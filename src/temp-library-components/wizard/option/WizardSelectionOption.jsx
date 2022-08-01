@@ -5,7 +5,15 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pick better name, standardize
-function WizardSelectionOption({ className, onClickFunction, text, icon, }) {
+function WizardSelectionOption(
+  {
+    className,
+    onClickFunction,
+    text,
+    icon,
+    option,
+    disabled,
+  }) {
   const { themeConstants } = useComponentStateReference();
 
   const getIconBox = () => {
@@ -45,7 +53,7 @@ function WizardSelectionOption({ className, onClickFunction, text, icon, }) {
           fontSize: "18px",
         }}
         className={"mx-auto pointer d-flex"}
-        onClick={onClickFunction}
+        onClick={() => onClickFunction(option)}
       >
         <div className={"d-flex p-2"}>
           {getIconBox()}
@@ -60,9 +68,11 @@ function WizardSelectionOption({ className, onClickFunction, text, icon, }) {
 
 WizardSelectionOption.propTypes = {
   className: PropTypes.string,
+  option: PropTypes.string,
   text: PropTypes.string,
   onClickFunction: PropTypes.func,
   icon: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default WizardSelectionOption;
