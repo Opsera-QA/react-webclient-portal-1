@@ -82,8 +82,21 @@
     "build:honeywell-sandbox": "env-cmd -f .env.honeywell-sandbox react-scripts build && mv build build-honeywell-sandbox",
     "build:production": "react-scripts build",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --detectOpenHandles",
+    "coverage": "react-scripts test --detectOpenHandles --coverage a",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\](?!(react-markdown|hast-*|html-*|zwitch|web-namespaces|rehype-*|hast-util-*|hastscript|vfile|vfile-message|markdown-table|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|mdast-util-.*|escape-string-regexp|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes|ccount)).+\\.(js|jsx|mjs|cjs|ts|tsx)$"
+
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/test/jest/__mocks__/stylemock.js"
+    },
+    "transform": {
+      "\\.js$": "babel-jest"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -106,10 +119,14 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "react-test-renderer": "^18.2.0"
   }
 }
