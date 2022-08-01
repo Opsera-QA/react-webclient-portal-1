@@ -8,6 +8,27 @@ import IconBase from "components/common/icons/IconBase";
 function WizardSelectionOption({ className, onClickFunction, text, icon, }) {
   const { themeConstants } = useComponentStateReference();
 
+  const getIconBox = () => {
+    if (icon) {
+      return (
+        <div
+          className={"mr-3"}
+          style={{
+            borderRadius: "9px",
+            backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
+          }}
+        >
+          <div className={"py-3 px-4"}>
+            <IconBase
+              icon={icon}
+              className={"m-auto"}
+            />
+          </div>
+        </div>
+      );
+    }
+  };
+
   if (onClickFunction == null) {
     return null;
   }
@@ -26,14 +47,8 @@ function WizardSelectionOption({ className, onClickFunction, text, icon, }) {
         className={"mx-auto pointer d-flex"}
         onClick={onClickFunction}
       >
-        <div className={"d-flex p-4"}>
-          <div
-            style={{
-              borderRadius: "9px",
-            }}
-          >
-            <IconBase icon={icon} className={"mr-2"} />
-          </div>
+        <div className={"d-flex p-2"}>
+          {getIconBox()}
           <div className={"m-auto"}>
             {text}
           </div>

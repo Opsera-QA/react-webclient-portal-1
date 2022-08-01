@@ -18,7 +18,7 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
               onClickFunction={() => setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN)}
               className={"mt-3"}
               icon={faGitlab}
-              text={"Select a method to sigin in to the free trial experience ."}
+              text={"Gitlab"}
             />
             <div className={"mt-5"}>
               <WizardButton
