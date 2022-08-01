@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
-import WizardSelectionOption from "temp-library-components/wizard/option/WizardSelectionOption";
+import WizardSelectionOption, {
+  SUPPORTED_WIZARD_SELECTION_OPTION_TYPES,
+} from "temp-library-components/wizard/option/WizardSelectionOption";
 import { faGithub, faGitlab, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/pro-light-svg-icons";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
@@ -43,6 +45,7 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
               className={"mt-3"}
               icon={faUser}
               text={"Sign Up with Username"}
+              type={SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY}
             />
             <div>Make OR line</div>
             <WizardSelectionOption

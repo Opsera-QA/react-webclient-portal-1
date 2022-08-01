@@ -4,6 +4,11 @@ import { fontThemeConstants } from "temp-library-components/theme/font.theme.con
 import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
 
+export const SUPPORTED_WIZARD_SELECTION_OPTION_TYPES = {
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+};
+
 // TODO: Pick better name, standardize
 function WizardSelectionOption(
   {
@@ -12,6 +17,7 @@ function WizardSelectionOption(
     text,
     icon,
     option,
+    type,
     disabled,
   }) {
   const { themeConstants } = useComponentStateReference();
@@ -29,11 +35,30 @@ function WizardSelectionOption(
           <div className={"py-3 px-4"}>
             <IconBase
               icon={icon}
+              iconSize={"lg"}
               className={"m-auto"}
             />
           </div>
         </div>
       );
+    }
+  };
+
+  const getFontColor = () => {
+    switch (type) {
+      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
+        return themeConstants.COLOR_PALETTE.WHITE;
+      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
+        return themeConstants.COLOR_PALETTE.BLACK;
+    }
+  };
+
+  const getBackgroundColor = () => {
+    switch (type) {
+      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
+        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
+      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
+        return themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER;
     }
   };
 
@@ -45,9 +70,8 @@ function WizardSelectionOption(
     <div className={className}>
       <div
         style={{
-          backgroundColor: themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER,
+          backgroundColor: getBackgroundColor(),
           borderRadius: ".5em",
-          color: themeConstants.COLOR_PALETTE.BLACK,
           fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 400,
           fontSize: "18px",
@@ -57,7 +81,12 @@ function WizardSelectionOption(
       >
         <div className={"d-flex p-2"}>
           {getIconBox()}
-          <div className={"m-auto"}>
+          <div
+            className={"m-auto"}
+            style={{
+              color: getFontColor(),
+            }}
+          >
             {text}
           </div>
         </div>
@@ -73,6 +102,11 @@ WizardSelectionOption.propTypes = {
   onClickFunction: PropTypes.func,
   icon: PropTypes.object,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
+};
+
+WizardSelectionOption.defaultProps = {
+  type: SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY,
 };
 
 export default WizardSelectionOption;
