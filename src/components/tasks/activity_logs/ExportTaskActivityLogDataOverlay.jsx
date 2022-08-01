@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import { format } from "date-fns";
+import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
-function ExportTaskActivityLogDataModal({showModal, closeModal, activityLogData, isLoading}) {
+function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
   const getRawData = () => {
     const rawData = Array.isArray(activityLogData) ? activityLogData.map(activityLog => JSON.stringify(activityLog)) : "export failure";
     return new Blob([rawData], {type: 'text/plain'});
@@ -50,9 +50,7 @@ function ExportTaskActivityLogDataModal({showModal, closeModal, activityLogData,
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -60,15 +58,11 @@ function ExportTaskActivityLogDataModal({showModal, closeModal, activityLogData,
   );
 }
 
-ExportTaskActivityLogDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
+ExportTaskActivityLogDataOverlay.propTypes = {
   activityLogData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
 };
 
-export default ExportTaskActivityLogDataModal;
+export default ExportTaskActivityLogDataOverlay;
 
 
