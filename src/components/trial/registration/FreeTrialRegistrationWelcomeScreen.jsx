@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
+import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 
 // TODO: Standardize styling
 const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
@@ -47,6 +49,7 @@ const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
             height: "575px",
             maxHeight: "575px",
             width: "525px",
+            borderRadius: "24px",
           }}
         >
           <div>
@@ -65,6 +68,26 @@ const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
             <h2>View Analytics</h2>
             <div>
               View key insights based on each action you take inside the platform.
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+                borderRadius: "2em",
+                color: themeConstants.COLOR_PALETTE.WHITE,
+                width: "225px",
+                fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+                fontWeight: 400,
+                fontSize: "18px",
+              }}
+              className={"mx-auto pointer d-flex"}
+              onClick={() => setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SELECT_SIGNUP_OPTION_SCREEN)}
+            >
+              <div className={"p-2 m-auto"}>Get Started</div>
+            </div>
+            <div className={"d-flex mt-2"}>
+              <span className={"mx-auto "}>Learn More</span>
             </div>
           </div>
         </div>

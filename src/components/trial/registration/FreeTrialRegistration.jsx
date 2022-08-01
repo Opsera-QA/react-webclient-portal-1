@@ -8,7 +8,7 @@ import FreeTrialRegistrationSelectSignupOptionScreen
   from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-const FREE_TRIAL_REGISTRATION_SCREENS = {
+export const FREE_TRIAL_REGISTRATION_SCREENS = {
   WELCOME_SCREEN: "welcome",
   SELECT_SIGNUP_OPTION_SCREEN: "signup_options",
   SIGNUP_SCREEN: "signup",
