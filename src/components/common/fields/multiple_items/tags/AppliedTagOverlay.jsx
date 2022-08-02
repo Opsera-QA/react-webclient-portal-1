@@ -11,6 +11,7 @@ function AppliedTagOverlay({
   kpiTags,
   dashboardTags,
   badgeClassName,
+  tags
 }) {
   const getDashboardTags = () => {
     const dashboardTagsCount = Array.isArray(dashboardTags) && dashboardTags.length ? dashboardTags.length : 0;
@@ -78,6 +79,15 @@ function AppliedTagOverlay({
       </>
     );
   };
+  const getTags = () => {
+    return tags.map((tag, index)=>(
+        <TagBadge
+          className={"mr-2 mb-2"}
+          tag={tag}
+          key={index}
+        />
+    ));
+  };
 
   const getTagPopover = () => {
     return (
@@ -102,7 +112,7 @@ function AppliedTagOverlay({
 
   return (
     <TooltipWrapper
-      innerText={getTagPopover()}
+      innerText={tags&& tags.length > 0 ? getTags() : getTagPopover()}
       title={"Applied Tags"}
       showCloseButton={false}
       className={"popover-filter"}
@@ -118,6 +128,7 @@ AppliedTagOverlay.propTypes = {
   kpiTags: PropTypes.array,
   dashboardTags: PropTypes.array,
   badgeClassName: PropTypes.string,
+  tags: PropTypes.array
 };
 
 export default AppliedTagOverlay;
