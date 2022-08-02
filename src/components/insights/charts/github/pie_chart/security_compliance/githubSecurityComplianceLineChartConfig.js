@@ -1,4 +1,4 @@
-export default (getColor) => ({
+export default (METRIC_THEME_CHART_PALETTE_COLORS) => ({
     xScale: {
         type: "time",
         format: "%Y-%m-%d",
@@ -8,6 +8,10 @@ export default (getColor) => ({
         type: "linear",
         stacked: false,
     },
-    colors: getColor,
+    colors: [
+        METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
+        METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
+        METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3
+    ],
     pointSize: 7
 });
