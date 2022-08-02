@@ -46,7 +46,7 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
-              className={"mt-3"}
+              className={"mt-5"}
               icon={faUser}
               text={"Sign Up with Username"}
               type={SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY}
