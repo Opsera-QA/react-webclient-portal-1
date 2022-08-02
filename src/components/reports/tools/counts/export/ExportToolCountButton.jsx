@@ -1,12 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ExportToolCountDataOverlay from "components/reports/tools/counts/export/ExportToolCountDataOverlay";
-import IconBase from "components/common/icons/IconBase";
-import ExportTaskActivityLogDataOverlay from "components/tasks/activity_logs/ExportTaskActivityLogDataOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 
