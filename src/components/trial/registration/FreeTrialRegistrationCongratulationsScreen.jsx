@@ -6,8 +6,7 @@ import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInf
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import WizardButton from "temp-library-components/wizard/button/WizardButton";
 
-// TODO: Standardize styling
-const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
+const FreeTrialRegistrationCongratulationsScreen = ({ setCurrentScreen }) => {
   return (
     <div className={"h-100 w-100 d-flex"}>
       <div className={"mx-auto"}>
@@ -48,8 +47,8 @@ const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
   );
 };
 
-FreeTrialRegistrationWelcomeScreen.propTypes = {
+FreeTrialRegistrationCongratulationsScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
 };
 
-export default FreeTrialRegistrationWelcomeScreen;
+export default FreeTrialRegistrationCongratulationsScreen;

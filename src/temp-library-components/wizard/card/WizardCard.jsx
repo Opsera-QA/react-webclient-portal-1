@@ -5,7 +5,13 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Pick better name
 // TODO: Allow to pass height, width
-function WizardCard({ className, children }) {
+function WizardCard(
+  {
+    height,
+    width,
+    className,
+    children,
+  }) {
   const { themeConstants } = useComponentStateReference();
 
   return (
@@ -13,10 +19,10 @@ function WizardCard({ className, children }) {
       <div
         style={{
           backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
-          minHeight: "575px",
-          height: "575px",
-          maxHeight: "575px",
-          width: "525px",
+          minHeight: height,
+          height: height,
+          maxHeight: height,
+          width: width,
           borderRadius: "24px",
         }}
         className={"mt-2"}
@@ -24,13 +30,20 @@ function WizardCard({ className, children }) {
         <div
           className={"mx-auto"}
           style={{
-            width: "450px",
+            width: `calc(${width} - 75px)`,
             height: "5px",
             backgroundColor: themeConstants.COLOR_PALETTE.BLUE_HIGHLIGHT,
             borderRadius: "2px",
           }}
         />
-        {children}
+        <div
+          style={{
+            overflowY: "auto",
+            height: `calc(${height} - 5px)`,
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -39,6 +52,8 @@ function WizardCard({ className, children }) {
 WizardCard.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
+  height: PropTypes.string,
+  width: PropTypes.string,
 };
 
 export default WizardCard;

@@ -34,7 +34,10 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
     <div className={"h-100 w-100 d-flex"}>
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
-        <WizardCard>
+        <WizardCard
+          height={"575px"}
+          width={"525px"}
+        >
           <div className={"p-4"}>
             <WizardCardInfoItem
               title={"Signup"}
@@ -46,25 +49,29 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
               icon={faUser}
               text={"Sign Up with Username"}
               type={SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY}
+              option={SIGNUP_OPTIONS.OPSERA}
             />
             <div>Make OR line</div>
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
-              icon={faGitlab}
-              text={"Gitlab"}
+              icon={faGithub}
+              text={"Github"}
+              option={SIGNUP_OPTIONS.GITHUB}
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
-              icon={faGithub}
-              text={"Github"}
+              icon={faGitlab}
+              text={"Gitlab"}
+              option={SIGNUP_OPTIONS.GITLAB}
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faLinkedin}
               text={"LinkedIn"}
+              option={SIGNUP_OPTIONS.LINKED_IN}
             />
           </div>
         </WizardCard>

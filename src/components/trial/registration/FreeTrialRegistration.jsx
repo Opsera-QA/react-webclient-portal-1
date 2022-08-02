@@ -11,6 +11,7 @@ export const FREE_TRIAL_REGISTRATION_SCREENS = {
   WELCOME_SCREEN: "welcome",
   SELECT_SIGNUP_OPTION_SCREEN: "signup_options",
   SIGNUP_SCREEN: "signup",
+  CONGRATULATIONS_SCREEN: "congratulations",
 };
 
 const FreeTrialRegistration = () => {
@@ -24,7 +25,7 @@ const FreeTrialRegistration = () => {
 
   const loadData = async () => {
     setIsLoading(true);
-    setRegistrationModel({...modelHelpers.parseObjectIntoModel(freeTrialRegistrationMetadata)});
+    setRegistrationModel({...modelHelpers.getNewModelForMetadata(freeTrialRegistrationMetadata)});
     setIsLoading(false);
   };
 
@@ -43,6 +44,13 @@ const FreeTrialRegistration = () => {
           />
         );
       case FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN:
+        return (
+          <FreeTrialRegistrationSignupScreen
+            registrationModel={registrationModel}
+            setRegistrationModel={setRegistrationModel}
+          />
+        );
+      case FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN:
         return (
           <FreeTrialRegistrationSignupScreen
             registrationModel={registrationModel}

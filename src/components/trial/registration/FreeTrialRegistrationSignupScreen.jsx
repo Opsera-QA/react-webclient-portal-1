@@ -11,9 +11,13 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import PropTypes from "prop-types";
 import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/FreeTrialRegistrationWelcomeScreen";
+import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
+import WizardCard from "temp-library-components/wizard/card/WizardCard";
+import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
+import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 const FreeTrialRegistrationSignupScreen = ({ registrationModel, setRegistrationModel}) => {
-  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
 
@@ -50,71 +54,73 @@ const FreeTrialRegistrationSignupScreen = ({ registrationModel, setRegistrationM
     }
   };
 
-  if (isLoading || registrationModel == null) {
+  if (registrationModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
-    <div className="new-user-signup-form mt-2">
-      <Form className="m-auto" noValidate onSubmit={e => e.preventDefault()}>
-        <Card>
-          <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
-          <Card.Body className="new-user-body">
-            <div className="signupForm p-2">
-              <div className="pr-3 pb-3">
-                <TextInputBase
-                  fieldName={"firstName"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <TextInputBase
-                  fieldName={"lastName"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <TextInputBase
-                  fieldName={"email"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <TextInputBase
-                  fieldName={"company"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <TextInputBase
-                  fieldName={"domain"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <TextInputBase
-                  fieldName={"title"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <PasswordInput
-                  fieldName={"password"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-                <PasswordInput
-                  fieldName={"confirmPassword"}
-                  setDataObject={setRegistrationModel}
-                  dataObject={registrationModel}
-                />
-              </div>
-              <div className="px-2">
-                <RegisterButton createAccount={createAccount} recordDto={registrationModel} />
-              </div>
-            </div>
-          </Card.Body>
-          <Card.Footer className="new-user-footer">
-            <div className="text-muted text-right pr-2">
-              <span><span className="danger-red">*</span> Required Fields</span>
-            </div>
-          </Card.Footer>
-        </Card>
-      </Form>
+    <div className={"h-100 w-100 d-flex"}>
+      <div className={"mx-auto"}>
+        <FreeTrialSignupHeader />
+        <WizardCard
+          height={"900px"}
+          width={"825px"}
+        >
+          <WizardCardInfoItem
+            title={"Signup"}
+            description={"Signup for Free Trial to experience how Opsera can enhance your development process."}
+          />
+          <div className={"p-3"}>
+            <TextInputBase
+              fieldName={"firstName"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <TextInputBase
+              fieldName={"lastName"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <TextInputBase
+              fieldName={"email"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <TextInputBase
+              fieldName={"company"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <TextInputBase
+              fieldName={"domain"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <TextInputBase
+              fieldName={"title"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <PasswordInput
+              fieldName={"password"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <PasswordInput
+              fieldName={"confirmPassword"}
+              setDataObject={setRegistrationModel}
+              dataObject={registrationModel}
+            />
+            <ButtonContainerBase>
+              <RegisterButton
+                createAccount={createAccount}
+                recordDto={registrationModel}
+              />
+            </ButtonContainerBase>
+            <RequiredFieldsMessage />
+          </div>
+        </WizardCard>
+      </div>
     </div>
   );
 };
