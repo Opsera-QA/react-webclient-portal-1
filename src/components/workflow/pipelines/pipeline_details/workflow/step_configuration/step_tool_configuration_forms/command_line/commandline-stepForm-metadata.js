@@ -197,7 +197,19 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    }
+    },
+    {
+      label: "Input Parameters with Variable Mapping",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15,
+      isRequiredFunction: (model) => {
+        return model?.getData("saveEnvironmentVariables") === true;
+      },
+    },
   ],
   fieldsAlt: [
     {
@@ -398,7 +410,19 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    }
+    },
+    {
+      label: "Input Parameters with Variable Mapping",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15,
+      isRequiredFunction: (model) => {
+        return model?.getData("saveEnvironmentVariables") === true;
+      },
+    },
   ],
   newObjectFields: {
 
@@ -449,6 +473,8 @@ const commandLineStepFormMetadata = {
     sonarCustomParameters: [],
     sonarToolConfigId: "",
     projectKey: "",
+    saveEnvironmentVariables: false,
+    environmentVariables: [],
   }
 };
 
