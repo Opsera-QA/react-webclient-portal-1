@@ -18,13 +18,14 @@ function FreeTrialRegisterButton(
   const createFreeTrialAccount = async () => {
     try {
       setRegisteringAccount(true);
-      // TODO: Wire up inline banner on signup forms
-      await persistNewRecord(
-        registrationModel,
-        toastContext,
-        false,
-        registerAccountFunction,
-      );
+      // TODO: Wire up
+      registerAccountFunction();
+      // await persistNewRecord(
+      //   registrationModel,
+      //   toastContext,
+      //   false,
+      //   registerAccountFunction,
+      // );
     } catch (error) {
       console.error(error);
     } finally {
@@ -41,6 +42,10 @@ function FreeTrialRegisterButton(
 
     return ("Register Account");
   };
+
+  if (registrationModel == null || registerAccountFunction == null) {
+    return null;
+  }
 
   return (
     <div className={className}>

@@ -1,16 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Card, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { freeTrialRegistrationMetadata } from "components/trial/freeTrialRegistration.metadata";
+import React from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import userActions from "components/user/user-actions";
-import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import PasswordInput from "components/common/inputs/text/PasswordInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import modelHelpers from "components/common/model/modelHelpers";
 import PropTypes from "prop-types";
-import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/FreeTrialRegistrationWelcomeScreen";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
@@ -18,6 +10,7 @@ import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignu
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialRegisterButton from "components/trial/registration/FreeTrialRegisterButton";
 
 const FreeTrialRegistrationSignupScreen = (
   {
@@ -28,7 +21,7 @@ const FreeTrialRegistrationSignupScreen = (
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   // TODO: Wire up user creation. Ensure cancelToken is used
-  const createAccount = async () => {
+  const registerAccountFunction = async () => {
     // const isDomainAvailable = await userActions.isDomainAvailable(registrationModel.getData("domain"));
     //
     // if (!isDomainAvailable) {
@@ -114,9 +107,9 @@ const FreeTrialRegistrationSignupScreen = (
               dataObject={registrationModel}
             />
             <ButtonContainerBase>
-              <RegisterButton
-                createAccount={createAccount}
-                recordDto={registrationModel}
+              <FreeTrialRegisterButton
+                registerAccountFunction={registerAccountFunction}
+                registrationModel={registrationModel}
               />
             </ButtonContainerBase>
             <RequiredFieldsMessage />
