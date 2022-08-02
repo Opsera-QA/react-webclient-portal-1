@@ -9,6 +9,7 @@ import WizardSelectionOption, {
 import { faGithub, faGitlab, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/pro-light-svg-icons";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
+import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
 
 const SIGNUP_OPTIONS = {
   GITLAB: "gitlab",
@@ -51,7 +52,7 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
               type={SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY}
               option={SIGNUP_OPTIONS.OPSERA}
             />
-            <div>Make OR line</div>
+            <DividerWithCenteredText text={"OR"} className={"my-3 mx-3"} />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}

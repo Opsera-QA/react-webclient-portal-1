@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function DividerWithCenteredText(
+export function DividerWithCenteredText(
   {
     className,
     text,
@@ -11,8 +11,13 @@ function DividerWithCenteredText(
 
   return (
     <div className={className}>
-      <div>
-        <div />
+      <div className={"d-flex mx-auto"}>
+        <div
+          className={"my-auto w-100"}
+          style={{
+            border: `1px solid ${themeConstants.COLOR_PALETTE.BLACK}`,
+          }}
+        />
         <div
           className={"mx-2"}
           style={{
@@ -21,7 +26,12 @@ function DividerWithCenteredText(
         >
           {text}
         </div>
-        <div />
+        <div
+          className={"my-auto w-100"}
+          style={{
+            border: `1px solid ${themeConstants.COLOR_PALETTE.BLACK}`,
+          }}
+        />
       </div>
     </div>
   );
