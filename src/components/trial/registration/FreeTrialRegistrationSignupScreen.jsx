@@ -17,6 +17,7 @@ import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInf
 import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const FreeTrialRegistrationSignupScreen = (
   {
@@ -24,10 +25,9 @@ const FreeTrialRegistrationSignupScreen = (
     setRegistrationModel,
     setCurrentScreen,
   }) => {
-  const history = useHistory();
-  const toastContext = useContext(DialogToastContext);
+  const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
-  // TODO: Wire up user creation
+  // TODO: Wire up user creation. Ensure cancelToken is used
   const createAccount = async () => {
     // const isDomainAvailable = await userActions.isDomainAvailable(registrationModel.getData("domain"));
     //
@@ -67,6 +67,7 @@ const FreeTrialRegistrationSignupScreen = (
           height={"900px"}
           width={"825px"}
         >
+          {toastContext?.getInlineBanner()}
           <WizardCardInfoItem
             title={"Signup"}
             description={"Signup for Free Trial to experience how Opsera can enhance your development process."}
