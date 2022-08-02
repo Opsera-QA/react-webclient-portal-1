@@ -6,6 +6,8 @@ import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/Fr
 import FreeTrialRegistrationSignupScreen from "components/trial/registration/FreeTrialRegistrationSignupScreen";
 import FreeTrialRegistrationSelectSignupOptionScreen
   from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
+import FreeTrialRegistrationCongratulationsScreen
+  from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
 
 export const FREE_TRIAL_REGISTRATION_SCREENS = {
   WELCOME_SCREEN: "welcome",
@@ -48,14 +50,12 @@ const FreeTrialRegistration = () => {
           <FreeTrialRegistrationSignupScreen
             registrationModel={registrationModel}
             setRegistrationModel={setRegistrationModel}
+            setCurrentScreen={setCurrentScreen}
           />
         );
       case FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN:
         return (
-          <FreeTrialRegistrationSignupScreen
-            registrationModel={registrationModel}
-            setRegistrationModel={setRegistrationModel}
-          />
+          <FreeTrialRegistrationCongratulationsScreen />
         );
     }
   };

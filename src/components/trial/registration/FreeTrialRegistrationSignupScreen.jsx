@@ -16,42 +16,43 @@ import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
 import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
 
-const FreeTrialRegistrationSignupScreen = ({ registrationModel, setRegistrationModel}) => {
+const FreeTrialRegistrationSignupScreen = (
+  {
+    registrationModel,
+    setRegistrationModel,
+    setCurrentScreen,
+  }) => {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
 
-  const loadRegistrationResponse = () => {
-    history.push("/registration");
-  };
-
+  // TODO: Wire up user creation
   const createAccount = async () => {
-    const isDomainAvailable = await userActions.isDomainAvailable(registrationModel.getData("domain"));
-
-    console.log("isDomainAvailable: " + JSON.stringify(isDomainAvailable));
-
-    if (!isDomainAvailable) {
-      toastContext.showDomainAlreadyRegisteredErrorDialog();
-      return;
-    }
-
-    const emailIsAvailable = await userActions.isEmailAvailable(registrationModel.getData("email"));
-
-    if (!emailIsAvailable) {
-      toastContext.showEmailAlreadyExistsErrorDialog();
-      return;
-    }
-
-    if (registrationModel.isModelValid()) {
-      try {
-        await userActions.createFreeTrialAccount(registrationModel);
-        // TODO: Do we want to pop up success toast?
-        // toastContext.showCreateSuccessResultDialog("Opsera Account");
-        loadRegistrationResponse();
-      } catch (error) {
-        toastContext.showCreateFailureResultDialog("Opsera Account", error);
-      }
-    }
+    // const isDomainAvailable = await userActions.isDomainAvailable(registrationModel.getData("domain"));
+    //
+    // if (!isDomainAvailable) {
+    //   toastContext.showDomainAlreadyRegisteredErrorDialog();
+    //   return;
+    // }
+    //
+    // const emailIsAvailable = await userActions.isEmailAvailable(registrationModel.getData("email"));
+    //
+    // if (!emailIsAvailable) {
+    //   toastContext.showEmailAlreadyExistsErrorDialog();
+    //   return;
+    // }
+    //
+    // if (registrationModel.isModelValid()) {
+    //   try {
+    //     await userActions.createFreeTrialAccount(registrationModel);
+    //     // TODO: Do we want to pop up success toast?
+    //     // toastContext.showCreateSuccessResultDialog("Opsera Account");
+    setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
+    //   } catch (error) {
+    //     toastContext.showCreateFailureResultDialog("Opsera Account", error);
+    //   }
+    // }
   };
 
   if (registrationModel == null) {
@@ -128,6 +129,7 @@ const FreeTrialRegistrationSignupScreen = ({ registrationModel, setRegistrationM
 FreeTrialRegistrationSignupScreen.propTypes = {
   registrationModel: PropTypes.object,
   setRegistrationModel: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
 };
 
 export default FreeTrialRegistrationSignupScreen;
