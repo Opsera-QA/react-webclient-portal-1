@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import OrganizationBadgeBase from "components/common/badges/tag/OrganizationBadgeBase";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import AppliedTagOverlay from "components/common/fields/multiple_items/tags/AppliedTagOverlay";
+import AppliedTagBadgeOverlay from "components/common/fields/multiple_items/tags/AppliedTagBadgeOverlay";
 import AppliedOrganizationsOverlay from "components/common/fields/multiple_items/tags/AppliedOrganizationsOverlay";
 
 function AppliedOrganizationsBadge({ tags, tagLocation, className, showNoTagsAppliedBadge }) {
