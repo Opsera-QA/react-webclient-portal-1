@@ -11,6 +11,7 @@ function WizardCard(
     width,
     className,
     children,
+    bodyClassName,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -41,6 +42,7 @@ function WizardCard(
             overflowY: "auto",
             height: `calc(${height} - 5px)`,
           }}
+          className={bodyClassName}
         >
           {children}
         </div>
@@ -51,6 +53,7 @@ function WizardCard(
 
 WizardCard.propTypes = {
   className: PropTypes.string,
+  bodyClassName: PropTypes.string,
   children: PropTypes.any,
   height: PropTypes.string,
   width: PropTypes.string,
