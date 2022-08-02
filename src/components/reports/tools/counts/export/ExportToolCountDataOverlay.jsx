@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
+import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
 // TODO: Should we be just sending in data and formatting in here?
-function ExportToolCountDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportToolCountDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -35,27 +36,20 @@ function ExportToolCountDataModal({ showModal, closeModal, formattedData, rawDat
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
-      getCsvData={getCsvData}
     />
   );
 }
 
-ExportToolCountDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
+ExportToolCountDataOverlay.propTypes = {
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
 };
 
-export default ExportToolCountDataModal;
+export default ExportToolCountDataOverlay;
 
 
