@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import ExportToolCountDataOverlay from "components/reports/tools/counts/export/ExportToolCountDataOverlay";
