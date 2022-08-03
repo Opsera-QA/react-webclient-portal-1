@@ -78,7 +78,11 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
       const isNameTakenResponse = await checkIfUserWithNameExists();
 
       if (isNameTakenResponse?.isAvailable !== true) {
-        const message = `User with same name is already taken with email [${isNameTakenResponse?.foundUserEmailAddress}]! Please select a unique name. Can add a digit if necessary`;
+        const message = `
+          A user with same name is already registered with email [${isNameTakenResponse?.foundUserEmailAddress}]! 
+          If this is not your account, please add a digit to your last name to make it unique. 
+          For example, if your last name is "Jones," please try "Jones1" or "Jones2."
+        `;
         addLog(message);
         throw message;
       }
