@@ -42,13 +42,11 @@ function AppliedMetricTagBadgeOverlay({
             {dashboardTags.map((tag, index) => {
               if (typeof tag !== "string") {
                 return (
-                  // <div>
                   <TagBadge
                     className={"mr-2 mb-2"}
                     tag={tag}
                     key={index}
                   />
-                  // </div>
                 );
               }
             })}
@@ -69,7 +67,7 @@ function AppliedMetricTagBadgeOverlay({
           <div className={className}>
             <TagBadgeBase
               className={badgeClassName}
-              badgeText={`No Dashboard Tags Applied`}
+              badgeText={`No KPI Tags Applied`}
             />
           </div>
         </>
