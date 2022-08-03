@@ -63,11 +63,11 @@ const boomiMetadata = {
             id: "jobDescription",
         },
         {
-            label: "Source Environment",
+            label: "Environment",
             id: "environmentName",
         },
         {
-            label: "Source Environment",
+            label: "Environment",
             id: "environmentId",
         },
         {
