@@ -164,7 +164,7 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Sonar Reliability Remediation Trend for [${date}]`}
+        titleText={`Sonar Reliability Remediation Trend for ${date}`}
         showToasts={true}
         titleIcon={faTable}
         isLoading={false}
