@@ -7,7 +7,7 @@ import {parseError} from "../../common/helpers/error-helpers";
 import { faShieldKeyhole } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "../../common/table/FilterContainer";
 import GitCustodianChartsView from "./charts/GitCustodianChartsView";
-import GitCustodianTable from "./table/gitCustodianTable";
+import GitCustodianVulnerableCommits from "components/insights/gitCustodian/table/GitCustodianVulnerableCommits";
 
 
 function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel, loadData }) {
@@ -54,7 +54,7 @@ function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGit
 
   const getTable = () => {
     return (
-      <GitCustodianTable
+      <GitCustodianVulnerableCommits
         gitCustodianData={gitCustodianData}
         gitCustodianFilterModel={gitCustodianFilterModel}
         setGitCustodianFilterModel={setGitCustodianFilterModel}
