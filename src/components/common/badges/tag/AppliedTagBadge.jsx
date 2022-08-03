@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TagBadgeBase from "components/common/badges/tag/TagBadgeBase";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import AppliedTagBadgeOverlay from "components/common/fields/multiple_items/tags/AppliedTagBadgeOverlay";
+import AppliedTagBadgeOverlay from "components/common/badges/tag/AppliedTagBadgeOverlay";
 
 function AppliedTagBadge({tags, badgeClassName, tagLocation, className, showNoTagsAppliedBadge}) {
   const getTagLabel = () => {
