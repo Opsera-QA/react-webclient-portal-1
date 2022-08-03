@@ -4,7 +4,7 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportReportsDataModal from "components/common/modal/export_data/ExportReportsDataModal";
+import ExportReportsDataOverlay from "components/common/modal/export_data/ExportReportsDataOverlay";
 import IconBase from "components/common/icons/IconBase";
 
 function ExportTagReportButton({isLoading, tagData, className}) {
@@ -40,7 +40,7 @@ function ExportTagReportButton({isLoading, tagData, className}) {
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportReportsDataModal
+      <ExportReportsDataOverlay
         showModal={showExportModal}
         closeModal={closeModal}
         setParentVisibility={setShowExportModal}
