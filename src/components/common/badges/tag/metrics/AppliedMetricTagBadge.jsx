@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import { faTags } from "@fortawesome/pro-light-svg-icons";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
-import AppliedMetricTagBadgeOverlay from "components/common/fields/multiple_items/tags/AppliedMetricTagOverlay";
+import AppliedMetricTagBadgeOverlay from "components/common/badges/tag/metrics/AppliedMetricTagBadgeOverlay";
 
 function AppliedMetricTagBadge(
   {
