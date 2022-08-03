@@ -35,7 +35,7 @@ function PipelineActivityLogTreeTable(
   const [isLoading, setIsLoading] = useState(false);
   const pipelineTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
+  const [currentStepId, setCurrentStepId] = useState(undefined);
   const [latestRunNumber, setLatestRunNumber] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -145,6 +145,7 @@ function PipelineActivityLogTreeTable(
     const response = await pipelineActivityLogsActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, pipelineId, newFilterModel, currentRunNumber);
     const pipelineActivityData = response?.data?.data;
     const activityLogCount = response?.data?.count;
+    const triggeredBy = response?.data?.triggeredBy;
 
     if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
@@ -152,7 +153,7 @@ function PipelineActivityLogTreeTable(
       newFilterModel.setData("totalCount", activityLogCount);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
-      const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData);
+      const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData, triggeredBy);
 
       if (Array.isArray(newTree) && newTree.length > 0) {
         pipelineTree.current = [...newTree];
@@ -211,7 +212,7 @@ function PipelineActivityLogTreeTable(
         pipelineLogData={activityData}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         currentRunNumber={currentRunNumber}
-        currentStepName={currentStepName}
+        currentStepId={currentStepId}
       />
     );
   };
@@ -221,7 +222,7 @@ function PipelineActivityLogTreeTable(
       <PipelineActivityLogTree
         pipelineLogTree={pipelineTree?.current}
         setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentStepName={setCurrentStepName}
+        setCurrentStepId={setCurrentStepId}
         pipelineRunCount={latestRunNumber}
       />
     );

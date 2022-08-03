@@ -99,7 +99,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.successPercentage + "%"}
-              subtitle={'Success%'}
+              subtitle={'Successful Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -108,7 +108,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.failurePercentage + "%"}
-              subtitle={'Failed%'}
+              subtitle={'Failed Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -117,7 +117,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.cancelledPercentage == null ? 'N/A' : responseData?.cancelledPercentage + "%"}
-              subtitle={'Cancelled%'}
+              subtitle={'Cancelled Execution rate'}
             />
           </DataBlockBoxContainer>
         </Col>
@@ -126,7 +126,7 @@ function SuccessPercentActionableInsights({ kpiConfiguration, dashboardData }) {
             <TwoLineScoreDataBlock
               className="p-2"
               score={responseData?.skippedPercentage == null ? 'N/A' : responseData?.skippedPercentage + "%"}
-              subtitle={'Skipped%'}
+              subtitle={'Skipped Execution Rate'}
             />
           </DataBlockBoxContainer>
         </Col>

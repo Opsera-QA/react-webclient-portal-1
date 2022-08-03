@@ -150,6 +150,9 @@ import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_char
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
+// Boomi KPIs
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -171,6 +174,10 @@ import GithubSecurityCompliance from "./github/pie_chart/security_compliance/Git
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
 import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
+
+//APIGEE KPIs
+import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -982,6 +989,33 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
 
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+            <Col xl={12} md={12} className="p-2">
+              <GitlabDeploymentFrequency
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
+
+      //APIGEE KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeReportsChartTab
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       // Cypress KPIs
       case "cypress-test-results":
         return (
@@ -1639,6 +1673,21 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      
+
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return (
+          <Col md={12} className="p-2">
+            <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       default:
         return null;
     }

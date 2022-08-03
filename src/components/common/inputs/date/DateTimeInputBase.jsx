@@ -25,6 +25,7 @@ function DateTimeInputBase(
     className,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -87,6 +88,7 @@ function DateTimeInputBase(
         inputHelpOverlay={inputHelpOverlay}
         infoOverlay={infoOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <StandaloneDatePickerInput
         minDate={minDate}
@@ -125,6 +127,7 @@ DateTimeInputBase.propTypes = {
   className: PropTypes.string,
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 DateTimeInputBase.defaultProps = {

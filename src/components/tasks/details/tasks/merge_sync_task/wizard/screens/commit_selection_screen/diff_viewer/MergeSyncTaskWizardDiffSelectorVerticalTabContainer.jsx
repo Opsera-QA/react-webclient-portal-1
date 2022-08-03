@@ -12,6 +12,8 @@ import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/S
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MergeSyncTaskWizardSelectDeltaVersionButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { xmlHelpers } from "utils/xml.helper";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
   {
@@ -23,27 +25,13 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
     destinationContent,
   }) => {
   const [activeTab, setActiveTab] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
+    // TODO: Should we determine if the activeTab still exists?
     if (activeTab == null && Array.isArray(deltaList) && deltaList?.length > 0) {
       setActiveTab('0');
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [deltaList]);
+  }, [activeTab, deltaList]);
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -130,6 +118,7 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
     <VanitySetTabAndViewContainer
       icon={faBracketsCurly}
       title={`Diff Selection`}
+      tabColumnSize={1}
       verticalTabContainer={getVerticalTabContainer()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}

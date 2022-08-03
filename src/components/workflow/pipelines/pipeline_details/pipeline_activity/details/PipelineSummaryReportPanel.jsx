@@ -4,6 +4,7 @@ import Model from "core/data_model/model";
 import SalesforceLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
+import InformaticaIdqLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica_idq/InformaticaIdqLogSummaryReportPanel";
 import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
 import ApigeeLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeLogSummaryReportPanel";
 import pipelineTaskMetadata from "./pipeline-task-metadata";
@@ -13,7 +14,7 @@ import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportP
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
-import BoomiLogSummaryReportPanel from "./boomi/GitScraperLogSummaryReportPanel";
+import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -35,6 +36,12 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
           <InformaticaLogSummaryReportPanel
             pipelineTaskData={pipelineTaskData}
           />
+        );
+      case "informatica-idq":
+        return (
+            <InformaticaIdqLogSummaryReportPanel
+                pipelineTaskData={pipelineTaskData}
+            />
         );
       case "gitscraper":
         return (

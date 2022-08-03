@@ -10,6 +10,7 @@ import RadioButtonInputContainer from "components/common/inputs/radio/RadioButto
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ModalBase from "components/common/modal/ModalBase";
 
+// TODO: Delete after all references are updated to use export data overlay
 function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading, getRawData, getPdfExporter, getCsvData}) {
   const [exportDataModel, setExportDataModel] = useState(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   const toastContext = useContext(DialogToastContext);

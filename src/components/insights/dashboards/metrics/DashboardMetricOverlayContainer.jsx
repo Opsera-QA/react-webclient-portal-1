@@ -30,6 +30,9 @@ import AllGithubActionsDataBlockEditorPanel from "../../charts/github_actions/da
 import LeadTimeAndReleaseTracebilityEditorPanel from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
 import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
+import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
+import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
+import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -209,7 +212,35 @@ function DashboardMetricOverlayContainer(
                 kpiConfiguration={kpiConfiguration}
             />
         );
-
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <ApigeeReportsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <GitlabDeploymentFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />);
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+          return(
+            <BoomiBarChartEditorPanel
+              metricModel={metricModel}
+              metricFilterModel={metricFilterModel}
+              setMetricFilterModel={setMetricFilterModel}
+              unpackedFilterData={unpackedFilterData}
+              kpiConfiguration={kpiConfiguration}
+            />
+          );
     }
   };
 

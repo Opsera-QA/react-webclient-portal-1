@@ -11,30 +11,16 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, className, savePipelineFunction }) {
+function RegisterSourceRepositoryHookButton({ model, disable, pipeline, className, savePipelineFunction }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [successfulConnection, setSuccessfulConnection] = useState(false);
   const [failedConnection, setFailedConnection] = useState(false);
   const [isRegisteringHook, setIsRegisteringHook] = useState(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const { cancelTokenSource, isMounted} = useComponentStateReference();
 
   const registerHook = async () => {
     try {
@@ -45,20 +31,25 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, 
       await savePipelineFunction();
       const response = await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?._id, model);
 
-      if (response && response.data != null && response.data.status === 200) {
-        setSuccessfulConnection(true);
-      }
-      else {
-        setFailedConnection(true);
+      if (isMounted?.current === true) {
+        if (response?.data?.status === 200) {
+          setSuccessfulConnection(true);
+        } else {
+          setFailedConnection(true);
+        }
       }
     }
     catch (error) {
-      setFailedConnection(true);
+      if (isMounted?.current === true) {
+        setFailedConnection(true);
+        toastContext.showFormErrorToast(error, "Error Registering Webhook:");
+      }
     }
     finally {
-      setIsRegisteringHook(false);
+      if (isMounted?.current === true) {
+        setIsRegisteringHook(false);
+      }
     }
-
   };
 
   const getVariant = () => {
@@ -89,13 +80,13 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, branch, 
     return (<span><IconBase icon={faPlug} fixedWidth className={"mr-2"}/>Register Webhook</span>);
   };
 
-  if (branch == null || branch === "" || savePipelineFunction == null || model == null) {
+  if (model == null || hasStringValue(model?.getData("branch")) !== true || savePipelineFunction == null) {
     return null;
   }
 
   return (
     <div className={className}>
-      <TooltipWrapper innerText={"This is an option feature that can register the web hook."}>
+      <TooltipWrapper innerText={"This is an option feature that can register the webhook."}>
         <Button variant={getVariant()} disabled={disable || isRegisteringHook} size={"sm"} onClick={() => {registerHook(model);}}>
           {getLabel()}
         </Button>
@@ -109,7 +100,6 @@ RegisterSourceRepositoryHookButton.propTypes = {
   model: PropTypes.object,
   disable: PropTypes.bool,
   className: PropTypes.string,
-  branch: PropTypes.string,
   savePipelineFunction: PropTypes.func,
 };
 

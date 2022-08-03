@@ -125,6 +125,10 @@ const pipelineMetadata = {
       id: "workflow.last_run",
     },
     {
+      label: "Last Run",
+      id: "workflow.last_run.completed",
+    },
+    {
       label: "Schedule",
       id: "schedule"
     }

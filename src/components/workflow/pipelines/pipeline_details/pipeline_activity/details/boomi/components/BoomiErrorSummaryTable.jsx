@@ -12,13 +12,23 @@ import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "../../../../../../../common/icons/IconBase";
 
-function BoomiErrorSummaryTable({ boomiObj }) {
+function BoomiErrorSummaryTable({ boomiObj, jobType }) {
     const fields = boomiReportMetaData?.fields;
 
-    const columns = useMemo(
+    const deployPackageCols = useMemo(
         () => [
             getTableTextColumn(getField(fields,"componentId")),
-            getTableTextColumn(getField(fields,"packageId")),
+            getTableTextColumn(getField(fields,"packageVersion")),
+            getTableTextColumn(getField(fields,"message")),
+            getTableTextColumn(getField(fields, "environmentName")),
+        ],
+        []
+    );
+
+    const migrateCreatePackageCols = useMemo(
+        () => [
+            getTableTextColumn(getField(fields,"componentId")),
+            getTableTextColumn(getField(fields,"packageVersion")),
             getTableTextColumn(getField(fields,"message")),
         ],
         []
@@ -37,7 +47,7 @@ function BoomiErrorSummaryTable({ boomiObj }) {
         return (
             <VanityTable
                 data={boomiObj}
-                columns={columns}
+                columns={jobType === "CREATE_PACKAGE_COMPONENT" ? migrateCreatePackageCols : deployPackageCols}
                 tableHeight={"14.1vh"}
             />
         );
@@ -56,6 +66,7 @@ function BoomiErrorSummaryTable({ boomiObj }) {
 
 BoomiErrorSummaryTable.propTypes = {
     boomiObj: PropTypes.array,
+    jobType: PropTypes.string
 };
 
 export default BoomiErrorSummaryTable;

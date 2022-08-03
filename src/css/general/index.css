@@ -34,6 +34,11 @@ primary analytics font*/
     font-weight: 500;
 }
 
+.connected-assets-modal-body {
+    min-height: 10rem;
+    overflow: scroll;
+}
+
 .metric-sub-header-text-spacing {
     letter-spacing: 2px;
 }
@@ -227,6 +232,7 @@ primary analytics font*/
 
 .small-label-text {
     font-size:.8rem;
+    padding: .5rem .5rem;
 }
 
 .pointer {
@@ -736,6 +742,12 @@ a:hover, .active, .link-text:hover {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #3D3B36;
     padding: 5px;
+}
+
+.details-title-text {
+    font-family: 'Inter', sans-serif;
+    color: #3D3B36;
+    padding: 0.5rem;
 }
 
 .success-text {

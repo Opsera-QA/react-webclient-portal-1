@@ -19,4 +19,16 @@ SourceRepositoryActions.registerHook = async (getAccessToken, cancelTokenSource,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
+
+SourceRepositoryActions.exportToGitlab = async (getAccessToken, cancelTokenSource, pipelineId, service, gitToolId,) => {
+  const postBody = {
+    pipelineId,
+    gitToolId
+  };
+  const apiUrl = `tool/git-operations/${service}/export-pipeline`;
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+
 export default SourceRepositoryActions;

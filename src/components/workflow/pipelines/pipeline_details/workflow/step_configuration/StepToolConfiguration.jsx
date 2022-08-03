@@ -95,6 +95,8 @@ import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/
 import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
 import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
+import InformaticaIdqStepConfiguration
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1369,23 +1371,28 @@ function StepToolConfiguration({
                 stepTool={stepTool}
                 parentCallback={callbackFunction}
                 closeEditorPanel={closeEditorPanel}
+              />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
             />
         );
     }
   };
 
   const getTitleText = () => {
-    let titleText = "";
-
     if (hasStringValue(stepName) === true) {
-      titleText += `${stepName}: `;
+      return stepName;
     }
 
-    if (hasStringValue(stepTool?.tool_identifier)) {
-      titleText += stepTool.tool_identifier;
-    }
-
-    return titleText;
+    return "Pipeline Step Settings";
   };
 
   const getToolsAndAccountText = () => {

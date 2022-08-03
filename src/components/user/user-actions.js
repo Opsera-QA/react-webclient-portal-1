@@ -163,13 +163,8 @@ userActions.logout = async (getAccessToken) => {
 userActions.revokeAuthToken = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/users/token/okta/revoke";
-  const queryParams = {
-    params: {
-      token: accessToken
-    }
-  };
 
-  const response = await axiosApiService(accessToken).put(apiUrl, null, queryParams)
+  const response = await axiosApiService(accessToken).put(apiUrl, null, null)
     .then((result) => {
       return result;
     })

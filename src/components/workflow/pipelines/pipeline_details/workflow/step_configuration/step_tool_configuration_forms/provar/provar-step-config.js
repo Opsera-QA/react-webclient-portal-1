@@ -58,6 +58,14 @@ const provarStepFormMetadata = {
         {
             label: "Ant Target",
             id: "antTarget",
+        },
+        {
+            label: "Environment Variables",
+            id: "isEnvironmentVariables"
+        },
+        {
+            label: "Environment Variables",
+            id: "environmentVariables"
         }
     ],
     newObjectFields: {
@@ -76,6 +84,8 @@ const provarStepFormMetadata = {
         buildXmlPath : "",
         antTarget: "",
         jobType: "SFDC_PROVAR_TEST",
+        isEnvironmentVariables: false,
+        environmentVariables: []
     }
 };
 

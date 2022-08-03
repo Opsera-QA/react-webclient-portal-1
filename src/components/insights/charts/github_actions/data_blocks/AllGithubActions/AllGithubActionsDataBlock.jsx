@@ -143,7 +143,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Success %`}
+        titleText={`Actionable Report: Execution Rate`}
         showToasts={true}
         isLoading={false}
       >
@@ -159,7 +159,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Success Runs`}
+        titleText={`Actionable Report: Successful Execution Application Details`}
         showToasts={true}
         isLoading={false}
       >
@@ -214,7 +214,7 @@ function AllGithubActionsDataBlock({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Actionable Report: Failed Runs`}
+        titleText={`Actionable Report: Failed Execution Application Details`}
         showToasts={true}
         isLoading={false}
       >
@@ -246,8 +246,8 @@ function AllGithubActionsDataBlock({
                     className={`${getIconColor(metrics?.trend)} p-2`}
                     dataPoint={successPercent}
                     percentage={metrics?.successPercentage}
-                    topText={"Success %"}
-                    bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage + "%" : "No previous result"}
+                    topText={"Successful Execution Rate"}
+                    bottomText={metrics?.trendSuccessPercentage ? "Previous result: " + metrics?.trendSuccessPercentage : "No previous result"}
                     icon={getIcon(metrics?.trend)}
                     iconOverlayBody={getDescription(metrics?.trend)}
                   />

@@ -15,6 +15,7 @@ function TogglePasswordTextAreaInput(
     disabled,
     inputHelpOverlay,
     infoOverlay,
+    helpTooltipText,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -98,6 +99,7 @@ function TogglePasswordTextAreaInput(
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={"d-flex"}>
         <textarea
@@ -126,6 +128,7 @@ TogglePasswordTextAreaInput.propTypes = {
   disabled: PropTypes.bool,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 export default TogglePasswordTextAreaInput;

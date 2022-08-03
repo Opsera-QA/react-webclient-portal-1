@@ -26,7 +26,8 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_SERVICE_OFFERINGS: "servicenow-service-offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "servicenow-configuration-items",
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
-  HIERARCHY_FILTERS: "hierarchyFilters"
+  HIERARCHY_FILTERS: "hierarchyFilters",
+  DEPLOYMENT_STAGE: "deployment-stage"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -57,7 +58,8 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_SERVICE_OFFERINGS: "Service Now Service Offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "Service Now Configuration Items",
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
-  HIERARCHY_FILTERS: "Hierarchy Filters"
+  HIERARCHY_FILTERS: "Hierarchy Filters",
+  DEPLOYMENT_STAGE: "Deployment Stage"
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -118,6 +120,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES;
     case KPI_FILTER_TYPES.HIERARCHY_FILTERS:
       return KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS;
+    case KPI_FILTER_TYPES.DEPLOYMENT_STAGE:
+      return KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE;
     default:
       return kpiFilterType;
   }
@@ -265,5 +269,10 @@ export const KPI_FILTER_SELECT_OPTIONS = [
       filter5: [],
       filter6: [],
     },
+  },
+  {
+    type: KPI_FILTER_TYPES.DEPLOYMENT_STAGE,
+    text: KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE,
+    value: [],
   },
 ];

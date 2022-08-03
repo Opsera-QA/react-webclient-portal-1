@@ -5,12 +5,12 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CodeInputBase from "components/common/inputs/code/CodeInputBase";
 import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
-import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const CODE_THEME_TYPES = {
@@ -66,7 +66,14 @@ function CodeInput(
         <div className={"mr-2"}>
           {titleBarActionButtons}
         </div>
-        <ToggleThemeIcon theme={internalTheme} toggleTheme={toggleTheme} />
+        <CopyToClipboardIcon
+          copyString={model?.getData(fieldName)}
+          className={"mr-2"}
+        />
+        <ToggleThemeIcon
+          theme={internalTheme}
+          toggleTheme={toggleTheme}
+        />
       </div>
     );
   };
@@ -122,9 +129,9 @@ function CodeInput(
   return (
     <InputContainer className={className} fieldName={fieldName}>
       <InfoContainer
-      titleIcon={faFileCode}
-      titleText={getTitleText()}
-      titleRightSideButton={getTitleBarActionButtons()}
+        titleIcon={faFileCode}
+        titleText={getTitleText()}
+        titleRightSideButton={getTitleBarActionButtons()}
       >
         <div style={{height: height}}>
           {getBody()}
