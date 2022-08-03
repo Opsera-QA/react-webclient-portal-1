@@ -10,9 +10,11 @@ import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 import { PUBLIC_PATHS } from "AppWithRouterAccess";
+import ClientWebsocket from "core/websocket/client.websocket";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
+const websocketClient = new ClientWebsocket();
 
 const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
   const history = useHistory();
@@ -35,10 +37,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return () => {
       source.cancel();
       isMounted.current = false;
-
-      // if (websocketClient) {
-      //   websocketClient.close();
-      // }
     };
   }, []);
 
@@ -47,6 +45,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     setUserAccessRoles(undefined);
 
     if (userData) {
+      // websocketClient?.initializeWebsocket(userData);
       setAccessRoles(userData).then((newUserAccessRoles) => {
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
@@ -57,11 +56,10 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
         }
       });
     }
+    // else {
+    //   websocketClient?.closeWebsocket();
+    // }
   }, [userData]);
-
-  // const getWebsocketClient = () => {
-  //   return websocketClient;
-  // };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -224,6 +222,14 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return userAccessRoles;
   };
 
+  const subscribeToTopic = (topic, model) => {
+    websocketClient?.subscribeToTopic(topic, model);
+  };
+
+  const unsubscribeFromTopic = (topic, model) => {
+    websocketClient?.unsubscribeFromTopic(topic, model);
+  };
+
   // TODO: Don't return as function, just return true/false when pulling from auth context
   const isSassUser = () => {
     if (userData == null) {
@@ -302,6 +308,9 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       setTheme: setTheme,
       themeConstants: getThemeConstants(),
       // getWebsocketClient: getWebSocketClient,
+      websocketClient: websocketClient,
+      subscribeToTopic: subscribeToTopic,
+      unsubscribeFromTopic: unsubscribeFromTopic,
     }}>
       <div
         className={"w-100"}
