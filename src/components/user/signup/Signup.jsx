@@ -13,6 +13,7 @@ import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
+import AzureCloudProviderRegionSelectInput from "components/common/list_of_values_input/azure/AzureCloudProviderRegionSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 
 function Signup() {
@@ -62,6 +63,35 @@ function Signup() {
     }
   };
 
+  const getRegionSelectionPanel = () => {
+    if (registrationDataDto) {
+      switch (registrationDataDto?.getData("cloudProvider")) {
+        case "EKS":
+          return (
+            <Col md={6}>
+              <AwsCloudProviderRegionSelectInput
+                fieldName={"cloudProviderRegion"}
+                model={registrationDataDto}
+                setModel={setRegistrationDataDto}
+              />
+            </Col>
+          );
+        case "AKS":
+          return (
+            <Col md={6}>
+              <AzureCloudProviderRegionSelectInput
+                fieldName={"cloudProviderRegion"}
+                model={registrationDataDto}
+                setModel={setRegistrationDataDto}
+              />
+            </Col>
+          );
+        default:
+          return null;
+      }
+    }
+  };
+
   if (isLoading || registrationDataDto == null) {
     return <LoadingDialog />;
   }
@@ -103,9 +133,7 @@ function Signup() {
               <Col md={6}>
                 <SignupCloudProviderSelectInput fieldName={"cloudProvider"} model={registrationDataDto} setModel={setRegistrationDataDto} />
               </Col>
-              <Col md={6}>
-                <AwsCloudProviderRegionSelectInput fieldName={"cloudProviderRegion"} model={registrationDataDto} setModel={setRegistrationDataDto} />
-              </Col>
+              {getRegionSelectionPanel()}
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">

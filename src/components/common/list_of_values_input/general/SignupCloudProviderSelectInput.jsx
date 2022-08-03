@@ -4,6 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const cloudProviders = [
   { value: "EKS", text: "AWS" },
+  { value: "AKS", text: "Azure" },
   // { value: "GKE", text: "GCP" }
 ];
 

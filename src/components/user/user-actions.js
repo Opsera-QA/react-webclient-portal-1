@@ -191,6 +191,11 @@ userActions.getAwsRegionsV2 = async (cancelTokenSource) => {
   return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);
 };
 
+userActions.getAzureRegions = async (cancelTokenSource) => {
+  const apiUrl = `/users/azure/regions`;
+  return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);
+};
+
 userActions.getAccountInformationWithEmailAddress = async (emailAddress, token) => {
   const apiUrl = `/users/account/summary`;
 
