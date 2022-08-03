@@ -8,10 +8,10 @@ import Model from "core/data_model/model";
 import exportDataMetadata from "components/common/modal/export_data/export-data.metadata";
 import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
-import ModalBase from "components/common/modal/ModalBase";
+import CenterOverlayContainer, { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-// TODO: Delete after all references are updated to use export data overlay
-function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading, getRawData, getPdfExporter, getCsvData}) {
+function ExportDataOverlay({ children, isLoading, getRawData, getPdfExporter, getCsvData}) {
   const [exportDataModel, setExportDataModel] = useState(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   const toastContext = useContext(DialogToastContext);
 
@@ -20,9 +20,9 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
     setExportDataModel(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   }, []);
 
-  const handleClose = () => {
+  const closePanel = () => {
     toastContext.removeInlineMessage();
-    handleCancelModal();
+    toastContext.clearOverlayPanel();
   };
 
   // TODO: I'm going to refactor this after everything is known
@@ -74,7 +74,7 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
 
   const getButtonContainer = () => {
     return (
-      <>
+      <ButtonContainerBase className={"p-3"}>
         <ExportButton
           getRawData={getRawData}
           getPdfExporter={getPdfExporter}
@@ -82,37 +82,37 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
           exportDataModel={exportDataModel}
           className={"mr-2"}
           isLoading={isLoading}
-          closeEditorCallback={handleClose}
+          closeEditorCallback={closePanel}
         />
-        <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
-      </>
+        <CloseButton closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+      </ButtonContainerBase>
     );
   };
 
   return (
-    <ModalBase
-      handleClose={handleClose}
-      size={"lg"}
+    <CenterOverlayContainer
+      closePanel={closePanel}
       buttonContainer={getButtonContainer()}
-      showModal={showModal}
-      title={"Export Data"}
+      titleText={"Export Data"}
+      showCloseButton={false}
+      // titleIcon={} // TODO: Pick out an icon
     >
-      <div className="content-block-shaded m-3 full-height">
-        {toastContext.getInlineBanner()}
-        <div className="p-3">
-          {children}
-          <TextInputBase fieldName={"fileName"} dataObject={exportDataModel} setDataObject={setExportDataModel} />
-          <div className={"mt-2"}>{getExportOptions()}</div>
-        </div>
+      {toastContext.getInlineBanner()}
+      <div className="p-3">
+        {children}
+        <TextInputBase
+          fieldName={"fileName"}
+          dataObject={exportDataModel}
+          setDataObject={setExportDataModel}
+        />
+        <div className={"mt-2"}>{getExportOptions()}</div>
       </div>
-    </ModalBase>
+    </CenterOverlayContainer>
   );
 }
 
-ExportDataModalBase.propTypes = {
+ExportDataOverlay.propTypes = {
   children: PropTypes.any,
-  showModal: PropTypes.bool,
-  handleCancelModal: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   csvEnabled: PropTypes.bool,
   getRawData: PropTypes.func,
@@ -120,10 +120,10 @@ ExportDataModalBase.propTypes = {
   getPdfExporter: PropTypes.func,
 };
 
-ExportButton.defaultProps = {
+ExportDataOverlay.defaultProps = {
   showButtonText: true
 };
 
-export default ExportDataModalBase;
+export default ExportDataOverlay;
 
 
