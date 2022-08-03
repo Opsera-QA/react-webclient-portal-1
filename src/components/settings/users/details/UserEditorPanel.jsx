@@ -79,7 +79,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
 
       if (isNameTakenResponse?.isAvailable !== true) {
         const message = `
-          A user with same name is already registered with email [${isNameTakenResponse?.foundUserEmailAddress}]! 
+          A user with the same first and last name is already registered with email [${isNameTakenResponse?.foundUserEmailAddress}]! 
           If this is not your account, please add a digit to your last name to make it unique. 
           For example, if your last name is "Jones," please try "Jones1" or "Jones2."
         `;
