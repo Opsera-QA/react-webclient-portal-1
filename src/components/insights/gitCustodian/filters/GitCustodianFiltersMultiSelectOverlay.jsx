@@ -12,7 +12,7 @@ import LenientSaveButton from "components/common/buttons/saving/LenientSaveButto
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import chartsActions from "components/insights/charts/charts-actions";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import GitCustodianTableMetaData from "../table/gitCustodianTableMetaData";
+import { GitCustodianFilterMetadata } from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
 
@@ -31,7 +31,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
-  const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({ ...filterModel.getPersistData() }, GitCustodianTableMetaData, false));
+  const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({ ...filterModel.getPersistData() }, GitCustodianFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
