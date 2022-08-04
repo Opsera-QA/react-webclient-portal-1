@@ -1,6 +1,6 @@
 export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
   keys: ["count"],
-  indexBy: "commitHash",
+  indexBy: "vulnerability_type",
   axisLeft: {
     tickSize: 5,
     tickValues: 5,
@@ -9,6 +9,9 @@ export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
     legend: "Count",
     legendOffset: -50,
     legendPosition: "middle",
+  },
+  axisBottom: {
+    tickRotation: -45
   },
   colorBy: "id",
   colors: [

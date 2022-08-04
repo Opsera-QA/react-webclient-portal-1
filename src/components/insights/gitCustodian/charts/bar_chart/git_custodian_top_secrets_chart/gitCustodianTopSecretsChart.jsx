@@ -59,8 +59,7 @@ function GitCustodianTopSecretsCharts({ gitCustodianData, data }) {
         <ResponsiveBar
           data={data}
           cutoffLength={5}
-          {...defaultConfig("Count", "Commit Hash",
-            true, false, "values", "cutoffString", true)}
+          {...defaultConfig("Count", "Vulnerability Type", true, true, "values", "cutoffString", true)}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(data)}
         />
