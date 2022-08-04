@@ -18,6 +18,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
   const [domain, setDomain] = useState(undefined);
+  const [organization, setOrganization] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -41,6 +42,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   const initializeData = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const orgDomain = user?.ldap?.domain;
+    setOrganization(user?.ldap?.organization);
     setDomain(orgDomain);
     const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
     const accountResponse = await userActions.getAccountInformationV2(cancelSource, orgDomain, token);
@@ -49,7 +51,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
     if (accountResponse?.data) {
       if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
         setInvalidHost(true);
-        toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
+        toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper to URL register accounts.");
       }
 
       newUserModel.setData("company", accountResponse.data?.orgName);
@@ -80,6 +82,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
     return (
       <UserEditorPanel
         orgDomain={domain}
+        organization={organization}
         userData={userData}
         handleClose={handleClose}
       />
