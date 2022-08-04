@@ -137,22 +137,17 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   }
 
   return (
-    <>
-      {/*<InlineWarning*/}
-      {/*  warningMessage={"Please Note: The line numbers shown do not correspond to the lines in the actual file."}*/}
-      {/*/>*/}
-      <VanitySetTabAndViewContainer
-        icon={faBracketsCurly}
-        title={`Merge Change Selection`}
-        verticalTabContainer={getVerticalTabContainer()}
-        bodyClassName={"mx-0"}
-        currentView={getCurrentView()}
-        isLoading={isLoading}
-        loadDataFunction={loadDataFunction}
-        minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-        maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-      />
-    </>
+    <VanitySetTabAndViewContainer
+      icon={faBracketsCurly}
+      title={`Merge Change Selection`}
+      verticalTabContainer={getVerticalTabContainer()}
+      bodyClassName={"mx-0"}
+      currentView={getCurrentView()}
+      isLoading={isLoading}
+      loadDataFunction={loadDataFunction}
+      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+    />
   );
 };
 
