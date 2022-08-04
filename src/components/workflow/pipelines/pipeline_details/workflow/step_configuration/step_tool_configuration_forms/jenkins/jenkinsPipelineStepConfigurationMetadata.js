@@ -225,6 +225,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "SFDC DATA TRANSFORM";
       },
+    },
+    {
+      label: "Enable Quick Deploy",
+      id: "enableQuickDeploy",
     }
   ],
   newObjectFields: {
@@ -280,6 +284,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dependencies: {},
     dependencyType:"",
     ruleIds: [],
+    enableQuickDeploy: false
   }
 };
 
