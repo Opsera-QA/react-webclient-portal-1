@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders and verifies the snapshot 1`] = `
+Array [
+  <nav
+    class="nav-bar navbar navbar-expand navbar-light"
+  >
+    <a
+      class="navbar-brand"
+      href="/"
+    >
+      <img
+        alt="Opsera Inc."
+        class="d-inline-block align-top ml-3"
+        height="42"
+        src="/img/logos/opsera_logo_white_horizontal_240_42.png"
+        width="240"
+      />
+    </a>
+    <button
+      aria-controls="basic-navbar-nav"
+      aria-label="Toggle navigation"
+      class="navbar-toggler collapsed"
+      type="button"
+    >
+      <span
+        class="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="basic-navbar-nav"
+    >
+      <div
+        class="ml-auto navbar-nav"
+      >
+        <button
+          class="mr-2 btn btn-warning"
+          type="button"
+        >
+          Sign Up
+        </button>
+        <button
+          class="btn btn-outline-success"
+          type="button"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </nav>,
+  <div />,
+  <div
+    class="container-fluid"
+    style="margin:0"
+  >
+    <div
+      class="d-flex flex-row"
+    >
+      <div
+        class="w-100 pb-4"
+      >
+        <div
+          class="mt-4 row"
+        >
+          <div
+            class="p-4 col-md-5"
+          >
+            <div
+              class="ml-4"
+            >
+              <h2
+                class="mb-3 bd-text-purple-bright"
+              >
+                Welcome to Opsera!
+              </h2>
+              <div
+                style="font-size:1.1rem"
+              >
+                Opsera’s vision is to enable and empower the developers, operations and release teams by giving the flexibility in selecting the various DevOps functional tools, build the pipeline with quality and security gates.
+              </div>
+              <div
+                class="mt-3"
+                style="font-size:1.1rem"
+              >
+                Opsera provides out of the box monitoring dashboard, giving an end to end visibility of DevOps landscape metrics via an intelligent dashboard to improve the Agility, Operational excellence and help them to track security and compliance metrics.
+              </div>
+              <div
+                class="row mx-n2 mt-4"
+              >
+                <div
+                  class="col-md px-2"
+                >
+                  <button
+                    class="btn-lg w-100 mb-3 btn btn-primary"
+                    type="button"
+                  >
+                    Add User To Account
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="d-flex align-items-center justify-content-center"
+            >
+              <div
+                class="auth-box-w"
+              >
+                <div
+                  class="logo-w"
+                >
+                  <img
+                    alt="Opsera"
+                    height="126"
+                    src="/img/logos/opsera_bird_infinity_171_126.png"
+                    width="171"
+                  />
+                </div>
+                <h4
+                  class="auth-header"
+                >
+                  Sign in
+                </h4>
+                <form>
+                  <div
+                    class="form-group"
+                  >
+                    <label
+                      for="username"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      class="form-control"
+                      id="username"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="pre-icon os-icon os-icon-user-male-circle"
+                    />
+                  </div>
+                  <div
+                    class="buttons-w"
+                  >
+                    <button
+                      class="w-100 mb-3 btn btn-warning"
+                      disabled=""
+                      type="submit"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row fixed-row-footer-bottom"
+    >
+      <div
+        class="col text-center m-1"
+        style="padding:0;margin:0;font-size:.6em"
+      >
+        <span>
+          © 2022 Opsera, Inc. The Continuous Orchestration Platform™
+        </span>
+      </div>
+    </div>
+  </div>,
+]
+`;

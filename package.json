@@ -89,10 +89,9 @@
   "jest": {
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\](?!(react-markdown|hast-*|html-*|zwitch|web-namespaces|rehype-*|hast-util-*|hastscript|vfile|vfile-message|markdown-table|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|mdast-util-.*|escape-string-regexp|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes|ccount)).+\\.(js|jsx|mjs|cjs|ts|tsx)$"
-
     ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/test/jest/__mocks__/stylemock.js"
+      "\\.(css|less)$": "<rootDir>/src/__test__/jest/__mocks__/stylemock.js"
     },
     "transform": {
       "\\.js$": "babel-jest"
