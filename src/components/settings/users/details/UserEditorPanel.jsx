@@ -19,8 +19,9 @@ import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
+import organizationActions from "components/settings/organizations/organization-actions";
 
-function UserEditorPanel({ userData, orgDomain, handleClose }) {
+function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
@@ -61,19 +62,31 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     try {
       setIsSaving(true);
       eraseLogs();
+      const email = userModel?.getData("emailAddress");
+      const organization = userModel?.getData("organizationName");
       addLog("Beginning the user creation process...");
-      addLog(`Checking if email address [${userModel?.getData("emailAddress")}] is available`);
+      addLog(`Checking if email address [${email}] is available`);
       const isEmailTaken = await checkIfEmailExists();
 
       if (isEmailTaken === true) {
-        addLog(`Email address [${userModel?.getData("emailAddress")}] is already taken!`);
-        throw `User with email ${userModel?.getData("emailAddress")} already exists. Please try another email address.`;
+        const message = `User with email [${email}] is already taken! Please try another email address.`;
+        addLog(message);
+        throw message;
       }
 
-      addLog(`Email address [${userModel?.getData("emailAddress")}] is available.`);
+      addLog(`Email address [${email}] is available.`);
 
+      const isNameTaken = await checkIfUserWithNameExists();
+
+      if (isNameTaken === true) {
+        const message = `User with same name is already taken! Please select a unique name. Can add a digit if necessary`;
+        addLog(message);
+        throw message;
+      }
+
+      // eslint-disable-next-line no-unreachable
       try {
-        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}.`);
+        addLog(`Adding user [${email}] to Organization ${organization}.`);
         const userResponse = await createLdapUser();
 
         if (userResponse?.status !== 200) {
@@ -81,16 +94,16 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
         }
       }
       catch (error) {
-        const errorLog = `Error adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}: ${parseError(error)}.  Please check browser logs for more details.`;
+        const errorLog = `Error adding user [${email}] to Organization ${organization}: ${parseError(error)}.  Please check browser logs for more details.`;
         addLog(errorLog);
         console.error(error);
         throw errorLog;
       }
 
-      addLog(`User [${userModel?.getData("emailAddress")}] successfully added to Organization ${userModel?.getData("organizationName")}.`);
+      addLog(`User [${email}] successfully added to Organization ${organization}.`);
 
       try {
-        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Opsera Platform.`);
+        addLog(`Adding user [${email}] to Opsera Platform.`);
         const ssoUserResponse = await createSsoUser();
 
         if (ssoUserResponse?.data?.status !== 200) {
@@ -98,7 +111,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
         }
       }
       catch (error) {
-        const errorLog = `Error adding user [${userModel?.getData("emailAddress")}] to Organization ${userModel?.getData("organizationName")}: ${parseError(error)}. Please check browser logs for more details.`;
+        const errorLog = `Error adding user [${email}] to Organization ${organization}: ${parseError(error)}. Please check browser logs for more details.`;
         addLog(errorLog);
         console.error(error);
         throw errorLog;
@@ -108,13 +121,13 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       const groups = userModel.getArrayData("groups");
 
       if (Array.isArray(groups) && groups.length > 0) {
-        addLog(`Adding user [${userModel?.getData("emailAddress")}] to Groups [${JSON.stringify(groups)}].`);
+        addLog(`Adding user [${email}] to Groups [${JSON.stringify(groups)}].`);
         await assignUserToSelectedGroups(groups);
       }
 
-      addLog(`The User creation process for [${userModel?.getData("emailAddress")}] has completed.`);
+      addLog(`The User creation process for [${email}] has completed.`);
       toastContext.showSystemInformationBanner(`
-        An invitation email has been sent to the user [${userModel?.getData("emailAddress")}] for completing registration. 
+        An invitation email has been sent to the user [${email}] for completing registration. 
         The user will have 7 days to finalize registration before the invitation expires.
       `);
       return "Success";
@@ -131,6 +144,20 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     const emailIsAvailable = await accountsActions.isEmailAvailableV2(getAccessToken, cancelTokenSource, email);
 
     return emailIsAvailable?.data === false;
+  };
+
+  const checkIfUserWithNameExists = async () => {
+    const firstName = userModel?.getData("firstName");
+    const lastName = userModel?.getData("lastName");
+    const nameIsAvailable = await accountsActions.isNameAvailableForLdapUidV2(
+      getAccessToken,
+      cancelTokenSource,
+      organization,
+      firstName,
+      lastName,
+      );
+
+    return nameIsAvailable?.data === false;
   };
 
   const createLdapUser = async () => {
@@ -163,7 +190,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       title: userModel?.getData("title"),
       company: userModel?.getData("company"),
       ldapOrgAccount: userModel?.getData("ldapOrgAccount"),
-      ldapOrgDomain: userModel?.getData("ldapOrgDomain"),
+      ldapOrgDomain: orgDomain,
       organizationName: userModel?.getData("organizationName"),
       orgAccount: userModel?.getData("orgAccount"),
       cloudProvider: userModel?.getData("cloudProvider"),
@@ -183,7 +210,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
       const existingGroup = groupResponse?.data;
       const members = existingGroup?.members;
 
-      addLog(`Adding user [${userModel?.getData("emailAddress")}] to Group [${group}].`);
+      addLog(`Adding user [${userEmail}] to Group [${group}].`);
 
       if (existingGroup && Array.isArray(members)) {
         let emailList = members.reduce((acc, item) => {
@@ -198,7 +225,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
             const response = await accountsActions.syncMembershipV2(getAccessToken, cancelTokenSource, orgDomain, group, emailList);
 
             if (response?.status === 200) {
-              addLog(`User [${userModel?.getData("emailAddress")}] successfully added to Group [${group}].`);
+              addLog(`User [${userEmail}] successfully added to Group [${group}].`);
             }
             else {
               throw response;
@@ -206,7 +233,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
           }
           catch (error) {
             console.error(error);
-            addLog(`Error adding User [${userModel?.getData("emailAddress")}] to Group [${group}]: ${parseError(error)}. Please check browser logs for more details`);
+            addLog(`Error adding User [${userEmail}] to Group [${group}]: ${parseError(error)}. Please check browser logs for more details`);
           }
         }
       }
@@ -238,7 +265,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
     }
   };
 
-  if (isLoading || orgDomain == null || userModel == null) {
+  if (isLoading || orgDomain == null || userModel == null || organization == null) {
     return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
   }
 
@@ -305,6 +332,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose }) {
 }
 
 UserEditorPanel.propTypes = {
+  organization: PropTypes.string,
   orgDomain: PropTypes.string,
   userData: PropTypes.object,
   handleClose: PropTypes.func,
