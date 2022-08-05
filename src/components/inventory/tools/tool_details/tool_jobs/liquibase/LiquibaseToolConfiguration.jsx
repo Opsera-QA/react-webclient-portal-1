@@ -57,6 +57,18 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
+  const getDynamicFields = () => {
+    if (liquibaseConfigurationModel?.getData("buildType") === "oracle") {
+      return (
+        <TextInputBase
+          dataObject={liquibaseConfigurationModel}
+          setDataObject={setLiquibaseConfigurationModel}
+          fieldName={"service"}
+        />
+      );
+    }
+  };
+
   if (liquibaseConfigurationModel == null) {
     return null;
   }
@@ -95,6 +107,7 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
             setDataObject={setLiquibaseConfigurationModel}
             fieldName={"accountPassword"}
           />
+          {getDynamicFields()}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

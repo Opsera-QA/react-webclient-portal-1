@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const DB_TYPES = [
-  { name: "Snowflake", value: "snowflake" }
+  { name: "Snowflake", value: "snowflake" },
+  { name: "Oracle", value: "oracle"},
 ];
 
 function LiquibaseDatabaseTypeSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
