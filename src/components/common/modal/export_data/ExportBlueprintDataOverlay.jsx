@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { format } from "date-fns";
 
 // TODO: Should we be just sending in data and formatting in here?
 function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summaryData, logData}) {
