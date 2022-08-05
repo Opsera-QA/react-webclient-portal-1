@@ -277,7 +277,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       case PUBLIC_PATHS.FREE_TRIAL_REGISTRATION:
         return themeConstants.COLOR_PALETTE.BACKGROUND_PURPLE;
       default:
-        return themeConstants.COLOR_PALETTE.BACKGROUND_GRAY;
+        return themeConstants.COLOR_PALETTE.WHITE;
     }
   };
 
