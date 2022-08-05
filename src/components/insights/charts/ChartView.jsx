@@ -170,6 +170,7 @@ import QuickDeployStatistics from "./opsera/quick_deploy_statistics/QuickDeployS
 
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
+import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
 //Boomi KPI
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
@@ -990,6 +991,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={12} md={12} className="p-2">
             <ApigeeReportsChartTab
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeSummaryChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
