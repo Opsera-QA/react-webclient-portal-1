@@ -72,7 +72,10 @@ const LiquibaseStepFormMetadata = {
       id: "baseSchema",
       maxLength: 256,
       regexDefinitionName: "generalText",
-    },    
+    },
+    {
+      id: "dbType",
+    }
   ],
   newObjectFields: {
     jobType: "",
@@ -90,6 +93,7 @@ const LiquibaseStepFormMetadata = {
     gitUrl: "",
     scriptFilePath: "",
     baseSchema : "",
+    dbType: "snowflake"
   }
 };
 

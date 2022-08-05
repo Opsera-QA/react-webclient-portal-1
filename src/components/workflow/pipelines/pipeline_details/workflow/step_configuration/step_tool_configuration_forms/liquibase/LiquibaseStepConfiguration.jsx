@@ -59,6 +59,26 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
     return <LoadingDialog size="sm" />;
   }
 
+  const getDynamicFields = () => {
+    if (liquibaseStepConfigurationDto?.getData("dbType") === "oracle") {
+      return null;
+    }
+    return (
+      <>
+        <TextInputBase
+          dataObject={liquibaseStepConfigurationDto}
+          setDataObject={setLiquibaseConfigurationDataDto}
+          fieldName={"database"}
+        />
+        <TextInputBase
+          dataObject={liquibaseStepConfigurationDto}
+          setDataObject={setLiquibaseConfigurationDataDto}
+          fieldName={"warehouse"}
+        />
+      </>
+    );
+  };
+
   const getScmInputs = () => {
     if (liquibaseStepConfigurationDto?.getData("service") == undefined || liquibaseStepConfigurationDto?.getData("service") === "") {
       return null;
@@ -103,20 +123,11 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
         model={liquibaseStepConfigurationDto}
         setModel={setLiquibaseConfigurationDataDto}
       />
-      <TextInputBase
-        dataObject={liquibaseStepConfigurationDto}
-        setDataObject={setLiquibaseConfigurationDataDto}
-        fieldName={"database"}
-      />
-      <TextInputBase
-        dataObject={liquibaseStepConfigurationDto}
-        setDataObject={setLiquibaseConfigurationDataDto}
-        fieldName={"warehouse"}
-      />
+      {getDynamicFields()}
       <LiquibaseScmToolTypeSelectInput
         model={liquibaseStepConfigurationDto}
         setModel={setLiquibaseConfigurationDataDto}
-      />      
+      />
       {getScmInputs()}
       <TextInputBase
         dataObject={liquibaseStepConfigurationDto}

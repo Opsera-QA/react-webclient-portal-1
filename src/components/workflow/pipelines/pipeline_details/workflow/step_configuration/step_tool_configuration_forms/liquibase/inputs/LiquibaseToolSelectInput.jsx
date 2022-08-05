@@ -7,13 +7,19 @@ function LiquibaseToolSelectInput({ model, setModel, className, disabled }) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-    newModel.setData(fieldName, selectedOption._id);    
+    newModel.setData(fieldName, selectedOption._id);
+    newModel.setData("dbType", selectedOption?.configuration?.buildType);
+    newModel.setDefaultValue("database");
+    newModel.setDefaultValue("warehouse");
     setModel({...newModel});
   };
 
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
-    newModel.setDefaultValue("toolConfigId");    
+    newModel.setDefaultValue("toolConfigId");
+    newModel.setDefaultValue("dbType");
+    newModel.setDefaultValue("database");
+    newModel.setDefaultValue("warehouse");
     setModel({...newModel});
   };
 
