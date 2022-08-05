@@ -22,6 +22,44 @@ export const PUBLIC_PATHS = {
   AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
 };
 
+const OKTA_CONFIG = {
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+};
+
+const authClient = new OktaAuth({
+  issuer: OKTA_CONFIG.issuer,
+  clientId: OKTA_CONFIG.client_id,
+  redirectUri: OKTA_CONFIG.redirect_uri,
+  responseMode: "fragment",
+  tokenManager: {
+    autoRenew: true,
+    expireEarlySeconds: 160,
+  },
+});
+
+authClient.tokenManager.on("expired", function(key, expiredToken) {
+  console.info("Token with key", key, " has expired:");
+});
+
+authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
+  console.info("Token with key", key, "has been renewed");
+});
+
+export const isPublicPath = (path) => {
+  return (
+    path === "/login" ||
+    path === "/signup" ||
+    path === "/registration" ||
+    path === "/trial/registration" ||
+    path.includes("/account/registration") ||
+    path.includes("/signup/awsmarketplace")
+  );
+};
+
+authClient?.start();
+
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -37,32 +75,6 @@ const AppWithRouterAccess = () => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
   };
 
-  const OKTA_CONFIG = {
-    issuer: process.env.REACT_APP_OKTA_ISSUER,
-    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-  };
-
-  const authClient = new OktaAuth({
-    issuer: OKTA_CONFIG.issuer,
-    clientId: OKTA_CONFIG.client_id,
-    redirectUri: OKTA_CONFIG.redirect_uri,
-    responseMode: "fragment",
-    tokenManager: {
-      autoRenew: true,
-      expireEarlySeconds: 160,
-    },
-  });
-
-  authClient.start();
-
-  authClient.tokenManager.on("expired", function(key, expiredToken) {
-    console.info("Token with key", key, " has expired:");
-  });
-
-  authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
-    console.info("Token with key", key, "has been renewed");
-  });
 
   authClient.tokenManager.on("error", function(err) {
     console.error("TokenManager error:", err);
@@ -76,9 +88,10 @@ const AppWithRouterAccess = () => {
   });
 
 
-  authClient.authStateManager.subscribe(async authState => {
+  authClient?.authStateManager?.subscribe(async authState => {
     //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
+    enableSideBar();
 
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
@@ -97,22 +110,21 @@ const AppWithRouterAccess = () => {
       await loadUsersData(authState.accessToken["accessToken"]);
       authStateLoadingUser.current = false;
     }
-
   });
 
-  if (!authClient.isLoginRedirect()) {
+  if (!authClient?.isLoginRedirect()) {
     // Trigger an initial authState change event when the app startup
     authClient.authStateManager.updateAuthState();
   }
 
-  useEffect(() => {
-    enableSideBar(history.location.pathname);
-
-  }, [authenticatedState, history.location.pathname]);
-
   // TODO: We need to put this in an actions file and wire up cancel token
   const loadUsersData = async (token) => {
     try {
+      if (token == null) {
+        setData(undefined);
+        return;
+      }
+
       setLoading(true);
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
@@ -135,19 +147,8 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const isPublicPath = (path) => {
-    return (
-      path === "/login" ||
-      path === "/signup" ||
-      path === "/registration" ||
-      path === "/trial/registration" ||
-      path.includes("/account/registration") ||
-      path.includes("/signup/awsmarketplace")
-    );
-  };
-
-  const enableSideBar = (path) => {
-    if (isPublicPath(path)) {
+  const enableSideBar = () => {
+    if (isPublicPath(history.location.pathname)) {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
@@ -156,7 +157,7 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens.accessToken.value);
+    await loadUsersData(tokens?.accessToken?.value);
   };
 
   const getNavBar = () => {

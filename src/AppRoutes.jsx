@@ -347,6 +347,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={UserDataMappingDetailView} />
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
+          <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>
