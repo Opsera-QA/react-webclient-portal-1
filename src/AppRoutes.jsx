@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoginForm from "./components/login/LoginForm";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
 //template routes
@@ -136,6 +136,7 @@ import Col from "react-bootstrap/Col";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
+  const history = useHistory();
 
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 

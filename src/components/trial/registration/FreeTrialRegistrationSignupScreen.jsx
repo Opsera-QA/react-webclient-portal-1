@@ -11,6 +11,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialRegisterButton from "components/trial/registration/FreeTrialRegisterButton";
+import userActions from "components/user/user-actions";
 
 const FreeTrialRegistrationSignupScreen = (
   {
@@ -28,24 +29,23 @@ const FreeTrialRegistrationSignupScreen = (
     //   toastContext.showDomainAlreadyRegisteredErrorDialog();
     //   return;
     // }
-    //
-    // const emailIsAvailable = await userActions.isEmailAvailable(registrationModel.getData("email"));
-    //
-    // if (!emailIsAvailable) {
-    //   toastContext.showEmailAlreadyExistsErrorDialog();
-    //   return;
-    // }
-    //
-    // if (registrationModel.isModelValid()) {
-    //   try {
-    //     await userActions.createFreeTrialAccount(registrationModel);
-    //     // TODO: Do we want to pop up success toast?
-    //     // toastContext.showCreateSuccessResultDialog("Opsera Account");
-    setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
-    //   } catch (error) {
-    //     toastContext.showCreateFailureResultDialog("Opsera Account", error);
-    //   }
-    // }
+
+    const emailIsAvailable = await userActions.isEmailAvailable(registrationModel.getData("email"));
+
+    if (!emailIsAvailable) {
+      toastContext.showEmailAlreadyExistsErrorDialog();
+      return;
+    }
+
+    if (registrationModel.isModelValid()) {
+      try {
+        const response = await userActions.createFreeTrialAccount(registrationModel);
+        setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
+        return response;
+      } catch (error) {
+        toastContext.showCreateFailureResultDialog("Opsera Account", error);
+      }
+    }
   };
 
   if (registrationModel == null) {
@@ -64,6 +64,7 @@ const FreeTrialRegistrationSignupScreen = (
           <WizardCardInfoItem
             title={"Signup"}
             description={"Signup for Free Trial to experience how Opsera can enhance your development process."}
+            className={"mt-3"}
           />
           <div className={"p-3"}>
             <TextInputBase
@@ -86,16 +87,16 @@ const FreeTrialRegistrationSignupScreen = (
               setDataObject={setRegistrationModel}
               dataObject={registrationModel}
             />
-            <TextInputBase
-              fieldName={"domain"}
-              setDataObject={setRegistrationModel}
-              dataObject={registrationModel}
-            />
-            <TextInputBase
-              fieldName={"title"}
-              setDataObject={setRegistrationModel}
-              dataObject={registrationModel}
-            />
+            {/*<TextInputBase*/}
+            {/*  fieldName={"domain"}*/}
+            {/*  setDataObject={setRegistrationModel}*/}
+            {/*  dataObject={registrationModel}*/}
+            {/*/>*/}
+            {/*<TextInputBase*/}
+            {/*  fieldName={"title"}*/}
+            {/*  setDataObject={setRegistrationModel}*/}
+            {/*  dataObject={registrationModel}*/}
+            {/*/>*/}
             <PasswordInput
               fieldName={"password"}
               setDataObject={setRegistrationModel}

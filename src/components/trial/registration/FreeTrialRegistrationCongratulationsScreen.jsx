@@ -4,10 +4,13 @@ import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignu
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import WizardButton from "temp-library-components/wizard/button/WizardButton";
+import { useHistory } from "react-router-dom";
 
 const FreeTrialRegistrationCongratulationsScreen = () => {
+  const history = useHistory();
+
   const routeToLoginScreenButton = () => {
-      console.log("should be rerouted");
+    history.push('/login');
   };
 
   return (
@@ -48,12 +51,12 @@ const FreeTrialRegistrationCongratulationsScreen = () => {
                 You will receive a confirmation email that must be completed within 24 hours.
               </div>
               <div className={"mt-3"}>
-                After confirming your email you may log in to your new account.
+                After confirming your email you may continue and log in to your new account.
               </div>
             </div>
             <div className={"mt-5"}>
               <WizardButton
-                buttonText={"Log In"}
+                buttonText={"Continue"}
                 onClickFunction={routeToLoginScreenButton}
               />
             </div>

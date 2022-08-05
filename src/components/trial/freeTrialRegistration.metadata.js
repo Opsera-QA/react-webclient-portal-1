@@ -72,7 +72,7 @@ export const freeTrialRegistrationMetadata = {
       email: "",
       password: "",
       confirmPassword: "",
-      domain: "",
+      domain: "free-trial",
       street: "",
       city: "",
       state: "",
