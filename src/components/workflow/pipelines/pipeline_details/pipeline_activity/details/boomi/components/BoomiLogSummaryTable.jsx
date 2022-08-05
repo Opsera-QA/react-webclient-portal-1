@@ -59,7 +59,6 @@ function BoomiLogSummaryTable({ boomiObj, jobType }) {
       getTableTextColumn(getField(fields, "deployedDate")),
       getTableTextColumn(getField(fields, "deployedBy")),
       getTableTextColumn(getField(fields, "deploymentId")),
-      getTableTextColumn(getField(fields, "environmentName")),
       getTableTextColumn(getField(fields, "sourceEnvironmentName")),
       getTableTextColumn(getField(fields, "targetEnvironmentName")),
     ],
