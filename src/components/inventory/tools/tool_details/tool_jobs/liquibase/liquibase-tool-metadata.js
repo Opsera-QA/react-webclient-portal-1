@@ -32,7 +32,14 @@ const LiquibaseMetadata = {
       isRequired: true,
       maxLength: 256
     },
-
+    {
+      label: "Service",
+      id: "service",
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "oracle";
+      },
+      maxLength: 200,
+    },
   ],
   newObjectFields:
   {
@@ -41,6 +48,7 @@ const LiquibaseMetadata = {
     port: "",
     accountUsername: "",
     accountPassword: "",
+    service: "",
   }
 };
 
