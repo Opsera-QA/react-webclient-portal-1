@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
+import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { format } from "date-fns";
 
 // TODO: Should we be just sending in data and formatting in here?
-function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawData, isLoading, summaryData, logData}) {
+function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summaryData, logData}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -68,9 +69,7 @@ function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawDat
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -78,9 +77,7 @@ function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawDat
   );
 }
 
-ExportBlueprintDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+ExportBlueprintDataOverlay.propTypes = {
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
   isLoading: PropTypes.bool,
@@ -88,6 +85,6 @@ ExportBlueprintDataModal.propTypes = {
   logData: PropTypes.any,
 };
 
-export default ExportBlueprintDataModal;
+export default ExportBlueprintDataOverlay;
 
 
