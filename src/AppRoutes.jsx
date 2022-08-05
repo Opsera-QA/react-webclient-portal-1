@@ -134,6 +134,7 @@ import LogsExportManagement from "./components/settings/logs_management/LogsExpo
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
+import OpseraFooter from "components/footer/OpseraFooter";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   const history = useHistory();
@@ -176,11 +177,21 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
     );
   }
 
+  // Not used in free trial
+  const getSideBar = () => {
+    return (
+      <Sidebar
+        userData={userData}
+        hideSideBar={hideSideBar}
+      />
+    );
+  };
+
   // Authenticated routes
   return (
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
-        <Sidebar userData={userData} hideSideBar={hideSideBar} />
+        {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
@@ -344,11 +355,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           {/*{getFreeTrialRoutes()}*/}
         </div>
       </div>
-      <Row className={"fixed-row-footer-bottom"}>
-        <Col className={"text-center m-1 p-0"} style={{ fontSize: ".6em" }}>
-          <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
-        </Col>
-      </Row>
+      <OpseraFooter />
     </div>
   );
 };
