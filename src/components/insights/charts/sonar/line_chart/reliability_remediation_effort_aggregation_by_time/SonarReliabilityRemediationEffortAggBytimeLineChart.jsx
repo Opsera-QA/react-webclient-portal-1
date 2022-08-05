@@ -188,7 +188,7 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={`Sonar Reliability Remediation for [${date}]`}
+        titleText={`Sonar Reliability Remediation for ${date}`}
         showToasts={true}
         titleIcon={faTable}
         isLoading={false}
