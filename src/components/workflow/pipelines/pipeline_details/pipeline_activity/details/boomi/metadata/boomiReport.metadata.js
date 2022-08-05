@@ -50,8 +50,16 @@ const boomiReportMetadata = {
       id: "message",
     },
     {
-      label: "Environment Name",
+      label: "Source Environment",
+      id: "sourceEnvironmentName",
+    },
+    {
+      label: "Environment",
       id: "environmentName",
+    },
+    {
+      label: "Target Environment",
+      id: "targetEnvironmentName",
     },
     {
       label: "Deployment ID",
@@ -72,7 +80,9 @@ const boomiReportMetadata = {
     deployedDate: "",
     deployedBy: "" ,
     environmentName: "",
-    deploymentId: ""
+    deploymentId: "",
+    sourceEnvironmentName: "",
+    targetEnvironmentName: ""
   },
 };
 
