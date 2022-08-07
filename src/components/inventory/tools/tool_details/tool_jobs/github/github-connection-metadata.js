@@ -11,51 +11,29 @@ const githubConnectionMetadata = {
     {
       label: "Personal Access Token",
       id: "accountPassword",
-      isRequired: true,
-      maxLength: 256
+      maxLength: 256,
+      isRequiredFunction: (model) => {
+        return model.getData("twoFactorAuthentication") !== true;
+      },
     },
     {
       label: "Enable Two Factor Authentication?",
       id: "twoFactorAuthentication",
-      maxLength: 100
     },
     {
       label: "Private Key",
       id: "secretPrivateKey",
+      isRequiredFunction: (model) => {
+        return model?.getData("twoFactorAuthentication") === true;
+      },
     },
     {
       label: "Access Key",
       id: "secretAccessTokenKey",
       maxLength: 256,
-    },
-  ],
-  fieldsAlt: [
-    {
-      label: "Username",
-      id: "accountUsername",
-      isRequired: true,
-      maxLength: 100
-    },
-    {
-      label: "Password",
-      id: "accountPassword",
-      maxLength: 256
-    },
-    {
-      label: "Enable Two Factor Authentication?",
-      id: "twoFactorAuthentication",
-      maxLength: 100
-    },
-    {
-      label: "Private Key",
-      id: "secretPrivateKey",
-      isRequired: true,
-    },
-    {
-      label: "Access Key",
-      id: "secretAccessTokenKey",
-      isRequired: true,
-      maxLength: 256,
+      isRequiredFunction: (model) => {
+        return model?.getData("twoFactorAuthentication") === true;
+      },
     },
   ],
   newObjectFields:

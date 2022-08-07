@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 
 export const PIPELINE_CREATION_OPTIONS = {
+  SALESFORCE: "salesforce",
+  SOFTWARE_DEVELOPMENT_LIFE_CYCLE: "sdlc",
+};
+
+export const PIPELINE_CREATION_OPTION_LABELS = {
   SALESFORCE: "Salesforce.com",
   SOFTWARE_DEVELOPMENT_LIFE_CYCLE: "Software Development Life Cycle",
 };
@@ -19,7 +24,7 @@ function PipelineCreationRadioOptionInput(
         onClickFunction={setSelectedOption}
         selectedOption={selectedOption}
         option={PIPELINE_CREATION_OPTIONS.SALESFORCE}
-        text={"Salesforce.com"}
+        text={PIPELINE_CREATION_OPTION_LABELS.SALESFORCE}
         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
       />
       <WizardSelectionRadioOption
@@ -27,7 +32,7 @@ function PipelineCreationRadioOptionInput(
         onClickFunction={setSelectedOption}
         selectedOption={selectedOption}
         option={PIPELINE_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
-        text={"Software Development Life Cycle"}
+        text={PIPELINE_CREATION_OPTION_LABELS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
         disabled={true}
       />

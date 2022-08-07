@@ -38,6 +38,11 @@ toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+toolsActions.createStandaloneTool = async (getAccessToken, cancelTokenSource, tool) => {
+  const apiUrl = "/registry/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tool);
+};
+
 toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterModel, fields) => {
   const apiUrl = `/registry/configs/v2`;
 

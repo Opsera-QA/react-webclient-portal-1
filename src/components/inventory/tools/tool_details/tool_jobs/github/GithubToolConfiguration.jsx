@@ -20,13 +20,7 @@ function GithubToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    let githubConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), githubConnectionMetadata);
-
-    if (githubConfigurationData.getData("twoFactorAuthentication") === true) {
-      githubConfigurationData.setMetaDataFields(githubConnectionMetadata.fieldsAlt);
-    }
-
-    setGithubConfigurationDto(githubConfigurationData);
+    setGithubConfigurationDto({...modelHelpers.getToolConfigurationModel(toolData?.getData("configuration"), githubConnectionMetadata)});
   };
 
   const saveGithubToolConfiguration = async () => {

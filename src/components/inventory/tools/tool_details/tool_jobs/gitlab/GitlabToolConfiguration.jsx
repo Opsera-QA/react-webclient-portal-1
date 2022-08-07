@@ -21,13 +21,9 @@ function GitlabToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    let gitlabConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), gitlabConnectionMetadata);
-
-    if (gitlabConfigurationData.getData("twoFactorAuthentication") === true) {
-      gitlabConfigurationData.setMetaDataFields(gitlabConnectionMetadata.fieldsAlt);
-    }
-
-    setGitlabConfigurationDto(gitlabConfigurationData);
+    setGitlabConfigurationDto({
+      ...modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), gitlabConnectionMetadata)
+    });
   };
 
   const saveGitlabToolConfiguration = async () => {

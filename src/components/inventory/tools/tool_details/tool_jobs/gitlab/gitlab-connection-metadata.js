@@ -17,8 +17,10 @@ const gitlabConnectionMetadata = {
     {
       label: "Personal Access Token",
       id: "accountPassword",
-      isRequired: true,
-      maxLength: 256
+      maxLength: 256,
+      isRequiredFunction: (model) => {
+        return model?.getData("twoFactorAuthentication") !== true;
+      },
     },
     {
       label: "Enable Two Factor Authentication?",
@@ -28,46 +30,17 @@ const gitlabConnectionMetadata = {
       label: "Private Key",
       id: "secretPrivateKey",
       maxLength: 10000,
+      isRequiredFunction: (model) => {
+        return model?.getData("twoFactorAuthentication") === true;
+      },
     },
     {
       label: "Access Key",
       id: "secretAccessTokenKey",
       maxLength: 10000,
-    },
-  ],
-  fieldsAlt: [
-    {
-      label: "Url",
-      id: "url",
-      isRequired: true,
-      maxLength: 100
-    },
-    {
-      label: "Username",
-      id: "accountUsername",
-      isRequired: true,
-      maxLength: 100
-    },
-    {
-      label: "Password",
-      id: "accountPassword",
-      maxLength: 256
-    },
-    {
-      label: "Enable Two Factor Authentication?",
-      id: "twoFactorAuthentication"
-    },
-    {
-      label: "Private Key",
-      id: "secretPrivateKey",
-      isRequired: true,
-      maxLength: 10000,
-    },
-    {
-      label: "Access Key",
-      id: "secretAccessTokenKey",
-      isRequired: true,
-      maxLength: 10000,
+      isRequiredFunction: (model) => {
+        return model?.getData("twoFactorAuthentication") === true;
+      },
     },
   ],
   newObjectFields:

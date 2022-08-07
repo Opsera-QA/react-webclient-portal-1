@@ -16,6 +16,7 @@ function WizardButton(
     onClickFunction,
     buttonText,
     variant,
+    disabled,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -32,6 +33,7 @@ function WizardButton(
             fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
             fontWeight: 400,
             fontSize: "18px",
+            cursor: disabled === true ? "default" : "pointer",
           }
         );
       case WIZARD_BUTTON_VARIANTS.PRIMARY:
@@ -46,12 +48,19 @@ function WizardButton(
             fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
             fontWeight: 400,
             fontSize: "18px",
+            cursor: disabled === true ? "default" : "pointer",
           }
         );
     }
   };
 
-  if (onClickFunction == null) {
+  const handleOnClickFunction = () => {
+    if (disabled !== true) {
+      onClickFunction();
+    }
+  };
+
+  if (onClickFunction == null && disabled !== true) {
     return null;
   }
 
@@ -59,8 +68,8 @@ function WizardButton(
     <div className={className}>
       <div
         style={getStyling()}
-        className={"mx-auto pointer d-flex"}
-        onClick={onClickFunction}
+        className={"mx-auto d-flex"}
+        onClick={handleOnClickFunction}
       >
         <div className={"p-2 m-auto"}>{buttonText}</div>
       </div>
@@ -73,6 +82,7 @@ WizardButton.propTypes = {
   buttonText: PropTypes.string,
   onClickFunction: PropTypes.func,
   variant: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default WizardButton;
