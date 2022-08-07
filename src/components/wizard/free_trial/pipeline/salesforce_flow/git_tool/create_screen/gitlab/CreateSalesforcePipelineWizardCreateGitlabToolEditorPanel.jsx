@@ -71,7 +71,7 @@ export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPane
       </Row>
       <ButtonContainerBase>
         <CreateFreeTrialGitlabToolButton
-          githubToolCreationModel={gitlabToolCreationModel}
+          gitlabToolCreationModel={gitlabToolCreationModel}
           setCurrentScreen={setCurrentScreen}
           setGitToolId={setGitToolId}
         />
