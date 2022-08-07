@@ -46,21 +46,54 @@ function WizardSelectionRadioOption(
     }
   };
 
-  const getFontColor = () => {
+  const getOptionFontColor = () => {
+    if (disabled === true) {
+     return themeConstants.COLOR_PALETTE.DARK_GRAY;
+    }
+
     switch (type) {
       case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
-        return themeConstants.COLOR_PALETTE.WHITE;
+        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
       case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
-        return themeConstants.COLOR_PALETTE.BLACK;
+        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
     }
   };
 
   const getBackgroundColor = () => {
+    if (disabled === true) {
+      return themeConstants.COLOR_PALETTE.BACKGROUND_GRAY;
+    }
+
     switch (type) {
       case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
         return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
       case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
         return themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER;
+    }
+  };
+
+  const getRadioOptionContainerStyling = () => {
+    const backgroundColor = getBackgroundColor();
+
+    return (
+      {
+        backgroundColor: backgroundColor,
+        borderRadius: ".5em",
+        fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+        borderRight: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `2px solid ${backgroundColor}`,
+        borderTop: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `2px solid ${backgroundColor}`,
+        borderBottom: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` :`2px solid ${backgroundColor}`,
+        borderLeft: selectedOption === option ? `6px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `6px solid ${backgroundColor}`,
+        fontWeight: 400,
+        fontSize: "18px",
+        cursor: disabled ? "not-allowed" : "pointer",
+      }
+    );
+  };
+
+  const handleOnclickFunction = () => {
+    if (disabled !== true) {
+      onClickFunction(option);
     }
   };
 
@@ -71,19 +104,9 @@ function WizardSelectionRadioOption(
   return (
     <div className={className}>
       <div
-        style={{
-          backgroundColor: getBackgroundColor(),
-          borderRadius: ".5em",
-          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-          borderRight: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `2px solid ${getBackgroundColor()}`,
-          borderTop: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `2px solid ${getBackgroundColor()}`,
-          borderBottom: selectedOption === option ? `2px solid ${themeConstants.COLOR_PALETTE.GOLD}` :`2px solid ${getBackgroundColor()}`,
-          borderLeft: selectedOption === option ? `6px solid ${themeConstants.COLOR_PALETTE.GOLD}` : `6px solid ${getBackgroundColor()}`,
-          fontWeight: 400,
-          fontSize: "18px",
-        }}
+        style={getRadioOptionContainerStyling()}
         className={"mx-auto pointer d-flex"}
-        onClick={() => onClickFunction(option)}
+        onClick={() => handleOnclickFunction()}
       >
         <div className={"d-flex p-2"}>
           {getIconBox()}
@@ -92,7 +115,7 @@ function WizardSelectionRadioOption(
             <div
               className={"m-auto"}
               style={{
-                color: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+                color: getOptionFontColor(),
                 fontWeight: 600,
                 fontSize: "16px",
               }}

@@ -29,6 +29,7 @@ function PipelineCreationRadioOptionInput(
         option={PIPELINE_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
         text={"Software Development Life Cycle"}
         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
+        disabled={true}
       />
     </div>
   );
