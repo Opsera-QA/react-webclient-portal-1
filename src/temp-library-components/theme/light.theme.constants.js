@@ -33,6 +33,7 @@ lightThemeConstants.COLOR_PALETTE = {
   //Gray
   GRAY: "#6E6C78",
   TEXT_GRAY: "#878787",
+  DARK_GRAY: "#616161",
   BACKGROUND_GRAY: "#E5E5E5",
 
   // Black
