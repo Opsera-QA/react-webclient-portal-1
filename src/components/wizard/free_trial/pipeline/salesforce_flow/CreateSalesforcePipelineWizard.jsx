@@ -22,7 +22,6 @@ export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
 
 function CreateSalesforcePipelineWizard() {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
-  const [gitToolCreationModel, setGitToolCreationModel] = useState({...modelHelpers.getNewModelForMetadata(githubConnectionMetadata)});
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
 
@@ -32,8 +31,6 @@ function CreateSalesforcePipelineWizard() {
         return (
           <CreateSalesforcePipelineWizardCreateGitToolScreen
             setCurrentScreen={setCurrentScreen}
-            gitToolCreationModel={gitToolCreationModel}
-            setGitToolCreationModel={setGitToolCreationModel}
             setGitToolId={setGitToolId}
             gitToolOption={gitToolOption}
             setGitToolOption={setGitToolOption}

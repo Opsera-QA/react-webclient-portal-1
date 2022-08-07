@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
-import GithubTwoFactorToggle from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorToggle";
+import GithubTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import githubConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
@@ -59,10 +59,9 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
           />
         </Col>
         <Col sm={12}>
-          <GithubTwoFactorToggle
-            dataObject={githubToolCreationModel}
-            setDataObject={setGithubToolCreationModel}
-            fieldName={"twoFactorAuthentication"}
+          <GithubTwoFactorAuthenticationBooleanToggleInput
+            model={githubToolCreationModel}
+            setModel={setGithubToolCreationModel}
           />
         </Col>
         <Col sm={12}>

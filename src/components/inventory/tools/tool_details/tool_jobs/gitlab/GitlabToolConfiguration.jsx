@@ -5,7 +5,7 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import gitlabConnectionMetadata from "./gitlab-connection-metadata";
-import GitlabTwoFactorToggle from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorToggle";
+import GitlabTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -67,7 +67,10 @@ function GitlabToolConfiguration({ toolData }) {
         <TextInputBase dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"accountUsername"}/>
       </Col>
       <Col sm={12}>
-        <GitlabTwoFactorToggle dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"twoFactorAuthentication"}/>
+        <GitlabTwoFactorAuthenticationBooleanToggleInput
+          model={gitlabConfigurationDto}
+          setModel={setGitlabConfigurationDto}
+        />
       </Col>
       <Col sm={12}>
         {getDynamicFields()}
