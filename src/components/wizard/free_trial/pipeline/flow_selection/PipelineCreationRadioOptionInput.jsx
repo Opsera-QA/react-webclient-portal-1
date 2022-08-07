@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 
-const PIPELINE_CREATION_OPTIONS = {
+export const PIPELINE_CREATION_OPTIONS = {
   SALESFORCE: "Salesforce.com",
   SOFTWARE_DEVELOPMENT_LIFE_CYCLE: "Software Development Life Cycle",
 };
