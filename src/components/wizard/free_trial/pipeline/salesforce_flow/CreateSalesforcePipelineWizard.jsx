@@ -2,11 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import CreateSalesforcePipelineWizardCreateGitToolScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/CreateSalesforcePipelineWizardCreateGitToolScreen";
-import modelHelpers from "components/common/model/modelHelpers";
 import TestGitToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/test_connection/TestGitToolConnectionScreen";
-import githubConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
 
 export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
@@ -44,6 +41,18 @@ function CreateSalesforcePipelineWizard() {
             gitToolOption={gitToolOption}
           />
         );
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_GIT_TOOL_SCREEN:
+        return (
+          <div>
+            TODO: Implement git tool update panel
+          </div>
+        );
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_SOURCE_TOOL_SCREEN:
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.TEST_SALESFORCE_SOURCE_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_SALESFORCE_SOURCE_TOOL_SCREEN:
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_DESTINATION_TOOL_SCREEN:
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.TEST_SALESFORCE_DESTINATION_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_SALESFORCE_DESTINATION_TOOL_SCREEN:
     }
   };
 

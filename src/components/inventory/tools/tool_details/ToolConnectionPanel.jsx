@@ -60,7 +60,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   "anchore-integrator",
   "sonar",
   "aws_account",
-  "sfdc-configurator",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR,
   "nexus",
   "teams",
   "octopus",
@@ -130,7 +130,7 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <SonarToolConfiguration toolData={toolData} />;
       case "aws_account":
         return <AwsToolConfiguration toolData={toolData} />;
-      case "sfdc-configurator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
         return <SfdcToolConfiguration toolData={toolData} />;
       case "nexus":
         return <NexusToolConfiguration toolData={toolData} />;

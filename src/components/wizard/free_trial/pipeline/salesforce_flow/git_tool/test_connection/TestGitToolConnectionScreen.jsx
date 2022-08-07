@@ -6,6 +6,9 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
+import {
+  CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
+} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
 
 function TestGitToolConnectionScreen(
   {
@@ -58,6 +61,7 @@ function TestGitToolConnectionScreen(
 
           setLogs(newLogs);
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
+          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_SOURCE_TOOL_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -70,6 +74,7 @@ function TestGitToolConnectionScreen(
 
           setLogs(newLogs);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
+          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_GIT_TOOL_SCREEN);
         }
       }
     }
@@ -84,6 +89,7 @@ function TestGitToolConnectionScreen(
 
         setLogs(newLogs);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
+        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_GIT_TOOL_SCREEN);
       }
     }
   };
