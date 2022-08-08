@@ -1,13 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
+import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 // TODO: Should we be just sending in data and formatting in here?
-function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawData, isLoading, summaryData, logData}) {
+function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summaryData, logData}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
+  };
+
+  const getLastRunField = () => {
+    let lastRunField = `Last Run: `;
+
+    if (logData[0]?.createdAt) {
+      lastRunField += new Date(logData[0]?.createdAt)?.toLocaleString('en-us');
+    }
+
+    return lastRunField;
   };
 
   const getPdfExporter = () => {
@@ -36,7 +46,7 @@ function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawDat
           }
         },
           [`ID: ${summaryData?.pipelineId}`, `Pipeline Run Count: ${summaryData?.runCount}`, `Number of Steps: ${summaryData?.numberOfSteps}`],
-          [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, `Last Run: ${logData[0]?.createdAt}`, `Report Date: ${new Date().toLocaleDateString('en-US')}`],
+          [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, getLastRunField(), `Report Date: ${new Date()?.toLocaleString('en-us')}`],
           ...stepSummary],
       });
 
@@ -68,9 +78,7 @@ function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawDat
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -78,9 +86,7 @@ function ExportBlueprintDataModal({ showModal, closeModal, formattedData, rawDat
   );
 }
 
-ExportBlueprintDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+ExportBlueprintDataOverlay.propTypes = {
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
   isLoading: PropTypes.bool,
@@ -88,6 +94,5 @@ ExportBlueprintDataModal.propTypes = {
   logData: PropTypes.any,
 };
 
-export default ExportBlueprintDataModal;
-
+export default ExportBlueprintDataOverlay;
 
