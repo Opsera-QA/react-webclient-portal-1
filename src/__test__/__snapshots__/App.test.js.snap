@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders and verifies the snapshot 1`] = `
+exports[`renders and verifies the App Component snapshot 1`] = `
 Array [
   <nav
     class="nav-bar navbar navbar-expand navbar-light"

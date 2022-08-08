@@ -30,7 +30,8 @@ jest.mock("react-syntax-highlighter", () => {
   };
 });
 
-it('renders and verifies the snapshot', () => {
+it('renders and verifies the App Component snapshot', () => {
   const wrapper = render(<App/>);
   expect(toJson(wrapper)).toMatchSnapshot();
+  expect(true).toEqual(true);
 });
