@@ -27,6 +27,9 @@ import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import chartsActions from "../../charts-actions";
+import GithubCommitsActionableInsightOverlay
+  from "../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
+import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -113,7 +116,14 @@ function BoomiBarChart({
     }
   };
 
- 
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+        <BoomiActionableTabOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+        />
+    );
+  };
 
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
@@ -239,7 +249,7 @@ function BoomiBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
-        // launchActionableInsightsFunction={onRowSelect}
+        launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
         header="Mean Time to Resolution"
