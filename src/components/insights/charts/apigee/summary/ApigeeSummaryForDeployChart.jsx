@@ -94,7 +94,7 @@ function ApigeeSummaryForDeployChart({ kpiConfiguration, deployData, isLoading }
                       dataPoint={successPercent}
                       percentage={deployData?.successPercentage}
                       topText={"Success %"}
-                      bottomText={deployData?.successPercentageTrend ? "Previous result: " + deployData?.successPercentageTrend : "No previous result"}
+                      // bottomText={deployData?.successPercentageTrend ? "Previous result: " + deployData?.successPercentageTrend : "No previous result"}
                       icon={getIcon(deployData?.successPercentageTrend)}
                       iconOverlayBody={getDescription(deployData?.successPercentageTrend)}
                     />
@@ -108,7 +108,7 @@ function ApigeeSummaryForDeployChart({ kpiConfiguration, deployData, isLoading }
                     className={`${getIconColor(deployData?.totalRunsTrend)} p-2`}
                     score={deployData?.totalRuns}
                     topText={"Total Executions"}
-                    bottomText={deployData?.totalRunsTrend? "Previous result: " + deployData?.totalRunsTrend : "No previous result"}
+                    // bottomText={deployData?.totalRunsTrend? "Previous result: " + deployData?.totalRunsTrend : "No previous result"}
                     icon={getIcon(deployData?.totalRunsTrend)}
                     iconOverlayBody={getDescription(deployData?.totalRunsTrend)}
                   />
@@ -123,8 +123,8 @@ function ApigeeSummaryForDeployChart({ kpiConfiguration, deployData, isLoading }
                       className={`${getIconColor(deployData?.frequencyPerMonthTrend)} p-2`}
                       dataPoint={frequency}
                       score={deployData?.frequencyPerMonth}
-                      topText={"Frequency"}
-                      bottomText={deployData?.frequencyPerMonthTrend ? "Previous result: " + deployData?.frequencyPerMonthTrend : "No previous result"}
+                      topText={"Monthly Frequency"}
+                      // bottomText={deployData?.frequencyPerMonthTrend ? "Previous result: " + deployData?.frequencyPerMonthTrend : "No previous result"}
                       icon={getIcon(deployData?.frequencyPerMonthTrend)}
                       iconOverlayBody={getDescription(deployData?.frequencyPerMonthTrend)}
                     />
@@ -137,9 +137,9 @@ function ApigeeSummaryForDeployChart({ kpiConfiguration, deployData, isLoading }
                 <DataBlockBoxContainer showBorder={true}>
                   <ThreeLineScoreDataBlock
                     className={`${getIconColor(deployData?.averageDurationTrend)} p-2`}
-                    score={deployData?.averageDurationInSecs}
+                    score={deployData?.averageDurationInSecs ? `${deployData?.averageDurationInSecs}s` : deployData?.averageDurationInSecs}
                     topText={"Average Duration"}
-                    bottomText={deployData?.averageDurationTrend ? "Previous result: " + deployData?.averageDurationTrend : "No previous result"}
+                    // bottomText={deployData?.averageDurationTrend ? "Previous result: " + deployData?.averageDurationTrend : "No previous result"}
                     icon={getIcon(deployData?.averageDurationTrend)}
                     iconOverlayBody={getDescription(deployData?.averageDurationTrend)}
                   />
