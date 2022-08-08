@@ -6,15 +6,15 @@ import ToolConfigurationEditorPanelContainer
 import Col from "react-bootstrap/Col";
 import gitlabConnectionMetadata from "./gitlab-connection-metadata";
 import GitlabTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
-import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GitlabToolConfiguration({ toolData }) {
-  const { getAccessToken } = useContext(AuthContext);
   const [gitlabConfigurationDto, setGitlabConfigurationDto] = useState(undefined);
+  const { getAccessToken, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
     loadData();

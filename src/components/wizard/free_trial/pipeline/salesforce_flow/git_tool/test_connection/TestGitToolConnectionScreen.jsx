@@ -9,6 +9,8 @@ import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay"
 import {
   CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 
 function TestGitToolConnectionScreen(
   {
@@ -96,8 +98,10 @@ function TestGitToolConnectionScreen(
 
   return (
     <div className={"m-3"}>
-      <ConsoleLogOverlay
-        body={logs}
+      <StandaloneConsoleLogField
+        consoleLog={logs}
+        isLoading={currentState === TEST_CONNECTION_STATES.TESTING}
+        title={"Connection Test"}
       />
       {/*<ButtonContainerBase>*/}
       {/*  <HandleGitToolCreationButton*/}

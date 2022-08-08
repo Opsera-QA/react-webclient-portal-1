@@ -57,7 +57,9 @@ export default function CreateFreeTrialGithubToolButton(
   const handleGitToolCreation = async () => {
     const newTool = {
       name: `Free Trial Github Tool`,
-      toolIdentifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+      tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+      tool_type_identifier: "source",
+      active: true,
     };
 
     const response = await toolsActions.createStandaloneTool(
@@ -66,7 +68,7 @@ export default function CreateFreeTrialGithubToolButton(
       newTool,
     );
 
-    const toolId = response?._id;
+    const toolId = response?.data?._id;
     await saveConnectionDetails(toolId);
 
     setGitToolId(toolId);
