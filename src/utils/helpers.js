@@ -149,3 +149,7 @@ export const millisToMinutesAndSeconds = (millis) => {
   var seconds = ((millis % 60000) / 1000).toFixed(0);
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds + " mins";
 };
+
+export const sleep = async (milliseconds) => {
+  return await new Promise(resolve => setTimeout(resolve, milliseconds));
+};

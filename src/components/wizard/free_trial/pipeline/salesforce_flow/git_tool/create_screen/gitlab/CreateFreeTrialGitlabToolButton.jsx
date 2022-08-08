@@ -8,11 +8,13 @@ import {
   CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateFreeTrialGitlabToolButton(
   {
     setCurrentScreen,
-    gitlabToolCreationModel,
+    gitToolModel,
+    gitToolId,
     setGitToolId,
   }) {
   const {
@@ -21,7 +23,7 @@ export default function CreateFreeTrialGitlabToolButton(
   } = useComponentStateReference();
 
   const saveConnectionDetails = async (toolId) => {
-    const configuration = gitlabToolCreationModel?.getPersistData();
+    const configuration = gitToolModel?.getPersistData();
     configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
       getAccessToken,
       cancelTokenSource,
@@ -55,20 +57,24 @@ export default function CreateFreeTrialGitlabToolButton(
   };
 
   const handleGitToolCreation = async () => {
-    const newTool = {
-      name: `Free Trial Gitlab Tool`,
-      tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
-      tool_type_identifier: "source",
-      active: true,
-    };
+    let toolId = gitToolId;
 
-    const response = await toolsActions.createStandaloneTool(
-      getAccessToken,
-      cancelTokenSource,
-      newTool,
-    );
+    if (isMongoDbId(gitToolId) !== true) {
+      const newTool = {
+        name: `Free Trial Gitlab Tool`,
+        tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
+        tool_type_identifier: "source",
+        active: true,
+      };
 
-    const toolId = response?.data?._id;
+      const response = await toolsActions.createStandaloneTool(
+        getAccessToken,
+        cancelTokenSource,
+        newTool,
+      );
+
+      toolId = response?.data?._id;
+    }
     await saveConnectionDetails(toolId);
 
     setGitToolId(toolId);
@@ -83,7 +89,7 @@ export default function CreateFreeTrialGitlabToolButton(
           showSuccessToasts={false}
           customLabel={"Continue"}
           createRecord={handleGitToolCreation}
-          recordDto={gitlabToolCreationModel}
+          recordDto={gitToolModel}
         />
       </ButtonContainerBase>
     </div>
@@ -92,7 +98,8 @@ export default function CreateFreeTrialGitlabToolButton(
 
 CreateFreeTrialGitlabToolButton.propTypes = {
   setCurrentScreen: PropTypes.func,
-  gitlabToolCreationModel: PropTypes.object,
+  gitToolModel: PropTypes.object,
+  gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
 };
 

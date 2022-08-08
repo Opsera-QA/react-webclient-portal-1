@@ -1,13 +1,10 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
-import modelHelpers from "components/common/model/modelHelpers";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
-import gitlabConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
 import CreateFreeTrialGitlabToolButton
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/gitlab/CreateFreeTrialGitlabToolButton";
 import GitlabTwoFactorAuthenticationBooleanToggleInput
@@ -16,24 +13,25 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel(
   {
+    gitToolModel,
+    setGitToolModel,
     className,
+    gitToolId,
     setGitToolId,
     setCurrentScreen,
   }) {
-  const [gitlabToolCreationModel, setGitlabToolCreationModel] = useState({...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata)});
-
   const getDynamicFields = () => {
-    if (gitlabToolCreationModel?.getData("twoFactorAuthentication") === true) {
+    if (gitToolModel?.getData("twoFactorAuthentication") === true) {
       return (
         <div>
           <VaultTextInput
-            dataObject={gitlabToolCreationModel}
-            setDataObject={setGitlabToolCreationModel}
+            dataObject={gitToolModel}
+            setDataObject={setGitToolModel}
             fieldName={"secretPrivateKey"}
           />
           <VaultTextInput
-            dataObject={gitlabToolCreationModel}
-            setDataObject={setGitlabToolCreationModel}
+            dataObject={gitToolModel}
+            setDataObject={setGitToolModel}
             fieldName={"secretAccessTokenKey"}
           />
         </div>
@@ -42,35 +40,38 @@ export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPane
 
     return (
       <VaultTextInput
-        dataObject={gitlabToolCreationModel}
-        setDataObject={setGitlabToolCreationModel}
+        dataObject={gitToolModel}
+        setDataObject={setGitToolModel}
         fieldName={"accountPassword"}
       />
     );
   };
 
+  if (gitToolModel == null) {
+    return null;
+  }
 
   return (
     <div className={className}>
       <Row>
         <Col sm={12}>
           <TextInputBase
-            dataObject={gitlabToolCreationModel}
-            setDataObject={setGitlabToolCreationModel}
+            dataObject={gitToolModel}
+            setDataObject={setGitToolModel}
             fieldName={"url"}
           />
         </Col>
         <Col sm={12}>
           <VanitySetTextInputBase
             fieldName={"accountUsername"}
-            model={gitlabToolCreationModel}
-            setModel={setGitlabToolCreationModel}
+            model={gitToolModel}
+            setModel={setGitToolModel}
           />
         </Col>
         <Col sm={12}>
           <GitlabTwoFactorAuthenticationBooleanToggleInput
-            model={gitlabToolCreationModel}
-            setModel={setGitlabToolCreationModel}
+            model={gitToolModel}
+            setModel={setGitToolModel}
           />
         </Col>
         <Col sm={12}>
@@ -79,8 +80,9 @@ export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPane
       </Row>
       <ButtonContainerBase>
         <CreateFreeTrialGitlabToolButton
-          gitlabToolCreationModel={gitlabToolCreationModel}
+          gitToolModel={gitToolModel}
           setCurrentScreen={setCurrentScreen}
+          gitToolId={gitToolId}
           setGitToolId={setGitToolId}
         />
       </ButtonContainerBase>
@@ -89,6 +91,9 @@ export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPane
 }
 
 CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel.propTypes = {
+  gitToolModel: PropTypes.object,
+  setGitToolModel: PropTypes.func,
+  gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   className: PropTypes.string,

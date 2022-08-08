@@ -8,12 +8,14 @@ import {
   CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateFreeTrialGithubToolButton(
   {
     setCurrentScreen,
-    githubToolCreationModel,
+    gitToolModel,
     setGitToolId,
+    gitToolId,
   }) {
   const {
     getAccessToken,
@@ -21,7 +23,7 @@ export default function CreateFreeTrialGithubToolButton(
   } = useComponentStateReference();
 
   const saveConnectionDetails = async (toolId) => {
-    const configuration = githubToolCreationModel?.getPersistData();
+    const configuration = gitToolModel?.getPersistData();
     configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
       getAccessToken,
       cancelTokenSource,
@@ -55,20 +57,25 @@ export default function CreateFreeTrialGithubToolButton(
   };
 
   const handleGitToolCreation = async () => {
-    const newTool = {
-      name: `Free Trial Github Tool`,
-      tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-      tool_type_identifier: "source",
-      active: true,
-    };
+    let toolId = gitToolId;
 
-    const response = await toolsActions.createStandaloneTool(
-      getAccessToken,
-      cancelTokenSource,
-      newTool,
-    );
+    if (isMongoDbId(gitToolId) !== true) {
+      const newTool = {
+        name: `Free Trial Github Tool`,
+        tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+        tool_type_identifier: "source",
+        active: true,
+      };
 
-    const toolId = response?.data?._id;
+      const response = await toolsActions.createStandaloneTool(
+        getAccessToken,
+        cancelTokenSource,
+        newTool,
+      );
+
+      toolId = response?.data?._id;
+    }
+
     await saveConnectionDetails(toolId);
 
     setGitToolId(toolId);
@@ -82,7 +89,7 @@ export default function CreateFreeTrialGithubToolButton(
           showSuccessToasts={false}
           customLabel={"Continue"}
           createRecord={handleGitToolCreation}
-          recordDto={githubToolCreationModel}
+          recordDto={gitToolModel}
         />
       </ButtonContainerBase>
     </div>
@@ -91,7 +98,8 @@ export default function CreateFreeTrialGithubToolButton(
 
 CreateFreeTrialGithubToolButton.propTypes = {
   setCurrentScreen: PropTypes.func,
-  githubToolCreationModel: PropTypes.object,
+  gitToolModel: PropTypes.object,
+  gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
 };
 

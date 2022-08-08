@@ -11,6 +11,7 @@ import {
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
+import { sleep } from "utils/helpers";
 
 function TestGitToolConnectionScreen(
   {
@@ -22,7 +23,6 @@ function TestGitToolConnectionScreen(
   const [logs, setLogs]  = useState([]);
   const {
     cancelTokenSource,
-    toastContext,
     getAccessToken,
     isMounted,
   } = useComponentStateReference();
@@ -58,11 +58,13 @@ function TestGitToolConnectionScreen(
             "Connection Succeeded!\n",
             `Status: ${status}\n`,
             `Message: ${message}\n`,
-            `Test Complete.\nPlease close this window to proceed.\n`,
+            `Test Complete.\n`,
+            `Continuing to next screen in a few seconds\n`,
           );
 
-          setLogs(newLogs);
+          setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
+          await sleep(5000);
           setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_SOURCE_TOOL_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
@@ -71,12 +73,15 @@ function TestGitToolConnectionScreen(
             `Connection Failed!\n`,
             `Status : ${status}\n`,
             `Message: ${message}\n`,
-            `Test Complete. \nPlease close this panel, address the issue and try again.\n`,
+            `Test Complete.\n`,
+            `Please confirm your credentials and try again.\n`,
+            `Returning to credential entry in a few seconds\n`,
           );
 
-          setLogs(newLogs);
+          setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
-          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_GIT_TOOL_SCREEN);
+          await sleep(5000);
+          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
         }
       }
     }
@@ -86,12 +91,14 @@ function TestGitToolConnectionScreen(
         newLogs.push(
           `Connection Failed!\n`,
           `Error: ${parsedError}\n`,
-          `Test Complete.  Please close this panel, address the issue and try again.\n`,
+          `Test Complete.  Please confirm your credentials and try again.\n`,
+          `Returning to credential entry in a few seconds\n`,
         );
 
-        setLogs(newLogs);
+        setLogs([...newLogs]);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
-        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.UPDATE_GIT_TOOL_SCREEN);
+        await sleep(5000);
+        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
       }
     }
   };

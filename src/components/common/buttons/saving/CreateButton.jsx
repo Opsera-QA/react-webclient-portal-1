@@ -44,55 +44,58 @@ function CreateButton(
   }, []);
 
   const persistRecord = async () => {
-    setIsSaving(true);
+    try {
+      setIsSaving(true);
 
-    if (addAnother) {
-      await persistNewRecordAndAddAnother(
-        recordDto,
-        toastContext,
-        showSuccessToasts,
-        createRecord,
-        lenient,
-        setRecordDto,
-        isIncomplete,
-        );
-    }
-    else if (recordDto.getDetailViewLink() != null) {
-      await persistNewRecordAndViewDetails(
-        recordDto,
-        toastContext,
-        showSuccessToasts,
-        createRecord,
-        lenient,
-        history,
+      if (addAnother) {
+        await persistNewRecordAndAddAnother(
+          recordDto,
+          toastContext,
+          showSuccessToasts,
+          createRecord,
+          lenient,
+          setRecordDto,
           isIncomplete,
         );
-    }
-    else if (handleClose != null) {
-      await persistNewRecordAndClose(
-        recordDto,
-        toastContext,
-        showSuccessToasts,
-        createRecord,
-        lenient,
-        handleClose,
-        isIncomplete,
+      } else if (recordDto.getDetailViewLink && recordDto.getDetailViewLink() != null) {
+        await persistNewRecordAndViewDetails(
+          recordDto,
+          toastContext,
+          showSuccessToasts,
+          createRecord,
+          lenient,
+          history,
+          isIncomplete,
         );
-    }
-    else {
-      await persistNewRecord(
-        recordDto,
-        toastContext,
-        showSuccessToasts,
-        createRecord,
-        lenient,
-        undefined,
-        isIncomplete,
+      } else if (handleClose != null) {
+        await persistNewRecordAndClose(
+          recordDto,
+          toastContext,
+          showSuccessToasts,
+          createRecord,
+          lenient,
+          handleClose,
+          isIncomplete,
         );
+      } else {
+        await persistNewRecord(
+          recordDto,
+          toastContext,
+          showSuccessToasts,
+          createRecord,
+          lenient,
+          undefined,
+          isIncomplete,
+        );
+      }
     }
-
-    if (isMounted?.current === true) {
-      setIsSaving(false);
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
 
