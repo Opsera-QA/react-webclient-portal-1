@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import ParameterMappingInputBase from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
+import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
 import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 
@@ -18,15 +18,11 @@ function CommandLineInputParametersInput({ model, setModel, disabled, fieldName,
   const getParametersInput = () => {
     if (model.getData("saveEnvironmentVariables") === true) {
       return (
-        <ParameterMappingInputBase
-          titleIcon={faHandshake}
-          dataObject={model}
-          setDataObject={setModel}
+        <EditableParameterMappingInput
+          model={model}
+          setModel={setModel}
           fieldName={fieldName}
-          allowIncompleteItems={false}
-          type={"Parameter"}
-          regexValidationRequired={false}
-          titleText={"Input Parameters Mapping"}
+          nameMaxLength={50}
         />
       );
     }
