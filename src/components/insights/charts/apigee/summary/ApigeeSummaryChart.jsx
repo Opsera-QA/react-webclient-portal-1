@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
@@ -9,12 +9,12 @@ import ApigeeSummaryForTransferChart from "./ApigeeSummaryForTransferChart";
 import ApigeeSummaryForDeployChart from "./ApigeeSummaryForDeployChart";
 
 function ApigeeSummaryChart({
-                              kpiConfiguration,
-                              setKpiConfiguration,
-                              dashboardData,
-                              index,
-                              setKpis,
-                              showSettingsToggle}) {
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+  showSettingsToggle }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,18 +61,8 @@ function ApigeeSummaryChart({
 
       if (isMounted?.current === true && Array.isArray(metrics1)) {
         setMetrics(metrics1);
-        if(metrics1.length > 0) {
-          metrics1.forEach(item => {
-            if(item.type === 'transfer') {
-              setTransferData(item);
-            } else if(item.type === 'deploy') {
-              setDeployData(item);
-            }
-          });
-        } else {
-          setTransferData([]);
-          setDeployData([]);
-        }
+        setTransferData(getData(metrics1, "transfer"));
+        setDeployData(getData(metrics1, "deploy"));
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -86,12 +76,23 @@ function ApigeeSummaryChart({
     }
   };
 
+  const getData = (metricsData, type) => {
+    if (metricsData.length > 0) {
+      const metrics = metricsData[0];
+      const typeData = metrics[type];
+      if (Array.isArray(typeData) && typeData.length > 0) {
+        return typeData[0];
+      }
+    }
+    return [];
+  };
+
   const getChartBody = () => {
     return (
       <>
         <div className="new-chart mb-3 mr-3 ml-3 p-0 all-github-actions-data-block">
-            <ApigeeSummaryForTransferChart kpiConfiguration={kpiConfiguration} transferData={transferData} isLoading={isLoading}/>
-            <ApigeeSummaryForDeployChart kpiConfiguration={kpiConfiguration} deployData={deployData} isLoading={isLoading}/>
+          <ApigeeSummaryForTransferChart kpiConfiguration={kpiConfiguration} transferData={transferData} isLoading={isLoading} />
+          <ApigeeSummaryForDeployChart kpiConfiguration={kpiConfiguration} deployData={deployData} isLoading={isLoading} />
         </div>
       </>
     );
