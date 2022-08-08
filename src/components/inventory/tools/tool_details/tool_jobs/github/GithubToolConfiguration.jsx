@@ -10,10 +10,12 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
+import { vaultHelper } from "utils/vault.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GithubToolConfiguration({ toolData }) {
-  const { getAccessToken } = useContext(AuthContext);
   const [githubConfigurationDto, setGithubConfigurationDto] = useState(undefined);
+  const { getAccessToken, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
