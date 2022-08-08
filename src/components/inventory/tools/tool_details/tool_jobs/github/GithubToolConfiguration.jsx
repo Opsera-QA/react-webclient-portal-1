@@ -6,11 +6,9 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import GithubTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
-import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
-import { vaultHelper } from "utils/vault.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GithubToolConfiguration({ toolData }) {
