@@ -268,6 +268,23 @@ toolsActions.saveSimpleVaultPasswordToVaultV2 = async (getAccessToken, cancelTok
   return typeof newValue === "string" ? {} : newValue;
 };
 
+// TODO: Align with the above
+toolsActions.saveToolValueToVaultV2 = async (getAccessToken, cancelTokenSource, toolId, vaultKey, newValue, ) => {
+  if (hasStringValue(newValue) === true) {
+    const apiUrl = "/vault/tool/";
+    const postBody = {
+      key: vaultKey,
+      value: newValue,
+      toolId: toolId,
+    };
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: vaultKey } : {};
+  }
+
+  // Faseeh says all values MUST be objects and not strings
+  return typeof newValue === "string" ? {} : newValue;
+};
+
 // TODO: Remove this and wire up updateToolConnectionDetails
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   toolData.setData("configuration", configurationItem?.configuration);

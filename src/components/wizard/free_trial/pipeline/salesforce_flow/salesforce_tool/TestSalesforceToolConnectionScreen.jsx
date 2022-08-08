@@ -13,11 +13,10 @@ import StandaloneJsonField from "components/common/fields/json/StandaloneJsonFie
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
 
-function TestGitToolConnectionScreen(
+function TestSalesforceToolConnectionScreen(
   {
-    gitToolId,
+    salesforceToolId,
     setCurrentScreen,
-    gitToolOption,
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const [logs, setLogs]  = useState([]);
@@ -45,8 +44,8 @@ function TestGitToolConnectionScreen(
       const response = await toolsActions.checkToolConnectivityV2(
         getAccessToken,
         cancelTokenSource,
-        gitToolId,
-        capitalizeFirstLetter(gitToolOption),
+        salesforceToolId,
+        "Sfdc",
       );
 
       if (isMounted.current === true) {
@@ -65,7 +64,7 @@ function TestGitToolConnectionScreen(
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
+          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -81,7 +80,7 @@ function TestGitToolConnectionScreen(
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
           await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
         }
       }
     }
@@ -98,7 +97,7 @@ function TestGitToolConnectionScreen(
         setLogs([...newLogs]);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
         await sleep(5000);
-        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
       }
     }
   };
@@ -114,12 +113,11 @@ function TestGitToolConnectionScreen(
   );
 }
 
-TestGitToolConnectionScreen.propTypes = {
-  gitToolId: PropTypes.string,
+TestSalesforceToolConnectionScreen.propTypes = {
+  salesforceToolId: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  gitToolOption: PropTypes.string,
 };
 
-export default TestGitToolConnectionScreen;
+export default TestSalesforceToolConnectionScreen;
 
 

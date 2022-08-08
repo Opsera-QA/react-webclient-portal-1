@@ -14,6 +14,7 @@ function useComponentStateReference() {
     isOpseraAdministrator,
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
+    isSiteAdministrator,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
@@ -34,6 +35,7 @@ function useComponentStateReference() {
     accessRoleData: userAccessRoles,
     themeConstants: themeConstants,
     isOpseraAdministrator: isOpseraAdministrator(),
+    isSiteAdministrator: isSiteAdministrator,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
     isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
