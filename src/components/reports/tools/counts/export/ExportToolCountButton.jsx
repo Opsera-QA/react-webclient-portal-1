@@ -1,25 +1,25 @@
-import React, { useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import ExportToolCountDataOverlay from "components/reports/tools/counts/export/ExportToolCountDataOverlay";
 import IconBase from "components/common/icons/IconBase";
-import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import ExportReportsDataOverlay from "../../../modal/export_data/ExportReportsDataOverlay";
-import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 
-function ExportToolsUsedInPipelineReportButton(
+function ExportToolCountButton(
   {
     isLoading,
-    pipelineData,
+    toolData,
     className,
   }) {
   const toastContext = useContext(DialogToastContext);
 
   const launchOverlayFunction = () => {
     toastContext.showOverlayPanel(
-      <ExportReportsDataOverlay
+      <ExportToolCountDataOverlay
         isLoading={isLoading}
         formattedData={formattedData()}
         rawData={rawDataResults()}
@@ -28,11 +28,11 @@ function ExportToolsUsedInPipelineReportButton(
   };
 
   const rawDataResults = () =>{
-    return pipelineData ? pipelineData.map(item => JSON.stringify(item)) : "export failure";
+    return toolData ? toolData.map(item => JSON.stringify(item)) : "export failure";
   };
 
   const formattedData = () => {
-    let formattedData = pipelineData;
+    let formattedData = toolData;
 
     //any data formatting goes here
 
@@ -49,10 +49,10 @@ function ExportToolsUsedInPipelineReportButton(
   );
 }
 
-ExportToolsUsedInPipelineReportButton.propTypes = {
-  pipelineData: PropTypes.array,
+ExportToolCountButton.propTypes = {
+  toolData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportToolsUsedInPipelineReportButton;
+export default ExportToolCountButton;
