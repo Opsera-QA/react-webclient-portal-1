@@ -10,6 +10,16 @@ function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summary
     return new Blob([rawData], {type : 'text/plain'});
   };
 
+  const getLastRunField = () => {
+    let lastRunField = `Last Run: `;
+
+    if (logData[0]?.createdAt) {
+      lastRunField += new Date(logData[0]?.createdAt)?.toLocaleString('en-us');
+    }
+
+    return lastRunField;
+  };
+
   const getPdfExporter = () => {
     const pdfExporter = new jsPDF();
 
@@ -36,7 +46,7 @@ function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summary
           }
         },
           [`ID: ${summaryData?.pipelineId}`, `Pipeline Run Count: ${summaryData?.runCount}`, `Number of Steps: ${summaryData?.numberOfSteps}`],
-          [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, `Last Run: ${logData[0]?.createdAt}`, `Report Date: ${new Date().toLocaleDateString('en-US')}`],
+          [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, getLastRunField(), `Report Date: ${new Date()?.toLocaleString('en-us')}`],
           ...stepSummary],
       });
 
