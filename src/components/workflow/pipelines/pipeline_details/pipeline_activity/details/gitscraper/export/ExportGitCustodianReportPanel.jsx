@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
+import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
 
-// TODO: Should we be just sending in data and formatting in here?
-function ExportDetailedToolReportDataModal({
-  showModal,
-  closeModal,
-  formattedData,
-  rawData,
-  isLoading,
-}) {
+export default function ExportGitCustodianReportPanel(
+  {
+    showExportPanel,
+    setShowExportPanel,
+    gitCustodianData,
+    isLoading,
+  }) {
   const getRawData = () => {
+    const rawData = Array.isArray(gitCustodianData) ? gitCustodianData?.map(item => JSON.stringify(item)) : "export failure";
     return new Blob([rawData], { type: "text/plain" });
   };
 
@@ -39,7 +39,7 @@ function ExportDetailedToolReportDataModal({
           "Reason",
         ],
       ],
-      body: formattedData.map((item) => [
+      body: gitCustodianData.map((item) => [
         item.author,
         item.commit,
         item.commitHash,
@@ -64,7 +64,7 @@ function ExportDetailedToolReportDataModal({
         "Link",
         "Reason",
       ],
-      ...formattedData.map((item) => [
+      ...gitCustodianData.map((item) => [
         item.author,
         item.commit,
         item.commitHash,
@@ -76,29 +76,24 @@ function ExportDetailedToolReportDataModal({
     ];
   };
 
-  if (formattedData == null || !Array.isArray(formattedData)) {
+  if (gitCustodianData == null || !Array.isArray(gitCustodianData)) {
     return null;
   }
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataPanel
       isLoading={isLoading}
       getRawData={getRawData}
       getCsvData={getCsvData}
+      getPdfExporter={getPdfExporter}
+      closePanelFunction={() => setShowExportPanel(!showExportPanel)}
     />
   );
 }
 
-ExportDetailedToolReportDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
-  rawData: PropTypes.any,
-  formattedData: PropTypes.any,
+ExportGitCustodianReportPanel.propTypes = {
+  showExportPanel: PropTypes.bool,
+  setShowExportPanel: PropTypes.func,
+  gitCustodianData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
 };
-
-export default ExportDetailedToolReportDataModal;

@@ -1,22 +1,27 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   faCheckCircle,
   faExclamationCircle,
 } from "@fortawesome/pro-light-svg-icons";
-import gitScraperReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
+import gitScraperReportMetaData
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
-    getTableTextColumn,
-    getGitCustodianScmLinkIconColumnDefinition,
+  getTableTextColumn,
+  getGitCustodianScmLinkIconColumnDefinition,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
 import { pluralize } from "components/common/helpers/string-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import ExportGitCustodianExecutionSummaryReportButton from "components/common/buttons/export/reports/ExportGitCustodianExecutionSummaryReportButton";
+import ExportGitCustodianReportButton
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportButton";
+import ExportGitCustodianReportPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportPanel";
 
 function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
+  const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = gitScraperReportMetaData?.fields;
 
   const columns = useMemo(
@@ -34,7 +39,18 @@ function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
     [],
   );
 
-  const getComponentResultsTable = () => {
+  const getBody = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportGitCustodianReportPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          gitCustodianData={gitScraperObj}
+          isLoading={isLoading}
+        />
+      );
+    }
+
     return (
       <CustomTable
         data={gitScraperObj}
@@ -60,18 +76,25 @@ function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
   return (
     <FilterContainer
       showBorder={false}
-      body={getComponentResultsTable()}
+      body={getBody()}
       titleIcon={faExclamationCircle}
-      title={`${pluralize(gitScraperObj?.length, 'Record')} Found`}
+      title={`${pluralize(gitScraperObj?.length, "Record")} Found`}
       className={"mt-2"}
-      exportButton={<ExportGitCustodianExecutionSummaryReportButton className={"ml-2"} gitCustodianData={gitScraperObj} isLoading={isLoading} />}
+      exportButton={
+        <ExportGitCustodianReportButton
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
+          isLoading={isLoading}
+        />
+      }
     />
   );
 }
 
 GitScraperLogSummaryTable.propTypes = {
   gitScraperObj: PropTypes.array,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
 };
 
 export default GitScraperLogSummaryTable;

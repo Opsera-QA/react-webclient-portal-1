@@ -10,12 +10,21 @@ function ExportDataButtonBase(
     className,
     isLoading,
     launchOverlayFunction,
+    showExportPanel,
   }) {
+  const getVariant = () => {
+    if (showExportPanel === true) {
+      return "outline-success";
+    }
+
+    return "outline-primary";
+  };
+
   return (
     <TooltipWrapper innerText={"Export"}>
       <div className={className}>
         <Button
-          variant={"outline-primary"}
+          variant={getVariant()}
           size={"sm"}
           disabled={isLoading}
           onClick={launchOverlayFunction}
@@ -31,6 +40,7 @@ ExportDataButtonBase.propTypes = {
   className: PropTypes.string,
   launchOverlayFunction: PropTypes.func,
   isLoading: PropTypes.bool,
+  showExportPanel: PropTypes.bool,
 };
 
 export default ExportDataButtonBase;
