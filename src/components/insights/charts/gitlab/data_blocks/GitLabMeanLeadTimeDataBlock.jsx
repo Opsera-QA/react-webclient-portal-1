@@ -9,15 +9,15 @@ function GitLabMeanLeadTimeDataBlock({ data, previousData, getIcon, getIconColor
             <ThreeLineScoreDataBlock
                 className={`p-3 ${getIconColor(data, previousData)}`}
                 score={data}
-                topText={"Mean Lead Time (Days)"}
-                bottomText={"Previous Lead Time: " + previousData}
+                topText={"Current Average Lead Time (Days)"}
+                bottomText={"Previous Average Lead Time: " + previousData}
                 icon={getIcon(data, previousData)}
             />
         </DataBlockBoxContainer>
     );
 }
 
-GitLabMeanLeadTimeDataBlock.propTypes = {
+    GitLabMeanLeadTimeDataBlock.propTypes = {
     data: PropTypes.number,
     previousData: PropTypes.number,
     getIcon: PropTypes.func,

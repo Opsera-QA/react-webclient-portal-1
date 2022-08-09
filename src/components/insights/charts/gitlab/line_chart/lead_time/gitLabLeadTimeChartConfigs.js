@@ -1,14 +1,17 @@
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-
-export default (getColor, MeanLineLayer) => ({
-    indexBy: "date",
-    xScale: {
-        type: "time",
-        format: "%Y-%m-%d",
-        precision: "day",
+export default (getColor, maxValue) => ({
+    keys: ["count"],
+    indexBy: "_id",
+    colorBy: "_id",
+    minValue: 0,
+    maxValue,
+    colors: getColor,
+    axisBottom: {
+        // format: d => {if(isNaN(d)) return d; else return d+1 ; },
+        "orient": "bottom",
+        "tickSize": 5,
+        "tickPadding": 5,
+        "legend": "Lead Time (Days)",
+        "legendOffset": 25,
+        "legendPosition": "middle"
     },
-    xFormat: "time:%Y-%m-%d",
-    yScale: { type: "linear", min: 0, max: "auto", stacked: false },
-    colors: METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
-    layers: ["grid", "axes", MeanLineLayer, "nodes", "markers", "mesh"],
 });

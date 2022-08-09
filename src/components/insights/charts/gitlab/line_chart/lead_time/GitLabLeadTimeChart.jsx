@@ -1,32 +1,24 @@
 import PropTypes from "prop-types";
-import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import config from "./gitLabLeadTimeChartConfigs";
 import React, { useState, useEffect, useContext, useRef } from "react";
-import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
-import { line } from "d3-shape";
-import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
+import {defaultConfig, getColor, assignStandardColors, getColorByData, adjustBarWidth} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Col, Row } from "react-bootstrap";
-import { faMinus, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-// import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
-// import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";
 import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
-import IconBase from "components/common/icons/IconBase";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import {ResponsiveBar} from "@nivo/bar";
 
 function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
+    const [meanData, setMeanData] = useState({});
     const [issueData, setIssueData] = useState([]);
-    const [previousResults, setPreviousResults] = useState(undefined);
-    const [previousIssues, setPreviousIssues] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(false);
@@ -65,36 +57,21 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
-                "jiraLeadTime",
+                "gitlabLeadTimeForChange",
                 kpiConfiguration,
                 dashboardTags,
                 null,
                 null,
                 dashboardOrgs
             );
-            const dataObject =
-                response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
-                    ? response?.data?.data[0]?.jiraLeadTime?.data
-                    : [];
-            const issueDataObject =
-                response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
-                    ? response?.data?.data[0]?.jiraLeadTime?.issueData
-                    : [];
-            const previousResultsData =
-                response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
-                    ? response?.data?.data[0]?.jiraLeadTime?.previousResults
-                    : [];
-            const previousResultsIssueData =
-                response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
-                    ? response?.data?.data[0]?.jiraLeadTime?.previousResults?.data[0]?.issueData
-                    : [];
-            assignStandardColors(dataObject && dataObject[0]?.data, true);
+            const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits || [];
+            const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
 
-            if (isMounted?.current === true && dataObject) {
+            assignStandardColors(dataObject, true);
+
+            if (isMounted?.current === true && dataObject.length) {
                 setMetrics(dataObject);
-                setIssueData(issueDataObject);
-                setPreviousResults(previousResultsData);
-                setPreviousIssues(previousResultsIssueData);
+                setMeanData(meanDataObject);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -107,49 +84,38 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             }
         }
     };
-
+    const getMaxValue = (data) => {
+        let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
+        return countsMax;
+    };
     const getChartBody = () => {
         if (!Array.isArray(metrics) || metrics.length === 0) {
             return null;
         }
 
         //TODO: Do these need to be passed in via object props?
-        const MeanLineLayer = ({ nodes, xScale, yScale }) => {
-            const lineGenerator = line()
-                .x((d) => xScale(d.data.x))
-                .y((d) => yScale(d.data.mean));
-            return (
-                <path
-                    d={lineGenerator(nodes)}
-                    fill="none"
-                    stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
-                    strokeWidth="3"
-                />
-            );
-        };
-
-        //TODO: Do these need to be passed in via object props?
-        // const RollingMeanLineLayer = ({ nodes, xScale, yScale }) => {
-        //   const lineGenerator = line()
-        //     .x((d) => xScale(d.data.x))
-        //     .y((d) => yScale(d.data.rolling_mean));
-        //   return (
-        //     <path
-        //       d={lineGenerator(nodes)}
-        //       fill="none"
-        //       stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3}
-        //       strokeWidth="2"
-        //     />
-        //   );
+        // const MeanLineLayer = ({ nodes, xScale, yScale }) => {
+        //     const lineGenerator = line()
+        //         .x((d) => xScale(d.data.x))
+        //         .y((d) => yScale(d.data.mean));
+        //     return (
+        //         <path
+        //             d={lineGenerator(nodes)}
+        //             fill="none"
+        //             stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
+        //             strokeWidth="3"
+        //         />
+        //     );
         // };
-        const onNodeSelect = (node) => {
-            setModalData(
-                issueData.filter(function (item) {
-                    return item.y === node.data.y && item.date_finished === node.data.date_finished;
-                })
-            );
-            setShowModal(true);
-        };
+
+        // const onNodeSelect = (node) => {
+        //     setModalData(
+        //         issueData.filter(function (item) {
+        //             return item.y === node.data.y && item.date_finished === node.data.date_finished;
+        //         })
+        //     );
+        //     setShowModal(true);
+        // };
 
         const getIcon = (data, previousData) => {
             if (data > previousData) {
@@ -162,20 +128,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 return faMinusCircle;
             } else {
                 return undefined;
-            }
-        };
-
-        const getIconColor = (data, previousData) => {
-            if (data > previousData) {
-                return "green";
-            } else
-            if (data < previousData) {
-                return "red";
-            } else
-            if (data === previousData) {
-                return "light-gray-text-secondary";
-            } else {
-                return "black";
             }
         };
 
@@ -193,6 +145,15 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             }
         };
 
+        const toolTipData = (_id) => {
+            if(!_id)
+                return '1 Day';
+            else if(_id === 'Other')
+                return 'Other';
+            else
+                return (_id+ 1) + ' Days';
+        };
+
         return (
             <>
                 <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
@@ -200,54 +161,23 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                         <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
                             <Row>
                                 <Col lg={12} className={"my-3"}>
-                                    <GitLabMeanLeadTimeDataBlock data={metrics[0]?.data[0]?.mean} previousData={previousResults?.mean} getIcon={getIcon} getIconColor={getLeadTimeIconColor}/>
+                                    <GitLabMeanLeadTimeDataBlock data={meanData.currentAvgLeadTime} previousData={meanData.previousAvgLeadTime} getIcon={getIcon} getIconColor={getLeadTimeIconColor}/>
                                 </Col>
                             </Row>
                         </Col>
                         <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column align-items-end"}>
-                            <div
-                                className="px-3 font-inter-light-400 dark-gray-text-primary"
-                                style={{ float: "right", fontSize: "10px" }}
-                            >
-                                { `Mean Lead Time `}
-                                <IconBase
-                                    icon={faMinus}
-                                    iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_2}
-                                    iconSize={"lg"}
-                                />
-                                <br />
-                                {`Issues `}
-                                <IconBase
-                                    icon={faCircle}
-                                    iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1}
-                                    iconSize={"xs"}
-                                />
-                            </div>
-                            <ResponsiveScatterPlot
+                            <ResponsiveBar
                                 data={metrics}
-                                {...defaultConfig(
-                                    "Elapsed Time (Days)",
-                                    "Completion Date",
-                                    false,
-                                    true,
-                                    "wholeNumbers",
-                                    "monthDate",
-                                    false,
-                                    "circle"
-                                )}
-                                {...config(getColor, MeanLineLayer)}
-                                onClick={(node) => onNodeSelect(node)}
-                                tooltip={({ node, color }) => (
-                                    <ChartTooltip
-                                        titles={["Date Completed", "Lead Time", "Issues Completed"]}
-                                        values={[
-                                            String(node.data.date_finished),
-                                            `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`,
-                                            String(node.data.count),
-                                        ]}
-                                        color={color}
-                                    />
-                                )}
+                                {...defaultConfig("Frequency (commtis)", "Days",
+                                    false, false, "wholeNumbers", "wholeNumbers", true)}
+                                {...config(getColorByData, getMaxValue(metrics))}
+                                {...adjustBarWidth(metrics)}
+                                // onClick={(data) => onRowSelect(data)}
+                                tooltip={({ indexValue, value, data, color }) => <ChartTooltip
+                                    titles={["Lead Time", "Number of Commits"]}
+                                    values={[ toolTipData(data._id), data.count ]}
+                                    style={false}
+                                    color={color} />}
                             />
                         </Col>
                     </Row>
@@ -255,11 +185,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             </>
         );
     };
-    console.log(metrics);
+
     return (
         <div>
             <VanityMetricContainer
-                title={"Jira Lead Time"}
+                title={"Gitlab Lead Time"}
                 kpiConfiguration={kpiConfiguration}
                 setKpiConfiguration={setKpiConfiguration}
                 chart={getChartBody()}
@@ -271,14 +201,14 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 isLoading={isLoading}
                 chartHelpComponent={(closeHelpPanel) => <JiraLeadTimeChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
             />
-            <ModalLogs
-                header="Jira Lead Time"
-                size="lg"
-                jsonMessage={modalData}
-                dataType="bar"
-                show={showModal}
-                setParentVisibility={setShowModal}
-            />
+            {/*<ModalLogs*/}
+            {/*    header="Jira Lead Time"*/}
+            {/*    size="lg"*/}
+            {/*    jsonMessage={modalData}*/}
+            {/*    dataType="bar"*/}
+            {/*    show={showModal}*/}
+            {/*    setParentVisibility={setShowModal}*/}
+            {/*/>*/}
         </div>
     );
 }
