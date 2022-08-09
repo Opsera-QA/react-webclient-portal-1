@@ -24,8 +24,6 @@ export default function CreateFreeTrialSalesforceToolButton(
 
   const saveConnectionDetails = async (toolId) => {
     const configuration = salesforceToolModel?.getPersistData();
-    console.log("toolId: " + JSON.stringify(toolId));
-    console.log("configuration: " + JSON.stringify(configuration));
 
     const clientIdVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-client_id`;
     configuration.sfdc_client_id = await toolsActions.saveToolValueToVaultV2(

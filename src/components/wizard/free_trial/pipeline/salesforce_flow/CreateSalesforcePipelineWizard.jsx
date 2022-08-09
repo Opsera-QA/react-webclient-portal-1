@@ -19,7 +19,7 @@ export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
 };
 
 export default function CreateSalesforcePipelineWizard() {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
