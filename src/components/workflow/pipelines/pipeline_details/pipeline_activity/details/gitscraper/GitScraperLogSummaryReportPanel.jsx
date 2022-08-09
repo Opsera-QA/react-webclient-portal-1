@@ -69,6 +69,7 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
             />
             <GitScraperReportView
               gitScraperObj={gitScraperObj}
+              isLoading={isLoading}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
@@ -108,6 +109,7 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
 
 GitScraperLogSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  isLoading: PropTypes.bool
 };
 
 export default GitScraperLogSummaryReportPanel;

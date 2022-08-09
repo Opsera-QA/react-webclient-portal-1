@@ -14,8 +14,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
 import { pluralize } from "components/common/helpers/string-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import ExportGitCustodianExecutionSummaryReportButton from "components/common/buttons/export/reports/ExportGitCustodianExecutionSummaryReportButton";
 
-function GitScraperLogSummaryTable({ gitScraperObj }) {
+function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
   const fields = gitScraperReportMetaData?.fields;
 
   const columns = useMemo(
@@ -63,12 +64,14 @@ function GitScraperLogSummaryTable({ gitScraperObj }) {
       titleIcon={faExclamationCircle}
       title={`${pluralize(gitScraperObj?.length, 'Record')} Found`}
       className={"mt-2"}
+      exportButton={<ExportGitCustodianExecutionSummaryReportButton className={"ml-2"} gitCustodianData={gitScraperObj} isLoading={isLoading} />}
     />
   );
 }
 
 GitScraperLogSummaryTable.propTypes = {
   gitScraperObj: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default GitScraperLogSummaryTable;
