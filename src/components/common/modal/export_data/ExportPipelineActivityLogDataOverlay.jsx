@@ -1,15 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
+import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
 
+
 // TODO: Should we be just sending in data and formatting in here?
-function ExportPipelineActivityLogDataModal({showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportPipelineActivityLogDataOverlay({ activityLogData, isLoading}) {
   const getRawData = () => {
+    const rawData = Array.isArray(activityLogData) ? activityLogData.map(item => JSON.stringify(item)) : "export failure";
     return new Blob([rawData], {type: 'text/plain'});
   };
 
+  const getFormattedLogData = () => {
+    if (!Array.isArray(activityLogData)) {
+      return [];
+    }
+
+    return activityLogData.map((item) => {
+      return ([
+        item.run_count,
+        item.step_name,
+        item.action,
+        item.message,
+        item.status,
+        item.createdAt,
+      ]);
+    });
+  };
+
   const getPdfExporter = () => {
+    if (!Array.isArray(activityLogData)) {
+      return null;
+    }
+
     const pdfExporter = new jsPDF({orientation: "landscape"});
     pdfExporter.autoTable({
       startY: 2,
@@ -19,16 +42,14 @@ function ExportPipelineActivityLogDataModal({showModal, closeModal, formattedDat
       columnStyles: {0: {halign: 'center'}},
       margin: {left: 2, right: 2},
       head: [["Run", "Task", "Action", "Message", "Status", "Date"]],
-      body: formattedData.map(item => [item.run_count, item.step_name, item.action, item.message, item.status, item.createdAt])
+      body: getFormattedLogData(),
     });
 
     return pdfExporter;
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -36,14 +57,9 @@ function ExportPipelineActivityLogDataModal({showModal, closeModal, formattedDat
   );
 }
 
-ExportPipelineActivityLogDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
-  rawData: PropTypes.any,
-  formattedData: PropTypes.any,
+ExportPipelineActivityLogDataOverlay.propTypes = {
+  activityLogData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
 };
 
-export default ExportPipelineActivityLogDataModal;
+export default ExportPipelineActivityLogDataOverlay;

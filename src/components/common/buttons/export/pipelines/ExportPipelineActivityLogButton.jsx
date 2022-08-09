@@ -1,30 +1,30 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportPipelineActivityLogDataModal from "components/common/modal/export_data/ExportPipelineActivityLogDataModal";
 import IconBase from "components/common/icons/IconBase";
+import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import ExportPipelineActivityLogDataOverlay from "components/common/modal/export_data/ExportPipelineActivityLogDataOverlay";
 
-function ExportPipelineActivityLogButton({isLoading, activityLogData, className}) {
-  const [showExportModal, setShowExportModal] = useState(false);
+function ExportPipelineActivityLogButton(
+  {
+    isLoading,
+    activityLogData,
+    className,
+  }) {
+  const toastContext = useContext(DialogToastContext);
 
-  const closeModal = () => {
-    setShowExportModal(false);
+  const launchOverlay = () => {
+    toastContext.showOverlayPanel(
+      <ExportPipelineActivityLogDataOverlay
+        isLoading={isLoading}
+        activityLogData={activityLogData}
+      />
+    );
   };
 
-  const rawDataResults = () =>{
-    return activityLogData ? activityLogData.map(item => JSON.stringify(item)) : "export failure";
-   };
-
-  const formatActivityLogData = () => {
-    let formattedData = activityLogData;
-
-    //any data formatting goes here
-
-    return formattedData;
-  };
 
   // TODO: Refine when more is complete
   return (
@@ -35,18 +35,11 @@ function ExportPipelineActivityLogButton({isLoading, activityLogData, className}
             variant={"outline-primary"}
             size={"sm"}
             disabled={isLoading}
-            onClick={() => setShowExportModal(true)}>
+            onClick={launchOverlay}>
             <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportPipelineActivityLogDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        isLoading={isLoading}
-        formattedData={formatActivityLogData()}
-        rawData={rawDataResults()}
-      />
     </>
   );
 }
