@@ -13,6 +13,10 @@ import BoomiActionableInsightsTable from "./BoomiActionableInsightsTable";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import {metricHelpers} from "../../../metric.helpers";
+import BoomiActionableTotalExecutionsDataBlock from "./data_blocks/BoomiActionableTotalExecutionsDataBlock";
+import BoomiActionableFreqDataBlock from "./data_blocks/BoomiActionableFreqDataBlock";
+import BoomiActionableSuccessPercentageDataBlock from "./data_blocks/BoomiActionableSuccessPercentageDataBlock";
 
 function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardData , filter}) {
     const { getAccessToken } = useContext(AuthContext);
@@ -55,11 +59,10 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {
             setIsLoading(true);
-            let dashboardTags =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-            let dashboardOrgs =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-                    ?.value;
+            let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+            let dashboardTags = dashboardMetricFilter?.tags;
+            let dashboardOrgs = dashboardMetricFilter?.organizations;
+
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
@@ -117,31 +120,24 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
     const getDataBlocks = () =>{
         return (<Row className="px-2">
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
-                <DataBlockBoxContainer showBorder={true}>
-                    <TwoLineScoreDataBlock
+                <BoomiActionableTotalExecutionsDataBlock
                         className={'p-2 dark-gray-text-primary'}
-                        score={blockData?.totalExecutions}
-                        subtitle={"Total Executions"}
+                        data={blockData?.totalExecutions}
                     />
-                </DataBlockBoxContainer>
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
-                <DataBlockBoxContainer showBorder={true}>
-                    <TwoLineScoreDataBlock
+                <BoomiActionableFreqDataBlock
                         className={'p-2 dark-gray-text-primary'}
-                        score={blockData?.freq}
+                        data={blockData?.freq}
                         subtitle={"Frequency"}
                     />
-                </DataBlockBoxContainer>
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
-                <DataBlockBoxContainer showBorder={true}>
-                    <TwoLinePercentageDataBlock
+                <BoomiActionableSuccessPercentageDataBlock
                         className={'p-2 dark-gray-text-primary'}
-                        percentage={blockData?.successPercentage}
+                        data={blockData?.successPercentage}
                         subtitle={"Success Percentage"}
                     />
-                </DataBlockBoxContainer>
             </Col>
         </Row>);
     };
