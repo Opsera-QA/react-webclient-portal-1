@@ -25,10 +25,7 @@ import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDa
 import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
-import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import chartsActions from "../../charts-actions";
-import GithubCommitsActionableInsightOverlay
-  from "../../github/pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
 
 function BoomiBarChart({
