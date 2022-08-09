@@ -5,7 +5,8 @@ import {
   getSiteViewModeLabel,
   SITE_VIEW_MODE_SELECT_OPTIONS,
 } from "components/header/view_modes/siteViewMode.constants";
-import {NavigationDropdownSelectInputBase} from "@opsera/makeup-and-vanity-set/dist/makeup-and-vanity-set.module";
+import NavigationDropdownSelectInputBase
+  from "temp-library-components/navigation/dropdown/input/NavigationDropdownSelectInputBase";
 
 function SiteViewModeNavigationSelectInput() {
   const {

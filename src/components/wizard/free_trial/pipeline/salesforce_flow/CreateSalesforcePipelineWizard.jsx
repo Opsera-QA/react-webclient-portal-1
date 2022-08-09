@@ -9,6 +9,8 @@ import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import TestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/TestSalesforceToolConnectionScreen";
+import CreateSalesforcePipelineWizardSelectPipelineTemplateScreen
+  from "components/wizard/free_trial/pipeline/salesforce_flow/pipeline_template_selection/CreateSalesforcePipelineWizardSelectPipelineTemplateScreen";
 
 export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
@@ -19,12 +21,13 @@ export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
 };
 
 export default function CreateSalesforcePipelineWizard() {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
   const [salesforceToolModel, setSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
   const [salesforceToolId, setSalesforceToolId] = useState(undefined);
+  const [pipelineId, setPipelineId] = useState(undefined);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -67,6 +70,12 @@ export default function CreateSalesforcePipelineWizard() {
           />
         );
       case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN:
+        return (
+          <CreateSalesforcePipelineWizardSelectPipelineTemplateScreen
+            pipelineId={pipelineId}
+            setPipelineId={setPipelineId}
+          />
+        );
     }
   };
 

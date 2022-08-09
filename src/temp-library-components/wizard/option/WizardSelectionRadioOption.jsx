@@ -111,7 +111,6 @@ function WizardSelectionRadioOption(
         <div className={"d-flex p-2"}>
           {getIconBox()}
           <div>
-
             <div
               className={"m-auto"}
               style={{
@@ -143,8 +142,8 @@ function WizardSelectionRadioOption(
 WizardSelectionRadioOption.propTypes = {
   className: PropTypes.string,
   option: PropTypes.string,
-  text: PropTypes.string,
-  description: PropTypes.string,
+  text: PropTypes.any,
+  description: PropTypes.any,
   onClickFunction: PropTypes.func,
   icon: PropTypes.object,
   disabled: PropTypes.bool,
