@@ -4,29 +4,12 @@ import axios from "axios";
 import Model from "core/data_model/model";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import {
-    faCodeMerge,
-    faCodePullRequest,
-    faCodePullRequestClosed,
-    faExternalLink, faRadiationAlt,
-    faTable, faUsers
-} from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import BoomiActionableInsightsTable from "./BoomiActionableInsightsTable";
-import DataPointVisibilityWrapper from "../../../../common/metrics/data_points/DataPointVisibilityWrapper";
-import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock";
-import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock";
-import SonarCodeSmellsDataBlock
-    from "../../../../common/metrics/data_blocks/tools/sonar/code_smells/SonarCodeSmellsDataBlock";
-import SonarCriticalItemCountDataBlock
-    from "../../../../common/metrics/data_blocks/tools/sonar/critical/SonarCriticalItemCountDataBlock";
-import SonarBlockerCountDataBlock
-    from "../../../../common/metrics/data_blocks/tools/sonar/blocker/SonarBlockerCountDataBlock";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
@@ -67,9 +50,7 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
             source.cancel();
             isMounted.current = false;
         };
-    }, []);
-
-    console.log("packagename", filter);
+    }, [filter]);
 
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {
@@ -98,12 +79,8 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
                 filter
             );
 
-            console.log("response", response);
-
             const metrics = response?.data?.data[0][0]?.tableData;
             const block = response?.data?.data[0][0]?.stats[0];
-            console.log("block1", block);
-            console.log("metrics", metrics);
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
@@ -124,9 +101,6 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
             }
         }
     };
-
-    console.log("actinoable", actionableData);
-    console.log("block", blockData);
 
 
     const getDateBadge = () => {

@@ -18,7 +18,6 @@ function BoomiActionableInsightsTable({ data, isLoading, loadData, filterModel, 
     const tableTitle = "Boomi Actionable Insight Table";
     const noDataMessage = "Boomi report is currently unavailable at this time";
     let history = useHistory();
-    console.log("table", data);
 
     const columns = useMemo(
         () => [

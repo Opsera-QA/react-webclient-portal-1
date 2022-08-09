@@ -10,7 +10,7 @@ import BoomiActionableInsightsOverlay from "./BoomiActionableInsightsOverlay";
 
 function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
     const toastContext = useContext(DialogToastContext);
-    const [activeTab, setActiveTab] = useState("create");
+    const [activeTab, setActiveTab] = useState("deploy");
 
     const closePanel = () => {
         toastContext.removeInlineMessage();
