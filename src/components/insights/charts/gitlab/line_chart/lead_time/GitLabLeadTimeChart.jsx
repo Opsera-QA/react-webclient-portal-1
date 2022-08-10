@@ -4,9 +4,9 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
-import {defaultConfig, getColor, assignStandardColors, getColorByData, adjustBarWidth} from "../../../charts-views";
+import {defaultConfig, assignStandardColors, getColorByData, adjustBarWidth} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
-import { Col, Row } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
 import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
@@ -18,10 +18,8 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
     const [meanData, setMeanData] = useState({});
-    const [issueData, setIssueData] = useState([]);
+    const [meanCommitData, setMeanCommitData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [modalData, setModalData] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -64,14 +62,25 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 null,
                 dashboardOrgs
             );
+            const response2 = await chartsActions.parseConfigurationAndGetChartMetrics(
+                getAccessToken,
+                cancelSource,
+                "gitlabAverageCommitTimeToMerge",
+                kpiConfiguration,
+                dashboardTags,
+                null,
+                null,
+                dashboardOrgs
+            );
             const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits || [];
             const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
-
+            const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
             assignStandardColors(dataObject, true);
 
             if (isMounted?.current === true && dataObject.length) {
                 setMetrics(dataObject);
                 setMeanData(meanDataObject);
+                setMeanCommitData(meanCommitTimeDataObject);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -106,15 +115,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
         //             strokeWidth="3"
         //         />
         //     );
-        // };
-
-        // const onNodeSelect = (node) => {
-        //     setModalData(
-        //         issueData.filter(function (item) {
-        //             return item.y === node.data.y && item.date_finished === node.data.date_finished;
-        //         })
-        //     );
-        //     setShowModal(true);
         // };
 
         const getIcon = (data, previousData) => {
@@ -153,36 +153,56 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             else
                 return `< ${_id+1} Days`;
         };
-
-        return (
-            <>
-                <div className="new-chart m-3 p-0" style={{ minheight: "300px", display: "flex" }}>
-                    <Row>
-                        <Col xl={3} lg={3} md={4} className={"d-flex align-content-around"}>
-                            <Row>
-                                <Col lg={12} className={"my-3"}>
-                                    <GitLabMeanLeadTimeDataBlock data={meanData.currentAvgLeadTime} previousData={meanData.previousAvgLeadTime} getIcon={getIcon} getIconColor={getLeadTimeIconColor}/>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col xl={9} lg={9} md={8} className={"my-2 p-2 d-flex flex-column align-items-end"}>
-                            <ResponsiveBar
-                                data={metrics}
-                                {...defaultConfig("Frequency (commtis)", "Days",
-                                    false, false, "wholeNumbers", "wholeNumbers", true)}
-                                {...config(getColorByData, getMaxValue(metrics))}
-                                {...adjustBarWidth(metrics)}
-                                // onClick={(data) => onRowSelect(data)}
-                                tooltip={({ indexValue, value, data, color }) => <ChartTooltip
-                                    titles={["Lead Time", "Number of Commits"]}
-                                    values={[ toolTipData(data._id), data.count ]}
-                                    style={false}
-                                    color={color} />}
-                            />
-                        </Col>
-                    </Row>
+        const getBarChart = () => {
+            return (
+                <div className="new-chart p-0" style={{height: "300px"}}>
+                    <ResponsiveBar
+                        data={metrics}
+                        {...defaultConfig("Frequency (commits)", "Days",
+                            false, false, "wholeNumbers", "wholeNumbers", true)}
+                        {...config(getColorByData, getMaxValue(metrics))}
+                        {...adjustBarWidth(metrics)}
+                        tooltip={({ indexValue, value, data, color }) => <ChartTooltip
+                            titles={["Lead Time", "Number of Commits"]}
+                            values={[ toolTipData(data._id), data.count ]}
+                            style={false}
+                            color={color} />}
+                    />
                 </div>
-            </>
+            );
+        };
+
+        const getLeftDataBlocks = () => {
+            return (
+                <>
+                    <GitLabMeanLeadTimeDataBlock
+                        data={meanData.currentAvgLeadTime}
+                        previousData={meanData.previousAvgLeadTime}
+                        getIcon={getIcon}
+                        topText={"Average Lead Time (Days)"}
+                        bottomText={"Previous Average Lead Time: "}
+                        getIconColor={getLeadTimeIconColor}/>
+                    <GitLabMeanLeadTimeDataBlock
+                         data={meanCommitData.currentAvgCommitToMergeTime}
+                         previousData={meanCommitData.previousAvgCommitToMergeTime}
+                         getIcon={getIcon}
+                         topText={"Average Merge Time (Days)"}
+                         bottomText={"Previous Average Merge Time: "}
+                         getIconColor={getLeadTimeIconColor}/>
+                    </>
+            );
+        };
+        return (
+            <Container>
+                <Row className="align-items-center">
+                    <Col sm={4} className={"p-2"}>
+                        {getLeftDataBlocks()}
+                    </Col>
+                    <Col sm={8} className={"p-2"}>
+                        {getBarChart()}
+                    </Col>
+                </Row>
+            </Container>
         );
     };
 
@@ -201,14 +221,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 isLoading={isLoading}
                 chartHelpComponent={(closeHelpPanel) => <JiraLeadTimeChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
             />
-            {/*<ModalLogs*/}
-            {/*    header="Jira Lead Time"*/}
-            {/*    size="lg"*/}
-            {/*    jsonMessage={modalData}*/}
-            {/*    dataType="bar"*/}
-            {/*    show={showModal}*/}
-            {/*    setParentVisibility={setShowModal}*/}
-            {/*/>*/}
         </div>
     );
 }

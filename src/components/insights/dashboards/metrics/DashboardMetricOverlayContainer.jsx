@@ -38,6 +38,7 @@ import SalesforceComponentsEditorPanel
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
 import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
+import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -204,6 +205,15 @@ function DashboardMetricOverlayContainer(
           unpackedFilterData={unpackedFilterData}
           kpiConfiguration={kpiConfiguration}
         />);
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+            <GitlabLeadTimeEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />);
       case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
         return (
             <QuickDeployStatisticsEditorPanel

@@ -878,7 +878,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "gitlab-lead-time":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
         <Col md={12} className="p-2">
           <GitLabLeadTimeChart

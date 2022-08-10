@@ -6,7 +6,6 @@ export default (getColor, maxValue) => ({
     maxValue,
     colors: getColor,
     axisBottom: {
-        // format: d => {if(isNaN(d)) return d; else return d+1 ; },
         "orient": "bottom",
         "tickSize": 5,
         "tickPadding": 5,
