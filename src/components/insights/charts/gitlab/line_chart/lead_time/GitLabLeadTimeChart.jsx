@@ -102,21 +102,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             return null;
         }
 
-        //TODO: Do these need to be passed in via object props?
-        // const MeanLineLayer = ({ nodes, xScale, yScale }) => {
-        //     const lineGenerator = line()
-        //         .x((d) => xScale(d.data.x))
-        //         .y((d) => yScale(d.data.mean));
-        //     return (
-        //         <path
-        //             d={lineGenerator(nodes)}
-        //             fill="none"
-        //             stroke={METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2}
-        //             strokeWidth="3"
-        //         />
-        //     );
-        // };
-
         const getIcon = (data, previousData) => {
             if (data > previousData) {
                 return faArrowCircleUp;
@@ -219,7 +204,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
-                chartHelpComponent={(closeHelpPanel) => <JiraLeadTimeChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
             />
         </div>
     );
