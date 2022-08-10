@@ -222,6 +222,10 @@ import InformaticaIdqConnectionMetadata
   from "../../../../../inventory/tools/tool_details/tool_jobs/informatica_idq/informatica-idq-connection-metadata";
 import InformaticaIdqPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqPipelineStepConfigurationSummaryPanel";
+import LiquibasePipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/LiquibasePipelineStepConfigurationSummary";
+import LiquibaseStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -707,6 +711,13 @@ function PipelineStepConfigurationSummary({
             <InformaticaIdqPipelineStepConfigurationSummaryPanel
                 pipelineData={pipelineData}
                 informaticaIdqPipelineDataObject={getModelWrappedObject(InformaticaIdqConnectionMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
+        return (
+            <LiquibasePipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                liquibasePipelineDataObject={getModelWrappedObject(LiquibaseStepFormMetadata)}
             />
         );
       default:
