@@ -38,6 +38,8 @@ function BoomiErrorSummaryTable({ boomiObj, jobType }) {
         () => [
             getTableTextColumn(getField(fields,"componentId")),
             getTableTextColumn(getField(fields,"message")),
+            getTableTextColumn(getField(fields, "sourceEnvironmentName")),
+            getTableTextColumn(getField(fields, "targetEnvironmentName")),
         ],
         [],
     );
