@@ -133,10 +133,10 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
 
         const getLeadTimeIconColor = (data, previousData) => {
             if (data > previousData) {
-                return "red";
+                return "green";
             } else
             if (data < previousData) {
-                return "green";
+                return "red";
             } else
             if (data === previousData) {
                 return "light-gray-text-secondary";
@@ -147,11 +147,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
 
         const toolTipData = (_id) => {
             if(!_id)
-                return '1 Day';
+                return '< 1 Day';
             else if(_id === 'Other')
                 return 'Other';
             else
-                return (_id+ 1) + ' Days';
+                return `< ${_id+1} Days`;
         };
 
         return (
