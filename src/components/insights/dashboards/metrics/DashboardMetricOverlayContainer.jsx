@@ -30,6 +30,7 @@ import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
 import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
+import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 
 // TODO: combine with chart settings overlay?
@@ -208,17 +209,29 @@ function DashboardMetricOverlayContainer(
             setMetricFilterModel={setMetricFilterModel}
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
-          />);
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
-          return(
-            <BoomiBarChartEditorPanel
-              metricModel={metricModel}
-              metricFilterModel={metricFilterModel}
-              setMetricFilterModel={setMetricFilterModel}
-              unpackedFilterData={unpackedFilterData}
-              kpiConfiguration={kpiConfiguration}
-            />
-          );
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <ApigeeSummaryEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return(
+          <BoomiBarChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+  
     }
   };
 

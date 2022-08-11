@@ -44,6 +44,7 @@ import SnaplogicToolConfiguration
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
+import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -87,7 +88,8 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
-  "informatica-idq"
+  "informatica-idq",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -185,6 +187,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <BoomiToolConfiguration toolData={toolData} />;
       case "informatica-idq":
         return <InformaticaIdqToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
+        return <LiquibaseToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }

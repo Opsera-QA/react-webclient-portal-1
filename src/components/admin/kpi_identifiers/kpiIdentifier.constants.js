@@ -13,6 +13,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   //APIGEE
   APIGEE_REPORT: "apigee-report",
+  APIGEE_SUMMARY: "apigee-summary",
 
   // Bitbucket
   BITBUCKET_COMMITS_BY_AUTHOR: "bitbucket-commits-by-author",

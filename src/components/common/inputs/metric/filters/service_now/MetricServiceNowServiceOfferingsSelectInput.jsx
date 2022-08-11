@@ -20,8 +20,8 @@ function MetricServiceNowServiceOfferingsSelectInput(
     >
       <ServiceNowServiceOfferingsSelectInput
         fieldName={fieldName}
-        valueField={"value"}
-        textField={"text"}
+        valueField={"sys_id"}
+        textField={"name"}
         dataObject={metricFilterModel}
         setDataObject={setMetricFilterModel}
         serviceNowToolId={metricFilterModel.getData("servicenow-tools")}
