@@ -57,6 +57,24 @@ pipelineStepNotificationActions.getServiceNowGroupsByName = async (
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO : why is this here? Move this to service now actions.
+
+pipelineStepNotificationActions.getServiceNowGroupsByNamev2 = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/groupsByName/${toolId}`;
+  const queryParams = {
+    params: {
+      toolId: toolId,
+      serviceName: serviceName ? serviceName : "",
+    },
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};
+
 pipelineStepNotificationActions.getServiceNowServiceOfferings = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/serviceOfferings/${toolId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -70,6 +88,22 @@ pipelineStepNotificationActions.getServiceNowServiceOfferingsByName = async (
 ) => {
   const apiUrl = `/connectors/servicenow/serviceOfferingsByName/${toolId}/serviceName/${serviceName}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowServiceOfferingsByNameV2 = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const queryParams = {
+    params: {
+      toolId: toolId,
+      serviceName: serviceName ? serviceName : "",
+    },
+  };
+  const apiUrl = `/connectors/servicenow/serviceOfferingsByName/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
 pipelineStepNotificationActions.getServiceNowConfigurationItems = async (toolId, getAccessToken, cancelTokenSource) => {
@@ -87,6 +121,22 @@ pipelineStepNotificationActions.getServiceNowConfigurationItemsByName = async (
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineStepNotificationActions.getServiceNowConfigurationItemsByNameV2 = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const queryParams = {
+    params: {
+      toolId: toolId,
+      serviceName: serviceName ? serviceName : "",
+    },
+  };
+  const apiUrl = `/connectors/servicenow/configurationItemsByName/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};
+
 pipelineStepNotificationActions.getServiceNowBusinessServices = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/businessServices/${toolId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -100,6 +150,22 @@ pipelineStepNotificationActions.getServiceNowBusinessServicesByName = async (
 ) => {
   const apiUrl = `/connectors/servicenow/businessServicesByName/${toolId}/serviceName/${serviceName}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowBusinessServicesByNameV2 = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const queryParams = {
+    params: {
+      toolId: toolId,
+      serviceName: serviceName ? serviceName : "",
+    },
+  };
+  const apiUrl = `/connectors/servicenow/businessServicesByName/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
 export default pipelineStepNotificationActions;

@@ -6,6 +6,7 @@ import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ServiceNowBusinessServicesSelectInput({
   valueField,
@@ -22,8 +23,10 @@ function ServiceNowBusinessServicesSelectInput({
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [businessServices, setBusinessServices] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -58,45 +61,32 @@ function ServiceNowBusinessServicesSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setBusinessServices([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    // loadBusinessServices(serviceNowToolId, source).catch((error) => {
-    //   if (isMounted?.current === true) {
-    //     throw error;
-    //   }
-    // });
-    // }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+    loadBusinessServices("", serviceNowToolId).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+    }
   }, [serviceNowToolId]);
 
   const loadBusinessServices = async (searchTerm, serviceNowToolId) => {
-    if (searchTerm) {
+    // if (searchTerm) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowBusinessServicesByName(
+        const response = await pipelineStepNotificationActions.getServiceNowBusinessServicesByNameV2(
           serviceNowToolId,
           searchTerm,
           getAccessToken,
           cancelTokenSource
         );
 
+        const results = response.data.message.result;
+
         if (
-          response?.data != null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
+          Array.isArray(results)
         ) {
           setBusinessServices(response.data.message.result);
         }
@@ -112,7 +102,7 @@ function ServiceNowBusinessServicesSelectInput({
           setIsLoading(false);
         }
       }
-    }
+    // }
   };
 
   const getPlaceholderText = () => {
