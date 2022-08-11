@@ -87,7 +87,7 @@ function BoomiActionableInsightDeployOverlay({ kpiConfiguration, dashboardData }
                 setBlockData(block);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.tableData[0]?.count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.tableData[0]?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {
