@@ -6,6 +6,7 @@ import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ServiceNowServiceOfferingsSelectInput({
   valueField,
@@ -22,8 +23,10 @@ function ServiceNowServiceOfferingsSelectInput({
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [serviceOfferings, setServiceOfferings] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -58,47 +61,34 @@ function ServiceNowServiceOfferingsSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setServiceOfferings([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadServiceOfferings(serviceNowToolId, source).catch((error) => {
-    //     if (isMounted?.current === true) {
-    //       throw error;
-    //     }
-    //   });
-    // }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+      loadServiceOfferings("", serviceNowToolId).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [serviceNowToolId]);
 
   const loadServiceOfferings = async (searchTerm, serviceNowToolId) => {
-    if (searchTerm) {
+    // if (searchTerm) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowServiceOfferingsByName(
+        const response = await pipelineStepNotificationActions.getServiceNowServiceOfferingsByNameV2(
           serviceNowToolId,
           searchTerm,
           getAccessToken,
           cancelTokenSource
         );
 
+        const results = response.data.message.result;
+
         if (
-          response?.data !== null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
+          Array.isArray(results)
         ) {
-          setServiceOfferings(response.data.message.result);
+          setServiceOfferings(results);
         }
       } catch (error) {
         if (isMounted?.current === true) {
@@ -112,7 +102,7 @@ function ServiceNowServiceOfferingsSelectInput({
           setIsLoading(false);
         }
       }
-    }
+    // }
   };
 
   const getPlaceholderText = () => {

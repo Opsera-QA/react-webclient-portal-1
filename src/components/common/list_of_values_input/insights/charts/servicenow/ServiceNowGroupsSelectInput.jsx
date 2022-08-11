@@ -63,6 +63,7 @@ function ServiceNowAssignmentGroupSelectInput({
 
   useEffect(() => {
     setGroups([]);
+    setError("");
     if (isMongoDbId(serviceNowToolId) === true) {
       loadGroups("").catch((error) => {
         if (isMounted?.current === true) {
