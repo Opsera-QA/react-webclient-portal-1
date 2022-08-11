@@ -9,7 +9,10 @@ import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/fr
 import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 
-function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoading }) {
+function ApigeeSummaryDetails({ kpiConfiguration, summaryData, isLoading, type }) {
+
+  console.log({summaryData});
+
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -28,7 +31,7 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
       source.cancel();
       isMounted.current = false;
     };
-  }, [transferData]);
+  }, [summaryData]);
 
   const getIcon = (severity) => {
     switch (severity) {
@@ -36,6 +39,19 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
         return faArrowCircleUp;
       case "Red":
         return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getDurationIcon = (severity) => {
+    switch (severity) {
+      case "Green":
+        return faArrowCircleDown;
+      case "Red":
+        return faArrowCircleUp;
       case "Neutral":
         return faMinusCircle;
       default:
@@ -81,7 +97,7 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
         <div>
           <div className={"d-flex details-title-text"}>
             <div className={'mr-3'}>
-              <b>APIGEE Summary For Transfer</b>
+              <b>APIGEE Summary For {type}</b>
             </div>
           </div>
           <Row>
@@ -90,13 +106,13 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
                 <div className={"github-actions-success-rate-contained-data-block"}>
                   <DataBlockBoxContainer showBorder={true}>
                     <ThreeLinePercentageBlockBase
-                      className={`${getIconColor(transferData?.trend)} p-2`}
+                      className={`${getIconColor(summaryData?.trend?.successPercentage)} p-2`}
                       dataPoint={successPercent}
-                      percentage={transferData?.successPercentage}
+                      percentage={summaryData?.current?.successPercentage}
                       topText={"Success %"}
-                      bottomText={transferData?.trendSuccessPercentage ? "Previous result: " + transferData?.trendSuccessPercentage : "No previous result"}
-                      icon={getIcon(transferData?.trend)}
-                      iconOverlayBody={getDescription(transferData?.trend)}
+                      bottomText={summaryData?.previous?.successPercentage ? "Previous result: " + summaryData?.previous?.successPercentage : "No previous result"}
+                      icon={getIcon(summaryData?.trend?.successPercentage)}
+                      iconOverlayBody={getDescription(summaryData?.trend?.successPercentage)}
                     />
                   </DataBlockBoxContainer>
                 </div>
@@ -105,12 +121,12 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
               <div className={"github-actions-success-rate-contained-data-block"}>
                 <DataBlockBoxContainer showBorder={true}>
                   <ThreeLineScoreDataBlock
-                    className={`${getIconColor(transferData?.trend)} p-2`}
-                    score={transferData?.totalRuns}
+                    className={`${getIconColor(summaryData?.trend?.totalRuns)} p-2`}
+                    score={summaryData?.current?.totalRuns}
                     topText={"Total Executions"}
-                    bottomText={transferData?.trendTotalRuns ? "Previous result: " + transferData?.trendTotalRuns : "No previous result"}
-                    icon={getIcon(transferData?.trend)}
-                    iconOverlayBody={getDescription(transferData?.trend)}
+                    bottomText={summaryData?.previous?.totalRuns ? "Previous result: " + summaryData?.previous?.totalRuns : "No previous result"}
+                    icon={getIcon(summaryData?.trend?.totalRuns)}
+                    iconOverlayBody={getDescription(summaryData?.trend?.totalRuns)}
                   />
                 </DataBlockBoxContainer>
               </div>
@@ -120,13 +136,13 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
                 <div className={"github-actions-success-rate-contained-data-block"}>
                   <DataBlockBoxContainer showBorder={true}>
                     <ThreeLineScoreDataBlock
-                      className={`${getIconColor(transferData?.trend)} p-2`}
+                      className={`${getIconColor(summaryData?.trend?.frequencyPerMonth)} p-2`}
                       dataPoint={frequency}
-                      score={transferData?.frequencyPerMonth}
-                      topText={"Frequency"}
-                      bottomText={transferData?.trendFrequencyPerMonthe ? "Previous result: " + transferData?.trendFrequencyPerMonthe : "No previous result"}
-                      icon={getIcon(transferData?.trend)}
-                      iconOverlayBody={getDescription(transferData?.trend)}
+                      score={summaryData?.current?.frequencyPerMonth}
+                      topText={"Monthly Frequency"}
+                      bottomText={summaryData?.previous?.frequencyPerMonth ? "Previous result: " + summaryData?.previous?.frequencyPerMonth : "No previous result"}
+                      icon={getIcon(summaryData?.trend?.frequencyPerMonth)}
+                      iconOverlayBody={getDescription(summaryData?.trend?.frequencyPerMonth)}
                     />
                   </DataBlockBoxContainer>
                 </div>
@@ -136,12 +152,12 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
               <div className={"github-actions-success-rate-contained-data-block"}>
                 <DataBlockBoxContainer showBorder={true}>
                   <ThreeLineScoreDataBlock
-                    className={`${getIconColor(transferData?.trend)} p-2`}
-                    score={transferData?.averageDurationInSecs}
+                    className={`${getIconColor(summaryData?.trend?.averageDuration)} p-2`}
+                    score={summaryData?.current?.averageDurationInSecs ? `${summaryData?.current?.averageDurationInSecs}s` : summaryData?.current?.averageDurationInSecs}
                     topText={"Average Duration"}
-                    bottomText={transferData?.trendAverageDurationInSecs ? "Previous result: " + transferData?.trendAverageDurationInSecs : "No previous result"}
-                    icon={getIcon(transferData?.trend)}
-                    iconOverlayBody={getDescription(transferData?.trend)}
+                    bottomText={summaryData?.previous?.averageDurationInSecs ? `Previous result: ${summaryData?.previous?.averageDurationInSecs}s` : "No previous result"}
+                    icon={getDurationIcon(summaryData?.trend?.averageDuration)}
+                    iconOverlayBody={getDescription(summaryData?.trend?.averageDuration)}
                   />
                 </DataBlockBoxContainer>
               </div>
@@ -155,10 +171,11 @@ function ApigeeSummaryForTransferChart({ kpiConfiguration, transferData, isLoadi
   return getBody();
 }
 
-ApigeeSummaryForTransferChart.propTypes = {
+ApigeeSummaryDetails.propTypes = {
   kpiConfiguration: PropTypes.object,
-  transferData:PropTypes.object,
+  summaryData:PropTypes.object,
   isLoading: PropTypes.bool,
+  type: PropTypes.string,
 };
 
-export default ApigeeSummaryForTransferChart;
+export default ApigeeSummaryDetails;

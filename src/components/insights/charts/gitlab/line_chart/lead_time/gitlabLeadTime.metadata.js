@@ -1,5 +1,5 @@
-export const gitlabDeploymentFrequencyMetadata = {
-  type: "Deployment Frequency",
+export const gitlabLeadTimeMetadata = {
+  type: "Gitlab Lead Time",
   fields: [
     {
       label: "Tags",
