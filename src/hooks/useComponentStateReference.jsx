@@ -15,6 +15,7 @@ function useComponentStateReference() {
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
     isSiteAdministrator,
+    userData,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
@@ -39,6 +40,7 @@ function useComponentStateReference() {
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
     isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
+    userData: userData,
   });
 }
 

@@ -311,6 +311,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       websocketClient: websocketClient,
       subscribeToTopic: subscribeToTopic,
       unsubscribeFromTopic: unsubscribeFromTopic,
+      userData: userData,
     }}>
       <div
         className={"w-100"}
