@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-
+import _ from "lodash";
 function ServiceNowAssignmentGroupSelectInput({
   valueField,
   textField,
@@ -21,6 +21,7 @@ function ServiceNowAssignmentGroupSelectInput({
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -67,7 +68,7 @@ function ServiceNowAssignmentGroupSelectInput({
 
     setGroups([]);
     // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadGroups(serviceNowToolId, source).catch((error) => {
+    //   loadData(serviceNowToolId, source).catch((error) => {
     //     if (isMounted?.current === true) {
     //       throw error;
     //     }
@@ -80,8 +81,8 @@ function ServiceNowAssignmentGroupSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm) => {
-    if (searchTerm && searchTerm.length >= 3) {
+  const loadGroups = async (searchTerm, serviceNowToolId) => {
+    if (searchTerm) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
@@ -136,6 +137,11 @@ function ServiceNowAssignmentGroupSelectInput({
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadGroups(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
     <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
@@ -150,7 +156,7 @@ function ServiceNowAssignmentGroupSelectInput({
       // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => loadGroups(searchTerm)}
+      onSearchFunction={(searchTerm) => {console.log(searchTerm); delayedSearchQuery(searchTerm, serviceNowToolId);}}
       useToggle={false}
     />
   );
