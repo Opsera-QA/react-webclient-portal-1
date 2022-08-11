@@ -9,7 +9,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
-import BoomiActionableInsightsTable from "./BoomiActionableInsightsTable";
+import BoomiActionableInsightsCreateTable from "./BoomiActionableInsightsCreateTable";
 import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
@@ -18,7 +18,19 @@ import BoomiActionableTotalExecutionsDataBlock from "./data_blocks/BoomiActionab
 import BoomiActionableFreqDataBlock from "./data_blocks/BoomiActionableFreqDataBlock";
 import BoomiActionableSuccessPercentageDataBlock from "./data_blocks/BoomiActionableSuccessPercentageDataBlock";
 
-function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardData , filter}) {
+function BoomiActionableInsightsDeployTable(props) {
+    return null;
+}
+
+BoomiActionableInsightsDeployTable.propTypes = {
+    isLoading: PropTypes.bool,
+    data: PropTypes.arrayOf(PropTypes.any),
+    filterModel: PropTypes.any,
+    loadData: PropTypes.func,
+    setFilterModel: PropTypes.func
+};
+
+function BoomiActionableInsightDeployOverlay({ kpiConfiguration, dashboardData }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [filterModel, setFilterModel] = useState(
@@ -54,7 +66,7 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
             source.cancel();
             isMounted.current = false;
         };
-    }, [filter]);
+    }, []);
 
     const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         try {
@@ -72,14 +84,6 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
                 filterDto,
                 undefined,
                 dashboardOrgs,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                filter
             );
 
             const metrics = response?.data?.data[0][0]?.tableData;
@@ -121,46 +125,45 @@ function QuickDeployTotalSuccessActionableOverlay({ kpiConfiguration, dashboardD
         return (<Row className="px-2">
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableTotalExecutionsDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.totalExecutions}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.totalExecutions}
+                />
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableFreqDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.freq}
-                        subtitle={"Frequency"}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.freq}
+                    subtitle={"Frequency"}
+                />
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableSuccessPercentageDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.successPercentage}
-                        subtitle={"Success Percentage"}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.successPercentage}
+                    subtitle={"Success Percentage"}
+                />
             </Col>
         </Row>);
     };
 
     return (
-            <div className={"p-3"}>
-                <div className={"mb-4"} >{getDateBadge()}</div>
-                {getDataBlocks()}
-                <BoomiActionableInsightsTable
-                    isLoading={isLoading}
-                    data={actionableData}
-                    filterModel={filterModel}
-                    setFilterModel={setFilterModel}
-                    loadData={loadData}
-                />
-            </div>
+        <div className={"p-3"}>
+            <div className={"mb-4"} >{getDateBadge()}</div>
+            {getDataBlocks()}
+            <BoomiActionableInsightsDeployTable
+                isLoading={isLoading}
+                data={actionableData}
+                filterModel={filterModel}
+                setFilterModel={setFilterModel}
+                loadData={loadData}
+            />
+        </div>
     );
 }
 
-QuickDeployTotalSuccessActionableOverlay.propTypes = {
+BoomiActionableInsightDeployOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
-    filter: PropTypes.string
 };
 
-export default QuickDeployTotalSuccessActionableOverlay;
+export default BoomiActionableInsightDeployOverlay;

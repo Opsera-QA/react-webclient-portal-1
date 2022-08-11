@@ -12,7 +12,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
-function BoomiActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
+function BoomiActionableInsightsMigrateTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
     const toastContext = useContext(DialogToastContext);
     const fields = BoomiActionableMetadata.fields;
     const tableTitle = "Boomi Actionable Insight Table";
@@ -67,7 +67,7 @@ function BoomiActionableInsightsTable({ data, isLoading, loadData, filterModel, 
     );
 }
 
-BoomiActionableInsightsTable.propTypes = {
+BoomiActionableInsightsMigrateTable.propTypes = {
     data: PropTypes.array,
     isLoading: PropTypes.bool,
     loadData: PropTypes.func,
@@ -76,4 +76,4 @@ BoomiActionableInsightsTable.propTypes = {
     title: PropTypes.string,
 };
 
-export default BoomiActionableInsightsTable;
+export default BoomiActionableInsightsMigrateTable;
