@@ -57,6 +57,24 @@ pipelineStepNotificationActions.getServiceNowGroupsByName = async (
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO : why is this here? Move this to service now actions.
+
+pipelineStepNotificationActions.getServiceNowGroupsByNamev2 = async (
+  toolId,
+  serviceName,
+  getAccessToken,
+  cancelTokenSource
+) => {
+  const apiUrl = `/connectors/servicenow/groupsByName/${toolId}`;
+  const queryParams = {
+    params: {
+      toolId: toolId,
+      serviceName: serviceName ? serviceName : "",
+    },
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};
+
 pipelineStepNotificationActions.getServiceNowServiceOfferings = async (toolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/connectors/servicenow/serviceOfferings/${toolId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);

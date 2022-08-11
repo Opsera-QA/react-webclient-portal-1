@@ -67,13 +67,13 @@ function ServiceNowAssignmentGroupSelectInput({
     isMounted.current = true;
 
     setGroups([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadData(serviceNowToolId, source).catch((error) => {
-    //     if (isMounted?.current === true) {
-    //       throw error;
-    //     }
-    //   });
-    // }
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+      loadGroups( "", serviceNowToolId, source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -82,23 +82,31 @@ function ServiceNowAssignmentGroupSelectInput({
   }, [serviceNowToolId]);
 
   const loadGroups = async (searchTerm, serviceNowToolId) => {
-    if (searchTerm) {
+    // if (searchTerm) {
       try {
         setIsLoading(true);
+        console.log(serviceNowToolId);
+        console.log(searchTerm);
+
         // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowGroupsByName(
+        const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
           serviceNowToolId,
           searchTerm,
           getAccessToken,
           cancelTokenSource
         );
 
+        console.log(response);
+
         if (
+          response &&
           response?.data !== null &&
           response?.data?.message?.result !== null &&
           Array.isArray(response.data.message.result)
         ) {
           setGroups(response.data.message.result);
+        } else {
+          setGroups([]);
         }
       } catch (error) {
         if (isMounted?.current === true) {
@@ -112,7 +120,7 @@ function ServiceNowAssignmentGroupSelectInput({
           setIsLoading(false);
         }
       }
-    }
+    // }
   };
 
   const getPlaceholderText = () => {
