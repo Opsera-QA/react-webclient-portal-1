@@ -20,8 +20,8 @@ function MetricServiceNowConfigurationItemsSelectInput(
     >
       <ServiceNowConfigurationItemsSelectInput
         fieldName={fieldName}
-        valueField={"sys_id"}
-        textField={"name"}
+        valueField={"value"}
+        textField={"text"}
         dataObject={metricFilterModel}
         setDataObject={setMetricFilterModel}
         serviceNowToolId={metricFilterModel.getData("servicenow-tools")}

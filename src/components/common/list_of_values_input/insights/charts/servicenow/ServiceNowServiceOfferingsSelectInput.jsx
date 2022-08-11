@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import _ from "lodash";
 
 function ServiceNowServiceOfferingsSelectInput({
   valueField,
@@ -81,8 +80,8 @@ function ServiceNowServiceOfferingsSelectInput({
     };
   }, [serviceNowToolId]);
 
-  const loadServiceOfferings = async (searchTerm, serviceNowToolId) => {
-    if (searchTerm) {
+  const loadServiceOfferings = async (searchTerm) => {
+    if (searchTerm && searchTerm.length >= 3) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
@@ -137,11 +136,6 @@ function ServiceNowServiceOfferingsSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadServiceOfferings(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
     <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
@@ -156,7 +150,7 @@ function ServiceNowServiceOfferingsSelectInput({
       // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
+      onSearchFunction={(searchTerm) => loadServiceOfferings(searchTerm)}
       useToggle={false}
     />
   );
