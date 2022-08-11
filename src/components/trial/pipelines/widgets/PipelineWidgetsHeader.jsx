@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React  from "react";
+import PropTypes from "prop-types";
 import PipelineWidgetsPipelineSelectInput
   from "components/trial/pipelines/widgets/PipelineWidgetsPipelineSelectInput";
 import { Link } from "react-router-dom";
 
-function PipelineWidgetsHeader() {
-  const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
-
+function PipelineWidgetsHeader(
+  {
+    selectedPipelineId,
+    setSelectedPipelineId,
+  }) {
   return (
     <div className={"d-flex"}>
       <PipelineWidgetsPipelineSelectInput
@@ -40,6 +43,9 @@ function PipelineWidgetsHeader() {
   );
 }
 
-PipelineWidgetsHeader.propTypes = {};
+PipelineWidgetsHeader.propTypes = {
+  selectedPipelineId: PropTypes.string,
+  setSelectedPipelineId: PropTypes.func,
+};
 
 export default PipelineWidgetsHeader;

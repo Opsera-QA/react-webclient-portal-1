@@ -1,14 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
-import PipelineLandingDataBlockWidgets
-  from "components/trial/pipelines/data_blocks/PipelineLandingDataBlockWidgets";
-import PipelineWidgetsHeader from "components/trial/pipelines/widgets/PipelineWidgetsHeader";
-import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
 import WelcomeWidget from "components/trial/landing/widgets/WelcomeWidget";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
 import PipelineWizardWidgets from "components/trial/landing/widgets/PipelineWizardWidgets";
+import FreeTrialLandingPipelineWidgets from "components/trial/landing/widgets/FreeTrialLandingPipelineWidgets";
 
 export default function FreeTrialLanding() {
   return (
@@ -27,10 +23,7 @@ export default function FreeTrialLanding() {
         <PipelineWizardWidgets />
       </div>
       <div className={"mt-3"}>
-        <PipelineWidgetsHeader />
-      </div>
-      <div>
-        <PipelineWidgetsBody />
+        <FreeTrialLandingPipelineWidgets />
       </div>
     </div>
   );
