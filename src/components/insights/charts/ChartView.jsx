@@ -150,9 +150,6 @@ import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_char
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
-// Boomi KPIs
-import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
-
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
