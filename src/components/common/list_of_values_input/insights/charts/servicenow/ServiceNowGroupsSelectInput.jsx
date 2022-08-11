@@ -6,6 +6,8 @@ import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 function ServiceNowAssignmentGroupSelectInput({
   valueField,
   textField,
@@ -22,8 +24,10 @@ function ServiceNowAssignmentGroupSelectInput({
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [groups, setGroups] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -58,35 +62,21 @@ function ServiceNowAssignmentGroupSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setGroups([]);
-    if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      loadGroups( "", serviceNowToolId, source).catch((error) => {
+    if (isMongoDbId(serviceNowToolId) === true) {
+      loadGroups("").catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm, serviceNowToolId) => {
+  const loadGroups = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
         console.log(serviceNowToolId);
-        console.log(searchTerm);
 
         // setToggleSelected(true);
         const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
@@ -97,12 +87,11 @@ function ServiceNowAssignmentGroupSelectInput({
         );
 
         console.log(response);
+        // TODO: Faseeh, when updating the node end can you please make sure to return this in data as usual (would come as response?.data?.data).
+        const results = response.data.message.result;
 
         if (
-          response &&
-          response?.data !== null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
+          Array.isArray(results)
         ) {
           setGroups(response.data.message.result);
         } else {
@@ -110,11 +99,8 @@ function ServiceNowAssignmentGroupSelectInput({
         }
       } catch (error) {
         if (isMounted?.current === true) {
-          toastContext.showErrorDialog(
-            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-          );
+          setError(error);
         }
-        console.error(error);
       } finally {
         if (isMounted?.current === true) {
           setIsLoading(false);
@@ -166,6 +152,7 @@ function ServiceNowAssignmentGroupSelectInput({
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
       onSearchFunction={(searchTerm) => {console.log(searchTerm); delayedSearchQuery(searchTerm, serviceNowToolId);}}
       useToggle={false}
+      error={error}
     />
   );
 }
