@@ -10,6 +10,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
+import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
 
 // TODO: Convert to cards
 function BoomiActionableInsightsDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
@@ -32,10 +33,9 @@ function BoomiActionableInsightsDeployTable({ data, isLoading, loadData, filterM
     );
 
     const onRowSelect = (rowData) => {
-        const task = rowData?.original?.task;
-
-        toastContext.clearOverlayPanel();
-        history.push(`/task/details/${task}`);
+        toastContext.showOverlayPanel(
+            <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount}/>
+        );
     };
 
     const getTable = () => {
