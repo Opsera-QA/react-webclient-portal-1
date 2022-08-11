@@ -24,9 +24,9 @@ function BoomiActionableInsightsMigrateTable({ data, isLoading, loadData, filter
             getTableTextColumn(getField(fields, "pipeline"), "pipeline"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
             getTableTextColumn(getField(fields, "timestamp"), "timestamp"),
-            getTableTextColumn(getField(fields, "totalComponents"), "totalComponents"),
-            getTableTextColumn(getField(fields, "successfulComponents"), "successfulComponents"),
-            getTableTextColumn(getField(fields, "failedComponents"), "failedComponents"),
+            getTableTextColumn(getField(fields, "totalPackages"), "totalPackages"),
+            getTableTextColumn(getField(fields, "successfulPackages"), "successfulPackages"),
+            getTableTextColumn(getField(fields, "failedPackages"), "failedPackages"),
         ],
         []
     );

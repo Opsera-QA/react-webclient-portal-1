@@ -9,10 +9,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
-import BoomiActionableInsightsCreateTable from "./BoomiActionableInsightsCreateTable";
-import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
-import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import TwoLinePercentageDataBlock from "../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import {metricHelpers} from "../../../metric.helpers";
 import BoomiActionableTotalExecutionsDataBlock from "./data_blocks/BoomiActionableTotalExecutionsDataBlock";
 import BoomiActionableFreqDataBlock from "./data_blocks/BoomiActionableFreqDataBlock";
@@ -67,7 +63,7 @@ function BoomiActionableInsightsMigrateOverlay({ kpiConfiguration, dashboardData
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
-                "boomiDataActionableInsights",
+                "boomiMigratePackageActionableInsights",
                 kpiConfiguration,
                 dashboardTags,
                 filterDto,

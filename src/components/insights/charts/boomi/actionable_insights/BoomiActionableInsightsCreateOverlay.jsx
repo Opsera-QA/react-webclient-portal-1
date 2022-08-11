@@ -66,7 +66,7 @@ function BoomiActionableInsightCreateOverlay({ kpiConfiguration, dashboardData }
             const response = await chartsActions.parseConfigurationAndGetChartMetrics(
                 getAccessToken,
                 cancelSource,
-                "boomiDataActionableInsights",
+                "boomiCreatePackageActionableInsights",
                 kpiConfiguration,
                 dashboardTags,
                 filterDto,
