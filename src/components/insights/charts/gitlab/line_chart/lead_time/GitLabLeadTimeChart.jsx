@@ -4,12 +4,11 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
-import {defaultConfig, assignStandardColors, getColorByData, adjustBarWidth} from "../../../charts-views";
+import {defaultConfig, getColorByData, adjustBarWidth, assignStandardLineColors} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Container, Col, Row } from "react-bootstrap";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
-import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {ResponsiveBar} from "@nivo/bar";
 
@@ -75,7 +74,7 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits || [];
             const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
             const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
-            assignStandardColors(dataObject, true);
+            assignStandardLineColors(dataObject, true);
 
             if (isMounted?.current === true && dataObject.length) {
                 setMetrics(dataObject);
