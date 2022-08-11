@@ -10,7 +10,7 @@ export default (getColor, maxValue) => ({
         "tickSize": 5,
         "tickPadding": 5,
         "legend": "Lead Time (Days)",
-        "legendOffset": 25,
+        "legendOffset": 30,
         "legendPosition": "middle"
     },
 });
