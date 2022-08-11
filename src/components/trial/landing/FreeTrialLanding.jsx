@@ -8,6 +8,7 @@ import WelcomeWidget from "components/trial/landing/widgets/WelcomeWidget";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
+import PipelineWizardWidgets from "components/trial/landing/widgets/PipelineWizardWidgets";
 
 export default function FreeTrialLanding() {
   return (
@@ -21,6 +22,9 @@ export default function FreeTrialLanding() {
             <AccountStatusWidget />
           </Col>
         </Row>
+      </div>
+      <div className={"mt-3 mx-auto"}>
+        <PipelineWizardWidgets />
       </div>
       <div className={"mt-3"}>
         <PipelineWidgetsHeader />

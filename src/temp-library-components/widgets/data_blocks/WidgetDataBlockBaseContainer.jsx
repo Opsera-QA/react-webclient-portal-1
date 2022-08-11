@@ -6,6 +6,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 function WidgetDataBlockBaseContainer(
   {
     heightSize,
+    widthSize,
     backgroundColor,
     borderColor,
     fontColor,
@@ -21,6 +22,12 @@ function WidgetDataBlockBaseContainer(
     return "100px";
   };
 
+  const getWidth = () => {
+    if (numberHelpers.isNumberGreaterThan(0, widthSize)) {
+      return `${heightSize * 50}px`;
+    }
+  };
+
   const getBorder = () => {
     if (hasStringValue(borderColor) === true) {
       return `1px solid ${borderColor}`;
@@ -33,6 +40,10 @@ function WidgetDataBlockBaseContainer(
       style={{
         borderRadius: "1em",
         height: getHeight(),
+        maxHeight: getHeight(),
+        minWidth: getWidth(),
+        width: getWidth(),
+        maxWidth: getWidth(),
         border: getBorder(),
         backgroundColor: backgroundColor,
         color: fontColor,
@@ -47,7 +58,7 @@ function WidgetDataBlockBaseContainer(
 WidgetDataBlockBaseContainer.propTypes = {
   className: PropTypes.string,
   heightSize: PropTypes.number,
-  widthSize: PropTypes.string,
+  widthSize: PropTypes.number,
   borderColor: PropTypes.string,
   backgroundColor: PropTypes.string,
   fontColor: PropTypes.string,

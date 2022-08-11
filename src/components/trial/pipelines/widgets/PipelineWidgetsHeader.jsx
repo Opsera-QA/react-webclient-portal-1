@@ -6,15 +6,6 @@ import CreatePipelineWizard from "components/wizard/free_trial/pipeline/CreatePi
 
 function PipelineWidgetsHeader() {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
-  const { toastContext } = useComponentStateReference();
-
-  const launchPipelineCreationWizard = () => {
-    toastContext.showOverlayPanel(
-      <CreatePipelineWizard
-
-      />
-    );
-  };
 
   return (
     <div className={"d-flex"}>
@@ -22,9 +13,6 @@ function PipelineWidgetsHeader() {
         selectedPipelineId={selectedPipelineId}
         setSelectedPipelineId={setSelectedPipelineId}
       />
-      <div>
-        <div onClick={launchPipelineCreationWizard}>Create Pipeline</div>
-      </div>
     </div>
   );
 }
