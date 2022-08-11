@@ -19,6 +19,18 @@ const BoomiActionableMetadata = {
             id: "failedComponents",
         },
         {
+            label: "Total Packages",
+            id: "totalPackages",
+        },
+        {
+            label: "Successful Packages",
+            id: "successfulPackages",
+        },
+        {
+            label: "Failed Packages",
+            id: "failedPackages",
+        },
+        {
             label: "Run Count",
             id: "runCount",
         },

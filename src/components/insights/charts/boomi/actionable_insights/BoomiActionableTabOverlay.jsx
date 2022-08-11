@@ -6,7 +6,9 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import BoomiActionableInsightsOverlay from "./BoomiActionableInsightsOverlay";
+import BoomiActionableInsightsCreateOverlay from "./BoomiActionableInsightsCreateOverlay";
+import BoomiActionableInsightsDeployOverlay from "./BoomiActionableInsightsDeployOverlay";
+import BoomiActionableInsightsMigrateOverlay from "./BoomiActionableInsightsMigrateOverlay";
 
 function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
     const toastContext = useContext(DialogToastContext);
@@ -20,8 +22,7 @@ function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
     const getBody = () => {
         if (activeTab == "create") {
             return (
-                <BoomiActionableInsightsOverlay
-                    filter={"CREATE_PACKAGE_COMPONENT"}
+                <BoomiActionableInsightsCreateOverlay
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodePullRequest}
@@ -29,8 +30,7 @@ function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
             );
         } else if (activeTab == "deploy") {
             return (
-                <BoomiActionableInsightsOverlay
-                    filter={"DEPLOY_PACKAGE_COMPONENT"}
+                <BoomiActionableInsightsDeployOverlay
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodePullRequestClosed}
@@ -38,8 +38,7 @@ function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
             );
         } else if (activeTab == "migrate") {
             return (
-                <BoomiActionableInsightsOverlay
-                    filter={"MIGRATE_PACKAGE_COMPONENT"}
+                <BoomiActionableInsightsMigrateOverlay
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodeMerge}
@@ -101,7 +100,6 @@ function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
 BoomiActionableTabOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
-    highestMergesMetric: PropTypes.array,
 };
 
 export default BoomiActionableTabOverlay;
