@@ -79,15 +79,15 @@ function BoomiActionableInsightDeployOverlay({ kpiConfiguration, dashboardData }
                 dashboardOrgs,
             );
 
-            const metrics = response?.data?.data[0][0]?.tableData;
-            const block = response?.data?.data[0][0]?.stats[0];
+            const metrics = response?.data?.data[0]?.tableData[0].tableData;
+            const block = response?.data?.data[0]?.stats[0];
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
                 setBlockData(block);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.tableData[0]?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {
