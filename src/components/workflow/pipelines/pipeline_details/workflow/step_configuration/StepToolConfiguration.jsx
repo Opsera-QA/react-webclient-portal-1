@@ -97,6 +97,8 @@ import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
 import InformaticaIdqStepConfiguration
   from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
+import LiquibaseStepConfiguration
+  from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1382,6 +1384,17 @@ function StepToolConfiguration({
                 stepTool={stepTool}
                 parentCallback={callbackFunction}
                 closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
+        return (
+            <LiquibaseStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
             />
         );
     }
