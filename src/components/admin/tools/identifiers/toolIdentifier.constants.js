@@ -48,6 +48,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   JMETER: "jmeter",
   JUNIT: "junit",
   KAFKA_CONNECT: "kafka_connect",
+  LIQUIBASE: "liquibase",
   MOCK_STEP: "mock-step",
   MONGO_DB: "mongodb",
   NEXUS: "nexus",
