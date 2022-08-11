@@ -174,6 +174,10 @@ import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatisti
 
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
+import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
+
+//Boomi KPI
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1013,6 +1017,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
 
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeSummaryChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       // Cypress KPIs
       case "cypress-test-results":
         return (
@@ -1211,7 +1228,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-        );  
+        );
       case "github-commit-statistics":
         return (
           <Col md={12} className="p-2">
@@ -1633,7 +1650,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      
+
 
       case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
