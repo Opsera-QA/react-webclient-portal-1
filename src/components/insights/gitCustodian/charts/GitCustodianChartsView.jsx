@@ -6,7 +6,7 @@ import {AuthContext} from "../../../../contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import {parseError} from "../../../common/helpers/error-helpers";
-import GitCustodianTopSecretsChart from "../charts/bar_chart/git_custodian_top_secrets_chart/gitCustodianTopSecretsChart";
+import GitCustodianVulnerabilityTypesChart from "./bar_chart/git_custodian_vulnerability_types_chart/GitCustodianVulnerabilityTypesChart";
 import GitCustodianTopRepositoriesChart from "../charts/pie_chart/git_custodian_top_repositories_chart/gitCustodianTopRepositoriesChart";
 import GitCustodianTopAuthorsChart
   from "../charts/bar_chart/git_custodian_top_authors_chart/gitCustodianTopAuthorsChart";
@@ -87,25 +87,25 @@ function GitCustodianChartsView({ gitCustodianData }) {
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOTAL REPOSITORIES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>CLEAN REPOSITORIES</div>
               <GitCustodianTotalRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TIMELINE</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>ISSUES</div>
               <GitCustodianTimelineChart dashboardData={gitCustodianData} data={timeLineData}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP SECRETS</div>
-              <GitCustodianTopSecretsChart dashboardData={gitCustodianData} data={chartData?.topSecrets ? chartData?.topSecrets : []}/>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>VULNERABILITY TYPES</div>
+              <GitCustodianVulnerabilityTypesChart dashboardData={gitCustodianData} data={chartData?.vulnerability_types ? chartData?.vulnerability_types : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP REPOSITORIES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>REPOSITORIES</div>
               <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData} data={chartData?.topRepos ? chartData?.topRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
