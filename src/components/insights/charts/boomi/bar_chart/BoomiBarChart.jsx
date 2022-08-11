@@ -87,10 +87,9 @@ function BoomiBarChart({
           ]?.value;
       setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "boomiChartandBlocksData", kpiConfiguration, dashboardTags);
-      console.log("response", response);
         let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
         datablock = response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics?.data[0]?.statisticsData;
-      console.log("datablock1", datablock);
+
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
