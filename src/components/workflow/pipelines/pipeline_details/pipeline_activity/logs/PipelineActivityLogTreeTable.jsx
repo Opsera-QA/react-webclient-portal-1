@@ -289,7 +289,7 @@ function PipelineActivityLogTreeTable(
           <ExportPipelineActivityLogButton
             className={"ml-2"}
             isLoading={isLoading}
-            activityLogData={activityData?.current}
+            activityLogData={activityData}
           />
         }
       />
