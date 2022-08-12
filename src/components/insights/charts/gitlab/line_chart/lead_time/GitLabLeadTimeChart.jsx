@@ -71,12 +71,12 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 null,
                 dashboardOrgs
             );
-            const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits || [];
+            const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits;
             const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
             const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
             assignStandardLineColors(dataObject, true);
 
-        if (isMounted?.current === true && dataObject.length && meanCommitTimeDataObject?.currentAvgCommitToMergeTime !== undefined) {
+        if (isMounted?.current === true && Array.isArray(dataObject)) {
             setMetrics(dataObject);
             setMeanData(meanDataObject);
             setMeanCommitData(meanCommitTimeDataObject);
@@ -168,7 +168,7 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                         getIconColor={getLeadTimeIconColor}/>
                     <GitLabMeanLeadTimeDataBlock
                          data={meanCommitData.currentAvgCommitToMergeTime}
-                         previousData={meanCommitData.previousAvgCommitToMergeTime}
+                         previousData={meanCommitData.previousAvgCommitToMergeTime != undefined? meanCommitData.previousAvgCommitToMergeTime : "N/A" }
                          getIcon={getIcon}
                          topText={"Average Merge Time (Days)"}
                          bottomText={"Previous Average Merge Time: "}
