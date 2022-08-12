@@ -1,5 +1,5 @@
 export const gitlabDeploymentFrequencyMetadata = {
-  type: "Deployment Freqency",
+  type: "Deployment Frequency",
   fields: [
     {
       label: "Tags",
@@ -8,6 +8,10 @@ export const gitlabDeploymentFrequencyMetadata = {
     {
       label: "Deployment Stage",
       id: "deployment-stage",
+    },
+    {
+      label: "Gitlab Project",
+      id: "gitlab-project",
     },
     {
       label: "Date Range",

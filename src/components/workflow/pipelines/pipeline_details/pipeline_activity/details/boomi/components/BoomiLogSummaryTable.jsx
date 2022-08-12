@@ -32,7 +32,7 @@ function BoomiLogSummaryTable({ boomiObj, jobType }) {
     [],
   );
 
-  const deployMigrateColumns = useMemo(
+  const deployColumns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "componentId")),
       getTableTextColumn(getField(fields, "packageVersion")),
@@ -42,17 +42,44 @@ function BoomiLogSummaryTable({ boomiObj, jobType }) {
       getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "deployedDate")),
       getTableTextColumn(getField(fields, "deployedBy")),
-        getTableTextColumn(getField(fields, "deploymentId")),
-        getTableTextColumn(getField(fields, "environmentName")),
+      getTableTextColumn(getField(fields, "deploymentId")),
+      getTableTextColumn(getField(fields, "environmentName")),
     ],
     [],
   );
+
+  const migrateColumns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "componentId")),
+      getTableTextColumn(getField(fields, "packageVersion")),
+      getTableTextColumn(getField(fields, "notes")),
+      getTableTextColumn(getField(fields, "packageId")),
+      getTableTextColumn(getField(fields, "componentVersion")),
+      getTableTextColumn(getField(fields, "componentType")),
+      getTableTextColumn(getField(fields, "deployedDate")),
+      getTableTextColumn(getField(fields, "deployedBy")),
+      getTableTextColumn(getField(fields, "deploymentId")),
+      getTableTextColumn(getField(fields, "sourceEnvironmentName")),
+      getTableTextColumn(getField(fields, "targetEnvironmentName")),
+    ],
+    [],
+  );
+
+  const getColumns = () => {
+      if (jobType === "DEPLOY_PACKAGE_COMPONENT") {
+          return deployColumns;
+      }
+      if (jobType === "MIGRATE_PACKAGE_COMPONENT") {
+          return migrateColumns;
+      }
+      return createPackageColumns;
+  };
 
   const getComponentResultsTable = () => {
     return (
       <VanityTable
         data={boomiObj}
-        columns={jobType === "CREATE_PACKAGE_COMPONENT" ? createPackageColumns : deployMigrateColumns}
+        columns={getColumns()}
         tableHeight={"14.1vh"}
       />
     );

@@ -73,7 +73,8 @@ import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
-
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
+import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
 //new
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
 
@@ -177,7 +178,8 @@ import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/d
 
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
-import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
+import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1001,12 +1003,36 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
           );
-
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+            <Col md={12} className="p-2">
+              <GitLabLeadTimeChart
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+        );
       //APIGEE KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (
           <Col xl={12} md={12} className="p-2">
             <ApigeeReportsChartTab
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeSummaryChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1214,7 +1240,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-        );  
+        );
       case "github-commit-statistics":
         return (
           <Col md={12} className="p-2">
@@ -1673,7 +1699,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      
+
 
       case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (

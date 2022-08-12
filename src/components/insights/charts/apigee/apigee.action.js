@@ -87,4 +87,24 @@ apigeeActions.getReportDetails = async (
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+apigeeActions.getSummaryChartDetails = async (
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+) => {
+  const apiUrl = apigeeBaseURL + "metrics";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const postBody = {
+    startDate: dateRange?.start,
+    endDate: dateRange?.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+
+};
+
 export default apigeeActions;

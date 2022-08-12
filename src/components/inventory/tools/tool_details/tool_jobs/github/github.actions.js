@@ -36,3 +36,25 @@ githubActions.getBranchesFromGithubInstanceV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
+githubActions.getBranchesFromGithubInstanceV3 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  repositoryId,
+  searchTerm,
+) => {
+  const apiUrl = `/tools/${toolId}/github/v2/branches`;
+  const queryParams = {
+    params: {
+      repositoryId: repositoryId,
+      searchTerm: searchTerm ? searchTerm : "",
+    },
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParams,
+  );
+};

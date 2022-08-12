@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ServiceNowConfigurationItemsSelectInput({
   valueField,
@@ -21,8 +23,10 @@ function ServiceNowConfigurationItemsSelectInput({
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [configurationItems, setConfigurationItems] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -57,45 +61,32 @@ function ServiceNowConfigurationItemsSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setConfigurationItems([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadConfigurationItems(serviceNowToolId, source).catch((error) => {
-    //     if (isMounted?.current === true) {
-    //       throw error;
-    //     }
-    //   });
-    // }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+      loadConfigurationItems("", serviceNowToolId).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [serviceNowToolId]);
 
-  const loadConfigurationItems = async (searchTerm) => {
-    if (searchTerm && searchTerm.length >= 3) {
+  const loadConfigurationItems = async (searchTerm, serviceNowToolId) => {
+    // if (searchTerm) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowConfigurationItemsByName(
+        const response = await pipelineStepNotificationActions.getServiceNowConfigurationItemsByNameV2(
           serviceNowToolId,
           searchTerm,
           getAccessToken,
           cancelTokenSource
         );
 
+        const results = response.data.message.result;
+
         if (
-          response?.data !== null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
+          Array.isArray(results)
         ) {
           setConfigurationItems(response.data.message.result);
         }
@@ -111,7 +102,7 @@ function ServiceNowConfigurationItemsSelectInput({
           setIsLoading(false);
         }
       }
-    }
+    // }
   };
 
   const getPlaceholderText = () => {
@@ -136,6 +127,11 @@ function ServiceNowConfigurationItemsSelectInput({
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadConfigurationItems(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
     <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
@@ -150,7 +146,7 @@ function ServiceNowConfigurationItemsSelectInput({
       // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => loadConfigurationItems(searchTerm)}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
       useToggle={false}
     />
   );

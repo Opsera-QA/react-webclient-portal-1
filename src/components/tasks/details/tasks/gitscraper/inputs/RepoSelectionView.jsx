@@ -23,6 +23,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: This and the service work need to be completely refactored.
 //  We should not be manipulating objects on the front end.
+//  We also should make this more similar to how RepositorySelectInput works.
 const RepoSelectionView = ({
   dataObject,
   setDataObject,
@@ -81,17 +82,11 @@ const RepoSelectionView = ({
 
       switch (service) {
         case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-          await loadAllBitbucketRepositories(cancelSource);
-          // TODO: For when we support lazy loading on bitbucket
-          // await loadBitbucketRepositories(cancelSource);
-          break;
+          return await loadBitbucketRepositories(cancelSource);
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
           return await loadGitlabRepositories(cancelSource);
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-          await loadAllGithubRepositories(cancelSource);
-          // TODO: For when we support lazy loading on github
-          // await loadGithubRepositories(cancelSource);
-          break;
+          return await loadGithubRepositories(cancelSource);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -131,6 +126,11 @@ const RepoSelectionView = ({
       searchTerm,
       100,
     );
+
+    if (response == null) {
+      return false;
+    }
+
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -146,6 +146,11 @@ const RepoSelectionView = ({
       searchTerm,
       100,
     );
+
+    if (response == null) {
+      return false;
+    }
+
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -161,11 +166,12 @@ const RepoSelectionView = ({
       gitToolId,
       100,
     );
-    const repositories = response?.data?.data;
 
     if (response == null) {
       return false;
     }
+
+    const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setRepositories([...await formatRepoData(repositories)]);
@@ -260,7 +266,7 @@ const RepoSelectionView = ({
   };
 
   //TODO: We should be just passing the entire objects in ListInputBase BUT I don't want to break compatibility.
-  const callbackFunction = (fieldName, newRepositoryList) => {
+  const setDataFunction = (fieldName, newRepositoryList) => {
     const reposToScan = dataObject?.getArrayData("reposToScan");
     const newReposToScan = [];
 
@@ -290,8 +296,7 @@ const RepoSelectionView = ({
 
   const getLimitationMessage = () => {
     if (
-      service === toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB // TODO: When wiring up support for other services, this one line needs to be removed.
-      && isMongoDbId(gitToolId) === true
+      isMongoDbId(gitToolId) === true
       && (service !== toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET || hasStringValue(workspace) === true)
     ) {
       return (
@@ -340,17 +345,16 @@ const RepoSelectionView = ({
           selectOptions={repositories}
           dataObject={dataObject}
           setDataObject={setDataObject}
-          setDataFunction={callbackFunction}
+          setDataFunction={setDataFunction}
           showSelectAllButton={true}
           valueField={valueField}
           textField={textField}
           isLoading={isLoading}
-          searchFunction={service === toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined :searchFunction}
           icon={faGit}
           customTemplate={customTemplate}
           disabled={disabled}
           noDataMessage={"No Repositories Found"}
-          lazyLoadSearchFunction={service !== toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB ? undefined : lazyLoadSearchFunction}
+          lazyLoadSearchFunction={lazyLoadSearchFunction}
           disableSearch={disableSearch}
         />
       </Col>
@@ -362,7 +366,7 @@ const RepoSelectionView = ({
           selectOptions={selectedRepositories}
           dataObject={dataObject}
           setDataObject={setDataObject}
-          setDataFunction={callbackFunction}
+          setDataFunction={setDataFunction}
           noDataMessage={"No Repositories Selected"}
           valueField={valueField}
           textField={textField}

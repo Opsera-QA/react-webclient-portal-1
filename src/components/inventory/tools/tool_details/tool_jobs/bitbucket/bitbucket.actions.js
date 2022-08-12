@@ -42,3 +42,28 @@ bitbucketActions.getBranchesFromBitbucketInstanceV2 = async (getAccessToken, can
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
+bitbucketActions.getBranchesFromBitbucketInstanceV3 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  workspace,
+  repositoryId,
+  searchTerm,
+) => {
+  const apiUrl = `/tools/${toolId}/bitbucket/v2/branches`;
+
+  const queryParams = {
+    params: {
+      workspace: workspace,
+      repositoryId: repositoryId,
+      searchTerm: searchTerm ? searchTerm : "",
+    },
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParams,
+  );
+};

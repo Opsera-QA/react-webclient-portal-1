@@ -27,7 +27,8 @@ import {
   getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getDeploymentStageFromKpiConfiguration
+  getDeploymentStageFromKpiConfiguration,
+  getGitlabProjectFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -480,7 +481,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
-    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration);
+    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+    gitlabProjects = getGitlabProjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -538,7 +540,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
-    deploymentStages:deploymentStages
+    deploymentStages:deploymentStages,
+    gitlabProjects: gitlabProjects
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
