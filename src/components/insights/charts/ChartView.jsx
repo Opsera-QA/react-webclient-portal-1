@@ -176,8 +176,6 @@ import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatisti
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
-//Boomi KPI
-import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..

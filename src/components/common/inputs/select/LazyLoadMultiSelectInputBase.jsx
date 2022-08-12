@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -6,36 +6,48 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { errorHelpers } from "components/common/helpers/error-helpers";
 
-function LazyLoadMultiSelectInputBase({
-  fieldName,
-  dataObject,
-  setDataObject,
-  groupBy,
-  disabled,
-  selectOptions,
-  valueField,
-  textField,
-  placeholderText,
-  setDataFunction,
-  busy,
-  showClearValueButton,
-  clearDataFunction,
-  className,
-  showLabel,
-  requireClearDataConfirmation,
-  clearDataDetails,
-  linkTooltipText,
-  detailViewLink,
-  infoOverlay,
-  inputHelpOverlay,
-  onToggleFunction,
-  onSearchFunction,
-  useToggle,
-  helpTooltipText,
-}) {
+function LazyLoadMultiSelectInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    disabled,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    showClearValueButton,
+    clearDataFunction,
+    className,
+    showLabel,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    inputHelpOverlay,
+    onToggleFunction,
+    onSearchFunction,
+    useToggle,
+    helpTooltipText,
+    error,
+  }) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
+
+  useEffect(() => {
+    setErrorMessage("");
+
+    if (error) {
+      setErrorMessage(errorHelpers.parseApiErrorForInfoText(field?.pluralTopic, error));
+    }
+  }, [error]);
+
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -172,12 +184,13 @@ LazyLoadMultiSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
-  inputHelpOverlay: PropTypes.object,
-  infoOverlay: PropTypes.object,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
   useToggle: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  error: PropTypes.any,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {
