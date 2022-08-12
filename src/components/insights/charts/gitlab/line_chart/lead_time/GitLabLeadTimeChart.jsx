@@ -76,11 +76,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
             assignStandardLineColors(dataObject, true);
 
-            if (isMounted?.current === true && dataObject.length) {
-                setMetrics(dataObject);
-                setMeanData(meanDataObject);
-                setMeanCommitData(meanCommitTimeDataObject);
-            }
+        if (isMounted?.current === true && dataObject.length && meanCommitTimeDataObject?.currentAvgCommitToMergeTime !== undefined) {
+            setMetrics(dataObject);
+            setMeanData(meanDataObject);
+            setMeanCommitData(meanCommitTimeDataObject);
+        }
         } catch (error) {
             if (isMounted?.current === true) {
                 console.error(error);
@@ -158,7 +158,7 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
 
         const getLeftDataBlocks = () => {
             return (
-                <>
+                <div>
                     <GitLabMeanLeadTimeDataBlock
                         data={meanData.currentAvgLeadTime}
                         previousData={meanData.previousAvgLeadTime}
@@ -173,11 +173,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                          topText={"Average Merge Time (Days)"}
                          bottomText={"Previous Average Merge Time: "}
                          getIconColor={getLeadTimeIconColor}/>
-                    </>
+                </div>
             );
         };
         return (
-            <Container>
+            <Container fluid>
                 <Row className="align-items-center">
                     <Col sm={4} className={"p-2"}>
                         {getLeftDataBlocks()}
