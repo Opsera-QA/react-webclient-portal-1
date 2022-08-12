@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import BoomiActionableMetadata from "./boomi-actionable-insights-metadata";
 import {
+    getTableDateTimeColumn,
     getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -24,7 +25,7 @@ function BoomiActionableInsightsDeployTable({ data, isLoading, loadData, filterM
         () => [
             getTableTextColumn(getField(fields, "pipeline"), "pipeline"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
-            getTableTextColumn(getField(fields, "timestamp"), "timestamp"),
+            getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
             getTableTextColumn(getField(fields, "totalPackages"), "totalPackages"),
             getTableTextColumn(getField(fields, "successfulPackages"), "successfulPackages"),
             getTableTextColumn(getField(fields, "failedPackages"), "failedPackages"),
