@@ -37,4 +37,4 @@ export default function WorkspaceViews() {
   );
 }
 
-WorkspaceViewContainer.propTypes = {};
+WorkspaceViews.propTypes = {};
