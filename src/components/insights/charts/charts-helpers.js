@@ -234,6 +234,32 @@ export function getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
+        .value;
+  }
+  return null;
+}
+
+export function getGitlabProjectFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+        .value;
+  }
+  return null;
+}
+
 export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
@@ -312,19 +338,6 @@ export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfigurati
     return kpiConfiguration.filters[
       kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")
     ].value;
-  }
-  return null;
-}
-
-export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
-  if (
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
-          ?.value &&
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]?.value
-          .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
-        .value;
   }
   return null;
 }
