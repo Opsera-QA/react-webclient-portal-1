@@ -25,6 +25,10 @@ import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
+import AutomationPercentageChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import BoomiChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -246,6 +250,9 @@ function BoomiBarChart({
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
         launchActionableInsightsFunction={onRowSelect}
+        chartHelpComponent={(closeHelpPanel) => (
+            <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Mean Time to Resolution"
