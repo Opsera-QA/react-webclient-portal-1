@@ -10,6 +10,8 @@ import PipelineStatusFilter from "components/common/filters/pipelines/status/Pip
 import InlinePipelineStatusFilter from "components/common/filters/pipelines/status/InlinePipelineStatusFilter";
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+import PipelineActivityFilterModel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivity.filter.model";
 import axios from "axios";
 import pipelineActivityLogsActions
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
@@ -18,8 +20,6 @@ import pipelineLogHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
-import PipelineActivityFilterModel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivity.filter.model";
 
 function PipelineActivityLogTreeTable(
   {
