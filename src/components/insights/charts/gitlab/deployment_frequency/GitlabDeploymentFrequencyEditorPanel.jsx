@@ -5,8 +5,9 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import {gitlabDeploymentFrequencyMetadata} from "./gitlabDeploymentFrequency.metadata";
 import MetricDeploymentStageFilterInput
-    from "../../../../common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInput";
-
+    from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInput";
+import MetricGitLabProjectFilterInput
+    from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
 function GitlabDeploymentFrequencyEditorPanel(
   {
     metricModel,
@@ -35,6 +36,11 @@ function GitlabDeploymentFrequencyEditorPanel(
         setMetricFilterModel={setMetricFilterModel}
       />
       <MetricDeploymentStageFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+      <MetricGitLabProjectFilterInput
         metricModel={metricModel}
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
