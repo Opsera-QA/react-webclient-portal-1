@@ -16,7 +16,7 @@ function ExportPipelineActivityLogButton({isLoading, activityLogData, className}
 
   const rawDataResults = () =>{
     return activityLogData ? activityLogData.map(item => JSON.stringify(item)) : "export failure";
-   };
+  };
 
   const formatActivityLogData = () => {
     let formattedData = activityLogData;
