@@ -42,7 +42,7 @@ function GitCustodianNewJiraTicketEditorPanel({
     newModel.setData("issues", issueIds);
 
     // TODO: Determine what this is doing and rewrite
-    newModel.setData("description", !selectedIssues ? "" : selectedIssues.reduce((pv, cv) => pv + `Repository: ${cv.repository}; Path: ${cv.path}; Line Number: ${cv.lineNumber}\n`, ""));
+    newModel.setData("description", !selectedIssues ? "" : selectedIssues.reduce((pv, cv) => pv + `Repository: ${cv.repository}; Path: ${cv.path}; Line Number: ${cv?.lineNumber?.key}\n`, ""));
     newModel.setData("summary", `Opsera Git custodian - Compliance issue - total number of issues #${issueIds.length}`);
     setCreateJiraTicketDataModel({ ...newModel });
   };
