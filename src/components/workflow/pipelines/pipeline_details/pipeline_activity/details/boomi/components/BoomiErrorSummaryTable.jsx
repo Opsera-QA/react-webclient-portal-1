@@ -25,7 +25,7 @@ function BoomiErrorSummaryTable({ boomiObj, jobType }) {
         []
     );
 
-    const migrateCreatePackageCols = useMemo(
+    const createPackageColumns = useMemo(
         () => [
             getTableTextColumn(getField(fields,"componentId")),
             getTableTextColumn(getField(fields,"packageVersion")),
@@ -33,6 +33,26 @@ function BoomiErrorSummaryTable({ boomiObj, jobType }) {
         ],
         []
     );
+
+    const migrateColumns = useMemo(
+        () => [
+            getTableTextColumn(getField(fields,"componentId")),
+            getTableTextColumn(getField(fields,"message")),
+            getTableTextColumn(getField(fields, "sourceEnvironmentName")),
+            getTableTextColumn(getField(fields, "targetEnvironmentName")),
+        ],
+        [],
+    );
+
+    const getColumns = () => {
+        if (jobType === "DEPLOY_PACKAGE_COMPONENT") {
+            return deployPackageCols;
+        }
+        if (jobType === "MIGRATE_PACKAGE_COMPONENT") {
+            return migrateColumns;
+        }
+        return createPackageColumns;
+    };
 
     const getComponentResultsTable = () => {
         if (!Array.isArray(boomiObj) || boomiObj.length === 0) {
@@ -47,7 +67,7 @@ function BoomiErrorSummaryTable({ boomiObj, jobType }) {
         return (
             <VanityTable
                 data={boomiObj}
-                columns={jobType === "CREATE_PACKAGE_COMPONENT" ? migrateCreatePackageCols : deployPackageCols}
+                columns={getColumns()}
                 tableHeight={"14.1vh"}
             />
         );
