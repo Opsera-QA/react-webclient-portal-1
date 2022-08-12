@@ -97,7 +97,11 @@ export const itemArray = [
     "dependencyType" : "java",
     "version": "15",
   },
-
+  {
+    "name": "Java openJDK Version 17",
+    "dependencyType" : "java",
+    "version": "17",
+  },
   {
     "name": "Gradle Version 1.0",
     "dependencyType" : "gradle",
