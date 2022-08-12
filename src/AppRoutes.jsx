@@ -135,6 +135,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 import OpseraFooter from "components/footer/OpseraFooter";
+import Workspace from "components/workspace/Workspace";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   const history = useHistory();
@@ -347,7 +348,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={UserDataMappingDetailView} />
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
-          <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
+          <SecureRoute path="/workspace" component={Workspace} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>

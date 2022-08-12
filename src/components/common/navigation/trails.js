@@ -976,6 +976,15 @@ const breadcrumbs = {
     linkText: "Access Denied",
     icon: faEnvelope
   },
+
+  workspace: {
+    parent: undefined,
+    name: "workspace",
+    path: paths.workspace,
+    title: "Workspace",
+    linkText: "Workspace",
+    icon: faEnvelope
+  },
 };
 
 export const getTrail = (breadcrumb) => {
