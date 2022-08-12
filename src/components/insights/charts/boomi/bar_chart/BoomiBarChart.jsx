@@ -24,6 +24,11 @@ import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx"
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
+import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
+import AutomationPercentageChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import BoomiChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -109,6 +114,15 @@ function BoomiBarChart({
     }
   };
 
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+        <BoomiActionableTabOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+        />
+    );
+  };
  
 
   const getChartBody = () => {
@@ -235,6 +249,10 @@ function BoomiBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        launchActionableInsightsFunction={onRowSelect}
+        chartHelpComponent={(closeHelpPanel) => (
+            <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Mean Time to Resolution"
