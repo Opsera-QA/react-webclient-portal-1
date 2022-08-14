@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function WorkspaceRegistryTable(
+export default function WorkspaceRegistryTable(
   {
     tools,
     toolMetadata,
@@ -76,5 +76,3 @@ WorkspaceRegistryTable.propTypes = {
   toolMetadata: PropTypes.object,
   rowClickFunction: PropTypes.func,
 };
-
-export default WorkspaceRegistryTable;

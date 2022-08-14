@@ -24,6 +24,19 @@ taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilte
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+taskActions.getWorkspaceTasksList = async (getAccessToken, cancelTokenSource, fields) => {
+  const apiUrl = `/tasks`;
+  const urlParams = {
+    params: {
+      page: 1,
+      size: 100,
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 taskActions.getTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);

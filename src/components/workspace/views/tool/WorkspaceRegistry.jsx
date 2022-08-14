@@ -1,5 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
+import React, {useEffect, useState} from "react";
 import toolsActions from "components/inventory/tools/tools-actions";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -10,7 +9,6 @@ export default function WorkspaceRegistry(
     workspaceFilterModel,
     setWorkspaceFilterModel,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [tools, setTools] = useState([]);
   const [toolMetadata, setToolMetadata] = useState(undefined);
@@ -18,6 +16,7 @@ export default function WorkspaceRegistry(
     isMounted,
     getAccessToken,
     cancelTokenSource,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {

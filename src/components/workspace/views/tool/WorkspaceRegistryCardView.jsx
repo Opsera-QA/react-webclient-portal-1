@@ -5,7 +5,7 @@ import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import ToolModel from "components/inventory/tools/tool.model";
 
-function WorkspaceRegistryCardView(
+export default function WorkspaceRegistryCardView(
   {
     tools,
     toolMetadata,
@@ -45,5 +45,3 @@ WorkspaceRegistryCardView.propTypes = {
   isLoading: PropTypes.bool,
   toolMetadata: PropTypes.object,
 };
-
-export default WorkspaceRegistryCardView;

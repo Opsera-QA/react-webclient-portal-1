@@ -5,6 +5,7 @@ import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
 import WorkspaceRegistry from "components/workspace/views/tool/WorkspaceRegistry";
+import WorkspaceTasks from "components/workspace/views/task/WorkspaceTasks";
 
 export default function WorkspaceViewContainer() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
@@ -21,7 +22,12 @@ export default function WorkspaceViewContainer() {
           />
         );
       case "tasks":
-        return "test 3";
+        return (
+          <WorkspaceTasks
+            workspaceFilterModel={workspaceFilterModel}
+            setWorkspaceFilterModel={setWorkspaceFilterModel}
+          />
+        );
     }
   };
 
