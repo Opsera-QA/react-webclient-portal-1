@@ -75,6 +75,19 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+pipelineActions.getWorkspacePipelines = async (getAccessToken, cancelTokenSource, fields) => {
+  const apiUrl = `/pipelines/v2`;
+  const urlParams = {
+    params: {
+      size: 100,
+      page: 1,
+      fields: fields,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 pipelineActions.getPipelinesAccessByEmailV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, email) => {
   const apiUrl = `/pipelines/user/${email}`;
   const sortOption = pipelineFilterDto?.getData("sortOption");

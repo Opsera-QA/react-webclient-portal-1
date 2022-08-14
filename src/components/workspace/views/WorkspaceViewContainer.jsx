@@ -6,6 +6,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
 import WorkspaceRegistry from "components/workspace/views/tool/WorkspaceRegistry";
 import WorkspaceTasks from "components/workspace/views/task/WorkspaceTasks";
+import WorkspacePipelines from "components/workspace/views/pipeline/WorkspacePipelines";
 
 export default function WorkspaceViewContainer() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
@@ -13,7 +14,12 @@ export default function WorkspaceViewContainer() {
   const getCurrentView = () => {
     switch (workspaceFilterModel?.getData("type")) {
       case "pipelines":
-        return "test 1";
+        return (
+          <WorkspacePipelines
+            workspaceFilterModel={workspaceFilterModel}
+            setWorkspaceFilterModel={setWorkspaceFilterModel}
+          />
+        );
       case "registry":
         return (
           <WorkspaceRegistry
