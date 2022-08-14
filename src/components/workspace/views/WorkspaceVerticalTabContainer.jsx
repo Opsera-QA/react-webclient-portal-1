@@ -7,40 +7,50 @@ import {
   faDraftingCompass,
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function WorkspaceVerticalTabContainer(
   {
-    activeView,
-    setActiveView,
+    workspaceFilterModel,
+    setWorkspaceFilterModel,
   }) {
+  const setDataFunction = (selectedOption) => {
+    const currentOption = workspaceFilterModel?.getData("type");
+
+    if (hasStringValue(currentOption) && currentOption !== selectedOption) {
+      workspaceFilterModel?.setData("type", selectedOption);
+      setWorkspaceFilterModel({...workspaceFilterModel});
+    }
+  };
+
   return (
     <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faDraftingCompass}
         tabText={"Pipelines"}
         tabName={"pipelines"}
-        handleTabClick={setActiveView}
-        activeTab={activeView}
+        handleTabClick={setDataFunction}
+        activeTab={workspaceFilterModel?.getData("type")}
       />
       <VanitySetVerticalTab
         icon={faClipboardList}
         tabText={"Registry"}
         tabName={"registry"}
-        handleTabClick={setActiveView}
-        activeTab={activeView}
+        handleTabClick={setDataFunction}
+        activeTab={workspaceFilterModel?.getData("type")}
       />
       <VanitySetVerticalTab
         icon={faTasks}
         tabText={"Tasks"}
         tabName={"tasks"}
-        handleTabClick={setActiveView}
-        activeTab={activeView}
+        handleTabClick={setDataFunction}
+        activeTab={workspaceFilterModel?.getData("type")}
       />
     </VanitySetVerticalTabContainer>
   );
 }
 
 WorkspaceVerticalTabContainer.propTypes = {
-  activeView: PropTypes.string,
-  setActiveView: PropTypes.func,
+  workspaceFilterModel: PropTypes.object,
+  setWorkspaceFilterModel: PropTypes.func,
 };

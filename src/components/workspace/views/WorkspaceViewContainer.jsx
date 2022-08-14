@@ -1,29 +1,29 @@
-@@ -0,0 +1,57 @@
 import React, { useState } from "react";
 import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
-import { faNetworkWired } from "@fortawesome/pro-light-svg-icons";
+import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
 
 export default function WorkspaceViewContainer() {
-  const [activeView, setActiveView] = useState("pipelines");
+  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
 
   const getCurrentView = () => {
-    switch (activeView) {
+    switch (workspaceFilterModel?.getData("type")) {
       case "pipelines":
-        return activeView;
-      case "tasks":
-        return activeView;
+        return "test 1";
       case "registry":
-        return activeView;
+        return "test 2";
+      case "tasks":
+        return "test 3";
     }
   };
 
   const getVerticalTabContainer = () => {
     return (
       <WorkspaceVerticalTabContainer
-        activeView={activeView}
-        setActiveView={setActiveView}
+        workspaceFilterModel={workspaceFilterModel}
+        setWorkspaceFilterModel={setWorkspaceFilterModel}
       />
     );
   };
@@ -48,7 +48,7 @@ export default function WorkspaceViewContainer() {
     <FilterContainer
       // addRecordFunction={createNewTask}
       body={getTabAndViewContainer()}
-      titleIcon={faNetworkWired}
+      titleIcon={faRectangleList}
       title={"Workspace"}
       className={"px-2 pb-2"}
     />

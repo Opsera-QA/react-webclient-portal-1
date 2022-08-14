@@ -93,6 +93,7 @@ sessionHelper.deleteStoredSessionValue = (sessionKey) => {
 };
 
 sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
+  WORKSPACE_FILTER_MODEL_DATA: "workspace-filter-model-data",
   TASK_FILTER_MODEL_DATA: "task-filter-model-data",
   TOOL_FILTER_MODEL_DATA: "tool-filter-model-data",
   PIPELINE_FILTER_MODEL_DATA: "pipeline-filter-model-data",
