@@ -4,6 +4,7 @@ import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewConta
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
+import WorkspaceRegistry from "components/workspace/views/tool/WorkspaceRegistry";
 
 export default function WorkspaceViewContainer() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
@@ -13,7 +14,12 @@ export default function WorkspaceViewContainer() {
       case "pipelines":
         return "test 1";
       case "registry":
-        return "test 2";
+        return (
+          <WorkspaceRegistry
+            workspaceFilterModel={workspaceFilterModel}
+            setWorkspaceFilterModel={setWorkspaceFilterModel}
+          />
+        );
       case "tasks":
         return "test 3";
     }
@@ -49,6 +55,9 @@ export default function WorkspaceViewContainer() {
       // addRecordFunction={createNewTask}
       body={getTabAndViewContainer()}
       titleIcon={faRectangleList}
+      filterDto={workspaceFilterModel}
+      setFilterDto={setWorkspaceFilterModel}
+      supportViewToggle={true}
       title={"Workspace"}
       className={"px-2 pb-2"}
     />

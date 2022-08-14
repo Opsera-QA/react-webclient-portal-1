@@ -63,6 +63,19 @@ toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+toolsActions.getWorkspaceToolRegistryList = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/configs/v2`;
+  const urlParams = {
+    params: {
+      currentPage: 1,
+      pageSize: 100,
+      // owner: toolFilterModel?.getFilterValue("owner"),
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 toolsActions.getEstimatedToolRegistryCountV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/v2/count`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
