@@ -5,8 +5,7 @@ import ChartContainer from "../../../../common/panels/insights/charts/ChartConta
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
 import apigeeActions from "../apigee.action";
-import ApigeeSummaryForTransferChart from "./ApigeeSummaryForTransferChart";
-import ApigeeSummaryForDeployChart from "./ApigeeSummaryForDeployChart";
+import ApigeeSummaryDetails from "./ApigeeSummaryDetails";
 
 function ApigeeSummaryChart({
   kpiConfiguration,
@@ -21,8 +20,8 @@ function ApigeeSummaryChart({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [metrics, setMetrics] = useState([]);
-  const [transferData, setTransferData] = useState([]);
-  const [deployData, setDeployData] = useState([]);
+  const [transferData, setTransferData] = useState({});
+  const [deployData, setDeployData] = useState({});
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -79,20 +78,21 @@ function ApigeeSummaryChart({
   const getData = (metricsData, type) => {
     if (metricsData.length > 0) {
       const metrics = metricsData[0];
-      const typeData = metrics[type];
-      if (Array.isArray(typeData) && typeData.length > 0) {
-        return typeData[0];
-      }
+      return {
+        current: metrics?.currentData?.[type],
+        previous: metrics?.previousData?.[type],
+        trend: metrics?.trend?.[type],
+      };
     }
-    return [];
+    return {};
   };
 
   const getChartBody = () => {
     return (
       <>
         <div className="new-chart mb-3 mr-3 ml-3 p-0 all-github-actions-data-block">
-          <ApigeeSummaryForTransferChart kpiConfiguration={kpiConfiguration} transferData={transferData} isLoading={isLoading} />
-          <ApigeeSummaryForDeployChart kpiConfiguration={kpiConfiguration} deployData={deployData} isLoading={isLoading} />
+          <ApigeeSummaryDetails kpiConfiguration={kpiConfiguration} summaryData={transferData} isLoading={isLoading} type="Transfer" />
+          <ApigeeSummaryDetails kpiConfiguration={kpiConfiguration} summaryData={deployData} isLoading={isLoading} type="Deploy" />
         </div>
       </>
     );

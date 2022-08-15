@@ -7,6 +7,12 @@ regexDefinitions.generalText = {
   errorFormText: "Only letters, numbers, dashes, colons, underscores, and periods are allowed"
 };
 
+regexDefinitions.descriptionField = {
+  regex: /^[A-Za-z0-9'\-_.:,! ]*$/,
+  formText: "Spaces, letters, numbers dashes, colons, underscores, commas, exclamation points, and periods are allowed",
+  errorFormText: "Only spaces, letters, numbers dashes, colons, commas, exclamation points, underscores, and periods are allowed"
+};
+
 regexDefinitions.portField = {
   regex:/^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/,
   errorFormText: "Only numbers allowed and should not be greater than 65,535"

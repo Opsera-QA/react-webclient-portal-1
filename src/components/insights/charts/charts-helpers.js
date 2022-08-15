@@ -234,19 +234,6 @@ export function getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
-export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
-      .value;
-  }
-  return null;
-}
-
 export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
   if (
       kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
@@ -256,6 +243,32 @@ export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
   ) {
     return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
         .value;
+  }
+  return null;
+}
+
+export function getGitlabProjectFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+        .value;
+  }
+  return null;
+}
+
+export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]?.value
+      .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
+      .value;
   }
   return null;
 }

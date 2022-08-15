@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import {gitlabDeploymentFrequencyMetadata} from "./gitlabDeploymentFrequency.metadata";
+import {gitlabLeadTimeMetadata} from "./gitlabLeadTime.metadata";
 import MetricDeploymentStageFilterInput
     from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInput";
 import MetricGitLabProjectFilterInput
     from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
-function GitlabDeploymentFrequencyEditorPanel(
+function GitlabLeadTimeEditorPanel(
   {
     metricModel,
     unpackedFilterData,
@@ -19,7 +19,7 @@ function GitlabDeploymentFrequencyEditorPanel(
     setMetricFilterModel(undefined);
 
     if (unpackedFilterData) {
-      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, gitlabDeploymentFrequencyMetadata));
+      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, gitlabLeadTimeMetadata));
     }
 
   }, [unpackedFilterData]);
@@ -54,11 +54,11 @@ function GitlabDeploymentFrequencyEditorPanel(
   );
 }
 
-GitlabDeploymentFrequencyEditorPanel.propTypes = {
+GitlabLeadTimeEditorPanel.propTypes = {
   metricModel: PropTypes.object,
   unpackedFilterData: PropTypes.object,
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
 };
 
-export default GitlabDeploymentFrequencyEditorPanel;
+export default GitlabLeadTimeEditorPanel;
