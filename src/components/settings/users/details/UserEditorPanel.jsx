@@ -19,7 +19,6 @@ import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
-import organizationActions from "components/settings/organizations/organization-actions";
 
 function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -63,7 +62,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
       setIsSaving(true);
       eraseLogs();
       const email = userModel?.getData("emailAddress");
-      const organization = userModel?.getData("organizationName");
+      const organizationName = userModel?.getData("organizationName");
       addLog("Beginning the user creation process...");
       addLog(`Checking if email address [${email}] is available`);
       const isEmailTaken = await checkIfEmailExists();
@@ -76,17 +75,20 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
 
       addLog(`Email address [${email}] is available.`);
 
-      const isNameTaken = await checkIfUserWithNameExists();
+      const isNameTakenResponse = await checkIfUserWithNameExists();
 
-      if (isNameTaken === true) {
-        const message = `User with same name is already taken! Please select a unique name. Can add a digit if necessary`;
+      if (isNameTakenResponse?.isAvailable !== true) {
+        const message = `
+          A user with the same first and last name is already registered with email [${isNameTakenResponse?.foundUserEmailAddress}]! 
+          If this is not your account, please add a digit to your last name to make it unique. 
+          For example, if your last name is "Jones," please try "Jones1" or "Jones2."
+        `;
         addLog(message);
         throw message;
       }
 
-      // eslint-disable-next-line no-unreachable
       try {
-        addLog(`Adding user [${email}] to Organization ${organization}.`);
+        addLog(`Adding user [${email}] to Organization ${organizationName}.`);
         const userResponse = await createLdapUser();
 
         if (userResponse?.status !== 200) {
@@ -94,13 +96,13 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
         }
       }
       catch (error) {
-        const errorLog = `Error adding user [${email}] to Organization ${organization}: ${parseError(error)}.  Please check browser logs for more details.`;
+        const errorLog = `Error adding user [${email}] to Organization ${organizationName}: ${parseError(error)}.  Please check browser logs for more details.`;
         addLog(errorLog);
         console.error(error);
         throw errorLog;
       }
 
-      addLog(`User [${email}] successfully added to Organization ${organization}.`);
+      addLog(`User [${email}] successfully added to Organization ${organizationName}.`);
 
       try {
         addLog(`Adding user [${email}] to Opsera Platform.`);
@@ -111,7 +113,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
         }
       }
       catch (error) {
-        const errorLog = `Error adding user [${email}] to Organization ${organization}: ${parseError(error)}. Please check browser logs for more details.`;
+        const errorLog = `Error adding user [${email}] to Organization ${organizationName}: ${parseError(error)}. Please check browser logs for more details.`;
         addLog(errorLog);
         console.error(error);
         throw errorLog;
@@ -155,9 +157,9 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
       organization,
       firstName,
       lastName,
-      );
+    );
 
-    return nameIsAvailable?.isAvailable === false;
+    return nameIsAvailable?.data;
   };
 
   const createLdapUser = async () => {
@@ -250,12 +252,12 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
   };
 
   const addLog = useCallback((newLog) => {
-    setLogs(existingLogs => [...existingLogs, `${newLog}\n`]);
+      setLogs(existingLogs => [...existingLogs, `${newLog}\n`]);
     }, [setLogs]
   );
 
   const eraseLogs = useCallback(() => {
-    setLogs([]);
+      setLogs([]);
     }, [setLogs]
   );
 
