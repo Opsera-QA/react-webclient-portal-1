@@ -5,6 +5,7 @@ import {
   faTasks,
   faClipboardList,
   faDraftingCompass,
+  faChartTreeMap,
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -25,6 +26,13 @@ export default function WorkspaceVerticalTabContainer(
 
   return (
     <VanitySetVerticalTabContainer>
+      <VanitySetVerticalTab
+        icon={faChartTreeMap}
+        tabText={"All"}
+        tabName={"all"}
+        handleTabClick={setDataFunction}
+        activeTab={workspaceFilterModel?.getData("type")}
+      />
       <VanitySetVerticalTab
         icon={faDraftingCompass}
         tabText={"Pipelines"}

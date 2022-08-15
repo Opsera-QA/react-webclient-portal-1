@@ -7,6 +7,7 @@ import WorkspaceFilterModel from "components/workspace/views/workspace.filter.mo
 import WorkspaceRegistry from "components/workspace/views/tool/WorkspaceRegistry";
 import WorkspaceTasks from "components/workspace/views/task/WorkspaceTasks";
 import WorkspacePipelines from "components/workspace/views/pipeline/WorkspacePipelines";
+import WorkspaceItems from "components/workspace/views/all/WorkspaceItems";
 
 export default function WorkspaceViewContainer() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
@@ -30,6 +31,14 @@ export default function WorkspaceViewContainer() {
       case "tasks":
         return (
           <WorkspaceTasks
+            workspaceFilterModel={workspaceFilterModel}
+            setWorkspaceFilterModel={setWorkspaceFilterModel}
+          />
+        );
+      case "all":
+      default:
+        return (
+          <WorkspaceItems
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />

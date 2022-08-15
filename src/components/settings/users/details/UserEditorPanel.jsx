@@ -157,7 +157,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
       lastName,
       );
 
-    return nameIsAvailable?.data === false;
+    return nameIsAvailable?.isAvailable === false;
   };
 
   const createLdapUser = async () => {
