@@ -2,26 +2,21 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getCustomTablePipelineStateColumnDefinition,
-  getPipelineTypeColumn,
-  getTableDateColumn, getTableDateTimeColumn,
+  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import { workspaceItemMetadata } from "components/workspace/workspaceItem.metadata";
 
 export default function WorkspaceItemTable({ pipelines, isLoading, paginationModel, setPaginationModel, loadData, onRowClickFunction, }) {
-  const fields = pipelineMetadata.fields;
+  const fields = workspaceItemMetadata.fields;
 
   const columns = useMemo(
     () => [
-      getPipelineTypeColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "_id")),
+      getTableTextColumn(getField(fields, "workspaceType")),
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "owner_name")),
-      getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),
-      getTableTextColumn(getField(fields, "workflow.run_count")),
-      getTableDateTimeColumn(getField(fields, "workflow.last_run.completed")),
+      getTableDateTimeColumn(getField(fields, "createdAt")),
+      getTableTextColumn(getField(fields, "_id")),
     ],
     [],
   );

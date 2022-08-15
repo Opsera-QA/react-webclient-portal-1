@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TableCardView from "components/common/table/TableCardView";
-import WorkspacePipelinesTableBase from "components/workspace/views/pipeline/WorkspacePipelinesTableBase";
+import WorkspacePipelinesTable from "components/workspace/views/pipeline/WorkspacePipelinesTable";
 import WorkspacePipelineCardView from "components/workspace/views/pipeline/WorkspacePipelineCardView";
 
 export default function WorkspacePipelineViews(
@@ -31,7 +31,7 @@ export default function WorkspacePipelineViews(
 
   const getTableView = () => {
     return (
-      <WorkspacePipelinesTableBase
+      <WorkspacePipelinesTable
         isLoading={isLoading}
         paginationModel={workspaceFilterModel}
         setPaginationModel={setWorkspaceFilterModel}

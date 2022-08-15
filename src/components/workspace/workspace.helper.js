@@ -1,5 +1,6 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import { getDaysUntilDate } from "components/common/helpers/date/date.helpers";
 
 export const workspaceHelper = {};
 
@@ -17,4 +18,22 @@ workspaceHelper.getWorkspaceItemDetailLink = (type, mongoId) => {
     case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
     case workspaceConstants.WORKSPACE_ITEM_TYPES.REGISTRY:
   }
+};
+
+workspaceHelper.getExpirationRowStyling = (row) => {
+  const daysUntilDate = getDaysUntilDate(new Date(row?.original?.expiration));
+
+  if (daysUntilDate == null || daysUntilDate >= 7) {
+    return "";
+  }
+
+  if (daysUntilDate <= -1 || daysUntilDate === 0) {
+    return " expiring-within-a-day";
+  }
+
+  if (daysUntilDate <= 6) {
+    return " expiring-within-a-week";
+  }
+
+  return "";
 };

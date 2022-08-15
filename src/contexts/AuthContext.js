@@ -11,6 +11,7 @@ import { lightThemeConstants } from "temp-library-components/theme/light.theme.c
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 import { PUBLIC_PATHS } from "AppWithRouterAccess";
 import ClientWebsocket from "core/websocket/client.websocket";
+import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -141,6 +142,17 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const getFeatureFlags = async () => {
     const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
     return response?.data?.featureFlags;
+  };
+
+  const getFreeTrialUserExpirationDate = () => {
+    if (!userData) {
+      return null;
+    }
+
+    const userCreatedAt = userData?.createdAt;
+    const expiration = handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
+    console.log("expiration: " + JSON.stringify(expiration));
+    return expiration;
   };
 
   const isOrganizationOwner = async () => {
@@ -312,6 +324,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       subscribeToTopic: subscribeToTopic,
       unsubscribeFromTopic: unsubscribeFromTopic,
       userData: userData,
+      userExpiration: getFreeTrialUserExpirationDate(),
     }}>
       <div
         className={"w-100"}

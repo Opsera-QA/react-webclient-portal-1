@@ -4,24 +4,24 @@ import CustomTable from "components/common/table/CustomTable";
 import {
   getCustomTablePipelineStateColumnDefinition,
   getPipelineTypeColumn,
-  getTableDateColumn, getTableDateTimeColumn,
+  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
-export default function WorkspacePipelinesTableBase({ pipelines, isLoading, paginationModel, setPaginationModel, loadData, onRowClickFunction, }) {
+export default function WorkspacePipelinesTable({ pipelines, isLoading, paginationModel, setPaginationModel, loadData, onRowClickFunction, }) {
   const fields = pipelineMetadata.fields;
 
   const columns = useMemo(
     () => [
       getPipelineTypeColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "owner_name")),
+      getTableTextColumn(getField(fields, "_id")),
       getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),
       getTableTextColumn(getField(fields, "workflow.run_count")),
       getTableDateTimeColumn(getField(fields, "workflow.last_run.completed")),
+      getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
     [],
   );
@@ -40,7 +40,7 @@ export default function WorkspacePipelinesTableBase({ pipelines, isLoading, pagi
   );
 }
 
-WorkspacePipelinesTableBase.propTypes = {
+WorkspacePipelinesTable.propTypes = {
   pipelines: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
