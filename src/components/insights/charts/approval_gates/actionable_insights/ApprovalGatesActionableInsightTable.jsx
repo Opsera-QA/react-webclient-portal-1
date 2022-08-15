@@ -21,7 +21,7 @@ function ApprovalGatesActionableInsightTable({
   setFilterModel,
 }) {
   const toastContext = useContext(DialogToastContext);
-  const noDataMessage = "Approbal Gates report is currently unavailable at this time";
+  const noDataMessage = "Approval Gates report is currently unavailable at this time";
   const fields = ApprovalGatesInsightsTableMetadata.fields;
   const columns = useMemo(
     () => [

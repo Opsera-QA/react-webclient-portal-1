@@ -7,7 +7,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { Col, Row } from "react-bootstrap";
 import ApprovalGatesDataBlockBase from "./data_blocks/ApprovalGatesDataBlockBase";
-import ApprovalGatesActionableInsightOverlay from "./actionable_insights/ApprovalGatesActionableInsightOverlay";
+import ApprovalGatesExecutedActionableInsightOverlay from "./actionable_insights/ApprovalGatesExecutedActionableInsightOverlay";
+import ApprovalGatesTotalPipelinesActionableInsightOverlay from "./actionable_insights/ApprovalGatesTotalPipelinesActionableInsightOverlay";
 
 const APPROVAL_GATES = "approval_gates";
 
@@ -83,13 +84,23 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
   };
 
   const rowClick = (type) =>{
+    if(type==="total_approvals"){
       toastContext.showOverlayPanel(
-        <ApprovalGatesActionableInsightOverlay
+        <ApprovalGatesExecutedActionableInsightOverlay
           title={type}
           kpiConfiguration={kpiConfiguration}
           dashboardData={dashboardData}
         />
       );
+    } else {
+      toastContext.showOverlayPanel(
+        <ApprovalGatesTotalPipelinesActionableInsightOverlay
+          title={type}
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+        />
+      );
+    }
   };
 
   const getChartBody = () => {
@@ -102,7 +113,7 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
             <ApprovalGatesDataBlockBase score={metrics.total_pipelines_with_approval_gates} subtitle={'Total Pipelines'} onClickFunction={()=>rowClick('total_pipelines')}  />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvals_executed} subtitle={'Total Approvals executed'} />
+            <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvals_executed} subtitle={'Total Approvals executed'} onClickFunction={()=>rowClick('total_approvals')} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
             <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvers} subtitle={'Total Approvers'} />
