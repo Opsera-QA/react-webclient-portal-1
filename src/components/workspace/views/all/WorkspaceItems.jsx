@@ -43,8 +43,9 @@ export default function WorkspaceItems(
   };
 
   const getWorkspaceItems = async () => {
-    const response = await workspaceActions.getWorkspaceItems(getAccessToken, cancelTokenSource);
+    const response = await workspaceActions.getFreeTrialWorkspaceItems(getAccessToken, cancelTokenSource);
     const items = response?.data?.data;
+    console.log("items: " + JSON.stringify(items));
 
     if (isMounted?.current === true && Array.isArray(items)) {
       setWorkspaceItems([...items]);
