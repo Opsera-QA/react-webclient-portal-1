@@ -5,7 +5,7 @@ import {Col, Row} from "react-bootstrap";
 import GitScraperLogSummaryTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/components/GitScraperLogSummaryTable";
 
-function GitScraperReportView({ gitScraperObj }) {
+function GitScraperReportView({ gitScraperObj, isLoading }) {
 
   if (gitScraperObj == null) {
     return (
@@ -19,6 +19,7 @@ function GitScraperReportView({ gitScraperObj }) {
   return (
     <GitScraperLogSummaryTable
       gitScraperObj={gitScraperObj}
+      isLoading={isLoading}
     />
   );
 }
@@ -26,6 +27,7 @@ function GitScraperReportView({ gitScraperObj }) {
 
 GitScraperReportView.propTypes = {
   gitScraperObj: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default GitScraperReportView;
