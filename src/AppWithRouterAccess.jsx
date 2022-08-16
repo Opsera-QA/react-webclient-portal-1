@@ -12,6 +12,8 @@ import {generateUUID} from "components/common/helpers/string-helpers";
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
+import { isOpseraAdministrator } from "components/common/helpers/role-helpers";
+import FreeTrialAppRoutes from "FreeTrialAppRoutes";
 
 export const PUBLIC_PATHS = {
   LOGIN: "/login",
@@ -183,6 +185,35 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const getRoutes = () => {
+    const ldap = data?.ldap;
+    const groups = data?.ldap;
+
+    if (ldap?.domain === "opsera.io" && Array.isArray(groups) && groups.includes("Administrators")) { //checking for OpsERA account domain
+      return (
+        <AppRoutes
+          authenticatedState={authenticatedState}
+          authClient={authClient}
+          isPublicPathState={isPublicPathState}
+          OKTA_CONFIG={OKTA_CONFIG}
+          userData={data}
+          hideSideBar={hideSideBar}
+        />
+      );
+    }
+
+    return (
+      <FreeTrialAppRoutes
+        authenticatedState={authenticatedState}
+        authClient={authClient}
+        isPublicPathState={isPublicPathState}
+        OKTA_CONFIG={OKTA_CONFIG}
+        userData={data}
+        hideSideBar={hideSideBar}
+      />
+    );
+  };
+
   if (!data && loading && !error) {
     return (<LoadingDialog />);
   }
@@ -192,14 +223,7 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
         <ToastContextProvider navBar={getNavBar()}>
-          <AppRoutes
-            authenticatedState={authenticatedState}
-            authClient={authClient}
-            isPublicPathState={isPublicPathState}
-            OKTA_CONFIG={OKTA_CONFIG}
-            userData={data}
-            hideSideBar={hideSideBar}
-          />
+          {getRoutes()}
         </ToastContextProvider>
       </AuthContextProvider>
     </Security>
