@@ -134,6 +134,14 @@ userActions.createAwsMarketplaceOpseraAccount = async (registrationModel) => {
     .catch(error => {throw { error };});
 };
 
+userActions.getUserWithAuthenticationStateToken = async (
+  cancelTokenSource,
+  token,
+) => {
+  const apiUrl = "/users";
+  return await baseActions.customTokenApiGetCall(token, apiUrl);
+};
+
 
 /***
  * Calls the Opsera logout route which expires the User object cache in Redis

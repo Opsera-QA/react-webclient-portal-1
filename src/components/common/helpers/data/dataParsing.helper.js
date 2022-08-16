@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { hasDateValue } from "components/common/helpers/date/date.helpers";
 
 // TODO: Clean up and figure out how we want to use this on React end
 export const dataParsingHelper = {};
@@ -29,7 +30,7 @@ dataParsingHelper.hasObjectProperties = (object) => {
 };
 
 dataParsingHelper.parseDate = (date, defaultValue) => {
-  if (!date) {
+  if (hasDateValue(date) !== true) {
     return defaultValue;
   }
 
