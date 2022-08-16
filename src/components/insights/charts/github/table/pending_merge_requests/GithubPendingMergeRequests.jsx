@@ -19,9 +19,15 @@ import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  console.log("KPICONFIG",JSON.stringify(kpiConfiguration),"\n",
+      "setKpiConfiguration",setKpiConfiguration,"\n",
+      "dasg",JSON.stringify(dashboardData),"\n",
+      "index",index,"\n",
+      "setKPI",setKpis);
   const fields = githubPendingMergeRequestsMetadata.fields;
   const [activeTab, setActiveTab] = useState();
   const { getAccessToken } = useContext(AuthContext);
+  console.log("AuthContext", AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [metrics, setMetrics] = useState([]);
@@ -44,17 +50,22 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       ],
       []
   );
-
+  console.log("before use efffect");
   useEffect(() => {
+    console.log("lien 11");
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
+    console.log("axios cancel");
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
     isMounted.current = true;
+    console.log("active Tab",activeTab);
+
     if(activeTab){
+      console.log("hereeeeeeeeee");
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
