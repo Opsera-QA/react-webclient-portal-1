@@ -150,9 +150,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     }
 
     const userCreatedAt = userData?.createdAt;
-    const expiration = handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
-    console.log("expiration: " + JSON.stringify(expiration));
-    return expiration;
+    return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
   };
 
   const isOrganizationOwner = async () => {
