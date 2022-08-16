@@ -14,7 +14,7 @@ export default function ExportGitCustodianReportPanel(
     const rawData = Array.isArray(gitCustodianData) ? gitCustodianData?.map(item => JSON.stringify(item)) : "export failure";
     return new Blob([rawData], { type: "text/plain" });
   };
-
+console.log(gitCustodianData);
   const getPdfExporter = () => {
     const pdfExporter = new jsPDF({ orientation: "landscape" });
     pdfExporter.autoTable({
@@ -35,7 +35,6 @@ export default function ExportGitCustodianReportPanel(
           "Commit Hash",
           "Path",
           "Line Number",
-          "Link",
           "Reason",
         ],
       ],
@@ -45,7 +44,6 @@ export default function ExportGitCustodianReportPanel(
         item.commitHash,
         item.path,
         item.lineNumber,
-        item.link,
         item.reason,
       ]),
     });
@@ -70,7 +68,7 @@ export default function ExportGitCustodianReportPanel(
         item.commitHash,
         item.path,
         item.lineNumber,
-        item.link,
+        item.linkToSecret,
         item.reason,
       ]),
     ];
