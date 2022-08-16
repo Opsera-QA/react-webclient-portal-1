@@ -38,6 +38,11 @@ toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+toolsActions.createStandaloneTool = async (getAccessToken, cancelTokenSource, tool) => {
+  const apiUrl = "/registry/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tool);
+};
+
 toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTokenSource, toolFilterModel, fields) => {
   const apiUrl = `/registry/configs/v2`;
 
@@ -52,6 +57,19 @@ toolsActions.getRoleLimitedToolRegistryListV3 = async (getAccessToken, cancelTok
       search: toolFilterModel?.getFilterValue("search"),
       owner: toolFilterModel?.getFilterValue("owner"),
       fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getWorkspaceToolRegistryList = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/configs/v2`;
+  const urlParams = {
+    params: {
+      currentPage: 1,
+      pageSize: 100,
+      // owner: toolFilterModel?.getFilterValue("owner"),
     }
   };
 
@@ -257,6 +275,23 @@ toolsActions.saveSimpleVaultPasswordToVaultV2 = async (getAccessToken, cancelTok
     };
     const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: simpleVaultKey } : {};
+  }
+
+  // Faseeh says all values MUST be objects and not strings
+  return typeof newValue === "string" ? {} : newValue;
+};
+
+// TODO: Align with the above
+toolsActions.saveToolValueToVaultV2 = async (getAccessToken, cancelTokenSource, toolId, vaultKey, newValue, ) => {
+  if (hasStringValue(newValue) === true) {
+    const apiUrl = "/vault/tool/";
+    const postBody = {
+      key: vaultKey,
+      value: newValue,
+      toolId: toolId,
+    };
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: vaultKey } : {};
   }
 
   // Faseeh says all values MUST be objects and not strings

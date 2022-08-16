@@ -39,13 +39,9 @@ function ExportPipelineActivityLogDataModal({showModal, closeModal, formattedDat
 ExportPipelineActivityLogDataModal.propTypes = {
   showModal: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
 };
 
 export default ExportPipelineActivityLogDataModal;
-
-
