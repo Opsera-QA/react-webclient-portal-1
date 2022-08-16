@@ -38,6 +38,7 @@ export default function WorkspaceRegistryTable(
         [
           getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
           getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
+          getTableTextColumn(getField(fields, "_id")),
           getTableDateColumn(getField(fields, "createdAt")),
         ]
       );

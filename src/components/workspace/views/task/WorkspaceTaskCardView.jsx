@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TaskCard from "components/common/fields/tasks/TaskCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import TaskModel from "components/tasks/task.model";
+import modelHelpers from "components/common/model/modelHelpers";
 
 export default function WorkspaceTaskCardView(
   {
@@ -16,14 +16,14 @@ export default function WorkspaceTaskCardView(
   const getTaskCard = (task) => {
     return (
       <TaskCard
-        taskModel={new TaskModel({...task}, taskMetadata, false)}
+        taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
       />
     );
   };
 
   return (
     <VanitySetCardView
-      isLoading={isLoading}
+      isLoading={isLoading || taskMetadata == null}
       loadData={loadData}
       paginationModel={taskFilterModel}
       className={"makeup-container-table m-2"}

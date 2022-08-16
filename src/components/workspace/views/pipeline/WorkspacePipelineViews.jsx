@@ -11,12 +11,7 @@ export default function WorkspacePipelineViews(
     workspaceFilterModel,
     setWorkspaceFilterModel,
     loadData,
-    subscribedPipelineIds,
   }) {
-  const onRowSelect = (rowData) => {
-    history.push(`/workflow/details/${rowData.original._id}/summary`);
-  };
-
   const getCardView = () => {
     return (
       <WorkspacePipelineCardView
@@ -24,7 +19,6 @@ export default function WorkspacePipelineViews(
         loadData={loadData}
         pipelines={pipelines}
         pipelineFilterModel={workspaceFilterModel}
-        subscribedPipelineIds={subscribedPipelineIds}
       />
     );
   };
@@ -37,7 +31,6 @@ export default function WorkspacePipelineViews(
         setPaginationModel={setWorkspaceFilterModel}
         pipelines={pipelines}
         loadData={loadData}
-        onRowClickFunction={onRowSelect}
       />
     );
   };
@@ -57,7 +50,6 @@ WorkspacePipelineViews.propTypes = {
   pipelines: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  subscribedPipelineIds: PropTypes.array,
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

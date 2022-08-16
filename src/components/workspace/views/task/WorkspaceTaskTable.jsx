@@ -10,6 +10,7 @@ import {
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
+import { taskHelper } from "components/tasks/task.helper";
 
 export default function WorkspaceTaskTable(
   {
@@ -20,7 +21,7 @@ export default function WorkspaceTaskTable(
     isLoading,
     taskMetadata,
   }) {
-  let history = useHistory();
+  const history = useHistory();
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
@@ -47,8 +48,8 @@ export default function WorkspaceTaskTable(
     }
   };
 
-  const onRowSelect = (rowData) => {
-    history.push({pathname: `/task/details/${rowData?.original?._id}`});
+  const onRowSelect = (row) => {
+    history.push(taskHelper.getDetailViewLink(row?.original?._id));
   };
 
   if (taskMetadata == null) {

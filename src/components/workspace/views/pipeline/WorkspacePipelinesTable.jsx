@@ -9,8 +9,18 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import { pipelineHelper } from "components/workflow/pipeline.helper";
+import { useHistory } from "react-router-dom";
 
-export default function WorkspacePipelinesTable({ pipelines, isLoading, paginationModel, setPaginationModel, loadData, onRowClickFunction, }) {
+export default function WorkspacePipelinesTable(
+  {
+    pipelines,
+    isLoading,
+    paginationModel,
+    setPaginationModel,
+    loadData,
+  }) {
+  const history = useHistory();
   const fields = pipelineMetadata.fields;
 
   const columns = useMemo(
@@ -25,6 +35,10 @@ export default function WorkspacePipelinesTable({ pipelines, isLoading, paginati
     ],
     [],
   );
+
+  const onRowClickFunction = (row) => {
+    history.push(pipelineHelper.getDetailViewLink(row?.original?._id));
+  };
 
   return (
     <CustomTable
@@ -46,5 +60,4 @@ WorkspacePipelinesTable.propTypes = {
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
-  onRowClickFunction: PropTypes.func,
 };

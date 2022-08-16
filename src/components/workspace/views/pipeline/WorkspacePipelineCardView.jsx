@@ -10,8 +10,14 @@ import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import modelHelpers from "components/common/model/modelHelpers";
 
-export default function WorkspacePipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
-  let history = useHistory();
+export default function WorkspacePipelineCardView(
+  {
+    pipelines,
+    pipelineFilterModel,
+    loadData,
+    isLoading,
+  }) {
+  const history = useHistory();
 
   const handleDetailsClick = (pipelineId) => e => {
     e.preventDefault();
@@ -41,9 +47,9 @@ export default function WorkspacePipelineCardView({ pipelines, pipelineFilterMod
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineCard
               pipeline={pipeline}
-              subscribedPipelineIds={subscribedPipelineIds}
               pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
               getSelectButtonFunction={getSelectButton}
+              hideSubscriptionIcon={true}
             />
           </Col>
         ))}
@@ -66,5 +72,4 @@ WorkspacePipelineCardView.propTypes = {
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  subscribedPipelineIds: PropTypes.array,
 };

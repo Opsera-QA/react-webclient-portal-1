@@ -11,7 +11,6 @@ export default function WorkspacePipelines(
   }) {
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [subscribedPipelineIds, setSubscribedPipelineIds] = useState([]);
   const {
     isMounted,
     getAccessToken,
@@ -60,7 +59,6 @@ export default function WorkspacePipelines(
 
     if (isMounted?.current === true && Array.isArray(pipelines)) {
       setPipelines([...pipelines]);
-      setSubscribedPipelineIds(response?.data?.subscriptions);
     }
   };
 
@@ -71,7 +69,6 @@ export default function WorkspacePipelines(
       workspaceFilterModel={workspaceFilterModel}
       setWorkspaceFilterModel={setWorkspaceFilterModel}
       loadData={loadData}
-      subscribedPipelineIds={subscribedPipelineIds}
     />
   );
 }

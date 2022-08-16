@@ -1,61 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Col } from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
-import { useHistory } from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
-import modelHelpers from "components/common/model/modelHelpers";
-import WorkspaceItemCard from "components/workspace/views/all/WorkspaceItemCard";
+import { workspaceConstants } from "components/workspace/workspace.constants";
+import WorkspacePipelineCardView from "components/workspace/views/pipeline/WorkspacePipelineCardView";
+import WorkspaceRegistryCardView from "components/workspace/views/tool/WorkspaceRegistryCardView";
+import WorkspaceTaskCardView from "components/workspace/views/task/WorkspaceTaskCardView";
 
 export default function WorkspaceItemCardView(
   {
-    pipelines,
+    workspaceItems,
     pipelineFilterModel,
     loadData,
     isLoading,
-    subscribedPipelineIds,
-
+    toolMetadata,
+    taskMetadata,
   }) {
-  let history = useHistory();
-
-  const handleDetailsClick = (pipelineId) => e => {
-    e.preventDefault();
-    history.push(`/workflow/details/${pipelineId}/summary`);
-  };
-
-  const getSelectButton = (pipeline) => {
-    return (
-      <Button
-        variant={"primary"}
-        size={"sm"}
-        className={"w-50"}
-        onClick={handleDetailsClick(pipeline?._id)}>
-        <IconBase icon={faSearch} className={"mr-1"}/>View
-      </Button>
-    );
-  };
-
   const getCards = () => {
-    if (!Array.isArray(pipelines) || pipelines.length === 0) {
+    if (!Array.isArray(workspaceItems) || workspaceItems.length === 0) {
       return null;
     }
 
+    const pipelines = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE);
+    const tools = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL);
+    const tasks = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK);
+
     return (
-      <Row className={"mx-0"}>
-        {pipelines.map((pipeline, idx) => (
-          <Col key={idx} xl={6} md={12} className="p-2">
-            <WorkspaceItemCard
-              pipeline={pipeline}
-              subscribedPipelineIds={subscribedPipelineIds}
-              pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-              getSelectButtonFunction={getSelectButton}
-            />
-          </Col>
-        ))}
-      </Row>
+     <>
+       <WorkspacePipelineCardView
+         loadData={loadData}
+         pipelineFilterModel={pipelineFilterModel}
+         pipelines={pipelines}
+         isLoading={isLoading}
+       />
+       <WorkspaceRegistryCardView
+         loadData={loadData}
+         pipelineFilterModel={pipelineFilterModel}
+         tools={tools}
+         isLoading={isLoading}
+         toolMetadata={toolMetadata}
+       />
+       <WorkspaceTaskCardView
+         loadData={loadData}
+         taskFilterModel={pipelineFilterModel}
+         tasks={tasks}
+         isLoading={isLoading}
+         taskMetadata={taskMetadata}
+       />
+     </>
     );
   };
 
@@ -70,9 +61,10 @@ export default function WorkspaceItemCardView(
 }
 
 WorkspaceItemCardView.propTypes = {
-  pipelines: PropTypes.array,
+  workspaceItems: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  subscribedPipelineIds: PropTypes.array,
+  taskMetadata: PropTypes.object,
+  toolMetadata: PropTypes.object,
 };

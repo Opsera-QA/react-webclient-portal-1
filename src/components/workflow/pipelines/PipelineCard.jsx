@@ -19,8 +19,8 @@ const PipelineCard = (
     pipelineModel,
     subscribedPipelineIds,
     getSelectButtonFunction,
+    hideSubscriptionIcon,
   }) => {
-
   const getPendingApprovalField = () => {
     let pendingApproval = PipelineHelpers.getPendingApprovalStep(pipeline);
 
@@ -61,6 +61,20 @@ const PipelineCard = (
     }
   };
 
+  const getSubscriptionIcon = () => {
+    if (hideSubscriptionIcon !== true) {
+      return (
+        <PipelineSubscriptionIcon
+          pipelineModel={pipelineModel}
+          pipelineId={pipelineModel?.getData("_id")}
+          className={"ml-2"}
+          pullSubscriptionStatus={false}
+          subscribedPipelineIds={subscribedPipelineIds}
+        />
+      );
+    }
+  };
+
   return (
       <Card className={"h-100"}>
         <Card.Title className="pb-0">
@@ -70,13 +84,7 @@ const PipelineCard = (
               {pipeline?.name}
             </div>
             <div className={"d-flex ml-auto my-auto small"}>
-              <PipelineSubscriptionIcon
-                pipelineModel={pipelineModel}
-                pipelineId={pipelineModel?.getData("_id")}
-                className={"ml-2"}
-                pullSubscriptionStatus={false}
-                subscribedPipelineIds={subscribedPipelineIds}
-              />
+              {getSubscriptionIcon()}
               {getPendingApprovalField()}
             </div>
           </div>
@@ -127,6 +135,7 @@ PipelineCard.propTypes = {
   pipelineModel: PropTypes.object,
   subscribedPipelineIds: PropTypes.array,
   getSelectButtonFunction: PropTypes.func,
+  hideSubscriptionIcon: PropTypes.bool,
 };
 
 export default PipelineCard;

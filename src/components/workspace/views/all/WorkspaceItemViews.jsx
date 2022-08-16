@@ -11,6 +11,8 @@ export default function WorkspaceItemViews(
     workspaceFilterModel,
     setWorkspaceFilterModel,
     loadData,
+    taskMetadata,
+    toolMetadata,
   }) {
   const getCardView = () => {
     return (
@@ -19,6 +21,8 @@ export default function WorkspaceItemViews(
         loadData={loadData}
         workspaceItems={workspaceItems}
         workspaceFilterModel={workspaceFilterModel}
+        taskMetadata={taskMetadata}
+        toolMetadata={toolMetadata}
       />
     );
   };
@@ -39,7 +43,7 @@ export default function WorkspaceItemViews(
     <TableCardView
       data={workspaceItems}
       isLoading={isLoading}
-      cardView={getTableView()}
+      cardView={getCardView()}
       tableView={getTableView()}
       filterModel={workspaceFilterModel}
     />
@@ -52,4 +56,6 @@ WorkspaceItemViews.propTypes = {
   loadData: PropTypes.func,
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
+  taskMetadata: PropTypes.object,
+  toolMetadata: PropTypes.object,
 };

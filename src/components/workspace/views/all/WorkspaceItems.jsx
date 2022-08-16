@@ -11,6 +11,8 @@ export default function WorkspaceItems(
   }) {
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
+  const [taskMetadata, setTaskMetadata] = useState(undefined);
   const {
     isMounted,
     getAccessToken,
@@ -47,6 +49,8 @@ export default function WorkspaceItems(
     const items = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(items)) {
+      setToolMetadata(response?.data?.toolMetadata);
+      setTaskMetadata(response?.data?.taskMetadata);
       setWorkspaceItems([...items]);
     }
   };
@@ -58,6 +62,8 @@ export default function WorkspaceItems(
       workspaceFilterModel={workspaceFilterModel}
       setWorkspaceFilterModel={setWorkspaceFilterModel}
       loadData={loadData}
+      taskMetadata={taskMetadata}
+      toolMetadata={toolMetadata}
     />
   );
 }
