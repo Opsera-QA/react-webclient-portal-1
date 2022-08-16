@@ -1,10 +1,10 @@
 import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
-import WorkspaceRegistryTable from "components/workspace/views/tool/WorkspaceRegistryTable";
-import WorkspaceRegistryCardView from "components/workspace/views/tool/WorkspaceRegistryCardView";
+import FreeTrialWorkspaceRegistryTable from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryTable";
+import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
 
-export default function WorkspaceRegistryViews(
+export default function FreeTrialWorkspaceRegistryViews(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -15,7 +15,7 @@ export default function WorkspaceRegistryViews(
   }) {
   const getCardView = () => {
     return (
-      <WorkspaceRegistryCardView
+      <FreeTrialWorkspaceRegistryCardView
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}
@@ -26,7 +26,7 @@ export default function WorkspaceRegistryViews(
 
   const getTableView = () => {
     return (
-      <WorkspaceRegistryTable
+      <FreeTrialWorkspaceRegistryTable
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}
@@ -46,7 +46,7 @@ export default function WorkspaceRegistryViews(
   );
 }
 
-WorkspaceRegistryViews.propTypes = {
+FreeTrialWorkspaceRegistryViews.propTypes = {
   tools: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

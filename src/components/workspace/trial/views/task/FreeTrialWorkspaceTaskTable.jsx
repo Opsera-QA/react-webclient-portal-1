@@ -12,7 +12,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import { taskHelper } from "components/tasks/task.helper";
 
-export default function WorkspaceTaskTable(
+export default function FreeTrialWorkspaceTaskTable(
   {
     tasks,
     taskFilterModel,
@@ -71,7 +71,7 @@ export default function WorkspaceTaskTable(
   );
 }
 
-WorkspaceTaskTable.propTypes = {
+FreeTrialWorkspaceTaskTable.propTypes = {
   tasks: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

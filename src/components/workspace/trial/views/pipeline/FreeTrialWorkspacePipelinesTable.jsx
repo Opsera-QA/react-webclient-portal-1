@@ -12,7 +12,7 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import { pipelineHelper } from "components/workflow/pipeline.helper";
 import { useHistory } from "react-router-dom";
 
-export default function WorkspacePipelinesTable(
+export default function FreeTrialWorkspacePipelinesTable(
   {
     pipelines,
     isLoading,
@@ -54,7 +54,7 @@ export default function WorkspacePipelinesTable(
   );
 }
 
-WorkspacePipelinesTable.propTypes = {
+FreeTrialWorkspacePipelinesTable.propTypes = {
   pipelines: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,

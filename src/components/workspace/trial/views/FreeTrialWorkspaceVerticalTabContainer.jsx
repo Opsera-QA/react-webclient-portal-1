@@ -10,7 +10,7 @@ import {
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-export default function WorkspaceVerticalTabContainer(
+export default function FreeTrialWorkspaceVerticalTabContainer(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -58,7 +58,7 @@ export default function WorkspaceVerticalTabContainer(
   );
 }
 
-WorkspaceVerticalTabContainer.propTypes = {
+FreeTrialWorkspaceVerticalTabContainer.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

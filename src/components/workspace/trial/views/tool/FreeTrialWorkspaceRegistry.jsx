@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
-import pipelineActions from "components/workflow/pipeline-actions";
+import toolsActions from "components/inventory/tools/tools-actions";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
+import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";
 
-export default function WorkspacePipelines(
+export default function FreeTrialWorkspaceRegistry(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
   }) {
-  const [pipelines, setPipelines] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tools, setTools] = useState([]);
+  const [toolMetadata, setToolMetadata] = useState(undefined);
   const {
     isMounted,
     getAccessToken,
@@ -19,7 +20,6 @@ export default function WorkspacePipelines(
   } = useComponentStateReference();
 
   useEffect(() => {
-    setPipelines([]);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -30,7 +30,7 @@ export default function WorkspacePipelines(
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getPipelines();
+      await getToolRegistryList();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -42,38 +42,30 @@ export default function WorkspacePipelines(
     }
   };
 
-  const getPipelines = async () => {
-    const pipelineFields = [
-      "type",
-      "_id",
-      "name",
-      "owner",
-      "workflow.last_step",
-      "workflow.run_count",
-      "workflow.last_run",
-      "createdAt",
-      "updatedAt",
-    ];
-    const response = await pipelineActions.getWorkspacePipelines(getAccessToken, cancelTokenSource, pipelineFields);
-    const pipelines = response?.data?.data;
+  const getToolRegistryList = async () => {
+    const response = await toolsActions.getWorkspaceToolRegistryList(getAccessToken, cancelTokenSource);
+    const newTools = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(pipelines)) {
-      setPipelines([...pipelines]);
+    if (isMounted?.current === true && Array.isArray(newTools)) {
+      const metadata = response?.data?.metadata;
+      setToolMetadata({...metadata});
+      setTools([...newTools]);
     }
   };
 
   return (
-    <WorkspacePipelineViews
-      pipelines={pipelines}
+    <FreeTrialWorkspaceRegistryViews
       isLoading={isLoading}
+      loadData={loadData}
+      tools={tools}
+      toolMetadata={toolMetadata}
       workspaceFilterModel={workspaceFilterModel}
       setWorkspaceFilterModel={setWorkspaceFilterModel}
-      loadData={loadData}
     />
   );
 }
 
-WorkspacePipelines.propTypes = {
+FreeTrialWorkspaceRegistry.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

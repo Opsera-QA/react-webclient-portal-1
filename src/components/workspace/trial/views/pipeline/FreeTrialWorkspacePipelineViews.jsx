@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TableCardView from "components/common/table/TableCardView";
-import WorkspacePipelinesTable from "components/workspace/views/pipeline/WorkspacePipelinesTable";
-import WorkspacePipelineCardView from "components/workspace/views/pipeline/WorkspacePipelineCardView";
+import FreeTrialWorkspacePipelinesTable from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelinesTable";
+import FreeTrialWorkspacePipelineCardView from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineCardView";
 
-export default function WorkspacePipelineViews(
+export default function FreeTrialWorkspacePipelineViews(
   {
     pipelines,
     isLoading,
@@ -14,7 +14,7 @@ export default function WorkspacePipelineViews(
   }) {
   const getCardView = () => {
     return (
-      <WorkspacePipelineCardView
+      <FreeTrialWorkspacePipelineCardView
         isLoading={isLoading}
         loadData={loadData}
         pipelines={pipelines}
@@ -25,7 +25,7 @@ export default function WorkspacePipelineViews(
 
   const getTableView = () => {
     return (
-      <WorkspacePipelinesTable
+      <FreeTrialWorkspacePipelinesTable
         isLoading={isLoading}
         paginationModel={workspaceFilterModel}
         setPaginationModel={setWorkspaceFilterModel}
@@ -46,7 +46,7 @@ export default function WorkspacePipelineViews(
   );
 }
 
-WorkspacePipelineViews.propTypes = {
+FreeTrialWorkspacePipelineViews.propTypes = {
   pipelines: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

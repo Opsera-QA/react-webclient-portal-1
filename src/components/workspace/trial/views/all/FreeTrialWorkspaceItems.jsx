@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
-import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemViews";
+import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 
-export default function WorkspaceItems(
+export default function FreeTrialWorkspaceItems(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -56,7 +56,7 @@ export default function WorkspaceItems(
   };
 
   return (
-    <WorkspaceItemViews
+    <FreeTrialWorkspaceItemViews
       workspaceItems={workspaceItems}
       isLoading={isLoading}
       workspaceFilterModel={workspaceFilterModel}
@@ -68,7 +68,7 @@ export default function WorkspaceItems(
   );
 }
 
-WorkspaceItems.propTypes = {
+FreeTrialWorkspaceItems.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

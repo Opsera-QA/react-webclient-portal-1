@@ -1,10 +1,10 @@
 import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
-import WorkspaceTaskCardView from "components/workspace/views/task/WorkspaceTaskCardView";
-import WorkspaceTaskTable from "components/workspace/views/task/WorkspaceTaskTable";
+import FreeTrialWorkspaceTaskCardView from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskCardView";
+import FreeTrialWorkspaceTaskTable from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskTable";
 
-export default function WorkspaceTaskViews(
+export default function FreeTrialWorkspaceTaskViews(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -15,7 +15,7 @@ export default function WorkspaceTaskViews(
   }) {
   const getCardView = () => {
     return (
-      <WorkspaceTaskCardView
+      <FreeTrialWorkspaceTaskCardView
         taskMetadata={taskMetadata}
         isLoading={isLoading}
         loadData={loadData}
@@ -26,7 +26,7 @@ export default function WorkspaceTaskViews(
 
   const getTableView = () => {
     return (
-      <WorkspaceTaskTable
+      <FreeTrialWorkspaceTaskTable
         isLoading={isLoading}
         loadData={loadData}
         tasks={tasks}
@@ -46,7 +46,7 @@ export default function WorkspaceTaskViews(
   );
 }
 
-WorkspaceTaskViews.propTypes = {
+FreeTrialWorkspaceTaskViews.propTypes = {
   tasks: PropTypes.array,
   isLoading: PropTypes.bool,
   workspaceFilterModel: PropTypes.object,

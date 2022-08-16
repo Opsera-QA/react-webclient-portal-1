@@ -11,7 +11,7 @@ import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { useHistory } from "react-router-dom";
 
-export default function WorkspaceItemTable(
+export default function FreeTrialWorkspaceItemTable(
   {
     workspaceItems,
     isLoading,
@@ -54,7 +54,7 @@ export default function WorkspaceItemTable(
   );
 }
 
-WorkspaceItemTable.propTypes = {
+FreeTrialWorkspaceItemTable.propTypes = {
   workspaceItems: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,

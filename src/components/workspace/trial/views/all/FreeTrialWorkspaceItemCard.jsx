@@ -7,7 +7,7 @@ import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 
-export default function WorkspaceItemCard({ toolData, isLoading, loadToolInNewWindow }) {
+export default function FreeTrialWorkspaceItemCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
     let icon = getLargeVendorIconFromToolIdentifier(toolData?.getData("tool_identifier"));
 
@@ -70,7 +70,7 @@ export default function WorkspaceItemCard({ toolData, isLoading, loadToolInNewWi
   );
 }
 
-WorkspaceItemCard.propTypes = {
+FreeTrialWorkspaceItemCard.propTypes = {
   toolData: PropTypes.object,
   isLoading: PropTypes.bool,
   loadToolInNewWindow: PropTypes.bool

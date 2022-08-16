@@ -10,7 +10,7 @@ import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import modelHelpers from "components/common/model/modelHelpers";
 
-export default function WorkspacePipelineCardView(
+export default function FreeTrialWorkspacePipelineCardView(
   {
     pipelines,
     pipelineFilterModel,
@@ -67,7 +67,7 @@ export default function WorkspacePipelineCardView(
   );
 }
 
-WorkspacePipelineCardView.propTypes = {
+FreeTrialWorkspacePipelineCardView.propTypes = {
   pipelines: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,

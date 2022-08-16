@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
+import FreeTrialWorkspaceTaskViews from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskViews";
 import PropTypes from "prop-types";
 
-export default function WorkspaceTasks(
+export default function FreeTrialWorkspaceTasks(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -63,7 +63,7 @@ export default function WorkspaceTasks(
   }
 
   return (
-    <WorkspaceTaskViews
+    <FreeTrialWorkspaceTaskViews
       tasks={tasks}
       loadData={loadData}
       isLoading={isLoading}
@@ -75,7 +75,7 @@ export default function WorkspaceTasks(
   );
 }
 
-WorkspaceTasks.propTypes = {
+FreeTrialWorkspaceTasks.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

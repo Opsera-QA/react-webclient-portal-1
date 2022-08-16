@@ -1,36 +1,36 @@
 import React, { useState } from "react";
-import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceVerticalTabContainer";
+import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/views/FreeTrialWorkspaceVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
-import WorkspaceRegistry from "components/workspace/views/tool/WorkspaceRegistry";
-import WorkspaceTasks from "components/workspace/views/task/WorkspaceTasks";
-import WorkspacePipelines from "components/workspace/views/pipeline/WorkspacePipelines";
-import WorkspaceItems from "components/workspace/views/all/WorkspaceItems";
+import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
+import FreeTrialWorkspaceRegistry from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistry";
+import FreeTrialWorkspaceTasks from "components/workspace/trial/views/task/FreeTrialWorkspaceTasks";
+import FreeTrialWorkspacePipelines from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelines";
+import FreeTrialWorkspaceItems from "components/workspace/trial/views/all/FreeTrialWorkspaceItems";
 
-export default function WorkspaceViewContainer() {
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
+export default function FreeTrialWorkspaceViewContainer() {
+  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
 
   const getCurrentView = () => {
     switch (workspaceFilterModel?.getData("type")) {
       case "pipelines":
         return (
-          <WorkspacePipelines
+          <FreeTrialWorkspacePipelines
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
         );
       case "registry":
         return (
-          <WorkspaceRegistry
+          <FreeTrialWorkspaceRegistry
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
         );
       case "tasks":
         return (
-          <WorkspaceTasks
+          <FreeTrialWorkspaceTasks
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
@@ -38,7 +38,7 @@ export default function WorkspaceViewContainer() {
       case "all":
       default:
         return (
-          <WorkspaceItems
+          <FreeTrialWorkspaceItems
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
@@ -48,7 +48,7 @@ export default function WorkspaceViewContainer() {
 
   const getVerticalTabContainer = () => {
     return (
-      <WorkspaceVerticalTabContainer
+      <FreeTrialWorkspaceVerticalTabContainer
         workspaceFilterModel={workspaceFilterModel}
         setWorkspaceFilterModel={setWorkspaceFilterModel}
       />
@@ -79,10 +79,10 @@ export default function WorkspaceViewContainer() {
       filterDto={workspaceFilterModel}
       setFilterDto={setWorkspaceFilterModel}
       supportViewToggle={true}
-      title={"Workspace"}
+      title={"FreeTrialWorkspace"}
       className={"px-2 pb-2"}
     />
   );
 }
 
-WorkspaceViewContainer.propTypes = {};
+FreeTrialWorkspaceViewContainer.propTypes = {};

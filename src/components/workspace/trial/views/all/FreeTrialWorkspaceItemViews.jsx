@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TableCardView from "components/common/table/TableCardView";
-import WorkspaceItemTable from "components/workspace/views/all/WorkspaceItemTable";
-import WorkspaceItemCardView from "components/workspace/views/all/WorkspaceItemCardView";
+import FreeTrialWorkspaceItemTable from "components/workspace/trial/views/all/FreeTrialWorkspaceItemTable";
+import FreeTrialWorkspaceItemCardView from "components/workspace/trial/views/all/FreeTrialWorkspaceItemCardView";
 
-export default function WorkspaceItemViews(
+export default function FreeTrialWorkspaceItemViews(
   {
     workspaceItems,
     isLoading,
@@ -16,7 +16,7 @@ export default function WorkspaceItemViews(
   }) {
   const getCardView = () => {
     return (
-      <WorkspaceItemCardView
+      <FreeTrialWorkspaceItemCardView
         isLoading={isLoading}
         loadData={loadData}
         workspaceItems={workspaceItems}
@@ -29,7 +29,7 @@ export default function WorkspaceItemViews(
 
   const getTableView = () => {
     return (
-      <WorkspaceItemTable
+      <FreeTrialWorkspaceItemTable
         isLoading={isLoading}
         paginationModel={workspaceFilterModel}
         setPaginationModel={setWorkspaceFilterModel}
@@ -50,7 +50,7 @@ export default function WorkspaceItemViews(
   );
 }
 
-WorkspaceItemViews.propTypes = {
+FreeTrialWorkspaceItemViews.propTypes = {
   workspaceItems: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

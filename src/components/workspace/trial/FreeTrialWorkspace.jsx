@@ -1,8 +1,8 @@
 import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import WorkspaceViewContainer from "components/workspace/views/WorkspaceViewContainer";
+import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/FreeTrialWorkspaceViewContainer";
 
-export default function Workspace() {
+export default function FreeTrialWorkspace() {
   return (
     <ScreenContainer
       breadcrumbDestination={"workspace"}
@@ -11,7 +11,7 @@ export default function Workspace() {
         one centralized location.
       `}
     >
-      <WorkspaceViewContainer
+      <FreeTrialWorkspaceViewContainer
       />
     </ScreenContainer>
   );

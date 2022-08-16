@@ -5,7 +5,7 @@ import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import modelHelpers from "components/common/model/modelHelpers";
 
-export default function WorkspaceTaskCardView(
+export default function FreeTrialWorkspaceTaskCardView(
   {
     tasks,
     taskFilterModel,
@@ -37,7 +37,7 @@ export default function WorkspaceTaskCardView(
   );
 }
 
-WorkspaceTaskCardView.propTypes = {
+FreeTrialWorkspaceTaskCardView.propTypes = {
   tasks: PropTypes.array,
   taskFilterModel: PropTypes.object,
   taskMetadata: PropTypes.object,

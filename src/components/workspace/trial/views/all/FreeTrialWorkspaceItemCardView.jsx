@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import { workspaceConstants } from "components/workspace/workspace.constants";
-import WorkspacePipelineCardView from "components/workspace/views/pipeline/WorkspacePipelineCardView";
-import WorkspaceRegistryCardView from "components/workspace/views/tool/WorkspaceRegistryCardView";
-import WorkspaceTaskCardView from "components/workspace/views/task/WorkspaceTaskCardView";
+import FreeTrialWorkspacePipelineCardView from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineCardView";
+import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
+import FreeTrialWorkspaceTaskCardView from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskCardView";
 
-export default function WorkspaceItemCardView(
+export default function FreeTrialWorkspaceItemCardView(
   {
     workspaceItems,
     pipelineFilterModel,
@@ -26,20 +26,20 @@ export default function WorkspaceItemCardView(
 
     return (
      <>
-       <WorkspacePipelineCardView
+       <FreeTrialWorkspacePipelineCardView
          loadData={loadData}
          pipelineFilterModel={pipelineFilterModel}
          pipelines={pipelines}
          isLoading={isLoading}
        />
-       <WorkspaceRegistryCardView
+       <FreeTrialWorkspaceRegistryCardView
          loadData={loadData}
          pipelineFilterModel={pipelineFilterModel}
          tools={tools}
          isLoading={isLoading}
          toolMetadata={toolMetadata}
        />
-       <WorkspaceTaskCardView
+       <FreeTrialWorkspaceTaskCardView
          loadData={loadData}
          taskFilterModel={pipelineFilterModel}
          tasks={tasks}
@@ -60,7 +60,7 @@ export default function WorkspaceItemCardView(
   );
 }
 
-WorkspaceItemCardView.propTypes = {
+FreeTrialWorkspaceItemCardView.propTypes = {
   workspaceItems: PropTypes.array,
   pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,

@@ -39,7 +39,7 @@ const workspaceFilterMetadata = {
   },
 };
 
-export default class WorkspaceFilterModel extends FilterModelBase {
+export default class FreeTrialWorkspaceFilterModel extends FilterModelBase {
   constructor() {
     super(workspaceFilterMetadata);
     this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.WORKSPACE_FILTER_MODEL_DATA;
