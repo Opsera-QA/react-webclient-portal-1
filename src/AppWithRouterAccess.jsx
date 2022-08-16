@@ -187,7 +187,7 @@ const AppWithRouterAccess = () => {
 
   const getRoutes = () => {
     const ldap = data?.ldap;
-    const groups = data?.ldap;
+    const groups = data?.groups;
 
     if (ldap?.domain === "opsera.io" && Array.isArray(groups) && groups.includes("Administrators")) { //checking for OpsERA account domain
       return (
