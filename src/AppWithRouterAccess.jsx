@@ -189,7 +189,8 @@ const AppWithRouterAccess = () => {
     const ldap = data?.ldap;
     const groups = data?.groups;
 
-    if (ldap?.domain === "opsera.io" && Array.isArray(groups) && groups.includes("Administrators")) { //checking for OpsERA account domain
+    // Opsera Administrators should still have full access to everything
+    if (ldap?.domain === "opsera.io" && Array.isArray(groups) && groups.includes("Administrators")) {
       return (
         <AppRoutes
           authenticatedState={authenticatedState}
