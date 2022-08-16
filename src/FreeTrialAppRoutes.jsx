@@ -107,7 +107,6 @@ const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient,
           <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
           <SecureRoute path="/admin/templates" exact component={PipelineTemplateManagement} />
           <SecureRoute path="/admin/templates/details/:templateId" exact component={PipelineTemplateDetailView} />
-          <SecureRoute path="/admin/reports" exact component={Reports_Old} />
           <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
           <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
 
