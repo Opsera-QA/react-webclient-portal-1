@@ -6,27 +6,19 @@ import WorkspaceItemCardView from "components/workspace/views/all/WorkspaceItemC
 
 export default function WorkspaceItemViews(
   {
-    pipelines,
+    workspaceItems,
     isLoading,
     workspaceFilterModel,
     setWorkspaceFilterModel,
     loadData,
-    subscribedPipelineIds,
   }) {
-  const onRowSelect = (rowData) => {
-
-
-    history.push(`/workflow/details/${rowData.original._id}/summary`);
-  };
-
   const getCardView = () => {
     return (
       <WorkspaceItemCardView
         isLoading={isLoading}
         loadData={loadData}
-        pipelines={pipelines}
-        pipelineFilterModel={workspaceFilterModel}
-        subscribedPipelineIds={subscribedPipelineIds}
+        workspaceItems={workspaceItems}
+        workspaceFilterModel={workspaceFilterModel}
       />
     );
   };
@@ -37,18 +29,17 @@ export default function WorkspaceItemViews(
         isLoading={isLoading}
         paginationModel={workspaceFilterModel}
         setPaginationModel={setWorkspaceFilterModel}
-        pipelines={pipelines}
+        workspaceItems={workspaceItems}
         loadData={loadData}
-        onRowClickFunction={onRowSelect}
       />
     );
   };
 
   return (
     <TableCardView
-      data={pipelines}
+      data={workspaceItems}
       isLoading={isLoading}
-      cardView={getCardView()}
+      cardView={getTableView()}
       tableView={getTableView()}
       filterModel={workspaceFilterModel}
     />
@@ -56,10 +47,9 @@ export default function WorkspaceItemViews(
 }
 
 WorkspaceItemViews.propTypes = {
-  pipelines: PropTypes.array,
+  workspaceItems: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  subscribedPipelineIds: PropTypes.array,
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

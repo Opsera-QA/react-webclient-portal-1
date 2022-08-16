@@ -1,22 +1,29 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import { getDaysUntilDate } from "components/common/helpers/date/date.helpers";
+import { pipelineHelper } from "components/workflow/pipeline.helper";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { taskHelper } from "components/tasks/task.helper";
+import { toolHelper } from "components/inventory/tools/tool.helper";
 
 export const workspaceHelper = {};
 
 workspaceHelper.getWorkspaceItemDetailLink = (workspaceItem) => {
-  return workspaceHelper.getWorkspaceItemDetailLink(workspaceItem?.type, workspaceItem?._id);
+  return workspaceHelper.getWorkspaceItemDetailLinkBase(workspaceItem?.workspaceType, workspaceItem?._id);
 };
 
-workspaceHelper.getWorkspaceItemDetailLink = (type, mongoId) => {
-  if (hasStringValue(type) !== true || hasStringValue(mongoId) !== true) {
+workspaceHelper.getWorkspaceItemDetailLinkBase = (type, mongoId) => {
+  if (hasStringValue(type) !== true || isMongoDbId(mongoId) !== true) {
     return null;
   }
 
   switch (type) {
     case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return pipelineHelper.getDetailViewLink(mongoId);
     case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.REGISTRY:
+      return taskHelper.getDetailViewLink(mongoId);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+      return toolHelper.getDetailViewLink(mongoId);
   }
 };
 

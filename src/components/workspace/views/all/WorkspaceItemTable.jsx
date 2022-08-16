@@ -7,8 +7,19 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { workspaceItemMetadata } from "components/workspace/workspaceItem.metadata";
+import { workspaceHelper } from "components/workspace/workspace.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { useHistory } from "react-router-dom";
 
-export default function WorkspaceItemTable({ pipelines, isLoading, paginationModel, setPaginationModel, loadData, onRowClickFunction, }) {
+export default function WorkspaceItemTable(
+  {
+    workspaceItems,
+    isLoading,
+    paginationModel,
+    setPaginationModel,
+    loadData,
+  }) {
+  const history = useHistory();
   const fields = workspaceItemMetadata.fields;
 
   const columns = useMemo(
@@ -21,25 +32,32 @@ export default function WorkspaceItemTable({ pipelines, isLoading, paginationMod
     [],
   );
 
+  const onRowClickFunction = (workspaceItem) => {
+    const detailViewLink = workspaceHelper.getWorkspaceItemDetailLink(workspaceItem);
+
+    if (hasStringValue(detailViewLink) === true) {
+      history.push(detailViewLink);
+    }
+  };
+
   return (
     <CustomTable
       nextGeneration={true}
       columns={columns}
-      onRowSelect={onRowClickFunction}
+      onRowSelect={(row) => onRowClickFunction(row?.original)}
       paginationDto={paginationModel}
       loadData={loadData}
       setPaginationDto={setPaginationModel}
-      data={pipelines}
+      data={workspaceItems}
       isLoading={isLoading}
     />
   );
 }
 
 WorkspaceItemTable.propTypes = {
-  pipelines: PropTypes.array,
+  workspaceItems: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
-  onRowClickFunction: PropTypes.func,
 };

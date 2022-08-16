@@ -53,7 +53,7 @@ export default function WorkspaceItems(
 
   return (
     <WorkspaceItemViews
-      pipelines={workspaceItems}
+      workspaceItems={workspaceItems}
       isLoading={isLoading}
       workspaceFilterModel={workspaceFilterModel}
       setWorkspaceFilterModel={setWorkspaceFilterModel}
