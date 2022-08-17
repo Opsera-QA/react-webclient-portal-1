@@ -30,6 +30,11 @@ const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (selectedIssue
       const issue = row?.row?.original;
       const issueId = issue?.issueId;
       const index = selectedIssues.findIndex((selectedIssue) => selectedIssue?.issueId === issueId);
+
+      if (issue.status === 'Commit Removed') {
+        return null;
+      }
+
       return (
         <TooltipWrapper innerText={"Select this item to include in a Jira ticket"}>
           <div>
