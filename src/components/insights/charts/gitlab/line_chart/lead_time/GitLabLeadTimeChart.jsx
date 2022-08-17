@@ -11,6 +11,8 @@ import VanityMetricContainer from "components/common/panels/insights/charts/Vani
 import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {ResponsiveBar} from "@nivo/bar";
+import GitlabLeadTimeHelpDocumentation
+    from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 
 function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -76,11 +78,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
             assignStandardLineColors(dataObject, true);
 
-        if (isMounted?.current === true && Array.isArray(dataObject)) {
-            setMetrics(dataObject);
-            setMeanData(meanDataObject);
-            setMeanCommitData(meanCommitTimeDataObject);
-        }
+            if (isMounted?.current === true && Array.isArray(dataObject)) {
+                setMetrics(dataObject);
+                setMeanData(meanDataObject);
+                setMeanCommitData(meanCommitTimeDataObject);
+            }
         } catch (error) {
             if (isMounted?.current === true) {
                 console.error(error);
@@ -167,12 +169,12 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                         bottomText={"Previous Average Lead Time: "}
                         getIconColor={getLeadTimeIconColor}/>
                     <GitLabMeanLeadTimeDataBlock
-                         data={meanCommitData.currentAvgCommitToMergeTime}
-                         previousData={meanCommitData.previousAvgCommitToMergeTime != undefined? meanCommitData.previousAvgCommitToMergeTime : "N/A" }
-                         getIcon={getIcon}
-                         topText={"Average Merge Time (Days)"}
-                         bottomText={"Previous Average Merge Time: "}
-                         getIconColor={getLeadTimeIconColor}/>
+                        data={meanCommitData.currentAvgCommitToMergeTime}
+                        previousData={meanCommitData.previousAvgCommitToMergeTime != undefined? meanCommitData.previousAvgCommitToMergeTime : "N/A" }
+                        getIcon={getIcon}
+                        topText={"Average Merge Time (Days)"}
+                        bottomText={"Previous Average Merge Time: "}
+                        getIconColor={getLeadTimeIconColor}/>
                 </div>
             );
         };
@@ -203,6 +205,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
+                chartHelpComponent={(closeHelpPanel) => (
+                  <GitlabLeadTimeHelpDocumentation
+                    closeHelpPanel={closeHelpPanel}
+                  />
+                )}
             />
         </div>
     );
