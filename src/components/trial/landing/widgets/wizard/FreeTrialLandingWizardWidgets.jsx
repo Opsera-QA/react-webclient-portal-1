@@ -4,36 +4,19 @@ import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_b
 import useComponentStateReference from "hooks/useComponentStateReference";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CreatePipelineWizard from "components/wizard/free_trial/pipeline/CreatePipelineWizard";
+import FreeTrialLandingSalesforcePipelineWizardWidget
+  from "components/trial/landing/widgets/wizard/pipeline/FreeTrialLandingSalesforcePipelineWizardWidget";
 
-export default function PipelineWizardWidgets({className}) {
+export default function FreeTrialLandingWizardWidgets({className}) {
   const {themeConstants} = useComponentStateReference();
-  const { toastContext } = useComponentStateReference();
-
-  const launchPipelineCreationWizard = () => {
-    toastContext.showOverlayPanel(
-      <CreatePipelineWizard
-      />
-    );
-  };
 
   return (
     <div className={className}>
       <Row>
         <Col xs={4}>
-          <WidgetDataBlockBaseContainer
-            backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
-            borderColor={themeConstants.BORDER_COLORS.GRAY}
-            heightSize={3}
-            widthSize={5}
-            className={"mx-auto"}
-          >
-            <div className={"m-auto"}
-              onClick={launchPipelineCreationWizard}
-            >
-              Salesforce Pipeline Wizard
-            </div>
-          </WidgetDataBlockBaseContainer>
+          <FreeTrialLandingSalesforcePipelineWizardWidget
+
+          />
         </Col>
         <Col xs={4}>
           <WidgetDataBlockBaseContainer
@@ -62,6 +45,6 @@ export default function PipelineWizardWidgets({className}) {
   );
 }
 
-PipelineWizardWidgets.propTypes = {
+FreeTrialLandingWizardWidgets.propTypes = {
   className: PropTypes.string,
 };

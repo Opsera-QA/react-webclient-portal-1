@@ -13,6 +13,8 @@ function WidgetDataBlockBaseContainer(
     fontFamily,
     children,
     className,
+    onClickFunction,
+    disabled,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -34,9 +36,29 @@ function WidgetDataBlockBaseContainer(
     }
   };
 
+  const handleOnClickFunction = () => {
+    if (onClickFunction && disabled !== true) {
+      onClickFunction();
+    }
+  };
+
+  // TODO: Should this be a helper function that we pass disabled and onClickFunction into?
+  const getCursor = () => {
+    if (disabled === true) {
+      return "not-allowed";
+    }
+
+    if (onClickFunction) {
+      return "pointer";
+    }
+
+    return "default";
+  };
+
   return (
     <div
       className={className}
+      onClick={handleOnClickFunction}
       style={{
         borderRadius: "1em",
         height: getHeight(),
@@ -48,6 +70,7 @@ function WidgetDataBlockBaseContainer(
         backgroundColor: backgroundColor,
         color: fontColor,
         fontFamily: fontFamily,
+        cursor: getCursor(),
       }}
     >
       {children}
@@ -64,6 +87,8 @@ WidgetDataBlockBaseContainer.propTypes = {
   fontColor: PropTypes.string,
   fontFamily: PropTypes.string,
   children: PropTypes.any,
+  onClickFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {

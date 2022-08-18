@@ -3,7 +3,7 @@ import WelcomeWidget from "components/trial/landing/widgets/WelcomeWidget";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
-import PipelineWizardWidgets from "components/trial/landing/widgets/PipelineWizardWidgets";
+import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wizard/FreeTrialLandingWizardWidgets";
 import FreeTrialLandingPipelineWidgets from "components/trial/landing/widgets/FreeTrialLandingPipelineWidgets";
 
 export default function FreeTrialLanding() {
@@ -20,7 +20,7 @@ export default function FreeTrialLanding() {
         </Row>
       </div>
       <div className={"mt-3 mx-auto"}>
-        <PipelineWizardWidgets />
+        <FreeTrialLandingWizardWidgets />
       </div>
       <div className={"mt-3"}>
         <FreeTrialLandingPipelineWidgets />
