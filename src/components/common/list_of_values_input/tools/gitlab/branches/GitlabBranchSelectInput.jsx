@@ -1,10 +1,10 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
@@ -20,15 +20,14 @@ function GitlabBranchSelectInput(
     setDataFunction,
     clearDataFunction,
     repositoryId,
-    multi
+    multi,
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branch");
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -40,7 +39,6 @@ function GitlabBranchSelectInput(
     setCancelTokenSource(source);
     setGitlabBranches([]);
     setError(undefined);
-    setPlaceholderText("Select Gitlab Branch");
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -59,9 +57,13 @@ function GitlabBranchSelectInput(
       setIsLoading(true);
       await loadGitlabBranches("", toolId, repositoryId, cancelSource);
     } catch (error) {
-      setError(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -71,14 +73,13 @@ function GitlabBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Gitlab Branch");
       setGitlabBranches([...branches]);
     }
   };
 
   const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm, repositoryId, toolId) => loadGitlabBranches(searchTerm, toolId, repositoryId), 600),
-      [],
+    _.debounce((searchTerm, repositoryId, toolId) => loadGitlabBranches(searchTerm, toolId, repositoryId), 600),
+    [],
   );
 
   if (multi) {
@@ -94,7 +95,6 @@ function GitlabBranchSelectInput(
         valueField={"name"}
         textField={"name"}
         disabled={disabled}
-        placeholderText={placeholderText}
         error={error}
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
@@ -116,7 +116,6 @@ function GitlabBranchSelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
       error={error}
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
@@ -138,7 +137,7 @@ GitlabBranchSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   repositoryId: PropTypes.string,
-  multi: PropTypes.bool
+  multi: PropTypes.bool,
 };
 
 export default GitlabBranchSelectInput;
