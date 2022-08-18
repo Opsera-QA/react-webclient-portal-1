@@ -28,7 +28,7 @@ function RepositorySelectInput(
     disabled,
   }) {
   const getRelevantInput = () => {
-    switch (service) {
+    switch(service) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
         return (
           <AzureDevOpsRepositorySelectInput

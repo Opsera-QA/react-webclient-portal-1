@@ -11,24 +11,24 @@ import _ from "lodash";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    workspace,
-    valueField,
-    textField,
-  }) {
+    {
+      fieldName,
+      model,
+      setModel,
+      toolId,
+      disabled,
+      setDataFunction,
+      clearDataFunction,
+      workspace,
+      valueField,
+      textField,
+    }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
   const [error, setError] = useState("");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -101,7 +101,7 @@ function BitbucketRepositorySelectInput(
   };
 
   const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
+      _.debounce((searchTerm) => loadData(searchTerm, toolId), 600),
       [],
   );
 
