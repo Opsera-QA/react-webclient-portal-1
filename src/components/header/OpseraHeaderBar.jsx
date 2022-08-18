@@ -9,12 +9,13 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
+import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
 };
 
-function HeaderNavigationBar({ hideAuthComponents, userData }) {
+export default function OpseraHeaderBar({ hideAuthComponents, userData }) {
   const {
     loginUserContext,
     logoutUserContext,
@@ -30,7 +31,7 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
     isProductionEnvironment,
   } = useComponentStateReference();
   const history = useHistory();
-  const [currentScreen, setCurrentScreen] = useState("pipelines");
+  const [currentScreen, setCurrentScreen] = useState("home");
 
   const login = function() {
     loginUserContext();
@@ -58,24 +59,10 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
   // TODO: Should this be passed in?
   const getSubNavigationBar = () => {
     return (
-      <Navbar.Collapse id={"basic-navbar-nav"}>
-        <Nav.Item className={"mx-5"}>
-          <div
-            className={currentScreen === "pipelines" ? "font-weight-bold my-auto" : ""}
-          >
-            Pipelines
-          </div>
-          <div className={currentScreen === "pipelines" ? "w-100 mt-auto active-header-underline" : ""} />
-        </Nav.Item>
-        <Nav.Item className={"mx-5"}>
-          <div
-            className={currentScreen === "insights" ? "font-weight-bold active-header-underline" : ""}
-          >
-            Unified Insights
-          </div>
-          <div className={currentScreen === "insights" ? "w-100 mt-auto active-header-underline" : ""} />
-        </Nav.Item>
-      </Navbar.Collapse>
+      <FreeTrialLandingHeaderNavigationBar
+        currentScreen={currentScreen}
+        setCurrentScreen={setCurrentScreen}
+      />
     );
   };
 
@@ -203,7 +190,7 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
   };
 
   return (
-    <Navbar className="nav-bar">
+    <Navbar>
       <Navbar.Brand href="/">
         <img
           alt={"Opsera Inc."}
@@ -219,9 +206,7 @@ function HeaderNavigationBar({ hideAuthComponents, userData }) {
   );
 }
 
-HeaderNavigationBar.propTypes = {
+OpseraHeaderBar.propTypes = {
   hideAuthComponents: PropTypes.bool,
   userData: PropTypes.object,
 };
-
-export default HeaderNavigationBar;
