@@ -38,19 +38,19 @@ function GitlabRepositorySelectInput({
     }
 
     isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
+    const cancelSource = axios.CancelToken.source();
+    setCancelTokenSource(cancelSource);
     setError(undefined);
     setGitlabRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(source).catch((error) => {
+      loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
 
     return () => {
-      source.cancel();
+      cancelSource.cancel();
       isMounted.current = false;
     };
   }, [toolId]);
