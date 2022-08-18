@@ -13,9 +13,8 @@ const TerraformCloudMetadata = {
         isRequired: true
       },
       {
-        label: "Is Terraform Enterprise?",
+        label: "Use Terraform Enterprise",
         id: "terraformEnterpriseFlag",
-        isRequired: true
       },
     ],
     newObjectFields:
