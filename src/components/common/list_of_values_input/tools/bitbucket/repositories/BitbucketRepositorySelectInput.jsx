@@ -36,18 +36,18 @@ function BitbucketRepositorySelectInput(
     }
 
     isMounted.current = true;
-    const source = axios.CancelToken.source();
+    const cancelSource = axios.CancelToken.source();
     setBitbucketRepositories([]);
-    setCancelTokenSource(source);
+    setCancelTokenSource(cancelSource);
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
-      loadData("", toolId, cancelTokenSource).catch((error) => {
+      loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
 
     return () => {
-      source.cancel();
+      cancelSource.cancel();
       isMounted.current = false;
     };
   }, [toolId, workspace]);
