@@ -1817,4 +1817,8 @@ div.data-blocks-ellipses {
 
 }
 
+.widget-data-block-base:hover {
+    border-color: #7F74B9 !important;
+}
+
 /* End Page Link Card Styling */

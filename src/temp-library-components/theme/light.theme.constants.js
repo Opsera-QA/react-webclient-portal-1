@@ -5,6 +5,7 @@ lightThemeConstants.COLOR_PALETTE = {
   WHITE: "#FFFFFF",
 
   // Blue
+  SALESFORCE_BLUE: "#1798c1",
   LIGHT_BLUE: "#67C1E3",
   BLUE_HIGHLIGHT: "#5CBDE1",
 

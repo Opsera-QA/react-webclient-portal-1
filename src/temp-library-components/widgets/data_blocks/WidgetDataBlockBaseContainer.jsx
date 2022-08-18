@@ -42,6 +42,17 @@ function WidgetDataBlockBaseContainer(
     }
   };
 
+  const getClassNames = () => {
+    let classNames = ``;
+    // let classNames = `widget-data-block-base`; // Enable if we want border color change on hover
+
+    if (hasStringValue(className) === true) {
+      classNames += ` ${className}`;
+    }
+
+    return classNames;
+  };
+
   // TODO: Should this be a helper function that we pass disabled and onClickFunction into?
   const getCursor = () => {
     if (disabled === true) {
@@ -57,7 +68,7 @@ function WidgetDataBlockBaseContainer(
 
   return (
     <div
-      className={className}
+      className={getClassNames()}
       onClick={handleOnClickFunction}
       style={{
         borderRadius: "1em",

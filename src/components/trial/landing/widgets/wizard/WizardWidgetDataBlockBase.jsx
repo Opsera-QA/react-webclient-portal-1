@@ -9,11 +9,12 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function WizardWidgetDataBlockBase(
   {
-    middleText,
-    bottomText,
+    text,
     onClickFunction,
     className,
     icon,
+    iconStyling,
+    iconSize,
     disabled,
   }) {
   const {themeConstants} = useComponentStateReference();
@@ -22,28 +23,22 @@ export default function WizardWidgetDataBlockBase(
     if (icon) {
       return (
         <div>
-          <IconBase icon={icon} iconSize={"xl"}/>
+          <IconBase
+            icon={icon}
+            iconSize={iconSize}
+            iconStyling={iconStyling}
+          />
         </div>
       );
     }
   };
 
 
-  const getMiddleText = () => {
-    if (middleText) {
+  const getText = () => {
+    if (text) {
       return (
         <div className={"light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
-          {middleText}
-        </div>
-      );
-    }
-  };
-
-  const getBottomText = () => {
-    if (bottomText) {
-      return (
-        <div className={"dark-gray-text-primary font-inter-light-500"}>
-          {bottomText}
+          {text}
         </div>
       );
     }
@@ -62,14 +57,11 @@ export default function WizardWidgetDataBlockBase(
       >
         <CenteredContentWrapper>
           <Row className={"w-100 h-100 mx-auto text-center"}>
-            <Col xs={12} className={"my-auto text-center mx-0"}>
+            <Col xs={12} className={"text-center mx-0 mb-2"}>
               {getTopIcon()}
             </Col>
-            <Col xs={12} className={"my-auto text-center"}>
-              {getMiddleText()}
-            </Col>
             <Col xs={12} className={"mt-auto text-center"}>
-              {getBottomText()}
+              {getText()}
             </Col>
           </Row>
         </CenteredContentWrapper>
@@ -79,10 +71,11 @@ export default function WizardWidgetDataBlockBase(
 }
 
 WizardWidgetDataBlockBase.propTypes = {
-  middleText: PropTypes.any,
-  bottomText: PropTypes.any,
+  text: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
+  iconStyling: PropTypes.object,
+  iconSize: PropTypes.string,
   onClickFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
