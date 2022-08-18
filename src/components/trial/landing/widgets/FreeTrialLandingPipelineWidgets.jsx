@@ -15,7 +15,9 @@ export default function FreeTrialLandingPipelineWidgets({className}) {
         />
       </div>
       <div>
-        <PipelineWidgetsBody />
+        <PipelineWidgetsBody
+          selectedPipelineId={selectedPipelineId}
+        />
       </div>
     </div>
   );
