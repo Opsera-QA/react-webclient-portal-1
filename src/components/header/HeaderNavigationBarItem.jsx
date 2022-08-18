@@ -11,15 +11,22 @@ export default function HeaderNavigationBarItem(
     className,
   }) {
   return (
-    <Nav.Item
+    <div
       className={className}
-      onClickFunction={() => setCurrentScreen(screenName)}
+      onClick={() => setCurrentScreen(screenName)}
+      style={{
+        cursor: "pointer",
+      }}
     >
-      <div className={currentScreen === screenName ? "font-weight-bold my-auto" : ""}>
-        {screenLabel}
-      </div>
-      <div className={currentScreen === screenName ? "w-100 mt-auto active-header-underline" : ""} />
-    </Nav.Item>
+      <Nav.Item
+        className={className}
+      >
+        <div className={currentScreen === screenName ? "font-weight-bold my-auto" : ""}>
+          {screenLabel}
+        </div>
+        <div className={currentScreen === screenName ? "w-100 mt-auto active-header-underline" : ""} />
+      </Nav.Item>
+    </div>
   );
 }
 

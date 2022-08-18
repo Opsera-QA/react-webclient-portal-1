@@ -5,8 +5,12 @@ import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
 import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wizard/FreeTrialLandingWizardWidgets";
 import FreeTrialLandingPipelineWidgets from "components/trial/landing/widgets/FreeTrialLandingPipelineWidgets";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
+import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
 
 export default function FreeTrialLanding() {
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
+
   return (
     <div className={"max-content-width"}>
       <div className={"mt-3"}>

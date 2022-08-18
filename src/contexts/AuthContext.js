@@ -25,6 +25,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -323,6 +324,8 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       unsubscribeFromTopic: unsubscribeFromTopic,
       userData: userData,
       userExpiration: getFreeTrialUserExpirationDate(),
+      headerNavigationBar: headerNavigationBar,
+      setHeaderNavigationBar: setHeaderNavigationBar,
     }}>
       <div
         className={"w-100"}

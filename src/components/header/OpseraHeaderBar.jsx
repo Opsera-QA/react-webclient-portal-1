@@ -10,6 +10,7 @@ import SiteViewModeNavigationSelectInput from "components/header/view_modes/Site
 import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
@@ -19,6 +20,7 @@ export default function OpseraHeaderBar({ hideAuthComponents, userData }) {
   const {
     loginUserContext,
     logoutUserContext,
+    headerNavigationBar,
   } = useContext(AuthContext);
   const {
     toastContext,
@@ -54,16 +56,6 @@ export default function OpseraHeaderBar({ hideAuthComponents, userData }) {
     } else {
       history.push("/signup");
     }
-  };
-
-  // TODO: Should this be passed in?
-  const getSubNavigationBar = () => {
-    return (
-      <FreeTrialLandingHeaderNavigationBar
-        currentScreen={currentScreen}
-        setCurrentScreen={setCurrentScreen}
-      />
-    );
   };
 
   // TODO: There might be multiple versions of this depending on how we build it--
@@ -200,7 +192,7 @@ export default function OpseraHeaderBar({ hideAuthComponents, userData }) {
           className={"d-inline-block align-top mx-3"}
         />
       </Navbar.Brand>
-      {getSubNavigationBar()}
+      {headerNavigationBar}
       {getAuthenticationComponents()}
     </Navbar>
   );
