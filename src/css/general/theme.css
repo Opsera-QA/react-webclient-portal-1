@@ -950,12 +950,12 @@ a.nav-link {
 
 .content-container {
     border: 1px solid #E6E5E3;
-    border-radius: 1em 1em 6px 6px;
+    border-radius: 1rem;
 }
 
 .content-container-border {
     border: 1px solid #E6E5E3;
-    border-radius: 1em 1em 6px 6px;
+    border-radius: 1rem;
 }
 
 .content-container-shadow {
@@ -985,8 +985,8 @@ a.nav-link {
     background-color: #3D3B36;
     color: #fef7fd;
     line-height: 2.4em;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 
 .dashboard-container-header {
@@ -1014,6 +1014,8 @@ a.nav-link {
     background-color: #3D3B36;
     padding-top: 1em;
     height: 1.5em;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
 }
 
 .content-block-footer-text-container {
@@ -1424,7 +1426,7 @@ div.data-blocks-ellipses {
 .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
-    border-radius: 1em;
+    border-radius: 1rem;
 }
 
 .filter-container-no-border {
@@ -1434,7 +1436,7 @@ div.data-blocks-ellipses {
 .filter-container .content-block-header {
     background-color: #E6E5E3;
     color: #3D3B36;
-    border-radius: 1em 1em 0 0;
+    border-radius: 1rem 1rem 0 0;
 }
 
 .filter-container .title-text-header {
@@ -1742,8 +1744,8 @@ div.data-blocks-ellipses {
     min-height: 500px;
     height: calc(100% - 48px);
     max-height: calc(100% - 48px);
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 /* Confirmation panel */
