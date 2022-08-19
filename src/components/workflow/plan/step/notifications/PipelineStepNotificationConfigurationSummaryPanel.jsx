@@ -28,6 +28,10 @@ import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notificati
 import {
   jiraStepNotificationMetadata
 } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import PipelineStepGChatNotificationSummaryPanel
+  from "components/workflow/plan/step/notifications/gchat/PipelineStepGChatNotificationSummaryPanel";
+import gChatStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Style and utilize the left tab construct
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {
@@ -36,6 +40,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
   const [slackModel, setSlackModel] = useState(undefined);
   const [emailModel, setEmailModel] = useState(undefined);
   const [serviceNowModel, setServiceNowModel] = useState(undefined);
+  const [gChatModel, setGChatModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -67,6 +72,9 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
     const serviceNowNotification = pipelineStepData?.notification?.find((notification) => notification.type === "servicenow");
     setServiceNowModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
+
+    const gChatNotification = pipelineStepData?.notification?.find((notification) => notification.type === "gchat");
+    setGChatModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
   };
 
   const getEmailFields = () => {
@@ -129,12 +137,25 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
     );
   };
 
+  const getGChatFields = () => {
+    if (gChatModel?.getData("enabled") !== true) {
+      return null;
+    }
+
+    return (
+      <InfoContainer titleText={"Google Chat Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
+        <PipelineStepGChatNotificationSummaryPanel gChatStepNotificationMetadata={gChatModel} />
+      </InfoContainer>
+    );
+  };
+
   const getNotificationBody = () => {
     const hasEmailNotifications = emailModel?.getData("enabled") === true;
     const hasJiraNotifications = jiraModel?.getData("enabled") === true;
     const hasTeamsNotifications = teamsModel?.getData("enabled") === true;
     const hasSlackNotifications = slackModel?.getData("enabled") === true;
     const hasServiceNowNotifications = serviceNowModel?.getData("enabled") === true;
+    const hasGChatNotifications = gChatModel?.getData("enabled") === true;
 
     if (
          hasEmailNotifications === false
@@ -142,6 +163,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
       && hasTeamsNotifications === false
       && hasSlackNotifications === false
       && hasServiceNowNotifications === false
+      && hasGChatNotifications === false
     ) {
       return (
         <NoDataMessageField message={"No notifications are configured for this Pipeline step."} />
@@ -155,6 +177,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
         {getTeamsFields()}
         {getSlackFields()}
         {getServiceNowFields()}
+        {getGChatFields()}
       </div>
     );
   };
