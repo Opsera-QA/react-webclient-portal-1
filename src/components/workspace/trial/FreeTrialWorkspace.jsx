@@ -14,6 +14,7 @@ export default function FreeTrialWorkspace() {
         The Opsera Workspace allows you to register, track, and configure all of the tools, pipelines, and tasks available to your account in
         one centralized location.
       `}
+      includeSubNavigationGap={false}
     >
       <FreeTrialWorkspaceViewContainer
       />

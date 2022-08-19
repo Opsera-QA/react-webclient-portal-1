@@ -7,28 +7,34 @@ import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wiza
 import FreeTrialLandingPipelineWidgets from "components/trial/landing/widgets/FreeTrialLandingPipelineWidgets";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
 
   return (
     <div className={"max-content-width"}>
-      <div className={"mt-3"}>
-        <Row>
-          <Col xs={6}>
-            <WelcomeWidget />
-          </Col>
-          <Col xs={6}>
-            <AccountStatusWidget />
-          </Col>
-        </Row>
-      </div>
-      <div className={"mt-3 mx-auto"}>
-        <FreeTrialLandingWizardWidgets />
-      </div>
-      <div className={"mt-3"}>
-        <FreeTrialLandingPipelineWidgets />
-      </div>
+      <ScreenContainer
+        breadcrumbDestination={"workspace"}
+        includeSubNavigationGap={false}
+      >
+        <div className={"m-3"}>
+          <Row>
+            <Col xs={6}>
+              <WelcomeWidget />
+            </Col>
+            <Col xs={6}>
+              <AccountStatusWidget />
+            </Col>
+          </Row>
+          <div className={"mt-3 mx-auto"}>
+            <FreeTrialLandingWizardWidgets />
+          </div>
+          <div className={"mt-3"}>
+            <FreeTrialLandingPipelineWidgets />
+          </div>
+        </div>
+      </ScreenContainer>
     </div>
   );
 }

@@ -26,6 +26,7 @@ function ScreenContainer(
     titleActionBar,
     helpComponent,
     bodyClassName,
+    includeSubNavigationGap,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -50,11 +51,13 @@ function ScreenContainer(
       );
     }
 
-    return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
-      </div>
-    );
+    if (includeSubNavigationGap === true) {
+      return (
+        <div className="mb-3">
+          <div className="sub-navigation-block" />
+        </div>
+      );
+    }
   };
 
   const getPageDescription = () => {
@@ -178,10 +181,12 @@ ScreenContainer.propTypes = {
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
+  includeSubNavigationGap: PropTypes.bool,
 };
 
 ScreenContainer.defaultProps = {
   bodyClassName: "mt-2",
+  includeSubNavigationGap: true,
 };
 
 export default ScreenContainer;
