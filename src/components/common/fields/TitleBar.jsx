@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import BadgeBase from "components/common/badges/BadgeBase";
-import { faCircleInfo } from "@fortawesome/pro-light-svg-icons";
 import BetaBadge from "components/common/badges/TooltipBadgeBase";
 
 function TitleBar(
@@ -34,12 +32,12 @@ function TitleBar(
   };
 
   if (isLoading) {
-    return (<span><IconBase isLoading={isLoading} className={"mr-1"}/>Loading Data</span>);
+    return (<span><IconBase isLoading={isLoading} className={"mr-2"}/>Loading Data</span>);
   }
 
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-1"}/>{title}</span></div>
+      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
       {getRightSideItems()}
     </div>
   );

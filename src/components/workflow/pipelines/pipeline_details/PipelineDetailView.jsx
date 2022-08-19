@@ -254,7 +254,7 @@ function PipelineDetailView() {
 
   return (
     <div>
-      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
+      {/*<WorkflowSubNavigationBar currentTab={"pipelineViewer"} />*/}
       {getBody()}
     </div>
   );
