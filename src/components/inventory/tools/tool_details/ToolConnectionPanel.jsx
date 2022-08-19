@@ -45,6 +45,7 @@ import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
 import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfiguration";
+import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -90,6 +91,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
   toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
   toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -191,6 +193,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <InformaticaIdqToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
         return <LiquibaseToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
+        return <GChatToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }

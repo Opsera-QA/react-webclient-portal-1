@@ -38,31 +38,39 @@ function GitlabRepositorySelectInput({
     }
 
     isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
+    const cancelSource = axios.CancelToken.source();
+    setCancelTokenSource(cancelSource);
     setError(undefined);
     setGitlabRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(source).catch((error) => {
+      loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
 
     return () => {
-      source.cancel();
+      cancelSource.cancel();
       isMounted.current = false;
     };
   }, [toolId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "", currentToolId = toolId, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadGitlabRepositories("", toolId, cancelSource);
+      await loadGitlabRepositories(
+        searchTerm,
+        currentToolId,
+        cancelSource,
+        );
     } catch (error) {
-      setError(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -71,44 +79,29 @@ function GitlabRepositorySelectInput({
     toolId,
     cancelSource = cancelTokenSource,
   ) => {
-    try {
-      setIsLoading(true);
-      const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
-        getAccessToken,
-        cancelSource,
-        searchTerm,
-        toolId,
-      );
+    const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
+      getAccessToken,
+      cancelSource,
+      searchTerm,
+      toolId,
+    );
+    const repositories = response?.data?.data;
 
-      const repositories = response?.data?.data;
+    if (isMounted?.current === true && Array.isArray(repositories)) {
+      setGitlabRepositories([...repositories]);
 
-      if (isMounted?.current === true && Array.isArray(repositories)) {
-        setGitlabRepositories([...repositories]);
+      const existingRepository = model?.getData(fieldName);
 
-        const existingRepository = model?.getData(fieldName);
-
-        if (hasStringValue(existingRepository) === true) {
-          const existingRepositoryExists = repositories.find(
-            (repository) => repository[valueField] === existingRepository,
-          );
-
-          if (existingRepositoryExists == null) {
-            setError(
-              "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list.",
-            );
-          }
-        }
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        setError(
-          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.",
+      if (hasStringValue(existingRepository) === true) {
+        const existingRepositoryExists = repositories.find(
+          (repository) => repository[valueField] === existingRepository,
         );
-      }
-      console.error(error);
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
+
+        if (existingRepositoryExists == null) {
+          setError(
+            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list.",
+          );
+        }
       }
     }
   };
@@ -118,7 +111,7 @@ function GitlabRepositorySelectInput({
   };
 
   const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadGitlabRepositories(searchTerm, toolId), 600),
+    _.debounce((searchTerm) => loadData(searchTerm, toolId), 600),
     [],
   );
 

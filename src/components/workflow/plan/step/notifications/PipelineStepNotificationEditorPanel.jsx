@@ -22,6 +22,7 @@ import {
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import PipelineStepNotificationConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 function PipelineStepNotificationEditorPanel(
   {
@@ -36,6 +37,7 @@ function PipelineStepNotificationEditorPanel(
   const [slackNotificationModel, setSlackNotificationModel] = useState(undefined);
   const [emailNotificationModel, setEmailNotificationModel] = useState(undefined);
   const [serviceNowNotificationModel, setServiceNowNotificationModel] = useState(undefined);
+  const [gChatNotificationModel, setGChatNotificationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -90,11 +92,14 @@ function PipelineStepNotificationEditorPanel(
 
     const serviceNowNotification = pipelineStep?.notification?.find((notification) => notification.type === "servicenow");
     setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
+
+    const gChatNotification = pipelineStep?.notification?.find((notification) => notification.type === "gchat");
+    setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
   };
 
   const updateStepNotificationConfiguration = async () => {
     if (validateRequiredFields()) {
-      const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackNotificationModel.getPersistData(), jiraNotificationModel.getPersistData(), teamsNotificationModel.getPersistData(), serviceNowNotificationModel.getPersistData()];
+      const newNotificationConfiguration = [emailNotificationModel.getPersistData(), slackNotificationModel.getPersistData(), jiraNotificationModel.getPersistData(), teamsNotificationModel.getPersistData(), serviceNowNotificationModel.getPersistData(), gChatNotificationModel.getPersistData()];
       await pipelineActions.updatePipelineStepNotificationConfiguration(
         getAccessToken,
         cancelTokenSource,
@@ -129,6 +134,11 @@ function PipelineStepNotificationEditorPanel(
     
     if (serviceNowNotificationModel.getData("enabled") === true && !serviceNowNotificationModel.isModelValid()) {
       toastContext.showInlineErrorMessage("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
+      return false;
+    }
+
+    if (gChatNotificationModel.getData("enabled") === true && !gChatNotificationModel.isModelValid()) {
+      toastContext.showInlineErrorMessage("Error: Cannot enable GChat notification without tool selected.");
       return false;
     }
 
@@ -177,6 +187,8 @@ function PipelineStepNotificationEditorPanel(
         setServiceNowNotificationModel={setJiraNotificationModel}
         emailNotificationModel={emailNotificationModel}
         setEmailNotificationModel={setEmailNotificationModel}
+        gChatNotificationModel={gChatNotificationModel}
+        setGChatNotificationModel={setGChatNotificationModel}
         pipelineStep={pipelineStep}
       />
       <SaveButtonContainer>
