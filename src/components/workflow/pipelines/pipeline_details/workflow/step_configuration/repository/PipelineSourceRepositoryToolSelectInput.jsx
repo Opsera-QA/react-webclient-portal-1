@@ -20,7 +20,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     const accountName = tool?.configuration?.accountUsername || "No Account Assigned";
     const toolName = tool?.name;
 
-    return (`${accountName} (${toolName})`);
+    return (`${toolName} (${accountName})`);
   };
 
   return (
