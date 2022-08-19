@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CreatePipelineWizard from "components/wizard/free_trial/pipeline/CreatePipelineWizard";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import WizardWidgetDataBlockBase from "components/trial/landing/widgets/wizard/WizardWidgetDataBlockBase";
+import FreeTrialSalesforcePipelineWizardOverlay
+  from "components/wizard/free_trial/pipeline/salesforce_flow/FreeTrialSalesforcePipelineWizardOverlay";
 
 export default function FreeTrialLandingSalesforcePipelineWizardWidget({ className }) {
   const { themeConstants } = useComponentStateReference();
@@ -11,8 +12,8 @@ export default function FreeTrialLandingSalesforcePipelineWizardWidget({ classNa
 
   const launchPipelineCreationWizard = () => {
     toastContext.showOverlayPanel(
-      <CreatePipelineWizard
-      />,
+      <FreeTrialSalesforcePipelineWizardOverlay
+      />
     );
   };
 

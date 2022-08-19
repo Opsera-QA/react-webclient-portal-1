@@ -13,7 +13,7 @@ export const CREATE_PIPELINE_WIZARD_SCREENS = {
   SDLC_FLOW: "sdlc_flow",
 };
 
-function CreatePipelineWizard() {
+export default function CreatePipelineWizard() {
   const toastContext = useContext(DialogToastContext);
   const [currentScreen, setCurrentScreen] = useState(CREATE_PIPELINE_WIZARD_SCREENS.FLOW_SELECTION_SCREEN);
 
@@ -54,10 +54,6 @@ function CreatePipelineWizard() {
   );
 }
 
-CreatePipelineWizard.propTypes = {
-  toolMetadata: PropTypes.object,
-};
-
-export default CreatePipelineWizard;
+CreatePipelineWizard.propTypes = {};
 
 
