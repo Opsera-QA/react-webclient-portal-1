@@ -21,6 +21,8 @@ import DotNetCliTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
 import DotNetCliSdkVersionSelectInput 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -81,6 +83,20 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
           {coverityStepConfigurationDto?.getData("dotnetType") && 
             <DotNetCliSdkVersionSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
           }
+          <TextAreaInput 
+            dataObject={coverityStepConfigurationDto}                         
+            setDataObject={setCoverityStepConfigurationDataDto}
+            fieldName={"commandLineArguments"} 
+          />
+          <ParameterSelectListInputBase
+            dataObject={coverityStepConfigurationDto}
+            setDataObject={setCoverityStepConfigurationDataDto}
+            fieldName={"customParameters"}
+            allowIncompleteItems={true}
+            type={"Parameter"}
+            regexValidationRequired={false}
+            titleText={"Parameter Selection"}
+          />
         </>
       );
     }
