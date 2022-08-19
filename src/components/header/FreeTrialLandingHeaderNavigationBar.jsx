@@ -33,29 +33,35 @@ export default function FreeTrialLandingHeaderNavigationBar(
   };
 
   return (
-    <Navbar.Collapse id={"basic-navbar-nav"}>
-      <HeaderNavigationBarItem
-        className={"mx-5"}
-        currentScreen={currentScreen}
-        setCurrentScreen={handleScreenClick}
-        screenLabel={"Home"}
-        screenName={"home"}
-      />
-      <HeaderNavigationBarItem
-        className={"mx-5"}
-        currentScreen={currentScreen}
-        setCurrentScreen={handleScreenClick}
-        screenLabel={"Workspace"}
-        screenName={"workspace"}
-      />
-      <HeaderNavigationBarItem
-        className={"mx-5"}
-        currentScreen={currentScreen}
-        setCurrentScreen={handleScreenClick}
-        screenLabel={"Unified Insights"}
-        screenName={"insights"}
-      />
-    </Navbar.Collapse>
+    <div
+      style={{
+        height: "88px",
+      }}
+    >
+      <Navbar.Collapse className={"h-100"}>
+        <HeaderNavigationBarItem
+          className={"mx-5"}
+          currentScreen={currentScreen}
+          setCurrentScreen={handleScreenClick}
+          screenLabel={"Home"}
+          screenName={"home"}
+        />
+        <HeaderNavigationBarItem
+          className={"mx-5"}
+          currentScreen={currentScreen}
+          setCurrentScreen={handleScreenClick}
+          screenLabel={"Workspace"}
+          screenName={"workspace"}
+        />
+        <HeaderNavigationBarItem
+          className={"mx-5"}
+          currentScreen={currentScreen}
+          setCurrentScreen={handleScreenClick}
+          screenLabel={"Unified Insights"}
+          screenName={"insights"}
+        />
+      </Navbar.Collapse>
+    </div>
   );
 }
 

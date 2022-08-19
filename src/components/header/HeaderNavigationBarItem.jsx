@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Nav } from "react-bootstrap";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
+import { disabled } from "react-widgets/PropTypes";
+import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
 
 export default function HeaderNavigationBarItem(
   {
@@ -9,23 +13,70 @@ export default function HeaderNavigationBarItem(
     screenName,
     screenLabel,
     className,
+    disabled,
   }) {
-  return (
-    <div
-      className={className}
-      onClick={() => setCurrentScreen(screenName)}
-      style={{
-        cursor: "pointer",
-      }}
-    >
-      <Nav.Item
-        className={className}
-      >
-        <div className={currentScreen === screenName ? "font-weight-bold my-auto" : ""}>
+  const { themeConstants } = useComponentStateReference();
+
+  const getCurrentScreenUnderline = () => {
+    if (currentScreen === screenName) {
+      return (
+        <div
+          className={"w-100 align-self-end"}
+          style={{
+            backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+            height: "3px",
+          }}
+        />
+      );
+    }
+  };
+
+  const getScreenLabel = () => {
+    return (
+      <div className={"d-flex"}>
+        <div
+          className={currentScreen === screenName ? "font-weight-bold align-self-center" : "align-self-center"}
+        >
           {screenLabel}
         </div>
-        <div className={currentScreen === screenName ? "w-100 mt-auto active-header-underline" : ""} />
-      </Nav.Item>
+        {/*{getCurrentScreenUnderline()}*/}
+      </div>
+    );
+  };
+
+  const getStyling = () => {
+    if (currentScreen === screenName) {
+      return (
+        {
+          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+          fontWeight: 800,
+          fontSize: "16px",
+          cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
+        }
+      );
+    }
+
+    return (
+      {
+        cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
+        fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+        fontWeight: 500,
+        fontSize: "16px",
+      }
+    );
+  };
+
+  return (
+    <div className={className}>
+      <div
+        className={"mx-5 h-100 w-100 d-flex flex-column"}
+        onClick={() => setCurrentScreen(screenName)}
+        style={getStyling()}
+      >
+        <Nav.Item className={"h-100 w-100 d-flex"}>
+          {getScreenLabel()}
+        </Nav.Item>
+      </div>
     </div>
   );
 }
@@ -36,8 +87,5 @@ HeaderNavigationBarItem.propTypes = {
   screenName: PropTypes.string,
   screenLabel: PropTypes.string,
   className: PropTypes.string,
-};
-
-HeaderNavigationBarItem.defaultProps = {
-  className: "mx-5",
+  disabled: PropTypes.bool,
 };

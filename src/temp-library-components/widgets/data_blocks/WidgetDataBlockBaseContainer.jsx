@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
 
 function WidgetDataBlockBaseContainer(
   {
@@ -53,19 +54,6 @@ function WidgetDataBlockBaseContainer(
     return classNames;
   };
 
-  // TODO: Should this be a helper function that we pass disabled and onClickFunction into?
-  const getCursor = () => {
-    if (disabled === true) {
-      return "not-allowed";
-    }
-
-    if (onClickFunction) {
-      return "pointer";
-    }
-
-    return "default";
-  };
-
   return (
     <div
       className={getClassNames()}
@@ -81,7 +69,7 @@ function WidgetDataBlockBaseContainer(
         backgroundColor: backgroundColor,
         color: fontColor,
         fontFamily: fontFamily,
-        cursor: getCursor(),
+        cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
       }}
     >
       {children}
