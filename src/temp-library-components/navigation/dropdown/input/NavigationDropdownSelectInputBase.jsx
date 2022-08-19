@@ -84,18 +84,20 @@ function NavigationDropdownSelectInputBase(
   }
 
   return (
-    <NavDropdown
-      title={getTitle()}
-      id={id}
-      className={className}
-    >
-      <div style={{
-        maxHeight: "100px",
-        overflowY: "auto",
-      }}>
-        {getSelectOptions()}
-      </div>
-    </NavDropdown>
+    <div className={className}>
+      <NavDropdown
+        title={getTitle()}
+        id={id}
+        className={"navigation-dropdown-select-input"}
+      >
+        <div style={{
+          maxHeight: "100px",
+          overflowY: "auto",
+        }}>
+          {getSelectOptions()}
+        </div>
+      </NavDropdown>
+    </div>
   );
 }
 

@@ -4,10 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
 import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wizard/FreeTrialLandingWizardWidgets";
-import FreeTrialLandingPipelineWidgets from "components/trial/landing/widgets/FreeTrialLandingPipelineWidgets";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import FreeTrialLandingPipelinesWidget from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidget";
 
 export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
@@ -31,7 +31,7 @@ export default function FreeTrialLanding() {
             <FreeTrialLandingWizardWidgets />
           </div>
           <div className={"mt-3"}>
-            <FreeTrialLandingPipelineWidgets />
+            <FreeTrialLandingPipelinesWidget />
           </div>
         </div>
       </ScreenContainer>

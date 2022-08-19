@@ -1,14 +1,15 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import PipelineWidgetsPipelineSelectInput
-  from "components/trial/pipelines/widgets/PipelineWidgetsPipelineSelectInput";
 import { Link } from "react-router-dom";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import NavigationDropdownSelectInputBase
+  from "temp-library-components/navigation/dropdown/input/NavigationDropdownSelectInputBase";
 
-function PipelineWidgetsHeader(
+export default function PipelinesWidgetHeaderTitleBar(
   {
     selectedPipelineId,
     setSelectedPipelineId,
+    pipelines,
   }) {
   const getLinkBar = () => {
     if (isMongoDbId(selectedPipelineId) === true) {
@@ -43,20 +44,39 @@ function PipelineWidgetsHeader(
     }
   };
 
+  const getSelectedPipelineName = () => {
+    if (isMongoDbId(selectedPipelineId) === true) {
+      if (Array.isArray(pipelines) && pipelines.length > 0) {
+        const foundPipeline = pipelines?.find((pipeline) => pipeline?._id === selectedPipelineId);
+
+        if (foundPipeline) {
+          return foundPipeline?.name;
+        }
+      }
+
+      return selectedPipelineId;
+    }
+
+    return "Select a Pipeline";
+  };
+
   return (
     <div className={"d-flex"}>
-      <PipelineWidgetsPipelineSelectInput
-        selectedPipelineId={selectedPipelineId}
-        setSelectedPipelineId={setSelectedPipelineId}
+      <NavigationDropdownSelectInputBase
+        selectedOption={selectedPipelineId}
+        selectOptions={pipelines}
+        setDataFunction={setSelectedPipelineId}
+        title={getSelectedPipelineName()}
+        textField={"name"}
+        valueField={"_id"}
       />
       {getLinkBar()}
     </div>
   );
 }
 
-PipelineWidgetsHeader.propTypes = {
+PipelinesWidgetHeaderTitleBar.propTypes = {
   selectedPipelineId: PropTypes.string,
   setSelectedPipelineId: PropTypes.func,
+  pipelines: PropTypes.array,
 };
-
-export default PipelineWidgetsHeader;

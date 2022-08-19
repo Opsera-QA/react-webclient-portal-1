@@ -4,7 +4,7 @@ import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_b
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function PipelineWidgetsBody({selectedPipelineId}) {
+export default function PipelineWidgetsBody({selectedPipelineId}) {
   const {themeConstants} = useComponentStateReference();
 
   if (isMongoDbId(selectedPipelineId) !== true) {
@@ -13,13 +13,7 @@ function PipelineWidgetsBody({selectedPipelineId}) {
 
   return (
     <div>
-      <WidgetDataBlockBaseContainer
-        backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
-        borderColor={themeConstants.BORDER_COLORS.GRAY}
-        heightSize={5}
-      >
         TODO:
-      </WidgetDataBlockBaseContainer>
     </div>
   );
 }
@@ -27,5 +21,3 @@ function PipelineWidgetsBody({selectedPipelineId}) {
 PipelineWidgetsBody.propTypes = {
   selectedPipelineId: PropTypes.string,
 };
-
-export default PipelineWidgetsBody;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import PipelineLandingDataBlockWidgets
   from "components/trial/pipelines/data_blocks/PipelineLandingDataBlockWidgets";
-import PipelineWidgetsHeader from "components/trial/pipelines/widgets/PipelineWidgetsHeader";
+import PipelinesWidgetHeaderTitleBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
 
 export default function PipelinesLanding() {
@@ -14,7 +14,7 @@ export default function PipelinesLanding() {
         <PipelineLandingDataBlockWidgets />
       </div>
       <div className={"mt-3"}>
-        <PipelineWidgetsHeader
+        <PipelinesWidgetHeaderTitleBar
           selectedPipelineId={selectedPipelineId}
           setSelectedPipelineId={setSelectedPipelineId}
         />

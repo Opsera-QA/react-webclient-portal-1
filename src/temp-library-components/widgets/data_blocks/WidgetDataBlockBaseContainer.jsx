@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
-import InfoContainer from "components/common/containers/InfoContainer";
-import FilterContainer from "components/common/table/FilterContainer";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 
 function WidgetDataBlockBaseContainer(

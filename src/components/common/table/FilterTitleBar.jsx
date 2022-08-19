@@ -21,7 +21,7 @@ function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading }) {
 }
 
 FilterTitleBar.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.any,
   titleIcon: PropTypes.object,
   inlineFilters: PropTypes.any,
   isLoading: PropTypes.bool,

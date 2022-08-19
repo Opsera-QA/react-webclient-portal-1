@@ -378,3 +378,9 @@ input[disabled] {
 }
 
 /* End Error State CSS */
+
+/* Vanity Set V3 Component CSS */
+.navigation-dropdown-select-input .nav-link {
+    padding: 0;
+}
+/* End Vanity Set V3 Component CSS */
