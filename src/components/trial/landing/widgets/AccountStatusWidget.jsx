@@ -15,8 +15,8 @@ export default function AccountStatusWidget({ className }) {
     return (
       <div
         style={{
-          fontWeight: 700,
-          fontSize: "22px",
+          // fontWeight: 700,
+          // fontSize: "22px",
         }}
       >
         Account Status
@@ -43,14 +43,14 @@ export default function AccountStatusWidget({ className }) {
   return (
     <div className={className}>
       <WidgetDataBlockBaseContainer
+        title={getTitleText()}
         borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
-        fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-        heightSize={5}
+        // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
+        heightSize={6}
       >
         <div className={"p-3"}>
           <div>
-            {getTitleText()}
             {getAccountStats()}
           </div>
         </div>

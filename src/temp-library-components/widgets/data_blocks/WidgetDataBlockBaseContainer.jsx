@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import InfoContainer from "components/common/containers/InfoContainer";
+import FilterContainer from "components/common/table/FilterContainer";
+import FilterTitleBar from "components/common/table/FilterTitleBar";
 
 function WidgetDataBlockBaseContainer(
   {
+    title,
+    titleIcon,
     heightSize,
     widthSize,
     backgroundColor,
@@ -16,6 +21,7 @@ function WidgetDataBlockBaseContainer(
     className,
     onClickFunction,
     disabled,
+    isLoading,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -54,6 +60,25 @@ function WidgetDataBlockBaseContainer(
     return classNames;
   };
 
+  const getBody = () => {
+    if (title) {
+      return (
+        <div className={"filter-container"}>
+          <div className={"w-100 px-3 d-flex content-block-header py-2"}>
+            <FilterTitleBar
+              isLoading={isLoading}
+              title={title}
+              titleIcon={titleIcon}
+            />
+          </div>
+          {children}
+        </div>
+      );
+    }
+
+    return children;
+  };
+
   return (
     <div
       className={getClassNames()}
@@ -72,7 +97,7 @@ function WidgetDataBlockBaseContainer(
         cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
       }}
     >
-      {children}
+      {getBody()}
     </div>
   );
 }
@@ -88,6 +113,9 @@ WidgetDataBlockBaseContainer.propTypes = {
   children: PropTypes.any,
   onClickFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  title: PropTypes.any,
+  titleIcon: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {

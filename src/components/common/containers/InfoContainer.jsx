@@ -18,6 +18,7 @@ function InfoContainer(
     loadDataFunction,
     backgroundColor,
     field,
+    bodyClassName,
   }) {
   const getBodyStyling = () => {
     const styling = {};
@@ -48,7 +49,7 @@ function InfoContainer(
         field={field}
       />
       <div
-        className={"content-container"}
+        className={bodyClassName}
         style={getBodyStyling()}
       >
         {children}
@@ -71,6 +72,11 @@ InfoContainer.propTypes = {
   loadDataFunction: PropTypes.func,
   backgroundColor: PropTypes.string,
   field: PropTypes.object,
+  bodyClassName: PropTypes.string,
+};
+
+InfoContainer.defaultProps = {
+  bodyClassName: "content-container",
 };
 
 export default InfoContainer;

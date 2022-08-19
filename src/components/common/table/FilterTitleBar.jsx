@@ -4,7 +4,7 @@ import IconBase from "components/common/icons/IconBase";
 
 function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading }) {
   return (
-    <div className={"d-flex w-100 justify-content-between filter-title-bar"}>
+    <div className={"d-flex w-100 justify-content-between"}>
       <div className={"my-auto mr-2 filter-title-text text-nowrap"}>
         <span className={"d-flex"}>
           <IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2 d-none d-lg-block"} />

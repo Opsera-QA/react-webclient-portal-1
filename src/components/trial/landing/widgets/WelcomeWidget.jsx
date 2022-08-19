@@ -18,8 +18,10 @@ export default function WelcomeWidget({ className }) {
     return (
       <div
         style={{
-          fontWeight: 700,
-          fontSize: "22px",
+          // fontWeight: 700,
+          // fontSize: "22px",
+          // color: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+          // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
         }}
       >
         {welcomeText}
@@ -62,15 +64,15 @@ export default function WelcomeWidget({ className }) {
   return (
     <div className={className}>
       <WidgetDataBlockBaseContainer
+        title={getWelcomeText()}
         borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
-        fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-        heightSize={5}
+        // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
+        heightSize={6}
       >
         <div className={"p-3"}>
           <div className={"d-flex"}>
             <div>
-              {getWelcomeText()}
               <div
                 style={{
                   fontSize: "13px",
