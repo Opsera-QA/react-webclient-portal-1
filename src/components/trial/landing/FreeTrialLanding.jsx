@@ -15,7 +15,7 @@ export default function FreeTrialLanding() {
   return (
     <div className={"max-content-width"}>
       <ScreenContainer
-        breadcrumbDestination={"workspace"}
+        breadcrumbDestination={"freeTrialLanding"}
         includeSubNavigationGap={false}
       >
         <div className={"m-3"}>

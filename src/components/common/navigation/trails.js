@@ -5,7 +5,7 @@ import {
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
   faHexagon, faListAlt, faRss, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole, faRectangleList
+  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole, faRectangleList, faHouseUser,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -984,6 +984,15 @@ const breadcrumbs = {
     title: "Workspace",
     linkText: "Workspace",
     icon: faRectangleList
+  },
+
+  freeTrialLanding: {
+    parent: undefined,
+    name: "freeTrialLanding",
+    path: paths.home,
+    title: "Home",
+    linkText: "Home",
+    icon: faHouseUser,
   },
 };
 
