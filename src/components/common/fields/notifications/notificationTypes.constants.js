@@ -3,7 +3,8 @@ export const ORCHESTRATION_NOTIFICATION_TYPES = {
   JIRA: "jira",
   SERVICE_NOW: "servicenow",
   SLACK: "slack",
-  TEAMS: "teams"
+  TEAMS: "teams",
+  GCHAT: "gchat"
 };
 
 export const ORCHESTRATION_NOTIFICATION_TYPE_LABELS = {
@@ -11,7 +12,8 @@ export const ORCHESTRATION_NOTIFICATION_TYPE_LABELS = {
   JIRA: "Jira",
   SERVICE_NOW: "Service Now",
   SLACK: "Slack",
-  TEAMS: "servicenow"
+  TEAMS: "servicenow",
+  GCHAT: "GChat"
 };
 
 export const ORCHESTRATION_NOTIFICATION_TYPE_SELECT_OPTIONS = [
@@ -35,6 +37,10 @@ export const ORCHESTRATION_NOTIFICATION_TYPE_SELECT_OPTIONS = [
     value: ORCHESTRATION_NOTIFICATION_TYPES.TEAMS,
     text: ORCHESTRATION_NOTIFICATION_TYPE_LABELS.TEAMS
   },
+  {
+    value: ORCHESTRATION_NOTIFICATION_TYPES.GCHAT,
+    text: ORCHESTRATION_NOTIFICATION_TYPE_LABELS.GCHAT
+  },
 ];
 
 export const getOrchestrationNotificationTypeLabel = (type) => {
@@ -49,6 +55,8 @@ export const getOrchestrationNotificationTypeLabel = (type) => {
       return ORCHESTRATION_NOTIFICATION_TYPE_LABELS.SLACK;
     case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
       return ORCHESTRATION_NOTIFICATION_TYPE_LABELS.TEAMS;
+    case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
+      return ORCHESTRATION_NOTIFICATION_TYPE_LABELS.GCHAT;
     default:
       return type;
   }

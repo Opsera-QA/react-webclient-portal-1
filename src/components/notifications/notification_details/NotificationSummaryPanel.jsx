@@ -26,6 +26,10 @@ import MetricNotificationTypeSummaryCard
   from "components/notifications/notification_details/configuration_forms/metric/MetricNotificationTypeSummaryCard";
 import PipelineNotificationTypeSummaryCard
   from "components/notifications/notification_details/configuration_forms/pipeline/PipelineNotificationTypeSummaryCard";
+import GChatNotificationMethodSummaryCard
+  from "components/notifications/notification_details/notification_method_forms/gchat/GChatNotificationMethodSummaryCard";
+import gChatNotificationMetadata
+  from "components/notifications/notification_details/notification_method_forms/gchat/gChatNotificationMetadata";
 
 function NotificationSummaryPanel({ notificationData, setActiveTab }) {
   const wrapNotificationType = (metaData) => {
@@ -64,6 +68,13 @@ function NotificationSummaryPanel({ notificationData, setActiveTab }) {
         return (
           <JiraNotificationMethodSummaryCard
             notificationMethodData={wrapNotificationMethod(jiraNotificationMetadata)}
+            notificationData={notificationData}
+          />
+        );
+      case "gchat":
+        return (
+          <GChatNotificationMethodSummaryCard
+            notificationMethodData={wrapNotificationMethod(gChatNotificationMetadata)}
             notificationData={notificationData}
           />
         );
