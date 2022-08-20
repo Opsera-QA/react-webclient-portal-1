@@ -35,7 +35,7 @@ const workspaceFilterMetadata = {
     totalCount: 0,
     activeFilters: [],
     viewType: "list",
-    type: "pipelines",
+    type: "all",
   },
 };
 
