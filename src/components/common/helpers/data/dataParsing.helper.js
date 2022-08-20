@@ -29,6 +29,23 @@ dataParsingHelper.hasObjectProperties = (object) => {
   return object != null && typeof object === "object" && Object.keys(object).length > 0;
 };
 
+dataParsingHelper.doesObjectContainValue = (object, key) => {
+  const parsedKey = dataParsingHelper.parseString(key);
+  const parsedObject = dataParsingHelper.parseObject(object, undefined);
+
+  if (!parsedKey || !parsedObject) {
+    return false;
+  }
+
+  const parsedObjectValues = dataParsingHelper.parseArray(Object.values(parsedObject));
+
+  if (!parsedObjectValues) {
+    return false;
+  }
+
+  return parsedObjectValues.includes(parsedKey);
+};
+
 dataParsingHelper.parseDate = (date, defaultValue) => {
   if (hasDateValue(date) !== true) {
     return defaultValue;

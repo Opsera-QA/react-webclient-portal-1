@@ -1,36 +1,58 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/views/FreeTrialWorkspaceVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
-import FreeTrialWorkspaceRegistry from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistry";
-import FreeTrialWorkspaceTasks from "components/workspace/trial/views/task/FreeTrialWorkspaceTasks";
-import FreeTrialWorkspacePipelines from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelines";
-import FreeTrialWorkspaceItems from "components/workspace/trial/views/all/FreeTrialWorkspaceItems";
+import CreatePipelineWizard from "components/wizard/free_trial/pipeline/CreatePipelineWizard";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import PropTypes from "prop-types";
+import FreeTrialWorkspacePipelineViews from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineViews";
+import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";
+import FreeTrialWorkspaceTaskViews from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskViews";
+import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 
-export default function FreeTrialWorkspaceViewContainer() {
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
+export default function FreeTrialWorkspaceViewContainer(
+  {
+    workspaceFilterModel,
+    setWorkspaceFilterModel,
+    workspaceItems,
+    toolMetadata,
+    taskMetadata,
+    loadData,
+    isLoading,
+  }) {
+  const toastContext = useContext(DialogToastContext);
 
   const getCurrentView = () => {
     switch (workspaceFilterModel?.getData("type")) {
       case "pipelines":
         return (
-          <FreeTrialWorkspacePipelines
+          <FreeTrialWorkspacePipelineViews
+            pipelines={workspaceItems}
+            isLoading={isLoading}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
+            loadData={loadData}
           />
         );
       case "registry":
         return (
-          <FreeTrialWorkspaceRegistry
+          <FreeTrialWorkspaceRegistryViews
+            isLoading={isLoading}
+            loadData={loadData}
+            tools={workspaceItems}
+            toolMetadata={toolMetadata}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
         );
       case "tasks":
         return (
-          <FreeTrialWorkspaceTasks
+          <FreeTrialWorkspaceTaskViews
+            tasks={workspaceItems}
+            loadData={loadData}
+            isLoading={isLoading}
+            taskMetadata={taskMetadata}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
@@ -38,9 +60,14 @@ export default function FreeTrialWorkspaceViewContainer() {
       case "all":
       default:
         return (
-          <FreeTrialWorkspaceItems
+          <FreeTrialWorkspaceItemViews
+            workspaceItems={workspaceItems}
+            isLoading={isLoading}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
+            loadData={loadData}
+            taskMetadata={taskMetadata}
+            toolMetadata={toolMetadata}
           />
         );
     }
@@ -50,7 +77,8 @@ export default function FreeTrialWorkspaceViewContainer() {
     return (
       <FreeTrialWorkspaceVerticalTabContainer
         workspaceFilterModel={workspaceFilterModel}
-        setWorkspaceFilterModel={setWorkspaceFilterModel}
+        loadData={loadData}
+        isLoading={isLoading}
       />
     );
   };
@@ -71,18 +99,34 @@ export default function FreeTrialWorkspaceViewContainer() {
     );
   };
 
+  const createWorkspaceItem = () => {
+    toastContext.showOverlayPanel(
+      <CreatePipelineWizard />
+    );
+  };
+
   return (
     <FilterContainer
-      // addRecordFunction={createNewTask}
+      addRecordFunction={createWorkspaceItem}
       body={getTabAndViewContainer()}
       titleIcon={faRectangleList}
       filterDto={workspaceFilterModel}
       setFilterDto={setWorkspaceFilterModel}
       supportViewToggle={true}
-      title={"FreeTrialWorkspace"}
+      isLoading={isLoading}
+      title={"Workspace"}
+      type={"Workspace Item"}
       className={"px-2 pb-2"}
     />
   );
 }
 
-FreeTrialWorkspaceViewContainer.propTypes = {};
+FreeTrialWorkspaceViewContainer.propTypes = {
+  workspaceFilterModel: PropTypes.object,
+  setWorkspaceFilterModel: PropTypes.func,
+  workspaceItems: PropTypes.array,
+  toolMetadata: PropTypes.object,
+  taskMetadata: PropTypes.object,
+  isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+};

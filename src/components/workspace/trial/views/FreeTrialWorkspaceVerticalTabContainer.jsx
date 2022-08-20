@@ -9,18 +9,20 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { workspaceConstants } from "components/workspace/workspace.constants";
 
 export default function FreeTrialWorkspaceVerticalTabContainer(
   {
     workspaceFilterModel,
-    setWorkspaceFilterModel,
+    loadData,
+    isLoading,
   }) {
   const setDataFunction = (selectedOption) => {
     const currentOption = workspaceFilterModel?.getData("type");
 
-    if (hasStringValue(currentOption) && currentOption !== selectedOption) {
+    if (currentOption !== selectedOption) {
       workspaceFilterModel?.setData("type", selectedOption);
-      setWorkspaceFilterModel({...workspaceFilterModel});
+      loadData({...workspaceFilterModel});
     }
   };
 
@@ -29,30 +31,34 @@ export default function FreeTrialWorkspaceVerticalTabContainer(
       <VanitySetVerticalTab
         icon={faChartTreeMap}
         tabText={"All"}
-        tabName={"all"}
+        tabName={workspaceConstants.WORKSPACE_ITEM_TYPES.ALL}
         handleTabClick={setDataFunction}
         activeTab={workspaceFilterModel?.getData("type")}
+        disabled={isLoading}
       />
       <VanitySetVerticalTab
         icon={faDraftingCompass}
         tabText={"Pipelines"}
-        tabName={"pipelines"}
+        tabName={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
         handleTabClick={setDataFunction}
         activeTab={workspaceFilterModel?.getData("type")}
+        disabled={isLoading}
       />
       <VanitySetVerticalTab
         icon={faClipboardList}
         tabText={"Registry"}
-        tabName={"registry"}
+        tabName={workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL}
         handleTabClick={setDataFunction}
         activeTab={workspaceFilterModel?.getData("type")}
+        disabled={isLoading}
       />
       <VanitySetVerticalTab
         icon={faTasks}
         tabText={"Tasks"}
-        tabName={"tasks"}
+        tabName={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
         handleTabClick={setDataFunction}
         activeTab={workspaceFilterModel?.getData("type")}
+        disabled={isLoading}
       />
     </VanitySetVerticalTabContainer>
   );
@@ -60,5 +66,6 @@ export default function FreeTrialWorkspaceVerticalTabContainer(
 
 FreeTrialWorkspaceVerticalTabContainer.propTypes = {
   workspaceFilterModel: PropTypes.object,
-  setWorkspaceFilterModel: PropTypes.func,
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool,
 };

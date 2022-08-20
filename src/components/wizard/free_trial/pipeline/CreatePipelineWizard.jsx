@@ -10,6 +10,7 @@ import CreateSalesforcePipelineWizard
 export const CREATE_PIPELINE_WIZARD_SCREENS = {
   FLOW_SELECTION_SCREEN: "flow_selection_screen",
   SALESFORCE_FLOW: "salesforce_flow",
+  GIT_CUSTODIAN_FLOW: "git_custodian_flow",
   SDLC_FLOW: "sdlc_flow",
 };
 
@@ -37,6 +38,10 @@ export default function CreatePipelineWizard() {
           />
         );
       case CREATE_PIPELINE_WIZARD_SCREENS.SDLC_FLOW:
+        return (
+          <div>Coming Soon</div>
+        );
+      case CREATE_PIPELINE_WIZARD_SCREENS.GIT_CUSTODIAN_FLOW:
         return (
           <div>Coming Soon</div>
         );

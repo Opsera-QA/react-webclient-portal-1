@@ -45,7 +45,12 @@ export default function FreeTrialWorkspaceItems(
   };
 
   const getWorkspaceItems = async () => {
-    const response = await workspaceActions.getFreeTrialWorkspaceItems(getAccessToken, cancelTokenSource);
+    const response = await workspaceActions.getFreeTrialWorkspaceItems(
+      getAccessToken,
+      cancelTokenSource,
+      workspaceFilterModel?.getFilterValue("type"),
+      workspaceFilterModel?.getFilterValue("search"),
+    );
     const items = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(items)) {
