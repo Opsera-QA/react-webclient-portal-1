@@ -57,22 +57,25 @@ const FreeTrialRegistrationSelectSignupOptionScreen = ({ setCurrentScreen}) => {
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faGithub}
-              text={"Github"}
+              text={"Github (Coming Soon)"}
               option={SIGNUP_OPTIONS.GITHUB}
+              disabled={true}
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faGitlab}
-              text={"Gitlab"}
+              text={"Gitlab (Coming Soon)"}
               option={SIGNUP_OPTIONS.GITLAB}
+              disabled={true}
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faLinkedin}
-              text={"LinkedIn"}
+              text={"LinkedIn (Coming Soon)"}
               option={SIGNUP_OPTIONS.LINKED_IN}
+              disabled={true}
             />
           </div>
         </WizardCard>

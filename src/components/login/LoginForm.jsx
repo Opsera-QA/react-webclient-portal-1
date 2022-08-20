@@ -238,8 +238,12 @@ const LoginForm = ({ authClient }) => {
     setFederatedIdpEnabled(false);
     toastContext.removeAllBanners();
 
-    const apiUrl = "/users/active-account";
-    const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
+    const apiUrl = "/users/trial/is-account-active";
+    const params = {
+      email: lookupAccountEmail,
+      hostname: window.location.hostname,
+    };
+
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       toastContext.removeAllBanners();

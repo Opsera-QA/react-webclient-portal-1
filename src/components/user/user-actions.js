@@ -62,23 +62,27 @@ userActions.isDomainAvailable = async (domain) => {
 
 
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them
-userActions.createFreeTrialAccount = async (registrationDataDto) => {
-  let finalObject = registrationDataDto.getPersistData();
-  let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
-  let configuration = { cloudProvider: "GKE", cloudProviderRegion: "" };
-  delete finalObject["title"];
-  delete finalObject["company"];
-  finalObject["attributes"] = attributes;
-  finalObject["configuration"] = configuration;
-  finalObject["domain"] = registrationDataDto.getData("domain");
-  finalObject["organizationName"] = "freeTrial";
+//  this needs to be rewritten to use the soft token
+userActions.createFreeTrialAccount = async (registrationModel) => {
+  const finalObject = registrationModel?.getPersistData();
+  const attributes = {
+    title: finalObject?.title,
+    company: finalObject?.company,
+  };
+  const configuration = {
+    cloudProvider: "GKE",
+    cloudProviderRegion: "",
+  };
+  finalObject.company = undefined;
+  finalObject.title = undefined;
+  finalObject.attributes = attributes;
+  finalObject.configuration = configuration;
+  finalObject.organizationName = "freetrial";
+  const apiUrl = "/users/create";
 
-  const apiCall = new ApiService("/users/create", {}, null, finalObject);
-  const response = await apiCall
-    .post()
+  return await new ApiService(apiUrl, {}, null, finalObject).post()
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
-  return response;
 };
 
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them

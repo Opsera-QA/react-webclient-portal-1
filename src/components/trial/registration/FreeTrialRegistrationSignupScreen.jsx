@@ -21,16 +21,8 @@ const FreeTrialRegistrationSignupScreen = (
   }) => {
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
-  // TODO: Wire up user creation. Ensure cancelToken is used
   const registerAccountFunction = async () => {
-    // const isDomainAvailable = await userActions.isDomainAvailable(registrationModel.getData("domain"));
-    //
-    // if (!isDomainAvailable) {
-    //   toastContext.showDomainAlreadyRegisteredErrorDialog();
-    //   return;
-    // }
-
-    const emailIsAvailable = await userActions.isEmailAvailable(registrationModel.getData("email"));
+    const emailIsAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
 
     if (!emailIsAvailable) {
       toastContext.showEmailAlreadyExistsErrorDialog();

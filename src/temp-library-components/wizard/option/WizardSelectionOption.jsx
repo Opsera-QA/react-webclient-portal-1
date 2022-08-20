@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
+import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
 
 export const SUPPORTED_WIZARD_SELECTION_OPTION_TYPES = {
   PRIMARY: "primary",
@@ -75,8 +76,9 @@ function WizardSelectionOption(
           fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 400,
           fontSize: "18px",
+          cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
         }}
-        className={"mx-auto pointer d-flex"}
+        className={"mx-auto d-flex"}
         onClick={() => onClickFunction(option)}
       >
         <div className={"d-flex p-2"}>
