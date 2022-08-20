@@ -8,7 +8,6 @@ workspaceActions.getFreeTrialWorkspaceItems = async (getAccessToken, cancelToken
   const apiUrl = `trial/workspace/items`;
   const params = {};
 
-  console.log("searching for type: " + type);
   if (workspaceConstants.isWorkspaceTypeValid(type) === true) {
     params.type = type;
   }

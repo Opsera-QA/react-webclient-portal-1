@@ -9,7 +9,7 @@ import IconBase from "components/common/icons/IconBase";
 
 function SearchFilter({ paginationModel, loadData, disabled, fieldName, className, isLoading, metadata}) {
   let history = useHistory();
-  const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+  const [currentSearchTerm, setCurrentSearchTerm] = useState(paginationModel?.getStringValue(fieldName) || "");
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = async () => {

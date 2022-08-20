@@ -5,7 +5,7 @@ export const constantsHelper = {};
 
 constantsHelper.isValueValid = (
   constants,
-  potentialValue,
+  potentialKeyValue,
 ) => {
   const parsedConstants = dataParsingHelper.parseObject(constants, undefined);
 
@@ -13,9 +13,46 @@ constantsHelper.isValueValid = (
     return false;
   }
 
-  if (hasStringValue(potentialValue) !== true) {
+  if (hasStringValue(potentialKeyValue) !== true) {
     return false;
   }
 
-  return dataParsingHelper.doesObjectContainValue(parsedConstants, potentialValue);
+  return dataParsingHelper.doesObjectContainValue(parsedConstants, potentialKeyValue);
+};
+
+constantsHelper.getLabelForValue = (
+  constantKeys,
+  constantLabels,
+  keyValue,
+) => {
+  const parsedConstantKeys = dataParsingHelper.parseObject(constantKeys, undefined);
+
+  if (!parsedConstantKeys) {
+    return "";
+  }
+
+  const parsedConstantLabels = dataParsingHelper.parseObject(constantLabels, undefined);
+
+  if (!parsedConstantLabels) {
+    return "";
+  }
+
+  if (hasStringValue(keyValue) !== true) {
+    return "";
+  }
+
+  const foundKey = constantsHelper.getKeyForValue(constantKeys, keyValue);
+
+  if (hasStringValue(foundKey) !== true) {
+    return "";
+  }
+
+  return dataParsingHelper.parseString(constantLabels[foundKey], "");
+};
+
+constantsHelper.getKeyForValue = (
+  constants,
+  potentialKeyValue,
+) => {
+  return dataParsingHelper.getKeyForObjectValue(constants, potentialKeyValue);
 };

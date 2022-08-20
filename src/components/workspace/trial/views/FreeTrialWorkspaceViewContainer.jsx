@@ -10,6 +10,7 @@ import FreeTrialWorkspacePipelineViews from "components/workspace/trial/views/pi
 import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";
 import FreeTrialWorkspaceTaskViews from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskViews";
 import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
+import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
 
 export default function FreeTrialWorkspaceViewContainer(
   {
@@ -99,6 +100,19 @@ export default function FreeTrialWorkspaceViewContainer(
     );
   };
 
+  const getInlineFilters = () => {
+    return (
+      <>
+        <InlineWorkspaceItemTypeFilter
+          loadData={loadData}
+          filterModel={workspaceFilterModel}
+          setFilterModel={setWorkspaceFilterModel}
+          className={"mr-2"}
+        />
+      </>
+    );
+  };
+
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
       <CreatePipelineWizard />
@@ -114,6 +128,8 @@ export default function FreeTrialWorkspaceViewContainer(
       setFilterDto={setWorkspaceFilterModel}
       supportViewToggle={true}
       isLoading={isLoading}
+      loadData={loadData}
+      inlineFilters={getInlineFilters()}
       title={"Workspace"}
       type={"Workspace Item"}
       className={"px-2 pb-2"}

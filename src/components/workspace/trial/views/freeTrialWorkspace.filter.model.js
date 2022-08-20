@@ -49,7 +49,11 @@ export default class FreeTrialWorkspaceFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
-  }
+  };
+
+  canSearch = () => {
+    return true;
+  };
 
   unpackUrlParameters = () => {
     let hasUrlParams = this.unpackCommonUrlParameters();

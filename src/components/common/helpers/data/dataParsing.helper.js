@@ -29,11 +29,11 @@ dataParsingHelper.hasObjectProperties = (object) => {
   return object != null && typeof object === "object" && Object.keys(object).length > 0;
 };
 
-dataParsingHelper.doesObjectContainValue = (object, key) => {
-  const parsedKey = dataParsingHelper.parseString(key);
+dataParsingHelper.doesObjectContainValue = (object, keyValue) => {
+  const parsedKeyValue = dataParsingHelper.parseString(keyValue);
   const parsedObject = dataParsingHelper.parseObject(object, undefined);
 
-  if (!parsedKey || !parsedObject) {
+  if (!parsedKeyValue || !parsedObject) {
     return false;
   }
 
@@ -43,7 +43,28 @@ dataParsingHelper.doesObjectContainValue = (object, key) => {
     return false;
   }
 
-  return parsedObjectValues.includes(parsedKey);
+  return parsedObjectValues.includes(parsedKeyValue);
+};
+
+dataParsingHelper.getKeyForObjectValue = (object, keyValue) => {
+  const parsedKeyValue = dataParsingHelper.parseString(keyValue);
+  const parsedObject = dataParsingHelper.parseObject(object, undefined);
+
+  if (!parsedKeyValue || !parsedObject) {
+    return null;
+  }
+
+  const parsedObjectValues = dataParsingHelper.parseArray(Object.values(parsedObject));
+
+  if (!parsedObjectValues) {
+    return null;
+  }
+
+  if (parsedObjectValues.includes(parsedKeyValue) !== true) {
+    return null;
+  }
+
+  return Object.keys(parsedObject)?.find((key) => object[key] === keyValue);
 };
 
 dataParsingHelper.parseDate = (date, defaultValue) => {

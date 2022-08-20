@@ -59,6 +59,7 @@ export default function FreeTrialWorkspace() {
       setToolMetadata(response?.data?.toolMetadata);
       setTaskMetadata(response?.data?.taskMetadata);
       setWorkspaceItems([...items]);
+      newWorkspaceFilterModel.updateActiveFilters();
       setWorkspaceFilterModel({...newWorkspaceFilterModel});
     }
   };

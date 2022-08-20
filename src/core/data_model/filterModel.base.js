@@ -41,6 +41,16 @@ export class FilterModelBase {
     return currentValue;
   };
 
+  getStringValue = (fieldName, defaultValue = "") => {
+    const currentValue = this.getData(fieldName);
+
+    if (hasStringValue(currentValue) !== true) {
+      return defaultValue;
+    }
+
+    return currentValue;
+  };
+
   setData = (fieldName, newValue, updateQueryParameters = true) => {
     this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
 
