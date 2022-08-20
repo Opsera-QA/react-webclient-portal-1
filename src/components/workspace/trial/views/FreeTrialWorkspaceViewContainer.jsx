@@ -11,6 +11,7 @@ import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/to
 import FreeTrialWorkspaceTaskViews from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskViews";
 import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
+import { workspaceConstants } from "components/workspace/workspace.constants";
 
 export default function FreeTrialWorkspaceViewContainer(
   {
@@ -26,7 +27,7 @@ export default function FreeTrialWorkspaceViewContainer(
 
   const getCurrentView = () => {
     switch (workspaceFilterModel?.getData("type")) {
-      case "pipelines":
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         return (
           <FreeTrialWorkspacePipelineViews
             pipelines={workspaceItems}
@@ -36,7 +37,7 @@ export default function FreeTrialWorkspaceViewContainer(
             loadData={loadData}
           />
         );
-      case "registry":
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
         return (
           <FreeTrialWorkspaceRegistryViews
             isLoading={isLoading}
@@ -47,7 +48,7 @@ export default function FreeTrialWorkspaceViewContainer(
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
         );
-      case "tasks":
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
           <FreeTrialWorkspaceTaskViews
             tasks={workspaceItems}
@@ -58,7 +59,7 @@ export default function FreeTrialWorkspaceViewContainer(
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
         );
-      case "all":
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
       default:
         return (
           <FreeTrialWorkspaceItemViews

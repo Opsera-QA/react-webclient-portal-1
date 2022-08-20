@@ -6,6 +6,7 @@ import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
 import regexDefinitions from "utils/regexDefinitions";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function SearchFilter({ paginationModel, loadData, disabled, fieldName, className, isLoading, metadata}) {
   let history = useHistory();
@@ -54,7 +55,7 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
         <input
           disabled={disabled || isLoading}
           placeholder="Search"
-          value={currentSearchTerm}
+          value={hasStringValue(currentSearchTerm) === true ? currentSearchTerm : ""}
           className="text-input inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => setCurrentSearchTerm(e.target.value)}
