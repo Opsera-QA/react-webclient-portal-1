@@ -3,20 +3,23 @@ import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
+import PipelineWidgetsBody from "components/trial/pipelines/widgets/body/PipelineWidgetsBody";
 import PipelinesWidgetHeaderTitleBar, {
   PIPELINE_WIDGET_HEADER_ITEMS,
 } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
+import { widgetHelper } from "temp-library-components/helpers/widget.helper";
 
 const WIDGET_HEIGHT_SIZE = 5;
-const WIDGET_DROPDOWN_MAX_HEIGHT = `${WIDGET_HEIGHT_SIZE * 25}px`;
+const WIDGET_DROPDOWN_MAX_HEIGHT = widgetHelper.getWidgetPixelSize(WIDGET_HEIGHT_SIZE - 2);
 
 export default function FreeTrialLandingPipelinesWidget({ className }) {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
-  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
+  const [selectedPipeline, setSelectedPipeline] = useState(undefined);
+  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.LOGS);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pipelineRefreshing, setPipelineRefreshing] = useState(false);
   const {
     isMounted,
     cancelTokenSource,
@@ -59,7 +62,16 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
 
       if (pipelines.length > 0) {
         setSelectedPipelineId(pipelines[0]?._id);
+        setSelectedPipeline(pipelines[0]);
       }
+    }
+  };
+
+  const selectPipelineById = (pipelineId) => {
+    if (selectedPipelineId !== pipelineId) {
+      const pipeline = pipelines.find((pipeline) => pipeline._id === pipelineId);
+      setSelectedPipelineId(pipeline?._id);
+      setSelectedPipeline(pipeline);
     }
   };
 
@@ -67,9 +79,13 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
     return (
       <PipelinesWidgetHeaderTitleBar
         selectedPipelineId={selectedPipelineId}
-        setSelectedPipelineId={setSelectedPipelineId}
+        setSelectedPipelineId={selectPipelineById}
         pipelines={pipelines}
         dropdownMaxHeight={WIDGET_DROPDOWN_MAX_HEIGHT}
+        isLoading={isLoading}
+        setIsLoading={setPipelineRefreshing}
+        selectedPipeline={selectedPipeline}
+        setSelectedPipeline={setSelectedPipeline}
       />
     );
   };
@@ -77,14 +93,18 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
   return (
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
-        heightSize={WIDGET_HEIGHT_SIZE}
+        // heightSize={WIDGET_HEIGHT_SIZE}
         titleIcon={faDraftingCompass}
         title={getTitleBar()}
-        isLoading={isLoading}
+        isLoading={isLoading || pipelineRefreshing}
       >
         <PipelineWidgetsBody
           selectedHeaderItem={selectedHeaderItem}
           selectedPipelineId={selectedPipelineId}
+          selectedPipeline={selectedPipeline}
+          setSelectedPipeline={setSelectedPipeline}
+          isLoading={isLoading}
+          setIsLoading={setPipelineRefreshing}
         />
       </FreeTrialWidgetDataBlockBase>
     </div>

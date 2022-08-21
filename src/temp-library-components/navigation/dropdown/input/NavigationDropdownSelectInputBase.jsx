@@ -4,7 +4,7 @@ import { NavDropdown } from "react-bootstrap";
 import NavigationDropdownSelectOption
   from "temp-library-components/navigation/dropdown/option/NavigationDropdownSelectOption.jsx";
 
-function NavigationDropdownSelectInputBase(
+export default function NavigationDropdownSelectInputBase(
   {
     title,
     id,
@@ -17,6 +17,7 @@ function NavigationDropdownSelectInputBase(
     textField,
     valueField,
     dropdownBodyMaxHeight,
+    isLoading,
   }) {
   const getTitleClassName = () => {
     // const parsedTitleClassName = DataParsingHelper.parseString(titleClassName);
@@ -90,6 +91,7 @@ function NavigationDropdownSelectInputBase(
         title={getTitle()}
         id={id}
         className={"navigation-dropdown-select-input"}
+        disabled={disabled === true || isLoading === true || !Array.isArray(selectOptions) || selectOptions?.length === 0}
       >
         <div style={{
           maxHeight: dropdownBodyMaxHeight,
@@ -113,6 +115,7 @@ NavigationDropdownSelectInputBase.propTypes = {
   selectedOption: PropTypes.string,
   selectOptions: PropTypes.array,
   setDataFunction: PropTypes.func,
+  isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -121,5 +124,3 @@ NavigationDropdownSelectInputBase.defaultProps = {
   valueField: "value",
   dropdownBodyMaxHeight: "100px",
 };
-
-export default NavigationDropdownSelectInputBase;

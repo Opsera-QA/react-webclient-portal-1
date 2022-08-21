@@ -68,7 +68,6 @@ FreeTrialWidgetDataBlockBase.propTypes = {
 };
 
 FreeTrialWidgetDataBlockBase.defaultProps = {
-  heightSize: 2,
   // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
 };
 

@@ -25,7 +25,9 @@ function WidgetDataBlockBaseContainer(
     isLoading,
   }) {
   const getHeight = () => {
-    return widgetHelper.getWidgetPixelSize(heightSize, 2);
+    if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
+      return widgetHelper.getWidgetPixelSize(heightSize, 2);
+    }
   };
 
   const getWidth = () => {
@@ -109,7 +111,7 @@ function WidgetDataBlockBaseContainer(
         maxWidth: getWidth(),
         border: getBorder(),
         backgroundColor: getBackgroundColor(),
-        color: fontColor,
+        color: getFontColor(),
         fontFamily: fontFamily,
         cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
       }}
@@ -138,7 +140,6 @@ WidgetDataBlockBaseContainer.propTypes = {
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {
-  heightSize: 2,
   backgroundColor: "#FFFFFF",
   disabledBackgroundColor: "#E5E5E5",
 };

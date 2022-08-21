@@ -35,12 +35,29 @@ import PipelineDurationMetricsStandaloneField
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const INITIAL_FORM_DATA = {
   name: "",
   project: { name: "", project_id: "" },
   description: "",
   type: [],
+};
+
+const getWorkflowStatus = (pipeline) => {
+  const lastStep = pipeline?.workflow?.last_step;
+
+  if (lastStep != null) {
+    const status = lastStep?.status;
+
+    if (status === "stopped" && lastStep?.running?.paused) {
+      return "paused";
+    } else if (hasStringValue(status)) {
+      return status;
+    }
+  }
+
+  return false;
 };
 
 // TODO: This class needs to be reworked with new components and also to cleanup
@@ -53,6 +70,7 @@ function PipelineSummaryPanel(
     fetchPlan,
     setWorkflowStatus,
     setPipeline,
+    showActionControls,
   }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -95,26 +113,12 @@ function PipelineSummaryPanel(
 
   const loadData = async () => {
     try {
-      await loadFormData(pipeline);
+      if (setWorkflowStatus) {
+        setWorkflowStatus(getWorkflowStatus(pipeline));
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
-
-  const loadFormData = async (pipeline) => {
-    if (pipeline.workflow !== undefined) {
-      if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-
-        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");
-        } else {
-          setWorkflowStatus(status);
-        }
-      } else {
-        setWorkflowStatus(false);
       }
     }
   };
@@ -364,17 +368,9 @@ function PipelineSummaryPanel(
     }
   };
 
-  if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
-    return (
-      <InformationDialog
-        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
-      />
-    );
-  }
-
-  return (
-    <>
-      <div>
+  const getPipelineActionControls = () => {
+    if (showActionControls !== false) {
+      return (
         <div className="text-right py-2">
           <PipelineActionControls
             pipeline={pipeline}
@@ -385,7 +381,21 @@ function PipelineSummaryPanel(
             setParentWorkflowStatus={setWorkflowStatus}
           />
         </div>
-      </div>
+      );
+    }
+  };
+
+  if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
+    return (
+      <InformationDialog
+        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
+      />
+    );
+  }
+
+  return (
+    <>
+      {getPipelineActionControls()}
 
       <div className="pr-1">
         <Row>
@@ -529,6 +539,7 @@ PipelineSummaryPanel.propTypes = {
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
+  showActionControls: PropTypes.bool,
 };
 
 export default PipelineSummaryPanel;

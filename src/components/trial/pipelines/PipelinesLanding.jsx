@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PipelineLandingDataBlockWidgets
   from "components/trial/pipelines/data_blocks/PipelineLandingDataBlockWidgets";
 import PipelinesWidgetHeaderTitleBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
-import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
+import PipelineWidgetsBody from "components/trial/pipelines/widgets/body/PipelineWidgetsBody";
 
 export default function PipelinesLanding() {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);

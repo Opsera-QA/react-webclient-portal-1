@@ -204,7 +204,7 @@ function PipelineDetailView() {
             fetchPlan={fetchPlan}
           />
         </div>
-        <div className="max-content-width-1875">
+        <div className="max-content-width-1875 mr-2">
           <PipelineActivityLogTreeTable
             pipeline={pipeline}
             pipelineStatus={pipeline?.workflow?.last_step?.status}

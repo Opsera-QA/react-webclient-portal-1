@@ -26,6 +26,7 @@ function PipelineActivityLogTreeTable(
     pipeline,
     pipelineId,
     pipelineRunCount,
+    className,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -273,7 +274,7 @@ function PipelineActivityLogTreeTable(
   };
 
   return (
-    <div className={"mr-2"}>
+    <div className={className}>
       <FilterContainer
         loadData={loadData}
         filterDto={pipelineActivityFilterModel}
@@ -301,6 +302,7 @@ PipelineActivityLogTreeTable.propTypes = {
   pipeline: PropTypes.object,
   pipelineId: PropTypes.string,
   pipelineRunCount: PropTypes.number,
+  className: PropTypes.string,
 };
 
 export default PipelineActivityLogTreeTable;
