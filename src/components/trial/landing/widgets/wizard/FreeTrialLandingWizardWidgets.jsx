@@ -17,11 +17,11 @@ export default function FreeTrialLandingWizardWidgets({className}) {
     <div className={className}>
       <Row>
         <Col xs={4}>
-          <FreeTrialLandingSalesforcePipelineWizardWidget
+          <FreeTrialLandingSdlcPipelineWizardWidget
           />
         </Col>
         <Col xs={4}>
-          <FreeTrialLandingSdlcPipelineWizardWidget
+          <FreeTrialLandingSalesforcePipelineWizardWidget
           />
         </Col>
         <Col xs={4}>

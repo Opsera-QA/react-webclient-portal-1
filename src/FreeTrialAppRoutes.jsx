@@ -90,34 +90,7 @@ const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient,
 
           <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
           <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
-
-
-          <SecureRoute path="/admin" exact component={AdminTools} />
-          <SecureRoute path="/admin/custom-environment-variables" exact component={CustomEnvironmentVariableManagement} />
-          <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
-          <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement} />
-          <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />
-          <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
-          <SecureRoute path="/admin/tools/categories" exact component={ToolCategoryManagement} />
-          <SecureRoute path="/admin/tools/identifiers" exact component={ToolIdentifierManagement} />
-          <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
-          <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
-                       component={ToolIdentifierDetailView} />
-          <SecureRoute path="/admin/kpis" exact component={KpiIdentifierManagement} />
-          <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
-          <SecureRoute path="/admin/templates" exact component={PipelineTemplateManagement} />
-          <SecureRoute path="/admin/templates/details/:templateId" exact component={PipelineTemplateDetailView} />
-          <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
-          <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
-
-
-          <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement} />
-          <SecureRoute path="/admin/site-notifications/details/:id" exact
-                       component={SiteNotificationDetailView} />
-          <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManager} />
-
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
-
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
         </div>
       </div>
