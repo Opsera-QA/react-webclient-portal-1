@@ -48,7 +48,7 @@ export default function WizardWidgetDataBlockBase(
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
         heightSize={3}
-        widthSize={5}
+        widthSize={3}
         className={"mx-auto"}
         onClickFunction={onClickFunction}
         disabled={disabled}

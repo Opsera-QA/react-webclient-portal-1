@@ -1,16 +1,37 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import NavigationDropdownSelectInputBase
   from "temp-library-components/navigation/dropdown/input/NavigationDropdownSelectInputBase";
+
+export const PIPELINE_WIDGET_HEADER_ITEMS = {
+  PIPELINE: "pipeline",
+  LOGS: "logs",
+  METRICS: "metrics",
+  MORE: "more",
+};
 
 export default function PipelinesWidgetHeaderTitleBar(
   {
     selectedPipelineId,
     setSelectedPipelineId,
     pipelines,
+    dropdownMaxHeight,
   }) {
+  const history = useHistory();
+
+  const handleHeaderItemClick = (selectedOption) => {
+    switch (selectedOption) {
+      case PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE:
+      case PIPELINE_WIDGET_HEADER_ITEMS.LOGS:
+      case PIPELINE_WIDGET_HEADER_ITEMS.METRICS:
+      case PIPELINE_WIDGET_HEADER_ITEMS.MORE:
+        default:
+          history.push(`/workflow/details/${selectedPipelineId}/summary`);
+    }
+  };
+
   const getLinkBar = () => {
     if (isMongoDbId(selectedPipelineId) === true) {
       return (
@@ -57,6 +78,10 @@ export default function PipelinesWidgetHeaderTitleBar(
       return selectedPipelineId;
     }
 
+    if (!Array.isArray(pipelines) || pipelines.length === 0) {
+      return "No Pipelines Found";
+    }
+
     return "Select a Pipeline";
   };
 
@@ -69,6 +94,7 @@ export default function PipelinesWidgetHeaderTitleBar(
         title={getSelectedPipelineName()}
         textField={"name"}
         valueField={"_id"}
+        dropdownBodyMaxHeight={dropdownMaxHeight}
       />
       {getLinkBar()}
     </div>
@@ -79,4 +105,5 @@ PipelinesWidgetHeaderTitleBar.propTypes = {
   selectedPipelineId: PropTypes.string,
   setSelectedPipelineId: PropTypes.func,
   pipelines: PropTypes.array,
+  dropdownMaxHeight: PropTypes.string,
 };

@@ -4,11 +4,17 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
-import PipelinesWidgetHeaderTitleBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
+import PipelinesWidgetHeaderTitleBar, {
+  PIPELINE_WIDGET_HEADER_ITEMS,
+} from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
+
+const WIDGET_HEIGHT_SIZE = 5;
+const WIDGET_DROPDOWN_MAX_HEIGHT = `${WIDGET_HEIGHT_SIZE * 25}px`;
 
 export default function FreeTrialLandingPipelinesWidget({ className }) {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
+  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -50,7 +56,10 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
 
     if (isMounted.current === true && Array.isArray(pipelines)) {
       setPipelines(pipelines);
-      setSelectedPipelineId(pipelines[0]?._id);
+
+      if (pipelines.length > 0) {
+        setSelectedPipelineId(pipelines[0]?._id);
+      }
     }
   };
 
@@ -60,6 +69,7 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
         selectedPipelineId={selectedPipelineId}
         setSelectedPipelineId={setSelectedPipelineId}
         pipelines={pipelines}
+        dropdownMaxHeight={WIDGET_DROPDOWN_MAX_HEIGHT}
       />
     );
   };
@@ -67,12 +77,13 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
   return (
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
-        heightSize={5}
+        heightSize={WIDGET_HEIGHT_SIZE}
         titleIcon={faDraftingCompass}
         title={getTitleBar()}
         isLoading={isLoading}
       >
         <PipelineWidgetsBody
+          selectedHeaderItem={selectedHeaderItem}
           selectedPipelineId={selectedPipelineId}
         />
       </FreeTrialWidgetDataBlockBase>

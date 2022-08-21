@@ -16,6 +16,7 @@ function NavigationDropdownSelectInputBase(
     disabled,
     textField,
     valueField,
+    dropdownBodyMaxHeight,
   }) {
   const getTitleClassName = () => {
     // const parsedTitleClassName = DataParsingHelper.parseString(titleClassName);
@@ -91,7 +92,7 @@ function NavigationDropdownSelectInputBase(
         className={"navigation-dropdown-select-input"}
       >
         <div style={{
-          maxHeight: "100px",
+          maxHeight: dropdownBodyMaxHeight,
           overflowY: "auto",
         }}>
           {getSelectOptions()}
@@ -104,6 +105,7 @@ function NavigationDropdownSelectInputBase(
 NavigationDropdownSelectInputBase.propTypes = {
   title: PropTypes.any,
   id: PropTypes.string,
+  dropdownBodyMaxHeight: PropTypes.string,
   className: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
@@ -117,6 +119,7 @@ NavigationDropdownSelectInputBase.propTypes = {
 NavigationDropdownSelectInputBase.defaultProps = {
   textField: "text",
   valueField: "value",
+  dropdownBodyMaxHeight: "100px",
 };
 
 export default NavigationDropdownSelectInputBase;

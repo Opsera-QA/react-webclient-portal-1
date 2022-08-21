@@ -4,6 +4,7 @@ import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
+import { widgetHelper } from "temp-library-components/helpers/widget.helper";
 
 function WidgetDataBlockBaseContainer(
   {
@@ -24,16 +25,12 @@ function WidgetDataBlockBaseContainer(
     isLoading,
   }) {
   const getHeight = () => {
-    if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
-      return `${heightSize * 50}px`;
-    }
-
-    return "100px";
+    return widgetHelper.getWidgetPixelSize(heightSize, 2);
   };
 
   const getWidth = () => {
     if (numberHelpers.isNumberGreaterThan(0, widthSize)) {
-      return `${heightSize * 50}px`;
+      return widgetHelper.getWidgetPixelSize(widthSize, 2);
     }
   };
 
