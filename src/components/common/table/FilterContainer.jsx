@@ -79,7 +79,7 @@ function FilterContainer(
         className={"filter-container container-border"}
       >
         <div className={"w-100"}>
-          <div className={"px-3 d-flex content-block-header"}>
+          <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
