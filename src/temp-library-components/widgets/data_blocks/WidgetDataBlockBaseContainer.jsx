@@ -62,7 +62,7 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <div className={"filter-container"}>
-          <div className={"w-100 px-3 d-flex content-block-header py-2"}>
+          <div className={"w-100 px-3 d-flex filter-container-content-block-header py-2"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}

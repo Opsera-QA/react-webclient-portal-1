@@ -985,7 +985,7 @@ a.nav-link {
     color: #fef7fd;
 }
 
-.content-block-header-inverse {
+.content-block-header-inverse, .filter-container-content-block-header {
     background-color: #EAE9E7;
     border-bottom: 1px solid #E6E5E3;
     color: #3D3B36;
@@ -1369,13 +1369,6 @@ div.data-blocks-ellipses {
 
 .filter-container-no-border {
     border: 0;
-}
-
-/*TODO: Combine with content-block-header-inverse*/
-.filter-container .content-block-header {
-    background-color: #EAE9E7;
-    border-bottom: 1px solid #E6E5E3;
-    color: #3D3B36;
 }
 
 .filter-container .title-text-header {
