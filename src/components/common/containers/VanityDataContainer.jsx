@@ -46,7 +46,7 @@ function VanityDataContainer(
     <div className={className}>
       <div className="filter-container container-border">
         <div className="filter-title-bar w-100">
-          <div className="px-2 d-flex content-block-header">
+          <div className="px-2 d-flex filter-container-header">
             <FilterTitleBar
               isLoading={isLoading}
               title={title}

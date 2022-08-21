@@ -22,10 +22,10 @@ function TitleBar(
 
   const getRightSideItems = () => {
     return (
-      <div className="ml-auto d-flex mr-2">
+      <div className="ml-auto d-flex">
         {getInactiveText()}
         {titleActionBar}
-        <LaunchHelpIcon helpComponent={helpComponent} className={"mx-1"} />
+        <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
         <BetaBadge isBeta={isBeta} />
       </div>
     );

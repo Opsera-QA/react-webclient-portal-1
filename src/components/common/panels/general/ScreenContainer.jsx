@@ -148,7 +148,7 @@ function ScreenContainer(
           className={"content-container content-card-1"}
           style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
         >
-          <div className={"px-3 content-block-header title-text-header-1"}>
+          <div className={"px-3 py-2 content-block-header title-text-header-1"}>
             <TitleBar
               titleIcon={breadcrumb?.icon}
               title={breadcrumb?.title}
