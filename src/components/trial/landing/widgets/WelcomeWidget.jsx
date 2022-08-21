@@ -4,6 +4,7 @@ import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_b
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
+import { faMessageExclamation } from "@fortawesome/pro-light-svg-icons";
 
 export default function WelcomeWidget({ className }) {
   const {
@@ -65,6 +66,7 @@ export default function WelcomeWidget({ className }) {
     <div className={className}>
       <WidgetDataBlockBaseContainer
         title={getWelcomeText()}
+        titleIcon={faMessageExclamation}
         borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}

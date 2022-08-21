@@ -4,6 +4,7 @@ import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_b
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
+import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Standardize
 export default function AccountStatusWidget({ className }) {
@@ -44,6 +45,7 @@ export default function AccountStatusWidget({ className }) {
     <div className={className}>
       <WidgetDataBlockBaseContainer
         title={getTitleText()}
+        titleIcon={faClipboardList}
         borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
