@@ -69,7 +69,7 @@ export default function PipelinesWidgetHeaderTitleBar(
             screenLabel={"Pipeline"}
             setCurrentScreen={handleHeaderItemClick}
             className={"ml-5 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+            fontColor={themeConstants.COLOR_PALETTE.BLACK}
           />
           <HeaderNavigationBarItem
             currentScreen={selectedHeaderItem}
@@ -77,7 +77,7 @@ export default function PipelinesWidgetHeaderTitleBar(
             screenLabel={"Logs"}
             setCurrentScreen={handleHeaderItemClick}
             className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+            fontColor={themeConstants.COLOR_PALETTE.BLACK}
           />
           <HeaderNavigationBarItem
             currentScreen={selectedHeaderItem}
@@ -85,7 +85,7 @@ export default function PipelinesWidgetHeaderTitleBar(
             screenLabel={"Metrics"}
             setCurrentScreen={handleHeaderItemClick}
             className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+            fontColor={themeConstants.COLOR_PALETTE.BLACK}
           />
           <HeaderNavigationBarItem
             currentScreen={selectedHeaderItem}
@@ -93,7 +93,7 @@ export default function PipelinesWidgetHeaderTitleBar(
             screenLabel={"More..."}
             setCurrentScreen={handleHeaderItemClick}
             className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+            fontColor={themeConstants.COLOR_PALETTE.BLACK}
           />
         </div>
       );

@@ -361,7 +361,7 @@ function PipelineSummaryPanel(
         <Col xs={12} sm={6}>
           <PipelineSchedulerField
             pipelineModel={pipelineModel}
-            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running"}
+            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline?.owner) && parentWorkflowStatus !== "running"}
           />
         </Col>
       );

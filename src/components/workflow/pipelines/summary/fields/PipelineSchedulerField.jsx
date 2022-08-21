@@ -7,6 +7,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
 import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PipelineSchedulerField(
   {
@@ -32,7 +33,7 @@ function PipelineSchedulerField(
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (pipelineModel) {
+    if (pipelineModel && isMongoDbId(pipelineModel?.getMongoDbId())) {
       loadData(source).catch((error) => {
         if (isMounted.current === true) {
           setError(error);
