@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function NavigationTabContainer({children, styling}) {
+export default function NavigationTabContainer({children, styling}) {
+  const { isOpseraAdministrator } = useComponentStateReference();
+
+  // This is hidden on free trial for users besides opsera administrators
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <div className={styling}>
       <ul className="nav nav-tabs">
@@ -19,5 +27,3 @@ NavigationTabContainer.propTypes = {
 NavigationTabContainer.defaultProps = {
   styling: "sub-navigation"
 };
-
-export default NavigationTabContainer;
