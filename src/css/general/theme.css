@@ -1006,8 +1006,8 @@ a.nav-link {
 }
 
 .content-card-1 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
+    /*border-top: 5px solid #E6E5E3;*/
+    /*background-color: #3D3B36;*/
     padding-top: 1em;
     height: 1.5em;
 }
