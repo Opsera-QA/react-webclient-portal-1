@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/FreeTrialWorkspaceViewContainer";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
-import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
@@ -66,6 +66,7 @@ export default function FreeTrialWorkspace() {
 
   return (
     <ScreenContainer
+      className={"mt-3"}
       breadcrumbDestination={"workspace"}
       pageDescription={`
         The Opsera Workspace allows you to register, track, and configure all of the tools, pipelines, and tasks available to your account in

@@ -14,7 +14,7 @@ import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 import { isOpseraAdministrator } from "components/common/helpers/role-helpers";
 import FreeTrialAppRoutes from "FreeTrialAppRoutes";
-import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
 
 export const PUBLIC_PATHS = {

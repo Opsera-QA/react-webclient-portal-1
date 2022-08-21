@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
 import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wizard/FreeTrialLandingWizardWidgets";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
-import FreeTrialLandingHeaderNavigationBar from "components/header/FreeTrialLandingHeaderNavigationBar";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FreeTrialLandingPipelinesWidget from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidget";
 
@@ -13,7 +13,7 @@ export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
 
   return (
-    <div className={"max-content-width"}>
+    <div className={"max-content-width mt-3"}>
       <ScreenContainer
         breadcrumbDestination={"freeTrialLanding"}
         includeSubNavigationGap={false}

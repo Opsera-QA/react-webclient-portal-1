@@ -27,6 +27,7 @@ function ScreenContainer(
     helpComponent,
     bodyClassName,
     includeSubNavigationGap,
+    className,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -140,29 +141,31 @@ function ScreenContainer(
   }
 
   return (
-    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
-      {getTopNavigation()}
-      <div
-        className={"content-container content-card-1"}
-        style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
-      >
-        <div className={"px-3 content-block-header title-text-header-1"}>
-          <TitleBar
-            titleIcon={breadcrumb?.icon}
-            title={breadcrumb?.title}
-            isBeta={breadcrumb?.isBeta === true}
-            isLoading={isLoading}
-            titleActionBar={titleActionBar}
-            helpComponent={helpComponent}
-          />
-        </div>
+    <div className={className}>
+      <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
+        {getTopNavigation()}
         <div
-          style={{ minHeight: getBodyHeight()}}
+          className={"content-container content-card-1"}
+          style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
         >
-          {getBody()}
+          <div className={"px-3 content-block-header title-text-header-1"}>
+            <TitleBar
+              titleIcon={breadcrumb?.icon}
+              title={breadcrumb?.title}
+              isBeta={breadcrumb?.isBeta === true}
+              isLoading={isLoading}
+              titleActionBar={titleActionBar}
+              helpComponent={helpComponent}
+            />
+          </div>
+          <div
+            style={{ minHeight: getBodyHeight()}}
+          >
+            {getBody()}
+          </div>
+          {getRoleRequirementField()}
+          <div className={"content-block-footer"}/>
         </div>
-        {getRoleRequirementField()}
-        <div className={"content-block-footer"}/>
       </div>
     </div>
   );
@@ -182,6 +185,7 @@ ScreenContainer.propTypes = {
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
   includeSubNavigationGap: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {

@@ -32,7 +32,8 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     isTestEnvironment,
     isProductionEnvironment,
   } = useComponentStateReference();
-  const fullUserName = `${userData.firstName} ${userData.lastName} (${userData.email})`;
+  // const fullUserName = `${userData?.firstName} ${userData?.lastName} (${userData?.email})`;
+  const fullUserName = `${userData?.firstName} ${userData?.lastName}`;
 
   const login = function() {
     loginUserContext();
@@ -91,10 +92,10 @@ export default function OpseraHeaderAccountAuthenticationComponent(
 
   const getTitle = () => {
     return (
-      <div>
+      <span>
         {getUserIconTitle()}
-        {fullUserName}
-      </div>
+        <span className={"mx-2"}>{fullUserName}</span>
+      </span>
     );
   };
 

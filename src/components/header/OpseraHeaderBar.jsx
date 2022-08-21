@@ -4,14 +4,22 @@ import { Navbar } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import OpseraHeaderIcon from "components/header/OpseraHeaderIcon";
 import OpseraHeaderAccountAuthenticationComponent from "components/header/OpseraHeaderAccountAuthenticationComponent";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function OpseraHeaderBar({ hideAuthComponents }) {
   const {
     headerNavigationBar,
   } = useContext(AuthContext);
+  const {
+    themeConstants,
+  } = useComponentStateReference();
 
   return (
-    <Navbar>
+    <Navbar
+      style={{
+        backgroundColor: themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE,
+      }}
+    >
       <OpseraHeaderIcon />
       {headerNavigationBar}
       <OpseraHeaderAccountAuthenticationComponent

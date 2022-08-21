@@ -47,9 +47,11 @@ export default function HeaderNavigationBarItem(
     if (currentScreen === screenName) {
       return (
         {
-          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+          color: themeConstants.COLOR_PALETTE.WHITE,
+          // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 800,
           fontSize: "16px",
+          letterSpacing: "0.25rem",
           cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
         }
       );
@@ -57,8 +59,10 @@ export default function HeaderNavigationBarItem(
 
     return (
       {
+        color: themeConstants.COLOR_PALETTE.WHITE,
         cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
-        fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+        // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+        letterSpacing: "0.25rem",
         fontWeight: 500,
         fontSize: "16px",
       }

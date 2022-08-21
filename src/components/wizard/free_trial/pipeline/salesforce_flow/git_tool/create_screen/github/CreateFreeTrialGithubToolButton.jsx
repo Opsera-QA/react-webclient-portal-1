@@ -90,6 +90,7 @@ export default function CreateFreeTrialGithubToolButton(
           customLabel={"Continue"}
           createRecord={handleGitToolCreation}
           recordDto={gitToolModel}
+          addAnotherOption={false}
         />
       </ButtonContainerBase>
     </div>

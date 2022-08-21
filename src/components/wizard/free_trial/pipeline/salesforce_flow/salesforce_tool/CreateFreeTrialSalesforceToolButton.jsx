@@ -100,6 +100,7 @@ export default function CreateFreeTrialSalesforceToolButton(
       <ButtonContainerBase>
         <CreateButton
           showSuccessToasts={false}
+          addAnotherOption={false}
           customLabel={"Continue"}
           createRecord={handleToolCreation}
           recordDto={salesforceToolModel}
