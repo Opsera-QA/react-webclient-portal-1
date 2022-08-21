@@ -86,6 +86,8 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
         setIsLoading={setPipelineRefreshing}
         selectedPipeline={selectedPipeline}
         setSelectedPipeline={setSelectedPipeline}
+        selectedHeaderItem={selectedHeaderItem}
+        setSelectedHeaderItem={setSelectedHeaderItem}
       />
     );
   };

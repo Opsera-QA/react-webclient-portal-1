@@ -7,6 +7,8 @@ import NavigationDropdownSelectInputBase
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
+import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 
 export const PIPELINE_WIDGET_HEADER_ITEMS = {
   PIPELINE: "pipeline",
@@ -25,6 +27,8 @@ export default function PipelinesWidgetHeaderTitleBar(
     pipelines,
     dropdownMaxHeight,
     isLoading,
+    selectedHeaderItem,
+    setSelectedHeaderItem,
   }) {
   const history = useHistory();
   const {
@@ -33,6 +37,7 @@ export default function PipelinesWidgetHeaderTitleBar(
     getAccessToken,
     toastContext,
     accessRoleData,
+    themeConstants,
   } = useComponentStateReference();
   const [workflowStatus, setWorkflowStatus] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
@@ -40,8 +45,14 @@ export default function PipelinesWidgetHeaderTitleBar(
   const handleHeaderItemClick = (selectedOption) => {
     switch (selectedOption) {
       case PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE:
+        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
+        break;
       case PIPELINE_WIDGET_HEADER_ITEMS.LOGS:
+        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.LOGS);
+        break;
       case PIPELINE_WIDGET_HEADER_ITEMS.METRICS:
+        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.METRICS);
+        break;
       case PIPELINE_WIDGET_HEADER_ITEMS.MORE:
         default:
           history.push(`/workflow/details/${selectedPipelineId}/summary`);
@@ -52,30 +63,38 @@ export default function PipelinesWidgetHeaderTitleBar(
     if (isMongoDbId(selectedPipelineId) === true) {
       return (
         <div className={"d-flex"}>
-          <div className={"ml-5 my-auto"}>
-            <Link to={`/workflow/details/${selectedPipelineId}/summary`}>
-              {/*<IconBase icon={faCompassDrafting} className={"mr-2"}/>*/}
-              Pipeline
-            </Link>
-          </div>
-          <div className={"ml-5 my-auto"}>
-            <Link to={`/workflow/details/${selectedPipelineId}/summary`}>
-              {/*<IconBase icon={faCompassDrafting} className={"mr-2"}/>*/}
-              Logs
-            </Link>
-          </div>
-          <div className={"ml-5 my-auto"}>
-            <Link to={`/workflow/details/${selectedPipelineId}/summary`}>
-              {/*<IconBase icon={faCompassDrafting} className={"mr-2"}/>*/}
-              Metrics
-            </Link>
-          </div>
-          <div className={"ml-5 my-auto"}>
-            <Link to={`/workflow/details/${selectedPipelineId}/summary`}>
-              {/*<IconBase icon={faCompassDrafting} className={"mr-2"}/>*/}
-              More...
-            </Link>
-          </div>
+          <HeaderNavigationBarItem
+            currentScreen={selectedHeaderItem}
+            screenName={PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE}
+            screenLabel={"Pipeline"}
+            setCurrentScreen={handleHeaderItemClick}
+            className={"ml-5 my-auto"}
+            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+          />
+          <HeaderNavigationBarItem
+            currentScreen={selectedHeaderItem}
+            screenName={PIPELINE_WIDGET_HEADER_ITEMS.LOGS}
+            screenLabel={"Logs"}
+            setCurrentScreen={handleHeaderItemClick}
+            className={"ml-3 my-auto"}
+            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+          />
+          <HeaderNavigationBarItem
+            currentScreen={selectedHeaderItem}
+            screenName={PIPELINE_WIDGET_HEADER_ITEMS.METRICS}
+            screenLabel={"Metrics"}
+            setCurrentScreen={handleHeaderItemClick}
+            className={"ml-3 my-auto"}
+            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+          />
+          <HeaderNavigationBarItem
+            currentScreen={selectedHeaderItem}
+            screenName={PIPELINE_WIDGET_HEADER_ITEMS.MORE}
+            screenLabel={"More..."}
+            setCurrentScreen={handleHeaderItemClick}
+            className={"ml-3 my-auto"}
+            fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+          />
         </div>
       );
     }
@@ -173,6 +192,8 @@ export default function PipelinesWidgetHeaderTitleBar(
 }
 
 PipelinesWidgetHeaderTitleBar.propTypes = {
+  selectedHeaderItem: PropTypes.string,
+  setSelectedHeaderItem: PropTypes.func,
   selectedPipelineId: PropTypes.string,
   setSelectedPipelineId: PropTypes.func,
   isLoading: PropTypes.bool,

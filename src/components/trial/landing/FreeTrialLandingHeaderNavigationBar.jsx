@@ -4,6 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { useHistory } from "react-router-dom";
 import HeaderNavigationBarItemDivider from "components/header/navigation_bar/HeaderNavigationBarItemDivider";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const FREE_TRIAL_LANDING_SCREENS = {
   HOME: "home",
@@ -16,6 +17,9 @@ export default function FreeTrialLandingHeaderNavigationBar(
     currentScreen,
   }) {
   const history = useHistory();
+  const {
+    themeConstants,
+  } = useComponentStateReference();
 
   const handleScreenClick = (newScreen) => {
     if (currentScreen !== newScreen) {
@@ -41,6 +45,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Home"}
         screenName={"home"}
+        fontColor={themeConstants.COLOR_PALETTE.WHITE}
       />
       <HeaderNavigationBarItemDivider />
       <HeaderNavigationBarItem
@@ -49,6 +54,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
+        fontColor={themeConstants.COLOR_PALETTE.WHITE}
       />
       {/*<HeaderNavigationBarItem*/}
       {/*  className={"mx-5"}*/}

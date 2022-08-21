@@ -13,6 +13,7 @@ export default function HeaderNavigationBarItem(
     screenLabel,
     className,
     disabled,
+    fontColor,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -47,11 +48,11 @@ export default function HeaderNavigationBarItem(
     if (currentScreen === screenName) {
       return (
         {
-          color: themeConstants.COLOR_PALETTE.WHITE,
+          color: fontColor,
           // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 800,
           fontSize: "16px",
-          letterSpacing: "0.25rem",
+          // letterSpacing: "0.25rem",
           cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
         }
       );
@@ -59,11 +60,11 @@ export default function HeaderNavigationBarItem(
 
     return (
       {
-        color: themeConstants.COLOR_PALETTE.WHITE,
+        color: fontColor,
         cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
         // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-        letterSpacing: "0.25rem",
-        fontWeight: 500,
+        // letterSpacing: "0.25rem",
+        fontWeight: undefined,
         fontSize: "16px",
       }
     );
@@ -91,4 +92,5 @@ HeaderNavigationBarItem.propTypes = {
   screenLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  fontColor: PropTypes.string,
 };
