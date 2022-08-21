@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
+import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 
 // TODO: Standardize
 export default function AccountStatusWidget({ className }) {
@@ -43,12 +41,10 @@ export default function AccountStatusWidget({ className }) {
 
   return (
     <div className={className}>
-      <WidgetDataBlockBaseContainer
+      <FreeTrialWidgetDataBlockBase
         title={getTitleText()}
         titleIcon={faClipboardList}
-        borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
-        // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
         heightSize={6}
       >
         <div className={"p-3"}>
@@ -56,7 +52,7 @@ export default function AccountStatusWidget({ className }) {
             {getAccountStats()}
           </div>
         </div>
-      </WidgetDataBlockBaseContainer>
+      </FreeTrialWidgetDataBlockBase>
     </div>
   );
 }

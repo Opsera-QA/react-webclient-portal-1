@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PipelineWidgetsBody from "components/trial/pipelines/widgets/PipelineWidgetsBody";
 import PipelinesWidgetHeaderTitleBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
+import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 
 export default function FreeTrialLandingPipelinesWidget({ className }) {
-  const {themeConstants} = useComponentStateReference();
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,9 +66,7 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
 
   return (
     <div className={className}>
-      <WidgetDataBlockBaseContainer
-        backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
-        borderColor={themeConstants.BORDER_COLORS.GRAY}
+      <FreeTrialWidgetDataBlockBase
         heightSize={5}
         titleIcon={faDraftingCompass}
         title={getTitleBar()}
@@ -78,7 +75,7 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
         <PipelineWidgetsBody
           selectedPipelineId={selectedPipelineId}
         />
-      </WidgetDataBlockBaseContainer>
+      </FreeTrialWidgetDataBlockBase>
     </div>
   );
 }

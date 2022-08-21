@@ -18,7 +18,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
 
   if (isLoading) {
     return (
-      <div className="px-3 content-block-header title-text-header-1">
+      <div className="px-3 py-2 content-block-header title-text-header-1">
         <div className="d-flex justify-content-between">
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
@@ -32,7 +32,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
 
   if (titleText == null) {
     return (
-      <Row className="title-text-header-1 w-100 p-1 mx-0 bg-white">
+      <Row className="title-text-header-1 w-100 p-2 mx-0 bg-white">
         <div className={"ml-auto dark-grey d-flex"}>
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
@@ -42,7 +42,7 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
   }
 
   return (
-    <div className="px-3 content-block-header title-text-header-1">
+    <div className="px-3 py-2 content-block-header title-text-header-1">
       <div className="d-flex justify-content-between">
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>

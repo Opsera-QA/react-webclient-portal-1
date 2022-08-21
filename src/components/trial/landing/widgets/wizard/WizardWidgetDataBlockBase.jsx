@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import IconBase from "components/common/icons/IconBase";
-import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 
 export default function WizardWidgetDataBlockBase(
   {
@@ -46,9 +46,7 @@ export default function WizardWidgetDataBlockBase(
 
   return (
     <div className={className}>
-      <WidgetDataBlockBaseContainer
-        backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
-        borderColor={themeConstants.BORDER_COLORS.GRAY}
+      <FreeTrialWidgetDataBlockBase
         heightSize={3}
         widthSize={5}
         className={"mx-auto"}
@@ -65,7 +63,7 @@ export default function WizardWidgetDataBlockBase(
             </Col>
           </Row>
         </CenteredContentWrapper>
-      </WidgetDataBlockBaseContainer>
+      </FreeTrialWidgetDataBlockBase>
     </div>
   );
 }

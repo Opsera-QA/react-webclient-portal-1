@@ -11,9 +11,11 @@ function WidgetDataBlockBaseContainer(
     titleIcon,
     heightSize,
     widthSize,
+    disabledBackgroundColor,
     backgroundColor,
     borderColor,
     fontColor,
+    disabledFontColor,
     fontFamily,
     children,
     className,
@@ -77,19 +79,39 @@ function WidgetDataBlockBaseContainer(
     return children;
   };
 
+  const getBackgroundColor = () => {
+    if (disabled === true) {
+      return disabledBackgroundColor;
+    }
+
+    if (backgroundColor) {
+      return backgroundColor;
+    }
+  };
+
+  const getFontColor = () => {
+    if (disabled === true) {
+      return disabledFontColor;
+    }
+
+    if (fontColor) {
+      return fontColor;
+    }
+  };
+
   return (
     <div
       className={getClassNames()}
       onClick={handleOnClickFunction}
       style={{
-        boxShadow: "0 0 40px rgba(0, 0, 0, 0.05)",
+        boxShadow: "0 0 40px rgba(0, 0, 0, 0.075)",
         height: getHeight(),
         maxHeight: getHeight(),
         minWidth: getWidth(),
         width: getWidth(),
         maxWidth: getWidth(),
         border: getBorder(),
-        backgroundColor: backgroundColor,
+        backgroundColor: getBackgroundColor(),
         color: fontColor,
         fontFamily: fontFamily,
         cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
@@ -106,7 +128,9 @@ WidgetDataBlockBaseContainer.propTypes = {
   widthSize: PropTypes.number,
   borderColor: PropTypes.string,
   backgroundColor: PropTypes.string,
+  disabledBackgroundColor: PropTypes.string,
   fontColor: PropTypes.string,
+  disabledFontColor: PropTypes.string,
   fontFamily: PropTypes.string,
   children: PropTypes.any,
   onClickFunction: PropTypes.func,
@@ -118,6 +142,8 @@ WidgetDataBlockBaseContainer.propTypes = {
 
 WidgetDataBlockBaseContainer.defaultProps = {
   heightSize: 2,
+  backgroundColor: "#FFFFFF",
+  disabledBackgroundColor: "#E5E5E5",
 };
 
 export default WidgetDataBlockBaseContainer;

@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import { faMessageExclamation } from "@fortawesome/pro-light-svg-icons";
+import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 
 export default function WelcomeWidget({ className }) {
   const {
@@ -64,10 +63,9 @@ export default function WelcomeWidget({ className }) {
 
   return (
     <div className={className}>
-      <WidgetDataBlockBaseContainer
+      <FreeTrialWidgetDataBlockBase
         title={getWelcomeText()}
         titleIcon={faMessageExclamation}
-        borderColor={themeConstants.BORDER_COLORS.GRAY}
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
         heightSize={6}
@@ -91,7 +89,7 @@ export default function WelcomeWidget({ className }) {
             </div>
           </div>
         </div>
-      </WidgetDataBlockBaseContainer>
+      </FreeTrialWidgetDataBlockBase>
     </div>
   );
 }
