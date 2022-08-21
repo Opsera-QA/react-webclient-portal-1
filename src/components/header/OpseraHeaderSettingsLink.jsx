@@ -6,7 +6,7 @@ import IconBase from "components/common/icons/IconBase";
 import { faCogs } from "@fortawesome/pro-light-svg-icons";
 import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
 
-const HEADER_SETTINGS_LINK = "/settings";
+const HEADER_SETTINGS_LINK = "/trial/settings";
 
 export default function OpseraHeaderSettingsLink() {
   const {

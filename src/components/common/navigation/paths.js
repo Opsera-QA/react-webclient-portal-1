@@ -68,6 +68,7 @@ paths.connectedAssets = "insights/insightsConnectedAssets";
 paths.gitCustodian = "insights/insightsGitCustodian";
 
 // Settings Paths
+paths.freeTrialSettings = "/trial/settings";
 paths.accountSettings = "settings";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;

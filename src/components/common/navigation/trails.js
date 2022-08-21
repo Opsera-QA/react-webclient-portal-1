@@ -287,6 +287,14 @@ const breadcrumbs = {
     linkText: "Account Settings",
     icon: faCogs
   },
+  freeTrialSettings: {
+    parent: undefined,
+    name: "freeTrialSettings",
+    path: paths.accountSettings,
+    title: "Free Trial Settings",
+    linkText: "Free Trial Settings",
+    icon: faCogs
+  },
 
   // Customer System Status
   customerSystemStatus: {
