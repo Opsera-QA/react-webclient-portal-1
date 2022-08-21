@@ -26,11 +26,13 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     toastContext,
     accessRoleData,
     getAccessToken,
+    userData,
     isOpseraAdministrator,
     themeConstants,
     isTestEnvironment,
     isProductionEnvironment,
   } = useComponentStateReference();
+  const fullUserName = `${userData.firstName} ${userData.lastName} (${userData.email})`;
 
   const login = function() {
     loginUserContext();
@@ -87,10 +89,19 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     }
   };
 
+  const getTitle = () => {
+    return (
+      <div>
+        {getUserIconTitle()}
+        {fullUserName}
+      </div>
+    );
+  };
+
   const getUserIconDropdown = () => {
     return (
       <NavDropdown
-        title={getUserIconTitle()}
+        title={getTitle()}
         id={"basic-nav-dropdown"}
         className={"top-nav-dropdown"}
       >

@@ -53,13 +53,13 @@ export default function FreeTrialLandingHeaderNavigationBar(
           screenLabel={"Workspace"}
           screenName={"workspace"}
         />
-        <HeaderNavigationBarItem
-          className={"mx-5"}
-          currentScreen={currentScreen}
-          setCurrentScreen={handleScreenClick}
-          screenLabel={"Unified Insights"}
-          screenName={"insights"}
-        />
+        {/*<HeaderNavigationBarItem*/}
+        {/*  className={"mx-5"}*/}
+        {/*  currentScreen={currentScreen}*/}
+        {/*  setCurrentScreen={handleScreenClick}*/}
+        {/*  screenLabel={"Unified Insights"}*/}
+        {/*  screenName={"insights"}*/}
+        {/*/>*/}
       </Navbar.Collapse>
     </div>
   );
