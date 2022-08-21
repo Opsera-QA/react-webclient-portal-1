@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
+import OpseraHeaderSettingsLink from "components/header/OpseraHeaderSettingsLink";
 
 const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
@@ -27,7 +28,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     accessRoleData,
     getAccessToken,
     userData,
-    isOpseraAdministrator,
     themeConstants,
     isTestEnvironment,
     isProductionEnvironment,
@@ -133,20 +133,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     );
   };
 
-  const getSettingsLink = () => {
-    if (isOpseraAdministrator === true) {
-      return (
-        <Navbar.Collapse id={"basic-navbar-nav"}>
-          <span className={"mr-3"}>
-            <Link to={"/settings"}>
-              Settings
-            </Link>
-          </span>
-        </Navbar.Collapse>
-      );
-    }
-  };
-
   // TODO: There might be multiple versions of this depending on how we build it--
   //  different areas might have different views. If we only use one version, move this inline
   const getViewTypeDropdown = () => {
@@ -190,7 +176,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
       <Nav className={"ml-auto"}>
         {getUserIconDropdown()}
         {/*{getViewTypeDropdown()}*/}
-        {getSettingsLink()}
+        <OpseraHeaderSettingsLink />
       </Nav>
     </Navbar.Collapse>
   );
