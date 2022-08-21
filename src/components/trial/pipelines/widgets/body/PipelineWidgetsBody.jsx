@@ -33,10 +33,6 @@ export default function PipelineWidgetsBody(
         return (
           <PipelineWidgetsPipelineActivityLogsPanel
             selectedPipeline={selectedPipeline}
-            setSelectedPipeline={setSelectedPipeline}
-            selectedPipelineId={selectedPipelineId}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
             className={"m-3"}
           />
         );

@@ -11,53 +11,9 @@ import PipelineActivityLogTreeTable
 export default function PipelineWidgetsPipelineActivityLogsPanel(
   {
     selectedPipeline,
-    selectedPipelineId,
-    setSelectedPipeline,
     className,
-    isLoading,
-    setIsLoading,
   }) {
-  const [refreshCount, setRefreshCount] = useState(0);
-  const {
-    isMounted,
-    cancelTokenSource,
-    toastContext,
-    getAccessToken,
-    accessRoleData,
-  } = useComponentStateReference();
-
-  const getPipeline = async () => {
-    try {
-      if (isMounted?.current !== true) {
-        return;
-      }
-
-      const newRefreshCount = refreshCount + 1;
-      setRefreshCount(newRefreshCount);
-
-      setIsLoading(true);
-      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, selectedPipelineId);
-      const newPipeline = response?.data?.data;
-
-      if (isMounted?.current === true) {
-        if (newPipeline) {
-          setSelectedPipeline(newPipeline);
-        } else {
-          toastContext.showLoadingErrorDialog("Pipeline not found");
-        }
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  if (isMongoDbId(selectedPipelineId) !== true) {
+  if (selectedPipeline == null) {
     return null;
   }
 
@@ -65,9 +21,7 @@ export default function PipelineWidgetsPipelineActivityLogsPanel(
     <div className={className}>
       <PipelineActivityLogTreeTable
         pipeline={selectedPipeline}
-        pipelineStatus={selectedPipeline?.workflow?.last_step?.status}
         pipelineId={selectedPipeline?._id}
-        getPipeline={getPipeline}
         pipelineRunCount={selectedPipeline?.workflow?.run_count}
       />
     </div>
@@ -76,9 +30,5 @@ export default function PipelineWidgetsPipelineActivityLogsPanel(
 
 PipelineWidgetsPipelineActivityLogsPanel.propTypes = {
   selectedPipeline: PropTypes.object,
-  setSelectedPipeline: PropTypes.func,
-  selectedPipelineId: PropTypes.string,
-  isLoading: PropTypes.bool,
-  setIsLoading: PropTypes.func,
   className: PropTypes.string,
 };

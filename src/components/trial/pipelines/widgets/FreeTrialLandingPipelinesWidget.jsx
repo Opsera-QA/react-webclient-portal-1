@@ -16,7 +16,7 @@ const WIDGET_DROPDOWN_MAX_HEIGHT = widgetHelper.getWidgetPixelSize(WIDGET_HEIGHT
 export default function FreeTrialLandingPipelinesWidget({ className }) {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
   const [selectedPipeline, setSelectedPipeline] = useState(undefined);
-  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.LOGS);
+  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pipelineRefreshing, setPipelineRefreshing] = useState(false);
@@ -71,7 +71,7 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
     if (selectedPipelineId !== pipelineId) {
       const pipeline = pipelines.find((pipeline) => pipeline._id === pipelineId);
       setSelectedPipelineId(pipeline?._id);
-      setSelectedPipeline(pipeline);
+      setSelectedPipeline({...pipeline});
     }
   };
 
