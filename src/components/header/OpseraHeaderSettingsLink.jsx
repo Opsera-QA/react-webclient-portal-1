@@ -26,10 +26,9 @@ export default function OpseraHeaderSettingsLink() {
     return (
       <IconBase
         icon={faCogs}
-        iconSize={"lg"}
+        iconSize={"xl"}
         className={"mr-2"}
         iconStyling={{
-          backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
           // borderRadius: "38px",
           color: themeConstants.COLOR_PALETTE.WHITE,
         }}

@@ -64,7 +64,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         icon={faUserCircle}
         iconSize={"lg"}
         iconStyling={{
-          backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
           // borderRadius: "38px",
           color: themeConstants.COLOR_PALETTE.WHITE,
         }}
