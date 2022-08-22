@@ -18,7 +18,7 @@ function SourceRepositoryToolSelectInput({className, fieldName, model, setModel,
     const accountName = tool?.configuration?.accountUsername || "No Account Assigned";
     const toolName = tool?.name;
 
-    return (`${accountName} (${toolName})`);
+    return (`${toolName} (${accountName})`);
   };
 
   return (
