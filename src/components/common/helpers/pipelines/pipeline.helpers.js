@@ -1,4 +1,22 @@
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+
 export const pipelineHelpers = {};
+
+pipelineHelpers.getPipelineSteps = (pipeline) => {
+  const parsedPipeline = dataParsingHelper.parseObject(pipeline, undefined);
+
+  if (!parsedPipeline) {
+    throw "Did not receive a Pipeline object";
+  }
+
+  const pipelineSteps = dataParsingHelper.parseArray(pipeline?.workflow?.plan, undefined);
+
+  if (!pipelineSteps) {
+    throw "The Pipeline did not have any steps associated with it.";
+  }
+
+  return pipelineSteps;
+};
 
 pipelineHelpers.findStepIndex = (pipeline, toolIdentifier) => {
   if (typeof pipeline !== "object" || !Array.isArray(pipeline?.workflow?.plan)) {
