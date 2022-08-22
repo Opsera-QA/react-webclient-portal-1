@@ -175,6 +175,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
     );
   }
 
+  console.info("Running Environment: ", process.env.NODE_ENV);
+  console.info("ALL VARIABLES:", process.env);
+
+
   // Not used in free trial
   const getSideBar = () => {
     return (
