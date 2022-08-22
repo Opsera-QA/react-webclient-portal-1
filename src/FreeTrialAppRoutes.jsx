@@ -52,6 +52,9 @@ const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient,
     history.push('/');
   };
 
+  console.info("Running Environment: ", process.env.NODE_ENV);
+  console.info("ALL VARIABLES:", process.env);
+
   //Login Form
   if (!authenticatedState && !isPublicPathState) {
     return (
