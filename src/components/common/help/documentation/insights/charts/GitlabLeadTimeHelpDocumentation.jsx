@@ -15,6 +15,8 @@ function GitlabDeployFrequencyChartHelpDocumentation({closeHelpPanel}) {
             <li><b>Average Lead Time </b> -  The average time (in days) it takes from code commit to production deployment. The <b>Deployment Stage</b> can be defined in the KPI Settings.  </li>
             <li><b>Average Merge Time</b> - The average time (in days) it takes from a code commit to complete a merge request. </li>
             <li><b>Lead Time</b> - This bar chart displays the lead time by number of days and the number of commits that have been made, merged and deployed to production. </li>
+            <li><b>Deployment Stage</b> - Gitlab pipelines allow users to provide/define custom stages. Select a production deployment stage to display its respective data in the chart. </li>
+            <li><b>Gitlab Projects</b> - Filter results based on list of projects. </li>
           </ul>
         </div>
       </div>
