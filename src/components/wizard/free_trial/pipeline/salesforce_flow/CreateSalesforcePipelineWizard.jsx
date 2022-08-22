@@ -9,15 +9,15 @@ import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import TestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/TestSalesforceToolConnectionScreen";
-import CreateSalesforcePipelineWizardSelectPipelineTemplateScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/pipeline_template_selection/CreateSalesforcePipelineWizardSelectPipelineTemplateScreen";
+import CreateSalesforcePipelineWizardSelectFlowScreen
+  from "components/wizard/free_trial/pipeline/salesforce_flow/pipeline_template_selection/CreateSalesforcePipelineWizardSelectFlowScreen";
 
 export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
+  SELECT_FLOW_SCREEN: "select_flow_screen",
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
   TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
   CREATE_SALESFORCE_TOOL_SCREEN: "create_salesforce_source_tool_screen",
   TEST_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_salesforce_source_tool_connection_screen",
-  SELECT_PIPELINE_TEMPLATE_SCREEN: "select_pipeline_template_screen",
 };
 
 export default function CreateSalesforcePipelineWizard() {
@@ -31,6 +31,13 @@ export default function CreateSalesforcePipelineWizard() {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
+      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
+        return (
+          <CreateSalesforcePipelineWizardSelectFlowScreen
+            pipelineId={pipelineId}
+            setPipelineId={setPipelineId}
+          />
+        );
       case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
         return (
           <CreateSalesforcePipelineWizardCreateGitToolScreen
@@ -67,13 +74,6 @@ export default function CreateSalesforcePipelineWizard() {
           <TestSalesforceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceToolId}
-          />
-        );
-      case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN:
-        return (
-          <CreateSalesforcePipelineWizardSelectPipelineTemplateScreen
-            pipelineId={pipelineId}
-            setPipelineId={setPipelineId}
           />
         );
     }
