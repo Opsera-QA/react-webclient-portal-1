@@ -16,13 +16,6 @@ workspaceConstants.WORKSPACE_ITEM_TYPE_LABELS = {
   TOOL: "Tools",
 };
 
-workspaceConstants.getLabelForWorkspaceType = {
-  ALL: "All",
-  PIPELINE: "Pipeline",
-  TASK: "Tasks",
-  TOOL: "Tools",
-};
-
 workspaceConstants.isWorkspaceTypeValid = (potentialValue) => {
   return constantsHelper.isValueValid(workspaceConstants.WORKSPACE_ITEM_TYPES, potentialValue);
 };
