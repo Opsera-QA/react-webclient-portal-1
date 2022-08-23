@@ -23,7 +23,7 @@ const gitlabConnectionMetadata = {
       },
     },
     {
-      label: "Enable Two Factor Authentication?",
+      label: "Use SSH Key",
       id: "twoFactorAuthentication",
     },
     {
