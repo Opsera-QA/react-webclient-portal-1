@@ -13,6 +13,8 @@ import CreateSalesforcePipelineWizardFlowSelectionScreen
 } from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
 import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
+import CreateSalesforceWorkflowWizardCompletionScreen
+  from "components/wizard/free_trial/pipeline/salesforce_flow/completion/CreateSalesforceWorkflowWizardCompletionScreen";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
@@ -119,11 +121,10 @@ export default function CreateSalesforceWorkflowWizard() {
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
-        // TODO: Create completion screen
         return (
-          <div>
-            Success!
-          </div>
+          <CreateSalesforceWorkflowWizardCompletionScreen
+            pipeline={pipeline}
+          />
         );
     }
   };
