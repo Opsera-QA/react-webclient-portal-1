@@ -505,31 +505,31 @@ function PipelineSummaryPanel(
   };
 
   const getDescriptionField = () => {
+    if (editDescription === true) {
+      return (
+        <>
+          <Col xs={11}>
+            <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
+                          value={formData.description || ""}
+                          onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
+          <Col xs={1} className="my-auto">
+            {getSaveIcon("description")}
+            {getCancelIcon(setEditDescription)}
+          </Col>
+        </>
+      );
+    }
+
     return (
-      <span>
-        {editDescription ?
-          <>
-            <Col xs={11}>
-              <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
-                            value={formData.description || ""}
-                            onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
-            <Col xs={1} className="my-auto">
-              {getSaveIcon("description")}
-              {getCancelIcon(setEditDescription)}
-            </Col>
-          </>
-          :
-          <>
-            <Col sm={12} className="py-2">
-              <span className="text-muted mr-1">Notes:</span>{pipeline.description}
-              {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-              && parentWorkflowStatus !== "running"
-                ? getEditIcon("description")
-                : null}
-            </Col>
-          </>
-        }
-      </span>
+      <>
+        <Col sm={12} className="py-2">
+          <span className="text-muted mr-1">Notes:</span>{pipeline.description}
+          {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+          && parentWorkflowStatus !== "running"
+            ? getEditIcon("description")
+            : null}
+        </Col>
+      </>
     );
   };
 
