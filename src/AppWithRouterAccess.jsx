@@ -1,28 +1,22 @@
 import React, { useState, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import ToastContextProvider from "./contexts/DialogToastContext";
 import { axiosApiService } from "api/apiService";
 
-
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { Security } from "@okta/okta-react";
+import { LoginCallback, Security } from "@okta/okta-react";
 import AppRoutes from "./AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import {generateUUID} from "components/common/helpers/string-helpers";
+import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
 import FreeTrialAppRoutes from "FreeTrialAppRoutes";
-
-export const PUBLIC_PATHS = {
-  LOGIN: "/login",
-  SIGNUP: "/signup",
-  REGISTRATION: "/registration",
-  FREE_TRIAL_REGISTRATION: "/trial/registration",
-  LDAP_ACCOUNT_REGISTRATION: "/account/registration",
-  AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
-};
+import LoginForm from "components/login/LoginForm";
+import Logout from "components/login/Logout";
+import OpseraFooter from "components/footer/OpseraFooter";
+import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -30,10 +24,9 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [isPublicPathState, setIsPublicPathState] = useState(false);
   const [data, setData] = useState(null);
-
   const history = useHistory();
+  const { isPublicPathState } = useLocationReference();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
@@ -85,12 +78,6 @@ const AppWithRouterAccess = () => {
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
       setData(null);
-
-      if (isPublicPath(history.location.pathname)) {
-        console.info("Public path identified");
-        setIsPublicPathState(true);
-      }
-
       return;
     }
 
@@ -136,19 +123,8 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const isPublicPath = (path) => {
-    return (
-      path === "/login" ||
-      path === "/signup" ||
-      path === "/registration" ||
-      path === "/trial/registration" ||
-      path.includes("/account/registration") ||
-      path.includes("/signup/awsmarketplace")
-    );
-  };
-
-  const enableSideBar = (path) => {
-    if (isPublicPath(path)) {
+  const enableSideBar = () => {
+    if (isPublicPathState) {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
@@ -190,7 +166,26 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const onAuthResume = async () => {
+    history.push('/');
+  };
+
   const getRoutes = () => {
+    if (!authenticatedState && isPublicPathState !== true) {
+      return (
+        <div className={"container-fluid m-0"}>
+          <div className={"d-flex flex-row"}>
+            <div className={"w-100"} style={{ marginBottom: "26px"}}>
+              <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
+              <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
+              <Route path="/logout" exact component={Logout} />
+            </div>
+          </div>
+          <OpseraFooter />
+        </div>
+      );
+    }
+
     const ldap = data?.ldap;
     const groups = data?.groups;
 

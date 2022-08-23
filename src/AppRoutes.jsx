@@ -139,41 +139,7 @@ import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrialSettingsManagement";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
-  const history = useHistory();
-
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-  /*const getFreeTrialRoutes = () => {
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      return (
-        <>
-          <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding} />
-        </>
-      );
-    }
-  };*/
-
-  const onAuthResume = async () => {
-    history.push('/');
-  };
-
-  //Login Form
-  if (!authenticatedState && !isPublicPathState) {
-    return (
-      <div className="container-fluid" style={{ margin: "0" }}>
-        <div className="d-flex flex-row">
-          <div className="w-100 pb-4">
-            <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
-
-            <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-            <Route path="/logout" exact component={Logout} />
-
-          </div>
-        </div>
-        <OpseraFooter />
-      </div>
-    );
-  }
 
   console.info("Running Environment: ", process.env.NODE_ENV);
   console.info("ALL VARIABLES:", process.env);

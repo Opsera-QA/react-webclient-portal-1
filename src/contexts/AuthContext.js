@@ -9,9 +9,9 @@ import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constan
 import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
-import { PUBLIC_PATHS } from "AppWithRouterAccess";
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
+import { PUBLIC_PATHS } from "hooks/useLocationReference";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;

@@ -44,34 +44,10 @@ import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 
 const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
-  const history = useHistory();
-
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-  const onAuthResume = async () => {
-    history.push('/');
-  };
 
   console.info("Running Environment: ", process.env.NODE_ENV);
   console.info("ALL VARIABLES:", process.env);
-
-  //Login Form
-  if (!authenticatedState && !isPublicPathState) {
-    return (
-      <div className="container-fluid" style={{ margin: "0" }}>
-        <div className="d-flex flex-row">
-          <div className="w-100 pb-4">
-            <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
-
-            <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-            <Route path="/logout" exact component={Logout} />
-
-          </div>
-        </div>
-        <OpseraFooter />
-      </div>
-    );
-  }
 
   return (
     <div className={"container-fluid m-0"}>
