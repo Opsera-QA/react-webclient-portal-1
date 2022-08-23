@@ -36,18 +36,24 @@ function LazyLoadMultiSelectInputBase(
     useToggle,
     helpTooltipText,
     error,
+    pluralTopic,
+    singularTopic,
   }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
 
   useEffect(() => {
-    setErrorMessage("");
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
 
     if (error) {
-      setErrorMessage(errorHelpers.parseApiErrorForInfoText(field?.pluralTopic, error));
+      console.error(error);
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
     }
   }, [error]);
-
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -109,6 +115,33 @@ function LazyLoadMultiSelectInputBase(
     return parsedValues;
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select ${singularTopic}`;
+    }
+
+    return "Select One";
+  };
+
+
   if (field == null) {
     return null;
   }
@@ -126,7 +159,7 @@ function LazyLoadMultiSelectInputBase(
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
-        hasError={hasStringValue(errorMessage) === true}
+        hasError={hasStringValue(getErrorMessage()) === true}
         helpTooltipText={helpTooltipText}
       />
       <div className={"custom-multiselect-input"}>
@@ -143,7 +176,7 @@ function LazyLoadMultiSelectInputBase(
             }
           }}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
-          placeholderText={placeholderText}
+          placeholderText={getPlaceholderText()}
           disabled={disabled}
           onSearchFunction={onSearchFunction}
           setDataFunction={(newValue) =>
@@ -156,7 +189,7 @@ function LazyLoadMultiSelectInputBase(
         model={dataObject}
         fieldName={fieldName}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
       />
     </InputContainer>
@@ -190,6 +223,8 @@ LazyLoadMultiSelectInputBase.propTypes = {
   onSearchFunction: PropTypes.func,
   useToggle: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
   error: PropTypes.any,
 };
 

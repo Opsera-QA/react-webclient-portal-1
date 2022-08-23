@@ -55,7 +55,7 @@ function LazyLoadSelectInputBase(
       setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
       setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
     }
-  }, [error, field]);
+  }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
