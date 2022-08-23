@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
-import { widgetHelper } from "temp-library-components/helpers/widget.helper";
+import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 
 function WidgetDataBlockBaseContainer(
   {

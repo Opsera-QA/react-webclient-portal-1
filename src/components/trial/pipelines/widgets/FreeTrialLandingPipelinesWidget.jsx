@@ -8,7 +8,7 @@ import PipelinesWidgetHeaderTitleBar, {
   PIPELINE_WIDGET_HEADER_ITEMS,
 } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import { widgetHelper } from "temp-library-components/helpers/widget.helper";
+import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 
 const WIDGET_HEIGHT_SIZE = 5;
 const WIDGET_DROPDOWN_MAX_HEIGHT = widgetHelper.getWidgetPixelSize(WIDGET_HEIGHT_SIZE - 2);

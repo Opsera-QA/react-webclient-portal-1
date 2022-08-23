@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { useLocation, useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { faCogs } from "@fortawesome/pro-light-svg-icons";
-import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 
 const HEADER_SETTINGS_LINK = "/trial/settings";
 

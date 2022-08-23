@@ -1,4 +1,4 @@
-import { constantsHelper } from "temp-library-components/helpers/constants.helper";
+import { constantsHelper } from "temp-library-components/helpers/constants/constants.helper";
 
 export const salesforceJenkinsJobConstants = {};
 

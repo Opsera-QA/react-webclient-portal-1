@@ -1,38 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import {
-  CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
+  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
-import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
   SALESFORCE_FLOW_OPTIONS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
 import pipelineActions from "components/workflow/pipeline-actions";
+import IconBase from "components/common/icons/IconBase";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
 export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton(
   {
     setCurrentScreen,
-    gitToolModel,
     selectedFlow,
-    gitToolId,
-    setGitToolId,
+    setPipelineId,
+    setPipeline,
+    disabled,
+    className,
   }) {
+  const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
     getAccessToken,
     cancelTokenSource,
+    isMounted,
+    toastContext,
   } = useComponentStateReference();
 
   const initializeSalesforcePipelineTemplate = async () => {
-    const response = await pipelineActions.deployTemplateV2(
-      getAccessToken,
-      cancelTokenSource,
-      "630386aebcb7dc0019d1c2c9", // TODO: how to dynamically pull this?
+    try {
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+      const response = await pipelineActions.deployTemplateV2(
+        getAccessToken,
+        cancelTokenSource,
+        "630386aebcb7dc0019d1c2c9", // TODO: how to dynamically pull this?
       );
+
+      console.log("response: " + JSON.stringify(response));
+      const pipelineId = response?.data?._id;
+
+      if (isMongoDbId(pipelineId)) {
+        setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+        setPipelineId(pipelineId);
+        setPipeline(response?.data);
+        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+      }
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+        toastContext.showInlineErrorMessage(error, "Error Initializing Salesforce Workflow:");
+      }
+    }
   };
 
   const confirmFlow = async () => {
@@ -47,16 +72,40 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
     }
   };
 
+  const getLabel = () => {
+    return buttonLabelHelper.getLabelForStatus(
+      buttonState,
+      "Confirm Salesforce Workflow",
+      "Initializing Salesforce Workflow",
+      "Initialized Salesforce Workflow!",
+      "Error Initializing Salesforce Workflow!",
+    );
+  };
+
+  const getButtonVariant = () => {
+    return buttonLabelHelper.getVariantForState(
+      "primary",
+      buttonState,
+    );
+  };
+
   return (
-    <div className={"m-3"}>
+    <div className={className}>
       <ButtonContainerBase>
-        <CreateButton
-          addAnotherOption={false}
-          showSuccessToasts={false}
-          customLabel={"Confirm"}
-          createRecord={confirmFlow}
-          recordDto={gitToolModel}
-        />
+        <Button
+          disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled}
+          onClick={confirmFlow}
+          variant={getButtonVariant()}
+        >
+        <span>
+          <IconBase
+            isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
+            icon={faSave}
+            className={"mr-2"}
+          />
+          {getLabel()}
+        </span>
+        </Button>
       </ButtonContainerBase>
     </div>
   );
@@ -65,8 +114,9 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
 CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton.propTypes = {
   setCurrentScreen: PropTypes.func,
   selectedFlow: PropTypes.string,
-  gitToolModel: PropTypes.object,
-  gitToolId: PropTypes.string,
-  setGitToolId: PropTypes.func,
+  setPipelineId: PropTypes.func,
+  setPipeline: PropTypes.func,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 

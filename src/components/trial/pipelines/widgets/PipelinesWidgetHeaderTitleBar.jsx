@@ -7,7 +7,7 @@ import NavigationDropdownSelectInputBase
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
-import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 
 export const PIPELINE_WIDGET_HEADER_ITEMS = {

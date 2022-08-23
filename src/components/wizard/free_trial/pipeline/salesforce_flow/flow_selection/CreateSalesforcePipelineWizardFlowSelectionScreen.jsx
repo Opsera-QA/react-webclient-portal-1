@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
+import CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
+  from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton";
 
 export const SALESFORCE_FLOW_OPTIONS = {
   SALESFORCE_ORGANIZATION_SYNC: "salesforce_organization_sync",
@@ -17,6 +19,9 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
     className,
     selectedFlow,
     setSelectedFlow,
+    setPipelineId,
+    setPipeline,
+    setCurrentScreen,
   }) {
   return (
     <div className={className}>
@@ -64,8 +69,12 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
         className={"mb-2"}
         disabled={true}
       />
-
-
+      <CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
+        selectedFlow={selectedFlow}
+        setPipelineId={setPipelineId}
+        setPipeline={setPipeline}
+        setCurrentScreen={setCurrentScreen}
+      />
       <div>Coming Soon</div>
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
@@ -99,6 +108,8 @@ CreateSalesforcePipelineWizardFlowSelectionScreen.propTypes = {
   selectedFlow: PropTypes.string,
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setPipelineId: PropTypes.func,
+  setPipeline: PropTypes.func,
   className: PropTypes.string,
 };
 

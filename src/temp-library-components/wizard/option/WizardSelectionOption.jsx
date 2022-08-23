@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
-import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 
 export const SUPPORTED_WIZARD_SELECTION_OPTION_TYPES = {
   PRIMARY: "primary",

@@ -7,7 +7,7 @@ import { parseError } from "components/common/helpers/error-helpers";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import {
-  CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS
+  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
@@ -64,7 +64,7 @@ function TestSalesforceToolConnectionScreen(
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN);
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_PIPELINE_TEMPLATE_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -80,7 +80,7 @@ function TestSalesforceToolConnectionScreen(
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
           await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
         }
       }
     }
@@ -97,7 +97,7 @@ function TestSalesforceToolConnectionScreen(
         setLogs([...newLogs]);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
         await sleep(5000);
-        setCurrentScreen(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
+        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
       }
     }
   };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Nav } from "react-bootstrap";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
-import { mouseHelper } from "temp-library-components/helpers/mouse.helper";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 
 export default function HeaderNavigationBarItem(
   {
