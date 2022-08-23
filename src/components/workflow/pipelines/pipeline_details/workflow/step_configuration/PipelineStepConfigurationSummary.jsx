@@ -226,6 +226,10 @@ import LiquibasePipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/LiquibasePipelineStepConfigurationSummary";
 import LiquibaseStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
+import ContainerCliPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/container_cli/ContainerCliPipelineStepConfigurationSummaryPanel";
+import containerCliStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/container_cli/containerCli-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -719,6 +723,13 @@ function PipelineStepConfigurationSummary({
                 pipelineData={pipelineData}
                 liquibasePipelineDataObject={getModelWrappedObject(LiquibaseStepFormMetadata)}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.CONTAINER_CLI:
+        return (
+          <ContainerCliPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            containerCliPipelineDataObject={getModelWrappedObject(containerCliStepFormMetadata)}
+          />
         );
       default:
         return (

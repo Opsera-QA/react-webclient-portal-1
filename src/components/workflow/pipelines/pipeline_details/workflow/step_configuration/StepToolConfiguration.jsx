@@ -101,6 +101,7 @@ import InformaticaIdqStepConfiguration
   from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 import LiquibaseStepConfiguration
   from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
+import ContainerCliStepConfiguration from "./step_tool_configuration_forms/container_cli/ContainerCliStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1400,6 +1401,17 @@ function StepToolConfiguration({
               parentCallback={callbackFunction}
               closeEditorPanel={closeEditorPanel}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.CONTAINER_CLI:
+        return (
+          <ContainerCliStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
         );
     }
   };

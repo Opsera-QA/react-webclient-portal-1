@@ -25,6 +25,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   BLACKDUCK: "blackduck",
   CHILD_PIPELINE: "child-pipeline",
   COMMAND_LINE: "command-line",
+  CONTAINER_CLI: "container-cli",
   COVERITY: "coverity",
   CYPRESS: "cypress",
   DATABRICKS_NOTEBOOK: "databricks-notebook",
