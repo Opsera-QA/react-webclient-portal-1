@@ -8,6 +8,9 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import CreateFreeTrialGithubToolButton
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/github/CreateFreeTrialGithubToolButton";
 import Row from "react-bootstrap/Row";
+import CreateSalesforceWorkflowWizardToolInputBase
+  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizardToolInputBase";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPanel(
   {
@@ -52,6 +55,15 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
   return (
     <div className={className}>
       <Row>
+        <Col sm={12}>
+          <CreateSalesforceWorkflowWizardToolInputBase
+            model={gitToolModel}
+            setModel={setGitToolModel}
+            toolId={gitToolId}
+            setToolId={setGitToolId}
+            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB}
+          />
+        </Col>
         <Col sm={12}>
           <VanitySetTextInputBase
             fieldName={"accountUsername"}

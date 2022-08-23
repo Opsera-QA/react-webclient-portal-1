@@ -208,13 +208,9 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           fieldName={"gitExportEnabled"}
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
-          disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
+          service={sourceRepositoryModel?.getData("service")}
         />
-{console.log(sourceRepositoryModel)}
       {/* <div className={"p-3"} >COMING SOON</div> */}
-
-
-
     </PipelineStepEditorPanelContainer>
   );
 }

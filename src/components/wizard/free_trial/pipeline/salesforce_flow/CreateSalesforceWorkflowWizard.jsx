@@ -119,6 +119,7 @@ export default function CreateSalesforceWorkflowWizard() {
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
+        // TODO: Create completion screen
         return (
           <div>
             Success!

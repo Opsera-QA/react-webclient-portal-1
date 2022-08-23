@@ -10,6 +10,9 @@ import CreateFreeTrialGitlabToolButton
 import GitlabTwoFactorAuthenticationBooleanToggleInput
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import CreateSalesforceWorkflowWizardToolInputBase
+  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizardToolInputBase";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel(
   {
@@ -54,6 +57,15 @@ export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPane
   return (
     <div className={className}>
       <Row>
+        <Col sm={12}>
+          <CreateSalesforceWorkflowWizardToolInputBase
+            model={gitToolModel}
+            setModel={setGitToolModel}
+            toolId={gitToolId}
+            setToolId={setGitToolId}
+            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB}
+          />
+        </Col>
         <Col sm={12}>
           <TextInputBase
             dataObject={gitToolModel}

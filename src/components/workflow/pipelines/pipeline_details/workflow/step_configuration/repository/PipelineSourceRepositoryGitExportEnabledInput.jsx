@@ -4,7 +4,14 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 
-function PipelineSourceRepositoryGitExportEnabledInput({className, model, setModel, disabled}) {
+export default function PipelineSourceRepositoryGitExportEnabledInput(
+  {
+    className,
+    model,
+    setModel,
+    service,
+    disabled,
+  }) {
   const getDynamicFields = () => {
     if (model?.getData("gitExportEnabled") === true) {
       return (
@@ -12,7 +19,7 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
            fieldName={"gitExportPath"}
            dataObject={model}
            setDataObject={setModel}
-           disabled={disabled}
+           disabled={disabled || ["gitlab", "github"].includes(service) !== true}
          />
       );
     }
@@ -24,7 +31,7 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
         dataObject={model}
         setDataObject={setModel}
         fieldName={"gitExportEnabled"}
-        disabled={disabled}
+        disabled={disabled || ["gitlab", "github"].includes(service) !== true}
       />
       {getDynamicFields()}
     </div>
@@ -34,10 +41,7 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
 PipelineSourceRepositoryGitExportEnabledInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  savePipelineFunction: PropTypes.func,
+  service: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  pipeline: PropTypes.object,
 };
-
-export default PipelineSourceRepositoryGitExportEnabledInput;

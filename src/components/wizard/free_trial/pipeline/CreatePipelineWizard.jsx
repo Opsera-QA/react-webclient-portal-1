@@ -51,7 +51,7 @@ export default function CreatePipelineWizard() {
   return (
     <CreateCenterPanel
       closePanel={closeOverlayFunction}
-      objectType={"Pipeline"}
+      objectType={"Workflow"}
       showCloseButton={true}
     >
       {getCurrentScreen()}
