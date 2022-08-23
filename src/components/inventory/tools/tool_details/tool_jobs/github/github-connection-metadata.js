@@ -15,7 +15,7 @@ const githubConnectionMetadata = {
       maxLength: 256
     },
     {
-      label: "Enable Two Factor Authentication?",
+      label: "Use SSH Key",
       id: "twoFactorAuthentication",
       maxLength: 100
     },
@@ -42,7 +42,7 @@ const githubConnectionMetadata = {
       maxLength: 256
     },
     {
-      label: "Enable Two Factor Authentication?",
+      label: "Use SSH Key",
       id: "twoFactorAuthentication",
       maxLength: 100
     },
