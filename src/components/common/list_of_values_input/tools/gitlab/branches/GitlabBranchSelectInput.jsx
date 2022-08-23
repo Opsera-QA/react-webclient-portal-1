@@ -26,7 +26,6 @@ function GitlabBranchSelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const [placeholderText, setPlaceholderText] = useState("Select Gitlab Branch");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -40,7 +39,6 @@ function GitlabBranchSelectInput(
     setCancelTokenSource(source);
     setGitlabBranches([]);
     setError(undefined);
-    setPlaceholderText("Select Gitlab Branch");
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
@@ -59,9 +57,13 @@ function GitlabBranchSelectInput(
       setIsLoading(true);
       await loadGitlabBranches("", toolId, repositoryId, cancelSource);
     } catch (error) {
-      setError(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -71,7 +73,6 @@ function GitlabBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setPlaceholderText("Select Gitlab Branch");
       setGitlabBranches([...branches]);
     }
   };
@@ -94,7 +95,6 @@ function GitlabBranchSelectInput(
         valueField={"name"}
         textField={"name"}
         disabled={disabled}
-        placeholderText={placeholderText}
         error={error}
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
@@ -116,7 +116,6 @@ function GitlabBranchSelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
       error={error}
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
