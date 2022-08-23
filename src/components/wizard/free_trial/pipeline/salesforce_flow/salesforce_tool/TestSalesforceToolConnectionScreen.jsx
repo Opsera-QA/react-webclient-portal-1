@@ -4,19 +4,20 @@ import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/Tes
 import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
-import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
-function TestSalesforceToolConnectionScreen(
+export default function TestSalesforceToolConnectionScreen(
   {
     salesforceToolId,
     setCurrentScreen,
+    pipeline,
+    setPipeline,
+    type,
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const [logs, setLogs]  = useState([]);
@@ -63,8 +64,17 @@ function TestSalesforceToolConnectionScreen(
 
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
-          await sleep(5000);
-          // setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS);
+
+          if (type === "source") {
+            setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
+            await sleep(5000);
+            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+          }
+          else {
+            setPipeline({...salesforcePipelineHelper.updateDeploymentSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
+            await sleep(5000);
+            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
+          }
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -79,8 +89,12 @@ function TestSalesforceToolConnectionScreen(
 
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
-          await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+
+          if (type === "source") {
+            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+          } else {
+            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+          }
         }
       }
     }
@@ -97,7 +111,12 @@ function TestSalesforceToolConnectionScreen(
         setLogs([...newLogs]);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
         await sleep(5000);
-        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+
+        if (type === "source") {
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+        } else {
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+        }
       }
     }
   };
@@ -116,8 +135,8 @@ function TestSalesforceToolConnectionScreen(
 TestSalesforceToolConnectionScreen.propTypes = {
   salesforceToolId: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  type: PropTypes.string,
+  pipeline: PropTypes.object,
+  setPipeline: PropTypes.func,
 };
-
-export default TestSalesforceToolConnectionScreen;
-
 

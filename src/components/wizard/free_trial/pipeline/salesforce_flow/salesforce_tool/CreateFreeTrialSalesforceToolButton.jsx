@@ -16,6 +16,7 @@ export default function CreateFreeTrialSalesforceToolButton(
     salesforceToolModel,
     setSalesforceToolId,
     salesforceToolId,
+    type,
   }) {
   const {
     getAccessToken,
@@ -90,9 +91,14 @@ export default function CreateFreeTrialSalesforceToolButton(
     }
 
     await saveConnectionDetails(toolId);
-
     setSalesforceToolId(toolId);
-    setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SALESFORCE_TOOL_CONNECTION_SCREEN);
+
+    if (type === "source") {
+      setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN);
+    }
+    else {
+      setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN);
+    }
   };
 
   return (
@@ -114,7 +120,8 @@ CreateFreeTrialSalesforceToolButton.propTypes = {
   setCurrentScreen: PropTypes.func,
   salesforceToolModel: PropTypes.object,
   salesforceToolId: PropTypes.string,
-  setSalesforceToolId: PropTypes.setSalesforceToolId,
+  setSalesforceToolId: PropTypes.func,
+  type: PropTypes.string,
 };
 
 

@@ -19,6 +19,7 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
     setCurrentScreen,
     salesforceToolModel,
     setSalesforceToolModel,
+    type,
   }) {
   if (salesforceToolModel == null) {
     return null;
@@ -27,7 +28,7 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
   return (
     <div className={className}>
       <H5FieldSubHeader
-        subheaderText={"Enter your Source Salesforce Account details"}
+        subheaderText={`Enter your ${type} Salesforce Account details`}
       />
       <Row>
         <Col sm={12}>
@@ -74,6 +75,7 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
           setCurrentScreen={setCurrentScreen}
           setSalesforceToolId={setSalesforceToolId}
           salesforceToolId={salesforceToolId}
+          type={type}
         />
       </ButtonContainerBase>
     </div>
@@ -87,6 +89,7 @@ CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel.propTypes = {
   setSalesforceToolId: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   className: PropTypes.string,
+  type: PropTypes.string,
 };
 
 

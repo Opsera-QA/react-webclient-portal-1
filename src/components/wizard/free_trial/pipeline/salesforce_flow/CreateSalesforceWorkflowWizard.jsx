@@ -5,21 +5,24 @@ import TestGitToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/test_connection/TestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateSalesforcePipelineWizardCreateSalesforceSourceToolEditorPanel
-  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import TestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/TestSalesforceToolConnectionScreen";
 import CreateSalesforcePipelineWizardFlowSelectionScreen
   , {
   SALESFORCE_FLOW_OPTIONS,
 } from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
+import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
   TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
-  CREATE_SOURCE_SALESFORCE_TOOL_SCREEN: "create_salesforce_source_tool_screen",
-  TEST_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_salesforce_source_tool_connection_screen",
+  CREATE_SOURCE_SALESFORCE_TOOL_SCREEN: "create_source_salesforce_tool_screen",
+  TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_source_salesforce_tool_connection_screen",
+  CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN: "create_salesforce_destination_tool_screen",
+  TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_salesforce_source_tool_connection_screen",
+  WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
 };
 
 export default function CreateSalesforceWorkflowWizard() {
@@ -28,8 +31,10 @@ export default function CreateSalesforceWorkflowWizard() {
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
-  const [salesforceToolModel, setSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
-  const [salesforceToolId, setSalesforceToolId] = useState(undefined);
+  const [sourceSalesforceToolModel, setSourceSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
+  const [deploymentSalesforceToolModel, setDeploymentSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
+  const [salesforceSourceToolId, setSalesforceSourceToolId] = useState(undefined);
+  const [salesforceDeploymentToolId, setSalesforceDeploymentToolId] = useState(undefined);
   const [pipelineId, setPipelineId] = useState(undefined);
   const [pipeline, setPipeline] = useState(undefined);
 
@@ -71,21 +76,53 @@ export default function CreateSalesforceWorkflowWizard() {
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceSourceToolEditorPanel
-            salesforceToolModel={salesforceToolModel}
-            setSalesforceToolModel={setSalesforceToolModel}
-            salesforceToolId={salesforceToolId}
-            setSalesforceToolId={setSalesforceToolId}
+          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+            salesforceToolModel={sourceSalesforceToolModel}
+            setSalesforceToolModel={setSourceSalesforceToolModel}
+            salesforceToolId={salesforceSourceToolId}
+            setSalesforceToolId={setSalesforceSourceToolId}
             setCurrentScreen={setCurrentScreen}
+            type={"source"}
             className={"m-3"}
           />
         );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SALESFORCE_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
           <TestSalesforceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
-            salesforceToolId={salesforceToolId}
+            salesforceToolId={salesforceSourceToolId}
+            type={"source"}
+            pipeline={pipeline}
+            setPipeline={setPipeline}
           />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
+        return (
+          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+            salesforceToolModel={deploymentSalesforceToolModel}
+            setSalesforceToolModel={setDeploymentSalesforceToolModel}
+            salesforceToolId={salesforceDeploymentToolId}
+            setSalesforceToolId={setSalesforceDeploymentToolId}
+            setCurrentScreen={setCurrentScreen}
+            type={"destination"}
+            className={"m-3"}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
+        return (
+          <TestSalesforceToolConnectionScreen
+            setCurrentScreen={setCurrentScreen}
+            salesforceToolId={salesforceDeploymentToolId}
+            type={"destination"}
+            pipeline={pipeline}
+            setPipeline={setPipeline}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
+        return (
+          <div>
+            Success!
+          </div>
         );
     }
   };
