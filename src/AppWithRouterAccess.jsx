@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import Navbar from "./Navbar";
 import ToastContextProvider from "./contexts/DialogToastContext";
 import { axiosApiService } from "api/apiService";
-import AppRoutes from "./AppRoutes";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import {generateUUID} from "components/common/helpers/string-helpers";
+
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
-import { isOpseraAdministrator } from "components/common/helpers/role-helpers";
-import FreeTrialAppRoutes from "FreeTrialAppRoutes";
-import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
+import AppRoutes from "./AppRoutes";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import {generateUUID} from "components/common/helpers/string-helpers";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
+import FreeTrialAppRoutes from "FreeTrialAppRoutes";
 
 export const PUBLIC_PATHS = {
   LOGIN: "/login",
@@ -25,44 +23,6 @@ export const PUBLIC_PATHS = {
   LDAP_ACCOUNT_REGISTRATION: "/account/registration",
   AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
 };
-
-const OKTA_CONFIG = {
-  issuer: process.env.REACT_APP_OKTA_ISSUER,
-  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-};
-
-const authClient = new OktaAuth({
-  issuer: OKTA_CONFIG.issuer,
-  clientId: OKTA_CONFIG.client_id,
-  redirectUri: OKTA_CONFIG.redirect_uri,
-  responseMode: "fragment",
-  tokenManager: {
-    autoRenew: true,
-    expireEarlySeconds: 160,
-  },
-});
-
-authClient.tokenManager.on("expired", function(key, expiredToken) {
-  console.info("Token with key", key, " has expired:");
-});
-
-authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
-  console.info("Token with key", key, "has been renewed");
-});
-
-export const isPublicPath = (path) => {
-  return (
-    path === "/login" ||
-    path === "/signup" ||
-    path === "/registration" ||
-    path === "/trial/registration" ||
-    path.includes("/account/registration") ||
-    path.includes("/signup/awsmarketplace")
-  );
-};
-
-authClient?.start();
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -79,6 +39,32 @@ const AppWithRouterAccess = () => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
   };
 
+  const OKTA_CONFIG = {
+    issuer: process.env.REACT_APP_OKTA_ISSUER,
+    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+  };
+
+  const authClient = new OktaAuth({
+    issuer: OKTA_CONFIG.issuer,
+    clientId: OKTA_CONFIG.client_id,
+    redirectUri: OKTA_CONFIG.redirect_uri,
+    responseMode: "fragment",
+    tokenManager: {
+      autoRenew: true,
+      expireEarlySeconds: 160,
+    },
+  });
+
+  authClient.start();
+
+  authClient.tokenManager.on("expired", function(key, expiredToken) {
+    console.info("Token with key", key, " has expired:");
+  });
+
+  authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
+    console.info("Token with key", key, "has been renewed");
+  });
 
   authClient.tokenManager.on("error", function(err) {
     console.error("TokenManager error:", err);
@@ -95,7 +81,6 @@ const AppWithRouterAccess = () => {
   authClient?.authStateManager?.subscribe(async authState => {
     //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
-    enableSideBar();
 
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
@@ -151,8 +136,19 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const enableSideBar = () => {
-    if (isPublicPath(history.location.pathname)) {
+  const isPublicPath = (path) => {
+    return (
+      path === "/login" ||
+      path === "/signup" ||
+      path === "/registration" ||
+      path === "/trial/registration" ||
+      path.includes("/account/registration") ||
+      path.includes("/signup/awsmarketplace")
+    );
+  };
+
+  const enableSideBar = (path) => {
+    if (isPublicPath(path)) {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
