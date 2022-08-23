@@ -5,7 +5,7 @@ import TestGitToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/test_connection/TestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+import CreateSalesforcePipelineWizardCreateSalesforceSourceToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import TestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/TestSalesforceToolConnectionScreen";
@@ -18,11 +18,11 @@ export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
   TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
-  CREATE_SALESFORCE_TOOL_SCREEN: "create_salesforce_source_tool_screen",
+  CREATE_SOURCE_SALESFORCE_TOOL_SCREEN: "create_salesforce_source_tool_screen",
   TEST_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_salesforce_source_tool_connection_screen",
 };
 
-export default function CreateSalesforcePipelineWizard() {
+export default function CreateSalesforceWorkflowWizard() {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   const [selectedFlow, setSelectedFlow] = useState(SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
   const [gitToolModel, setGitToolModel] = useState(undefined);
@@ -65,11 +65,13 @@ export default function CreateSalesforcePipelineWizard() {
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
+            pipeline={pipeline}
+            setPipeline={setPipeline}
           />
         );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN:
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+          <CreateSalesforcePipelineWizardCreateSalesforceSourceToolEditorPanel
             salesforceToolModel={salesforceToolModel}
             setSalesforceToolModel={setSalesforceToolModel}
             salesforceToolId={salesforceToolId}
@@ -95,5 +97,5 @@ export default function CreateSalesforcePipelineWizard() {
   );
 }
 
-CreateSalesforcePipelineWizard.propTypes = {};
+CreateSalesforceWorkflowWizard.propTypes = {};
 

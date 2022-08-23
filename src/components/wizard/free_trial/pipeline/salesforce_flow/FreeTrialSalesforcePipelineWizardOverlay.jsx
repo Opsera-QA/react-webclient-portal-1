@@ -2,8 +2,8 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import CreateSalesforcePipelineWizard
-  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+import CreateSalesforceWorkflowWizard
+  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
 
 export default function FreeTrialSalesforcePipelineWizardOverlay() {
   const toastContext = useContext(DialogToastContext);
@@ -21,7 +21,7 @@ export default function FreeTrialSalesforcePipelineWizardOverlay() {
       objectType={"Pipeline"}
       showCloseButton={true}
     >
-      <CreateSalesforcePipelineWizard
+      <CreateSalesforceWorkflowWizard
       />
     </CreateCenterPanel>
   );

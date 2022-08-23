@@ -8,16 +8,19 @@ import { capitalizeFirstLetter } from "components/common/helpers/string-helpers"
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
-function TestGitToolConnectionScreen(
+export default function TestGitToolConnectionScreen(
   {
     gitToolId,
     setCurrentScreen,
     gitToolOption,
+    pipeline,
+    setPipeline,
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const [logs, setLogs]  = useState([]);
@@ -63,9 +66,10 @@ function TestGitToolConnectionScreen(
           );
 
           setLogs([...newLogs]);
+          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, gitToolId)});
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);
-          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_TOOL_SCREEN);
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -118,8 +122,8 @@ TestGitToolConnectionScreen.propTypes = {
   gitToolId: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   gitToolOption: PropTypes.string,
+  pipeline: PropTypes.object,
+  setPipeline: PropTypes.func,
 };
-
-export default TestGitToolConnectionScreen;
 
 

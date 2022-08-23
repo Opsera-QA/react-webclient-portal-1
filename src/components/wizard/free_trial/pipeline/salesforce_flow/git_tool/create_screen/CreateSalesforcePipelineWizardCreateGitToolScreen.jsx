@@ -8,7 +8,7 @@ import CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/gitlab/CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function CreateSalesforcePipelineWizardCreateGitToolScreen(
+export default function CreateSalesforcePipelineWizardCreateGitToolScreen(
   {
     setGitToolId,
     setCurrentScreen,
@@ -72,7 +72,5 @@ CreateSalesforcePipelineWizardCreateGitToolScreen.propTypes = {
   setGitToolOption: PropTypes.func,
   gitToolId: PropTypes.string,
 };
-
-export default CreateSalesforcePipelineWizardCreateGitToolScreen;
 
 

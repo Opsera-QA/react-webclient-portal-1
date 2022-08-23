@@ -218,81 +218,10 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
     throw `Invalid Pipeline Step given [${parsedPipelineStep?.tool?.tool_identifier}] does not match [${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}]`;
   }
 
+  const jobType = stepToolConfiguration?.jobType;
+  console.log(`Job Type [${jobType}] gitToolId before: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.gitToolId = gitToolId;
-  stepToolConfiguration.repository = "";
-  stepToolConfiguration.repoId = "";
-  stepToolConfiguration.projectId = "";
-  stepToolConfiguration.gitUrl = "";
-  stepToolConfiguration.sshUrl = "";
-  stepToolConfiguration.branch = "";
-  stepToolConfiguration.defaultBranch = "";
-  stepToolConfiguration.gitBranch = "";
-  stepToolConfiguration.workspace = "";
-  parsedPipelineStep.tool.configuration = stepToolConfiguration;
-  return parsedPipelineStep;
-};
-
-salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, gitToolId) => {
-  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
-
-  if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
-    throw "Invalid Git Tool ID given";
-  }
-
-  const updatedPipelineSteps = [];
-
-  pipelineSteps.forEach((pipelineStep) => {
-    const stepToolConfiguration = pipelineStep?.tool?.configuration;
-
-    if (!stepToolConfiguration) {
-      updatedPipelineSteps.push(pipelineStep);
-      return;
-    }
-
-    const jobType = stepToolConfiguration?.jobType;
-
-    switch (jobType) {
-      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-        updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, gitToolId));
-        break;
-      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-        updatedPipelineSteps.push(pipelineStep);
-        break;
-      default:
-        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
-        updatedPipelineSteps.push(pipelineStep);
-    }
-  });
-
-  pipeline.workflow.plan = updatedPipelineSteps;
-  return pipeline;
-};
-
-salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId) => {
-  const parsedPipelineStep = dataParsingHelper.parseObject(pipelineStep, undefined);
-
-  if (!parsedPipelineStep) {
-    throw "Did not receive a Pipeline Step object";
-  }
-
-  if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
-    throw "Invalid Git Tool ID given";
-  }
-
-  const stepToolConfiguration = dataParsingHelper.parseObject(parsedPipelineStep?.tool?.configuration, undefined);
-
-  if (!stepToolConfiguration) {
-    throw "The Pipeline Step did not contain a configuration object to update.";
-  }
-
-  if (parsedPipelineStep?.tool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
-    throw `Invalid Pipeline Step given [${parsedPipelineStep?.tool?.tool_identifier}] does not match [${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}]`;
-  }
-
-  stepToolConfiguration.gitToolId = gitToolId;
+  console.log(`Job Type [${jobType}] gitToolId after: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.repository = "";
   stepToolConfiguration.repoId = "";
   stepToolConfiguration.projectId = "";
@@ -405,7 +334,10 @@ salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep = (pipelineStep, sa
     throw `Invalid Pipeline Step given [${parsedPipelineStep?.tool?.tool_identifier}] does not match [${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}]`;
   }
 
+  const jobType = stepToolConfiguration?.jobType;
+  console.log(`Job Type [${jobType}] sfdcToolId before: ${stepToolConfiguration.sfdcToolId}`);
   stepToolConfiguration.sfdcToolId = salesforceToolId;
+  console.log(`Job Type [${jobType}] sfdcToolId after: ${stepToolConfiguration.sfdcToolId}`);
   parsedPipelineStep.tool.configuration = stepToolConfiguration;
   return parsedPipelineStep;
 };

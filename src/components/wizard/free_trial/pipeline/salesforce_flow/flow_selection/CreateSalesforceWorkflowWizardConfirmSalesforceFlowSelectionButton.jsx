@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CreateButton from "components/common/buttons/saving/CreateButton";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
   SALESFORCE_FLOW_OPTIONS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
 import pipelineActions from "components/workflow/pipeline-actions";
 import IconBase from "components/common/icons/IconBase";
-import { faSave } from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { Button } from "react-bootstrap";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
@@ -42,12 +41,11 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
         "630386aebcb7dc0019d1c2c9", // TODO: how to dynamically pull this?
       );
 
-      console.log("response: " + JSON.stringify(response));
-      const pipelineId = response?.data?._id;
+      const newPipeline = response?.data;
 
-      if (isMongoDbId(pipelineId)) {
+      if (isMongoDbId(newPipeline?._id)) {
         setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setPipelineId(pipelineId);
+        setPipelineId(newPipeline?._id);
         setPipeline(response?.data);
         setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
       }
@@ -100,7 +98,7 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
         <span>
           <IconBase
             isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
-            icon={faSave}
+            icon={faCheckCircle}
             className={"mr-2"}
           />
           {getLabel()}

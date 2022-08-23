@@ -9,6 +9,7 @@ import SFDCBuildTypeSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 import CreateFreeTrialSalesforceToolButton
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateFreeTrialSalesforceToolButton";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel(
   {
@@ -25,6 +26,9 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
 
   return (
     <div className={className}>
+      <H5FieldSubHeader
+        subheaderText={"Enter your Source Salesforce Account details"}
+      />
       <Row>
         <Col sm={12}>
           <TextInputBase
@@ -57,11 +61,11 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
             setDataObject={setSalesforceToolModel}
             fieldName={"sfdc_password"}
           />
-          <SFDCBuildTypeSelectInput
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"buildType"}
-          />
+          {/*<SFDCBuildTypeSelectInput*/}
+          {/*  dataObject={salesforceToolModel}*/}
+          {/*  setDataObject={setSalesforceToolModel}*/}
+          {/*  fieldName={"buildType"}*/}
+          {/*/>*/}
         </Col>
       </Row>
       <ButtonContainerBase>

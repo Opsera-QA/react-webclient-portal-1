@@ -6,7 +6,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
@@ -77,7 +77,6 @@ export default function CreateFreeTrialGithubToolButton(
     }
 
     await saveConnectionDetails(toolId);
-
     setGitToolId(toolId);
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN);
   };

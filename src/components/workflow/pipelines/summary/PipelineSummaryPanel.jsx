@@ -36,6 +36,7 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -94,6 +95,11 @@ function PipelineSummaryPanel(
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    // if (pipeline) {
+    //   // console.log("pipeline before: " + JSON.stringify(pipeline));
+    //   const newPIpeline = salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, "6304e5952ea8f768b8485e40");
+    //   // console.log("newPipeline:" + JSON.stringify(newPIpeline));
+    // }
     loadData().catch((error) => {
       if (isMounted.current === true) {
         // toastContext.showLoadingError(error);

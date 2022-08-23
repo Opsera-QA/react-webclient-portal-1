@@ -4,8 +4,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import CreatePipelineWizardFlowSelectionScreen
   from "components/wizard/free_trial/pipeline/flow_selection/CreatePipelineWizardFlowSelectionScreen";
-import CreateSalesforcePipelineWizard
-  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforcePipelineWizard";
+import CreateSalesforceWorkflowWizard
+  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
 
 export const CREATE_PIPELINE_WIZARD_SCREENS = {
   FLOW_SELECTION_SCREEN: "flow_selection_screen",
@@ -34,7 +34,7 @@ export default function CreatePipelineWizard() {
         );
       case CREATE_PIPELINE_WIZARD_SCREENS.SALESFORCE_FLOW:
         return (
-          <CreateSalesforcePipelineWizard
+          <CreateSalesforceWorkflowWizard
           />
         );
       case CREATE_PIPELINE_WIZARD_SCREENS.SDLC_FLOW:
