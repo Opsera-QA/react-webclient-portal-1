@@ -19,12 +19,12 @@ function BoomiChartHelpDocumentation({closeHelpPanel}) {
                             <li><b>Boomi Line Chart</b> - Failed and Successful components deployed over a given time period.</li>
                         </ul>
                         <li></li>
-                        <li><b>Actionable Insights:</b> shows three separate tabs for the three main Boomi steps: Create Package, Deploy Package and Migrate Package</li>
+                        <li><b>Actionable Insights: shows three separate tabs for the three main Boomi steps: Create Package, Deploy Package and Migrate Package</b></li>
                         <ul>
-                            <li><b>Total Executions</b> - Total number of executions . </li>
-                            <li><b>Successful Execution Rate</b> - Percentage of components/packages successfully deployed . </li>
-                            <li><b>Frequency</b> - Average number of components/packages deployed per day.</li>
-                        </ul>
+                        <li><b>Total Executions</b> - Total number of executions . </li>
+                        <li><b>Successful Execution Rate</b> - Percentage of components/packages successfully deployed . </li>
+                        <li><b>Frequency</b> - Average number of components/packages deployed per day.</li>
+                            </ul>
                     </ul>
                 </div>
             </div>
