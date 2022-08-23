@@ -6,6 +6,7 @@ import { pipelineHelpers } from "components/common/helpers/pipelines/pipeline.he
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
+// TODO: Don't use these yet (outside of free trial). They're still being refined
 export const salesforcePipelineHelper = {};
 
 salesforcePipelineHelper.updateBranchForSalesforcePipelineSteps = (pipeline, gitBranch) => {
@@ -367,7 +368,7 @@ salesforcePipelineHelper.updateDeploymentSalesforceToolIdForSalesforcePipelineSt
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-        updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, salesforceToolId));
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep(pipelineStep, salesforceToolId));
         break;
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:

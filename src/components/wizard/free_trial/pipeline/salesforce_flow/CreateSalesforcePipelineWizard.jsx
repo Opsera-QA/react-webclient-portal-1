@@ -9,8 +9,10 @@ import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import TestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/TestSalesforceToolConnectionScreen";
-import CreateSalesforcePipelineWizardSelectFlowScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/pipeline_template_selection/CreateSalesforcePipelineWizardSelectFlowScreen";
+import CreateSalesforcePipelineWizardFlowSelectionScreen
+  , {
+  SALESFORCE_FLOW_OPTIONS,
+} from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
 
 export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
@@ -21,7 +23,8 @@ export const CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS = {
 };
 
 export default function CreateSalesforcePipelineWizard() {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
+  const [selectedFlow, setSelectedFlow] = useState(SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
@@ -33,9 +36,11 @@ export default function CreateSalesforcePipelineWizard() {
     switch (currentScreen) {
       case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardSelectFlowScreen
-            pipelineId={pipelineId}
-            setPipelineId={setPipelineId}
+          <CreateSalesforcePipelineWizardFlowSelectionScreen
+            selectedFlow={selectedFlow}
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            className={"m-2"}
           />
         );
       case CREATE_SALESFORCE_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
