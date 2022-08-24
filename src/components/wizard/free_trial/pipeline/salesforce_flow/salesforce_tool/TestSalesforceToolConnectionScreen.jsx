@@ -18,6 +18,7 @@ export default function TestSalesforceToolConnectionScreen(
     pipeline,
     setPipeline,
     type,
+    isTaskFlag
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const [logs, setLogs]  = useState([]);
@@ -66,9 +67,12 @@ export default function TestSalesforceToolConnectionScreen(
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
 
           if (type === "source") {
-            setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
+            setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, salesforceToolId)});
             await sleep(5000);
-            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+            if(!isTaskFlag) {
+              setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+            }
+            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
           }
           else {
             setPipeline({...salesforcePipelineHelper.updateDeploymentSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
@@ -138,5 +142,6 @@ TestSalesforceToolConnectionScreen.propTypes = {
   type: PropTypes.string,
   pipeline: PropTypes.object,
   setPipeline: PropTypes.func,
+  isTaskFlag: PropTypes.bool
 };
 

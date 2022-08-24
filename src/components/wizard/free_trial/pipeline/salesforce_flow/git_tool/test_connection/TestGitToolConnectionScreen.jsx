@@ -21,6 +21,7 @@ export default function TestGitToolConnectionScreen(
     gitToolOption,
     pipeline,
     setPipeline,
+    isTaskFlag
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
   const [logs, setLogs]  = useState([]);
@@ -66,7 +67,7 @@ export default function TestGitToolConnectionScreen(
           );
 
           setLogs([...newLogs]);
-          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, gitToolId)});
+          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, gitToolId)});
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);
           setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
@@ -124,6 +125,7 @@ TestGitToolConnectionScreen.propTypes = {
   gitToolOption: PropTypes.string,
   pipeline: PropTypes.object,
   setPipeline: PropTypes.func,
+  isTaskFlag: PropTypes.bool
 };
 
 

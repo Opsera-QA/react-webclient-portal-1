@@ -14,6 +14,7 @@ import IconBase from "components/common/icons/IconBase";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { Button } from "react-bootstrap";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import taskActions from "../../../../../tasks/task.actions";
 
 export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton(
   {
@@ -21,6 +22,7 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
     selectedFlow,
     setPipelineId,
     setPipeline,
+    setIsTaskFlag,
     disabled,
     className,
   }) {
@@ -58,6 +60,59 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
     }
   };
 
+  const initializeSalesforceTaskTemplate = async () => {
+    try {
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+
+      // template for org-sync task
+      const template = {
+        "name" : "Freetrial : Sync Org Task",
+        "description" : "",
+        "type" : "sync-sfdc-repo",
+        "tool_identifier" : "",
+        "active" : true,
+        "status" : "created",
+        "configuration" : {
+          "type" : "",
+          "jobType" : "SFDC_GIT_SYNC",
+          "toolConfigId" : "60c307fb5ac28205e841343b", // this is hardcoded, TODO make it more dynamic
+          "autoScaleEnable" : false,
+          "jobName" : "",
+          "projectId" : "",
+          "buildType" : "ant",
+          "gitToolId" : "",
+          "gitUrl" : "",
+          "sshUrl" : "",
+          "service" : "",
+          "workspace" : "",
+          "repository" : "",
+          "gitBranch" : "",
+          "sourceBranch" : "",
+          "defaultBranch" : "",
+          "dependencyType" : "",
+          "sfdcToolId" : "",
+        }
+      };
+
+      const response = await taskActions.createFreeTrialTaskV2(getAccessToken, cancelTokenSource, template);
+      const newTask = response?.data;
+
+      if (isMongoDbId(newTask?._id)) {
+        setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+        setIsTaskFlag(true);
+        setPipelineId(newTask?._id);
+        setPipeline(newTask);
+        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+      }
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+        toastContext.showInlineErrorMessage(error, "Error Initializing Salesforce Workflow:");
+      }
+    }
+  };
+
   const confirmFlow = async () => {
     switch (selectedFlow) {
       case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
@@ -66,7 +121,8 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
         await initializeSalesforcePipelineTemplate();
         break;
       case SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_ORGANIZATION_SYNC_TASK:
-        console.log("adding soon");
+        await initializeSalesforceTaskTemplate();
+        break;
     }
   };
 
@@ -114,6 +170,7 @@ CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton.propTypes = {
   selectedFlow: PropTypes.string,
   setPipelineId: PropTypes.func,
   setPipeline: PropTypes.func,
+  setIsTaskFlag: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
 };

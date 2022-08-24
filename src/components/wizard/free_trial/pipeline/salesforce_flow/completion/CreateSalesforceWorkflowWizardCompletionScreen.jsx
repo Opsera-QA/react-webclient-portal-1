@@ -4,10 +4,12 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import taskActions from "../../../../../tasks/task.actions";
 
 export default function CreateSalesforceWorkflowWizardCompletionScreen(
   {
     pipeline,
+    isTaskFlag
   }) {
   const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
@@ -26,8 +28,13 @@ export default function CreateSalesforceWorkflowWizardCompletionScreen(
   const updatePipeline = async () => {
     try {
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.BUSY);
-      await pipelineActions.updatePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id, pipeline);
-      setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
+      if(isTaskFlag) {
+        await taskActions.updateFreeTrialTaskV2(getAccessToken, cancelTokenSource, pipeline);
+        setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
+      } else {
+        await pipelineActions.updatePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id, pipeline);
+        setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error, "Error Finishing Workflow Initialization");
@@ -65,6 +72,7 @@ export default function CreateSalesforceWorkflowWizardCompletionScreen(
 }
 
 CreateSalesforceWorkflowWizardCompletionScreen.propTypes = {
-  pipeline: PropTypes.object
+  pipeline: PropTypes.object,
+  isTaskFlag: PropTypes.bool
 };
 

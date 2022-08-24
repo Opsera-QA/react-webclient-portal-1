@@ -158,12 +158,19 @@ salesforcePipelineHelper.updateRepositoryInJenkinsStep = (pipelineStep, reposito
   return parsedPipelineStep;
 };
 
-salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, gitToolId) => {
-  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
+salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, gitToolId) => {
 
   if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
     throw "Invalid Git Tool ID given";
   }
+
+  if(isTaskFlag && pipeline.type === "sync-sfdc-repo") {
+    console.log("its a task : ", isTaskFlag);
+    pipeline.configuration.gitToolId = gitToolId;
+    return pipeline;
+  }
+
+  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
 
   const updatedPipelineSteps = [];
 
@@ -235,12 +242,18 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
   return parsedPipelineStep;
 };
 
-salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps = (pipeline, salesforceToolId) => {
-  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
+salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, salesforceToolId) => {
 
   if (isMongoDbId(salesforceToolId) !== true && salesforceToolId !== "") {
     throw "Invalid Source Salesforce Tool ID given";
   }
+
+  if(isTaskFlag && pipeline.type === "sync-sfdc-repo") {
+    pipeline.configuration.sfdcToolId = salesforceToolId;
+    return pipeline;
+  }
+
+  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
 
   const updatedPipelineSteps = [];
 

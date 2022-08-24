@@ -39,6 +39,7 @@ export default function CreateSalesforceWorkflowWizard() {
   const [salesforceDeploymentToolId, setSalesforceDeploymentToolId] = useState(undefined);
   const [pipelineId, setPipelineId] = useState(undefined);
   const [pipeline, setPipeline] = useState(undefined);
+  const [isTaskFlag, setIsTaskFlag] = useState(false);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -51,6 +52,7 @@ export default function CreateSalesforceWorkflowWizard() {
             pipelineId={pipelineId}
             setPipelineId={setPipelineId}
             setPipeline={setPipeline}
+            setIsTaskFlag={setIsTaskFlag}
             className={"m-2"}
           />
         );
@@ -74,6 +76,7 @@ export default function CreateSalesforceWorkflowWizard() {
             gitToolOption={gitToolOption}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            isTaskFlag={isTaskFlag}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -96,6 +99,7 @@ export default function CreateSalesforceWorkflowWizard() {
             type={"source"}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            isTaskFlag={isTaskFlag}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
@@ -118,12 +122,14 @@ export default function CreateSalesforceWorkflowWizard() {
             type={"destination"}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            isTaskFlag={isTaskFlag}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardCompletionScreen
             pipeline={pipeline}
+            isTaskFlag={isTaskFlag}
           />
         );
     }

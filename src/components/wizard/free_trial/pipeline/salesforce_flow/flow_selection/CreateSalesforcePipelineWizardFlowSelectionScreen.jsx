@@ -14,15 +14,15 @@ export const SALESFORCE_FLOW_OPTIONS = {
   SALESFORCE_TO_GIT_MERGE_SYNC: "salesforce_to_git_merge_sync",
 };
 
-export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
-  {
-    className,
-    selectedFlow,
-    setSelectedFlow,
-    setPipelineId,
-    setPipeline,
-    setCurrentScreen,
-  }) {
+export default function CreateSalesforcePipelineWizardFlowSelectionScreen({
+  className,
+  selectedFlow,
+  setSelectedFlow,
+  setPipelineId,
+  setPipeline,
+  setCurrentScreen,
+  setIsTaskFlag,
+}) {
   return (
     <div className={className}>
       <WizardSelectionRadioOption
@@ -39,7 +39,9 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
         selectedOption={selectedFlow}
-        option={SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING}
+        option={
+          SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING
+        }
         text={"Salesforce Organization Sync: Include Unit Testing"}
         description={`
         Set up an Organization Sync workflow that includes an explicit unit testing step. 
@@ -50,8 +52,12 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
         selectedOption={selectedFlow}
-        option={SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP}
-        text={"Salesforce Organization Sync: Include Unit Testing and Backup Option"}
+        option={
+          SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP
+        }
+        text={
+          "Salesforce Organization Sync: Include Unit Testing and Backup Option"
+        }
         description={`
         Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
         `}
@@ -67,12 +73,13 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
         Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
         `}
         className={"mb-2"}
-        disabled={true}
+        disabled={false}
       />
       <CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
         selectedFlow={selectedFlow}
         setPipelineId={setPipelineId}
         setPipeline={setPipeline}
+        setIsTaskFlag={setIsTaskFlag}
         setCurrentScreen={setCurrentScreen}
       />
       <div>Coming Soon</div>
@@ -87,7 +94,9 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen(
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
         selectedOption={selectedFlow}
-        option={SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC}
+        option={
+          SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC
+        }
         text={"Salesforce Profile Migration: Organization Sync"}
         disabled={true}
         className={"mb-2"}
@@ -110,6 +119,7 @@ CreateSalesforcePipelineWizardFlowSelectionScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   setPipelineId: PropTypes.func,
   setPipeline: PropTypes.func,
+  setIsTaskFlag: PropTypes.bool,
   className: PropTypes.string,
 };
 

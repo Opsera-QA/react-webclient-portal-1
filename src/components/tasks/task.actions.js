@@ -51,10 +51,28 @@ taskActions.createTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.createFreeTrialTaskV2 = async (getAccessToken, cancelTokenSource, taskData) => {
+  const apiUrl = "/tasks/create";
+  const postBody = {
+    ...taskData
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) => {
   const apiUrl = `/tasks/${taskModel.getData("_id")}/update`;
   const postBody = {
     ...taskModel.getPersistData()
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.updateFreeTrialTaskV2 = async (getAccessToken, cancelTokenSource, taskData) => {
+  const apiUrl = `/tasks/${taskData._id}/update`;
+  const postBody = {
+    ...taskData
   };
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
