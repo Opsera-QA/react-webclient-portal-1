@@ -13,6 +13,12 @@ import StandaloneJsonField from "components/common/fields/json/StandaloneJsonFie
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
+import modelHelpers from "../../../../../../../common/model/modelHelpers";
+import {
+  jenkinsToolAccountMetadata
+} from "../../../../../../../inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccount.metadata";
+import jenkinsAccountActions
+  from "../../../../../../../inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 export default function CreateSalesforceWorkflowWizardTestGitToolConnectionScreen(
   {
@@ -63,10 +69,28 @@ export default function CreateSalesforceWorkflowWizardTestGitToolConnectionScree
             `Status: ${status}\n`,
             `Message: ${message}\n`,
             `Test Complete.\n`,
-            `Continuing to next screen in a few seconds\n`,
+            `Creating Account link to the tool\n`,
           );
 
           setLogs([...newLogs]);
+
+          const toolConfigId = salesforcePipelineHelper.getSalesforceCreatePackageStepToolConfigIdFromPipeline(pipeline, isTaskFlag);
+          const postBody = {
+            toolId: toolConfigId, //tool id of jenkins
+            service: gitToolOption, // github/gitlab/bitbucket
+            credentialsToolId: gitToolId,
+            credentialsId: gitToolId,
+            credentialsDescription: gitToolId,
+          };
+          const newAccountModel = modelHelpers.parseObjectIntoModel(postBody, jenkinsToolAccountMetadata);
+          // TODO: Check with service dev on why this is failing
+          // const accountLinkResponse = await jenkinsAccountActions.createJenkinsAccountV2(getAccessToken, cancelTokenSource, toolConfigId, newAccountModel);
+          // newLogs.push(
+          //     `Status: ${accountLinkResponse}\n`,
+          //     `Continuing to next screen in a few seconds\n`,
+          // );
+          // setLogs([...newLogs]);
+
           setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, gitToolId, gitToolOption)});
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);

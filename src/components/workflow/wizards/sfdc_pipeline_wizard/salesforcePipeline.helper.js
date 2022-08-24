@@ -373,3 +373,11 @@ salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline = (pipeline)
     return jobType === salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML;
   });
 };
+
+salesforcePipelineHelper.getSalesforceCreatePackageStepToolConfigIdFromPipeline = (pipeline, isTaskFlag) => {
+  if(isTaskFlag) {
+    return pipeline?.configuration?.toolConfigId;
+  }
+  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
+  return pipelineSteps[0]?.tool?.configuration?.toolConfigId;
+};
