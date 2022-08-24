@@ -8,10 +8,10 @@ export default function Home() {
 
   if (authState?.isAuthenticated) {
     return (
-      // <FreeTrialLanding
-      // />
-    <OverviewLanding
-    />
+      <FreeTrialLanding
+      />
+    // <OverviewLanding
+    // />
     );
   }
 
