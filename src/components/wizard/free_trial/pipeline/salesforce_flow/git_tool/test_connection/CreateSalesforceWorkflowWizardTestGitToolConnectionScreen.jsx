@@ -67,7 +67,7 @@ export default function CreateSalesforceWorkflowWizardTestGitToolConnectionScree
           );
 
           setLogs([...newLogs]);
-          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, gitToolId)});
+          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, gitToolId, gitToolOption)});
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
           await sleep(5000);
           setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
