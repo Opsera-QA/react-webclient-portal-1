@@ -20,7 +20,7 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
   const loadData = async () => {
     setIsLoading(true);
     const jenkinsSteps = pipelineHelpers
-      .parseSummaryLogStepConfiguration(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS, toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE]);
+      .getFilteredPreviousSteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS, toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE]);
     setListOfSteps(jenkinsSteps);
     setIsLoading(false);
   };
