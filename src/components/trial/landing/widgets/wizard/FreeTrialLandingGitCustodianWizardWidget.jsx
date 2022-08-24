@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CreateWorkflowWizard from "components/wizard/free_trial/pipeline/CreateWorkflowWizard";
+import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import WizardWidgetDataBlockBase from "components/trial/landing/widgets/wizard/WizardWidgetDataBlockBase";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import { faGit } from "@fortawesome/free-brands-svg-icons";
