@@ -5,8 +5,6 @@ import CreateWorkflowWizardTestGitToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
@@ -65,6 +63,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             gitToolOption={gitToolOption}
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
+            className={"m-3"}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -78,6 +77,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             isTaskFlag={true}
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
             onFailureFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
+            className={"m-3"}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -93,16 +93,16 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
-        return (
-          <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
-            setCurrentScreen={setCurrentScreen}
-            salesforceToolId={salesforceSourceToolId}
-            type={"source"}
-            pipeline={pipeline}
-            setPipeline={setPipeline}
-            isTaskFlag={true}
-          />
-        );
+        // return (
+        //   <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
+        //     setCurrentScreen={setCurrentScreen}
+        //     salesforceToolId={salesforceSourceToolId}
+        //     type={"source"}
+        //     pipeline={pipeline}
+        //     setPipeline={setPipeline}
+        //     isTaskFlag={true}
+        //   />
+        // );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel

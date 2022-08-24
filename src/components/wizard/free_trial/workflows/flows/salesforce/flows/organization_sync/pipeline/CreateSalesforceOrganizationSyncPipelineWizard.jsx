@@ -13,7 +13,11 @@ import * as PropType from "prop-types";
 import CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen";
 import CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/git/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/git/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
+import CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
+import CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -35,7 +39,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
   const [sourceSalesforceToolModel, setSourceSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
-  const [deploymentSalesforceToolModel, setDeploymentSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
+  const [destinationSalesforceToolModel, setDestinationSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
   const [salesforceSourceToolId, setSalesforceSourceToolId] = useState(undefined);
   const [salesforceDeploymentToolId, setSalesforceDeploymentToolId] = useState(undefined);
   const [pipeline, setPipeline] = useState(undefined);
@@ -86,10 +90,9 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
+          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceSourceToolId}
-            type={"source"}
             pipeline={pipeline}
             setPipeline={setPipeline}
           />
@@ -97,8 +100,8 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel
-            salesforceToolModel={deploymentSalesforceToolModel}
-            setSalesforceToolModel={setDeploymentSalesforceToolModel}
+            salesforceToolModel={destinationSalesforceToolModel}
+            setSalesforceToolModel={setDestinationSalesforceToolModel}
             salesforceToolId={salesforceDeploymentToolId}
             setSalesforceToolId={setSalesforceDeploymentToolId}
             setCurrentScreen={setCurrentScreen}
@@ -108,10 +111,9 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
+          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceDeploymentToolId}
-            type={"destination"}
             pipeline={pipeline}
             setPipeline={setPipeline}
           />

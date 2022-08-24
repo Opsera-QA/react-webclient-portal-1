@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import CreateWorkflowWizardTestGitToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
-import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
 export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
   {
@@ -32,6 +32,7 @@ export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineTe
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep(pipeline)}
+      className={"m-3"}
     />
   );
 }
