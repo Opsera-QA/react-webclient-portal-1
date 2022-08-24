@@ -18,6 +18,25 @@ pipelineHelpers.getPipelineSteps = (pipeline) => {
   return pipelineSteps;
 };
 
+// Not tested yet
+pipelineHelpers.filterStepsThatMatchToolIdentifiers = (pipelineStepArray, toolIdentifierArray) => {
+  const pipelineSteps = dataParsingHelper.parseArray(pipelineStepArray, undefined);
+
+  if (!pipelineSteps) {
+    throw "The Pipeline did not have any steps associated with it.";
+  }
+
+  const parsedToolIdentifierArray = dataParsingHelper.parseArray(toolIdentifierArray, undefined);
+
+  if (!parsedToolIdentifierArray) {
+    throw "No tool identifiers were included.";
+  }
+
+  return pipelineSteps.filter((pipelineStep) => {
+    return parsedToolIdentifierArray.includes(pipelineStep?.tool?.tool_identifier);
+  });
+};
+
 pipelineHelpers.findStepIndex = (pipeline, toolIdentifier) => {
   if (typeof pipeline !== "object" || !Array.isArray(pipeline?.workflow?.plan)) {
     return -1;
