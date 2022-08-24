@@ -79,42 +79,39 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
           )
           ]?.value;
    let projectName;
-   const search = filterDto.getData('search');
-   if(!search){
-     projectName =filterDto.getData('projectName') ;
+   if(!filterDto.getData('search')){
+     projectName = filterDto.getData('projectName') ;
    }
-   // If there is no project and no search keywords, the below call need not be made.
-   if(projectName || search) {
-     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-         getAccessToken,
-         cancelSource,
-         "gitlabPendingMergeRequests",
-         kpiConfiguration,
-         dashboardTags,
-         filterDto,
-         null,
-         dashboardOrgs,
-         undefined,
-         undefined,
-         undefined,
-         undefined,
-         undefined,
-         undefined,
-         undefined,
-         projectName,
-     );
-     let dataObject =
-         response?.data?.data[0]?.gitlabPendingMergeRequests?.data;
 
-     if (isMounted?.current === true && dataObject) {
-       setMetrics(dataObject);
-       let newFilterDto = filterDto;
-       newFilterDto.setData(
-           "totalCount",
-           response?.data?.data[0]?.gitlabPendingMergeRequests?.count,
-       );
-       setTableFilterDto({ ...newFilterDto });
-     }
+   const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+       getAccessToken,
+       cancelSource,
+       "gitlabPendingMergeRequests",
+       kpiConfiguration,
+       dashboardTags,
+       filterDto,
+       null,
+       dashboardOrgs,
+       undefined,
+       undefined,
+       undefined,
+       undefined,
+       undefined,
+       undefined,
+       undefined,
+       projectName,
+   );
+   let dataObject =
+       response?.data?.data[0]?.gitlabPendingMergeRequests?.data;
+
+   if (isMounted?.current === true && dataObject) {
+     setMetrics(dataObject);
+     let newFilterDto = filterDto;
+     newFilterDto.setData(
+         "totalCount",
+         response?.data?.data[0]?.gitlabPendingMergeRequests?.count,
+     );
+     setTableFilterDto({ ...newFilterDto });
    }
   };
 
