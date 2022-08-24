@@ -23,7 +23,7 @@ pipelineHelpers.filterStepsThatMatchToolIdentifiers = (pipelineStepArray, toolId
   const pipelineSteps = dataParsingHelper.parseArray(pipelineStepArray, undefined);
 
   if (!pipelineSteps) {
-    throw "The Pipeline did not have any steps associated with it.";
+    return [];
   }
 
   const parsedToolIdentifierArray = dataParsingHelper.parseArray(toolIdentifierArray, undefined);
