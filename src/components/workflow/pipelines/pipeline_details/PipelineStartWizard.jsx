@@ -1,13 +1,37 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipeline";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import SalesforcePipelineWizardPreRunTaskScreen
+  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardPreRunTaskScreen";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest }) {
+export const PIPELINE_START_WIZARD_FLOWS = {
+  PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
+  SALESFORCE_PIPELINE_WIZARD: "salesforce_pipeline_wizard",
+};
+
+function PipelineStartWizard(
+  {
+    pipelineType,
+    pipelineId,
+    pipelineOrientation,
+    pipeline,
+    handleClose,
+    handlePipelineWizardRequest,
+  }) {
+  const [currentScreen, setCurrentScreen] = useState(PIPELINE_START_WIZARD_FLOWS.PRE_RUN_TASK_SCREEN);
+  const [internalPipeline, setInternalPipeline] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
+
+  useEffect(() => {
+    if (pipeline) {
+      console.log("setting internal pipeline");
+      setInternalPipeline(pipeline);
+    }
+  }, [pipeline]);
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -16,10 +40,25 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
 
   const getBody = () => {
     if (pipelineType !== "sfdc" && pipelineOrientation === "middle") {
-      return (<ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />);
+      return (
+        <ConfirmResumePipeline
+          pipelineId={pipelineId}
+          handlePipelineWizardRequest={handlePipelineWizardRequest}
+        />
+      );
     }
 
     if (pipelineType === "sfdc") {
+      if (currentScreen === PIPELINE_START_WIZARD_FLOWS.PRE_RUN_TASK_SCREEN) {
+        return (
+          <SalesforcePipelineWizardPreRunTaskScreen
+            setCurrentScreen={setCurrentScreen}
+            internalPipeline={internalPipeline}
+            setInternalPipeline={setInternalPipeline}
+          />
+        );
+      }
+
       return (
         <SfdcPipelineWizard
           pipelineId={pipelineId}
@@ -39,7 +78,6 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
       titleText={`Pipeline Start Wizard`}
       titleIcon={faWandMagic}
       showToasts={true}
-      fullWidth={true}
       showCloseButton={false}
     >
       {getBody()}

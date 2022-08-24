@@ -35,7 +35,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export const PIPELINE_WIZARD_SCREENS = {
-  PRE_RUN_TASK_SCREEN: "PRE_RUN_TASK_SCREEN",
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
   COMPONENT_SELECTOR: "COMPONENT_SELECTOR",
   STANDARD_FILE_SELECTOR: "STANDARD_FILE_SELECTOR",
@@ -81,8 +80,6 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   const getBody = () => {
     switch (pipelineWizardScreen) {
-      case PIPELINE_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN:
-
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
           <SfdcPipelineWizardInitializationScreen

@@ -4,20 +4,23 @@ import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/Tes
 import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
+import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
+import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
-export default function TestSalesforceToolConnectionScreen(
+export default function CreateSalesforceWorkflowWizardTestGitToolConnectionScreen(
   {
-    salesforceToolId,
+    gitToolId,
     setCurrentScreen,
+    gitToolOption,
     pipeline,
     setPipeline,
-    type,
     isTaskFlag
   }) {
   const [currentState, setCurrentState]  = useState(TEST_CONNECTION_STATES.READY);
@@ -46,8 +49,8 @@ export default function TestSalesforceToolConnectionScreen(
       const response = await toolsActions.checkToolConnectivityV2(
         getAccessToken,
         cancelTokenSource,
-        salesforceToolId,
-        "Sfdc",
+        gitToolId,
+        capitalizeFirstLetter(gitToolOption),
       );
 
       if (isMounted.current === true) {
@@ -64,21 +67,10 @@ export default function TestSalesforceToolConnectionScreen(
           );
 
           setLogs([...newLogs]);
+          setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, gitToolId)});
           setCurrentState(TEST_CONNECTION_STATES.SUCCESSFUL_CONNECTION);
-
-          if (type === "source") {
-            setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, isTaskFlag, salesforceToolId)});
-            await sleep(5000);
-            if(!isTaskFlag) {
-              setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
-            }
-            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
-          }
-          else {
-            setPipeline({...salesforcePipelineHelper.updateDeploymentSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
-            await sleep(5000);
-            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
-          }
+          await sleep(5000);
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
         } else {
           const message = JSON.stringify(response?.data?.message);
           const status = response?.status;
@@ -93,12 +85,8 @@ export default function TestSalesforceToolConnectionScreen(
 
           setLogs([...newLogs]);
           setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
-
-          if (type === "source") {
-            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
-          } else {
-            setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
-          }
+          await sleep(5000);
+          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
         }
       }
     }
@@ -115,12 +103,7 @@ export default function TestSalesforceToolConnectionScreen(
         setLogs([...newLogs]);
         setCurrentState(TEST_CONNECTION_STATES.FAILED_CONNECTION);
         await sleep(5000);
-
-        if (type === "source") {
-          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
-        } else {
-          setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
-        }
+        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
       }
     }
   };
@@ -136,12 +119,13 @@ export default function TestSalesforceToolConnectionScreen(
   );
 }
 
-TestSalesforceToolConnectionScreen.propTypes = {
-  salesforceToolId: PropTypes.string,
+CreateSalesforceWorkflowWizardTestGitToolConnectionScreen.propTypes = {
+  gitToolId: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  type: PropTypes.string,
+  gitToolOption: PropTypes.string,
   pipeline: PropTypes.object,
   setPipeline: PropTypes.func,
   isTaskFlag: PropTypes.bool
 };
+
 

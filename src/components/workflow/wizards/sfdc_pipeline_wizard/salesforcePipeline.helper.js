@@ -5,6 +5,7 @@ import {
 import { pipelineHelpers } from "components/common/helpers/pipelines/pipeline.helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Don't use these yet (outside of free trial). They're still being refined
 export const salesforcePipelineHelper = {};
@@ -158,13 +159,17 @@ salesforcePipelineHelper.updateRepositoryInJenkinsStep = (pipelineStep, reposito
   return parsedPipelineStep;
 };
 
-salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, gitToolId) => {
+salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, gitToolId, service) => {
 
   if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
     throw "Invalid Git Tool ID given";
   }
 
-  if(isTaskFlag && pipeline.type === "sync-sfdc-repo") {
+  if (hasStringValue(service) === false) {
+    throw "Did not include a service.";
+  }
+
+  if (isTaskFlag && pipeline.type === "sync-sfdc-repo") {
     console.log("its a task : ", isTaskFlag);
     pipeline.configuration.gitToolId = gitToolId;
     return pipeline;
@@ -187,7 +192,7 @@ salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, 
     switch (jobType) {
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-        updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, gitToolId));
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, gitToolId, service));
         break;
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
       case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
@@ -204,7 +209,7 @@ salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, 
   return pipeline;
 };
 
-salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId) => {
+salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId, service) => {
   const parsedPipelineStep = dataParsingHelper.parseObject(pipelineStep, undefined);
 
   if (!parsedPipelineStep) {
@@ -213,6 +218,10 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
 
   if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
     throw "Invalid Git Tool ID given";
+  }
+
+  if (hasStringValue(service) === false) {
+    throw "Did not include a service.";
   }
 
   const stepToolConfiguration = dataParsingHelper.parseObject(parsedPipelineStep?.tool?.configuration, undefined);
@@ -229,6 +238,7 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
   console.log(`Job Type [${jobType}] gitToolId before: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.gitToolId = gitToolId;
   console.log(`Job Type [${jobType}] gitToolId after: ${stepToolConfiguration.gitToolId}`);
+  stepToolConfiguration.service = service;
   stepToolConfiguration.repository = "";
   stepToolConfiguration.repoId = "";
   stepToolConfiguration.projectId = "";
@@ -353,4 +363,16 @@ salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep = (pipelineStep, sa
   console.log(`Job Type [${jobType}] sfdcToolId after: ${stepToolConfiguration.sfdcToolId}`);
   parsedPipelineStep.tool.configuration = stepToolConfiguration;
   return parsedPipelineStep;
+};
+
+salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline = (pipeline) => {
+  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
+
+  pipelineSteps.forEach((pipelineStep) => {
+    const jobType = pipelineStep?.tool?.configuration?.jobType;
+
+    if (jobType === salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML) {
+      return pipelineStep;
+    }
+  });
 };

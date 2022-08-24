@@ -6,7 +6,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateFreeTrialSalesforceToolButton
-  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/CreateFreeTrialSalesforceToolButton";
+  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/create_screen/CreateFreeTrialSalesforceToolButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizardToolInputBase";
