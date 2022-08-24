@@ -7,8 +7,9 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
 import ReactJson from "react-json-view";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
 
-function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType}) {
+function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, plan, stepId}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
 
   const getDynamicTagNameField = () => {
@@ -96,6 +97,12 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType})
         setDeleteDockerSecrets={setDeleteDockerSecrets}
         addSecret={deleteDockerSecrets || dataParsingHelper.isEmpty(model?.data?.dockerBuildPathJson)}
       />
+      <DockerPreviousStepDataInputForm 
+        setModel={setModel}
+        model={model}
+        plan={plan}
+        stepId={stepId}
+      />
     </div>
   );
 }
@@ -104,6 +111,8 @@ JenkinsStepConfigurationDockerEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   buildType: PropTypes.string,
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 export default JenkinsStepConfigurationDockerEditorPanel;
