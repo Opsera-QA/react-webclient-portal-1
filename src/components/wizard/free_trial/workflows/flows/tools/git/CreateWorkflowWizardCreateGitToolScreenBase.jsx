@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitToolCreationRadioOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationRadioOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import CreateSalesforcePipelineWizardCreateGithubToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateSalesforcePipelineWizardCreateGithubToolEditorPanel";
+import CreateWorkflowWizardCreateGithubToolEditorPanel
+  from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
 import CreateWorkflowWizardCreateGitlabToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
@@ -35,7 +35,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     switch (gitToolOption) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
         return (
-          <CreateSalesforcePipelineWizardCreateGithubToolEditorPanel
+          <CreateWorkflowWizardCreateGithubToolEditorPanel
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
             setGitToolId={setGitToolId}

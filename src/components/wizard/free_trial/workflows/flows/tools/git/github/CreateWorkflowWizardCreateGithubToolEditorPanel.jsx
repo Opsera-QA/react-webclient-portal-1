@@ -12,7 +12,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPanel(
+export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {
     className,
     gitToolId,
@@ -93,7 +93,7 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
   );
 }
 
-CreateSalesforcePipelineWizardCreateGithubToolEditorPanel.propTypes = {
+CreateWorkflowWizardCreateGithubToolEditorPanel.propTypes = {
   gitToolModel: PropTypes.object,
   setGitToolModel: PropTypes.func,
   gitToolId: PropTypes.string,
