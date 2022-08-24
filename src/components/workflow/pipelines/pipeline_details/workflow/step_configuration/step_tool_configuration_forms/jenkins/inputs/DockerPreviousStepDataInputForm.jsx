@@ -5,6 +5,7 @@ import EditableParameterMappingInput from "components/common/list_of_values_inpu
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import _ from "lodash";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, stepId }) {
 
@@ -19,7 +20,7 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
     setIsLoading(true);
     
     if (plan && stepId) {
-      let pipelineSteps = formatStepOptions(plan, stepId);
+      let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
       let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
       let jenkinsSteps =
         Object.keys(groupedSteps).length > 0
@@ -33,15 +34,6 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
       setListOfSteps(jenkinsSteps);
     }
     setIsLoading(false);
-  };
-
-  const formatStepOptions = (plan, stepId) => {
-    let STEP_OPTIONS = plan.slice(
-      0,
-      plan.findIndex((element) => element._id === stepId)
-    );
-    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
-    return STEP_OPTIONS;
   };
 
   const setDataFunction = () => {
