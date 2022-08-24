@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import LoginForm from "./components/login/LoginForm";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 import Home from "./Home";
 import Logout from "./components/login/Logout";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
-import Signup from "components/user/signup/Signup";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import TaskDetailView from "components/tasks/details/TaskDetailView";
@@ -18,10 +17,7 @@ import FreeTrialRegistration from "components/trial/registration/FreeTrialRegist
 import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 
-const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
-  useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-
+export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
   return (
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
@@ -52,17 +48,10 @@ const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient,
       <OpseraFooter />
     </div>
   );
-};
-
+}
 
 FreeTrialAppRoutes.propTypes = {
-  authenticatedState: PropTypes.bool,
-  isPublicPathState:  PropTypes.bool,
   authClient: PropTypes.object,
   OKTA_CONFIG: PropTypes.object,
-  userData: PropTypes.object,
-  hideSideBar: PropTypes.bool,
 };
-
-export default FreeTrialAppRoutes;
 

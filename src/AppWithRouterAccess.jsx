@@ -201,12 +201,8 @@ const AppWithRouterAccess = () => {
 
     return (
       <FreeTrialAppRoutes
-        authenticatedState={authenticatedState}
         authClient={authClient}
-        isPublicPathState={isPublicPathState}
         OKTA_CONFIG={OKTA_CONFIG}
-        userData={data}
-        hideSideBar={hideSideBar}
       />
     );
   };

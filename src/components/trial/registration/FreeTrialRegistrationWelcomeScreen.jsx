@@ -5,11 +5,17 @@ import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignu
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import WizardButton from "temp-library-components/wizard/button/WizardButton";
+import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 
 // TODO: Standardize styling
 const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
   return (
-    <div className={"h-100 w-100 d-flex siteFont"}>
+    <div
+      className={"h-100 w-100 d-flex"}
+      style={{
+        fontFamily: fontThemeConstants.FONT_FAMILIES.MAIN_SITE_FONT_FAMILIES,
+      }}
+    >
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
