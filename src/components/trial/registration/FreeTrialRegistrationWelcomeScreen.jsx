@@ -9,7 +9,7 @@ import WizardButton from "temp-library-components/wizard/button/WizardButton";
 // TODO: Standardize styling
 const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
   return (
-    <div className={"h-100 w-100 d-flex"}>
+    <div className={"h-100 w-100 d-flex siteFont"}>
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard

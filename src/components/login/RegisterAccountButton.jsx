@@ -9,13 +9,8 @@ function RegisterAccountButton() {
   const history = useHistory();
 
   const gotoSignUp = () => {
-    //if free trial, go that form, otherwise use normal
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      history.push("/trial/registration");
-    } else {
-      history.push("/signup");
-    }
-    history.go(0);
+    history.push("/trial/registration");
+    //history.go(0);
   };
 
   const goToLdapSignupForm = () => {

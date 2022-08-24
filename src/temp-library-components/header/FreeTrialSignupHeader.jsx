@@ -1,39 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OpseraHeaderIcon from "temp-library-components/icon/opsera/OpseraHeaderIcon";
+//import OpseraHeaderIcon from "temp-library-components/icon/opsera/OpseraHeaderIcon";
 
-function FreeTrialSignupHeader({ className }) {
+function FreeTrialSignupHeader({className}) {
   return (
-    <div className={className}>
-      <div
-        style={{
-          textAlign: "center",
-        }}
-      >
-        <OpseraHeaderIcon />
-      </div>
-      <div
-        style={{
-          fontSize: "32px",
-          fontWeight: 700,
-          fontFamily: "Inter",
-          textAlign: "center",
-        }}
-      >
-        Welcome to Opsera
-      </div>
-      <div
-        style={{
-          fontSize: "16px",
-          fontWeight: 400,
-          fontFamily: "Inter",
-          textAlign: "center",
-        }}
-      >
-        Free Trial Experience
-      </div>
-    </div>
-  );
+    <div className={"darkBackgroundText"}>
+
+        <img alt="Opsera"
+             src="/img/logos/opsera_bird_infinity_171_126.png"
+             width="171"
+             height="126"
+        />
+
+
+      <h2 style={{ textAlign: "center" }}>Lets get started!</h2>
+</div>
+)
+  ;
 }
 
 FreeTrialSignupHeader.propTypes = {

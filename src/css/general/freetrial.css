@@ -3,6 +3,23 @@ Styles specific to Free Trial
 
 */
 
+.siteFont {
+    font-family: 'Inter', sans-serif;
+}
+
+.openRoutesContainer {
+    padding-top: 50px;
+}
+
+.darkBackground {
+    background-color: #352F54;
+}
+
+.darkBackgroundText {
+    color: #FFF;
+}
+
+
 .loginScreenBackground {
     background-color: #352F54;
     height: 100vw;
