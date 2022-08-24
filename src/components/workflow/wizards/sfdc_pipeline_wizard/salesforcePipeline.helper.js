@@ -170,8 +170,8 @@ salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, 
   }
 
   if (isTaskFlag && pipeline.type === "sync-sfdc-repo") {
-    console.log("its a task : ", isTaskFlag);
     pipeline.configuration.gitToolId = gitToolId;
+    pipeline.configuration.service = service;
     return pipeline;
   }
 

@@ -15,6 +15,8 @@ import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { Button } from "react-bootstrap";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import taskActions from "../../../../../tasks/task.actions";
+import modelHelpers from "../../../../../common/model/modelHelpers";
+import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 
 export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton(
   {
@@ -94,7 +96,8 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
         }
       };
 
-      const response = await taskActions.createFreeTrialTaskV2(getAccessToken, cancelTokenSource, template);
+      const newTaskTemplateModel = modelHelpers.parseObjectIntoModel(template, salesforceOrganizationSyncTaskConfigurationMetadata);
+      const response = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, newTaskTemplateModel);
       const newTask = response?.data;
 
       if (isMongoDbId(newTask?._id)) {
