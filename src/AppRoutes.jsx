@@ -157,13 +157,12 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
-          <Route path="/" exact component={Home} />
+          <
           <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
           <Route path="/implicit/callback" component={LoginCallback} />
           <Route path="/logout" exact component={Logout} />
 
           <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-          <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/faq" exact component={Faq} />
           <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
@@ -173,6 +172,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <Route path="/registration" exact component={Registration} />
           <Route path="/account/registration/:domain" exact component={AccountRegistration} />
           <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
+
+          <Route path="/" exact component={Home} />
+
+          <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
 
           <SecureRoute path="/user/:tab?" exact component={UserSettings} />
           <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView} />

@@ -21,42 +21,27 @@ import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 
-  if (!authenticatedState) {
-    return (
-      <div className="darkBackground">
-        <Route path="/" exact component={Home} />
-        <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
-        <Route path="/implicit/callback" component={LoginCallback} />
-        <Route path="/logout" exact component={Logout} />
-
-        <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-        {/*<Route path="/signup" exact component={Signup} />*/}
-        <Route path="/faq" exact component={Faq} />
-        <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
-        <Route path="/about" exact component={About} />
-        <Route path="/about/pricing" component={Pricing} />
-        <Route path="/help" component={OnlineHelp} />
-      </div>
-    );
-  }
 
   return (
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
-          {/*<Route path="/" exact component={Home} />
-          <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
-          <Route path="/implicit/callback" component={LoginCallback} />
-          <Route path="/logout" exact component={Logout} />
+          <div className="darkBackground">
+            <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
+            <Route path="/implicit/callback" component={LoginCallback} />
+            <Route path="/logout" exact component={Logout} />
 
-          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/faq" exact component={Faq} />
-          <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
-          <Route path="/about" exact component={About} />
-          <Route path="/about/pricing" component={Pricing} />
-          <Route path="/help" component={OnlineHelp} />*/}
+            <Route path="/trial/registration" exact component={FreeTrialRegistration} />
+            {/*<Route path="/signup" exact component={Signup} />*/}
+            <Route path="/faq" exact component={Faq} />
+            <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
+            <Route path="/about" exact component={About} />
+            <Route path="/about/pricing" component={Pricing} />
+            <Route path="/help" component={OnlineHelp} />
+          </div>
+
+          <Route path="/" exact component={Home} />
 
           <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
           <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
