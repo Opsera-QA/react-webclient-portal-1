@@ -84,9 +84,9 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
       <ButtonContainerBase>
         <CreateFreeTrialGithubToolButton
           gitToolModel={gitToolModel}
-          setCurrentScreen={onSuccessFunction}
           setGitToolId={setGitToolId}
           gitToolId={gitToolId}
+          onSuccessFunction={onSuccessFunction}
         />
       </ButtonContainerBase>
     </div>

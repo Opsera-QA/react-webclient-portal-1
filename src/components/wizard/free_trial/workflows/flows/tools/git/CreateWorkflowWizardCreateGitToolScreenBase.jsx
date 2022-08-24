@@ -17,6 +17,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     gitToolId,
     gitToolModel,
     setGitToolModel,
+    className,
   }) {
   const getDynamicField = () => {
     if (isMongoDbId(gitToolId) !== true) {
@@ -38,7 +39,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
             setGitToolId={setGitToolId}
-            setCurrentScreen={onSuccessFunction}
+            onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
           />
         );
@@ -48,7 +49,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
             setGitToolId={setGitToolId}
-            setCurrentScreen={onSuccessFunction}
+            onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
           />
         );
@@ -56,7 +57,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
   };
 
   return (
-    <div className={"m-3"}>
+    <div className={className}>
       {getDynamicField()}
       {getEditorPanel()}
     </div>
@@ -71,6 +72,7 @@ CreateWorkflowWizardCreateGitToolScreenBase.propTypes = {
   gitToolOption: PropTypes.string,
   setGitToolOption: PropTypes.func,
   gitToolId: PropTypes.string,
+  className: PropTypes.string,
 };
 
 

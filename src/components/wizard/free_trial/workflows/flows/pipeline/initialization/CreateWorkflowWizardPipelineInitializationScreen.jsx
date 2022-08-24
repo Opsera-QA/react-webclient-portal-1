@@ -12,7 +12,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
     type,
     templateIdentifier,
   }) {
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
     getAccessToken,
     cancelTokenSource,
