@@ -4,7 +4,6 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import _ from "lodash";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
