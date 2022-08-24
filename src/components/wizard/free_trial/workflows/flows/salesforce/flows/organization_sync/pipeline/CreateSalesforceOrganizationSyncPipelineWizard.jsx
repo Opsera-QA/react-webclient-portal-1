@@ -1,32 +1,19 @@
 import React, {useState} from "react";
 import CreateWorkflowWizardCreateGitToolScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
-import CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/test_connection/CreateSalesforceWorkflowWizardTestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
-import CreateSalesforceWorkflowWizardFlowSelectionScreen
-  , {
-  SALESFORCE_FLOW_OPTIONS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
-import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import pipelineActions from "components/workflow/pipeline-actions";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
-import CreateWorkflowWizardPipelineInitializationScreen
-  from "components/wizard/free_trial/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
 import * as PropType from "prop-types";
-import {
-  salesforceWorkflowFlowConstants
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen";
+import CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/git/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -57,12 +44,10 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
     switch (currentScreen) {
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
-          <CreateWorkflowWizardPipelineInitializationScreen
+          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen
             setPipeline={setPipeline}
-            type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-            selectedFlow={flow}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
-            // templateId={}
+            flow={flow}
+            setCurrentScreen={setCurrentScreen}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
@@ -79,14 +64,12 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
+          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
-            onFailureFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import CreateWorkflowWizardCreateGitToolScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
-import CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/test_connection/CreateSalesforceWorkflowWizardTestGitToolConnectionScreen";
+import CreateWorkflowWizardTestGitToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
@@ -69,7 +69,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
+          <CreateWorkflowWizardTestGitToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}

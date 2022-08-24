@@ -8,10 +8,9 @@ import PropTypes from "prop-types";
 
 export default function CreateWorkflowWizardPipelineInitializationScreen(
   {
-    setPipeline,
+    setPipelineFunction,
     type,
-    onSuccessFunction,
-    templateId,
+    templateIdentifier,
   }) {
   const [status, setStatus] = useState();
   const {
@@ -44,8 +43,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
 
       if (isMongoDbId(newPipeline?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setPipeline(response?.data);
-        onSuccessFunction();
+        setPipelineFunction(response?.data);
       }
     }
     catch (error) {
@@ -66,7 +64,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
     );
   };
 
-  if (onSuccessFunction == null) {
+  if (setPipelineFunction == null) {
     return null;
   }
 
@@ -78,9 +76,8 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
 }
 
 CreateWorkflowWizardPipelineInitializationScreen.propTypes = {
-  setPipeline: PropTypes.func,
+  setPipelineFunction: PropTypes.func,
   type: PropTypes.string,
-  onSuccessFunction: PropTypes.func,
-  templateId: PropTypes.string,
+  templateIdentifier: PropTypes.string,
 };
 

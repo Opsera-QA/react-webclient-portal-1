@@ -374,10 +374,11 @@ salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline = (pipeline)
   });
 };
 
-salesforcePipelineHelper.getSalesforceCreatePackageStepToolConfigIdFromPipeline = (pipeline, isTaskFlag) => {
-  if(isTaskFlag) {
-    return pipeline?.configuration?.toolConfigId;
-  }
-  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
-  return pipelineSteps[0]?.tool?.configuration?.toolConfigId;
+salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep = (pipeline) => {
+  const createPackageStep = salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline(pipeline);
+  return createPackageStep?.tool?.configuration?.toolConfigId;
+};
+
+salesforcePipelineHelper.getJenkinsIdFromSalesforceTask = (task) => {
+    return task?.configuration?.toolConfigId;
 };
