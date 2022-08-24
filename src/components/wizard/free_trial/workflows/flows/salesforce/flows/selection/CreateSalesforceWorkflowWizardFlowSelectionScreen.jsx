@@ -14,7 +14,7 @@ export const SALESFORCE_FLOW_OPTIONS = {
   SALESFORCE_TO_GIT_MERGE_SYNC: "salesforce_to_git_merge_sync",
 };
 
-export default function CreateSalesforcePipelineWizardFlowSelectionScreen({
+export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
   className,
   selectedFlow,
   setSelectedFlow,
@@ -113,7 +113,7 @@ export default function CreateSalesforcePipelineWizardFlowSelectionScreen({
   );
 }
 
-CreateSalesforcePipelineWizardFlowSelectionScreen.propTypes = {
+CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   selectedFlow: PropTypes.string,
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,

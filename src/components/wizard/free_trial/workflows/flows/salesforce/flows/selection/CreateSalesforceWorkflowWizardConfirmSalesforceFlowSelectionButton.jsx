@@ -13,7 +13,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import {
   SALESFORCE_FLOW_OPTIONS
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";

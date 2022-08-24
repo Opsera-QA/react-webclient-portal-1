@@ -7,10 +7,10 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
-import CreateSalesforcePipelineWizardFlowSelectionScreen
+import CreateSalesforceWorkflowWizardFlowSelectionScreen
   , {
   SALESFORCE_FLOW_OPTIONS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
 import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/create_screen/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
@@ -45,7 +45,7 @@ export default function CreateSalesforceWorkflowWizard() {
     switch (currentScreen) {
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardFlowSelectionScreen
+          <CreateSalesforceWorkflowWizardFlowSelectionScreen
             selectedFlow={selectedFlow}
             setSelectedFlow={setSelectedFlow}
             setCurrentScreen={setCurrentScreen}
