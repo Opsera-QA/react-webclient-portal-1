@@ -14,8 +14,8 @@ import IconBase from "components/common/icons/IconBase";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { Button } from "react-bootstrap";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import taskActions from "../../../../../tasks/task.actions";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import taskActions from "components/tasks/task.actions";
+import modelHelpers from "components/common/model/modelHelpers";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 
 export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton(

@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import WizardWidgetDataBlockBase from "components/trial/landing/widgets/wizard/WizardWidgetDataBlockBase";
 import FreeTrialSalesforcePipelineWizardOverlay
-  from "components/wizard/free_trial/pipeline/salesforce_flow/FreeTrialSalesforcePipelineWizardOverlay";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/FreeTrialSalesforcePipelineWizardOverlay";
 
 export default function FreeTrialLandingSalesforcePipelineWizardWidget({ className }) {
   const { themeConstants } = useComponentStateReference();

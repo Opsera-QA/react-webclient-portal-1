@@ -1,25 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
-import GithubTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
-import CreateFreeTrialGithubToolButton
-  from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/github/CreateFreeTrialGithubToolButton";
 import Row from "react-bootstrap/Row";
+import CreateFreeTrialGitlabToolButton
+  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/gitlab/CreateFreeTrialGitlabToolButton";
+import GitlabTwoFactorAuthenticationBooleanToggleInput
+  from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateSalesforceWorkflowWizardToolInputBase
-  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizardToolInputBase";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPanel(
+export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel(
   {
+    gitToolModel,
+    setGitToolModel,
     className,
     gitToolId,
     setGitToolId,
     setCurrentScreen,
-    gitToolModel,
-    setGitToolModel,
   }) {
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
@@ -61,7 +63,14 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
             setModel={setGitToolModel}
             toolId={gitToolId}
             setToolId={setGitToolId}
-            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB}
+            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB}
+          />
+        </Col>
+        <Col sm={12}>
+          <TextInputBase
+            dataObject={gitToolModel}
+            setDataObject={setGitToolModel}
+            fieldName={"url"}
           />
         </Col>
         <Col sm={12}>
@@ -72,7 +81,7 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
           />
         </Col>
         <Col sm={12}>
-          <GithubTwoFactorAuthenticationBooleanToggleInput
+          <GitlabTwoFactorAuthenticationBooleanToggleInput
             model={gitToolModel}
             setModel={setGitToolModel}
           />
@@ -82,18 +91,18 @@ export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPane
         </Col>
       </Row>
       <ButtonContainerBase>
-        <CreateFreeTrialGithubToolButton
+        <CreateFreeTrialGitlabToolButton
           gitToolModel={gitToolModel}
           setCurrentScreen={setCurrentScreen}
-          setGitToolId={setGitToolId}
           gitToolId={gitToolId}
+          setGitToolId={setGitToolId}
         />
       </ButtonContainerBase>
     </div>
   );
 }
 
-CreateSalesforcePipelineWizardCreateGithubToolEditorPanel.propTypes = {
+CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel.propTypes = {
   gitToolModel: PropTypes.object,
   setGitToolModel: PropTypes.func,
   gitToolId: PropTypes.string,

@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import taskActions from "../../../../../tasks/task.actions";
+import taskActions from "components/tasks/task.actions";
 
 // TODO: Separate out the separate flows for task and pipeline
 export default function CreateSalesforceWorkflowWizardCompletionScreen(

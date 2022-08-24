@@ -1,20 +1,20 @@
 import React, {useState} from "react";
 import CreateSalesforcePipelineWizardCreateGitToolScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/create_screen/CreateSalesforcePipelineWizardCreateGitToolScreen";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/CreateSalesforcePipelineWizardCreateGitToolScreen";
 import CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/git_tool/test_connection/CreateSalesforceWorkflowWizardTestGitToolConnectionScreen";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/test_connection/CreateSalesforceWorkflowWizardTestGitToolConnectionScreen";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
 import CreateSalesforcePipelineWizardFlowSelectionScreen
   , {
   SALESFORCE_FLOW_OPTIONS,
-} from "components/wizard/free_trial/pipeline/salesforce_flow/flow_selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
+} from "components/wizard/free_trial/pipeline/flows/salesforce/flows/selection/CreateSalesforcePipelineWizardFlowSelectionScreen";
 import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
-  from "components/wizard/free_trial/pipeline/salesforce_flow/salesforce_tool/create_screen/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/salesforce_tool/create_screen/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
-  from "components/wizard/free_trial/pipeline/salesforce_flow/completion/CreateSalesforceWorkflowWizardCompletionScreen";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",

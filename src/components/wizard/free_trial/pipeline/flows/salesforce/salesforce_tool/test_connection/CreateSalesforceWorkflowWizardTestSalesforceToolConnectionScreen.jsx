@@ -6,7 +6,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
+} from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizard";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";

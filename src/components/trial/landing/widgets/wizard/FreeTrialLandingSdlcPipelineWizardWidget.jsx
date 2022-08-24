@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CreatePipelineWizard from "components/wizard/free_trial/pipeline/CreatePipelineWizard";
+import CreateWorkflowWizard from "components/wizard/free_trial/pipeline/CreateWorkflowWizard";
 import WizardWidgetDataBlockBase from "components/trial/landing/widgets/wizard/WizardWidgetDataBlockBase";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 
@@ -11,7 +11,7 @@ export default function FreeTrialLandingSdlcPipelineWizardWidget({ className }) 
 
   const launchPipelineCreationWizard = () => {
     toastContext.showOverlayPanel(
-      <CreatePipelineWizard
+      <CreateWorkflowWizard
       />,
     );
   };

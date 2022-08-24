@@ -4,9 +4,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineCreationRadioOptionInput, {
   PIPELINE_CREATION_OPTIONS,
-} from "components/wizard/free_trial/pipeline/flow_selection/PipelineCreationRadioOptionInput";
+} from "components/wizard/free_trial/pipeline/flows/selection/PipelineCreationRadioOptionInput";
 import WizardButton, { WIZARD_BUTTON_VARIANTS } from "temp-library-components/wizard/button/WizardButton";
-import { CREATE_PIPELINE_WIZARD_SCREENS } from "components/wizard/free_trial/pipeline/CreatePipelineWizard";
+import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/pipeline/CreateWorkflowWizard";
 
 function CreatePipelineWizardFlowSelectionScreen(
   {
@@ -18,10 +18,10 @@ function CreatePipelineWizardFlowSelectionScreen(
   const handleContinueButtonFunction = () => {
     switch (selectedOption) {
       case PIPELINE_CREATION_OPTIONS.SALESFORCE:
-        setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.SALESFORCE_FLOW);
+        setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
         return;
       case PIPELINE_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE:
-        setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.SDLC_FLOW);
+        setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW);
         return;
     }
   };

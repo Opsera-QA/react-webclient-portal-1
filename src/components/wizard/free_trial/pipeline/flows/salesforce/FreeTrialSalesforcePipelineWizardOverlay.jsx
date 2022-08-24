@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import CreateSalesforceWorkflowWizard
-  from "components/wizard/free_trial/pipeline/salesforce_flow/CreateSalesforceWorkflowWizard";
+  from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizard";
 
 export default function FreeTrialSalesforcePipelineWizardOverlay() {
   const toastContext = useContext(DialogToastContext);
