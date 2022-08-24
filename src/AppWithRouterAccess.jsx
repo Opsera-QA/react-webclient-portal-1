@@ -137,16 +137,12 @@ const AppWithRouterAccess = () => {
   };
 
   const getNavBar = () => {
-    if (history.location.pathname !== PUBLIC_PATHS.FREE_TRIAL_REGISTRATION) {
-      // return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
-
-      return (
-        <OpseraHeaderBar
-          hideAuthComponents={hideSideBar}
-          userData={data}
-        />
-      );
-    }
+    return (
+      <OpseraHeaderBar
+        hideAuthComponents={hideSideBar}
+        userData={data}
+      />
+    );
   };
 
   const getError = () => {
