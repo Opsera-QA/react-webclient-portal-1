@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
-import "css/general/navbar.css";
 import userActions from "./components/user/user-actions";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";

@@ -51,11 +51,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   const gotoSignUp = function() {
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      history.push("/trial/registration");
-    } else {
-      history.push("/signup");
-    }
+    history.push("/trial/registration");
   };
 
   const getUserIconTitle = () => {
@@ -91,7 +87,11 @@ export default function OpseraHeaderAccountAuthenticationComponent(
 
   const getTitle = () => {
     return (
-      <span>
+      <span
+        style={{
+          color: `${themeConstants.COLOR_PALETTE.WHITE}`,
+        }}
+      >
         {getUserIconTitle()}
         <span className={"mx-2"}>{fullUserName}</span>
       </span>

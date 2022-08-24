@@ -9,8 +9,8 @@
 }
 
 .nav-bar .header-text {
-  font-size: 1.7rem;
-  margin-left:-3px;
+  /*font-size: 1.7rem;*/
+  /*margin-left:-3px;*/
   color: #fef7fd;
 }
 
@@ -23,7 +23,7 @@
 /* UserName Text Style */
 .navbar-nav .nav-link {
   /* color: #fff !important; */
-  font-size: 1.2em;
+  /*font-size: 1.2em;*/
 }
 
 a.nav-drop-down-item:hover {

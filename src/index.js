@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@opsera/dhx-suite-package/codebase/suite.css";
 import "react-widgets/styles.css";
+import "css/general/navbar.css";
 import "css/general/theme.css";
 import "css/general/field.css";
 import "css/general/container.css";
