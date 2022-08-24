@@ -36,7 +36,6 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
