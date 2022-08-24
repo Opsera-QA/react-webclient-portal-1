@@ -23,6 +23,7 @@ pipelineHelpers.filterStepsThatMatchToolIdentifiers = (pipelineStepArray, toolId
   const pipelineSteps = dataParsingHelper.parseArray(pipelineStepArray, undefined);
 
   if (!pipelineSteps) {
+    console.error("The Pipeline Steps were empty.");
     return [];
   }
 
