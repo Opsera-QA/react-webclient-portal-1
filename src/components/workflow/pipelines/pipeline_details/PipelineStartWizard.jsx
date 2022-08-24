@@ -28,8 +28,7 @@ function PipelineStartWizard(
 
   useEffect(() => {
     if (pipeline) {
-      console.log("setting internal pipeline");
-      setInternalPipeline(pipeline);
+      setInternalPipeline({...pipeline});
     }
   }, [pipeline]);
 
@@ -53,8 +52,9 @@ function PipelineStartWizard(
         return (
           <SalesforcePipelineWizardPreRunTaskScreen
             setCurrentScreen={setCurrentScreen}
-            internalPipeline={internalPipeline}
-            setInternalPipeline={setInternalPipeline}
+            pipeline={internalPipeline}
+            setPipeline={setInternalPipeline}
+            className={"m-3"}
           />
         );
       }

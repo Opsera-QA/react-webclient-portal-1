@@ -6,6 +6,7 @@ import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import taskActions from "../../../../../tasks/task.actions";
 
+// TODO: Separate out the separate flows for task and pipeline
 export default function CreateSalesforceWorkflowWizardCompletionScreen(
   {
     pipeline,
@@ -28,13 +29,14 @@ export default function CreateSalesforceWorkflowWizardCompletionScreen(
   const updatePipeline = async () => {
     try {
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.BUSY);
-      if(isTaskFlag) {
+
+      if (isTaskFlag) {
         await taskActions.updateFreeTrialTaskV2(getAccessToken, cancelTokenSource, pipeline);
-        setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
       } else {
         await pipelineActions.updatePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id, pipeline);
-        setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
       }
+
+      setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error, "Error Finishing Workflow Initialization");

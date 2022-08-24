@@ -368,11 +368,8 @@ salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep = (pipelineStep, sa
 salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline = (pipeline) => {
   const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
 
-  pipelineSteps.forEach((pipelineStep) => {
+  return pipelineSteps.find((pipelineStep) => {
     const jobType = pipelineStep?.tool?.configuration?.jobType;
-
-    if (jobType === salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML) {
-      return pipelineStep;
-    }
+    return jobType === salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML;
   });
 };

@@ -1,5 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import jenkinsPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/jenkinsPipelineStepConfigurationMetadata";
+import modelHelpers from "components/common/model/modelHelpers";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import Row from "react-bootstrap/Row";
+import SalesforcePipelineWizardBitbucketWorkspaceSelectInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBitbucketWorkspaceSelectInput";
+import Col from "react-bootstrap/Col";
+import SalesforcePipelineWizardRepositorySelectInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardRepositorySelectInput";
+import SalesforcePipelineWizardBranchSelectInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBranchSelectInput";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import SalesforcePipelineWizardConfirmRepositorySettingsButton
+  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardConfirmRepositorySettingsButton";
 
 export default function SalesforcePipelineWizardPreRunTaskScreen(
   {
@@ -8,9 +25,65 @@ export default function SalesforcePipelineWizardPreRunTaskScreen(
     setCurrentScreen,
     className,
   }) {
+  const [repositoryInformationModel, setRepositoryInformationModel] = useState(undefined);
+  const { toastContext } = useComponentStateReference();
+
+  useEffect(() => {
+    if (pipeline) {
+      try {
+        const createPipelineStep = salesforcePipelineHelper.getSalesforceCreatePackageStepFromPipeline(pipeline);
+        setRepositoryInformationModel({...modelHelpers.parseObjectIntoModel(createPipelineStep?.tool?.configuration, jenkinsPipelineStepConfigurationMetadata)});
+      }
+      catch (error) {
+        toastContext.showInlineErrorMessage(error, "Error initializing Salesforce Pipeline run:");
+      }
+    }
+  }, [pipeline]);
+
+  if (pipeline == null || repositoryInformationModel == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
-      test
+      <H5FieldSubHeader
+        subheaderText={"Salesforce Pipeline Run: Pre Run Tasks"}
+      />
+      <div>Please select the repository and branch you wish to use during for this Salesforce workflow</div>
+      <Row>
+        {/*<Col xs={12}>*/}
+        {/*  <SalesforcePipelineWizardBitbucketWorkspaceSelectInput*/}
+        {/*    pipeline={pipeline}*/}
+        {/*    setPipeline={setPipeline}*/}
+        {/*    model={repositoryInformationModel}*/}
+        {/*    setModel={setRepositoryInformationModel}*/}
+        {/*    gitToolId={repositoryInformationModel?.getData("gitToolId")}*/}
+        {/*    service={repositoryInformationModel?.getData("service")}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        <Col xs={12}>
+          <SalesforcePipelineWizardRepositorySelectInput
+            pipeline={pipeline}
+            setPipeline={setPipeline}
+            model={repositoryInformationModel}
+            setModel={setRepositoryInformationModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <SalesforcePipelineWizardBranchSelectInput
+            pipeline={pipeline}
+            setPipeline={setPipeline}
+            model={repositoryInformationModel}
+            setModel={setRepositoryInformationModel}
+          />
+        </Col>
+      </Row>
+      <ButtonContainerBase>
+        <SalesforcePipelineWizardConfirmRepositorySettingsButton
+          pipeline={pipeline}
+          setCurrentScreen={setCurrentScreen}
+        />
+      </ButtonContainerBase>
     </div>
   );
 }

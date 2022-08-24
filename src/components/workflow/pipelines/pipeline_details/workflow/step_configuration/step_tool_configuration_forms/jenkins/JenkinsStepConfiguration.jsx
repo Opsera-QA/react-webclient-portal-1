@@ -54,9 +54,6 @@ function JenkinsStepConfiguration({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
-  console.log("stepTool: " + JSON.stringify(stepTool));
-
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
