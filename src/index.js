@@ -11,6 +11,7 @@ import "css/general/theme.css";
 import "css/general/field.css";
 import "css/general/container.css";
 import "css/general/index.css";
+import "css/general/freetrial.css";
 import "css/analytics/analytics.css";
 import "css/pipelines/workflows.css";
 import * as serviceWorker from "./serviceWorker";

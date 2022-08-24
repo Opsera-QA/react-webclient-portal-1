@@ -42,11 +42,11 @@ function RegisterAccountButton() {
 
     return (
       <Button
-        variant={"warning"}
+        variant={"success"}
         className={"btn-lg w-100 mb-3"}
         onClick={gotoSignUp}
       >
-        Register an Account
+        Get Started!
       </Button>
     );
   };

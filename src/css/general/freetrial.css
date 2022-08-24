@@ -1,0 +1,15 @@
+/*
+Styles specific to Free Trial
+
+*/
+
+.loginScreenBackground {
+    background-color: #352F54;
+    height: 100vw;
+}
+
+.loginScreenText {
+    color: #FFF;
+    text-align: center;
+    margin-top:50px;
+}

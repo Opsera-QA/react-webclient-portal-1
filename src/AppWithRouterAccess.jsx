@@ -173,7 +173,7 @@ const AppWithRouterAccess = () => {
   const getRoutes = () => {
     if (!authenticatedState && isPublicPathState !== true) {
       return (
-        <div className={"container-fluid m-0"}>
+        <div className={"container-fluid m-0 loginScreenBackground"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"} style={{ marginBottom: "26px"}}>
               <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
