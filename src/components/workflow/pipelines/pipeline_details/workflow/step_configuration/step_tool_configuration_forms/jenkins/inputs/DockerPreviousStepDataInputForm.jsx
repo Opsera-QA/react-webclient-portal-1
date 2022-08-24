@@ -55,7 +55,7 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
             valueField={"_id"}
             dataObject={model}
             filter={"contains"}
-            selectOptions={listOfSteps ? listOfSteps : []}
+            selectOptions={listOfSteps}
             fieldName={"buildStepId"}
             busy={isLoading}
           />
