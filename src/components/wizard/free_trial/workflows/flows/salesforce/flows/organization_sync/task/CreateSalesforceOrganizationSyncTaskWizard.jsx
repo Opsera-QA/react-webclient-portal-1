@@ -116,16 +116,16 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
-        return (
-          <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
-            setCurrentScreen={setCurrentScreen}
-            salesforceToolId={salesforceDeploymentToolId}
-            type={"destination"}
-            pipeline={pipeline}
-            setPipeline={setPipeline}
-            isTaskFlag={true}
-          />
-        );
+        // return (
+        //   <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
+        //     setCurrentScreen={setCurrentScreen}
+        //     salesforceToolId={salesforceDeploymentToolId}
+        //     type={"destination"}
+        //     pipeline={pipeline}
+        //     setPipeline={setPipeline}
+        //     isTaskFlag={true}
+        //   />
+        // );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardCompletionScreen

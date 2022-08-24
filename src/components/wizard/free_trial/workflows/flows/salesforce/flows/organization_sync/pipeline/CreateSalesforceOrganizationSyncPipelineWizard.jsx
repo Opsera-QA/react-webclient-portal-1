@@ -3,8 +3,6 @@ import CreateWorkflowWizardCreateGitToolScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
