@@ -3,7 +3,7 @@ import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/v
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import CreateWorkflowWizard from "components/wizard/free_trial/pipeline/CreateWorkflowWizard";
+import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import FreeTrialWorkspacePipelineViews from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineViews";

@@ -6,10 +6,10 @@ import Col from "react-bootstrap/Col";
 import GithubTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import CreateFreeTrialGithubToolButton
-  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/github/CreateFreeTrialGithubToolButton";
+  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/github/CreateFreeTrialGithubToolButton";
 import Row from "react-bootstrap/Row";
 import CreateSalesforceWorkflowWizardToolInputBase
-  from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
+  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateSalesforcePipelineWizardCreateGithubToolEditorPanel(

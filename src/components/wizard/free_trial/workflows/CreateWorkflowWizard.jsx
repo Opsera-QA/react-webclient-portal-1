@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import CreatePipelineWizardFlowSelectionScreen
-  from "components/wizard/free_trial/pipeline/flows/selection/CreatePipelineWizardFlowSelectionScreen";
+  from "components/wizard/free_trial/workflows/flows/selection/CreatePipelineWizardFlowSelectionScreen";
 import CreateSalesforceWorkflowWizard
-  from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizard";
+  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 
 export const CREATE_WORKFLOW_WIZARD_SCREENS = {
   FLOW_SELECTION_SCREEN: "flow_selection_screen",

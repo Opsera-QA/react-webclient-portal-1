@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
-  from "components/wizard/free_trial/pipeline/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton";
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton";
 
 export const SALESFORCE_FLOW_OPTIONS = {
   SALESFORCE_ORGANIZATION_SYNC: "salesforce_organization_sync",

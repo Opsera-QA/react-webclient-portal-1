@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitToolCreationRadioOptionInput from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/GitToolCreationRadioOptionInput";
+import GitToolCreationRadioOptionInput from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/GitToolCreationRadioOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import CreateSalesforcePipelineWizardCreateGithubToolEditorPanel
-  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/github/CreateSalesforcePipelineWizardCreateGithubToolEditorPanel";
+  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/github/CreateSalesforcePipelineWizardCreateGithubToolEditorPanel";
 import CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel
-  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/gitlab/CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel";
+  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/gitlab/CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateSalesforcePipelineWizardCreateGitToolScreen(

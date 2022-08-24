@@ -6,12 +6,12 @@ import Col from "react-bootstrap/Col";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
 import CreateFreeTrialGitlabToolButton
-  from "components/wizard/free_trial/pipeline/flows/salesforce/git_tool/create_screen/gitlab/CreateFreeTrialGitlabToolButton";
+  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/gitlab/CreateFreeTrialGitlabToolButton";
 import GitlabTwoFactorAuthenticationBooleanToggleInput
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateSalesforceWorkflowWizardToolInputBase
-  from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
+  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel(

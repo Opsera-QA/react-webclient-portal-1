@@ -4,9 +4,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineCreationRadioOptionInput, {
   PIPELINE_CREATION_OPTIONS,
-} from "components/wizard/free_trial/pipeline/flows/selection/PipelineCreationRadioOptionInput";
+} from "components/wizard/free_trial/workflows/flows/selection/PipelineCreationRadioOptionInput";
 import WizardButton, { WIZARD_BUTTON_VARIANTS } from "temp-library-components/wizard/button/WizardButton";
-import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/pipeline/CreateWorkflowWizard";
+import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 
 function CreatePipelineWizardFlowSelectionScreen(
   {

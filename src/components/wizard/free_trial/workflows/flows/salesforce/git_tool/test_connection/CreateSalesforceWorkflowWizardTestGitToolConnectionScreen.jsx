@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from "components/common/helpers/string-helpers"
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/pipeline/flows/salesforce/CreateSalesforceWorkflowWizard";
+} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
