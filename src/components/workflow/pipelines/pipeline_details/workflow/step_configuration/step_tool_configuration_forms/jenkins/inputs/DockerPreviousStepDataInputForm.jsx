@@ -6,6 +6,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import _ from "lodash";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, stepId }) {
 
@@ -18,21 +19,9 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
 
   const loadData = async () => {
     setIsLoading(true);
-    
-    if (plan && stepId) {
-      let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
-      let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
-      let jenkinsSteps =
-        Object.keys(groupedSteps).length > 0
-          ? (groupedSteps.jenkins  || groupedSteps["command-line"])
-            ? ( (groupedSteps.jenkins  && groupedSteps["command-line"]) ?  [...groupedSteps.jenkins, ...groupedSteps["command-line"]] : groupedSteps.jenkins ? groupedSteps.jenkins : groupedSteps["command-line"] ? groupedSteps["command-line"] 
-            : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
-             )
-            : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
-          : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }];
-      
-      setListOfSteps(jenkinsSteps);
-    }
+    const jenkinsSteps = pipelineHelpers
+      .parseSummaryLogStepConfiguration(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS, toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE]);
+    setListOfSteps(jenkinsSteps);
     setIsLoading(false);
   };
 
@@ -59,10 +48,10 @@ function DockerPreviousStepDataInputForm({ model, setModel, disabled, plan, step
             fieldName={"buildStepId"}
             busy={isLoading}
           />
-          <TextAreaInput 
-            dataObject={model} 
-            fieldName={"commands"} 
-            setDataObject={setModel} 
+          <TextAreaInput
+            dataObject={model}
+            fieldName={"commands"}
+            setDataObject={setModel}
           />
           <EditableParameterMappingInput
             model={model}

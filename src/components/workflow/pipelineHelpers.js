@@ -257,4 +257,12 @@ pipelineHelpers.parseSummaryLogStepConfiguration = (pipelineLogData) => {
   }
 };
 
+pipelineHelpers.parseSummaryLogStepConfiguration = (plan, stepId, toolIdentifiers) => {
+  if (plan && stepId) {
+    const pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
+    return pipelineSteps.filter(step => toolIdentifiers.includes(step?.tool?.tool_identifier));    
+  }
+  return [];
+};
+
 export default pipelineHelpers;
