@@ -12,7 +12,8 @@ pipelineHelpers.getPipelineSteps = (pipeline) => {
   const pipelineSteps = dataParsingHelper.parseArray(pipeline?.workflow?.plan, undefined);
 
   if (!pipelineSteps) {
-    throw "The Pipeline did not have any steps associated with it.";
+    console.info("The Pipeline did not have any steps associated with it.");
+    return [];
   }
 
   return pipelineSteps;
@@ -23,7 +24,7 @@ pipelineHelpers.filterStepsThatMatchToolIdentifiers = (pipelineStepArray, toolId
   const pipelineSteps = dataParsingHelper.parseArray(pipelineStepArray, undefined);
 
   if (!pipelineSteps) {
-    console.error("The Pipeline Steps were empty.");
+    console.info("The Pipeline Steps were empty.");
     return [];
   }
 
