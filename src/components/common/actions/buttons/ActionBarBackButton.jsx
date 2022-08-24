@@ -4,7 +4,7 @@ import ActionBarButton from "./ActionBarButton";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
 
-function ActionBarBackButton({path}) {
+export default function ActionBarBackButton({path}) {
   const history = useHistory();
 
   const handleBackButton = () => {
@@ -19,5 +19,3 @@ function ActionBarBackButton({path}) {
 ActionBarBackButton.propTypes = {
   path: PropTypes.string,
 };
-
-export default ActionBarBackButton;
