@@ -510,6 +510,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     search: tableFilterDto?.getData("search"),
+    type: tableFilterDto?.getData("type"),
     sortOption: tableFilterDto?.getData("sortOption")?.value,
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
