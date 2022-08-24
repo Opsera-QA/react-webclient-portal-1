@@ -6,7 +6,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateFreeTrialSalesforceToolButton
-  from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/create_screen/CreateFreeTrialSalesforceToolButton";
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateFreeTrialSalesforceToolButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
@@ -17,7 +17,7 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
     className,
     salesforceToolId,
     setSalesforceToolId,
-    setCurrentScreen,
+    onSuccessFunction,
     salesforceToolModel,
     setSalesforceToolModel,
     type,
@@ -94,10 +94,9 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
       <ButtonContainerBase>
         <CreateFreeTrialSalesforceToolButton
           salesforceToolModel={salesforceToolModel}
-          setCurrentScreen={setCurrentScreen}
+          onSuccessFunction={onSuccessFunction}
           setSalesforceToolId={setSalesforceToolId}
           salesforceToolId={salesforceToolId}
-          type={type}
         />
       </ButtonContainerBase>
     </div>
@@ -109,7 +108,7 @@ CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel.propTypes = {
   setSalesforceToolModel: PropTypes.func,
   salesforceToolId: PropTypes.string,
   setSalesforceToolId: PropTypes.func,
-  setCurrentScreen: PropTypes.func,
+  onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
   type: PropTypes.string,
 };

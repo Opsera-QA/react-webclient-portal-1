@@ -141,10 +141,6 @@ import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrial
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 
-  console.info("Running Environment: ", process.env.NODE_ENV);
-  console.info("ALL VARIABLES:", process.env);
-
-
   // Not used in free trial
   const getSideBar = () => {
     return (

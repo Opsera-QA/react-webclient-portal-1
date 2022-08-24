@@ -9,35 +9,10 @@ import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
 import Signup from "components/user/signup/Signup";
-import AdminTools from "./components/admin/AdminTools";
-import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
-import RegisteredUserDetailView
-  from "./components/admin/registered_users/details/RegisteredUserDetailView";
-import ManageSystems from "./components/admin/manage_systems/ManageSystems";
-import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import KpiIdentifierManagement from "components/admin/kpi_identifiers/KpiIdentifierManagement";
-import KpiIdentifierDetailView from "components/admin/kpi_identifiers/details/KpiIdentifierDetailView";
-import PipelineTemplateManagement from "components/admin/pipeline_templates/PipelineTemplateManagement";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import PipelineTemplateDetailView from "components/admin/pipeline_templates/details/PipelineTemplateDetailView";
-import ToolCategoryDetailView
-  from "components/admin/tools/categories/details/ToolCategoryDetailView";
-import ToolIdentifierDetailView
-  from "./components/admin/tools/identifiers/details/ToolIdentifierDetailView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
-import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
-import SiteNotificationDetailView
-  from "./components/admin/site_notifications/details/SiteNotificationDetailView";
-import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import TaskDetailView from "components/tasks/details/TaskDetailView";
-import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
-import PipelineStorageDetailView
-  from "components/admin/pipeline_storage/details/PipelineStorageDetailView";
-import ToolCategoryManagement from "components/admin/tools/categories/ToolCategoryManagement";
-import ToolIdentifierManagement from "components/admin/tools/identifiers/ToolIdentifierManagement";
 import Faq from "components/about/faq/Faq";
-import CustomEnvironmentVariableManagement
-  from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 import OpseraFooter from "components/footer/OpseraFooter";
@@ -45,9 +20,6 @@ import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 
 const FreeTrialAppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-  console.info("Running Environment: ", process.env.NODE_ENV);
-  console.info("ALL VARIABLES:", process.env);
 
   return (
     <div className={"container-fluid m-0"}>

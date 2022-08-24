@@ -4,19 +4,15 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateFreeTrialSalesforceToolButton(
   {
-    setCurrentScreen,
+    onSuccessFunction,
     salesforceToolModel,
     setSalesforceToolId,
     salesforceToolId,
-    type,
   }) {
   const {
     getAccessToken,
@@ -93,12 +89,13 @@ export default function CreateFreeTrialSalesforceToolButton(
     await saveConnectionDetails(toolId);
     setSalesforceToolId(toolId);
 
-    if (type === "source") {
-      setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN);
-    }
-    else {
-      setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN);
-    }
+    onSuccessFunction();
+    // if (type === "source") {
+    //   setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN);
+    // }
+    // else {
+    //   setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN);
+    // }
   };
 
   return (
@@ -117,11 +114,10 @@ export default function CreateFreeTrialSalesforceToolButton(
 }
 
 CreateFreeTrialSalesforceToolButton.propTypes = {
-  setCurrentScreen: PropTypes.func,
+  onSuccessFunction: PropTypes.func,
   salesforceToolModel: PropTypes.object,
   salesforceToolId: PropTypes.string,
   setSalesforceToolId: PropTypes.func,
-  type: PropTypes.string,
 };
 
 

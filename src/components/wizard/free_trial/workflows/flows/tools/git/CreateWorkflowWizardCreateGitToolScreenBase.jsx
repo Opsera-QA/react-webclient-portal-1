@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitToolCreationRadioOptionInput from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/GitToolCreationRadioOptionInput";
+import GitToolCreationRadioOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationRadioOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import CreateSalesforcePipelineWizardCreateGithubToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/github/CreateSalesforcePipelineWizardCreateGithubToolEditorPanel";
-import CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/salesforce/git_tool/create_screen/gitlab/CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel";
+  from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateSalesforcePipelineWizardCreateGithubToolEditorPanel";
+import CreateWorkflowWizardCreateGitlabToolEditorPanel
+  from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-export default function CreateSalesforcePipelineWizardCreateGitToolScreen(
+export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
     setGitToolId,
-    setCurrentScreen,
+    onSuccessFunction,
     gitToolOption,
     setGitToolOption,
     gitToolId,
@@ -38,17 +38,17 @@ export default function CreateSalesforcePipelineWizardCreateGitToolScreen(
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
             setGitToolId={setGitToolId}
-            setCurrentScreen={setCurrentScreen}
+            setCurrentScreen={onSuccessFunction}
             gitToolId={gitToolId}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
         return (
-          <CreateSalesforcePipelineWizardCreateGitlabToolEditorPanel
+          <CreateWorkflowWizardCreateGitlabToolEditorPanel
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
             setGitToolId={setGitToolId}
-            setCurrentScreen={setCurrentScreen}
+            setCurrentScreen={onSuccessFunction}
             gitToolId={gitToolId}
           />
         );
@@ -63,11 +63,11 @@ export default function CreateSalesforcePipelineWizardCreateGitToolScreen(
   );
 }
 
-CreateSalesforcePipelineWizardCreateGitToolScreen.propTypes = {
+CreateWorkflowWizardCreateGitToolScreenBase.propTypes = {
   gitToolModel: PropTypes.object,
   setGitToolModel: PropTypes.func,
   setGitToolId: PropTypes.func,
-  setCurrentScreen: PropTypes.func,
+  onSuccessFunction: PropTypes.func,
   gitToolOption: PropTypes.string,
   setGitToolOption: PropTypes.func,
   gitToolId: PropTypes.string,

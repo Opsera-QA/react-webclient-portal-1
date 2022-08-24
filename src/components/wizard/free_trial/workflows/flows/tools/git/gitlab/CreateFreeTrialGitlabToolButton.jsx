@@ -4,18 +4,15 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateFreeTrialGitlabToolButton(
   {
-    setCurrentScreen,
     gitToolModel,
     gitToolId,
     setGitToolId,
+    onSuccessFunction,
   }) {
   const {
     getAccessToken,
@@ -78,7 +75,7 @@ export default function CreateFreeTrialGitlabToolButton(
     await saveConnectionDetails(toolId);
 
     setGitToolId(toolId);
-    setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN);
+    onSuccessFunction();
   };
 
   return (
@@ -97,9 +94,9 @@ export default function CreateFreeTrialGitlabToolButton(
 }
 
 CreateFreeTrialGitlabToolButton.propTypes = {
-  setCurrentScreen: PropTypes.func,
   gitToolModel: PropTypes.object,
   gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
+  onSuccessFunction: PropTypes.func,
 };
 
