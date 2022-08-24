@@ -23,6 +23,10 @@ import {
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import CreateWorkflowWizardPipelineInitializationScreen
   from "components/wizard/free_trial/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
+import * as PropType from "prop-types";
+import {
+  salesforceWorkflowFlowConstants
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -35,7 +39,10 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
 };
 
-export default function CreateSalesforceOrganizationSyncPipelineWizard() {
+export default function CreateSalesforceOrganizationSyncPipelineWizard(
+  {
+    flow,
+  }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
@@ -45,15 +52,19 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard() {
   const [salesforceSourceToolId, setSalesforceSourceToolId] = useState(undefined);
   const [salesforceDeploymentToolId, setSalesforceDeploymentToolId] = useState(undefined);
   const [pipeline, setPipeline] = useState(undefined);
-  const [isTaskFlag, setIsTaskFlag] = useState(false);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        <CreateWorkflowWizardPipelineInitializationScreen
-          setPipeline={setPipeline}
-          type={}
-        />
+        return (
+          <CreateWorkflowWizardPipelineInitializationScreen
+            setPipeline={setPipeline}
+            type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            selectedFlow={flow}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
+            // templateId={}
+          />
+        );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateGitToolScreenBase
@@ -74,7 +85,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard() {
             gitToolOption={gitToolOption}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
             onFailureFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
           />
@@ -99,7 +109,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard() {
             type={"source"}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
@@ -122,14 +131,12 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard() {
             type={"destination"}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardCompletionScreen
             pipeline={pipeline}
-            isTaskFlag={isTaskFlag}
           />
         );
     }
@@ -142,5 +149,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard() {
   );
 }
 
-CreateSalesforceOrganizationSyncPipelineWizard.propTypes = {};
+CreateSalesforceOrganizationSyncPipelineWizard.propTypes = {
+  flow: PropType.string,
+};
 

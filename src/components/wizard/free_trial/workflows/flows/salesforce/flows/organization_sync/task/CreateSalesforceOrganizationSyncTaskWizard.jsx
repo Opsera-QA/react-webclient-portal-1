@@ -7,16 +7,19 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
-import CreateSalesforceWorkflowWizardFlowSelectionScreen
-  , {
-  SALESFORCE_FLOW_OPTIONS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
+import {
+  salesforceWorkflowFlowConstants
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateWorkflowWizardTaskInitializationScreen
+  from "components/wizard/free_trial/workflows/flows/tasks/CreateWorkflowWizardTaskInitializationScreen";
+import * as PropType from "prop-types";
 
-export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
+export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
+  INITIALIZATION_SCREEN: "initialization_screen",
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
   TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
   CREATE_SOURCE_SALESFORCE_TOOL_SCREEN: "create_source_salesforce_tool_screen",
@@ -26,9 +29,12 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
 };
 
-export default function CreateSalesforceOrganizationSyncTaskWizard() {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
-  const [selectedFlow, setSelectedFlow] = useState(SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
+export default function CreateSalesforceOrganizationSyncTaskWizard(
+  {
+    flow,
+  }) {
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [pipeline, setPipeline] = useState(undefined);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
@@ -36,25 +42,32 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
   const [deploymentSalesforceToolModel, setDeploymentSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
   const [salesforceSourceToolId, setSalesforceSourceToolId] = useState(undefined);
   const [salesforceDeploymentToolId, setSalesforceDeploymentToolId] = useState(undefined);
-  const [pipelineId, setPipelineId] = useState(undefined);
-  const [pipeline, setPipeline] = useState(undefined);
-  const [isTaskFlag, setIsTaskFlag] = useState(false);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <CreateWorkflowWizardTaskInitializationScreen
+            setTask={setPipeline}
+            type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            selectedFlow={flow}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
+            // templateId={}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateGitToolScreenBase
             gitToolModel={gitToolModel}
             setGitToolModel={setGitToolModel}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN)}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN)}
             setGitToolId={setGitToolId}
             gitToolOption={gitToolOption}
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardTestGitToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
@@ -62,12 +75,12 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
             gitToolOption={gitToolOption}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
-            onFailureFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
+            isTaskFlag={true}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
+            onFailureFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={sourceSalesforceToolModel}
@@ -79,7 +92,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
             className={"m-3"}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
@@ -87,10 +100,10 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
             type={"source"}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
+            isTaskFlag={true}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={deploymentSalesforceToolModel}
@@ -102,7 +115,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
             className={"m-3"}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
@@ -110,14 +123,14 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
             type={"destination"}
             pipeline={pipeline}
             setPipeline={setPipeline}
-            isTaskFlag={isTaskFlag}
+            isTaskFlag={true}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
           <CreateSalesforceWorkflowWizardCompletionScreen
             pipeline={pipeline}
-            isTaskFlag={isTaskFlag}
+            isTaskFlag={true}
           />
         );
     }
@@ -130,5 +143,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
   );
 }
 
-CreateSalesforceOrganizationSyncPipelineWizard.propTypes = {};
+CreateSalesforceOrganizationSyncTaskWizard.propTypes = {
+  flow: PropType.string,
+};
 

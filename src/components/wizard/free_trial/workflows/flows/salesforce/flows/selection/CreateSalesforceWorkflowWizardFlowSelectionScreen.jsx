@@ -1,20 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
-import CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton";
 import {
   salesforceWorkflowFlowConstants
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
   className,
   selectedFlow,
   setSelectedFlow,
-  setPipelineId,
-  setPipeline,
   setCurrentScreen,
-  setIsTaskFlag,
 }) {
   return (
     <div className={className}>
@@ -66,11 +63,8 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         className={"mb-2"}
         disabled={false}
       />
-      <CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelectionButton
+      <CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
         selectedFlow={selectedFlow}
-        setPipelineId={setPipelineId}
-        setPipeline={setPipeline}
-        setIsTaskFlag={setIsTaskFlag}
         setCurrentScreen={setCurrentScreen}
       />
       <div>Coming Soon</div>
@@ -108,9 +102,6 @@ CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   selectedFlow: PropTypes.string,
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  setPipelineId: PropTypes.func,
-  setPipeline: PropTypes.func,
-  setIsTaskFlag: PropTypes.bool,
   className: PropTypes.string,
 };
 
