@@ -11,8 +11,8 @@ import CreateSalesforceWorkflowWizardFlowSelectionScreen
   , {
   SALESFORCE_FLOW_OPTIONS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
-import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
+import CreateWorkflowWizardCreateSalesforceToolEditorPanel
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
 
@@ -69,7 +69,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={sourceSalesforceToolModel}
             setSalesforceToolModel={setSourceSalesforceToolModel}
             salesforceToolId={salesforceSourceToolId}
@@ -92,7 +92,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard() {
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={deploymentSalesforceToolModel}
             setSalesforceToolModel={setDeploymentSalesforceToolModel}
             salesforceToolId={salesforceDeploymentToolId}

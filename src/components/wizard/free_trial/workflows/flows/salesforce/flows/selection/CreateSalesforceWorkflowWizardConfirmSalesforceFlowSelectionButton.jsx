@@ -12,9 +12,6 @@ import taskActions from "components/tasks/task.actions";
 import modelHelpers from "components/common/model/modelHelpers";
 import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import {
-  SALESFORCE_FLOW_OPTIONS
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
-import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 
@@ -35,32 +32,6 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
     isMounted,
     toastContext,
   } = useComponentStateReference();
-
-  const initializeSalesforcePipelineTemplate = async () => {
-    try {
-      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      const response = await pipelineActions.deployTemplateV2(
-        getAccessToken,
-        cancelTokenSource,
-        "630386aebcb7dc0019d1c2c9", // TODO: how to dynamically pull this?
-      );
-
-      const newPipeline = response?.data;
-
-      if (isMongoDbId(newPipeline?._id)) {
-        setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setPipelineId(newPipeline?._id);
-        setPipeline(response?.data);
-        setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
-      }
-    }
-    catch (error) {
-      if (isMounted.current === true) {
-        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
-        toastContext.showInlineErrorMessage(error, "Error Initializing Salesforce Workflow:");
-      }
-    }
-  };
 
   const initializeSalesforceTaskTemplate = async () => {
     try {
@@ -116,18 +87,18 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
     }
   };
 
-  const confirmFlow = async () => {
-    switch (selectedFlow) {
-      case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
-      case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
-      case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
-        await initializeSalesforcePipelineTemplate();
-        break;
-      case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
-        await initializeSalesforceTaskTemplate();
-        break;
-    }
-  };
+  // const confirmFlow = async () => {
+  //   switch (selectedFlow) {
+  //     case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
+  //     case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
+  //     case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
+  //       await initializeSalesforcePipelineTemplate();
+  //       break;
+  //     case SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+  //       await initializeSalesforceTaskTemplate();
+  //       break;
+  //   }
+  // };
 
   const getLabel = () => {
     return buttonLabelHelper.getLabelForStatus(
@@ -151,7 +122,7 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowSelec
       <ButtonContainerBase>
         <Button
           disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled}
-          onClick={confirmFlow}
+          // onClick={confirmFlow}
           variant={getButtonVariant()}
         >
         <span>

@@ -12,7 +12,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel(
+export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
     className,
     salesforceToolId,
@@ -103,7 +103,7 @@ export default function CreateSalesforcePipelineWizardCreateSalesforceToolEditor
   );
 }
 
-CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel.propTypes = {
+CreateWorkflowWizardCreateSalesforceToolEditorPanel.propTypes = {
   salesforceToolModel: PropTypes.object,
   setSalesforceToolModel: PropTypes.func,
   salesforceToolId: PropTypes.string,

@@ -7,14 +7,14 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/salesforce_tool/test_connection/CreateSalesforceWorkflowWizardTestSalesforceToolConnectionScreen";
-import CreateSalesforceWorkflowWizardFlowSelectionScreen
-  , {
-  SALESFORCE_FLOW_OPTIONS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
-import CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel";
+import CreateSalesforceWorkflowWizardFlowSelectionScreen from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
+import CreateWorkflowWizardCreateSalesforceToolEditorPanel
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import CreateSalesforceWorkflowWizardCompletionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
+import {
+  salesforceWorkflowFlowConstants
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
@@ -29,7 +29,7 @@ export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
 
 export default function CreateSalesforceWorkflowWizard() {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
-  const [selectedFlow, setSelectedFlow] = useState(SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
+  const [selectedFlow, setSelectedFlow] = useState(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
@@ -83,7 +83,7 @@ export default function CreateSalesforceWorkflowWizard() {
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={sourceSalesforceToolModel}
             setSalesforceToolModel={setSourceSalesforceToolModel}
             salesforceToolId={salesforceSourceToolId}
@@ -106,7 +106,7 @@ export default function CreateSalesforceWorkflowWizard() {
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
         return (
-          <CreateSalesforcePipelineWizardCreateSalesforceToolEditorPanel
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={deploymentSalesforceToolModel}
             setSalesforceToolModel={setDeploymentSalesforceToolModel}
             salesforceToolId={salesforceDeploymentToolId}
