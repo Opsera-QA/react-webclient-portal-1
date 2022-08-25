@@ -102,7 +102,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             setSalesforceToolModel={setDestinationSalesforceToolModel}
             salesforceToolId={salesforceDeploymentToolId}
             setSalesforceToolId={setSalesforceDeploymentToolId}
-            setCurrentScreen={setCurrentScreen}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN)}
             type={"destination"}
             className={"m-3"}
           />
