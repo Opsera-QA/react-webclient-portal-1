@@ -73,15 +73,15 @@ function GithubMonoRepositorySelectInput(
 
       const existingRepository = model?.getData(fieldName);
 
-      if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
-
-        if (existingRepositoryExists == null) {
-          setErrorMessage(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
-          );
-        }
-      }
+      // if (hasStringValue(existingRepository) === true) {
+      //   const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
+      //
+      //   if (existingRepositoryExists == null) {
+      //     setErrorMessage(
+      //       "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+      //     );
+      //   }
+      // }
     }
   };
 

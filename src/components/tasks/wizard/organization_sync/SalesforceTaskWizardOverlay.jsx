@@ -14,7 +14,7 @@ export const SALESFORCE_TASK_WIZARD_SCREENS = {
 };
 
 export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
-  const [currentScreen, setCurrentScreen] = useState(PIPELINE_START_WIZARD_FLOWS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 

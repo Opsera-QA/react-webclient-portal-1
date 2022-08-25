@@ -65,7 +65,7 @@ export default function SalesforceTaskWizardConfirmRepositorySettingsButton(
   return (
     <div className={className}>
       <Button
-        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || taskConfigurationModel?.isValid() !== true}
+        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
         onClick={updateTask}
         variant={getButtonVariant()}
       >

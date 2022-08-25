@@ -13,6 +13,7 @@ import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -38,7 +39,8 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
   }, []);
 
   const checkValidity = () => {
-    return !gitTasksConfigurationDataDto?.checkCurrentValidity();
+    return false;
+    // return !gitTasksConfigurationDataDto?.checkCurrentValidity();
   };
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type

@@ -43,6 +43,8 @@ import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskC
 import SnaplogicProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicProjectSelectInput";
 import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicScmBranchSelectInput";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+import SalesforceOrganizationSyncTaskRepositorySelectInput
+  from "./tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -170,6 +172,58 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     );
   };
 
+  const repoSelectionInputs = () => {
+    if ( canEdit
+        // process.env.REACT_APP_STACK === "free-trial"
+    ) {
+      return (
+        <Row>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskRepositorySelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskGitBranchSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              visible={taskConfigurationModel?.getData("isNewBranch") !== true}
+            />
+          </Col>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskNewBranchToggleInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+            />
+          </Col>
+          {taskConfigurationModel?.getData("isNewBranch") && (
+            <>
+              <Col lg={12}>
+                <SalesforceOrganizationSyncTaskGitBranchTextInput
+                  fieldName={"gitBranch"}
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
+                  visible={
+                    taskConfigurationModel?.getData("isNewBranch") === true
+                  }
+                />
+              </Col>
+              <Col lg={12}>
+                <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+                  model={taskConfigurationModel}
+                  setModel={setTaskConfigurationModel}
+                />
+              </Col>
+            </>
+          )}
+        </Row>
+      );
+    } else {
+      return branchSelectionInputs();
+    }
+  };
+  
   const branchSelectionInputs = () => {
     if (canEdit) {
       if (taskConfigurationModel?.getData("isNewBranch") === true) {
@@ -289,7 +343,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     switch (type) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-        return branchSelectionInputs();
+        return repoSelectionInputs();
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return quickDeployForm();
       case TASK_TYPES.SNAPLOGIC_TASK:
