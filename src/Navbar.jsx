@@ -115,6 +115,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     }
   };
 
+  /*
+  Should be deprecated as an old code from old free trial
   if (process.env.REACT_APP_STACK === "free-trial") {
     return (
       <Navbar className="nav-bar">
@@ -148,7 +150,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
         </Navbar.Collapse>
       </Navbar>
     );
-  }
+  }*/
 
   return (
     <Navbar className="nav-bar">

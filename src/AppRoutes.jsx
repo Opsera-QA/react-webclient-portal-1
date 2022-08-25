@@ -137,6 +137,7 @@ import FreeTrialRegistration from "components/trial/registration/FreeTrialRegist
 import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrialSettingsManagement";
+import FreeTrialInsightsLanding from "./components/trial/insights/FreeTrialInsightsLanding";
 import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
 import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
 
@@ -327,6 +328,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
+          <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 
           {/*{getFreeTrialRoutes()}*/}
         </div>
