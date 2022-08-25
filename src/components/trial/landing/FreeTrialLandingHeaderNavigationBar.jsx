@@ -31,38 +31,39 @@ export default function FreeTrialLandingHeaderNavigationBar(
           history.push("/workspace");
           break;
         case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
-          history.push("/");
+          history.push("/unified-insights");
           break;
       }
     }
   };
 
   return (
-    <Navbar.Collapse className={"h-100 mx-auto"}>
+    <Navbar.Collapse className={"h-100 darkBackgroundText"}>
       <HeaderNavigationBarItem
-        className={"ml-auto"}
+        className={"ml-5 mr-1"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Home"}
         screenName={"home"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
       />
-      <HeaderNavigationBarItemDivider />
+      {/*<HeaderNavigationBarItemDivider className={"mr-1"} />*/}
       <HeaderNavigationBarItem
-        className={"mr-auto"}
+        className={"mr-1"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
       />
-      {/*<HeaderNavigationBarItem*/}
-      {/*  className={"mx-5"}*/}
-      {/*  currentScreen={currentScreen}*/}
-      {/*  setCurrentScreen={handleScreenClick}*/}
-      {/*  screenLabel={"Unified Insights"}*/}
-      {/*  screenName={"insights"}*/}
-      {/*/>*/}
+      {/*<HeaderNavigationBarItemDivider className={"mr-1"} />*/}
+      <HeaderNavigationBarItem
+        className={"mr-1"}
+        currentScreen={currentScreen}
+        setCurrentScreen={handleScreenClick}
+        screenLabel={"Unified Insights"}
+        screenName={"insights"}
+      />
     </Navbar.Collapse>
   );
 }

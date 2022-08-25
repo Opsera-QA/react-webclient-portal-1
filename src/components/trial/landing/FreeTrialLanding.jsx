@@ -13,13 +13,16 @@ export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
 
   return (
-    <div className={"max-content-width mt-3"}>
-      <ScreenContainer
+    <div className={"max-content-width mt-3 pt-3"}>
+      {/*<ScreenContainer
         breadcrumbDestination={"freeTrialLanding"}
         includeSubNavigationGap={false}
       >
+      TODO: Noah, if you want to restore this with an option to toggle
+      header / border visilibty that is fine too.
+      */}
         <div className={"m-3"}>
-          <Row>
+          <Row className={"pb-3"}>
             <Col xs={6}>
               <WelcomeWidget />
             </Col>
@@ -27,14 +30,14 @@ export default function FreeTrialLanding() {
               <AccountStatusWidget />
             </Col>
           </Row>
-          <div className={"mt-3 mx-auto"}>
+          <div className={"mt-3 mx-auto pb-3"}>
             <FreeTrialLandingWizardWidgets />
           </div>
           <div className={"mt-3"}>
             <FreeTrialLandingPipelinesWidget />
           </div>
         </div>
-      </ScreenContainer>
+      {/*</ScreenContainer>*/}
     </div>
   );
 }

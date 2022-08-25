@@ -66,6 +66,7 @@ export default function OpseraHeaderSettingsLink() {
     return null;
   }
 
+  //todo: Add tool tip to this: Administrative Settings
   return (
     <Navbar.Collapse id={"basic-navbar-nav"}>
       <span
@@ -74,7 +75,6 @@ export default function OpseraHeaderSettingsLink() {
         onClick={handleLink}
       >
         {getSettingsIcon()}
-        Settings
       </span>
     </Navbar.Collapse>
   );

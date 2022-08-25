@@ -77,7 +77,7 @@ export default function HeaderNavigationBarItem(
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >
-        <Nav.Item className={"h-100 w-100 d-flex"}>
+        <Nav.Item className={""}>
           {getScreenLabel()}
         </Nav.Item>
       </div>
