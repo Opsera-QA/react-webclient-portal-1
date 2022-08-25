@@ -8,6 +8,9 @@ import {
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import CreateWorkflowWizardPipelineInitializationScreen
   from "components/wizard/free_trial/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
+import {
+  pipelineTemplateIdentifierConstants
+} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 
 export default function CreateSalesforceOrganizationSyncPipelineInitializationScreen(
   {
@@ -26,7 +29,7 @@ export default function CreateSalesforceOrganizationSyncPipelineInitializationSc
     <CreateWorkflowWizardPipelineInitializationScreen
       setPipelineFunction={setPipelineFunction}
       type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-      templateIdentifier={"test"}
+      templateIdentifier={pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE}
     />
   );
 }

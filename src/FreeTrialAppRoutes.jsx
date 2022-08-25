@@ -22,7 +22,7 @@ export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
-        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
+        <div className={"w-100 hide-x-overflow"}>
           <div className="darkBackground">
             <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
             <Route path="/implicit/callback" component={LoginCallback} />

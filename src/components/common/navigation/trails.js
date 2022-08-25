@@ -166,6 +166,26 @@ const breadcrumbs = {
     pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   },
 
+  taskTemplateManagement: {
+    parent: "admin",
+    name: "taskTemplateManagement",
+    path: paths.taskTemplateManagement,
+    title: "Task Template Management",
+    linkText: "Task Template Management",
+    icon: faStream,
+    pageDescription: `
+      Create and manage personalized task templates according to your organization’s needs. 
+    `
+  },
+  taskTemplateDetailView: {
+    parent: "taskTemplateManagement",
+    name: "taskTemplateDetailView",
+    path: paths.taskTemplateDetailView,
+    title: "Task emplate Details",
+    linkText: "Task Template Details",
+    icon: faStream
+  },
+
   templateManagement: {
     parent: "admin",
     name: "templateManagement",

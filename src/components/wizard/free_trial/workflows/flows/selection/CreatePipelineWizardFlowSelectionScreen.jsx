@@ -1,7 +1,5 @@
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineCreationRadioOptionInput, {
   PIPELINE_CREATION_OPTIONS,
 } from "components/wizard/free_trial/workflows/flows/selection/PipelineCreationRadioOptionInput";

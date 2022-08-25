@@ -4,7 +4,9 @@ import Row from "react-bootstrap/Row";
 
 function OpseraFooter() {
   return (
-    <Row className={"fixed-row-footer-bottom"}>
+    <Row className={"fixed-row-footer-bottom"}
+         style={{ marginTop: "26px"}}
+    >
       <Col className={"text-center m-1 p-0"} style={{ fontSize: ".6em" }}>
         <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
       </Col>

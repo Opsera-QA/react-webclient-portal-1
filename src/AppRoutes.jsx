@@ -137,6 +137,8 @@ import FreeTrialRegistration from "components/trial/registration/FreeTrialRegist
 import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrialSettingsManagement";
+import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
+import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
@@ -156,7 +158,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
     <div className={"container-fluid m-0"}>
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
-        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px"}}>
+        <div className={"w-100 hide-x-overflow"}>
           <div className="darkBackground">
             <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
             <Route path="/implicit/callback" component={LoginCallback} />
@@ -265,6 +267,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/reports" exact component={Reports_Old} />
           <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
           <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
+
+
+          <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
+          <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
 
 
           <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement} />

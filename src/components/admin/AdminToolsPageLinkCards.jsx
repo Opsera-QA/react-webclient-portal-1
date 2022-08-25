@@ -17,6 +17,7 @@ import PipelineTemplateManagementPageLinkCard
 import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPageLinkCard";
 import CustomEnvironmentVariableManagementPageLinkCard
   from "components/admin/environment_variables/CustomEnvironmentVariableManagementPageLinkCard";
+import TaskTemplateManagementPageLinkCard from "components/admin/task_templates/TaskTemplateManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -48,6 +49,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <PipelineTemplateManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
         accessRoleData={accessRoleData}
       />

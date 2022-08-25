@@ -1,9 +1,9 @@
-const templateEditorMetadata = {
+export const taskTemplateMetadata = {
   idProperty: "_id",
-  type: "Pipeline Template",
+  type: "Task Template",
   activeField: "active",
   detailView: function (record) {
-    return `/admin/templates/details/${record.getData("_id")}`;
+    return `/admin/templates/tasks/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
     return `${record?.getOriginalValue("name")}`;
@@ -28,6 +28,7 @@ const templateEditorMetadata = {
       maxLength: 200,
       lowercase: true,
       spacesAllowed: false,
+      isRequired: true,
     },
     {
       label: "Description",
@@ -85,36 +86,20 @@ const templateEditorMetadata = {
       id: "access"
     },
     {
-      label: "Plan",
-      id: "plan",
-      type: "JSON",
-      toShow: true,
-      isCollapsed: true,
-      value: [
-        {
-          "tool": {},
-          "trigger": [],
-          "type": [],
-          "notification": [],
-          "name": "",
-          "description": "",
-          "active": true,
-        },
-      ],
+      label: "Configuration",
+      id: "configuration",
     },
   ],
   newObjectFields: {
-    "type": [],
-    "tags": [],
-    "name": "",
-    "description": "",
-    "active": true,
-    "publicUse": true,
-    "singleUse": false,
-    "account": "",
-    "access": [],
-    "plan": [{}],
+    type: [],
+    tags: [],
+    name: "",
+    description: "",
+    active: true,
+    publicUse: true,
+    singleUse: false,
+    account: "",
+    access: [],
+    configuration: {},
   },
 };
-
-export default templateEditorMetadata;

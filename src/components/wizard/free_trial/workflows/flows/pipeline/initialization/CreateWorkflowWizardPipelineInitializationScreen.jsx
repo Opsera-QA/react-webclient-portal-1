@@ -5,6 +5,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
+import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 
 export default function CreateWorkflowWizardPipelineInitializationScreen(
   {
@@ -32,14 +33,13 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
   const initializeSalesforcePipelineTemplate = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
-      const response = await pipelineActions.deployTemplateV2(
+      const response = await pipelineTemplateActions.deployTemplateByIdentifierV2(
         getAccessToken,
         cancelTokenSource,
-        // templateId,
-        "630386aebcb7dc0019d1c2c9", // TODO: how to dynamically pull this?
+        templateIdentifier,
       );
 
-      const newPipeline = response?.data;
+      const newPipeline = response?.data?.data;
 
       if (isMongoDbId(newPipeline?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
