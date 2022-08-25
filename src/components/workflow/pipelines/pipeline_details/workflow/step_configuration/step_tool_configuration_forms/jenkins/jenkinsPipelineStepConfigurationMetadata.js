@@ -141,10 +141,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label: "Commands",
-      id: "commands",
-    },
-    {
       label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
       isRequired: true,
