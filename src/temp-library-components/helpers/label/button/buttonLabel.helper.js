@@ -1,4 +1,4 @@
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 
 export const buttonLabelHelper = {};
 
@@ -46,6 +46,23 @@ buttonLabelHelper.getVariantForState = (
       return "success";
     case buttonLabelHelper.BUTTON_STATES.ERROR:
       return "danger";
+    default:
+      throw "Invalid button state given";
+  }
+};
+
+buttonLabelHelper.getIconForState = (
+  icon,
+  buttonState,
+) => {
+  switch (buttonState) {
+    case buttonLabelHelper.BUTTON_STATES.READY:
+    case buttonLabelHelper.BUTTON_STATES.BUSY:
+      return icon;
+    case buttonLabelHelper.BUTTON_STATES.SUCCESS:
+      return faCheckCircle;
+    case buttonLabelHelper.BUTTON_STATES.ERROR:
+      return faExclamationCircle;
     default:
       throw "Invalid button state given";
   }

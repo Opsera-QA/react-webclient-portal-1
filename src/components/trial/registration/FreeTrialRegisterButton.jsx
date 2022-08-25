@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
 export default function FreeTrialRegisterButton(
   {
@@ -12,35 +12,20 @@ export default function FreeTrialRegisterButton(
     className,
     disabled,
   }) {
-  const [registeringAccount, setRegisteringAccount] = useState(false);
+  const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const createFreeTrialAccount = async () => {
     try {
-      setRegisteringAccount(true);
-      // TODO: Wire up
-      registerAccountFunction();
-      // await persistNewRecord(
-      //   registrationModel,
-      //   toastContext,
-      //   false,
-      //   registerAccountFunction,
-      // );
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+      await registerAccountFunction();
+      setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
     } catch (error) {
-      console.error(error);
-    } finally {
       if (isMounted.current === true) {
-        setRegisteringAccount(false);
+        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+        toastContext.showFormErrorBanner(error, "There was an error registering your Opsera account:");
       }
     }
-  };
-
-  const getLabel = () => {
-    if (registeringAccount) {
-      return ("Registering Account...");
-    }
-
-    return ("Continue");
   };
 
   if (registrationModel == null || registerAccountFunction == null) {
@@ -48,27 +33,18 @@ export default function FreeTrialRegisterButton(
   }
 
   return (
-    <div className={className}>
-      <Button
-        variant={"success"}
-        id={"register-account-button"}
-        disabled={
-          registeringAccount
-          || disabled === true
-          // || !registrationModel.checkCurrentValidity() // TODO: Enable when actually wiring up registration. Disabled for now to get to Congratulations screen
-        }
-        onClick={createFreeTrialAccount}
-      >
-        <span>
-          <IconBase
-            icon={faArrowRight}
-            isLoading={registeringAccount}
-            className={"mr-2"}
-          />
-          {getLabel()}
-        </span>
-      </Button>
-    </div>
+    <VanityButtonBase
+      normalText={"Continue"}
+      busyText={"Registering Account"}
+      errorText={"Error Registering Account"}
+      successText={"Successfully Registered Account"}
+      className={className}
+      variant={"success"}
+      icon={faArrowRight}
+      onClickFunction={createFreeTrialAccount}
+      disabled={disabled || registrationModel.checkCurrentValidity() !== true}
+      buttonState={buttonState}
+    />
   );
 }
 
@@ -77,10 +53,4 @@ FreeTrialRegisterButton.propTypes = {
   registerAccountFunction: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  showSuccessToasts: PropTypes.bool,
-  lenient: PropTypes.bool,
-};
-
-FreeTrialRegisterButton.defaultProps = {
-  showSuccessToasts: true,
 };

@@ -27,14 +27,14 @@ export default function FreeTrialRegistrationSignupScreen (
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const registerAccountFunction = async () => {
-    const emailIsAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
-
-    if (!emailIsAvailable) {
-      toastContext.showEmailAlreadyExistsErrorDialog();
-      return;
-    }
-
     if (registrationModel.isModelValid()) {
+      const emailIsAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
+
+      if (!emailIsAvailable) {
+        toastContext.showEmailAlreadyExistsErrorDialog();
+        return;
+      }
+
       try {
         const response = await userActions.createFreeTrialAccount(registrationModel);
         setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
