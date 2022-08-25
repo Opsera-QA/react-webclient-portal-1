@@ -18,7 +18,7 @@ export default function FreeTrialRegistrationCongratulationsScreen() {
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
-          height={"575px"}
+          height={"420px"}
           width={"525px"}
           bodyClassName={"p-4 d-flex"}
         >
