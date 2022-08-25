@@ -5,7 +5,7 @@ import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/tasks/buttons/run_task/GitTaskSfdcPipelineWizardOverlay";
+import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -73,7 +73,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       } finally {
         handleClose();
-        toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
+        toastContext.showOverlayPanel(<SalesforceTaskWizardOverlay gitTasksData={gitTasksData}/>);
         setIsLoading(false);
       }
     }
