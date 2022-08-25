@@ -65,8 +65,8 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <div>An Approval Gate in an Opsera Pipeline will halt the running pipeline and notify the configured
-        user in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification. <b>Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action</b>.
+      <div>An Approval Gate in an Opsera pipeline will halt the running pipeline and notify the configured
+        user in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification. <b>Only pipeline Admins and Managers (via pipeline Access Rules) are permitted to perform this action</b>.
         <div className="my-3">Use the notification icon (<IconBase icon={faEnvelope}/>) to enable the various channels to use.</div>
       </div>
       <BooleanToggleInput
