@@ -15,7 +15,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
     salesforceToolId,
   }) {
   const onSuccessFunction = () => {
-    setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
+    setPipeline({...salesforcePipelineHelper.updateDestinationSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
   };
 
