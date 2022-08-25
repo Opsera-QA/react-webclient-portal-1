@@ -167,6 +167,9 @@ const AppWithRouterAccess = () => {
   };
 
   const getRoutes = () => {
+    console.info("Running Environment: ", process.env.NODE_ENV);
+    console.info("ALL VARIABLES:", process.env);
+
     if (!authenticatedState && isPublicPathState !== true) {
       return (
         <div className={"container-fluid m-0 loginScreenBackground"}>
