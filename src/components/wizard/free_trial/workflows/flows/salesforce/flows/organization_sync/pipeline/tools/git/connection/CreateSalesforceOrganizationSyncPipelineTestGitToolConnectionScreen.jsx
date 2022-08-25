@@ -16,7 +16,7 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
     gitToolOption,
   }) {
   const onSuccessFunction = () => {
-    setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, false, gitToolId, gitToolOption)});
+    setPipeline({...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(pipeline, gitToolId, gitToolOption)});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
   };
 

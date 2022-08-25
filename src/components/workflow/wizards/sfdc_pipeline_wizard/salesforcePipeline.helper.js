@@ -159,7 +159,7 @@ salesforcePipelineHelper.updateRepositoryInJenkinsStep = (pipelineStep, reposito
   return parsedPipelineStep;
 };
 
-salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, gitToolId, service) => {
+salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, gitToolId, service) => {
 
   if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {
     throw "Invalid Git Tool ID given";
@@ -167,12 +167,6 @@ salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, 
 
   if (hasStringValue(service) === false) {
     throw "Did not include a service.";
-  }
-
-  if (isTaskFlag && pipeline.type === "sync-sfdc-repo") {
-    pipeline.configuration.gitToolId = gitToolId;
-    pipeline.configuration.service = service;
-    return pipeline;
   }
 
   const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
@@ -252,15 +246,10 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
   return parsedPipelineStep;
 };
 
-salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps = (pipeline, isTaskFlag, salesforceToolId) => {
+salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps = (pipeline, salesforceToolId) => {
 
   if (isMongoDbId(salesforceToolId) !== true && salesforceToolId !== "") {
     throw "Invalid Source Salesforce Tool ID given";
-  }
-
-  if(isTaskFlag && pipeline.type === "sync-sfdc-repo") {
-    pipeline.configuration.sfdcToolId = salesforceToolId;
-    return pipeline;
   }
 
   const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
@@ -297,11 +286,11 @@ salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps 
   return pipeline;
 };
 
-salesforcePipelineHelper.updateDeploymentSalesforceToolIdForSalesforcePipelineSteps = (pipeline, salesforceToolId) => {
+salesforcePipelineHelper.updateDestinationSalesforceToolIdForSalesforcePipelineSteps = (pipeline, salesforceToolId) => {
   const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
 
   if (isMongoDbId(salesforceToolId) !== true && salesforceToolId !== "") {
-    throw "Invalid Deployment Salesforce Tool ID given";
+    throw "Invalid Destination Salesforce Tool ID given";
   }
 
   const updatedPipelineSteps = [];
