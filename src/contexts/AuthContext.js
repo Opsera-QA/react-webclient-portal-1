@@ -22,7 +22,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
-  const [backgroundColor, setBackgroundColor] = useState(THEMES.LIGHT);
+  const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
