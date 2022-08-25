@@ -13,15 +13,13 @@ export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
 
   return (
-    <div className={"max-content-width mt-3 pt-3"}>
+    <div className={"max-content-width"}>
       {/*<ScreenContainer
         breadcrumbDestination={"freeTrialLanding"}
         includeSubNavigationGap={false}
       >
-      TODO: Noah, if you want to restore this with an option to toggle
-      header / border visilibty that is fine too.
       */}
-        <div className={"m-3"}>
+        <div className={"my-3"}>
           <Row className={"pb-3"}>
             <Col xs={6}>
               <WelcomeWidget />

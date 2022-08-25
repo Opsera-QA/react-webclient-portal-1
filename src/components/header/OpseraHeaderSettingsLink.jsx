@@ -5,6 +5,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { faCogs } from "@fortawesome/pro-light-svg-icons";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const HEADER_SETTINGS_LINK = "/trial/settings";
 
@@ -66,16 +67,28 @@ export default function OpseraHeaderSettingsLink() {
     return null;
   }
 
-  //todo: Add tool tip to this: Administrative Settings
   return (
     <Navbar.Collapse id={"basic-navbar-nav"}>
-      <span
-        className={"mx-2"}
-        style={getStyling()}
-        onClick={handleLink}
+      <TooltipWrapper
+        innerText={"Administrative Settings"}
+        placement={"bottom"}
       >
-        {getSettingsIcon()}
-      </span>
+        <div
+          className={"mx-2"}
+          style={getStyling()}
+          onClick={handleLink}
+        >
+          <IconBase
+            icon={faCogs}
+            iconSize={"xl"}
+            className={"mr-2"}
+            iconStyling={{
+              // borderRadius: "38px",
+              color: themeConstants.COLOR_PALETTE.WHITE,
+            }}
+          />
+        </div>
+      </TooltipWrapper>
     </Navbar.Collapse>
   );
 }

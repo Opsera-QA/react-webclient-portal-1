@@ -9,7 +9,7 @@ export default function FreeTrialInsightsLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"insights"} />);
 
   return (
-    <div className={"max-content-width mt-3 pt-3"}>
+    <div className={"max-content-width"}>
       {/*<ScreenContainer
         breadcrumbDestination={"freeTrialLanding"}
         includeSubNavigationGap={false}

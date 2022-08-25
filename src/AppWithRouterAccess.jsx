@@ -140,7 +140,7 @@ const AppWithRouterAccess = () => {
   const getNavBar = () => {
     return (
       <OpseraHeaderBar
-        hideAuthComponents={hideSideBar}
+        hideAuthComponents={!authenticatedState}
         userData={data}
       />
     );

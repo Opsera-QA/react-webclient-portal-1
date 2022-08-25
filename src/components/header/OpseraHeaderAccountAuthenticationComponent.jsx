@@ -144,10 +144,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     }
   };
 
-  if (hideAuthComponents === true) {
-    return null;
-  }
-
   if (!accessRoleData) {
     return (
       <Navbar.Collapse id={"basic-navbar-nav"}>
