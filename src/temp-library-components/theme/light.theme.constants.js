@@ -3,6 +3,7 @@ export const lightThemeConstants = {};
 // TODO: Simplify, rename colors to what general contexts are to make different themes easier to understand
 lightThemeConstants.COLOR_PALETTE = {
   WHITE: "#FFFFFF",
+  RED: "#FF0000",
 
   // Blue
   SALESFORCE_BLUE: "#1798c1",
