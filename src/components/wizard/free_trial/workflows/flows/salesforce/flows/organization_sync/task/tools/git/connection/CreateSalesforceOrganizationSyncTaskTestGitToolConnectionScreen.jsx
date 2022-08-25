@@ -18,6 +18,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
   const onSuccessFunction = () => {
     task.configuration.gitToolId = gitToolId;
     task.configuration.service = gitToolOption;
+    task.tool_identifier = gitToolOption;
     setTask({...task});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
   };

@@ -16,7 +16,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforce
   const onSuccessFunction = () => {
     task.configuration.sfdcToolId = salesforceToolId;
     setTask({...task});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
   };
 
   const onFailureFunction = () => {

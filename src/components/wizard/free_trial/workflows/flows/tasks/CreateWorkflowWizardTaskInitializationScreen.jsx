@@ -5,9 +5,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import taskActions from "components/tasks/task.actions";
+import tasksMetadata from "components/tasks/details/tasks/task-metadata";
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
@@ -73,7 +72,7 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
         }
       };
 
-      const newTaskTemplateModel = modelHelpers.parseObjectIntoModel(template, salesforceOrganizationSyncTaskConfigurationMetadata);
+      const newTaskTemplateModel = modelHelpers.parseObjectIntoModel(template, tasksMetadata);
       const response = await taskActions.createTaskV2(getAccessToken, cancelTokenSource, newTaskTemplateModel);
       const newTask = response?.data;
 

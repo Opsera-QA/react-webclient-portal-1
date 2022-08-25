@@ -60,15 +60,6 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.updateFreeTrialTaskV2 = async (getAccessToken, cancelTokenSource, taskData) => {
-  const apiUrl = `/tasks/${taskData._id}/update`;
-  const postBody = {
-    ...taskData
-  };
-
-  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelTokenSource, taskId, notificationConfiguration) => {
   const apiUrl = `/tasks/${taskId}/notifications/update/`;
   const postBody = {

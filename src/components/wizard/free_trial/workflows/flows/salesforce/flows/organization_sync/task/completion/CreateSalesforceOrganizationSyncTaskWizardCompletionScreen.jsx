@@ -4,6 +4,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import taskActions from "components/tasks/task.actions";
+import modelHelpers from "components/common/model/modelHelpers";
+import tasksMetadata from "components/tasks/details/tasks/task-metadata";
 
 // TODO: We should probably make base screens for updating pipelines and tasks and just pass in whatever extra
 export default function CreateSalesforceOrganizationSyncTaskWizardCompletionScreen(
@@ -27,7 +29,8 @@ export default function CreateSalesforceOrganizationSyncTaskWizardCompletionScre
   const updateTask = async () => {
     try {
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.BUSY);
-      await taskActions.updateFreeTrialTaskV2(getAccessToken, cancelTokenSource, task);
+      const newTaskTemplateModel = modelHelpers.parseObjectIntoModel(task, tasksMetadata);
+      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newTaskTemplateModel);
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
     } catch (error) {
       if (isMounted?.current === true) {
