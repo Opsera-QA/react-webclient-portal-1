@@ -38,6 +38,7 @@ import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
+import CheckboxInputBase from "../inputs/boolean/CheckboxInputBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
