@@ -57,6 +57,13 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
           />
         </Col>
         <Col lg={6}>
+          <TextInputBase
+            fieldName={"identifier"}
+            dataObject={templateModel}
+            setDataObject={setTemplateModel}
+          />
+        </Col>
+        <Col lg={6}>
           <ActivityToggleInput
             fieldName={"active"}
             dataObject={templateModel}

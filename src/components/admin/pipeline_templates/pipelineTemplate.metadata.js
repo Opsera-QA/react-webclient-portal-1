@@ -22,6 +22,13 @@ const templateEditorMetadata = {
       id: "_id",
     },
     {
+      label: "Identifier",
+      id: "identifier",
+      formText: "This is to aid with the dynamic deployment of Pipeline Templates across the environment, currently only used for Free Trial",
+      maxLength: 200,
+      lowercase: true,
+    },
+    {
       label: "Description",
       id: "description",
       minLength: 3,
