@@ -164,6 +164,7 @@ const AppWithRouterAccess = () => {
   };
 
   const onAuthResume = async () => {
+    console.log("onAuthResume fired");
     history.push('/');
   };
 

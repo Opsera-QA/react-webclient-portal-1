@@ -1,8 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Navbar } from "react-bootstrap";
+//import PropTypes from "prop-types";
+//import { Navbar } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 export default function OpseraHeaderIcon() {
+  const history = useHistory();
   const getOpseraIcon = () => {
     // put new icon?
     // return (
@@ -25,10 +27,16 @@ export default function OpseraHeaderIcon() {
     );
   };
 
+
+  const handleLogoClick = () => {
+    history.push(`/`);
+  };
+
+
   return (
-    <Navbar.Brand href="/">
+    <div onClick={handleLogoClick} className={"pointer"}>
       {getOpseraIcon()}
-    </Navbar.Brand>
+    </div>
   );
 }
 

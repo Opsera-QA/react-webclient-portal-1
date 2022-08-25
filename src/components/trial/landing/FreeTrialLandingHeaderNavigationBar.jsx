@@ -57,13 +57,26 @@ export default function FreeTrialLandingHeaderNavigationBar(
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
       />
       {/*<HeaderNavigationBarItemDivider className={"mr-1"} />*/}
-      <HeaderNavigationBarItem
-        className={"mr-1"}
-        currentScreen={currentScreen}
-        setCurrentScreen={handleScreenClick}
-        screenLabel={"Unified Insights"}
-        screenName={"insights"}
-      />
+      {/* Narrow screens vs wide ...*/}
+      <span className={"d-none d-lg-inline"}>
+        <HeaderNavigationBarItem
+          className={"mr-1 no-wrap"}
+          currentScreen={currentScreen}
+          setCurrentScreen={handleScreenClick}
+          screenLabel={"Unified Insights"}
+          screenName={"insights"}
+        />
+      </span>
+
+      <span className={"d-inline d-lg-none"}>
+        <HeaderNavigationBarItem
+          className={"mr-1"}
+          currentScreen={currentScreen}
+          setCurrentScreen={handleScreenClick}
+          screenLabel={"Insights"}
+          screenName={"insights"}
+        />
+      </span>
     </Navbar.Collapse>
   );
 }

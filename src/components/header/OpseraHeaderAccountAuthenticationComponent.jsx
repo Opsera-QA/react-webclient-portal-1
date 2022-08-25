@@ -93,14 +93,14 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         }}
       >
         {getUserIconTitle()}
-        <span className={"mx-1"}>{fullUserName}</span>
+        <span className={"d-none d-lg-inline mx-1"}>{fullUserName}</span>
       </span>
     );
   };
 
   const getUserIconDropdown = () => {
     return (
-      <NavDropdown
+      <NavDropdown alignRight
         title={getTitle()}
         id={"basic-nav-dropdown"}
         className={"top-nav-dropdown"}

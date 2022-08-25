@@ -33,13 +33,10 @@ export default function HeaderNavigationBarItem(
 
   const getScreenLabel = () => {
     return (
-      <div className={"d-flex"}>
-        <div
-          className={currentScreen === screenName ? "font-weight-bold align-self-center" : "align-self-center"}
-        >
-          {screenLabel}
-        </div>
-        {/*{getCurrentScreenUnderline()}*/}
+      <div
+        className={currentScreen === screenName ? "font-weight-bold align-self-center" : "align-self-center"}
+      >
+        {screenLabel}
       </div>
     );
   };
@@ -73,7 +70,7 @@ export default function HeaderNavigationBarItem(
   return (
     <div className={className}>
       <div
-        className={"mx-5 h-100 w-100 d-flex flex-column"}
+        className={"mx-5 h-100 d-flex flex-column"}
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >
