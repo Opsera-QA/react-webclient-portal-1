@@ -59,6 +59,7 @@ export default function WorkflowWizardToolConnectionScreenBase(
 
         setLogs([...newLogs]);
         setCurrentState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
+        await sleep(5000);
         onSuccessFunction();
       }
     } catch (error) {
