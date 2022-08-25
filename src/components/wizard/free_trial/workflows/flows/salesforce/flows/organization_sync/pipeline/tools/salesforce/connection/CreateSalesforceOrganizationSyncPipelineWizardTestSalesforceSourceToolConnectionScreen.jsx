@@ -7,7 +7,7 @@ import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipel
 import WorkflowWizardToolConnectionScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 
-export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen(
+export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen(
   {
     pipeline,
     setPipeline,
@@ -16,11 +16,11 @@ export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineWi
   }) {
   const onSuccessFunction = () => {
     setPipeline({...salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps(pipeline, false, salesforceToolId)});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
   };
 
   const onFailureFunction = () => {
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
   };
 
   return (
@@ -34,7 +34,7 @@ export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineWi
   );
 }
 
-CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen.propTypes = {
+CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen.propTypes = {
   pipeline: PropTypes.string,
   salesforceToolId: PropTypes.string,
   setPipeline: PropTypes.func,

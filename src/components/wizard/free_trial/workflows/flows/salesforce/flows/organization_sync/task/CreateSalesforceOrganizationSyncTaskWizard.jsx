@@ -7,8 +7,8 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
-import CreateSalesforceWorkflowWizardCompletionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen";
 import {
   salesforceWorkflowFlowConstants
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
@@ -128,7 +128,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
         // );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardCompletionScreen
+          <CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
             pipeline={pipeline}
             isTaskFlag={true}
           />

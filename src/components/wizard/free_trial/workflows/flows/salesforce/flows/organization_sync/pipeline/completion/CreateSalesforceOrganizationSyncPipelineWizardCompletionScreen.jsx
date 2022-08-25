@@ -7,7 +7,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import taskActions from "components/tasks/task.actions";
 
 // TODO: Separate out the separate flows for task and pipeline
-export default function CreateSalesforceWorkflowWizardCompletionScreen(
+export default function CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen(
   {
     pipeline,
     isTaskFlag
@@ -73,7 +73,7 @@ export default function CreateSalesforceWorkflowWizardCompletionScreen(
   );
 }
 
-CreateSalesforceWorkflowWizardCompletionScreen.propTypes = {
+CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen.propTypes = {
   pipeline: PropTypes.object,
   isTaskFlag: PropTypes.bool
 };

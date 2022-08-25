@@ -7,7 +7,7 @@ import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipel
 import CreateWorkflowWizardTestGitToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 
-export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
+export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
   {
     pipeline,
     setPipeline,
@@ -37,7 +37,7 @@ export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineTe
   );
 }
 
-CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen.propTypes = {
+CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen.propTypes = {
   pipeline: PropTypes.string,
   gitToolId: PropTypes.string,
   gitToolOption: PropTypes.string,

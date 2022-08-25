@@ -9,7 +9,7 @@ import {
 import CreateWorkflowWizardPipelineInitializationScreen
   from "components/wizard/free_trial/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
 
-export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen(
+export default function CreateSalesforceOrganizationSyncPipelineInitializationScreen(
   {
     setPipeline,
     setCurrentScreen,
@@ -31,7 +31,7 @@ export default function CreateWorkflowWizardSalesforceOrganizationSyncPipelineIn
   );
 }
 
-CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen.propTypes = {
+CreateSalesforceOrganizationSyncPipelineInitializationScreen.propTypes = {
   setPipeline: PropTypes.func,
   flow: PropTypes.string,
   setCurrentScreen: PropTypes.func,

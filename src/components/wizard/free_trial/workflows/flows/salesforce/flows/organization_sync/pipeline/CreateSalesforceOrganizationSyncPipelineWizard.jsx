@@ -5,17 +5,17 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
-import CreateSalesforceWorkflowWizardCompletionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceWorkflowWizardCompletionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen";
 import * as PropType from "prop-types";
-import CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen";
-import CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/git/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
-import CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
-import CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
+import CreateSalesforceOrganizationSyncPipelineInitializationScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateSalesforceOrganizationSyncPipelineInitializationScreen";
+import CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/git/connection/CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -46,7 +46,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
     switch (currentScreen) {
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
-          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineInitializationScreen
+          <CreateSalesforceOrganizationSyncPipelineInitializationScreen
             setPipeline={setPipeline}
             flow={flow}
             setCurrentScreen={setCurrentScreen}
@@ -66,7 +66,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
+          <CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
@@ -88,7 +88,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
+          <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceSourceToolId}
             pipeline={pipeline}
@@ -109,7 +109,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateWorkflowWizardSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
+          <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceDeploymentToolId}
             pipeline={pipeline}
@@ -118,7 +118,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizardCompletionScreen
+          <CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
             pipeline={pipeline}
           />
         );
