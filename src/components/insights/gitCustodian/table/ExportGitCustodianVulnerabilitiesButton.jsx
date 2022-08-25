@@ -4,14 +4,26 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportGitCustodianVulnerabilitiesDataModal from "components/common/modal/export_data/ExportGitCustodianVulnerabilitiesDataModal";
+import ExportGitCustodianVulnerabilitiesDataOverlay from "components/common/modal/export_data/ExportGitCustodianVulnerabilitiesDataOverlay";
 import IconBase from "components/common/icons/IconBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "../../charts/charts-actions";
+import { DialogToastContext} from "../../../../contexts/DialogToastContext";
+import ExportDataButtonBase from "../../../common/modal/export_data/ExportDataButtonBase";
 
-function ExportGitCustodianVulnerabilitiesButton({ className, gitCustodianData, isLoading }) {
+function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, isLoading }) {
+  const toastContext = useContext(DialogToastContext);
 
+  const launchOverlayFunction = () => {
+    toastContext.showOverlayPanel(
+      <ExportGitCustodianVulnerabilitiesDataOverlay
+        isLoading={isLoading}
+        formattedData={formattedData()}
+        rawData={rawDataResults()}
+      />
+    );
+  };
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [isDownloadDataLoading, setIsDownloadDataLoading] = useState(false);
@@ -34,9 +46,6 @@ function ExportGitCustodianVulnerabilitiesButton({ className, gitCustodianData, 
     };
   }, []);
 
-  const closeModal = () => {
-    setShowExportModal(false);
-  };
 
   const rawDataResults = () =>{
     return issuesData;
@@ -72,27 +81,12 @@ function ExportGitCustodianVulnerabilitiesButton({ className, gitCustodianData, 
 
   // TODO: Refine when more is complete
   return (
-    <>
-      <TooltipWrapper innerText={"Export"}>
-        <div className={className}>
-          <Button
-            variant={"outline-primary"}
-            size={"sm"}
-            disabled={isLoading}
-            onClick={fetchDownloadData}>
-            <span><IconBase icon={faFileDownload}/></span>
-          </Button>
-        </div>
-      </TooltipWrapper>
-      <ExportGitCustodianVulnerabilitiesDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        setParentVisibility={setShowExportModal}
-        isLoading={isDownloadDataLoading}
-        formattedData={formattedData()}
-        rawData={rawDataResults()}
-       />
-    </>
+    <ExportDataButtonBase
+      isLoading={isLoading}
+      className={className}
+      launchOverlayFunction={launchOverlayFunction}
+    />
+
   );
 }
 
