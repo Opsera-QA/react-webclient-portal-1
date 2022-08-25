@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import pipelineActions from "components/workflow/pipeline-actions";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import taskActions from "components/tasks/task.actions";
 
-export default function CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen(
+// TODO: Separate out the separate flows for task and pipeline
+export default function CreateSalesforceOrganizationSyncTaskWizardCompletionScreen(
   {
-    pipeline,
+    task,
   }) {
   const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
@@ -18,15 +19,15 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardCompletion
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (pipeline) {
-      updatePipeline().catch(() => {});
+    if (task) {
+      updateTask().catch(() => {});
     }
-  }, [pipeline]);
+  }, [task]);
 
-  const updatePipeline = async () => {
+  const updateTask = async () => {
     try {
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.BUSY);
-      await pipelineActions.updatePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id, pipeline);
+      await taskActions.updateFreeTrialTaskV2(getAccessToken, cancelTokenSource, task);
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -64,7 +65,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardCompletion
   );
 }
 
-CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen.propTypes = {
-  pipeline: PropTypes.object,
+CreateSalesforceOrganizationSyncTaskWizardCompletionScreen.propTypes = {
+  task: PropTypes.object,
 };
 

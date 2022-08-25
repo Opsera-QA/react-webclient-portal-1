@@ -11,9 +11,8 @@ import taskActions from "components/tasks/task.actions";
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
-    setTask,
     type,
-    onSuccessFunction,
+    setTaskFunction,
     templateIdentifier,
   }) {
   const [status, setStatus] = useState();
@@ -80,8 +79,7 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
 
       if (isMongoDbId(newTask?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setTask(newTask);
-        onSuccessFunction();
+        setTaskFunction(newTask);
       }
     }
     catch (error) {
@@ -102,7 +100,7 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
     );
   };
 
-  if (onSuccessFunction == null) {
+  if (setTaskFunction == null) {
     return null;
   }
 
@@ -114,9 +112,8 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
 }
 
 CreateWorkflowWizardTaskInitializationScreen.propTypes = {
-  setTask: PropTypes.func,
   type: PropTypes.string,
-  onSuccessFunction: PropTypes.func,
+  setTaskFunction: PropTypes.func,
   templateIdentifier: PropTypes.string,
 };
 
