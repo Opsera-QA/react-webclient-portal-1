@@ -5,8 +5,6 @@ import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { PIPELINE_START_WIZARD_FLOWS } from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
-import SalesforcePipelineWizardPreRunTaskScreen
-  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardPreRunTaskScreen";
 import SalesforceTaskWizardPreRunTaskScreen
   from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceTaskWizardPreRunTaskScreen";
 
@@ -46,7 +44,7 @@ export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
 
     return (
       <SfdcPipelineWizard
-        gitTaskData={gitTasksData}
+        gitTaskData={internalTaskModel}
         handleClose={closePanel}
         closePanel={closePanel}
       />
