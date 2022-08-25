@@ -27,7 +27,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
   const { isPublicPathState } = useLocationReference();
-  const { isPublicPathState } = useLocationReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
