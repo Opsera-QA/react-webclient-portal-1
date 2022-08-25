@@ -13,12 +13,12 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialRegisterButton from "components/trial/registration/FreeTrialRegisterButton";
 import userActions from "components/user/user-actions";
 
-const FreeTrialRegistrationSignupScreen = (
+export default function FreeTrialRegistrationSignupScreen (
   {
     registrationModel,
     setRegistrationModel,
     setCurrentScreen,
-  }) => {
+  }) {
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const registerAccountFunction = async () => {
@@ -111,12 +111,10 @@ const FreeTrialRegistrationSignupScreen = (
       </div>
     </div>
   );
-};
+}
 
 FreeTrialRegistrationSignupScreen.propTypes = {
   registrationModel: PropTypes.object,
   setRegistrationModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
 };
-
-export default FreeTrialRegistrationSignupScreen;

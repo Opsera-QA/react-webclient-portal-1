@@ -8,7 +8,7 @@ import WizardButton from "temp-library-components/wizard/button/WizardButton";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 
 // TODO: Standardize styling
-const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
+export default function FreeTrialRegistrationWelcomeScreen({ setCurrentScreen }) {
   return (
     <div
       className={"h-100 w-100 d-flex"}
@@ -52,10 +52,8 @@ const FreeTrialRegistrationWelcomeScreen = ({ setCurrentScreen }) => {
       </div>
     </div>
   );
-};
+}
 
 FreeTrialRegistrationWelcomeScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
 };
-
-export default FreeTrialRegistrationWelcomeScreen;

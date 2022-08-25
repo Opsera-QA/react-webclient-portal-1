@@ -6,7 +6,7 @@ import { fontThemeConstants } from "temp-library-components/theme/font.theme.con
 import WizardButton from "temp-library-components/wizard/button/WizardButton";
 import { useHistory } from "react-router-dom";
 
-const FreeTrialRegistrationCongratulationsScreen = () => {
+export default function FreeTrialRegistrationCongratulationsScreen() {
   const history = useHistory();
 
   const routeToLoginScreenButton = () => {
@@ -65,10 +65,8 @@ const FreeTrialRegistrationCongratulationsScreen = () => {
       </div>
     </div>
   );
-};
+}
 
 FreeTrialRegistrationCongratulationsScreen.propTypes = {
   // setCurrentScreen: PropTypes.func,
 };
-
-export default FreeTrialRegistrationCongratulationsScreen;
