@@ -16,6 +16,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 
 //const OktaSignIn = require("@okta/okta-signin-widget");
 import OktaSignIn from '@okta/okta-signin-widget';
+import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 
 const LoginForm = ({ authClient }) => {
   const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
@@ -31,6 +32,7 @@ const LoginForm = ({ authClient }) => {
   const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
   const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
+  useBackgroundColorReference(true);
 
   useEffect(() => {
     if (viewType === "domain" && oktaSignInWidget) {

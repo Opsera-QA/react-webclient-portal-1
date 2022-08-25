@@ -11,7 +11,7 @@ import { lightThemeConstants } from "temp-library-components/theme/light.theme.c
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
-import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
+import MainViewContainer from "components/common/containers/MainViewContainer";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -22,11 +22,11 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
+  const [backgroundColor, setBackgroundColor] = useState(THEMES.LIGHT);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
-  const { isPublicPathState } = useLocationReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -283,16 +283,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     }
   };
 
-  const getScreenBackgroundColor = () => {
-    const themeConstants = getThemeConstants();
-
-    if (isPublicPathState === true) {
-      return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
-    }
-
-    return themeConstants.COLOR_PALETTE.WHITE;
-  };
-
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -327,16 +317,12 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       userExpiration: getFreeTrialUserExpirationDate(),
       headerNavigationBar: headerNavigationBar,
       setHeaderNavigationBar: setHeaderNavigationBar,
+      backgroundColor: backgroundColor,
+      setBackgroundColor: setBackgroundColor,
     }}>
-      <div
-        className={"w-100"}
-        style={{
-          height: "100vh",
-          backgroundColor: getScreenBackgroundColor(),
-        }}
-      >
+      <MainViewContainer>
         {children}
-      </div>
+      </MainViewContainer>
     </AuthContext.Provider>
   );
 };

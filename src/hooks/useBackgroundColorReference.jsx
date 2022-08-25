@@ -1,53 +1,32 @@
-import { useEffect, useState } from "react";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import useLocationReference from "hooks/useLocationReference";
+import { AuthContext } from "contexts/AuthContext";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-export const PUBLIC_PATHS = {
-  LOGIN: "/login",
-  SIGNUP: "/signup",
-  REGISTRATION: "/registration",
-  FREE_TRIAL_REGISTRATION: "/trial/registration",
-  LDAP_ACCOUNT_REGISTRATION: "/account/registration",
-  AWS_MARKETPLACE_REGISTRATION: "/signup/awsmarketplace",
-};
-
-const isPathPublic = (path) => {
-  if (hasStringValue(path) === false) {
-    return false;
-  }
-
-  return (
-    path === "/login" ||
-    path === "/signup" ||
-    path === "/registration" ||
-    path === "/trial/registration" ||
-    path.includes("/account/registration") ||
-    path.includes("/signup/awsmarketplace")
-  );
-};
-
-export default function useBackgroundColorReference(themeConstants, customBackgroundColor) {
+export default function useBackgroundColorReference(usePurpleBackground, customBackgroundColor) {
   const { isPublicPathState } = useLocationReference();
-  const [backgroundColor, setBackgroundColor] = useState(undefined);
+  const {
+    themeConstants,
+    backgroundColor,
+    setBackgroundColor,
+  } = useContext(AuthContext);
 
   useEffect(() => {
     if (hasStringValue(customBackgroundColor) === true) {
-      setBackgroundColor(customBackgroundColor)
-    }
-
-    if (isPublicPathState === true) {
+      setBackgroundColor(customBackgroundColor);
+    } else if (usePurpleBackground === true || isPublicPathState === true) {
       setBackgroundColor(themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE);
+    } else {
+      setBackgroundColor(themeConstants.COLOR_PALETTE.WHITE);
     }
-
-    setBackgroundColor(themeConstants.COLOR_PALETTE.WHITE);
 
     return () => {
-      setBackgroundColor(undefined);
+      setBackgroundColor(themeConstants.COLOR_PALETTE.WHITE);
     };
   }, []);
 
   return ({
     backgroundColor: backgroundColor,
+    setBackgroundColor: setBackgroundColor,
   });
 }
