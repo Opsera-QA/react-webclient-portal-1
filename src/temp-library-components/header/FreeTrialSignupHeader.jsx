@@ -19,7 +19,7 @@ export default function FreeTrialSignupHeader({ className }) {
   // </div>
 
   return (
-    <div className={"darkBackgroundText"}>
+    <div className={"darkBackgroundText pt-2 pb-4"}>
       {/*<img*/}
       {/*  alt="Opsera"*/}
       {/*  src="/img/logos/opsera_bird_infinity_171_126.png"*/}

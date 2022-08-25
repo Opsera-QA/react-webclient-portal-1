@@ -73,9 +73,10 @@ function WizardSelectionOption(
         style={{
           backgroundColor: getBackgroundColor(),
           borderRadius: ".5em",
-          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+          fontFamily: fontThemeConstants.FONT_FAMILIES.MAIN_SITE_FONT_FAMILIES,
           fontWeight: 400,
           fontSize: "18px",
+          opacity: disabled === true ? ".5" : undefined,
           cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
         }}
         className={"mx-auto d-flex"}

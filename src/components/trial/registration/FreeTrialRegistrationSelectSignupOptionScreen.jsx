@@ -57,7 +57,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faGithub}
-              text={"Github (Coming Soon)"}
+              text={"Github"}
               option={SIGNUP_OPTIONS.GITHUB}
               disabled={true}
             />
@@ -65,7 +65,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faGitlab}
-              text={"Gitlab (Coming Soon)"}
+              text={"Gitlab"}
               option={SIGNUP_OPTIONS.GITLAB}
               disabled={true}
             />
@@ -73,7 +73,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faLinkedin}
-              text={"LinkedIn (Coming Soon)"}
+              text={"LinkedIn"}
               option={SIGNUP_OPTIONS.LINKED_IN}
               disabled={true}
             />
