@@ -24,7 +24,7 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
   } = useComponentStateReference();
 
   useEffect(() => {
-    initializeSalesforcePipelineTemplate().catch((error) => {
+    initializeSalesforceTaskTemplate().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -32,7 +32,7 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
   }, []);
 
 
-  const initializeSalesforcePipelineTemplate = async () => {
+  const initializeSalesforceTaskTemplate = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
       // TODO: Lookup via task template identifier when implemented
