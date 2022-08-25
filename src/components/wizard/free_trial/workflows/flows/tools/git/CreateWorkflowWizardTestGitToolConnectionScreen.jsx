@@ -8,6 +8,8 @@ import {
 import WorkflowWizardToolConnectionScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import jenkinsAccountActions
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 export default function CreateWorkflowWizardTestGitToolConnectionScreen(
   {
@@ -21,26 +23,21 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen(
   const {
     toastContext,
     isMounted,
+    cancelTokenSource,
+    getAccessToken,
   } = useComponentStateReference();
 
-  const onSuccess = () => {
+  const onSuccess = async () => {
     try {
       const postBody = {
         toolId: jenkinsToolId,
         service: gitToolOption,
-        credentialsToolId: gitToolId,
+        credentailsToolId: gitToolId,
         credentialsId: gitToolId,
         credentialsDescription: gitToolId,
       };
       const newAccountModel = modelHelpers.parseObjectIntoModel(postBody, jenkinsToolAccountMetadata);
-      // TODO: Check with service dev on why this is failing
-      // const accountLinkResponse = await jenkinsAccountActions.createJenkinsAccountV2(getAccessToken, cancelTokenSource, toolConfigId, newAccountModel);
-      // newLogs.push(
-      //     `Status: ${accountLinkResponse}\n`,
-      //     `Continuing to next screen in a few seconds\n`,
-      // );
-      // setLogs([...newLogs]);
-
+      await jenkinsAccountActions.createJenkinsAccountV2(getAccessToken, cancelTokenSource, jenkinsToolId, newAccountModel);
       onSuccessFunction();
     }
     catch (error) {
