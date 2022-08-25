@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import { persistNewRecord } from "components/common/buttons/saving/saving-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 
-function FreeTrialRegisterButton(
+export default function FreeTrialRegisterButton(
   {
     registrationModel,
     registerAccountFunction,
@@ -37,10 +37,10 @@ function FreeTrialRegisterButton(
 
   const getLabel = () => {
     if (registeringAccount) {
-      return ("Creating Account...");
+      return ("Registering Account...");
     }
 
-    return ("Register Account");
+    return ("Continue");
   };
 
   if (registrationModel == null || registerAccountFunction == null) {
@@ -59,7 +59,14 @@ function FreeTrialRegisterButton(
         }
         onClick={createFreeTrialAccount}
       >
-        <span><IconBase icon={registeringAccount} className={"mr-2"} />{getLabel()}</span>
+        <span>
+          <IconBase
+            icon={faArrowRight}
+            isLoading={registeringAccount}
+            className={"mr-2"}
+          />
+          {getLabel()}
+        </span>
       </Button>
     </div>
   );
@@ -77,5 +84,3 @@ FreeTrialRegisterButton.propTypes = {
 FreeTrialRegisterButton.defaultProps = {
   showSuccessToasts: true,
 };
-
-export default FreeTrialRegisterButton;
