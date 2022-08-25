@@ -5,7 +5,7 @@ import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import taskActions from "components/tasks/task.actions";
 
-// TODO: Separate out the separate flows for task and pipeline
+// TODO: We should probably make base screens for updating pipelines and tasks and just pass in whatever extra
 export default function CreateSalesforceOrganizationSyncTaskWizardCompletionScreen(
   {
     task,
