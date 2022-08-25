@@ -253,6 +253,8 @@ function JenkinsStepConfiguration({
           model={jenkinsStepConfigurationDto}
           setModel={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+          plan={plan}
+          stepId={stepId}
         />
         <JenkinsPythonPanel
           dataObject={jenkinsStepConfigurationDto}
