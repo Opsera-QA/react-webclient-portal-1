@@ -2,8 +2,10 @@ import React, {useContext} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {AuthContext} from "contexts/AuthContext";
 import HelpDocumentation from "components/common/help/overlay/HelpDocumentation";
+import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 
 const HelpDocumentationScreen = () => {
+  useBackgroundColorReference(true);
   const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
 
   if (featureFlagHideItemInTest() !== false || featureFlagHideItemInProd() !== false) {

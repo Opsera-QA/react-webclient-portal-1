@@ -160,22 +160,20 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"}>
-          <div className="darkBackground">
-            <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
-            <Route path="/implicit/callback" component={LoginCallback} />
-            <Route path="/logout" exact component={Logout} />
+          <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
+          <Route path="/implicit/callback" component={LoginCallback} />
+          <Route path="/logout" exact component={Logout} />
 
-            <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/faq" exact component={Faq} />
-            <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
-            <Route path="/about" exact component={About} />
-            <Route path="/about/pricing" component={Pricing} />
-            <Route path="/help" component={OnlineHelp} />
-            <Route path="/registration" exact component={Registration} />
-            <Route path="/account/registration/:domain" exact component={AccountRegistration} />
-            <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
-          </div>
+          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/faq" exact component={Faq} />
+          <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
+          <Route path="/about" exact component={About} />
+          <Route path="/about/pricing" component={Pricing} />
+          <Route path="/help" component={OnlineHelp} />
+          <Route path="/registration" exact component={Registration} />
+          <Route path="/account/registration/:domain" exact component={AccountRegistration} />
+          <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
 
           <Route path="/" exact component={Home} />
 

@@ -3,8 +3,10 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FrequentlyAskedQuestionsVerticalTabContainer
   from "components/about/faq/FrequentlyAskedQuestionsVerticalTabContainer";
 import FaqSubNavigationBar from "components/about/faq/FaqSubNavigationBar";
+import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 
 const Faq = () => {
+  useBackgroundColorReference(true);
   return (
     <ScreenContainer
       navigationTabContainer={<FaqSubNavigationBar currentTab={"all"} />}
