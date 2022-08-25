@@ -41,7 +41,6 @@ export const taskTemplateMetadata = {
     {
       label: "Type",
       id: "type",
-      formText: "Type of pipeline supported.  Current supported values: sfdc or freetrial."
     },
     {
       label: "Created At",
@@ -91,9 +90,10 @@ export const taskTemplateMetadata = {
     },
   ],
   newObjectFields: {
-    type: [],
+    type: "",
     tags: [],
     name: "",
+    identifier: "",
     description: "",
     active: true,
     publicUse: true,

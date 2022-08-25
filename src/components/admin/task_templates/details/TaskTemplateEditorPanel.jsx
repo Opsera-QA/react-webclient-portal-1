@@ -10,6 +10,7 @@ import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
+import TaskTypeSelectInputBase from "components/common/list_of_values_input/tasks/TaskTypeSelectInputBase";
 
 export default function TaskTemplateEditorPanel({ templateModel, setTemplateModel, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -70,6 +71,13 @@ export default function TaskTemplateEditorPanel({ templateModel, setTemplateMode
             fieldName={"description"}
             dataObject={templateModel}
             setDataObject={setTemplateModel}
+          />
+        </Col>
+        <Col lg={6}>
+          <TaskTypeSelectInputBase
+            fieldName={"type"}
+            model={templateModel}
+            setModel={setTemplateModel}
           />
         </Col>
         {/*<Col lg={6}>*/}
