@@ -13,17 +13,10 @@ export default function WelcomeWidget({ className }) {
 
   const getWelcomeText = () => {
     const firstNameText = hasStringValue(userData?.firstName) ? `, ${userData.firstName}` : "";
-    const welcomeText = `Welcome Back to Opsera Free Trial${firstNameText}!`;
+    const welcomeText = `Hello ${firstNameText}!`;
 
     return (
-      <div
-        style={{
-          // fontWeight: 700,
-          // fontSize: "22px",
-          // color: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
-          // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-        }}
-      >
+      <div>
         {welcomeText}
       </div>
     );
@@ -31,10 +24,10 @@ export default function WelcomeWidget({ className }) {
 
   const getHowToLinks = () => {
     return (
-      <div>
-        <div>How to Link Here</div>
-        <div>How to Link Here</div>
-        <div>How to Link Here</div>
+      <div className={"marketingModulesText"}>
+        <div className={"my-2"}>How to Link Here</div>
+        <div className={"my-2"}>More how to Links Here</div>
+        <div className={"my-2"}>Even more how to Links Here</div>
       </div>
     );
   };
@@ -73,12 +66,7 @@ export default function WelcomeWidget({ className }) {
         <div className={"p-3"}>
           <div className={"d-flex"}>
             <div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 500,
-                }}
-              >
+              <div className={"marketingModulesText"}>
                 Get insights to help make the right decisions.
                 Watch the video on how to customise your dashboard
               </div>

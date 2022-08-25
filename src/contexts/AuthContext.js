@@ -11,7 +11,7 @@ import { lightThemeConstants } from "temp-library-components/theme/light.theme.c
 import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
-import { PUBLIC_PATHS } from "hooks/useLocationReference";
+import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -26,6 +26,8 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
+  const { isPublicPathState } = useLocationReference();
+  const { isPublicPathState } = useLocationReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -284,12 +286,12 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
 
   const getScreenBackgroundColor = () => {
     const themeConstants = getThemeConstants();
-    switch (history.location.pathname) {
-      case PUBLIC_PATHS.FREE_TRIAL_REGISTRATION:
-        return themeConstants.COLOR_PALETTE.BACKGROUND_PURPLE;
-      default:
-        return themeConstants.COLOR_PALETTE.WHITE;
+
+    if (isPublicPathState === true) {
+      return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
     }
+
+    return themeConstants.COLOR_PALETTE.WHITE;
   };
 
   return (

@@ -17,6 +17,7 @@ import LoginForm from "components/login/LoginForm";
 import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
 import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
+import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -172,9 +173,9 @@ const AppWithRouterAccess = () => {
 
     if (!authenticatedState && isPublicPathState !== true) {
       return (
-        <div className={"container-fluid m-0 loginScreenBackground"}>
+        <div className={"container-fluid m-0"}>
           <div className={"d-flex flex-row"}>
-            <div className={"w-100"} style={{ marginBottom: "26px"}}>
+            <div className={"w-100"}>
               <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
               <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
               <Route path="/logout" exact component={Logout} />

@@ -18,23 +18,21 @@ export default function AccountStatusWidget({ className }) {
           // fontSize: "22px",
         }}
       >
-        Account Status
+        My Account
       </div>
     );
   };
 
   const getAccountStats = () => {
     return (
-      <div
-        style={{
-          fontSize: "13px",
-          fontWeight: 500,
-        }}
-      >
-        <div>X Pipelines</div>
-        <div>Pipeline Status</div>
-        <div>X Days left in Free Trial</div>
-        <div>Other Account Level Stats</div>
+      <div className={"marketingModulesText"}>
+        <div className={"mb-2"}>Welcome to the Opsera Salesforce Free Trial.  Your account is registered and active for the
+          duration of this trial period. During this time you can create and run pipelines, review logs and learn about the
+          Unified Insights available around these operations.</div>
+        <div className={"my-2"}>You have 1 Pipeline configured</div>
+        <div className={"my-2"}>Pipelines are healthy</div>
+        <div className={"my-2"}>Your free trial will expire on 8/1/2000</div>
+        <div className={"my-2"}>For questions or help, email support@opsera.io</div>
       </div>
     );
   };

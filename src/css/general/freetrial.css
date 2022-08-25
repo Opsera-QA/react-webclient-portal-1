@@ -30,3 +30,10 @@ Styles specific to Free Trial
     text-align: center;
     margin-top:50px;
 }
+
+.marketingModulesText {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    letter-spacing: 1.3px;
+    line-height: 1.5;
+}

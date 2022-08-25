@@ -18,7 +18,7 @@ export const FREE_TRIAL_REGISTRATION_SCREENS = {
 
 const FreeTrialRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState(FREE_TRIAL_REGISTRATION_SCREENS.WELCOME_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(FREE_TRIAL_REGISTRATION_SCREENS.SELECT_SIGNUP_OPTION_SCREEN);
   const [registrationModel, setRegistrationModel] = useState(undefined);
 
   useEffect(() => {
