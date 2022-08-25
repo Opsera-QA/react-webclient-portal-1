@@ -11,6 +11,8 @@ import VanityMetricContainer from "components/common/panels/insights/charts/Vani
 import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {ResponsiveBar} from "@nivo/bar";
+import GitlabLeadTimeHelpDocumentation
+    from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 
 function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -203,6 +205,11 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
+                chartHelpComponent={(closeHelpPanel) => (
+                  <GitlabLeadTimeHelpDocumentation
+                    closeHelpPanel={closeHelpPanel}
+                  />
+                )}
             />
         </div>
     );
