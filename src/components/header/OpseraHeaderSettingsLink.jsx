@@ -69,7 +69,7 @@ export default function OpseraHeaderSettingsLink() {
   return (
     <Navbar.Collapse id={"basic-navbar-nav"}>
       <span
-        className={"ml-3"}
+        className={"mx-2"}
         style={getStyling()}
         onClick={handleLink}
       >

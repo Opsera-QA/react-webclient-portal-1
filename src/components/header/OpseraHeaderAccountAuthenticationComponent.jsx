@@ -93,7 +93,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         }}
       >
         {getUserIconTitle()}
-        <span className={"mx-2"}>{fullUserName}</span>
+        <span className={"mx-1"}>{fullUserName}</span>
       </span>
     );
   };
@@ -173,9 +173,9 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   return (
     <Navbar.Collapse id={"basic-navbar-nav"}>
       <Nav className={"ml-auto"}>
-        {getUserIconDropdown()}
         {/*{getViewTypeDropdown()}*/}
         <OpseraHeaderSettingsLink />
+        {getUserIconDropdown()}
       </Nav>
     </Navbar.Collapse>
   );
