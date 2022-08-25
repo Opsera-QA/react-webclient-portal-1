@@ -7,7 +7,6 @@ lightThemeConstants.COLOR_PALETTE = {
   // Blue
   SALESFORCE_BLUE: "#1798c1",
   LIGHT_BLUE: "#67C1E3",
-  BLUE_HIGHLIGHT: "#cF940C",
 
   // Purple
   GRAY_PURPLE: "#DFD1FF",
@@ -24,6 +23,7 @@ lightThemeConstants.COLOR_PALETTE = {
   // Gold
   LIGHT_GOLD: "#E5C27E",
   GOLD: "#FFBE3F",
+  GOLD_HIGHLIGHT: "#cF940C",
 
   // Orange
   ORANGE: "#FA7245",

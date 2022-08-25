@@ -5,13 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 
-export const SUPPORTED_WIZARD_SELECTION_OPTION_TYPES = {
-  PRIMARY: "primary",
-  SECONDARY: "secondary",
-};
-
-// TODO: Pick better name, standardize
-function WizardSelectionOption(
+export default function WizardSelectionOption(
   {
     className,
     onClickFunction,
@@ -45,24 +39,6 @@ function WizardSelectionOption(
     }
   };
 
-  const getFontColor = () => {
-    switch (type) {
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
-        return themeConstants.COLOR_PALETTE.WHITE;
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
-        return themeConstants.COLOR_PALETTE.BLACK;
-    }
-  };
-
-  const getBackgroundColor = () => {
-    switch (type) {
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
-        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
-        return themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER;
-    }
-  };
-
   if (onClickFunction == null) {
     return null;
   }
@@ -71,7 +47,7 @@ function WizardSelectionOption(
     <div className={className}>
       <div
         style={{
-          backgroundColor: getBackgroundColor(),
+          backgroundColor: themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER,
           borderRadius: ".5em",
           fontFamily: fontThemeConstants.FONT_FAMILIES.MAIN_SITE_FONT_FAMILIES,
           fontWeight: 400,
@@ -79,15 +55,15 @@ function WizardSelectionOption(
           opacity: disabled === true ? ".5" : undefined,
           cursor: mouseHelper.getMouseCursor(onClickFunction, disabled),
         }}
-        className={"mx-auto d-flex"}
+        className={"mx-auto d-flex wizard-selection-option"}
         onClick={() => onClickFunction(option)}
       >
         <div className={"d-flex p-2"}>
           {getIconBox()}
           <div
-            className={"m-auto"}
+            className={"m-auto wizard-font"}
             style={{
-              color: getFontColor(),
+              color: themeConstants.COLOR_PALETTE.BLACK,
             }}
           >
             {text}
@@ -107,9 +83,3 @@ WizardSelectionOption.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
 };
-
-WizardSelectionOption.defaultProps = {
-  type: SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY,
-};
-
-export default WizardSelectionOption;

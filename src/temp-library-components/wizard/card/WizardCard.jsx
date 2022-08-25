@@ -4,8 +4,7 @@ import OpseraHeaderIcon from "temp-library-components/icon/opsera/OpseraHeaderIc
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Pick better name
-// TODO: Allow to pass height, width
-function WizardCard(
+export default function WizardCard(
   {
     height,
     width,
@@ -33,14 +32,14 @@ function WizardCard(
           style={{
             width: `calc(${width} - 75px)`,
             height: "5px",
-            backgroundColor: themeConstants.COLOR_PALETTE.BLUE_HIGHLIGHT,
+            backgroundColor: themeConstants.COLOR_PALETTE.GOLD_HIGHLIGHT,
             borderRadius: "2px",
           }}
         />
         <div
           style={{
             overflowY: "auto",
-            height: `calc(${height} - 5px)`,
+            height: height ? `calc(${height} - 5px)` : undefined,
           }}
           className={bodyClassName}
         >
@@ -58,5 +57,3 @@ WizardCard.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
-
-export default WizardCard;

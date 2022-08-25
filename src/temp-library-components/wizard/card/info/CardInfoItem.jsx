@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OpseraHeaderIcon from "temp-library-components/icon/opsera/OpseraHeaderIcon";
 import { fontThemeConstants } from "temp-library-components/theme/font.theme.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Pick better name
-function WizardCardInfoItem(
+export default function WizardCardInfoItem(
   {
     className,
     title,
@@ -13,11 +12,19 @@ function WizardCardInfoItem(
   }) {
   const { themeConstants } = useComponentStateReference();
 
+  const getTitle = () => {
+    if (title) {
+      return (
+        <div className={"d-flex"}>
+          <h4 className={"mx-auto"}>{title}</h4>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={className}>
-      <div className={"d-flex"}>
-        <h4 className={"mx-auto"}>{title}</h4>
-      </div>
+      {getTitle()}
       <div
         style={{
           color: themeConstants.COLOR_PALETTE.TEXT_GRAY,
@@ -38,5 +45,3 @@ WizardCardInfoItem.propTypes = {
   title: PropTypes.any,
   description: PropTypes.any,
 };
-
-export default WizardCardInfoItem;

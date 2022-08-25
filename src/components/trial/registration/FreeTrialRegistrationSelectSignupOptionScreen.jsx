@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import FreeTrialSignupHeader from "temp-library-components/header/FreeTrialSignupHeader";
 import WizardCard from "temp-library-components/wizard/card/WizardCard";
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
-import WizardSelectionOption, {
-  SUPPORTED_WIZARD_SELECTION_OPTION_TYPES,
-} from "temp-library-components/wizard/option/WizardSelectionOption";
+import WizardSelectionOption from "temp-library-components/wizard/option/WizardSelectionOption";
 import { faGithub, faGitlab, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/pro-light-svg-icons";
 import WizardCardInfoItem from "temp-library-components/wizard/card/info/CardInfoItem";
@@ -36,26 +34,26 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
-          height={"575px"}
+          height={"505px"}
           width={"525px"}
         >
-          <div className={"p-4"}>
+          <div className={"px-4 pt-3"}>
             <WizardCardInfoItem
-              title={"Signup"}
-              description={"Sign up for Free Trial to experience how Opsera can enhance your development process."}
+              // title={"Signup"}
+              // description={"Sign up for Free Trial to experience how Opsera can enhance your development process."}
+              description={"Choose the sign in account method to use."}
             />
-            <WizardSelectionOption
-              onClickFunction={handleSelection}
-              className={"mt-5"}
-              icon={faUser}
-              text={"Sign Up with Email Address"}
-              type={SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY}
-              option={SIGNUP_OPTIONS.OPSERA}
-            />
-            <DividerWithCenteredText text={"OR"} className={"my-3 mx-3"} />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
+              icon={faUser}
+              text={"Sign Up with Email Address"}
+              option={SIGNUP_OPTIONS.OPSERA}
+            />
+            <DividerWithCenteredText text={"OR"} className={"my-4 mx-4"} />
+            <WizardSelectionOption
+              onClickFunction={handleSelection}
+              className={"mt-4"}
               icon={faGithub}
               text={"Github"}
               option={SIGNUP_OPTIONS.GITHUB}
@@ -63,7 +61,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
-              className={"mt-3"}
+              className={"mt-4"}
               icon={faGitlab}
               text={"Gitlab"}
               option={SIGNUP_OPTIONS.GITLAB}
@@ -71,7 +69,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
-              className={"mt-3"}
+              className={"mt-4"}
               icon={faLinkedin}
               text={"LinkedIn"}
               option={SIGNUP_OPTIONS.LINKED_IN}
