@@ -81,10 +81,6 @@ export const taskTemplateMetadata = {
       formText: "If enabled, user can only have one copy of this template in use at a time.  They will not be allowed to create a second pipeline while another one exists with this template.",
     },
     {
-      label: "Roles",
-      id: "roles"
-    },
-    {
       label: "Configuration",
       id: "configuration",
     },
