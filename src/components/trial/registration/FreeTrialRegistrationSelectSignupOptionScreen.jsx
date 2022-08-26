@@ -58,7 +58,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
               text={"Sign in with Email Address"}
               option={SIGNUP_OPTIONS.OPSERA}
             />
-            <DividerWithCenteredText text={"OR"} className={"my-4 mx-4"} />
+            <DividerWithCenteredText text={"OR"} className={"m-4"} />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-4"}

@@ -22,6 +22,7 @@ export function DividerWithCenteredText(
           className={"mx-2"}
           style={{
             color: themeConstants.COLOR_PALETTE.BLACK,
+            whiteSpace: "nowrap",
           }}
         >
           {text}

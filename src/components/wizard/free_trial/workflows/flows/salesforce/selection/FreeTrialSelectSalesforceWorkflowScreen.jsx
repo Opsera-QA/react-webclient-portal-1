@@ -135,7 +135,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
           <div className={"w-100"}>
             <CenteredContentWrapper>
               <H5FieldSubHeader
-                className={"my-2"}
+                className={"mt-3 mb-4"}
                 subheaderText={"Would you like to create a new Salesforce Workflow or launch an existing one?"}
               />
             </CenteredContentWrapper>
@@ -146,8 +146,8 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
                 option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
                 text={"Create Salesforce Workflow"}
                 description={`
-              Set up a new Salesforce Workflow 
-            `}
+                  Set up a new Salesforce Workflow 
+                `}
                 icon={faSalesforce}
                 className={"mb-2"}
               />

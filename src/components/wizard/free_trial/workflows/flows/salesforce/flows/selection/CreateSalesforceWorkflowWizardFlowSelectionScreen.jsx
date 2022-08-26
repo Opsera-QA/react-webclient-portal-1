@@ -6,6 +6,7 @@ import {
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton";
+import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
   className,
@@ -64,7 +65,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         selectedFlow={selectedFlow}
         setCurrentScreen={setCurrentScreen}
       />
-      <div>Coming Soon</div>
+      <DividerWithCenteredText text={"Coming Soon"} className={"m-4"} />
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
         selectedOption={selectedFlow}
