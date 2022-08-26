@@ -18,7 +18,6 @@ export default function FreeTrialRegistrationCongratulationsScreen() {
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
-          height={"420px"}
           width={"525px"}
           bodyClassName={"p-4 d-flex"}
         >
@@ -40,21 +39,26 @@ export default function FreeTrialRegistrationCongratulationsScreen() {
                 fontSize: "16px",
                 textAlign: "center",
               }}
+              className={"pb-4"}
             >
               <div className={"mt-3"}>
-                You have successfully completed the sign up process!
+                You have successfully registered your account in our system!
               </div>
-              <div className={"mt-3"}>
-                The final step is to verify your account with the email address registered.
+              <div className={"my-5"}>
+                There is one more step before we can proceed.  You must check your email account to verify your account
+                with the email address provided.
               </div>
-              <div className={"mt-3"}>
-                You will receive a confirmation email that must be completed within 24 hours.
+              <div className={"my-5"}>
+                &nbsp;
               </div>
-              <div className={"mt-3"}>
-                After confirming your email you may continue and log in to your new account.
+              <div className={"mt-5"} style={{textAlign:"left", fontSize: "smaller"}}>
+                You will receive a confirmation email that must be completed within 7 days in order to use this service.
+                After confirming your email you may continue and log in to your new account.  Please check your SPAM folder
+                if you do not see an email from Okta & Opsera shortly.
               </div>
+
             </div>
-            <div className={"mt-5"}>
+            <div className={"mt-2"}>
               <WizardButton
                 buttonText={"Continue"}
                 onClickFunction={routeToLoginScreenButton}

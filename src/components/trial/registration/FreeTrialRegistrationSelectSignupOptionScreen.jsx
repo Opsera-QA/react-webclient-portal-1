@@ -16,7 +16,7 @@ const SIGNUP_OPTIONS = {
   OPSERA: "opsera",
 };
 
-export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurrentScreen}) {
+export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurrentScreen }) {
   const handleSelection = (selectedOption) => {
     switch (selectedOption) {
       case SIGNUP_OPTIONS.GITHUB:
@@ -34,20 +34,28 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
-          height={"505px"}
           width={"525px"}
         >
-          <div className={"px-4 pt-3"}>
+          <div className={"px-4 py-3"}>
+            <div className={"mt-2 mb-5 w-100"} style={{textAlign: "center"}}>
+              <img
+                alt={"Opsera Inc."}
+                src={"/img/logos/opsera_bird_transparent_158x120.png"}
+                width={"158"}
+                height={"120"}
+              />
+            </div>
+
             <WizardCardInfoItem
               // title={"Signup"}
               // description={"Sign up for Free Trial to experience how Opsera can enhance your development process."}
-              description={"Choose the sign in account method to use."}
+              description={"Choose the sign in method to use."}
             />
             <WizardSelectionOption
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faUser}
-              text={"Sign Up with Email Address"}
+              text={"Sign in with Email Address"}
               option={SIGNUP_OPTIONS.OPSERA}
             />
             <DividerWithCenteredText text={"OR"} className={"my-4 mx-4"} />
@@ -79,7 +87,8 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
         </WizardCard>
       </div>
     </div>
-  );
+  )
+    ;
 }
 
 FreeTrialRegistrationSelectSignupOptionScreen.propTypes = {
