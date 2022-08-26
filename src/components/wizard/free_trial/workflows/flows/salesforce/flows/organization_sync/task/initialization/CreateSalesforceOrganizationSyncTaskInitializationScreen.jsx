@@ -8,6 +8,9 @@ import CreateWorkflowWizardTaskInitializationScreen
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import {
+  taskTemplateIdentifierConstants
+} from "../../../../../../../../../admin/task_templates/taskTemplateIdentifier.constants";
 
 export default function CreateSalesforceOrganizationSyncTaskInitializationScreen(
   {
@@ -24,7 +27,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     <CreateWorkflowWizardTaskInitializationScreen
       setTaskFunction={setTaskFunction}
       type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-      templateIdentifier={"test"}
+      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE}
     />
   );
 }

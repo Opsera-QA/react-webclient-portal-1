@@ -175,20 +175,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   };
 
   const repoSelectionInputs = () => {
-    if (
-      !isMongoDbId(taskConfigurationModel.getData("sfdcToolId")) ||
-      !isMongoDbId(taskConfigurationModel.getData("gitToolId"))
-    ) {
-      return (
-        <InlineErrorText
-          prependMessage={
-            "Task was not configured properly, Please delete this Task and create a new one."
-          }
-          error={"No credentials were added."}
-        />
-      );
-    }
-    
     if ( canEdit
         // process.env.REACT_APP_STACK === "free-trial"
     ) {

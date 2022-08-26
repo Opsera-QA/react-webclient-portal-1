@@ -39,3 +39,8 @@ taskTemplateActions.getTemplateByIdentifier = async (getAccessToken, cancelToken
   const apiUrl = `/tasks/templates/platform/identifier/${taskTemplateIdentifier}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+taskTemplateActions.deployTemplate = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `/tasks/templates/platform/identifier/${identifier}/deploy`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
