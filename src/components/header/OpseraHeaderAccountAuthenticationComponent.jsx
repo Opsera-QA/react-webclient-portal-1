@@ -145,25 +145,26 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   if (!accessRoleData) {
-    return (
-      <Navbar.Collapse id={"basic-navbar-nav"}>
-        <Nav className={"ml-auto"}>
-          <Button
-            variant={"warning"}
-            className="mr-2"
-            onClick={gotoSignUp}
-          >
-            Sign Up
-          </Button>
-          <Button
-            variant={"outline-success"}
-            onClick={login}
-          >
-            Login
-          </Button>
-        </Nav>
-      </Navbar.Collapse>
-    );
+    return null;
+    // return (
+    //   <Navbar.Collapse id={"basic-navbar-nav"}>
+    //     <Nav className={"ml-auto"}>
+    //       <Button
+    //         variant={"warning"}
+    //         className="mr-2"
+    //         onClick={gotoSignUp}
+    //       >
+    //         Sign Up
+    //       </Button>
+    //       <Button
+    //         variant={"outline-success"}
+    //         onClick={login}
+    //       >
+    //         Login
+    //       </Button>
+    //     </Nav>
+    //   </Navbar.Collapse>
+    // );
   }
 
   return (
