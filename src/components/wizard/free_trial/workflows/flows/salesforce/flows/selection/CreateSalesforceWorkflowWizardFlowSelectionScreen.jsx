@@ -74,6 +74,17 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
         `}
         className={"mb-2"}
       />
+      <WizardSelectionRadioOption
+        onClickFunction={setSelectedFlow}
+        selectedOption={selectedFlow}
+        option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
+        text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
+        description={`
+          Handle a Merge Sync on demand from Salesforce to Git
+        `}
+        disabled={true}
+        className={"mb-2"}
+      />
       <ButtonContainerBase
         className={"mt-3"}
         leftSideButtons={
@@ -105,14 +116,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC
         }
         text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC}
-        disabled={true}
-        className={"mb-2"}
-      />
-      <WizardSelectionRadioOption
-        onClickFunction={setSelectedFlow}
-        selectedOption={selectedFlow}
-        option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
-        text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
         disabled={true}
         className={"mb-2"}
       />
