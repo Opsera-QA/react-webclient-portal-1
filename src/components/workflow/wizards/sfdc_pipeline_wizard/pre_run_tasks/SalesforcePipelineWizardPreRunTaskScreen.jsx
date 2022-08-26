@@ -17,6 +17,8 @@ import SalesforcePipelineWizardBranchSelectInput
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import SalesforcePipelineWizardConfirmRepositorySettingsButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardConfirmRepositorySettingsButton";
+import InlineErrorText from "components/common/status_notifications/inline/InlineErrorText";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function SalesforcePipelineWizardPreRunTaskScreen(
   {
@@ -42,6 +44,22 @@ export default function SalesforcePipelineWizardPreRunTaskScreen(
 
   if (pipeline == null || repositoryInformationModel == null) {
     return null;
+  }
+
+  if (
+    !isMongoDbId(repositoryInformationModel.getData("sfdcToolId")) ||
+    !isMongoDbId(repositoryInformationModel.getData("gitToolId"))
+  ) {
+    return (
+      <div className={className}>
+        <InlineErrorText
+          prependMessage={
+            "Pipeline was not configured properly, Please delete this pipeline and create a new one."
+          }
+          error={"No credentials were added."}
+        />
+      </div>
+    );
   }
 
   return (
