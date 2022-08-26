@@ -6,16 +6,12 @@ import IconBase from "components/common/icons/IconBase";
 import { faDraftingCompass, faTasks } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
-import {
-  PIPELINE_TYPES,
-  pipelineTypeConstants,
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
-import FieldContainer from "components/common/fields/FieldContainer";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
+import CardFooterBase from "temp-library-components/cards/CardFooterBase";
 
 const getLastRunEntry = (taskModel) => {
   const lastRun = taskModel?.getData("last_run");
@@ -86,26 +82,13 @@ export default function TaskCardBase(
 
   const getTypeHeader = () => {
    return (
-     <div
-       className={"d-flex w-100"}
-       style={{
-         backgroundColor: themeConstants.COLOR_PALETTE.SALESFORCE_BLUE,
-         color: themeConstants.COLOR_PALETTE.WHITE,
-       }}
-     >
-       <div
-         className={"mx-auto"}
-         style={{
-           fontSize: "13px",
-         }}
-       >
-         <IconBase
-           icon={faTasks}
-           className={"mr-2"}
-         />
-         Task
-       </div>
-     </div>
+
+     <CardFooterBase
+       backgroundColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+       color={themeConstants.COLOR_PALETTE.WHITE}
+       icon={faTasks}
+       text={"Task"}
+     />
    );
   };
 

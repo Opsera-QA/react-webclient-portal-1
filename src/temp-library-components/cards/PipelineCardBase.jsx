@@ -15,6 +15,7 @@ import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import FieldContainer from "components/common/fields/FieldContainer";
+import CardFooterBase from "temp-library-components/cards/CardFooterBase";
 
 const getLastRunEntry = (pipelineModel) => {
   const lastRun = pipelineModel?.getData("workflow.last_run");
@@ -83,28 +84,14 @@ export default function PipelineCardBase(
   };
 
   const getTypeHeader = () => {
-   return (
-     <div
-       className={"d-flex w-100"}
-       style={{
-         backgroundColor: themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE,
-         color: themeConstants.COLOR_PALETTE.WHITE,
-       }}
-     >
-       <div
-         className={"mx-auto"}
-         style={{
-           fontSize: "13px",
-         }}
-       >
-         <IconBase
-           icon={faDraftingCompass}
-           className={"mr-2"}
-         />
-         Pipeline
-       </div>
-     </div>
-   );
+    return (
+      <CardFooterBase
+        backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
+        color={themeConstants.COLOR_PALETTE.WHITE}
+        icon={faDraftingCompass}
+        text={"Pipeline"}
+      />
+    );
   };
 
   const getRunFields = () => {
@@ -124,7 +111,7 @@ export default function PipelineCardBase(
       <>
         <Row>
           <Col xs={6}>
-              {pipelineStatusField}
+            {pipelineStatusField}
           </Col>
           <Col xs={6}>
             <span className="mr-2">Runs:</span> {runCount}
