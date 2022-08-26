@@ -6,6 +6,8 @@ import IconBase from "../../../common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import FreeTrialLaunchSalesforceWorkflowWizardOverlay
+  from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 
 const EXTERNAL_LINKS = {
   YOUTUBE_CHANNEL: "https://youtube.com/channel/UCJJFTWPkGfK8Kq4nPbNAtaQ",
@@ -34,7 +36,16 @@ export default function SFDCLandingWidget({ className }) {
   const {
     themeConstants,
     userData,
+    toastContext,
   } = useComponentStateReference();
+
+
+  const launchWorkflowCreationWizard = () => {
+    toastContext.showOverlayPanel(
+      <FreeTrialLaunchSalesforceWorkflowWizardOverlay
+      />
+    );
+  };
 
 
   const handleClick = (url) => e => {
@@ -82,6 +93,7 @@ export default function SFDCLandingWidget({ className }) {
                  width="450"
                  height="193"
                  className={"pointer"}
+                 onClick={launchWorkflowCreationWizard}
             />
           </TooltipWrapper>
         </Col>
