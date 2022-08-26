@@ -112,7 +112,10 @@ export default function WizardSelectionRadioOption(
       >
         <div className={"d-flex p-2"}>
           {getIconBox()}
-          <div>
+          <div
+            // TODO: Should we center the text with the icon container?
+            // className={"my-auto"}
+          >
             <div
               className={"m-auto"}
               style={{

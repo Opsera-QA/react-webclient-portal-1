@@ -9,7 +9,7 @@ import CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
 import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import BackButton from "components/common/buttons/back/BackButton";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faDraftingCompass, faTasks } from "@fortawesome/pro-light-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
@@ -34,6 +34,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
         selectedOption={selectedFlow}
         option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC}
         text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC}
+        icon={faDraftingCompass}
         description={`
         Set up a basic Organization Sync workflow for syncing your Salesforce Organizations. 
         This operation will allow you to select modified files from your Git repository or Salesforce Organization and move it to the next organization.
@@ -47,6 +48,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING
         }
         text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING}
+        icon={faDraftingCompass}
         description={`
         Set up an Organization Sync workflow that includes an explicit unit testing step. 
         `}
@@ -59,6 +61,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP
         }
         text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP}
+        icon={faDraftingCompass}
         description={`
         Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
         `}
@@ -69,6 +72,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
         selectedOption={selectedFlow}
         option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK}
         text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK}
+        icon={faTasks}
         description={`
         Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
         `}
