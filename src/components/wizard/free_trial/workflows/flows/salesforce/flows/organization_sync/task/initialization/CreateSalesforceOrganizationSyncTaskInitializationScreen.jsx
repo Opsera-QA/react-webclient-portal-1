@@ -16,7 +16,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     flow,
   }) {
   const setTaskFunction = (task) => {
-    setTask({...task});
+    setTask({...task, name: salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK + " [Free Trial]"});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   };
 
