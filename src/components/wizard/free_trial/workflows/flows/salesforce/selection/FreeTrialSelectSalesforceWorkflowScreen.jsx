@@ -18,6 +18,8 @@ import {
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
+  from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
 
 export default function FreeTrialSelectSalesforceWorkflowScreen(
   {
@@ -116,18 +118,6 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
     );
   };
 
-  const getExistingWorkflowDescription = () => {
-    if (isLoading === true) {
-      return "Loading Salesforce Workflows";
-    }
-
-    if (!Array.isArray(workspaceItems) || workspaceItems.length === 0) {
-      return "No Salesforce Workflows found. Please create a new one";
-    }
-
-    return (`Launch a Salesforce Workflow`);
-  };
-
   const getBody = () => {
     switch (currentScreen) {
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN:
@@ -151,15 +141,11 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
                 icon={faSalesforce}
                 className={"mb-2"}
               />
-              <WizardSelectionRadioOption
-                onClickFunction={setCurrentScreen}
-                selectedOption={currentScreen}
-                option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
-                text={"Launch Existing Workflow"}
-                description={getExistingWorkflowDescription()}
-                icon={faRectangleList}
-                isBusy={isLoading}
-                disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
+              <FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+                isLoading={isLoading}
+                workspaceItems={workspaceItems}
                 className={"mb-2"}
               />
             </div>
