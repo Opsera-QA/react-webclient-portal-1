@@ -37,7 +37,7 @@ const getPipelineStatusField = (pipelineModel) => {
 };
 
 // TODO: Rewrite
-export default function WorkspacePipelineCardBase(
+export default function PipelineCardBase(
   {
     pipelineModel,
     onClickFunction,
@@ -74,8 +74,8 @@ export default function WorkspacePipelineCardBase(
   const getDescription = () => {
     return (
       <div>
-        <div className={"description-height small pl-1"}>
-          <DescriptionField dataObject={pipelineModel} fieldName={"description"} />
+        <div className={"small pl-1"}>
+          <DescriptionField dataObject={pipelineModel} className={"description-height"} />
           {getRunFields()}
         </div>
       </div>
@@ -162,7 +162,7 @@ export default function WorkspacePipelineCardBase(
   );
 }
 
-WorkspacePipelineCardBase.propTypes = {
+PipelineCardBase.propTypes = {
   pipelineModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,

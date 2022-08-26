@@ -5,6 +5,15 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import FreeTrialWorkspacePipelineCardView from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineCardView";
 import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
 import FreeTrialWorkspaceTaskCardView from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskCardView";
+import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import WorkspacePipelineCard from "components/workspace/cards/WorkspacePipelineCard";
+import modelHelpers from "components/common/model/modelHelpers";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import { useHistory } from "react-router-dom";
+import TaskCardBase from "temp-library-components/cards/TaskCardBase";
+import ToolModel from "components/inventory/tools/tool.model";
+import RegistryToolCard from "components/common/fields/inventory/RegistryToolCard";
+import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
 
 export default function FreeTrialWorkspaceItemCardView(
   {
@@ -15,39 +24,30 @@ export default function FreeTrialWorkspaceItemCardView(
     toolMetadata,
     taskMetadata,
   }) {
-  const getCards = () => {
-    if (!Array.isArray(workspaceItems) || workspaceItems.length === 0) {
-      return null;
+  const history = useHistory();
+
+  const getWorkspaceItemCard = (workspaceItem) => {
+    switch (workspaceItem?.workspaceType) {
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+        return (
+          <WorkspacePipelineCard
+            pipeline={workspaceItem}
+          />
+        );
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        return (
+          <WorkspaceTaskCard
+            task={workspaceItem}
+            taskMetadata={taskMetadata}
+          />
+        );
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+        return (
+          <RegistryToolCard
+            toolData={new ToolModel({ ...workspaceItem }, toolMetadata, false)}
+          />
+        );
     }
-
-    const pipelines = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE);
-    const tools = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL);
-    const tasks = workspaceItems.filter((item) => item.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK);
-
-    return (
-     <>
-       <FreeTrialWorkspacePipelineCardView
-         loadData={loadData}
-         pipelineFilterModel={pipelineFilterModel}
-         pipelines={pipelines}
-         isLoading={isLoading}
-       />
-       <FreeTrialWorkspaceRegistryCardView
-         loadData={loadData}
-         pipelineFilterModel={pipelineFilterModel}
-         tools={tools}
-         isLoading={isLoading}
-         toolMetadata={toolMetadata}
-       />
-       <FreeTrialWorkspaceTaskCardView
-         loadData={loadData}
-         taskFilterModel={pipelineFilterModel}
-         tasks={tasks}
-         isLoading={isLoading}
-         taskMetadata={taskMetadata}
-       />
-     </>
-    );
   };
 
   return (
@@ -55,7 +55,12 @@ export default function FreeTrialWorkspaceItemCardView(
       isLoading={isLoading}
       loadData={loadData}
       paginationModel={pipelineFilterModel}
-      cards={getCards()}
+      cards={
+        <VerticalCardViewBase
+          getCardFunction={getWorkspaceItemCard}
+          data={workspaceItems}
+        />
+      }
     />
   );
 }

@@ -17,7 +17,14 @@ function VerticalCardViewBase({ data, getCardFunction, noDataMessage }) {
   return (
     <Row className={"mx-0"}>
       {data.map((toolData, index) => (
-        <Col key={index} className={"m-2 px-0"}>
+        <Col
+          key={index}
+          xl={3}
+          lg={4}
+          md={6}
+          sm={12}
+          className={"p-2"}
+        >
           {getCardFunction(toolData)}
         </Col>
       ))}

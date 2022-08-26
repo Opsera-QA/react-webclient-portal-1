@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TaskCard from "components/common/fields/tasks/TaskCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import modelHelpers from "components/common/model/modelHelpers";
+import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
 
 export default function FreeTrialWorkspaceTaskCardView(
   {
@@ -15,8 +14,9 @@ export default function FreeTrialWorkspaceTaskCardView(
   }) {
   const getTaskCard = (task) => {
     return (
-      <TaskCard
-        taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
+      <WorkspaceTaskCard
+        task={task}
+        taskMetadata={taskMetadata}
       />
     );
   };

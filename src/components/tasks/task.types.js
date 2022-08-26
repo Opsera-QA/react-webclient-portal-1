@@ -1,4 +1,29 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { faAws, faGit, faGitAlt, faMicrosoft, faSalesforce } from "@fortawesome/free-brands-svg-icons";
+
+// TODO: Rewrite to follow current standards
+export const taskTypeConstants = {};
+
+taskTypeConstants.getIconForTaskType = (taskType) => {
+  if (hasStringValue(taskType) === false) {
+    return null;
+  }
+
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
+      return faSalesforce;
+    case TASK_TYPE_CATEGORIES.GIT:
+      return faGit;
+    case TASK_TYPE_CATEGORIES.AWS:
+      return faAws;
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return faGitAlt;
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return faMicrosoft;
+  }
+};
 
 export const TASK_TYPES = {
   // Salesforce
@@ -184,6 +209,18 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   //snaplogic
   { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
 ];
+
+taskTypeConstants.getTaskCategoryForType = (taskType) => {
+  if (hasStringValue(taskType) !== true) {
+    return "";
+  }
+
+  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find((taskTypeDefinition) => {
+    return taskTypeDefinition.value === taskType;
+  });
+
+  return taskTypeDefinition?.category;
+};
 
 export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = true) => {
   if (
