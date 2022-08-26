@@ -18,8 +18,8 @@ export default function WelcomeWidget({ className }) {
   } = useComponentStateReference();
 
   const getWelcomeText = () => {
-    //const firstNameText = hasStringValue(userData?.firstName) ? `, ${userData.firstName}` : "";
-    const welcomeText = `Hello ${userData.firstName}!`;
+    const welcomeText = hasStringValue(userData?.firstName) === true ? `Hello ${userData?.firstName}` : "Hello";
+    // const welcomeText = `Hello ${userData.firstName}!`;
 
     return (
       <div>

@@ -25,6 +25,32 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   }) {
   const { themeConstants } = useComponentStateReference();
 
+  const getComingSoonItems = () => {
+    return (
+      <>
+        <DividerWithCenteredText text={"Coming Soon"} className={"m-4"} />
+        <WizardSelectionRadioOption
+          onClickFunction={setSelectedFlow}
+          selectedOption={selectedFlow}
+          option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION}
+          text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION}
+          disabled={true}
+          className={"mb-2"}
+        />
+        <WizardSelectionRadioOption
+          onClickFunction={setSelectedFlow}
+          selectedOption={selectedFlow}
+          option={
+            salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC
+          }
+          text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC}
+          disabled={true}
+          className={"mb-2"}
+        />
+      </>
+    );
+  };
+
   return (
     <div className={className}>
       <CenteredContentWrapper>
@@ -116,25 +142,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           setCurrentScreen={setCurrentScreen}
         />
       </ButtonContainerBase>
-      <DividerWithCenteredText text={"Coming Soon"} className={"m-4"} />
-      <WizardSelectionRadioOption
-        onClickFunction={setSelectedFlow}
-        selectedOption={selectedFlow}
-        option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION}
-        text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION}
-        disabled={true}
-        className={"mb-2"}
-      />
-      <WizardSelectionRadioOption
-        onClickFunction={setSelectedFlow}
-        selectedOption={selectedFlow}
-        option={
-          salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC
-        }
-        text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC}
-        disabled={true}
-        className={"mb-2"}
-      />
     </div>
   );
 }
