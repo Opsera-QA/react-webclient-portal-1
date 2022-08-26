@@ -27,7 +27,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     <CreateWorkflowWizardTaskInitializationScreen
       setTaskFunction={setTaskFunction}
       type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE}
+      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_TASK}
     />
   );
 }
