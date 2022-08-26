@@ -10,7 +10,7 @@ export const SUPPORTED_WIZARD_SELECTION_OPTION_TYPES = {
 };
 
 // TODO: Pick better name, standardize
-function WizardSelectionRadioOption(
+export default function WizardSelectionRadioOption(
   {
     className,
     onClickFunction,
@@ -19,13 +19,14 @@ function WizardSelectionRadioOption(
     icon,
     option,
     type,
+    isBusy,
     selectedOption,
     disabled,
   }) {
   const { themeConstants } = useComponentStateReference();
 
   const getIconBox = () => {
-    if (icon) {
+    if (icon || isBusy === true) {
       return (
         <div
           className={"mr-3"}
@@ -37,6 +38,7 @@ function WizardSelectionRadioOption(
           <div className={"py-3 px-4"}>
             <IconBase
               icon={icon}
+              isLoading={isBusy}
               iconSize={"lg"}
               className={"m-auto"}
             />
@@ -130,9 +132,6 @@ function WizardSelectionRadioOption(
               {description}
             </div>
           </div>
-          <div className={"ml-auto"}>
-
-          </div>
         </div>
       </div>
     </div>
@@ -149,10 +148,9 @@ WizardSelectionRadioOption.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
   selectedOption: PropTypes.string,
+  isBusy: PropTypes.bool,
 };
 
 WizardSelectionRadioOption.defaultProps = {
   type: SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY,
 };
-
-export default WizardSelectionRadioOption;
