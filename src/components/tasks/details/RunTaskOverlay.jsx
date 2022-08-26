@@ -182,7 +182,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       return (
         <InlineErrorText
           prependMessage={
-            "Pipeline was not configured properly, Please delete this pipeline and create a new one."
+            "Task was not configured properly, Please delete this Task and create a new one."
           }
           error={"No credentials were added."}
         />
