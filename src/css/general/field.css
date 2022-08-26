@@ -151,6 +151,11 @@ pre {
 .vertical-selection-card {
     /*min-width: 200px;*/
     /*width: 240px;*/
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-selection-card:hover {
+    box-shadow: 0 0 40px rgba(46, 25, 86, .25);
 }
 
 .vertical-selection-card .title-icon {

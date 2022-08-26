@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Card} from "react-bootstrap";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
+// TODO: Refactor, start from scratch
 export default function IconCardContainerBase(
   {
     children,
@@ -12,6 +14,9 @@ export default function IconCardContainerBase(
     footerBar,
     className,
     contentBody,
+    style,
+    onClickFunction,
+    tooltip,
   }) {
   const getCardTitle = () => {
     if (isLoading) {
@@ -30,24 +35,32 @@ export default function IconCardContainerBase(
   };
 
   const getCardFooter = () => {
-    if (!isLoading) {
-      return children;
+    if (!isLoading && children) {
+      return (
+        <Card.Footer>
+          {children}
+        </Card.Footer>
+      );
     }
   };
 
   return (
-    <Card className={`mb-2 h-100 ${className}`}>
-      {header}
-      <Card.Title className="mb-0 px-2">
-        {getCardTitle()}
-      </Card.Title>
-      <Card.Body className="h-100 px-2 py-0">
-        {getCardBody()}
-      </Card.Body>
-      <Card.Footer>
+    <TooltipWrapper innerText={tooltip}>
+      <div
+        className={`card mb-2 h-100 ${className}`}
+        style={style}
+        onClick={onClickFunction}
+      >
+        <Card.Title className="mb-0 px-2">
+          {getCardTitle()}
+        </Card.Title>
+        <Card.Body className="h-100 px-2 py-0">
+          {getCardBody()}
+        </Card.Body>
         {getCardFooter()}
-      </Card.Footer>
-    </Card>
+        {header}
+      </div>
+    </TooltipWrapper>
   );
 }
 
@@ -59,4 +72,7 @@ IconCardContainerBase.propTypes = {
   footerBar: PropTypes.object,
   isLoading: PropTypes.bool,
   header: PropTypes.any,
+  style: PropTypes.object,
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.any,
 };

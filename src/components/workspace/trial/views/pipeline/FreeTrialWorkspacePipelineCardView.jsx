@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import PipelineCard from "components/workflow/pipelines/PipelineCard";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import { useHistory } from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import modelHelpers from "components/common/model/modelHelpers";
 import WorkspacePipelineCardBase from "components/workspace/cards/WorkspacePipelineCardBase";
 
@@ -20,21 +17,8 @@ export default function FreeTrialWorkspacePipelineCardView(
   }) {
   const history = useHistory();
 
-  const handleDetailsClick = (pipelineId) => e => {
-    e.preventDefault();
+  const handleDetailsClick = (pipelineId) => {
     history.push(`/workflow/details/${pipelineId}/summary`);
-  };
-
-  const getSelectButton = (pipeline) => {
-    return (
-      <Button
-        variant={"primary"}
-        size={"sm"}
-        className={"w-50"}
-        onClick={handleDetailsClick(pipeline?._id)}>
-        <IconBase icon={faSearch} className={"mr-1"}/>View
-      </Button>
-    );
   };
 
   const getCards = () => {
@@ -55,7 +39,8 @@ export default function FreeTrialWorkspacePipelineCardView(
           >
             <WorkspacePipelineCardBase
               pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-              getSelectButtonFunction={getSelectButton}
+              onClickFunction={() => handleDetailsClick(pipeline?._id)}
+              tooltip={"Click to view Pipeline"}
             />
           </Col>
         ))}

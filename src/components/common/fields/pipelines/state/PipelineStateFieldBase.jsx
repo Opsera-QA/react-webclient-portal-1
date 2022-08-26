@@ -5,7 +5,7 @@ import IconBase from "components/common/icons/IconBase";
 
 function PipelineStateFieldBase({ icon, innerText, statusText, className, colorClassName }) {
   return (
-    <span className={`${className}`}>
+    <span className={className}>
       <span className={"d-flex flex-nowrap"}>
         <TooltipWrapper innerText={innerText}>
           <IconBase
