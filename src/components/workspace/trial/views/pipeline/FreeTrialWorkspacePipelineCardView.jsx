@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import modelHelpers from "components/common/model/modelHelpers";
+import WorkspacePipelineCardBase from "components/workspace/cards/WorkspacePipelineCardBase";
 
 export default function FreeTrialWorkspacePipelineCardView(
   {
@@ -43,13 +44,18 @@ export default function FreeTrialWorkspacePipelineCardView(
 
     return (
       <Row className={"mx-0"}>
-        {pipelines.map((pipeline, idx) => (
-          <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineCard
-              pipeline={pipeline}
+        {pipelines.map((pipeline, index) => (
+          <Col
+            key={index}
+            xl={3}
+            lg={4}
+            md={6}
+            sm={12}
+            className={"p-2"}
+          >
+            <WorkspacePipelineCardBase
               pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
               getSelectButtonFunction={getSelectButton}
-              hideSubscriptionIcon={true}
             />
           </Col>
         ))}

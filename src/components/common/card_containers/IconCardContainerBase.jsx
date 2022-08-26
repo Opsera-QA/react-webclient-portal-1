@@ -3,10 +3,19 @@ import PropTypes from "prop-types";
 import {Card} from "react-bootstrap";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function IconCardContainerBase({ children, isLoading, titleBar, footerBar, className, contentBody }) {
+export default function IconCardContainerBase(
+  {
+    children,
+    isLoading,
+    header,
+    titleBar,
+    footerBar,
+    className,
+    contentBody,
+  }) {
   const getCardTitle = () => {
     if (isLoading) {
-      return (<div className="ml-1"><LoadingIcon className={"mr-1"}/>Loading Data</div>);
+      return (<div className="ml-1"><LoadingIcon className={"mr-1"} />Loading Data</div>);
     }
 
     return titleBar;
@@ -28,6 +37,7 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
 
   return (
     <Card className={`mb-2 h-100 ${className}`}>
+      {header}
       <Card.Title className="mb-0 px-2">
         {getCardTitle()}
       </Card.Title>
@@ -47,7 +57,6 @@ IconCardContainerBase.propTypes = {
   contentBody: PropTypes.object,
   className: PropTypes.string,
   footerBar: PropTypes.object,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  header: PropTypes.any,
 };
-
-export default IconCardContainerBase;

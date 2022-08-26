@@ -17,6 +17,8 @@ export default function WizardSelectionRadioOption(
     text,
     description,
     icon,
+    iconColor,
+    iconSize,
     option,
     type,
     isBusy,
@@ -33,13 +35,14 @@ export default function WizardSelectionRadioOption(
           style={{
             borderRadius: "9px",
             backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
+            color: iconColor,
           }}
         >
           <div className={"py-3 px-4"}>
             <IconBase
               icon={icon}
               isLoading={isBusy}
-              iconSize={"lg"}
+              iconSize={iconSize}
               className={"m-auto"}
             />
           </div>
@@ -152,8 +155,11 @@ WizardSelectionRadioOption.propTypes = {
   type: PropTypes.string,
   selectedOption: PropTypes.string,
   isBusy: PropTypes.bool,
+  iconColor: PropTypes.string,
+  iconSize: PropTypes.string,
 };
 
 WizardSelectionRadioOption.defaultProps = {
   type: SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY,
+  iconSize: "lg",
 };

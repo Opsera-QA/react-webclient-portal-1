@@ -1,10 +1,8 @@
 import { useContext, useEffect } from "react";
-import useLocationReference from "hooks/useLocationReference";
 import { AuthContext } from "contexts/AuthContext";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function useBackgroundColorReference(usePurpleBackground, customBackgroundColor) {
-  const { isPublicPathState } = useLocationReference();
   const {
     themeConstants,
     backgroundColor,
@@ -14,7 +12,7 @@ export default function useBackgroundColorReference(usePurpleBackground, customB
   useEffect(() => {
     if (hasStringValue(customBackgroundColor) === true) {
       setBackgroundColor(customBackgroundColor);
-    } else if (usePurpleBackground === true || isPublicPathState === true) {
+    } else if (usePurpleBackground === true) {
       setBackgroundColor(themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE);
     } else {
       setBackgroundColor(themeConstants.COLOR_PALETTE.WHITE);
