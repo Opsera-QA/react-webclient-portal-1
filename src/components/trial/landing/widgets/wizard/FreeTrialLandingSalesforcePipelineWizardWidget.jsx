@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import WizardWidgetDataBlockBase from "components/trial/landing/widgets/wizard/WizardWidgetDataBlockBase";
-import FreeTrialSalesforcePipelineWizardOverlay
-  from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialSalesforcePipelineWizardOverlay";
+import FreeTrialLaunchSalesforceWorkflowWizardOverlay
+  from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 
 export default function FreeTrialLandingSalesforcePipelineWizardWidget({ className }) {
   const { themeConstants } = useComponentStateReference();
@@ -12,7 +12,7 @@ export default function FreeTrialLandingSalesforcePipelineWizardWidget({ classNa
 
   const launchPipelineCreationWizard = () => {
     toastContext.showOverlayPanel(
-      <FreeTrialSalesforcePipelineWizardOverlay
+      <FreeTrialLaunchSalesforceWorkflowWizardOverlay
       />
     );
   };

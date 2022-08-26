@@ -71,7 +71,7 @@ function CenterOverlayContainer(
 
   const getStyling = () => {
     const containerStyle = getContainerStyling();
-    return (`${containerStyle} content-card-1`);
+    return (`${containerStyle} content-card-1 bg-white`);
   };
 
   const getBody = () => {

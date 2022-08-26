@@ -97,6 +97,15 @@ export const getTaskTypeLabel = (taskType) => {
   }
 };
 
+
+export const TASK_TYPE_CATEGORIES = {
+  AWS: "AWS",
+  AZURE: "Azure",
+  GIT: "Git",
+  COMPLIANCE: "Compliance",
+  SALESFORCE: "Salesforce",
+};
+
 export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   // AWS
   { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS" },
@@ -176,7 +185,7 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
 ];
 
-export const isTaskTypeOfCategory = (taskType, category) => {
+export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = true) => {
   if (
     hasStringValue(category) !== true
     || hasStringValue(taskType) !== true
@@ -188,9 +197,13 @@ export const isTaskTypeOfCategory = (taskType, category) => {
   const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find((taskTypeDefinition) => {
     return taskTypeDefinition.value === taskType;
   });
-  const taskTypeDefinitionCategory = taskTypeDefinition.category;
+  const taskTypeDefinitionCategory = taskTypeDefinition?.category;
 
-  return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category;
+  if (allowNullCategory === false) {
+    return hasStringValue(taskTypeDefinitionCategory) === true && taskTypeDefinitionCategory?.toLowerCase() === category?.toLowerCase();
+  }
+
+  return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory?.toLowerCase() === category;
 };
 
 export const getProductionTaskTypesForCategory = (category) => {
