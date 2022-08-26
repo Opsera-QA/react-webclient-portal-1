@@ -383,12 +383,15 @@ salesforcePipelineHelper.updateStepsForSalesforcePipeline = (pipeline, flow) => 
 
   switch (flow) {
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
+      updatedPipeline.name = salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC + " [Free Trial]";
       updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceBasicSteps(pipelineSteps);
       break;
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
+      updatedPipeline.name = salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING + " [Free Trial]";
       updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceUnitTestSteps(pipelineSteps);
       break;
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
+      updatedPipeline.name = salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP + " [Free Trial]";
       updatedPipeline.workflow.plan = pipelineSteps;
       break;
     default :
