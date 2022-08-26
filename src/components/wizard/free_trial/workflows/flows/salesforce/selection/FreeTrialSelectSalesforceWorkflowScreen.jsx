@@ -142,7 +142,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
         return (
           <FreeTrialLaunchSalesforceWorkflowScreen
             setCurrentScreen={setCurrentScreen}
-            className={"px-2 pb-2"}
+            className={"m-3"}
             isLoading={isLoading}
             workspaceItems={workspaceItems}
             loadData={loadData}

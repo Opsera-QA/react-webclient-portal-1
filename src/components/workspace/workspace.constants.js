@@ -1,4 +1,9 @@
 import { constantsHelper } from "temp-library-components/helpers/constants/constants.helper";
+import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
+import {
+  pipelineTemplateIdentifierConstants
+} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const workspaceConstants = {};
 
@@ -26,6 +31,26 @@ workspaceConstants.getLabelForWorkspaceType = (workspaceType) => {
     workspaceConstants.WORKSPACE_ITEM_TYPE_LABELS,
     workspaceType,
   );
+};
+
+workspaceConstants.getIdentifierLabelForWorkspaceItem = (workspaceItem) => {
+  return workspaceConstants.getIdentifierLabelForWorkspaceType(workspaceItem?.workspaceType, workspaceItem?.workflowIdentifier);
+};
+
+
+workspaceConstants.getIdentifierLabelForWorkspaceType = (type, workspaceIdentifier) => {
+  if (workspaceConstants.isWorkspaceTypeValid(type) !== true) {
+    return "";
+  }
+
+  switch (type) {
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return pipelineTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
+    default:
+      return "";
+  }
 };
 
 workspaceConstants.getSelectOptionForWorkspaceType = (type) => {

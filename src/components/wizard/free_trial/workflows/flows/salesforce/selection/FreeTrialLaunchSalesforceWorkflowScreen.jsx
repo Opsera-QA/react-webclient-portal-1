@@ -8,6 +8,7 @@ import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import BackButton from "components/common/buttons/back/BackButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 // TODO: Rename
 export default function FreeTrialLaunchSalesforceWorkflowScreen(
@@ -42,6 +43,14 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
     setCurrentScreen(LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN);
   };
 
+  const getBackButton = () => {
+    return (
+      <BackButton
+        backButtonFunction={backButtonFunction}
+      />
+    );
+  };
+
   return (
     <div className={className}>
       <FilterContainer
@@ -50,13 +59,13 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         isLoading={isLoading}
         loadData={loadData}
         title={"Select a Salesforce Workflow"}
-        className={"px-2 pb-2"}
+        className={""}
       />
-      <div>
-        <BackButton
-          backButtonFunction={backButtonFunction}
-        />
-      </div>
+      <ButtonContainerBase
+        className={"mt-3"}
+        leftSideButtons={getBackButton()}
+      >
+      </ButtonContainerBase>
     </div>
   );
 }

@@ -126,12 +126,16 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
   };
 };
 
-export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className, sendWholeObject) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function formatValue(row) {
       if (formatFunction) {
+        if (sendWholeObject === true) {
+          return formatFunction(row?.row?.original);
+        }
+
         return formatFunction(row?.value);
       }
 

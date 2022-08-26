@@ -27,6 +27,12 @@ export default function FreeTrialWorkspaceItemTable(
   const columns = useMemo(
     () => [
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "workspaceType"), workspaceConstants.getLabelForWorkspaceType),
+      getFormattedLabelWithFunctionColumnDefinition(
+        getField(fields, "workflowIdentifier"),
+        workspaceConstants.getIdentifierLabelForWorkspaceItem,
+        undefined,
+        true
+      ),
       getTableTextColumn(getField(fields, "name")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
       getTableTextColumn(getField(fields, "_id")),

@@ -13,6 +13,10 @@ export const workspaceItemMetadata = {
       id: "workspaceType",
     },
     {
+      label: "Workflow",
+      id: "workflowIdentifier",
+    },
+    {
       label: "Created",
       id: "createdAt",
     },
