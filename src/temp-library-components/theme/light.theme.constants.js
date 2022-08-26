@@ -32,6 +32,7 @@ lightThemeConstants.COLOR_PALETTE = {
 
   //Green
   LIGHT_MINT: "#95D0D5",
+  GREEN: "green",
 
   //Gray
   GRAY: "#6E6C78",

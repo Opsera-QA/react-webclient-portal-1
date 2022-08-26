@@ -14,6 +14,7 @@ import TaskCardBase from "temp-library-components/cards/TaskCardBase";
 import ToolModel from "components/inventory/tools/tool.model";
 import RegistryToolCard from "components/common/fields/inventory/RegistryToolCard";
 import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
+import WorkspaceToolCard from "components/workspace/cards/WorkspaceToolCard";
 
 export default function FreeTrialWorkspaceItemCardView(
   {
@@ -43,8 +44,9 @@ export default function FreeTrialWorkspaceItemCardView(
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
         return (
-          <RegistryToolCard
-            toolData={new ToolModel({ ...workspaceItem }, toolMetadata, false)}
+          <WorkspaceToolCard
+            tool={workspaceItem}
+            toolMetadata={toolMetadata}
           />
         );
     }

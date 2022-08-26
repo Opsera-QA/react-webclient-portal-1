@@ -29,10 +29,11 @@ export default function CardFooterBase(
           letterSpacing: "0.6px",
         }}
       >
-        <IconBase
-          icon={icon}
-          className={"mr-2"}
-        />
+        {/*<IconBase*/}
+        {/*  icon={icon}*/}
+        {/*  className={"mr-2"}*/}
+        {/*  iconSize={"xl"}*/}
+        {/*/>*/}
         {text}
       </div>
     </div>
