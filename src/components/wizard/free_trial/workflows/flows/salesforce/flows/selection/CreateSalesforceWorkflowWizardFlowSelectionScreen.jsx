@@ -37,7 +37,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         Set up an Organization Sync workflow that includes an explicit unit testing step. 
         `}
         className={"mb-2"}
-        disabled={true}
       />
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
@@ -50,7 +49,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
         `}
         className={"mb-2"}
-        disabled={true}
       />
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
@@ -61,7 +59,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
         `}
         className={"mb-2"}
-        disabled={false}
       />
       <CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
         selectedFlow={selectedFlow}

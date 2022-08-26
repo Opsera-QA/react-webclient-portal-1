@@ -22,6 +22,7 @@ export default function CreateSalesforceOrganizationSyncPipelineInitializationSc
     setPipeline({...pipeline});
     // TODO: Add flow related changes to toggle steps
 
+    console.log( "flow ",flow);
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   };
 

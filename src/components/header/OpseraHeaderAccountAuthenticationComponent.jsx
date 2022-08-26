@@ -5,7 +5,7 @@ import sessionHelper from "utils/session.helper";
 import userActions from "components/user/user-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { AuthContext } from "contexts/AuthContext";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
@@ -34,7 +34,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   } = useComponentStateReference();
   // const fullUserName = `${userData?.firstName} ${userData?.lastName} (${userData?.email})`;
   const fullUserName = `${userData?.firstName} ${userData?.lastName}`;
-
+  const history = useHistory();
   const login = function() {
     loginUserContext();
   };
