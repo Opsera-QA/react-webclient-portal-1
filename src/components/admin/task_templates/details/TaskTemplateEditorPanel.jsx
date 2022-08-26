@@ -81,10 +81,6 @@ export default function TaskTemplateEditorPanel({ templateModel, setTemplateMode
           />
         </Col>
         {/*<Col lg={6}>*/}
-        {/*  <PipelineTypeMultiSelectInput*/}
-        {/*    dataObject={templateModel}*/}
-        {/*    setDataObject={setTemplateModel}*/}
-        {/*  />*/}
         {/*  <LdapOrganizationAccountSelectInput*/}
         {/*    fieldName={"account"}*/}
         {/*    model={templateModel}*/}

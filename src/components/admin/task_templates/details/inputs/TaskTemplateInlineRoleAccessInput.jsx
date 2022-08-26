@@ -48,5 +48,5 @@ TaskTemplateInlineRoleAccessInput.propTypes = {
 };
 
 TaskTemplateInlineRoleAccessInput.defaultProps = {
-  fieldName: "access"
+  fieldName: "roles",
 };
