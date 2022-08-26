@@ -2,20 +2,33 @@ import React from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import {
-  salesforceWorkflowFlowConstants
+  salesforceWorkflowFlowConstants,
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton";
 import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import BackButton from "components/common/buttons/back/BackButton";
+import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
-export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
-  className,
-  selectedFlow,
-  setSelectedFlow,
-  setCurrentScreen,
-}) {
+export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
+  {
+    className,
+    selectedFlow,
+    setSelectedFlow,
+    setCurrentScreen,
+    stepBackFromWizardFunction,
+  }) {
   return (
     <div className={className}>
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          className={"mb-4 mx-3"}
+          subheaderText={"What kind of Salesforce Workflow would you like to create today?"}
+        />
+      </CenteredContentWrapper>
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
         selectedOption={selectedFlow}
@@ -61,10 +74,21 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen({
         `}
         className={"mb-2"}
       />
-      <CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
-        selectedFlow={selectedFlow}
-        setCurrentScreen={setCurrentScreen}
-      />
+      <ButtonContainerBase
+        className={"mt-3"}
+        leftSideButtons={
+          <BackButton
+            size={"md"}
+            backButtonFunction={stepBackFromWizardFunction}
+            icon={faArrowLeft}
+          />
+        }
+      >
+        <CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
+          selectedFlow={selectedFlow}
+          setCurrentScreen={setCurrentScreen}
+        />
+      </ButtonContainerBase>
       <DividerWithCenteredText text={"Coming Soon"} className={"m-4"} />
       <WizardSelectionRadioOption
         onClickFunction={setSelectedFlow}
@@ -100,6 +124,7 @@ CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   selectedFlow: PropTypes.string,
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  stepBackFromWizardFunction: PropTypes.func,
   className: PropTypes.string,
 };
 

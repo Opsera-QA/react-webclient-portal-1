@@ -5,13 +5,17 @@ import {
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateSalesforceWorkflowWizardFlowWrapper
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/wizards/CreateSalesforceWorkflowWizardFlowWrapper";
+import PropTypes from "prop-types";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
   WIZARD_FLOW_SCREEN: "wizard_flow_screen",
 };
 
-export default function CreateSalesforceWorkflowWizard() {
+export default function CreateSalesforceWorkflowWizard(
+  {
+    stepBackFromWizardFunction,
+  }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   const [selectedFlow, setSelectedFlow] = useState(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC);
 
@@ -23,7 +27,8 @@ export default function CreateSalesforceWorkflowWizard() {
             selectedFlow={selectedFlow}
             setSelectedFlow={setSelectedFlow}
             setCurrentScreen={setCurrentScreen}
-            className={"m-2"}
+            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            className={"m-3"}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:
@@ -42,5 +47,7 @@ export default function CreateSalesforceWorkflowWizard() {
   );
 }
 
-CreateSalesforceWorkflowWizard.propTypes = {};
+CreateSalesforceWorkflowWizard.propTypes = {
+  stepBackFromWizardFunction: PropTypes.func,
+};
 

@@ -23,6 +23,10 @@ export default function CreateWorkflowWizard() {
     toastContext.clearOverlayPanel();
   };
 
+  const backButtonFunction = () => {
+    setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN);
+  };
+
   const getCurrentScreen = () => {
     switch (currentScreen) {
       case CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN:
@@ -35,6 +39,7 @@ export default function CreateWorkflowWizard() {
       case CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW:
         return (
           <CreateSalesforceWorkflowWizard
+            stepBackFromWizardFunction={backButtonFunction}
           />
         );
       case CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW:

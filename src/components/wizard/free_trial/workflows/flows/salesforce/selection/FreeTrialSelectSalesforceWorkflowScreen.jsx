@@ -20,6 +20,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
   from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
+import FreeTrialLaunchSalesforceWorkflowScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialLaunchSalesforceWorkflowScreen";
 
 export default function FreeTrialSelectSalesforceWorkflowScreen(
   {
@@ -99,23 +101,8 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
     }
   };
 
-  const getSelectionBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          customMessage={"Loading Salesforce Workflows"}
-        />
-      );
-    }
-
-    return (
-      <FreeTrialWorkspaceItemViews
-        workspaceItems={workspaceItems}
-        isLoading={isLoading}
-        loadData={loadData}
-        taskMetadata={taskMetadata}
-      />
-    );
+  const goToOptionSelectionScreenFunction = () => {
+    setCurrentScreen(LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN);
   };
 
   const getBody = () => {
@@ -125,7 +112,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
           <div className={"w-100"}>
             <CenteredContentWrapper>
               <H5FieldSubHeader
-                className={"mt-3 mb-4"}
+                className={"mt-3 mb-4 mx-3"}
                 subheaderText={"Would you like to create a new Salesforce Workflow or launch an existing one?"}
               />
             </CenteredContentWrapper>
@@ -153,18 +140,20 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
         );
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW:
         return (
-          <FilterContainer
-            body={getSelectionBody()}
-            titleIcon={faRectangleList}
-            isLoading={isLoading}
-            loadData={loadData}
-            title={"Select a Salesforce Workflow"}
+          <FreeTrialLaunchSalesforceWorkflowScreen
+            setCurrentScreen={setCurrentScreen}
             className={"px-2 pb-2"}
+            isLoading={isLoading}
+            workspaceItems={workspaceItems}
+            loadData={loadData}
+            taskMetadata={taskMetadata}
+            currentScreen={currentScreen}
           />
         );
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN:
         return (
           <CreateSalesforceWorkflowWizard
+            stepBackFromWizardFunction={goToOptionSelectionScreenFunction}
           />
         );
     }
