@@ -45,6 +45,8 @@ import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipelin
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 import SalesforceOrganizationSyncTaskRepositorySelectInput
   from "./tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
+import {isMongoDbId} from "../../common/helpers/mongo/mongoDb.helpers";
+import InlineErrorText from "../../common/status_notifications/inline/InlineErrorText";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -173,6 +175,20 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   };
 
   const repoSelectionInputs = () => {
+    if (
+      !isMongoDbId(taskConfigurationModel.getData("sfdcToolId")) ||
+      !isMongoDbId(taskConfigurationModel.getData("gitToolId"))
+    ) {
+      return (
+        <InlineErrorText
+          prependMessage={
+            "Pipeline was not configured properly, Please delete this pipeline and create a new one."
+          }
+          error={"No credentials were added."}
+        />
+      );
+    }
+    
     if ( canEdit
         // process.env.REACT_APP_STACK === "free-trial"
     ) {
