@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
+import ExportDataOverlay from "./ExportDataOverlay";
 
-function ExportSonarQubeScanDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportSonarQubeScanDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -27,18 +27,16 @@ function ExportSonarQubeScanDataModal({ showModal, closeModal, formattedData, ra
   //   return [["Project", "Severity", "Line", "Message"],
   //     ...formattedData.map(item =>
   //       [
-  //         item.projects, 
-  //         item.severity, 
-  //         item.line, 
+  //         item.projects,
+  //         item.severity,
+  //         item.line,
   //         item.message
   //       ]
   //     )];
   // };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -47,9 +45,7 @@ function ExportSonarQubeScanDataModal({ showModal, closeModal, formattedData, ra
   );
 }
 
-ExportSonarQubeScanDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+ExportSonarQubeScanDataOverlay.propTypes = {
   dataToExport: PropTypes.any,
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
@@ -57,6 +53,4 @@ ExportSonarQubeScanDataModal.propTypes = {
   exportFrom: PropTypes.any,
 };
 
-export default ExportSonarQubeScanDataModal;
-
-
+export default ExportSonarQubeScanDataOverlay;

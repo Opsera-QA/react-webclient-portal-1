@@ -92,6 +92,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
   toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {

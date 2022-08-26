@@ -35,12 +35,29 @@ import PipelineDurationMetricsStandaloneField
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const INITIAL_FORM_DATA = {
   name: "",
   project: { name: "", project_id: "" },
   description: "",
   type: [],
+};
+
+const getWorkflowStatus = (pipeline) => {
+  const lastStep = pipeline?.workflow?.last_step;
+
+  if (lastStep != null) {
+    const status = lastStep?.status;
+
+    if (status === "stopped" && lastStep?.running?.paused) {
+      return "paused";
+    } else if (hasStringValue(status)) {
+      return status;
+    }
+  }
+
+  return false;
 };
 
 // TODO: This class needs to be reworked with new components and also to cleanup
@@ -53,6 +70,7 @@ function PipelineSummaryPanel(
     fetchPlan,
     setWorkflowStatus,
     setPipeline,
+    showActionControls,
   }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -95,26 +113,12 @@ function PipelineSummaryPanel(
 
   const loadData = async () => {
     try {
-      await loadFormData(pipeline);
+      if (setWorkflowStatus) {
+        setWorkflowStatus(getWorkflowStatus(pipeline));
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
-
-  const loadFormData = async (pipeline) => {
-    if (pipeline.workflow !== undefined) {
-      if (pipeline.workflow.last_step !== undefined) {
-        let status = pipeline.workflow.last_step.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
-
-        if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-          setWorkflowStatus("paused");
-        } else {
-          setWorkflowStatus(status);
-        }
-      } else {
-        setWorkflowStatus(false);
       }
     }
   };
@@ -357,8 +361,180 @@ function PipelineSummaryPanel(
         <Col xs={12} sm={6}>
           <PipelineSchedulerField
             pipelineModel={pipelineModel}
-            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running"}
+            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline?.owner) && parentWorkflowStatus !== "running"}
           />
+        </Col>
+      );
+    }
+  };
+
+  const getPipelineActionControls = () => {
+    if (showActionControls !== false) {
+      return (
+        <div className="text-right py-2">
+          <PipelineActionControls
+            pipeline={pipeline}
+            disabledActionState={false}
+            customerAccessRules={customerAccessRules}
+            fetchData={fetchPlan}
+            setPipeline={setPipeline}
+            setParentWorkflowStatus={setWorkflowStatus}
+          />
+        </div>
+      );
+    }
+  };
+
+  const getPipelineTitleField = () => {
+    return (
+      <div className="d-flex title-text-header-2">
+        {editTitle ?
+          <>
+            <div className="flex-fill p-2">
+              <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
+                            onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
+            <div className="flex-fill p-2">
+              {getSaveIcon("name")}
+              {getCancelIcon(setEditTitle)}
+            </div>
+          </>
+          :
+          <>{pipeline.name}
+            {authorizedAction("edit_pipeline_name", pipeline.owner)
+            && parentWorkflowStatus !== "running"
+              ? getEditIcon("name")
+              : null}
+          </>
+        }
+      </div>
+    );
+  };
+
+  const getPipelineIdField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">ID:</span>
+        {pipeline._id}
+      </span>
+    );
+  };
+
+  const getPipelineRunCountField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">Pipeline Run Count:</span>
+        {pipeline.workflow.run_count || "0"}
+      </span>
+    );
+  };
+
+  const getPipelineOwnerField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">Owner:</span>
+        {ownerName}
+      </span>
+    );
+  };
+
+  const getCreatedAtField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">Created On:</span>
+        {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
+      </span>
+    );
+  };
+
+  const getOrganizationField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">Organization:</span>
+        <span className="upper-case-first">{pipeline.organizationName}</span>
+      </span>
+    );
+  };
+
+  const getOrganizationAccountField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-1">Org Account:</span>
+        {pipeline.account}
+      </span>
+    );
+  };
+
+  const getPipelineTypeField = () => {
+    return (
+      <span>
+        <span className="text-muted mr-2">Type:</span>
+        {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
+        {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+        && parentWorkflowStatus !== "running" && !editType
+          ? getEditIcon("type")
+          : null}
+        {editType &&
+          <div className="d-flex mt-1">
+            <div className="w-75">
+              <StandaloneSelectInput
+                selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
+                defaultValue={pipeline?.type[0]}
+                valueField={"value"}
+                textField={"text"}
+                setDataFunction={e => {
+                  let type = formData.type;
+                  type[0] = e.value;
+                  setFormData({ ...formData, type: type });
+                }}
+              />
+            </div>
+            <div className="px-2 pt-1">
+              {getSaveIcon("type")}
+              {getCancelIcon(setEditType)}
+            </div>
+          </div>
+        }
+      </span>
+    );
+  };
+
+  const getDescriptionField = () => {
+    if (editDescription === true) {
+      return (
+        <>
+          <Col xs={11}>
+            <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
+                          value={formData.description || ""}
+                          onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
+          <Col xs={1} className="my-auto">
+            {getSaveIcon("description")}
+            {getCancelIcon(setEditDescription)}
+          </Col>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Col sm={12} className="py-2">
+          <span className="text-muted mr-1">Notes:</span>{pipeline.description}
+          {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+          && parentWorkflowStatus !== "running"
+            ? getEditIcon("description")
+            : null}
+        </Col>
+      </>
+    );
+  };
+
+  const getPipelineSummaryField = () => {
+    if (pipeline.workflow?.last_run?.completed) {
+      return (
+        <Col sm={12} className="py-2">
+          <span className="text-muted mr-1">Summary:</span>
+          Last complete run of pipeline finished on {
+          format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status
+          of {pipeline.workflow.last_run.status}.
         </Col>
       );
     }
@@ -374,44 +550,13 @@ function PipelineSummaryPanel(
 
   return (
     <>
-      <div>
-        <div className="text-right py-2">
-          <PipelineActionControls
-            pipeline={pipeline}
-            disabledActionState={false}
-            customerAccessRules={customerAccessRules}
-            fetchData={fetchPlan}
-            setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
-          />
-        </div>
-      </div>
+      {getPipelineActionControls()}
 
       <div className="pr-1">
         <Row>
           <Col sm={9}>
-            <div className="d-flex title-text-header-2">
-              {editTitle ?
-                <>
-                  <div className="flex-fill p-2">
-                    <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                                  onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
-                  <div className="flex-fill p-2">
-                    {getSaveIcon("name")}
-                    {getCancelIcon(setEditTitle)}
-                  </div>
-                </>
-                :
-                <>{pipeline.name}
-                  {authorizedAction("edit_pipeline_name", pipeline.owner)
-                  && parentWorkflowStatus !== "running"
-                    ? getEditIcon("name")
-                    : null}
-                </>
-              }</div>
+            {getPipelineTitleField()}
           </Col>
-
-
           <Col sm={3}>
             <PipelineSummaryActionBar
               pipeline={pipeline}
@@ -420,94 +565,34 @@ function PipelineSummaryPanel(
               isActionAllowedFunction={authorizedAction} // TODO: Handle this without passing the function in
             />
           </Col>
-
-
-          <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
-          <Col sm={12} md={6} className="py-2"><span
-            className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">
-            Owner:</span> {ownerName}</Col>
-          <Col xs={12} sm={6} className="py-2"><span
-            className="text-muted mr-1">Created On:</span> {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
+          <Col sm={12} md={6} className="py-2">
+            {getPipelineIdField()}
           </Col>
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">
-            Organization:</span> <span
-            className="upper-case-first">{pipeline.organizationName}</span></Col>
-
-          <Col lg className="py-2"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
-          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
-            {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
-            {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-            && parentWorkflowStatus !== "running" && !editType
-              ? getEditIcon("type")
-              : null}
-            {editType &&
-            <div className="d-flex mt-1">
-              <div className="w-75">
-                <StandaloneSelectInput
-                  selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-                  defaultValue={pipeline?.type[0]}
-                  valueField={"value"}
-                  textField={"text"}
-                  setDataFunction={e => {
-                    let type = formData.type;
-                    type[0] = e.value;
-                    setFormData({ ...formData, type: type });
-                  }}
-                />
-              </div>
-              <div className="px-2 pt-1">
-                {getSaveIcon("type")}
-                {getCancelIcon(setEditType)}
-              </div>
-            </div>
-            }
+          <Col sm={12} md={6} className="py-2">
+            {getPipelineRunCountField()}
           </Col>
-
+          <Col xs={12} sm={6} className="py-2">
+            {getPipelineOwnerField()}
+          </Col>
+          <Col xs={12} sm={6} className="py-2">
+            {getCreatedAtField()}
+          </Col>
+          <Col xs={12} sm={6} className="py-2">
+            {getOrganizationField()}
+          </Col>
+          <Col lg className="py-2">
+            {getOrganizationAccountField()}
+          </Col>
+          <Col xs={12} sm={6} className="py-2">
+            {getPipelineTypeField()}
+          </Col>
           {getSchedulerField()}
           {getTagField()}
 
           {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
 
-          {editDescription ?
-            <>
-              <Col xs={11}>
-                <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
-                              value={formData.description || ""}
-                              onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
-              <Col xs={1} className="my-auto">
-                {getSaveIcon("description")}
-                {getCancelIcon(setEditDescription)}
-              </Col>
-            </>
-            :
-            <>
-              <Col sm={12} className="py-2">
-                <span className="text-muted mr-1">Notes:</span>{pipeline.description}
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner)
-                && parentWorkflowStatus !== "running"
-                  ? getEditIcon("description")
-                  : null}
-              </Col>
-            </>
-          }
-
-          {pipeline.workflow?.last_run?.completed &&
-          <Col sm={12} className="py-2">
-            <span className="text-muted mr-1">Summary:</span> Last complete run of pipeline finished on {
-            format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status
-            of {pipeline.workflow.last_run.status}.
-
-            {(process.env.REACT_APP_STACK === "free-trial") &&
-            <PipelineSummaryMessages
-              type="free-trial-container-url-msg"
-              lastRun={pipeline.workflow.last_run}
-              tags={pipeline.tags}
-              run={pipeline.workflow.run_count}
-              getUserRecord={getUserRecord} />
-            }
-          </Col>
-          }
+          {getDescriptionField()}
+          {getPipelineSummaryField()}
 
           <Col sm={12}>
             <PipelineDurationMetricsStandaloneField
@@ -529,6 +614,7 @@ PipelineSummaryPanel.propTypes = {
   fetchPlan: PropTypes.func,
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
+  showActionControls: PropTypes.bool,
 };
 
 export default PipelineSummaryPanel;
