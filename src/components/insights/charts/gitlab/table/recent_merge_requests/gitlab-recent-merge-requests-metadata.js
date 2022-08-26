@@ -1,7 +1,7 @@
 const gitlabRecentMergeRequestsMetadata = {
-    idProperty: "_id",
-    type: "Gitlab Pending Merge Requests",
-    fields: [
+  idProperty: "_id",
+  type: "Gitlab Pending Merge Requests",
+  fields: [
     {
       label: "Page Size",
       id: "pageSize",
@@ -40,28 +40,28 @@ const gitlabRecentMergeRequestsMetadata = {
     },
     {
       label: "Time",
-      id: "mrCompletionTimeTimeStamp"
+      id: "mrCompletionTimeTimeStamp",
     },
     {
-        label: "Time Taken(Hours)",
-        id: "MergeRequestTimeTaken"
+      label: "Time Taken(Hours)",
+      id: "MergeRequestTimeTaken",
     },
     {
       label: "Merge Request Url",
-      id: "mergeRequestUrl"
+      id: "mergeRequestUrl",
     },
   ],
   newObjectFields: {
     pageSize: 5,
     currentPage: 1,
-    sortOption: {text: "Newest", value: ""},
+    sortOption: { text: "Newest", value: "" },
     search: "",
-    type:"recent",
+    type: "recent",
   },
   sortOptions: [
-    {text: "Newest", option: ""},
-    {text: "Oldest", option: "oldest"}
-  ]
+    { text: "Newest", option: "" },
+    { text: "Oldest", option: "oldest" },
+  ],
 };
-  
-  export default gitlabRecentMergeRequestsMetadata;
+
+export default gitlabRecentMergeRequestsMetadata;

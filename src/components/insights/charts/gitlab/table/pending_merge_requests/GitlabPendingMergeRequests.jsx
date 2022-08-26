@@ -17,10 +17,17 @@ import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
-import {ANALYTICS_TEXT_CONSTANTS} from "../../../../../common/constants/text/analytics/analytics.text.constants";
+import { ANALYTICS_TEXT_CONSTANTS } from "../../../../../common/constants/text/analytics/analytics.text.constants";
 import GitlabPendingMergeRequestVerticalTabContainer from "./GitlabPendingMergeRequestVerticalTabContainer";
+import gitlabActions from "../../gitlab.action";
 
-function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabPendingMergeRequests({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const fields = gitlabPendingMergeRequestsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -28,10 +35,14 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...gitlabPendingMergeRequestsMetadata.newObjectFields }, gitlabPendingMergeRequestsMetadata, false)
+    new Model(
+      { ...gitlabPendingMergeRequestsMetadata.newObjectFields },
+      gitlabPendingMergeRequestsMetadata,
+      false,
+    ),
   );
   const [metrics, setMetrics] = useState([]);
-  const [activeTab,setActiveTab] =useState();
+  const [activeTab, setActiveTab] = useState();
 
   const columns = useMemo(
     () => [
@@ -41,9 +52,12 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCreatedTimeTimeStamp")),
-      getExternalLinkIconColumnDefinition(getField(fields, "mergeRequestUrl"),"View Merge Request"),
+      getExternalLinkIconColumnDefinition(
+        getField(fields, "mergeRequestUrl"),
+        "View Merge Request",
+      ),
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -67,57 +81,53 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     };
   }, [JSON.stringify(dashboardData)]);
 
-   const loadProjectInfo = async (cancelSource = cancelTokenSource,filterDto=tableFilterDto) => {
+  const loadProjectInfo = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value;
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+      ]?.value;
     let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations",
-          )
-          ]?.value;
-   let projectName;
-   if(!filterDto.getData('search')){
-     projectName = filterDto.getData('projectName') ;
-   }
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "organizations",
+        )
+      ]?.value;
+    let projectName;
+    const search = filterDto.getData("search");
+    if (!search) {
+      projectName = filterDto.getData("projectName");
+    }
+    // This can be called only when there is an active tab selected in left panel or a valid search string.
+    if(projectName || search){
+      const response = await gitlabActions.gitlabPendingMergeRequests(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          filterDto,
+          projectName,
+          dashboardOrgs
+      );
 
-   const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-       getAccessToken,
-       cancelSource,
-       "gitlabPendingMergeRequests",
-       kpiConfiguration,
-       dashboardTags,
-       filterDto,
-       null,
-       dashboardOrgs,
-       undefined,
-       undefined,
-       undefined,
-       undefined,
-       undefined,
-       undefined,
-       undefined,
-       projectName,
-   );
-   let dataObject =
-       response?.data?.data[0]?.gitlabPendingMergeRequests?.data;
+      let dataObject = response?.data?.data?.gitlabPendingMergeRequests?.data;
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData(
+            "totalCount",
+            response?.data?.data?.gitlabPendingMergeRequests?.count,
+        );
+        setTableFilterDto({ ...newFilterDto });
+      }
+    }
 
-   if (isMounted?.current === true && dataObject) {
-     setMetrics(dataObject);
-     let newFilterDto = filterDto;
-     newFilterDto.setData(
-         "totalCount",
-         response?.data?.data[0]?.gitlabPendingMergeRequests?.count,
-     );
-     setTableFilterDto({ ...newFilterDto });
-   }
+
   };
 
-  const loadData = async (
-    cancelSource = cancelTokenSource
-  ) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await loadProjectInfo(cancelSource);
@@ -135,27 +145,31 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
-    newFilterDto.setData("projectName",projectName);
+    newFilterDto.setData("projectName", projectName);
     newFilterDto.setDefaultValue("search");
+    newFilterDto.setDefaultValue("currentPage");
     setTableFilterDto({ ...newFilterDto });
     // if no projectName then right side table will be empty and api will not be called
-    if(!projectName){
+    if (!projectName) {
       setMetrics([]);
     } else {
       setActiveTab(projectName);
-      await loadData(cancelTokenSource,newFilterDto);
+      await loadData(null, newFilterDto);
     }
   };
 
   const getVerticalTabContainer = () => {
-    return <GitlabPendingMergeRequestVerticalTabContainer
-      kpiConfiguration={kpiConfiguration}
-      setKpiConfiguration={setKpiConfiguration}
-      dashboardData={dashboardData}
-      setKpis={setKpis}
-      metric={metrics}
-      handleTabClick={handleTabClick}
-      activeTab={activeTab}/>;
+    return (
+      <GitlabPendingMergeRequestVerticalTabContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        dashboardData={dashboardData}
+        setKpis={setKpis}
+        metric={metrics}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
   };
 
   const getTabContentContainer = () => {
@@ -186,13 +200,15 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       />
     );
   };
-  
+
   const getFilterContainer = () => {
     return (
       <TabAndViewContainer
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTabContentContainer()}
-        defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+        defaultActiveKey={
+          metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id
+        }
         bodyClassName="mx-0"
         maximumHeight="calc(100vh - 264px)"
         overflowYContainerStyle={"hidden"}

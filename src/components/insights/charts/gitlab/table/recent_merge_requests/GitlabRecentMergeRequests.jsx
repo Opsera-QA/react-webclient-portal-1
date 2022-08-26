@@ -17,10 +17,17 @@ import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
-import {ANALYTICS_TEXT_CONSTANTS} from "../../../../../common/constants/text/analytics/analytics.text.constants";
+import { ANALYTICS_TEXT_CONSTANTS } from "../../../../../common/constants/text/analytics/analytics.text.constants";
 import GitlabRecentMergeRequestVerticalTabContainer from "./GitlabRecentMergeRequestVerticalTabContainer";
+import gitlabActions from "../../gitlab.action";
 
-function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabRecentMergeRequests({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const fields = gitlabRecentMergeRequestsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -28,23 +35,30 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...gitlabRecentMergeRequestsMetadata.newObjectFields }, gitlabRecentMergeRequestsMetadata, false)
+    new Model(
+      { ...gitlabRecentMergeRequestsMetadata.newObjectFields },
+      gitlabRecentMergeRequestsMetadata,
+      false,
+    ),
   );
   const [metrics, setMetrics] = useState([]);
-  const [activeTab,setActiveTab] =useState();
+  const [activeTab, setActiveTab] = useState();
 
   const columns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-        getTableTextColumn(getField(fields, "AssigneeName")),
-        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
-        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
-        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
-        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-        getTableTextColumn(getField(fields, "MergeRequestTimeTaken")),
-        getExternalLinkIconColumnDefinition(getField(fields, "mergeRequestUrl"),"View Merge Request"),
-      ],
-      []
+    () => [
+      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "AssigneeName")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      getTableTextColumn(getField(fields, "MergeRequestTimeTaken")),
+      getExternalLinkIconColumnDefinition(
+        getField(fields, "mergeRequestUrl"),
+        "View Merge Request",
+      ),
+    ],
+    [],
   );
 
   useEffect(() => {
@@ -68,56 +82,53 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadProjectInfo = async (cancelSource = cancelTokenSource,filterDto=tableFilterDto) => {
+  const loadProjectInfo = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value;
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+      ]?.value;
     let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations",
-          )
-          ]?.value;
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "organizations",
+        )
+      ]?.value;
     let projectName;
-    if(!filterDto.getData('search')){
-      projectName = filterDto.getData('projectName') ;
+    const search = filterDto.getData("search");
+    if (!search) {
+      projectName = filterDto.getData("projectName");
     }
-
-    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime",
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        null,
-        dashboardOrgs,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        projectName,
-    );
-    let dataObject = response?.data?.data[0]?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
-    if (isMounted?.current === true && dataObject) {
-      setMetrics(dataObject);
-      let newFilterDto = filterDto;
-      newFilterDto.setData(
-          "totalCount",
-          response?.data?.data[0]
-              ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count,
+    // This can be called only when there is an active tab selected in left panel or a valid search string.
+    if(projectName || search) {
+      const response = await gitlabActions.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          filterDto,
+          projectName,
+          dashboardOrgs
       );
-      setTableFilterDto({...newFilterDto});
+      let dataObject =
+          response?.data?.data
+              ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData(
+            "totalCount",
+            response?.data?.data
+                ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count,
+        );
+        setTableFilterDto({...newFilterDto});
+      }
     }
   };
 
-  const loadData = async (
-    cancelSource = cancelTokenSource
-  ) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await loadProjectInfo(cancelSource);
@@ -135,27 +146,31 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
-    newFilterDto.setData("projectName",projectName);
+    newFilterDto.setData("projectName", projectName);
     newFilterDto.setDefaultValue("search");
+    newFilterDto.setDefaultValue("currentPage");
     setTableFilterDto({ ...newFilterDto });
     // if no projectName then right side table will be empty and api will not be called
-    if(!projectName){
+    if (!projectName) {
       setMetrics([]);
     } else {
       setActiveTab(projectName);
-      await loadData(cancelTokenSource,newFilterDto);
+      await loadData(null, newFilterDto);
     }
   };
 
   const getVerticalTabContainer = () => {
-    return <GitlabRecentMergeRequestVerticalTabContainer
-      kpiConfiguration={kpiConfiguration}
-      setKpiConfiguration={setKpiConfiguration}
-      dashboardData={dashboardData}
-      setKpis={setKpis}
-      metric={metrics}
-      handleTabClick={handleTabClick}
-      activeTab={activeTab}/>;
+    return (
+      <GitlabRecentMergeRequestVerticalTabContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        dashboardData={dashboardData}
+        setKpis={setKpis}
+        metric={metrics}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+      />
+    );
   };
 
   const getTabContentContainer = () => {
@@ -192,7 +207,9 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       <TabAndViewContainer
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTabContentContainer()}
-        defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+        defaultActiveKey={
+          metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id
+        }
         bodyClassName="mx-0"
         maximumHeight="calc(100vh - 264px)"
         overflowYContainerStyle={"hidden"}
