@@ -41,15 +41,16 @@ export default function HeaderNavigationBarItem(
     );
   };
 
+  //setting most of the font configs by css, only color and weight need ot change
   const getStyling = () => {
     if (currentScreen === screenName) {
       return (
         {
-          color: fontColor,
+          color: fontThemeConstants.FONT_FAMILIES.OPSERA_GOLD, //fontColor,
           // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-          fontWeight: 800,
-          fontSize: "16px",
-          // letterSpacing: "0.25rem",
+          fontWeight: 300,
+          //fontSize: "16px",
+          //letterSpacing: "0.25rem",
           cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
         }
       );
@@ -57,12 +58,12 @@ export default function HeaderNavigationBarItem(
 
     return (
       {
-        color: fontColor,
+        //color: fontColor,
         cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
         // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
         // letterSpacing: "0.25rem",
-        fontWeight: undefined,
-        fontSize: "16px",
+        //fontWeight: undefined,
+        //fontSize: "16px",
       }
     );
   };
@@ -70,11 +71,11 @@ export default function HeaderNavigationBarItem(
   return (
     <div className={className}>
       <div
-        className={"mx-5 h-100 d-flex flex-column"}
+        className={"mx-5 h-100 d-flex flex-column topNavLinkText"}
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >
-        <Nav.Item className={""}>
+        <Nav.Item>
           {getScreenLabel()}
         </Nav.Item>
       </div>

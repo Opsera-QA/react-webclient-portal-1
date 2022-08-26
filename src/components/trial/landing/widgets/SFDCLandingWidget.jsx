@@ -43,7 +43,7 @@ export default function SFDCLandingWidget({ className }) {
   const launchWorkflowCreationWizard = () => {
     toastContext.showOverlayPanel(
       <FreeTrialLaunchSalesforceWorkflowWizardOverlay
-      />
+      />,
     );
   };
 
@@ -82,19 +82,22 @@ export default function SFDCLandingWidget({ className }) {
   return (
     <div className={className} style={{ minHeight: "150px", width: "90%" }}>
 
-      <Row className={"m-3 pb-3"}>
+      <Row className={"m-3"}>
         <Col style={{ textAlign: "center" }}>
           <TooltipWrapper
             innerText={"Get started with Salesforce on Opsera!"}
             placement={"bottom"}
           >
-            <img alt="Get started with Salesforce on Opsera!"
-                 src="/img/salesforce/salesforce_dark_450x193.png"
-                 width="450"
-                 height="193"
-                 className={"pointer"}
-                 onClick={launchWorkflowCreationWizard}
-            />
+            <div className={"pointer focusText"}
+                 onClick={launchWorkflowCreationWizard}>
+              <img alt="Get started with Salesforce on Opsera!"
+                   src="/img/salesforce/salesforce_logo_white_475x332.png"
+                   width="220"
+                   height="154"
+                   style={{ marginRight: "10px" }}
+              />
+              Get Started by clicking here!
+            </div>
           </TooltipWrapper>
         </Col>
         <Col>
@@ -104,13 +107,16 @@ export default function SFDCLandingWidget({ className }) {
               innerText={"Opsera is available on Salesforce AppExchange!"}
               placement={"bottom"}
             >
-              <img alt="Opsera is available on Salesforce AppExchange!"
-                   src="/img/salesforce/salesforce_appexchange_240x80.png"
-                   width="240"
-                   height="80"
-                   onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
-                   className={"pointer"}
-              />
+              <div>
+                <span className={"focusText"}>Opsera On</span>
+                <img alt="Opsera is available on Salesforce AppExchange!"
+                     src="/img/salesforce/salesforce_appexchange_240x80.png"
+                     width="240"
+                     height="80"
+                     onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
+                     className={"pointer"}
+                />
+              </div>
             </TooltipWrapper>
           </div>
           <div className={"w-100"} style={{ textAlign: "right" }}>

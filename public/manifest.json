@@ -71,6 +71,21 @@
       "src": "img/logos/opsera_logo_white_horizontal_240_42.png",
       "type": "image/png",
       "sizes": "240x42"
+    },
+    {
+      "src": "img/salesforce/salesforce_appexchange_240x80.png",
+      "type": "image/png",
+      "sizes": "240x80"
+    },
+    {
+      "src": "img/salesforce/salesforce_dark_450x193.png",
+      "type": "image/png",
+      "sizes": "450x193"
+    },
+    {
+      "src": "img/salesforce/salesforce_logo_white_475x332.png",
+      "type": "image/png",
+      "sizes": "450x193"
     }
   ],
   "start_url": ".",

@@ -18,8 +18,8 @@ export default function WelcomeWidget({ className }) {
   } = useComponentStateReference();
 
   const getWelcomeText = () => {
-    const firstNameText = hasStringValue(userData?.firstName) ? `, ${userData.firstName}` : "";
-    const welcomeText = `Hello ${firstNameText}!`;
+    //const firstNameText = hasStringValue(userData?.firstName) ? `, ${userData.firstName}` : "";
+    const welcomeText = `Hello ${userData.firstName}!`;
 
     return (
       <div>
@@ -30,7 +30,7 @@ export default function WelcomeWidget({ className }) {
 
   const getHowToLinks = () => {
     return (
-      <div className={"marketingModulesText"}>
+      <div className={"marketingModulesText marketingModulesTextLink"}>
         <div className={"my-2"}>How to Link Here</div>
         <div className={"my-2"}>More how to Links Here</div>
         <div className={"my-2"}>Even more how to Links Here</div>
@@ -114,7 +114,7 @@ export default function WelcomeWidget({ className }) {
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
         title={getWelcomeText()}
-        titleIcon={faMessageExclamation}
+        /*titleIcon={faMessageExclamation}*/
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
         heightSize={6}
@@ -122,7 +122,7 @@ export default function WelcomeWidget({ className }) {
         <div className={"p-3"}>
           <div className={"d-flex"}>
             <div>
-              <div className={"marketingModulesText"}>
+              <div className={"marketingModulesText"} style={{marginBottom: "20px"}}>
                 Get insights to help make the right decisions.
                 Watch the video on how to customise your dashboard
               </div>

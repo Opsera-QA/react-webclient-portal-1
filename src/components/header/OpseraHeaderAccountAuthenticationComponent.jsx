@@ -105,16 +105,16 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         id={"basic-nav-dropdown"}
         className={"top-nav-dropdown"}
       >
-        <Link
+        {/*<Link
           to={"/user/profile"}
           id={"profile-button"}
           className={"dropdown-item nav-drop-down-item"}
         >
           Profile
-        </Link>
+        </Link>*/}
         {/*{isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
-        <NavDropdown.Divider/>
+        {/*<NavDropdown.Divider/>*/}
 
         <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                           className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
