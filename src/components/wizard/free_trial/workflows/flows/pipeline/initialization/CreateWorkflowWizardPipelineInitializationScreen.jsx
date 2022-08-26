@@ -39,7 +39,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
         templateIdentifier,
       );
 
-      const newPipeline = response?.data?.data;
+      const newPipeline = response?.data;
 
       if (isMongoDbId(newPipeline?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);

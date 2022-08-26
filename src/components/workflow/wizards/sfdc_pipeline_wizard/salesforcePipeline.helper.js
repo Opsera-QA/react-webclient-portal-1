@@ -6,6 +6,10 @@ import { pipelineHelpers } from "components/common/helpers/pipelines/pipeline.he
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {
+  salesforceWorkflowFlowConstants
+} from "../../../wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+
 
 // TODO: Don't use these yet (outside of free trial). They're still being refined
 export const salesforcePipelineHelper = {};
@@ -370,4 +374,98 @@ salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep = (pipeline) => {
 
 salesforcePipelineHelper.getJenkinsIdFromSalesforceTask = (task) => {
     return task?.configuration?.toolConfigId;
+};
+
+salesforcePipelineHelper.updateStepsForSalesforcePipeline = (pipeline, flow) => {
+
+  const updatedPipeline = {...pipeline};
+  const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
+
+  switch (flow) {
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
+      updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceBasicSteps(pipelineSteps);
+      break;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
+      updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceUnitTestSteps(pipelineSteps);
+      break;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
+      updatedPipeline.workflow.plan = pipelineSteps;
+      break;
+    default :
+      updatedPipeline.workflow.plan = pipelineSteps;
+  }
+  return updatedPipeline;
+};
+
+salesforcePipelineHelper.updateSalesforceBasicSteps = (pipelineSteps) => {
+  const updatedPipelineSteps = [];
+
+  pipelineSteps.forEach((pipelineStep) => {
+    const stepToolConfiguration = pipelineStep?.tool?.configuration;
+
+    if (!stepToolConfiguration) {
+      updatedPipelineSteps.push(pipelineStep);
+      return;
+    }
+
+    const jobType = stepToolConfiguration?.jobType;
+
+    switch (jobType) {
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
+        break;
+      default:
+        updatedPipelineSteps.push(pipelineStep);
+    }
+  });
+
+  return updatedPipelineSteps;
+};
+
+salesforcePipelineHelper.updateSalesforceUnitTestSteps = (pipelineSteps) => {
+  const updatedPipelineSteps = [];
+
+  pipelineSteps.forEach((pipelineStep) => {
+    const stepToolConfiguration = pipelineStep?.tool?.configuration;
+
+    if (!stepToolConfiguration) {
+      updatedPipelineSteps.push(pipelineStep);
+      return;
+    }
+
+    const jobType = stepToolConfiguration?.jobType;
+
+    switch (jobType) {
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
+        break;
+      default:
+        updatedPipelineSteps.push(pipelineStep);
+    }
+  });
+
+  return updatedPipelineSteps;
+};
+
+
+salesforcePipelineHelper.enableStep = (pipelineStep, activeFlag) => {
+  const parsedPipelineStep = dataParsingHelper.parseObject(pipelineStep, undefined);
+
+  if (!parsedPipelineStep) {
+    throw "Did not receive a Pipeline Step object";
+  }
+
+  const stepToolConfiguration = dataParsingHelper.parseObject(parsedPipelineStep?.tool?.configuration, undefined);
+
+  if (!stepToolConfiguration) {
+    throw "The Pipeline Step did not contain a configuration object to update.";
+  }
+
+  if (parsedPipelineStep?.tool?.tool_identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+    throw `Invalid Pipeline Step given [${parsedPipelineStep?.tool?.tool_identifier}] does not match [${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}]`;
+  }
+
+  parsedPipelineStep.active = activeFlag;
+  return parsedPipelineStep;
 };
