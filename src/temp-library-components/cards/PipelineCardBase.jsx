@@ -23,9 +23,12 @@ const getLastRunEntry = (pipelineModel) => {
 
   if (lastRunCompletionDate != null) {
     return (
-      <div className={"d-flex justify-content-between"}>
-        {getFormattedTimestamp(lastRunCompletionDate)}
-        <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+      <div className={"mx-auto mt-2 mb-1"}>
+        <span>Last Run</span>
+        <div className={"d-flex justify-content-between"}>
+          {getFormattedTimestamp(lastRunCompletionDate)}
+          <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+        </div>
       </div>
     );
   }
@@ -55,17 +58,8 @@ export default function PipelineCardBase(
 
     return (
       <IconTitleBar
-        icon={
-          <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
-            <div className={"my-auto tool-title-text"}>
-              <IconBase
-                icon={icon}
-                iconSize={"2x"}
-                iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
-              />
-            </div>
-          </div>
-        }
+        icon={icon}
+        iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${pipelineModel?.getData("name")}`}
       />
     );
@@ -74,12 +68,12 @@ export default function PipelineCardBase(
 
   const getDescription = () => {
     return (
-      <div>
-        <div className={"small pl-1"}>
+      <Row className={"small"}>
+        <Col xs={12}>
           <DescriptionField dataObject={pipelineModel} className={"description-height"} />
-          {getRunFields()}
-        </div>
-      </div>
+        </Col>
+        {getRunFields()}
+      </Row>
     );
   };
 
@@ -97,32 +91,25 @@ export default function PipelineCardBase(
   const getRunFields = () => {
     if (runCount === 0 || runCount == null) {
       return (
-        <Row>
-          <Col xs={12} className={"mx-auto"}>
-            <div className={"text-muted mx-auto"}>
-              {"This pipeline hasn't been run yet"}
-            </div>
-          </Col>
-        </Row>
+        <Col xs={12} className={"d-flex"}>
+          <div className={"text-muted mx-auto"}>
+            {"This pipeline hasn't been run yet"}
+          </div>
+        </Col>
       );
     }
 
     return (
       <>
-        <Row>
-          <Col xs={6}>
-            {pipelineStatusField}
-          </Col>
-          <Col xs={6}>
-            <span className="mr-2">Runs:</span> {runCount}
-          </Col>
-          <Col xs={12} className={"mt-2 mb-1"}>
-            <div className={"mx-auto"}>
-              <span>Last Run</span>
-              <span>{formattedLastRun}</span>
-            </div>
-          </Col>
-        </Row>
+        <Col xs={6}>
+          {pipelineStatusField}
+        </Col>
+        <Col xs={6}>
+          <span className="mr-2">Runs:</span> {runCount}
+        </Col>
+        <Col xs={12}>
+          <span>{formattedLastRun}</span>
+        </Col>
       </>
     );
   };
@@ -138,6 +125,7 @@ export default function PipelineCardBase(
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
       className={"vertical-selection-card"}
+      bodyClassName={"px-2"}
       tooltip={tooltip}
       style={{
         // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
