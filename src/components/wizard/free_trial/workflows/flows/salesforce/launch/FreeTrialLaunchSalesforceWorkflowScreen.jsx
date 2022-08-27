@@ -10,6 +10,8 @@ import BackButton from "components/common/buttons/back/BackButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+import FreeTrialLaunchWorkflowButton
+  from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 
 // TODO: Rename
 export default function FreeTrialLaunchSalesforceWorkflowScreen(
@@ -70,6 +72,10 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         className={"mt-3"}
         leftSideButtons={getBackButton()}
       >
+        <FreeTrialLaunchWorkflowButton
+          workspaceItem={selectedWorkflowItem}
+          taskMetadata={taskMetadata}
+        />
       </ButtonContainerBase>
     </div>
   );

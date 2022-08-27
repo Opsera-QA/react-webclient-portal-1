@@ -17,7 +17,6 @@ export const PIPELINE_START_WIZARD_FLOWS = {
 export default function SalesforcePipelineWizardOverlay(
   {
     pipeline,
-    handlePipelineWizardRequest,
   }) {
   const [currentScreen, setCurrentScreen] = useState(PIPELINE_START_WIZARD_FLOWS.PRE_RUN_TASK_SCREEN);
   const [internalPipeline, setInternalPipeline] = useState(undefined);
@@ -91,10 +90,5 @@ export default function SalesforcePipelineWizardOverlay(
 }
 
 SalesforcePipelineWizardOverlay.propTypes = {
-  pipelineType: PropTypes.string,
-  pipelineId: PropTypes.string,
   pipeline: PropTypes.object,
-  pipelineOrientation: PropTypes.string,
-  handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func,
 };

@@ -5,39 +5,33 @@ import IconBase from "components/common/icons/IconBase";
 import { Button } from "react-bootstrap";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
+import SalesforcePipelineWizardOverlay
+  from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
+import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import modelHelpers from "components/common/model/modelHelpers";
 
 // TODO: This will need more work when we add more flows.
 export default function FreeTrialLaunchWorkflowButton(
   {
     className,
     workspaceItem,
+    taskMetadata,
   }) {
   const { toastContext } = useComponentStateReference();
 
   const launchWorkflow = () => {
     switch (workspaceItem?.workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        // toastContext.showOverlayPanel(
-        //   <PipelineStartWizard
-        //     pipelineType={pipelineType}
-        //     pipelineOrientation={pipelineOrientation}
-        //     pipelineId={pipelineId}
-        //     pipeline={pipeline}
-        //     handleClose={handlePipelineStartWizardClose}
-        //     handlePipelineWizardRequest={handlePipelineWizardRequest}
-        //   />,
-        // );
+        toastContext.showOverlayPanel(
+          <SalesforceTaskWizardOverlay
+            gitTasksData={modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata)}
+          />
+        );
         break;
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         toastContext.showOverlayPanel(
-          <PipelineStartWizard
-            pipelineType={"s"}
-            pipelineOrientation={pipelineOrientation}
-            pipelineId={pipelineId}
+          <SalesforcePipelineWizardOverlay
             pipeline={workspaceItem}
-            handleClose={handlePipelineStartWizardClose}
-            handlePipelineWizardRequest={handlePipelineWizardRequest}
           />,
         );
         break;
@@ -65,10 +59,9 @@ export default function FreeTrialLaunchWorkflowButton(
 }
 
 FreeTrialLaunchWorkflowButton.propTypes = {
-  currentScreen: PropTypes.string,
-  setCurrentScreen: PropTypes.func,
   className: PropTypes.string,
   workspaceItem: PropTypes.object,
+  taskMetadata: PropTypes.object,
 };
 
 
