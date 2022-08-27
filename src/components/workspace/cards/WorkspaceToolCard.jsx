@@ -12,7 +12,7 @@ export default function WorkspaceToolCard(
   const history = useHistory();
 
   const viewToolFunction = (pipelineId) => {
-    history.push(`/tools/details/${pipelineId}/summary`);
+    history.push(`/inventory/tools/details/${pipelineId}/summary`);
   };
 
   return (

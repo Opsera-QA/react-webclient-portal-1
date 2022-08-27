@@ -3,7 +3,6 @@ import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
-import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
 import Row from "react-bootstrap/Row";
 import { Col } from "react-bootstrap";
