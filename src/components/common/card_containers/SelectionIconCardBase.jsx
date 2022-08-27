@@ -28,14 +28,14 @@ export default function SelectionIconCardBase(
     }
 
     return ({
-      boxShadow: selectedOption === option ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
+      boxShadow: selectedOption != null && selectedOption === option ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
       borderRadius: "1rem",
       cursor: mouseHelper.getLinkMousePointer(
         onClickFunction,
         disabled === true || isLoading,
-        selectedOption === option,
+        selectedOption != null && selectedOption === option,
       ),
-      borderColor: selectedOption === option ? highlightedBorderColor : undefined,
+      borderColor: selectedOption != null && selectedOption === option ? highlightedBorderColor : undefined,
       overflow: "hidden",
       backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
       color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
