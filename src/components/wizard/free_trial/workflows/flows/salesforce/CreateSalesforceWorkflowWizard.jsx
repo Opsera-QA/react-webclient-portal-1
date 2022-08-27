@@ -28,7 +28,7 @@ export default function CreateSalesforceWorkflowWizard(
             setSelectedFlow={setSelectedFlow}
             setCurrentScreen={setCurrentScreen}
             stepBackFromWizardFunction={stepBackFromWizardFunction}
-            className={"m-3"}
+            className={"m-4"}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:

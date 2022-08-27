@@ -142,8 +142,7 @@ export default function TaskCardBase(
         borderRadius: "5px",
         cursor: mouseHelper.getMouseCursor(onClickFunction),
       }}
-    >
-    </IconCardContainerBase>
+    />
   );
 }
 

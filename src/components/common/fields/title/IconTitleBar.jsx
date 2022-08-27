@@ -2,10 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {cutOffExcessCharacters} from "components/common/helpers/string-helpers";
+import { cutOffExcessCharacters, hasStringValue } from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function IconTitleBar({ title, icon, isLoading, inactive, characterLimit }) {
+function IconTitleBar(
+  {
+    title,
+    subTitle,
+    icon,
+    isLoading,
+    inactive,
+    characterLimit,
+  }) {
   const getStateColumn = () => {
     if (inactive != null) {
       return (
@@ -14,6 +22,16 @@ function IconTitleBar({ title, icon, isLoading, inactive, characterLimit }) {
             <div className="mx-auto">{inactive ? "Inactive" : "Active"}</div>
           </div>
         </Col>
+      );
+    }
+  };
+
+  const getSubtitle = () => {
+    if (hasStringValue(subTitle) === true) {
+      return (
+        <div className={"small mt-2"}>
+          {subTitle}
+        </div>
       );
     }
   };
@@ -31,7 +49,10 @@ function IconTitleBar({ title, icon, isLoading, inactive, characterLimit }) {
       </Col>
       <Col sm={12}>
         <div className="d-flex w-100 mt-2 pl-1">
-          <div className="icon-card-title">{cutOffExcessCharacters(title, characterLimit)}</div>
+          <div className="icon-card-title">
+            {cutOffExcessCharacters(title, characterLimit)}
+            {getSubtitle()}
+          </div>
         </div>
       </Col>
       {getStateColumn()}
@@ -43,6 +64,7 @@ function IconTitleBar({ title, icon, isLoading, inactive, characterLimit }) {
 IconTitleBar.propTypes = {
   inactive: PropTypes.bool,
   title: PropTypes.string,
+  subTitle: PropTypes.string,
   parentBreadcrumb: PropTypes.object,
   icon: PropTypes.object,
   characterLimit: PropTypes.number,

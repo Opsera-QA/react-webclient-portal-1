@@ -144,8 +144,7 @@ export default function PipelineCardBase(
         borderRadius: "5px",
         cursor: mouseHelper.getMouseCursor(onClickFunction),
       }}
-    >
-    </IconCardContainerBase>
+    />
   );
 }
 
