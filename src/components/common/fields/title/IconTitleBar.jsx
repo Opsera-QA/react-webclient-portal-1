@@ -41,7 +41,7 @@ export default function IconTitleBar(
   const getStateColumn = () => {
     if (inactive != null) {
       return (
-        <div className="d-flex w-100">
+        <div className={"d-flex w-100"}>
           <div className="mx-auto">{inactive ? "Inactive" : "Active"}</div>
         </div>
       );
@@ -49,11 +49,24 @@ export default function IconTitleBar(
   };
 
   const getSubtitle = () => {
-    if (hasStringValue(subTitle) === true) {
+    if (hasStringValue(subTitle) === true || isLoading === true) {
       return (
-        <div className={"small mt-2"}>
-          <div className={subTitleClassName}>
-            {subTitle}
+        <div
+          style={{
+            fontSize: "13px",
+          }}
+        >
+          <div
+            className={"small d-flex"}
+          >
+            <div className={subTitleClassName}>
+              <IconBase
+                isLoading={isLoading}
+                className={"mr-2"}
+                iconSize={"sm"}
+              />
+              {subTitle}
+            </div>
           </div>
         </div>
       );
@@ -63,11 +76,10 @@ export default function IconTitleBar(
   const getTitle = () => {
     if (hasStringValue(title) === true) {
       return (
-        <div className="d-flex w-100 mt-3">
+        <div className={"d-flex w-100 mt-3"}>
           <div className={titleClassName}>
-            <div className="icon-card-title">
+            <div className={"icon-card-title"}>
               {cutOffExcessCharacters(title, characterLimit)}
-              {getSubtitle()}
             </div>
           </div>
         </div>
@@ -75,22 +87,17 @@ export default function IconTitleBar(
     }
   };
 
-  if (isLoading) {
-    return (<span><LoadingIcon className={"mr-1"} />Loading Data</span>);
-  }
-
   return (
     <div className={className}>
-      <div className="d-flex w-100">
-        <div className="mx-auto title-icon">
-          <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
-            <div className={"my-auto"}>
-              {getIcon()}
-            </div>
+      <div className="d-flex">
+        <div className={"mx-auto h-100 my-2"}>
+          <div className={"my-auto"}>
+            {getIcon()}
           </div>
         </div>
       </div>
       {getTitle()}
+      {getSubtitle()}
       {getStateColumn()}
     </div>
   );

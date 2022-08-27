@@ -5,7 +5,6 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
-import { disabled } from "react-widgets/PropTypes";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Refactor, start from scratch
@@ -66,8 +65,8 @@ export default function IconCardContainerBase(
       borderRadius: "1rem",
       cursor: mouseHelper.getMouseCursor(onClickFunction, disabled || isLoading),
       overflow: "hidden",
-      backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
-      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
+      backgroundColor: disabled === true || isLoading === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
+      color: disabled === true || isLoading === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
     });
   };
 

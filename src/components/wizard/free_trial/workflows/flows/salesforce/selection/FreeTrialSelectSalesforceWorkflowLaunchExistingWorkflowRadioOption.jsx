@@ -42,6 +42,7 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
           iconSize={"5x"}
           titleClassName={"mx-auto mt-2"}
           subTitleClassName={"mx-auto"}
+          isLoading={isLoading}
         />
       }
       onClickFunction={setCurrentScreen}
