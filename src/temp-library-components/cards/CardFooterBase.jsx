@@ -7,7 +7,6 @@ export default function CardFooterBase(
   {
     backgroundColor,
     color,
-    icon,
     text,
   }) {
   if (hasStringValue(text) !== true) {
@@ -20,6 +19,7 @@ export default function CardFooterBase(
       style={{
         backgroundColor: backgroundColor,
         color: color,
+        // borderRadius: "0 0 .9rem .9rem",
       }}
     >
       <div
@@ -44,5 +44,4 @@ CardFooterBase.propTypes = {
   backgroundColor: PropTypes.string,
   color: PropTypes.string,
   text: PropTypes.string,
-  icon: PropTypes.object,
 };

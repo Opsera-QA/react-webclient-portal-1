@@ -2,15 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
-import CardFooterBase from "temp-library-components/cards/CardFooterBase";
-import { faTools } from "@fortawesome/pro-thin-svg-icons";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
 import Row from "react-bootstrap/Row";
 import { Col } from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 
 export default function ToolCardBase(
   {
@@ -18,8 +16,6 @@ export default function ToolCardBase(
     onClickFunction,
     tooltip,
   }) {
-  const { themeConstants } = useComponentStateReference();
-
   const getTitleBar = () => {
     const icon = getLargeVendorIconFromToolIdentifier(toolModel?.getData("tool_identifier"));
 
@@ -51,24 +47,13 @@ export default function ToolCardBase(
     );
   };
 
-  const getTypeHeader = () => {
-    return (
-      <CardFooterBase
-        backgroundColor={themeConstants.COLOR_PALETTE.GREEN}
-        color={themeConstants.COLOR_PALETTE.WHITE}
-        icon={faTools}
-        text={"Tool"}
-      />
-    );
-  };
-
   if (toolModel == null) {
     return undefined;
   }
 
   return (
     <IconCardContainerBase
-      cardFooter={getTypeHeader()}
+      cardFooter={<ToolCardFooter />}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
-import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function SelectionIconCardBase(
   {
@@ -17,19 +16,19 @@ export default function SelectionIconCardBase(
     tooltip,
     selectedOption,
     option,
+    highlightedBorderColor,
   }) {
-  const { themeConstants } = useComponentStateReference();
-
   const getStyle = () => {
     if (style) {
       return style;
     }
 
     return ({
-      boxShadow: selectedOption === option ? "0 0 40px rgba(46, 25, 86, .25)" : undefined,
-      borderRadius: "5px",
+      boxShadow: selectedOption === option ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
+      borderRadius: "1rem",
       cursor: mouseHelper.getMouseCursor(onClickFunction),
-      borderColor: selectedOption === option ? themeConstants.COLOR_PALETTE.GOLD_HIGHLIGHT : undefined,
+      borderColor: selectedOption === option ? highlightedBorderColor : undefined,
+      overflow: "hidden",
     });
   };
 
@@ -61,4 +60,5 @@ SelectionIconCardBase.propTypes = {
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
   option: PropTypes.string,
+  highlightedBorderColor: PropTypes.string,
 };

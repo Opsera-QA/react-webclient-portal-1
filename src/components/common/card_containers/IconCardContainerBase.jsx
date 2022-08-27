@@ -59,8 +59,9 @@ export default function IconCardContainerBase(
     }
 
     return ({
-      borderRadius: "5px",
+      borderRadius: "1rem",
       cursor: mouseHelper.getMouseCursor(onClickFunction),
+      overflow: "hidden",
     });
   };
 

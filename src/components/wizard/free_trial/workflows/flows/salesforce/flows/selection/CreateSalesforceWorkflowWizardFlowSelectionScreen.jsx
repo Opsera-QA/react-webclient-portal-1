@@ -14,7 +14,9 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowOptionCardBase from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
+import WorkflowOptionCardBase, {
+  WORKFLOW_OPTION_TYPES,
+} from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
@@ -77,6 +79,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
               This operation will allow you to select modified files from your Git repository or Salesforce Organization and move it to the next organization.
             `}
             onClickFunction={() => setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC)}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -91,6 +94,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
               Set up an Organization Sync workflow that includes an explicit unit testing step. 
             `}
             onClickFunction={() => setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING)}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -105,6 +109,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
               Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
             `}
             onClickFunction={() => setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP)}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -119,6 +124,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
               Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
             `}
             onClickFunction={() => setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK)}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
       </Row>

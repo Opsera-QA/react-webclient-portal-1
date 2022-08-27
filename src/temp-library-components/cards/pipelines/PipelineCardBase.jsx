@@ -2,58 +2,62 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import { faTasks } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
+import {
+  PIPELINE_TYPES,
+  pipelineTypeConstants,
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
-import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
-import CardFooterBase from "temp-library-components/cards/CardFooterBase";
+import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 
-const getLastRunEntry = (taskModel) => {
-  const lastRun = taskModel?.getData("last_run");
-  const lastRunCompletionDate = taskModel?.getData("last_run.completed");
+const getLastRunEntry = (pipelineModel) => {
+  const lastRun = pipelineModel?.getData("workflow.last_run");
+  const lastRunCompletionDate = pipelineModel?.getData("workflow.last_run.completed");
 
   if (lastRunCompletionDate != null) {
     return (
-      <div className={"d-flex justify-content-between"}>
-        {getFormattedTimestamp(lastRunCompletionDate)}
-        <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+      <div className={"mx-auto mt-2 mb-1"}>
+        <span>Last Run</span>
+        <div className={"d-flex justify-content-between"}>
+          {getFormattedTimestamp(lastRunCompletionDate)}
+          <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+        </div>
       </div>
     );
   }
 };
 
-const getTaskStatusField = (taskModel) => {
-  const pipelineState = taskModel?.getData("state");
+const getPipelineStatusField = (pipelineModel) => {
+  const pipelineState = pipelineModel?.getData("state");
 
   return (getPipelineStateFieldBase(pipelineState));
 };
 
 // TODO: Rewrite
-export default function TaskCardBase(
+export default function PipelineCardBase(
   {
-    taskModel,
+    pipelineModel,
     onClickFunction,
     tooltip,
   }) {
-  const runCount = taskModel?.getData("run_count");
-  const formattedLastRun = getLastRunEntry(taskModel);
-  const pipelineStatusField = getTaskStatusField(taskModel);
+  const runCount = pipelineModel?.getData("workflow.run_count");
+  const formattedLastRun = getLastRunEntry(pipelineModel);
+  const pipelineStatusField = getPipelineStatusField(pipelineModel);
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
-    const type = taskModel?.getData("type");
-    const icon = taskTypeConstants.getIconForTaskType(type);
-    const category = taskTypeConstants.getTaskCategoryForType(type);
+    const pipelineType = pipelineModel?.getArrayData("type", 0);
+    const icon = pipelineTypeConstants.getIconForPipelineType(pipelineType);
 
     return (
       <IconTitleBar
         icon={icon}
-        iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
-        title={`${taskModel?.getData("name")}`}
+        iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
+        title={`${pipelineModel?.getData("name")}`}
         className={"mx-1"}
       />
     );
@@ -64,21 +68,10 @@ export default function TaskCardBase(
     return (
       <Row className={"small"}>
         <Col xs={12}>
-          <DescriptionField dataObject={taskModel} className={"description-height"} />
+          <DescriptionField dataObject={pipelineModel} className={"description-height"} />
         </Col>
-          {getRunFields()}
+        {getRunFields()}
       </Row>
-    );
-  };
-
-  const getCardFooter = () => {
-    return (
-      <CardFooterBase
-        backgroundColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
-        color={themeConstants.COLOR_PALETTE.WHITE}
-        icon={faTasks}
-        text={"Task"}
-      />
     );
   };
 
@@ -87,7 +80,7 @@ export default function TaskCardBase(
       return (
         <Col xs={12} className={"d-flex"}>
           <div className={"text-muted mx-auto"}>
-            {"This task hasn't been run yet"}
+            {"This pipeline hasn't been run yet"}
           </div>
         </Col>
       );
@@ -101,39 +94,35 @@ export default function TaskCardBase(
         <Col xs={6}>
           <span className="mr-2">Runs:</span> {runCount}
         </Col>
-        {/*<Col xs={12} className={"mt-2 mb-1"}>*/}
-        {/*  <div className={"mx-auto"}>*/}
-        {/*    <span>Last Run</span>*/}
-        {/*    <span>{formattedLastRun}</span>*/}
-        {/*  </div>*/}
-        {/*</Col>*/}
+        <Col xs={12}>
+          <span>{formattedLastRun}</span>
+        </Col>
       </>
     );
   };
 
-  if (taskModel == null) {
+  if (pipelineModel == null) {
     return undefined;
   }
 
   return (
     <IconCardContainerBase
-      cardFooter={getCardFooter()}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
-      className={"vertical-selection-card"}
       tooltip={tooltip}
       style={{
         // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
         borderRadius: "5px",
         cursor: mouseHelper.getMouseCursor(onClickFunction),
       }}
+      cardFooter={<PipelineCardFooter />}
     />
   );
 }
 
-TaskCardBase.propTypes = {
-  taskModel: PropTypes.object,
+PipelineCardBase.propTypes = {
+  pipelineModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
 };

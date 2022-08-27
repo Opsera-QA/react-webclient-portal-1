@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import modelHelpers from "components/common/model/modelHelpers";
 import { useHistory } from "react-router-dom";
-import ToolCardBase from "temp-library-components/cards/ToolCardBase";
+import ToolCardBase from "temp-library-components/cards/tools/ToolCardBase";
 
 export default function WorkspaceToolCard(
   {
