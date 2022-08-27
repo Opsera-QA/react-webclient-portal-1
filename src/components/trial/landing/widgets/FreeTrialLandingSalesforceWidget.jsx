@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import FreeTrialLaunchSalesforceWorkflowWizardOverlay
   from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
+import { faHandPointer } from "@fortawesome/pro-light-svg-icons";
 
 const EXTERNAL_LINKS = {
   YOUTUBE_CHANNEL: "https://youtube.com/channel/UCJJFTWPkGfK8Kq4nPbNAtaQ",
@@ -88,7 +89,7 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
             <IconCardContainerBase
               className={"focusText"}
               titleBar={
-              <div className={"mt-4 mb-2"}>
+              <div className={"mt-4 mb-3"}>
                 <img alt="Get started with Salesforce on Opsera!"
                      src="/img/salesforce/salesforce_logo_white_475x332.png"
                      width="220"
@@ -96,21 +97,15 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
                 />
               </div>
               }
-              contentBody={<div className={"mb-2"}>Click to get started!</div>}
+              contentBody={
+              <div className={"mb-3 mr-2"}>
+                Get started!
+              </div>
+            }
               onClickFunction={launchWorkflowCreationWizard}
               // className={className}
               tooltip={"Get started with Salesforce on Opsera!"}
             />
-            {/*<div className={"pointer focusText"}*/}
-            {/*     onClick={launchWorkflowCreationWizard}>*/}
-            {/*  <img alt="Get started with Salesforce on Opsera!"*/}
-            {/*       src="/img/salesforce/salesforce_logo_white_475x332.png"*/}
-            {/*       width="220"*/}
-            {/*       height="154"*/}
-            {/*       style={{ marginRight: "10px" }}*/}
-            {/*  />*/}
-            {/*  <div className={"mt-2"}>Click to get started!</div>*/}
-            {/*</div>*/}
         </Col>
         <Col>
 
