@@ -111,11 +111,6 @@ export default function PipelineCardBase(
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
-      style={{
-        // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
-        borderRadius: "5px",
-        cursor: mouseHelper.getMouseCursor(onClickFunction),
-      }}
       cardFooter={<PipelineCardFooter />}
     />
   );
