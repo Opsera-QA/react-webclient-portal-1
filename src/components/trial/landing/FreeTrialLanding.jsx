@@ -9,6 +9,7 @@ import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTr
 //import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FreeTrialLandingPipelinesWidget from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidget";
 import SFDCLandingWidget from "./widgets/SFDCLandingWidget";
+import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
 
 export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
@@ -33,7 +34,8 @@ export default function FreeTrialLanding() {
           </Row>
           <div className={"mt-3 mx-auto pb-3"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
-            <SFDCLandingWidget />
+            <FreeTrialLandingSalesforceWidget />
+            {/*<SFDCLandingWidget />*/}
           </div>
           <div className={"mt-3"}>
             <FreeTrialLandingPipelinesWidget />
