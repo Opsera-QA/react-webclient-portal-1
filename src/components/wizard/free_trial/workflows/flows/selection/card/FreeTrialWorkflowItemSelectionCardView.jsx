@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
 import WorkflowPipelineCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowPipelineCard";
 import WorkflowTaskCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowTaskCard";
 

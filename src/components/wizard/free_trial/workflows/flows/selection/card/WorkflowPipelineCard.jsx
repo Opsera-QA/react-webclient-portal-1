@@ -14,8 +14,8 @@ export default function WorkflowPipelineCard(
   return (
     <PipelineCardBase
       pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-      onClickFunction={setSelectedFlow}
-      selectedOption={selectedFlow}
+      onClickFunction={() => setSelectedFlow(pipeline)}
+      selectedOption={selectedFlow?._id}
       option={pipeline?._id}
       // tooltip={"Click to view Pipeline"}
     />
