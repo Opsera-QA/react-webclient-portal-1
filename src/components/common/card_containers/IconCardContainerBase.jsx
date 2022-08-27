@@ -11,9 +11,7 @@ export default function IconCardContainerBase(
     isLoading,
     header,
     titleBar,
-    footerBar,
     className,
-    bodyClassName,
     contentBody,
     style,
     onClickFunction,
@@ -36,7 +34,7 @@ export default function IconCardContainerBase(
   };
 
   const getCardFooter = () => {
-    if (!isLoading && children) {
+    if (children) {
       return (
         <Card.Footer>
           {children}
@@ -70,8 +68,6 @@ IconCardContainerBase.propTypes = {
   titleBar: PropTypes.object,
   contentBody: PropTypes.object,
   className: PropTypes.string,
-  bodyClassName: PropTypes.string,
-  footerBar: PropTypes.object,
   isLoading: PropTypes.bool,
   header: PropTypes.any,
   style: PropTypes.object,

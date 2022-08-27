@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { cutOffExcessCharacters, hasStringValue } from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
-import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 export default function IconTitleBar(
   {
@@ -22,11 +19,9 @@ export default function IconTitleBar(
   const getStateColumn = () => {
     if (inactive != null) {
       return (
-        <Col sm={12}>
-          <div className="d-flex w-100">
-            <div className="mx-auto">{inactive ? "Inactive" : "Active"}</div>
-          </div>
-        </Col>
+        <div className="d-flex w-100">
+          <div className="mx-auto">{inactive ? "Inactive" : "Active"}</div>
+        </div>
       );
     }
   };
@@ -41,37 +36,41 @@ export default function IconTitleBar(
     }
   };
 
-  if (isLoading) {
-    return (<span><LoadingIcon className={"mr-1"}/>Loading Data</span>);
-  }
-
-  return (
-    <Row className={className}>
-      <Col sm={12}>
-        <div className="d-flex w-100">
-          <div className="mx-auto title-icon">
-            <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
-              <div className={"my-auto"}>
-                <IconBase
-                  icon={icon}
-                  iconSize={iconSize}
-                  iconColor={iconColor}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Col>
-      <Col sm={12}>
+  const getTitle = () => {
+    if (hasStringValue(title) === true) {
+      return (
         <div className="d-flex w-100 mt-3">
           <div className="icon-card-title">
             {cutOffExcessCharacters(title, characterLimit)}
             {getSubtitle()}
           </div>
         </div>
-      </Col>
+      );
+    }
+  };
+
+  if (isLoading) {
+    return (<span><LoadingIcon className={"mr-1"} />Loading Data</span>);
+  }
+
+  return (
+    <div className={className}>
+      <div className="d-flex w-100">
+        <div className="mx-auto title-icon">
+          <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
+            <div className={"my-auto"}>
+              <IconBase
+                icon={icon}
+                iconSize={iconSize}
+                iconColor={iconColor}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      {getTitle()}
       {getStateColumn()}
-    </Row>
+    </div>
   );
 }
 
