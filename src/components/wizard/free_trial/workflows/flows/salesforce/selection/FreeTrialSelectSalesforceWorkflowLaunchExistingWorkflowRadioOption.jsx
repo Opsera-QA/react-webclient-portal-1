@@ -26,7 +26,7 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
       return "No Salesforce Workflows found. Please create a new one";
     }
 
-    return (`Launch a Salesforce Workflow`);
+    return (`${workspaceItems.length} Salesforce Workflows`);
   };
 
   return (
@@ -51,20 +51,6 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
       isLoading={isLoading}
     />
   );
-
-  // return (
-  //   <WizardSelectionRadioOption
-  //     onClickFunction={setCurrentScreen}
-  //     selectedOption={currentScreen}
-  //     option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
-  //     text={"Launch Existing Workflow"}
-  //     description={getExistingWorkflowDescription()}
-  //     icon={faRectangleList}
-  //     isBusy={isLoading}
-  //     disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
-  //     className={className}
-  //   />
-  // );
 }
 
 FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption.propTypes = {
