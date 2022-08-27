@@ -16,7 +16,7 @@ export default function FreeTrialLanding() {
 
   return (
     <div className={"max-content-width"}
-      style={{paddingTop: "30px"}}
+      // style={{paddingTop: "30px"}}
     >
       {/*<ScreenContainer
         breadcrumbDestination={"freeTrialLanding"}
