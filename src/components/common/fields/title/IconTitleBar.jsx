@@ -20,11 +20,7 @@ export default function IconTitleBar(
   }) {
   const getIcon = () => {
     if (hasStringValue(iconString) === true) {
-      return (
-        <div className="d-flex w-100 h-100 mt-2 mb-4">
-          <div className="my-auto tool-title-text">{icon}</div>
-        </div>
-      );
+      return iconString;
     }
 
     if (formattedIcon) {
