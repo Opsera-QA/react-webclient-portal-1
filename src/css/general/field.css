@@ -245,9 +245,9 @@ pre {
 }
 
 .vertical-selection-card .description-height {
-    min-height: 50px;
-    height: 50px;
-    max-height: 50px;
+    min-height: 70px;
+    height: 70px;
+    max-height: 70px;
     /*max-height: 90px;*/
 }
 

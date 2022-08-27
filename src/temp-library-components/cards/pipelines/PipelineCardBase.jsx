@@ -66,12 +66,14 @@ export default function PipelineCardBase(
 
   const getDescription = () => {
     return (
-      <Row className={"small"}>
-        <Col xs={12}>
-          <DescriptionField dataObject={pipelineModel} className={"description-height"} />
-        </Col>
-        {getRunFields()}
-      </Row>
+      <div className={"mx-1 mt-2 mb-1"}>
+        <Row className={"small"}>
+          <Col xs={12}>
+            <DescriptionField dataObject={pipelineModel} className={"description-height mb-2"} />
+          </Col>
+          {getRunFields()}
+        </Row>
+      </div>
     );
   };
 
