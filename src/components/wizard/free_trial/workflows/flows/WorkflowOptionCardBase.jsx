@@ -33,18 +33,23 @@ export default function WorkflowOptionCardBase(
         iconColor={iconColor}
         title={title}
         subTitle={subTitle}
+        titleClassName={"px-1 mx-auto"}
+        subTitleClassName={"px-1 mx-auto"}
+        iconSize={"4x"}
       />
     );
   };
 
   const getDescription = () => {
-    return (
-      <div className={"mt-3"}>
-        <div className={"small pl-1"}>
-          {description}
+    if (description) {
+      return (
+        <div className={"my-3"}>
+          <div className={"small pl-1"}>
+            {description}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   };
 
   const getCardFooterForWorkflowOptionType = () => {

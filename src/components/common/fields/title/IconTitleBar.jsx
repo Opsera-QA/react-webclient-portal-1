@@ -90,7 +90,7 @@ export default function IconTitleBar(
   return (
     <div className={className}>
       <div className="d-flex">
-        <div className={"mx-auto h-100 my-2"}>
+        <div className={"mx-auto h-100 mt-2"}>
           <div className={"my-auto"}>
             {getIcon()}
           </div>
