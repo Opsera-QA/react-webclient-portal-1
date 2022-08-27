@@ -80,53 +80,72 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
     );
   };
 
+  const getMainSalesforceWidget = () => {
+    return (
+      <IconCardContainerBase
+        className={"focusText"}
+        titleBar={
+          <div className={"mt-4 mb-3"}>
+            <img alt="Get started with Salesforce on Opsera!"
+                 src="/img/salesforce/salesforce_logo_white_475x332.png"
+                 width="220"
+                 height="154"
+            />
+          </div>
+        }
+        contentBody={
+          <div className={"mb-3 mr-2"}>
+            Get started!
+          </div>
+        }
+        onClickFunction={launchWorkflowCreationWizard}
+        // className={className}
+        tooltip={"Get started with Salesforce on Opsera!"}
+        tooltipPosition={"bottom"}
+      />
+    );
+  };
+
+  const getAppExchangeWidget = () => {
+    return (
+      <IconCardContainerBase
+        className={"focusText"}
+        contentBody={
+          <div className={"d-flex h-100"}>
+            <div className={"m-auto"}>
+              <span className={"focusText"}>Opsera On</span>
+              <img alt="Opsera is available on Salesforce AppExchange!"
+                   src="/img/salesforce/salesforce_appexchange_240x80.png"
+                   width="240"
+                   height="80"
+              />
+            </div>
+          </div>
+        }
+        onClickFunction={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
+        tooltip={"Opsera is available on Salesforce AppExchange!"}
+        tooltipPosition={"bottom"}
+      />
+    );
+  };
 
   return (
-    <div className={className} style={{ minHeight: "150px", width: "90%" }}>
+    <div className={className} style={{ minHeight: "150px" }}>
 
       <Row className={"m-3"}>
-        <Col style={{ textAlign: "center" }}>
-            <IconCardContainerBase
-              className={"focusText"}
-              titleBar={
-              <div className={"mt-4 mb-3"}>
-                <img alt="Get started with Salesforce on Opsera!"
-                     src="/img/salesforce/salesforce_logo_white_475x332.png"
-                     width="220"
-                     height="154"
-                />
-              </div>
-              }
-              contentBody={
-              <div className={"mb-3 mr-2"}>
-                Get started!
-              </div>
-            }
-              onClickFunction={launchWorkflowCreationWizard}
-              // className={className}
-              tooltip={"Get started with Salesforce on Opsera!"}
-            />
+        <Col
+          xs={12} md={6}
+          style={{ textAlign: "center" }}
+        >
+          {getMainSalesforceWidget()}
         </Col>
-        <Col>
+        <Col
+          xs={12} md={6}
+          style={{ textAlign: "center" }}
+        >
+          {getAppExchangeWidget()}
 
-          <div className={"h-100"} style={{ textAlign: "center", paddingTop: "50px", paddingLeft: "50px" }}>
-            <TooltipWrapper
-              innerText={"Opsera is available on Salesforce AppExchange!"}
-              placement={"bottom"}
-            >
-              <div>
-                <span className={"focusText"}>Opsera On</span>
-                <img alt="Opsera is available on Salesforce AppExchange!"
-                     src="/img/salesforce/salesforce_appexchange_240x80.png"
-                     width="240"
-                     height="80"
-                     onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
-                     className={"pointer"}
-                />
-              </div>
-            </TooltipWrapper>
-          </div>
-          <div className={"w-100"} style={{ textAlign: "right" }}>
+          <div className={"w-100 mt-2 mr-2"} style={{ textAlign: "right" }}>
             <div style={{ position: "relative", float: "right" }}>
               {getSocialAccountLogo(EXTERNAL_LINKS.YOUTUBE_CHANNEL, SOCIAL_ICONS.YOUTUBE, SOCIAL_ICONS.YOUTUBE_COLOR, SOCIAL_ICONS.YOUTUBE_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.LINKEDIN, SOCIAL_ICONS.LINKEDIN, SOCIAL_ICONS.LINKEDIN_COLOR, SOCIAL_ICONS.LINKEDIN_TOOLTIP)}

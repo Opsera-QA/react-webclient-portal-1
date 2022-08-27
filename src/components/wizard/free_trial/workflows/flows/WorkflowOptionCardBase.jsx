@@ -84,7 +84,7 @@ WorkflowOptionCardBase.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   description: PropTypes.string,
-  onClickFunction: PropTypes.string,
+  onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   iconColor: PropTypes.string,
   selectedOption: PropTypes.any,

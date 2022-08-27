@@ -18,6 +18,7 @@ export default function IconCardContainerBase(
     style,
     onClickFunction,
     tooltip,
+    tooltipPosition,
   }) {
   const getCardTitle = () => {
     if (isLoading) {
@@ -32,7 +33,13 @@ export default function IconCardContainerBase(
       return (<div className="m-3" />);
     }
 
-    return contentBody;
+    if (contentBody) {
+      return (
+        <Card.Body className="h-100 px-2 py-0">
+          {contentBody}
+        </Card.Body>
+      );
+    }
   };
 
   const getCardFooter = () => {
@@ -66,7 +73,7 @@ export default function IconCardContainerBase(
   };
 
   return (
-    <TooltipWrapper innerText={tooltip}>
+    <TooltipWrapper innerText={tooltip} placement={tooltipPosition}>
       <div
         className={getClassName()}
         style={getStyle()}
@@ -75,9 +82,7 @@ export default function IconCardContainerBase(
         <Card.Title className="mb-0 px-2">
           {getCardTitle()}
         </Card.Title>
-        <Card.Body className="h-100 px-2 py-0">
-          {getCardBody()}
-        </Card.Body>
+        {getCardBody()}
         {getCardFooter()}
         {cardFooter}
       </div>
@@ -95,4 +100,5 @@ IconCardContainerBase.propTypes = {
   style: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
+  tooltipPosition: PropTypes.string,
 };
