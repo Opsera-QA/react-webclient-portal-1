@@ -20,11 +20,14 @@ export default function FreeTrialLaunchWorkflowButton(
   const { toastContext } = useComponentStateReference();
 
   const launchWorkflow = () => {
+    const taskModel = modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata);
+
     switch (workspaceItem?.workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+
         toastContext.showOverlayPanel(
           <SalesforceTaskWizardOverlay
-            gitTasksData={modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata)}
+            gitTasksData={taskModel}
           />
         );
         break;
