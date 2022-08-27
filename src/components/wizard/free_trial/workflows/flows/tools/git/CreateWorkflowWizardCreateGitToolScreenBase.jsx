@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GitToolCreationRadioOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationRadioOptionInput";
+import GitToolCreationSelectionOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import CreateWorkflowWizardCreateGithubToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
@@ -22,7 +22,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
   const getDynamicField = () => {
     if (isMongoDbId(gitToolId) !== true) {
       return (
-        <GitToolCreationRadioOptionInput
+        <GitToolCreationSelectionOptionInput
           gitToolOption={gitToolOption}
           setGitToolOption={setGitToolOption}
           setGitToolModel={setGitToolModel}

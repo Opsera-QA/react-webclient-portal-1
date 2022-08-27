@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function SelectionIconCardBase(
   {
@@ -17,7 +18,10 @@ export default function SelectionIconCardBase(
     selectedOption,
     option,
     highlightedBorderColor,
+    disabled,
   }) {
+  const { themeConstants } = useComponentStateReference();
+
   const getStyle = () => {
     if (style) {
       return style;
@@ -26,10 +30,22 @@ export default function SelectionIconCardBase(
     return ({
       boxShadow: selectedOption === option ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
       borderRadius: "1rem",
-      cursor: mouseHelper.getMouseCursor(onClickFunction),
+      cursor: mouseHelper.getLinkMousePointer(
+        onClickFunction,
+        disabled === true || isLoading,
+        selectedOption === option,
+      ),
       borderColor: selectedOption === option ? highlightedBorderColor : undefined,
       overflow: "hidden",
+      backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
+      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
     });
+  };
+
+  const handleOnClickFunction = () => {
+    if (disabled !== true) {
+      onClickFunction(option);
+    }
   };
 
   return (
@@ -38,7 +54,7 @@ export default function SelectionIconCardBase(
       cardFooter={cardFooter}
       titleBar={titleBar}
       contentBody={contentBody}
-      onClickFunction={onClickFunction}
+      onClickFunction={handleOnClickFunction}
       className={className}
       tooltip={tooltip}
       style={getStyle()}
@@ -61,4 +77,5 @@ SelectionIconCardBase.propTypes = {
   selectedOption: PropTypes.string,
   option: PropTypes.string,
   highlightedBorderColor: PropTypes.string,
+  disabled: PropTypes.bool,
 };

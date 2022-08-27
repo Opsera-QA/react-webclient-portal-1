@@ -18,8 +18,7 @@ export const GIT_TOOL_CREATION_OPTION_LABELS = {
   GITLAB: "Gitlab",
 };
 
-// TODO: Should we make something more similar to the mockups?
-function GitToolCreationRadioOptionInput(
+function GitToolCreationSelectionOptionInput(
   {
     setGitToolModel,
     className,
@@ -60,13 +59,13 @@ function GitToolCreationRadioOptionInput(
   );
 }
 
-GitToolCreationRadioOptionInput.propTypes = {
+GitToolCreationSelectionOptionInput.propTypes = {
   className: PropTypes.string,
   gitToolOption: PropTypes.string,
   setGitToolOption: PropTypes.func,
   setGitToolModel: PropTypes.func,
 };
 
-export default GitToolCreationRadioOptionInput;
+export default GitToolCreationSelectionOptionInput;
 
 

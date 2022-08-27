@@ -5,6 +5,8 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
+import { disabled } from "react-widgets/PropTypes";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Refactor, start from scratch
 export default function IconCardContainerBase(
@@ -19,20 +21,15 @@ export default function IconCardContainerBase(
     onClickFunction,
     tooltip,
     tooltipPosition,
+    disabled,
   }) {
-  const getCardTitle = () => {
-    if (isLoading) {
-      return (<div className="ml-1"><LoadingIcon className={"mr-1"} />Loading Data</div>);
-    }
+  const { themeConstants } = useComponentStateReference();
 
+  const getCardTitle = () => {
     return titleBar;
   };
 
   const getCardBody = () => {
-    if (isLoading) {
-      return (<div className="m-3" />);
-    }
-
     if (contentBody) {
       return (
         <Card.Body className="h-100 px-2 py-0">
@@ -67,17 +64,29 @@ export default function IconCardContainerBase(
 
     return ({
       borderRadius: "1rem",
-      cursor: mouseHelper.getMouseCursor(onClickFunction),
+      cursor: mouseHelper.getMouseCursor(onClickFunction, disabled || isLoading),
       overflow: "hidden",
+      backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
+      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
     });
   };
+
+  const handleOnClickFunction = () => {
+    if (disabled !== true && isLoading !== true) {
+      onClickFunction();
+    }
+  };
+
+  if (onClickFunction == null && disabled !== true) {
+    return null;
+  }
 
   return (
     <TooltipWrapper innerText={tooltip} placement={tooltipPosition}>
       <div
         className={getClassName()}
         style={getStyle()}
-        onClick={onClickFunction}
+        onClick={handleOnClickFunction}
       >
         <Card.Title className="mb-0 px-2">
           {getCardTitle()}
@@ -101,4 +110,5 @@ IconCardContainerBase.propTypes = {
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   tooltipPosition: PropTypes.string,
+  disabled: PropTypes.bool,
 };

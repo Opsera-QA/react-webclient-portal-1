@@ -7,17 +7,13 @@ import { workspaceActions } from "components/workspace/workspace.actions";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { isTaskTypeOfCategory, TASK_TYPE_CATEGORIES } from "components/tasks/task.types";
-import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
-  from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
 import FreeTrialLaunchSalesforceWorkflowScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
+import FreeTrialSelectSalesforceWorkflowOptionScreen
+  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowOptionScreen";
 
 export default function FreeTrialSelectSalesforceWorkflowScreen(
   {
@@ -105,34 +101,13 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
     switch (currentScreen) {
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN:
         return (
-          <div className={"w-100"}>
-            <CenteredContentWrapper>
-              <H5FieldSubHeader
-                className={"mt-3 mb-4 mx-3"}
-                subheaderText={"Would you like to create a new Salesforce Workflow or launch an existing one?"}
-              />
-            </CenteredContentWrapper>
-            <div className={"mx-3"}>
-              <WizardSelectionRadioOption
-                onClickFunction={setCurrentScreen}
-                selectedOption={currentScreen}
-                option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
-                text={"Create Salesforce Workflow"}
-                description={`
-                  Set up a new Salesforce Workflow 
-                `}
-                icon={faSalesforce}
-                className={"mb-2"}
-              />
-              <FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
-                currentScreen={currentScreen}
-                setCurrentScreen={setCurrentScreen}
-                isLoading={isLoading}
-                workspaceItems={workspaceItems}
-                className={"mb-2"}
-              />
-            </div>
-          </div>
+          <FreeTrialSelectSalesforceWorkflowOptionScreen
+            className={""}
+            currentScreen={currentScreen}
+            setCurrentScreen={setCurrentScreen}
+            isLoading={isLoading}
+            workspaceItems={workspaceItems}
+          />
         );
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW:
         return (

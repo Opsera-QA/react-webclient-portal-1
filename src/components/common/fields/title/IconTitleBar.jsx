@@ -7,7 +7,9 @@ import IconBase from "components/common/icons/IconBase";
 export default function IconTitleBar(
   {
     title,
+    titleClassName,
     subTitle,
+    subTitleClassName,
     icon,
     iconString,
     formattedIcon,
@@ -50,7 +52,9 @@ export default function IconTitleBar(
     if (hasStringValue(subTitle) === true) {
       return (
         <div className={"small mt-2"}>
-          {subTitle}
+          <div className={subTitleClassName}>
+            {subTitle}
+          </div>
         </div>
       );
     }
@@ -60,9 +64,11 @@ export default function IconTitleBar(
     if (hasStringValue(title) === true) {
       return (
         <div className="d-flex w-100 mt-3">
-          <div className="icon-card-title">
-            {cutOffExcessCharacters(title, characterLimit)}
-            {getSubtitle()}
+          <div className={titleClassName}>
+            <div className="icon-card-title">
+              {cutOffExcessCharacters(title, characterLimit)}
+              {getSubtitle()}
+            </div>
           </div>
         </div>
       );
@@ -95,7 +101,9 @@ IconTitleBar.propTypes = {
   className: PropTypes.string,
   inactive: PropTypes.bool,
   title: PropTypes.string,
+  titleClassName: PropTypes.string,
   subTitle: PropTypes.string,
+  subTitleClassName: PropTypes.string,
   icon: PropTypes.object,
   iconString: PropTypes.string,
   formattedIcon: PropTypes.object,

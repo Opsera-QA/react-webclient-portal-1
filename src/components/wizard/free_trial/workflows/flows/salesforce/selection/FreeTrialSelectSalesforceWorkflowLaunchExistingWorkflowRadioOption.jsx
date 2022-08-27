@@ -5,6 +5,9 @@ import WizardSelectionRadioOption from "temp-library-components/wizard/option/Wi
 import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import IconTitleBar from "components/common/fields/title/IconTitleBar";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(
   {
@@ -27,18 +30,40 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
   };
 
   return (
-    <WizardSelectionRadioOption
-      onClickFunction={setCurrentScreen}
+    <SelectionIconCardBase
       selectedOption={currentScreen}
       option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
-      text={"Launch Existing Workflow"}
-      description={getExistingWorkflowDescription()}
-      icon={faRectangleList}
-      isBusy={isLoading}
+      titleBar={
+        <IconTitleBar
+          className={"m-3 mb-4"}
+          icon={faRectangleList}
+          title={"Launch Existing Workflow"}
+          subTitle={getExistingWorkflowDescription()}
+          iconSize={"5x"}
+          titleClassName={"mx-auto mt-2"}
+          subTitleClassName={"mx-auto"}
+        />
+      }
+      onClickFunction={setCurrentScreen}
       disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
       className={className}
+      isLoading={isLoading}
     />
   );
+
+  // return (
+  //   <WizardSelectionRadioOption
+  //     onClickFunction={setCurrentScreen}
+  //     selectedOption={currentScreen}
+  //     option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
+  //     text={"Launch Existing Workflow"}
+  //     description={getExistingWorkflowDescription()}
+  //     icon={faRectangleList}
+  //     isBusy={isLoading}
+  //     disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
+  //     className={className}
+  //   />
+  // );
 }
 
 FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption.propTypes = {
