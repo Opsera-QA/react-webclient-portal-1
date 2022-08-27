@@ -34,7 +34,7 @@ workspaceConstants.getLabelForWorkspaceType = (workspaceType) => {
 };
 
 workspaceConstants.getIdentifierLabelForWorkspaceItem = (workspaceItem) => {
-  return workspaceConstants.getIdentifierLabelForWorkspaceType(workspaceItem?.workspaceType, workspaceItem?.workflowIdentifier);
+  return workspaceConstants.getIdentifierLabelForWorkspaceType(workspaceItem?.workspaceType, workspaceItem?.templateIdentifier);
 };
 
 

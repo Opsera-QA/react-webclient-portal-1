@@ -14,7 +14,7 @@ export const workspaceItemMetadata = {
     },
     {
       label: "Workflow",
-      id: "workflowIdentifier",
+      id: "templateIdentifier",
     },
     {
       label: "Created",

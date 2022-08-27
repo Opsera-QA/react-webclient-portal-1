@@ -28,7 +28,7 @@ export default function FreeTrialWorkspaceItemTable(
     () => [
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "workspaceType"), workspaceConstants.getLabelForWorkspaceType),
       getFormattedLabelWithFunctionColumnDefinition(
-        getField(fields, "workflowIdentifier"),
+        getField(fields, "templateIdentifier"),
         workspaceConstants.getIdentifierLabelForWorkspaceItem,
         undefined,
         true
