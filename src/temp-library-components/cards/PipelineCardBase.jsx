@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import IconBase from "components/common/icons/IconBase";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
@@ -14,7 +13,6 @@ import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper"
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
-import FieldContainer from "components/common/fields/FieldContainer";
 import CardFooterBase from "temp-library-components/cards/CardFooterBase";
 
 const getLastRunEntry = (pipelineModel) => {
@@ -61,6 +59,7 @@ export default function PipelineCardBase(
         icon={icon}
         iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${pipelineModel?.getData("name")}`}
+        className={"mx-1"}
       />
     );
   };
@@ -77,7 +76,7 @@ export default function PipelineCardBase(
     );
   };
 
-  const getTypeHeader = () => {
+  const getCardFooter = () => {
     return (
       <CardFooterBase
         backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
@@ -120,18 +119,16 @@ export default function PipelineCardBase(
 
   return (
     <IconCardContainerBase
-      header={getTypeHeader()}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
-      className={"vertical-selection-card"}
-      bodyClassName={"px-2"}
       tooltip={tooltip}
       style={{
         // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
         borderRadius: "5px",
         cursor: mouseHelper.getMouseCursor(onClickFunction),
       }}
+      cardFooter={getCardFooter()}
     />
   );
 }

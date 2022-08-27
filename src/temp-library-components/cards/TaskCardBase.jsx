@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import IconBase from "components/common/icons/IconBase";
-import { faDraftingCompass, faTasks } from "@fortawesome/pro-light-svg-icons";
+import { faTasks } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
@@ -52,18 +51,10 @@ export default function TaskCardBase(
 
     return (
       <IconTitleBar
-        icon={
-          <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
-            <div className={"my-auto tool-title-text"}>
-              <IconBase
-                icon={icon}
-                iconSize={"2x"}
-                iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
-              />
-            </div>
-          </div>
-        }
+        icon={icon}
+        iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${taskModel?.getData("name")}`}
+        className={"mx-1"}
       />
     );
   };
@@ -71,56 +62,51 @@ export default function TaskCardBase(
 
   const getDescription = () => {
     return (
-      <div>
-        <div className={"small pl-1"}>
+      <Row className={"small"}>
+        <Col xs={12}>
           <DescriptionField dataObject={taskModel} className={"description-height"} />
+        </Col>
           {getRunFields()}
-        </div>
-      </div>
+      </Row>
     );
   };
 
-  const getTypeHeader = () => {
-   return (
-
-     <CardFooterBase
-       backgroundColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
-       color={themeConstants.COLOR_PALETTE.WHITE}
-       icon={faTasks}
-       text={"Task"}
-     />
-   );
+  const getCardFooter = () => {
+    return (
+      <CardFooterBase
+        backgroundColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+        color={themeConstants.COLOR_PALETTE.WHITE}
+        icon={faTasks}
+        text={"Task"}
+      />
+    );
   };
 
   const getRunFields = () => {
     if (runCount === 0 || runCount == null) {
       return (
-        <Row>
-          <Col xs={12} className={"mx-auto"}>
-            <div className={"text-muted mx-auto"}>
-              {"This task hasn't been run yet"}
-            </div>
-          </Col>
-        </Row>
+        <Col xs={12} className={"d-flex"}>
+          <div className={"text-muted mx-auto"}>
+            {"This task hasn't been run yet"}
+          </div>
+        </Col>
       );
     }
 
     return (
       <>
-        <Row>
-          <Col xs={6}>
-              {pipelineStatusField}
-          </Col>
-          <Col xs={6}>
-            <span className="mr-2">Runs:</span> {runCount}
-          </Col>
-          {/*<Col xs={12} className={"mt-2 mb-1"}>*/}
-          {/*  <div className={"mx-auto"}>*/}
-          {/*    <span>Last Run</span>*/}
-          {/*    <span>{formattedLastRun}</span>*/}
-          {/*  </div>*/}
-          {/*</Col>*/}
-        </Row>
+        <Col xs={6}>
+          {pipelineStatusField}
+        </Col>
+        <Col xs={6}>
+          <span className="mr-2">Runs:</span> {runCount}
+        </Col>
+        {/*<Col xs={12} className={"mt-2 mb-1"}>*/}
+        {/*  <div className={"mx-auto"}>*/}
+        {/*    <span>Last Run</span>*/}
+        {/*    <span>{formattedLastRun}</span>*/}
+        {/*  </div>*/}
+        {/*</Col>*/}
       </>
     );
   };
@@ -131,7 +117,7 @@ export default function TaskCardBase(
 
   return (
     <IconCardContainerBase
-      header={getTypeHeader()}
+      cardFooter={getCardFooter()}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}

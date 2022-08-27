@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import {Card} from "react-bootstrap";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Refactor, start from scratch
 export default function IconCardContainerBase(
   {
     children,
     isLoading,
-    header,
+    cardFooter,
     titleBar,
     className,
     contentBody,
@@ -43,10 +44,18 @@ export default function IconCardContainerBase(
     }
   };
 
+  const getClassName = () => {
+    if (hasStringValue(className) === true) {
+      return `${className} card h-100 vertical-selection-card`;
+    }
+
+    return `card h-100 vertical-selection-card`;
+  };
+
   return (
     <TooltipWrapper innerText={tooltip}>
       <div
-        className={`card mb-2 h-100 ${className}`}
+        className={getClassName()}
         style={style}
         onClick={onClickFunction}
       >
@@ -57,7 +66,7 @@ export default function IconCardContainerBase(
           {getCardBody()}
         </Card.Body>
         {getCardFooter()}
-        {header}
+        {cardFooter}
       </div>
     </TooltipWrapper>
   );
@@ -69,7 +78,7 @@ IconCardContainerBase.propTypes = {
   contentBody: PropTypes.object,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
-  header: PropTypes.any,
+  cardFooter: PropTypes.any,
   style: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,

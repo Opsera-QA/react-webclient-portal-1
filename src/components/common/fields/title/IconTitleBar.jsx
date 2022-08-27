@@ -9,6 +9,8 @@ export default function IconTitleBar(
     title,
     subTitle,
     icon,
+    iconString,
+    formattedIcon,
     iconColor,
     iconSize,
     isLoading,
@@ -16,6 +18,28 @@ export default function IconTitleBar(
     characterLimit,
     className,
   }) {
+  const getIcon = () => {
+    if (hasStringValue(iconString) === true) {
+      return (
+        <div className="d-flex w-100 h-100 mt-2 mb-4">
+          <div className="my-auto tool-title-text">{icon}</div>
+        </div>
+      );
+    }
+
+    if (formattedIcon) {
+      return formattedIcon;
+    }
+
+    return (
+      <IconBase
+        icon={icon}
+        iconSize={iconSize}
+        iconColor={iconColor}
+      />
+    );
+  };
+
   const getStateColumn = () => {
     if (inactive != null) {
       return (
@@ -59,11 +83,7 @@ export default function IconTitleBar(
         <div className="mx-auto title-icon">
           <div className={"d-flex w-100 h-100 mt-2 mb-4"}>
             <div className={"my-auto"}>
-              <IconBase
-                icon={icon}
-                iconSize={iconSize}
-                iconColor={iconColor}
-              />
+              {getIcon()}
             </div>
           </div>
         </div>
@@ -81,6 +101,8 @@ IconTitleBar.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   icon: PropTypes.object,
+  iconString: PropTypes.string,
+  formattedIcon: PropTypes.object,
   iconColor: PropTypes.string,
   iconSize: PropTypes.string,
   characterLimit: PropTypes.number,

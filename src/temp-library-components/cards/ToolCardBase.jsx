@@ -8,6 +8,9 @@ import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper"
 import CardFooterBase from "temp-library-components/cards/CardFooterBase";
 import { faTools } from "@fortawesome/pro-thin-svg-icons";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
+import Row from "react-bootstrap/Row";
+import { Col } from "react-bootstrap";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function ToolCardBase(
   {
@@ -18,19 +21,20 @@ export default function ToolCardBase(
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(toolModel?.getData("tool_identifier"));
+    const icon = getLargeVendorIconFromToolIdentifier(toolModel?.getData("tool_identifier"));
 
-    if (typeof icon === "string") {
-      icon = (
-        <div className="d-flex w-100 h-100 mt-2 mb-4">
-          <div className="my-auto tool-title-text">{icon}</div>
-        </div>
+    if (hasStringValue(icon) === true) {
+      return (
+        <IconTitleBar
+          iconString={icon}
+          title={`${toolModel.getData("name")}`}
+        />
       );
     }
 
     return (
       <IconTitleBar
-        icon={icon}
+        formattedIcon={icon}
         title={`${toolModel.getData("name")}`}
       />
     );
@@ -39,11 +43,11 @@ export default function ToolCardBase(
 
   const getDescription = () => {
     return (
-      <div>
-        <div className={"small pl-1"}>
+      <Row className={"small"}>
+        <Col xs={12}>
           <DescriptionField dataObject={toolModel} className={"description-height"} />
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   };
 
@@ -64,11 +68,10 @@ export default function ToolCardBase(
 
   return (
     <IconCardContainerBase
-      header={getTypeHeader()}
+      cardFooter={getTypeHeader()}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
-      className={"vertical-selection-card"}
       tooltip={tooltip}
       style={{
         // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
