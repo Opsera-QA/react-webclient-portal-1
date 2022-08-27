@@ -4,6 +4,7 @@ import {Card} from "react-bootstrap";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 
 // TODO: Refactor, start from scratch
 export default function IconCardContainerBase(
@@ -52,11 +53,22 @@ export default function IconCardContainerBase(
     return `card h-100 vertical-selection-card`;
   };
 
+  const getStyle = () => {
+    if (style) {
+      return style;
+    }
+
+    return ({
+      borderRadius: "5px",
+      cursor: mouseHelper.getMouseCursor(onClickFunction),
+    });
+  };
+
   return (
     <TooltipWrapper innerText={tooltip}>
       <div
         className={getClassName()}
-        style={style}
+        style={getStyle()}
         onClick={onClickFunction}
       >
         <Card.Title className="mb-0 px-2">

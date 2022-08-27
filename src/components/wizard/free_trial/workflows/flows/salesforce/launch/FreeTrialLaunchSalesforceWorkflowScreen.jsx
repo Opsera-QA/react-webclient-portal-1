@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import FilterContainer from "components/common/table/FilterContainer";
-import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import BackButton from "components/common/buttons/back/BackButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import FreeTrialWorkflowItemSelectionCardView
+  from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 
 // TODO: Rename
 export default function FreeTrialLaunchSalesforceWorkflowScreen(
@@ -20,6 +21,8 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
     loadData,
     taskMetadata,
   }) {
+  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState("");
+
   const getBody = () => {
     if (isLoading === true) {
       return (
@@ -30,11 +33,13 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
     }
 
     return (
-      <FreeTrialWorkspaceItemViews
-        workspaceItems={workspaceItems}
+      <FreeTrialWorkflowItemSelectionCardView
         isLoading={isLoading}
         loadData={loadData}
+        workspaceItems={workspaceItems}
         taskMetadata={taskMetadata}
+        selectedWorkflowItem={selectedWorkflowItem}
+        setSelectedWorkflowItem={setSelectedWorkflowItem}
       />
     );
   };

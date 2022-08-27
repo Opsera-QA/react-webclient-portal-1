@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import { faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import FreeTrialSelectSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowScreen";
+  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowScreen";
 
 export const LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_OPTION_SCREEN: "select_workflow_screen",

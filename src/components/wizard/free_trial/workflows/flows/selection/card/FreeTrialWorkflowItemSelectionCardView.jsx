@@ -5,15 +5,13 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import WorkspacePipelineCard from "components/workspace/cards/WorkspacePipelineCard";
 import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
-import WorkspaceToolCard from "components/workspace/cards/WorkspaceToolCard";
 
-export default function FreeTrialWorkspaceItemCardView(
+export default function FreeTrialWorkflowItemSelectionCardView(
   {
+    workflowFilterModel,
     workspaceItems,
-    workspaceFilterModel,
     loadData,
     isLoading,
-    toolMetadata,
     taskMetadata,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
@@ -31,13 +29,6 @@ export default function FreeTrialWorkspaceItemCardView(
             taskMetadata={taskMetadata}
           />
         );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
-        return (
-          <WorkspaceToolCard
-            tool={workspaceItem}
-            toolMetadata={toolMetadata}
-          />
-        );
     }
   };
 
@@ -45,7 +36,7 @@ export default function FreeTrialWorkspaceItemCardView(
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      paginationModel={workspaceFilterModel}
+      paginationModel={workflowFilterModel}
       cards={
         <VerticalCardViewBase
           getCardFunction={getWorkspaceItemCard}
@@ -56,11 +47,10 @@ export default function FreeTrialWorkspaceItemCardView(
   );
 }
 
-FreeTrialWorkspaceItemCardView.propTypes = {
+FreeTrialWorkflowItemSelectionCardView.propTypes = {
   workspaceItems: PropTypes.array,
-  workspaceFilterModel: PropTypes.object,
+  workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   taskMetadata: PropTypes.object,
-  toolMetadata: PropTypes.object,
 };

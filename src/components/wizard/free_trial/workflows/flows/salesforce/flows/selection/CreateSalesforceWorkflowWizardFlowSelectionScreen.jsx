@@ -14,7 +14,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowCardBase from "components/wizard/free_trial/workflows/flows/WorkflowCardBase";
+import WorkflowOptionCardBase from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
@@ -65,7 +65,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
       </CenteredContentWrapper>
       <Row>
         <SelectionCardColumn>
-          <WorkflowCardBase
+          <WorkflowOptionCardBase
             option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC}
             selectedOption={selectedFlow}
             title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC}
@@ -80,7 +80,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
-          <WorkflowCardBase
+          <WorkflowOptionCardBase
             option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING}
             selectedOption={selectedFlow}
             title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING}
@@ -94,7 +94,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
-          <WorkflowCardBase
+          <WorkflowOptionCardBase
             option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP}
             selectedOption={selectedFlow}
             title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP}
@@ -108,7 +108,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
-          <WorkflowCardBase
+          <WorkflowOptionCardBase
             option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK}
             selectedOption={selectedFlow}
             title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK}

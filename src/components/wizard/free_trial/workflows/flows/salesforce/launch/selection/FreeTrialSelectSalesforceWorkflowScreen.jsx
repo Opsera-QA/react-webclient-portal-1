@@ -17,7 +17,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
   from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
 import FreeTrialLaunchSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialLaunchSalesforceWorkflowScreen";
+  from "components/wizard/free_trial/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
 
 export default function FreeTrialSelectSalesforceWorkflowScreen(
   {
