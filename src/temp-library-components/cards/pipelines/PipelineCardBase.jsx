@@ -13,6 +13,7 @@ import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
+import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 
 const getLastRunEntry = (pipelineModel) => {
   const lastRun = pipelineModel?.getData("workflow.last_run");
@@ -43,6 +44,8 @@ export default function PipelineCardBase(
     pipelineModel,
     onClickFunction,
     tooltip,
+    selectedOption,
+    option,
   }) {
   const runCount = pipelineModel?.getData("workflow.run_count");
   const formattedLastRun = getLastRunEntry(pipelineModel);
@@ -108,12 +111,15 @@ export default function PipelineCardBase(
   }
 
   return (
-    <IconCardContainerBase
+    <SelectionIconCardBase
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       cardFooter={<PipelineCardFooter />}
+      selectedOption={selectedOption}
+      option={option}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
     />
   );
 }
@@ -122,4 +128,6 @@ PipelineCardBase.propTypes = {
   pipelineModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
+  option: PropTypes.string,
 };

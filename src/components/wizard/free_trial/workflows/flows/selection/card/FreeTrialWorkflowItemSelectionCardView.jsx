@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import WorkspacePipelineCard from "components/workspace/cards/WorkspacePipelineCard";
 import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
+import WorkflowPipelineCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowPipelineCard";
+import WorkflowTaskCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowTaskCard";
 
 export default function FreeTrialWorkflowItemSelectionCardView(
   {
@@ -13,18 +14,24 @@ export default function FreeTrialWorkflowItemSelectionCardView(
     loadData,
     isLoading,
     taskMetadata,
+    selectedWorkflowItem,
+    setSelectedWorkflowItem,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         return (
-          <WorkspacePipelineCard
+          <WorkflowPipelineCard
             pipeline={workspaceItem}
+            selectedFlow={selectedWorkflowItem}
+            setSelectedFlow={setSelectedWorkflowItem}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
-          <WorkspaceTaskCard
+          <WorkflowTaskCard
+            selectedFlow={selectedWorkflowItem}
+            setSelectedFlow={setSelectedWorkflowItem}
             task={workspaceItem}
             taskMetadata={taskMetadata}
           />
@@ -53,4 +60,6 @@ FreeTrialWorkflowItemSelectionCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   taskMetadata: PropTypes.object,
+  selectedWorkflowItem: PropTypes.string,
+  setSelectedWorkflowItem: PropTypes.func,
 };

@@ -1,17 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import { faTasks } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DescriptionField from "components/common/fields/text/DescriptionField";
-import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
-import CardFooterBase from "temp-library-components/cards/CardFooterBase";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
+import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 
 const getLastRunEntry = (taskModel) => {
   const lastRun = taskModel?.getData("last_run");
@@ -39,6 +36,8 @@ export default function TaskCardBase(
     taskModel,
     onClickFunction,
     tooltip,
+    selectedOption,
+    option,
   }) {
   const runCount = taskModel?.getData("run_count");
   const formattedLastRun = getLastRunEntry(taskModel);
@@ -106,13 +105,15 @@ export default function TaskCardBase(
   }
 
   return (
-    <IconCardContainerBase
+    <SelectionIconCardBase
       cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
-      className={"vertical-selection-card"}
       tooltip={tooltip}
+      selectedOption={selectedOption}
+      option={option}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
     />
   );
 }
@@ -121,4 +122,6 @@ TaskCardBase.propTypes = {
   taskModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
+  option: PropTypes.string,
 };

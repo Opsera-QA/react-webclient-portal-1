@@ -8,23 +8,22 @@ import { useHistory } from "react-router-dom";
 export default function WorkflowPipelineCard(
   {
     pipeline,
-
+    setSelectedFlow,
+    selectedFlow,
   }) {
-  const history = useHistory();
-
-  const viewPipelineFunction = (pipelineId) => {
-    history.push(`/workflow/details/${pipelineId}/summary`);
-  };
-
   return (
     <PipelineCardBase
       pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-      onClickFunction={() => viewPipelineFunction(pipeline?._id)}
-      tooltip={"Click to view Pipeline"}
+      onClickFunction={setSelectedFlow}
+      selectedOption={selectedFlow}
+      option={pipeline?._id}
+      // tooltip={"Click to view Pipeline"}
     />
   );
 }
 
 WorkflowPipelineCard.propTypes = {
   pipeline: PropTypes.object,
+  setSelectedFlow: PropTypes.func,
+  selectedFlow: PropTypes.string,
 };

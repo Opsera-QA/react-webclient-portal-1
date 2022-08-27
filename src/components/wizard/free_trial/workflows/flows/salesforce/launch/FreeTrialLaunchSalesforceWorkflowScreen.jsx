@@ -62,8 +62,8 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         body={getBody()}
         titleIcon={faRectangleList}
         isLoading={isLoading}
-        loadData={loadData}
-        title={"Select a Salesforce Workflow"}
+        // loadData={loadData}
+        title={"Select Salesforce Workflow"}
         className={""}
       />
       <ButtonContainerBase
