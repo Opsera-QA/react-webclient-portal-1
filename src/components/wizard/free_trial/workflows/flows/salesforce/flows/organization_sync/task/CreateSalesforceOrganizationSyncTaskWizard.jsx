@@ -34,9 +34,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
   const [gitToolOption, setGitToolOption] = useState(undefined);
   const [gitToolId, setGitToolId] = useState(undefined);
   const [sourceSalesforceToolModel, setSourceSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
-  const [deploymentSalesforceToolModel, setDeploymentSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
   const [salesforceSourceToolId, setSalesforceSourceToolId] = useState(undefined);
-  const [salesforceDestinationToolId, setSalesforceDestinationToolId] = useState(undefined);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {

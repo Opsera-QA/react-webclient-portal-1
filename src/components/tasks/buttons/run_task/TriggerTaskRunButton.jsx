@@ -75,7 +75,11 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       } finally {
         handleClose();
-        toastContext.showOverlayPanel(<SalesforceTaskWizardOverlay gitTasksData={gitTasksData}/>);
+        toastContext.showOverlayPanel(
+          <SalesforceTaskWizardOverlay
+            task={gitTasksData?.getPersistData()}
+          />
+        );
         setIsLoading(false);
       }
     }
