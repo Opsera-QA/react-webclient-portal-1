@@ -19,18 +19,6 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     setGitToolModel,
     className,
   }) {
-  const getDynamicField = () => {
-    if (isMongoDbId(gitToolId) !== true) {
-      return (
-        <GitToolCreationSelectionOptionInput
-          gitToolOption={gitToolOption}
-          setGitToolOption={setGitToolOption}
-          setGitToolModel={setGitToolModel}
-        />
-      );
-    }
-  };
-
   const getEditorPanel = () => {
     switch (gitToolOption) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
@@ -58,7 +46,11 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
 
   return (
     <div className={className}>
-      {getDynamicField()}
+      <GitToolCreationSelectionOptionInput
+        gitToolOption={gitToolOption}
+        setGitToolOption={setGitToolOption}
+        setGitToolModel={setGitToolModel}
+      />
       {getEditorPanel()}
     </div>
   );

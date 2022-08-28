@@ -7,6 +7,11 @@ import githubConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
 import gitlabConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
+import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import IconTitleBar from "components/common/fields/title/IconTitleBar";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
 
 export const GIT_TOOL_CREATION_OPTIONS = {
   GITHUB: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
@@ -40,21 +45,46 @@ function GitToolCreationSelectionOptionInput(
 
   return (
     <div className={className}>
-      <WizardSelectionRadioOption
-        onClickFunction={setDataFunction}
-        selectedOption={gitToolOption}
-        option={GIT_TOOL_CREATION_OPTIONS.GITHUB}
-        text={GIT_TOOL_CREATION_OPTION_LABELS.GITHUB}
-        description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
-      />
-      <WizardSelectionRadioOption
-        className={"mt-2"}
-        onClickFunction={setDataFunction}
-        selectedOption={gitToolOption}
-        option={GIT_TOOL_CREATION_OPTIONS.GITLAB}
-        text={GIT_TOOL_CREATION_OPTION_LABELS.GITLAB}
-        description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
-      />
+      <Row>
+        <Col xs={3} />
+        <Col xs={3}>
+          <SelectionIconCardBase
+            selectedOption={gitToolOption}
+            option={GIT_TOOL_CREATION_OPTIONS.GITHUB}
+            onClickFunction={setDataFunction}
+            titleBar={
+              <IconTitleBar
+                className={""}
+                formattedIcon={
+                  getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB)
+                }
+                title={GIT_TOOL_CREATION_OPTION_LABELS.GITHUB}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+          />
+        </Col>
+        <Col xs={3}>
+          <SelectionIconCardBase
+            selectedOption={gitToolOption}
+            option={GIT_TOOL_CREATION_OPTIONS.GITLAB}
+            onClickFunction={setDataFunction}
+            titleBar={
+              <IconTitleBar
+                className={""}
+                formattedIcon={
+                  getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB)
+                }
+                title={GIT_TOOL_CREATION_OPTION_LABELS.GITLAB}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+          />
+        </Col>
+        <Col xs={3} />
+      </Row>
     </div>
   );
 }

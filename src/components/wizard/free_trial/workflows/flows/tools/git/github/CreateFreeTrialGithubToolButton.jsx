@@ -79,17 +79,13 @@ export default function CreateFreeTrialGithubToolButton(
   };
 
   return (
-    <div className={"m-3"}>
-      <ButtonContainerBase>
-        <CreateButton
-          showSuccessToasts={false}
-          customLabel={"Continue"}
-          createRecord={handleGitToolCreation}
-          recordDto={gitToolModel}
-          addAnotherOption={false}
-        />
-      </ButtonContainerBase>
-    </div>
+    <CreateButton
+      showSuccessToasts={false}
+      customLabel={"Continue"}
+      createRecord={handleGitToolCreation}
+      recordDto={gitToolModel}
+      addAnotherOption={false}
+    />
   );
 }
 

@@ -62,6 +62,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             gitToolOption={gitToolOption}
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
+            className={"m-3"}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
