@@ -9,6 +9,7 @@ import PipelinesWidgetHeaderTitleBar, {
 } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
+import PipelinesWidgetHeaderTabBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTabBar";
 
 const WIDGET_HEIGHT_SIZE = 5;
 const WIDGET_DROPDOWN_MAX_HEIGHT = widgetHelper.getWidgetPixelSize(WIDGET_HEIGHT_SIZE - 2);
@@ -100,6 +101,12 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
         title={getTitleBar()}
         isLoading={isLoading || pipelineRefreshing}
       >
+        <PipelinesWidgetHeaderTabBar
+          selectedPipelineId={selectedPipelineId}
+          setSelectedHeaderItem={setSelectedHeaderItem}
+          selectedHeaderItem={selectedHeaderItem}
+          setSelectedPipelineId={setSelectedPipelineId}
+        />
         <PipelineWidgetsBody
           selectedHeaderItem={selectedHeaderItem}
           selectedPipelineId={selectedPipelineId}

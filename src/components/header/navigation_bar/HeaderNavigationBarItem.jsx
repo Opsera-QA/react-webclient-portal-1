@@ -46,9 +46,10 @@ export default function HeaderNavigationBarItem(
     if (currentScreen === screenName) {
       return (
         {
-          color: fontThemeConstants.FONT_FAMILIES.OPSERA_GOLD, //fontColor,
+          color: themeConstants.COLOR_PALETTE.OPSERA_GOLD, //fontColor,
           // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 300,
+          borderBottom: `1px solid ${themeConstants.COLOR_PALETTE.OPSERA_GOLD}`,
           //fontSize: "16px",
           //letterSpacing: "0.25rem",
           cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
@@ -71,7 +72,7 @@ export default function HeaderNavigationBarItem(
   return (
     <div className={className}>
       <div
-        className={"mx-5 h-100 d-flex flex-column topNavLinkText"}
+        className={"mx-5 h-100 d-flex flex-column"}
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >

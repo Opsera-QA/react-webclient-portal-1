@@ -16,6 +16,7 @@ export const PIPELINE_WIDGET_HEADER_ITEMS = {
   LOGS: "logs",
   METRICS: "metrics",
   MORE: "more",
+  SELECT_ANOTHER_WORKFLOW: "select_another_workflow",
 };
 
 export default function PipelinesWidgetHeaderTitleBar(
@@ -99,7 +100,7 @@ export default function PipelinesWidgetHeaderTitleBar(
   };
 
   const getPipelineActionControls = () => {
-    if (selectedPipeline) {
+    if (selectedPipeline && isMongoDbId(selectedPipelineId) === true) {
       return (
         <div className={"ml-auto"}>
           <PipelineActionControls
@@ -111,6 +112,27 @@ export default function PipelinesWidgetHeaderTitleBar(
             setParentWorkflowStatus={setWorkflowStatus}
           />
         </div>
+      );
+    }
+  };
+
+  const selectAnotherWorkflowFunction = () => {
+    setSelectedPipelineId(undefined);
+    setSelectedPipeline(undefined);
+    setSelectedHeaderItem(undefined);
+  };
+
+  const getSelectAnotherWorkflowHeaderItem = () => {
+    if (isMongoDbId(selectedPipelineId) === true) {
+      return (
+        <HeaderNavigationBarItem
+          currentScreen={selectedHeaderItem}
+          screenName={PIPELINE_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW}
+          screenLabel={"Select another Workflow..."}
+          setCurrentScreen={selectAnotherWorkflowFunction}
+          className={"my-auto"}
+          fontColor={themeConstants.COLOR_PALETTE.WHITE}
+        />
       );
     }
   };
@@ -128,11 +150,7 @@ export default function PipelinesWidgetHeaderTitleBar(
         isLoading={isLoading}
         className={"my-auto"}
       />
-      <PipelinesWidgetHeaderTabBar
-        selectedPipelineId={selectedPipelineId}
-        setSelectedHeaderItem={setSelectedHeaderItem}
-        selectedHeaderItem={selectedHeaderItem}
-      />
+      {getSelectAnotherWorkflowHeaderItem()}
       {getPipelineActionControls()}
     </div>
   );
