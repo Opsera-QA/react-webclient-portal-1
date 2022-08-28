@@ -519,7 +519,7 @@ function PipelineActionControls(
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
-      <div className="d-flex flex-fill">
+      <div className="d-flex">
 
         {statusMessage &&
         <div className="warning-theme warning-text text-left">

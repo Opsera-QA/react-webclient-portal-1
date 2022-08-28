@@ -349,8 +349,8 @@ function PipelineWorkflow({
   return (
     <>
       <div>
-        <Row className={"justify-content-between"}>
-          <Col xs={12} sm={6} className={"py-1"}>
+        <Row>
+          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
           {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
           <OverlayTrigger
             placement="top"
@@ -411,7 +411,7 @@ function PipelineWorkflow({
             </>}
           </>}
           </Col>
-          <Col sm={12} md={0} className={"py-1 d-md-none d-sm-block"}>
+          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
               {!editItemId && <div>
                 <PipelineActionControls
                   pipeline={pipeline}
@@ -422,18 +422,6 @@ function PipelineWorkflow({
                   setParentWorkflowStatus={setWorkflowStatus}
                 />
               </div>}
-          </Col>
-          <Col xs={0} sm={0} md={6} className={"py-1 d-sm-none d-md-block"}>
-            {!editItemId && <div>
-              <PipelineActionControls
-                pipeline={pipeline}
-                disabledActionState={false}
-                customerAccessRules={customerAccessRules}
-                fetchData={fetchPlan}
-                setPipeline={setPipeline}
-                setParentWorkflowStatus={setWorkflowStatus}
-              />
-            </div>}
           </Col>
         </Row>
       </div>
