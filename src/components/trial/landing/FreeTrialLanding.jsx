@@ -34,7 +34,7 @@ export default function FreeTrialLanding() {
           </Row>
           <div className={"mt-3 mx-auto pb-3"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-2"} />
+            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
             {/*<SFDCLandingWidget />*/}
           </div>
           <div className={"mt-3"}>

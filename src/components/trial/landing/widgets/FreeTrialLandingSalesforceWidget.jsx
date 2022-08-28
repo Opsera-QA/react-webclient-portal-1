@@ -131,20 +131,20 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
 
   return (
     <div className={className} style={{ minHeight: "150px" }}>
-
-      <Row className={"m-3"}>
+      <Row>
         <Col
-          xs={12} md={6}
+          xs={12} lg={6}
+          className={"my-3"}
           style={{ textAlign: "center" }}
         >
           {getMainSalesforceWidget()}
         </Col>
         <Col
-          xs={12} md={6}
+          xs={12} lg={6}
           style={{ textAlign: "center" }}
+          className={"my-3"}
         >
           {getAppExchangeWidget()}
-
           <div className={"w-100 mt-2 mr-2"} style={{ textAlign: "right" }}>
             <div style={{ position: "relative", float: "right" }}>
               {getSocialAccountLogo(EXTERNAL_LINKS.YOUTUBE_CHANNEL, SOCIAL_ICONS.YOUTUBE, SOCIAL_ICONS.YOUTUBE_COLOR, SOCIAL_ICONS.YOUTUBE_TOOLTIP)}
@@ -153,8 +153,6 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
               {getSocialAccountLogo(EXTERNAL_LINKS.FACEBOOK, SOCIAL_ICONS.FACEBOOK, SOCIAL_ICONS.FACEBOOK_COLOR, SOCIAL_ICONS.FACEBOOK_TOOLTIP)}
             </div>
           </div>
-
-
         </Col>
       </Row>
 
