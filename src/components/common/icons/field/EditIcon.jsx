@@ -21,7 +21,7 @@ function EditIcon(
   return (
     <div className={className}>
       <OverlayIconBase
-        innerText={tooltipBody}
+        overlayBody={tooltipBody}
         onClickFunction={() => {handleEditFunction();}}
         icon={faPencilAlt}
         className={"pointer"}
