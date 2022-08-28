@@ -342,16 +342,10 @@ function PipelineWorkflow({
     );
   };
 
-  if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
-    return <ErrorDialog error={"Pipeline Workflow Details Not Found"} align={"top"}/>;
-  }
-
-  return (
-    <>
-      <div>
-        <Row>
-          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
-          {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
+  const getViewPipelineConfigurationButton = () => {
+    return (
+      <>
+        {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -362,9 +356,15 @@ function PipelineWorkflow({
             }}>
               <IconBase icon={faFileAlt} className={"mr-1"}/>View Configuration</Button>
           </OverlayTrigger>
-          }
+        }
+      </>
+    );
+  };
 
-          {editWorkflow &&
+  const getEditWorkflowButton = () => {
+    return (
+      <>
+        {editWorkflow &&
           <Button
             variant="success"
             size="sm"
@@ -372,34 +372,41 @@ function PipelineWorkflow({
               handleDoneWorkflowEditsClick();
             }}>
             <IconBase icon={faCheck} className={"mr-1"}/>Done Editing</Button>
-          }
+        }
 
-          {!editWorkflow &&
+        {!editWorkflow &&
           <>
             {authorizedAction("edit_workflow_structure", pipeline.owner) && <>
               {!editWorkflow &&
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
-                <Button className="mr-1" variant="outline-secondary" size="sm"
-                        onClick={() => {
-                          handleEditWorkflowClick();
-                        }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped")}>
-                  <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
-              </OverlayTrigger>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
+                  <Button className="mr-1" variant="outline-secondary" size="sm"
+                          onClick={() => {
+                            handleEditWorkflowClick();
+                          }}
+                          disabled={(workflowStatus && workflowStatus !== "stopped")}>
+                    <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
+                </OverlayTrigger>
               }
             </>}
           </>}
-          {!editWorkflow &&
+      </>
+    );
+  };
+
+  const getExportButton = () => {
+    return (
+      <>
+        {!editWorkflow &&
           <>
             {authorizedAction("view_pipeline_configuration", pipeline.owner) && <>
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={gitExportEnabled ? 
-                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) : 
+                overlay={gitExportEnabled ?
+                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) :
                   renderTooltip({ message: "This feature allows users to push the current version of this pipeline to a configured git repository.  To use this feature go to workflow settings for this pipeline and enable Pipeline Git Revisions." }) }>
                 <Button variant="outline-secondary" size="sm"
                         onClick={() => {
@@ -410,6 +417,22 @@ function PipelineWorkflow({
               </OverlayTrigger>
             </>}
           </>}
+      </>
+    );
+  };
+
+  if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
+    return <ErrorDialog error={"Pipeline Workflow Details Not Found"} align={"top"}/>;
+  }
+
+  return (
+    <>
+      <div>
+        <Row>
+          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
+            {getViewPipelineConfigurationButton()}
+            {getEditWorkflowButton()}
+            {getExportButton()}
           </Col>
           <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
               {!editItemId && <div>
