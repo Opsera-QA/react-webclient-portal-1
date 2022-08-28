@@ -29,9 +29,11 @@ function GitToolCreationSelectionOptionInput(
     className,
     gitToolOption,
     setGitToolOption,
+    setGitToolId,
   }) {
   const setDataFunction = (newValue) => {
     setGitToolOption(newValue);
+    setGitToolId(undefined);
 
     switch (newValue) {
       case GIT_TOOL_CREATION_OPTIONS.GITHUB:
@@ -94,6 +96,7 @@ GitToolCreationSelectionOptionInput.propTypes = {
   gitToolOption: PropTypes.string,
   setGitToolOption: PropTypes.func,
   setGitToolModel: PropTypes.func,
+  setGitToolId: PropTypes.func,
 };
 
 export default GitToolCreationSelectionOptionInput;

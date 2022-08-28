@@ -50,6 +50,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
         gitToolOption={gitToolOption}
         setGitToolOption={setGitToolOption}
         setGitToolModel={setGitToolModel}
+        setGitToolId={setGitToolId}
       />
       {getEditorPanel()}
     </div>

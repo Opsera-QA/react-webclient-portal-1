@@ -94,8 +94,12 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (isLoading === true) {
+      return "Searching for Registered Accounts";
+    }
+
     if (!Array.isArray(tools) || tools.length === 0) {
-      return "Create a new Account";
+      return "There are no Accounts registered. Please create a new Account";
     }
 
     return "Create a new Account or Select a Registered One";
@@ -106,10 +110,6 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
     setToolId(selectedOption?._id);
     setModel({...newModel});
   };
-
-  if (!Array.isArray(tools) || tools.length === 0) {
-    return null;
-  }
 
   return (
     <InputContainer>
