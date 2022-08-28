@@ -520,9 +520,8 @@ function PipelineActionControls(
   return (
     <>
       <div className="d-flex">
-
         {statusMessage &&
-        <div className="warning-theme warning-text text-left">
+        <div className="warning-theme warning-text text-left mr-2">
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -532,7 +531,7 @@ function PipelineActionControls(
           {statusMessage}
         </div>
         }
-        <div className="flex-fill p-2"></div>
+        <div className="py-2" />
         <div className="text-right btn-group btn-group-sized">
           {workflowStatus === "running" &&
           <>
