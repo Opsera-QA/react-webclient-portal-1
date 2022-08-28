@@ -9,6 +9,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
+import PipelinesWidgetHeaderTabBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTabBar";
 
 export const PIPELINE_WIDGET_HEADER_ITEMS = {
   PIPELINE: "pipeline",
@@ -41,64 +42,6 @@ export default function PipelinesWidgetHeaderTitleBar(
   } = useComponentStateReference();
   const [workflowStatus, setWorkflowStatus] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
-
-  const handleHeaderItemClick = (selectedOption) => {
-    switch (selectedOption) {
-      case PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE:
-        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
-        break;
-      case PIPELINE_WIDGET_HEADER_ITEMS.LOGS:
-        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.LOGS);
-        break;
-      case PIPELINE_WIDGET_HEADER_ITEMS.METRICS:
-        setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.METRICS);
-        break;
-      case PIPELINE_WIDGET_HEADER_ITEMS.MORE:
-        default:
-          history.push(`/workflow/details/${selectedPipelineId}/summary`);
-    }
-  };
-
-  const getLinkBar = () => {
-    if (isMongoDbId(selectedPipelineId) === true) {
-      return (
-        <div className={"d-flex"}>
-          <HeaderNavigationBarItem
-            currentScreen={selectedHeaderItem}
-            screenName={PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE}
-            screenLabel={"Pipeline"}
-            setCurrentScreen={handleHeaderItemClick}
-            className={"ml-5 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.BLACK}
-          />
-          <HeaderNavigationBarItem
-            currentScreen={selectedHeaderItem}
-            screenName={PIPELINE_WIDGET_HEADER_ITEMS.LOGS}
-            screenLabel={"Logs"}
-            setCurrentScreen={handleHeaderItemClick}
-            className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.BLACK}
-          />
-          <HeaderNavigationBarItem
-            currentScreen={selectedHeaderItem}
-            screenName={PIPELINE_WIDGET_HEADER_ITEMS.METRICS}
-            screenLabel={"Metrics"}
-            setCurrentScreen={handleHeaderItemClick}
-            className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.BLACK}
-          />
-          <HeaderNavigationBarItem
-            currentScreen={selectedHeaderItem}
-            screenName={PIPELINE_WIDGET_HEADER_ITEMS.MORE}
-            screenLabel={"More..."}
-            setCurrentScreen={handleHeaderItemClick}
-            className={"ml-3 my-auto"}
-            fontColor={themeConstants.COLOR_PALETTE.BLACK}
-          />
-        </div>
-      );
-    }
-  };
 
   const getSelectedPipelineName = () => {
     if (isMongoDbId(selectedPipelineId) === true) {
@@ -185,7 +128,11 @@ export default function PipelinesWidgetHeaderTitleBar(
         isLoading={isLoading}
         className={"my-auto"}
       />
-      {getLinkBar()}
+      <PipelinesWidgetHeaderTabBar
+        selectedPipelineId={selectedPipelineId}
+        setSelectedHeaderItem={setSelectedHeaderItem}
+        selectedHeaderItem={selectedHeaderItem}
+      />
       {getPipelineActionControls()}
     </div>
   );
