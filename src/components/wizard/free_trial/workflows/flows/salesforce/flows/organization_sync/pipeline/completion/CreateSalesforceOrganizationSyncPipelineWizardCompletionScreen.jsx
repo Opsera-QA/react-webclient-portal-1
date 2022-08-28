@@ -4,6 +4,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import FreeTrialLaunchWorkflowButton
+  from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen(
   {
@@ -44,21 +48,33 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardCompletion
         );
       case apiRequestHelper.API_REQUEST_STATES.ERROR:
         return (
-          <div>
+          <CenteredContentWrapper>
             There was an issue finalizing the initialization for this Salesforce Workflow. Please try once more.
-          </div>
+          </CenteredContentWrapper>
         );
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
-          <div>
-            You have successfully set up this Salesforce Workflow!
-          </div>
+          <>
+            <CenteredContentWrapper>
+              <H5FieldSubHeader
+                subheaderText={"You Have successfully completed your Salesforce Workflow. Would you like to launch it now?"}
+              />
+            </CenteredContentWrapper>
+            <FreeTrialLaunchWorkflowButton
+
+            />
+          </>
         );
     }
   };
 
   return (
-    <div>
+    <div
+      className={"mt-3"}
+      style={{
+        height: "500px",
+      }}
+    >
       {getBody()}
     </div>
   );

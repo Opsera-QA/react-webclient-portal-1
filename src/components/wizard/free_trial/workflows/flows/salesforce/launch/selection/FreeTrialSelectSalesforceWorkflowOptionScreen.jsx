@@ -44,8 +44,8 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
         />
       </CenteredContentWrapper>
       <Row>
-        <Col xs={0} md={3} />
-        <Col xs={6} md={3}>
+        <Col xs={0} sm={0} md={0} lg={2} xl={3} />
+        <Col xs={12} sm={6} md={6} lg={4} xl={3}>
           <SelectionIconCardBase
             selectedOption={currentScreen}
             option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
@@ -64,7 +64,7 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
             onClickFunction={setCurrentScreen}
           />
         </Col>
-        <Col xs={6} md={3}>
+        <Col xs={12} sm={6} md={6} lg={4} xl={3}>
           <FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
             currentScreen={currentScreen}
             setCurrentScreen={setCurrentScreen}
@@ -73,7 +73,7 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
             className={"mb-2"}
           />
         </Col>
-        <Col xs={0} md={3} />
+        <Col xs={0} sm={0} md={0} lg={2} xl={3} />
       </Row>
     </div>
   );
