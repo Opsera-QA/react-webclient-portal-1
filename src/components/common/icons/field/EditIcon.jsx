@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 function EditIcon(
   {
@@ -19,14 +20,13 @@ function EditIcon(
 
   return (
     <div className={className}>
-      <ButtonTooltip innerText={tooltipBody}>
-        <IconBase
-          onClickFunction={() => {handleEditFunction();}}
-          icon={faPencilAlt}
-          className={"pointer"}
-          iconClassName={iconClassName}
-        />
-      </ButtonTooltip>
+      <OverlayIconBase
+        innerText={tooltipBody}
+        onClickFunction={() => {handleEditFunction();}}
+        icon={faPencilAlt}
+        className={"pointer"}
+        iconClassName={iconClassName}
+      />
     </div>
   );
 }
