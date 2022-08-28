@@ -6,7 +6,6 @@ import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBl
 import { workspaceActions } from "components/workspace/workspace.actions";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
-import FreeTrialLandingPipelinesWidgetV1 from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidgetV1";
 import FreeTrialLandingPipelineWorkflowWidget
   from "components/trial/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
@@ -70,6 +69,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
           // heightSize={WIDGET_HEIGHT_SIZE}
           titleIcon={faDraftingCompass}
           title={"Select a Workflow"}
+          isLoading={isLoading}
         >
           <FreeTrialWorkflowItemSelectionCardView
             workspaceItems={workspaceItems}
