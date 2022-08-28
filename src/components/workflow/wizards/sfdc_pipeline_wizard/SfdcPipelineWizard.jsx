@@ -46,7 +46,14 @@ export const PIPELINE_WIZARD_SCREENS = {
   VALIDATED_FILE_VIEWER: "VALIDATED_FILE_VIEWER",
 };
 
-const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose, gitTaskData, pipelineOrientation }) => {
+export default function SfdcPipelineWizard(
+  {
+    pipeline,
+    handlePipelineWizardRequest,
+    handleClose,
+    task,
+    pipelineOrientation,
+  }){
   const [error, setError] = useState("");
   const [pipelineWizardScreen, setPipelineWizardScreen] = useState(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
@@ -88,7 +95,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
             setPipelineWizardScreen={setPipelineWizardScreen}
             handleClose={handleClose}
             pipeline={pipeline}
-            gitTaskData={gitTaskData}
+            task={task}
             setError={setError}
           />
         );
@@ -260,15 +267,13 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       </div>
     </OverlayPanelBodyContainer>
   );
-};
+}
 
 SfdcPipelineWizard.propTypes = {
   pipelineId: PropTypes.string,
   pipeline: PropTypes.object,
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func,
-  gitTaskData: PropTypes.object,
+  task: PropTypes.object,
   pipelineOrientation: PropTypes.string,
 };
-
-export default SfdcPipelineWizard;

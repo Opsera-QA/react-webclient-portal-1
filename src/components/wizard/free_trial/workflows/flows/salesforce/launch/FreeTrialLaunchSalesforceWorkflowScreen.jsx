@@ -75,6 +75,7 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         <FreeTrialLaunchWorkflowButton
           workspaceItem={selectedWorkflowItem}
           taskMetadata={taskMetadata}
+          workspaceType={selectedWorkflowItem?.workspaceType}
         />
       </ButtonContainerBase>
     </div>

@@ -8,26 +8,23 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforcePipelineWizardOverlay
   from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
-import modelHelpers from "components/common/model/modelHelpers";
 
 // TODO: This will need more work when we add more flows.
 export default function FreeTrialLaunchWorkflowButton(
   {
     className,
     workspaceItem,
-    taskMetadata,
+    workspaceType,
   }) {
   const { toastContext } = useComponentStateReference();
 
   const launchWorkflow = () => {
-    const taskModel = modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata);
-
-    switch (workspaceItem?.workspaceType) {
+    switch (workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
 
         toastContext.showOverlayPanel(
           <SalesforceTaskWizardOverlay
-            gitTasksData={taskModel}
+            task={workspaceItem}
           />
         );
         break;
@@ -64,7 +61,7 @@ export default function FreeTrialLaunchWorkflowButton(
 FreeTrialLaunchWorkflowButton.propTypes = {
   className: PropTypes.string,
   workspaceItem: PropTypes.object,
-  taskMetadata: PropTypes.object,
+  workspaceType: PropTypes.string,
 };
 
 

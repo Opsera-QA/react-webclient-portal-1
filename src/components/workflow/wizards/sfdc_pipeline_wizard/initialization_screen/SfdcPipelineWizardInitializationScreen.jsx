@@ -20,8 +20,20 @@ import SfdcPipelineWizardFileUploadComponent
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import toolsActions from "components/inventory/tools/tools-actions";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
-const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
+export default function SfdcPipelineWizardInitializationScreen(
+  {
+    pipelineWizardModel,
+    setPipelineWizardModel,
+    setPipelineWizardScreen,
+    handleClose,
+    pipeline,
+    task,
+    setError,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("manual");
   const isMounted = useRef(false);
@@ -38,7 +50,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData(pipelineWizardModel, gitTaskData, pipeline?.workflow?.plan, source).catch((error) => {
+    loadData(pipelineWizardModel, pipeline?.workflow?.plan, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -48,15 +60,15 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipeline]);
+  }, [pipeline, task]);
 
-  const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
+  const loadData = async (newPipelineWizardModel, plan, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let newPipelineWizardRecord;
 
-      if (gitTaskData) {
-        newPipelineWizardRecord = loadGitTaskInformation(newPipelineWizardModel, gitTaskData);
+      if (task) {
+        newPipelineWizardRecord = loadGitTaskInformation(newPipelineWizardModel);
       }
       else {
         newPipelineWizardRecord = await loadSfdcInitStep(newPipelineWizardModel, plan, cancelSource);
@@ -75,22 +87,24 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
   };
 
-  const loadGitTaskInformation = (newPipelineWizardModel, gitTaskData) => {
-    const gitTaskId = gitTaskData.getData("_id");
-    const sfdcToolId = gitTaskData.getData("configuration")?.sfdcToolId;
-    const gitToolId = gitTaskData.getData("configuration")?.gitToolId;
-    const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
-    const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
-    const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
+  const loadGitTaskInformation = (newPipelineWizardModel) => {
+    const gitTaskId = task?._id;
 
-
-    if (gitTaskId == null || gitTaskId === "") {
+    if (isMongoDbId(gitTaskId) !== true) {
       setError("Could not find Git Task");
     }
 
-    if (sfdcToolId == null || sfdcToolId === "") {
-      setError("No Salesforce Tool is associated with this Task");
+    const configuration = dataParsingHelper.parseObject(task?.configuration);
+    const sfdcToolId = configuration?.sfdcToolId;
+
+    if (isMongoDbId(sfdcToolId == null) !== true) {
+      setError("No Salesforce Account is associated with this Task");
     }
+
+    const gitToolId = configuration?.gitToolId;
+    const sfdcDestToolId = configuration?.sfdcDestToolId;
+    const accountUsername = configuration?.accountUsername;
+    const gitBranch = configuration?.gitBranch;
 
     newPipelineWizardModel.setData("accountUsername", accountUsername);
     newPipelineWizardModel.setData("gitBranch", gitBranch);
@@ -482,7 +496,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       {getMainView()}
     </div>
   );
-};
+}
 
 SfdcPipelineWizardInitializationScreen.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
@@ -490,8 +504,6 @@ SfdcPipelineWizardInitializationScreen.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   pipeline: PropTypes.object,
-  gitTaskData: PropTypes.object,
+  task: PropTypes.object,
   setError: PropTypes.func
 };
-
-export default SfdcPipelineWizardInitializationScreen;

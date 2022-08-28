@@ -8,6 +8,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import { workspaceConstants } from "components/workspace/workspace.constants";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 export default function CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen(
   {
@@ -60,9 +62,12 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardCompletion
                 subheaderText={"You Have successfully completed your Salesforce Workflow. Would you like to launch it now?"}
               />
             </CenteredContentWrapper>
-            <FreeTrialLaunchWorkflowButton
-
-            />
+            <ButtonContainerBase>
+              <FreeTrialLaunchWorkflowButton
+                workspaceItem={pipeline}
+                workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
+              />
+            </ButtonContainerBase>
           </>
         );
     }

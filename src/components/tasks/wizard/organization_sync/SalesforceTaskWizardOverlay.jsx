@@ -13,16 +13,16 @@ export const SALESFORCE_TASK_WIZARD_SCREENS = {
   SALESFORCE_TASK_WIZARD: "salesforce_task_wizard",
 };
 
-export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
+export default function SalesforceTaskWizardOverlay({ task }) {
   const [currentScreen, setCurrentScreen] = useState(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
-  const [internalTaskModel, setInternalTaskModel] = useState(undefined);
+  const [internalTask, setInternalTask] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    if (gitTasksData) {
-      setInternalTaskModel({...gitTasksData});
+    if (task) {
+      setInternalTask({...task});
     }
-  }, [gitTasksData]);
+  }, [task]);
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -35,8 +35,8 @@ export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
       return (
         <SalesforceTaskWizardPreRunTaskScreen
           setCurrentScreen={setCurrentScreen}
-          task={internalTaskModel}
-          setTask={setInternalTaskModel}
+          task={internalTask}
+          setTask={setInternalTask}
           className={"m-3"}
         />
       );
@@ -44,7 +44,7 @@ export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
 
     return (
       <SfdcPipelineWizard
-        gitTaskData={internalTaskModel}
+        task={internalTask}
         handleClose={closePanel}
         closePanel={closePanel}
       />
@@ -65,5 +65,5 @@ export default function SalesforceTaskWizardOverlay({ gitTasksData }) {
 }
 
 SalesforceTaskWizardOverlay.propTypes = {
-  gitTasksData: PropTypes.object
+  task: PropTypes.object,
 };
