@@ -42,7 +42,7 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen(
     }
     catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showInlineErrorMessage(error, "Error Registering Git Account");
+        toastContext.showInlineErrorMessage(error, "Error Registering Git Account: ");
         onFailureFunction();
       }
     }
