@@ -22,7 +22,18 @@ export default function IconTitleBar(
   }) {
   const getIcon = () => {
     if (hasStringValue(iconString) === true) {
-      return iconString;
+      return (
+        <div
+          className={"d-flex"}
+          style={{
+            height: "96px",
+          }}
+        >
+          <div className={"my-auto"}>
+            {iconString}
+          </div>
+        </div>
+      );
     }
 
     if (formattedIcon) {
@@ -91,7 +102,11 @@ export default function IconTitleBar(
     <div className={className}>
       <div className="d-flex">
         <div className={"mx-auto h-100 mt-2"}>
-          <div className={"my-auto"}>
+          <div className={"my-auto"}
+            style={{
+              height: "96px",
+            }}
+          >
             {getIcon()}
           </div>
         </div>
