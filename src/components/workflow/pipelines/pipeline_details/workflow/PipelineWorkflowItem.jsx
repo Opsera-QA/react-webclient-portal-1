@@ -37,6 +37,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
 import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -70,10 +71,14 @@ const PipelineWorkflowItem = (
   const [isLoading, setIsLoading] = useState(false);
   const [isToolSet, setIsToolSet] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
+    return isOpseraAdministrator;
+    // return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
@@ -161,7 +166,8 @@ const PipelineWorkflowItem = (
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing step settings is not allowed.  This action requires elevated privileges.",
+        message: "In the main Opsera offering, you can edit Pipelines on a per-step basis to tailor them to your use case.",
+        // message: "Editing step settings is not allowed.  This action requires elevated privileges.",
         button: "OK",
       });
       return;
@@ -198,7 +204,8 @@ const PipelineWorkflowItem = (
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
+        message: "In the main Opsera offering, you can add Notification triggers on Pipelines.",
+        // message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
         button: "OK",
       });
       return;

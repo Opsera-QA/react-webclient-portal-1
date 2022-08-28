@@ -65,7 +65,8 @@ function PipelineWorkflow({
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
+    return isOpseraAdministrator;
+    // return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
@@ -166,7 +167,8 @@ function PipelineWorkflow({
       setInfoModal({
         show: true,
         header: "Permission Denied",
-        message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
+        // message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
+        message: "In the main Opsera offering, you can add add a source Git repository to trigger your Pipelines with webhooks and to export your Pipeline configuration on demand to your Git repository.",
         button: "OK",
       });
       return;

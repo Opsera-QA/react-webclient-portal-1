@@ -12,6 +12,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 
 function PipelineWorkflowItemList(
@@ -34,34 +35,23 @@ function PipelineWorkflowItemList(
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
   const [isLoading, setIsLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getToolIdentifiers(cancelSource);
+      await getToolIdentifiers();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -76,8 +66,8 @@ function PipelineWorkflowItemList(
     }
   };
 
-  const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+  const getToolIdentifiers = async () => {
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource);
     const identifiers = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(identifiers)) {
