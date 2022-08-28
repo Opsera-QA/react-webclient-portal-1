@@ -34,6 +34,8 @@ import PipelineWorkflowWorkflowEditingToggleButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
 import PipelineWorkflowViewConfigurationButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
+import PipelineWorkflowExportWorkflowButton
+  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -117,20 +119,6 @@ function PipelineWorkflow({
       toastContext.showLoadingErrorDialog(err);
       return false;
     }
-  };
-
-  const handleExportToGitClick = () => {
-
-    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Viewing the pipeline configuration requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-    toastContext.showOverlayPanel(<PipelineExportToGitOverlay pipeline={pipeline} />);
   };
 
   const callbackFunctionEditItem = async (item) => {
@@ -320,31 +308,6 @@ function PipelineWorkflow({
     );
   };
 
-  const getExportButton = () => {
-    return (
-      <>
-        {!editWorkflow &&
-          <>
-            {authorizedAction("view_pipeline_configuration", pipeline.owner) && <>
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={gitExportEnabled ?
-                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) :
-                  renderTooltip({ message: "This feature allows users to push the current version of this pipeline to a configured git repository.  To use this feature go to workflow settings for this pipeline and enable Pipeline Git Revisions." }) }>
-                <Button variant="outline-secondary" size="sm"
-                        onClick={() => {
-                          handleExportToGitClick();
-                        }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}>
-                  <IconBase icon={faGitAlt} className={"mr-1"}/>Export to Git</Button>
-              </OverlayTrigger>
-            </>}
-          </>}
-      </>
-    );
-  };
-
   if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
     return <ErrorDialog error={"Pipeline Workflow Details Not Found"} align={"top"}/>;
   }
@@ -368,7 +331,13 @@ function PipelineWorkflow({
               />
             </div>
             <div>
-              {getExportButton()}
+              <PipelineWorkflowExportWorkflowButton
+                pipeline={pipeline}
+                editingWorkflow={editWorkflow}
+                workflowStatus={workflowStatus}
+                gitExportEnabled={gitExportEnabled}
+                sourceRepositoryModel={sourceRepositoryModel}
+              />
             </div>
           </Col>
           <Col xs={12} sm={12} md={12} lg={6} className={"my-1"}>
