@@ -5,8 +5,8 @@ import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool
 import modelHelpers from "components/common/model/modelHelpers";
 import CreateWorkflowWizardCreateSalesforceToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
-import CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/completion/CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen";
+import CreateWorkflowWizardPipelineCompletionScreen
+  from "components/wizard/free_trial/workflows/flows/pipeline/completion/CreateWorkflowWizardPipelineCompletionScreen";
 import * as PropType from "prop-types";
 import CreateSalesforceOrganizationSyncPipelineInitializationScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateSalesforceOrganizationSyncPipelineInitializationScreen";
@@ -16,6 +16,9 @@ import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolCon
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
 import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
+import {
+  salesforceWorkflowFlowConstants
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -119,8 +122,9 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
-          <CreateSalesforceOrganizationSyncPipelineWizardCompletionScreen
+          <CreateWorkflowWizardPipelineCompletionScreen
             pipeline={pipeline}
+            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
           />
         );
     }

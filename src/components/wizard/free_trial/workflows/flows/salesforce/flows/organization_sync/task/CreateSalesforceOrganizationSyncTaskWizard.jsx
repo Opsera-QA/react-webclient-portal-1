@@ -8,12 +8,15 @@ import CreateWorkflowWizardCreateSalesforceToolEditorPanel
 import * as PropType from "prop-types";
 import CreateSalesforceOrganizationSyncTaskInitializationScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/initialization/CreateSalesforceOrganizationSyncTaskInitializationScreen";
-import CreateSalesforceOrganizationSyncTaskWizardCompletionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/completion/CreateSalesforceOrganizationSyncTaskWizardCompletionScreen";
+import CreateWorkflowWizardTaskCompletionScreen
+  from "components/wizard/free_trial/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
 import CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/git/connection/CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen";
 import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
+import {
+  salesforceWorkflowFlowConstants
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "initialization_screen",
@@ -93,8 +96,9 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
-          <CreateSalesforceOrganizationSyncTaskWizardCompletionScreen
+          <CreateWorkflowWizardTaskCompletionScreen
             task={task}
+            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
           />
         );
     }
