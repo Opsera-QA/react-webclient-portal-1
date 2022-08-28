@@ -4,7 +4,7 @@ import {OverlayTrigger, Popover} from "react-bootstrap";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-function TooltipWrapper(
+export default function TooltipWrapper(
   {
     innerText,
     placement,
@@ -15,6 +15,7 @@ function TooltipWrapper(
     overlayHeight,
     overlayWidth,
     trigger,
+    delay,
   }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
@@ -72,6 +73,7 @@ function TooltipWrapper(
       trigger={trigger}
       placement={placement}
       rootClose
+      delay={delay}
       overlay={getPopover(innerText)}
     >
       {children}
@@ -98,14 +100,14 @@ TooltipWrapper.propTypes = {
     PropTypes.string,
     PropTypes.array,
   ]),
+  delay: PropTypes.object,
 };
 
 TooltipWrapper.defaultProps = {
   placement: "top",
   className: "popover-container",
   trigger: ["hover", "focus"],
+  delay: { show: 250, hide: 400 },
 };
-
-export default TooltipWrapper;
 
 
