@@ -36,12 +36,12 @@ export default function FreeTrialLanding() {
               />
             </Col>
           </Row>
-          <div className={"mt-3 mx-auto pb-3"}>
+          <div className={"py-3 mx-auto"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
             <FreeTrialLandingSalesforceWidget className={"mx-4"} />
             {/*<SFDCLandingWidget />*/}
           </div>
-          <div className={"mt-3"}>
+          <div className={"py-3"}>
             <FreeTrialLandingPipelinesWidget />
           </div>
         </div>
