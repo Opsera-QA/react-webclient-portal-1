@@ -58,6 +58,7 @@ import { CONNECTION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tool
 import ToolDataTransformerRulesMappingTab, {
   DATA_TRANSFORMER_RULES_SUPPORTED_TOOL_IDENTIFIERS,
 } from "components/inventory/tools/details/panel/tab_container/tabs/ToolDataTransformerRulesMappingTab";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",
@@ -142,6 +143,30 @@ export const doesToolSupportTab = (toolIdentifier, toolDetailPanelTab) => {
 };
 
 function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
+
+  if (isOpseraAdministrator !== true) {
+    return (
+      <CustomTabContainer>
+        <SummaryToggleTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
+        {/*<ToolAttributesTab*/}
+        {/*  handleTabClick={handleTabClick}*/}
+        {/*  activeTab={activeTab}*/}
+        {/*/>*/}
+        <ToolConnectionTab
+          toolModel={toolModel}
+          activeTab={activeTab}
+          handleTabClick={handleTabClick}
+        />
+      </CustomTabContainer>
+    );
+  }
+
   return (
     <CustomTabContainer>
       <SummaryToggleTab
