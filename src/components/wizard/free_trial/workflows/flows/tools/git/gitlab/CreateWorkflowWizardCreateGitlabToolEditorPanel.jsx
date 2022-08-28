@@ -13,6 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import { Form } from "react-bootstrap";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -56,48 +57,50 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
 
   return (
     <div className={className}>
-      <Row>
-        <Col sm={12}>
-          <CreateSalesforceWorkflowWizardToolInputBase
-            model={gitToolModel}
-            setModel={setGitToolModel}
-            toolId={gitToolId}
-            setToolId={setGitToolId}
-            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB}
+      <Form>
+        <Row>
+          <Col sm={12}>
+            <CreateSalesforceWorkflowWizardToolInputBase
+              model={gitToolModel}
+              setModel={setGitToolModel}
+              toolId={gitToolId}
+              setToolId={setGitToolId}
+              toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB}
+            />
+          </Col>
+          <Col sm={12}>
+            <TextInputBase
+              dataObject={gitToolModel}
+              setDataObject={setGitToolModel}
+              fieldName={"url"}
+            />
+          </Col>
+          <Col sm={12}>
+            <VanitySetTextInputBase
+              fieldName={"accountUsername"}
+              model={gitToolModel}
+              setModel={setGitToolModel}
+            />
+          </Col>
+          <Col sm={12}>
+            <GitlabTwoFactorAuthenticationBooleanToggleInput
+              model={gitToolModel}
+              setModel={setGitToolModel}
+            />
+          </Col>
+          <Col sm={12}>
+            {getDynamicFields()}
+          </Col>
+        </Row>
+        <ButtonContainerBase>
+          <CreateFreeTrialGitlabToolButton
+            gitToolModel={gitToolModel}
+            onSuccessFunction={onSuccessFunction}
+            gitToolId={gitToolId}
+            setGitToolId={setGitToolId}
           />
-        </Col>
-        <Col sm={12}>
-          <TextInputBase
-            dataObject={gitToolModel}
-            setDataObject={setGitToolModel}
-            fieldName={"url"}
-          />
-        </Col>
-        <Col sm={12}>
-          <VanitySetTextInputBase
-            fieldName={"accountUsername"}
-            model={gitToolModel}
-            setModel={setGitToolModel}
-          />
-        </Col>
-        <Col sm={12}>
-          <GitlabTwoFactorAuthenticationBooleanToggleInput
-            model={gitToolModel}
-            setModel={setGitToolModel}
-          />
-        </Col>
-        <Col sm={12}>
-          {getDynamicFields()}
-        </Col>
-      </Row>
-      <ButtonContainerBase>
-        <CreateFreeTrialGitlabToolButton
-          gitToolModel={gitToolModel}
-          onSuccessFunction={onSuccessFunction}
-          gitToolId={gitToolId}
-          setGitToolId={setGitToolId}
-        />
-      </ButtonContainerBase>
+        </ButtonContainerBase>
+      </Form>
     </div>
   );
 }
