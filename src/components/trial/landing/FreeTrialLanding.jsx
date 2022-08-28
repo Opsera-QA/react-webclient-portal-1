@@ -7,9 +7,10 @@ import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wiza
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 //import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import FreeTrialLandingPipelinesWidget from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidget";
+import FreeTrialLandingPipelinesWidgetV1 from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidgetV1";
 import SFDCLandingWidget from "./widgets/SFDCLandingWidget";
 import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
+import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
 
 export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
@@ -42,7 +43,8 @@ export default function FreeTrialLanding() {
             {/*<SFDCLandingWidget />*/}
           </div>
           <div className={"py-3"}>
-            <FreeTrialLandingPipelinesWidget />
+            <FreeTrialLandingWorkflowWidget
+            />
           </div>
         </div>
       {/*</ScreenContainer>*/}

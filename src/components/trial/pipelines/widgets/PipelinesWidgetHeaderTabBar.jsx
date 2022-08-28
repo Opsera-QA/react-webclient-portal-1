@@ -8,8 +8,6 @@ import { PIPELINE_WIDGET_HEADER_ITEMS } from "components/trial/pipelines/widgets
 
 export default function PipelinesWidgetHeaderTabBar(
   {
-    selectedPipelineId,
-    setSelectedPipelineId,
     selectedHeaderItem,
     setSelectedHeaderItem,
   }) {
@@ -30,16 +28,15 @@ export default function PipelinesWidgetHeaderTabBar(
         setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.METRICS);
         break;
       case PIPELINE_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW:
-        setSelectedPipelineId(undefined);
         setSelectedHeaderItem(undefined);
         break;
       case PIPELINE_WIDGET_HEADER_ITEMS.MORE:
         default:
-          history.push(`/workflow/details/${selectedPipelineId}/summary`);
+          history.push(`/workflow/details/${selectedHeaderItem?._id}/summary`);
     }
   };
 
-  if (isMongoDbId(selectedPipelineId) !== true) {
+  if (selectedHeaderItem == null) {
     return null;
   }
 
@@ -73,6 +70,14 @@ export default function PipelinesWidgetHeaderTabBar(
         currentScreen={selectedHeaderItem}
         screenName={PIPELINE_WIDGET_HEADER_ITEMS.MORE}
         screenLabel={"More..."}
+        setCurrentScreen={handleHeaderItemClick}
+        className={"my-auto"}
+        fontColor={themeConstants.COLOR_PALETTE.BLACK}
+      />
+      <HeaderNavigationBarItem
+        currentScreen={selectedHeaderItem}
+        screenName={PIPELINE_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW}
+        screenLabel={"Select another Workflow..."}
         setCurrentScreen={handleHeaderItemClick}
         className={"my-auto"}
         fontColor={themeConstants.COLOR_PALETTE.BLACK}

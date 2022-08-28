@@ -10,7 +10,6 @@ import PipelineWidgetsPipelineActivityLogsPanel
 export default function PipelineWidgetsBody(
   {
     selectedPipeline,
-    selectedPipelineId,
     setSelectedPipeline,
     selectedHeaderItem,
     isLoading,
@@ -23,7 +22,6 @@ export default function PipelineWidgetsBody(
           <PipelineWidgetsPipelineSummaryPanel
             selectedPipeline={selectedPipeline}
             setSelectedPipeline={setSelectedPipeline}
-            selectedPipelineId={selectedPipelineId}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
             className={"m-3"}
@@ -47,7 +45,7 @@ export default function PipelineWidgetsBody(
     }
   };
 
-  if (isMongoDbId(selectedPipelineId) !== true) {
+  if (selectedHeaderItem == null) {
     return null;
   }
 

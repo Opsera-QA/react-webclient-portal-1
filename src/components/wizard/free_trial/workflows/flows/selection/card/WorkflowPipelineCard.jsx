@@ -17,7 +17,6 @@ export default function WorkflowPipelineCard(
       onClickFunction={() => setSelectedFlow(pipeline)}
       selectedOption={selectedFlow?._id}
       option={pipeline?._id}
-      // tooltip={"Click to view Pipeline"}
     />
   );
 }

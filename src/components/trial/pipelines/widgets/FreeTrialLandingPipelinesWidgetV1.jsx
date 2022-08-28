@@ -14,7 +14,7 @@ import PipelinesWidgetHeaderTabBar from "components/trial/pipelines/widgets/Pipe
 const WIDGET_HEIGHT_SIZE = 5;
 const WIDGET_DROPDOWN_MAX_HEIGHT = widgetHelper.getWidgetPixelSize(WIDGET_HEIGHT_SIZE - 2);
 
-export default function FreeTrialLandingPipelinesWidget({ className }) {
+export default function FreeTrialLandingPipelinesWidgetV1({ className }) {
   const [selectedPipelineId, setSelectedPipelineId] = useState(undefined);
   const [selectedPipeline, setSelectedPipeline] = useState(undefined);
   const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
@@ -120,6 +120,6 @@ export default function FreeTrialLandingPipelinesWidget({ className }) {
   );
 }
 
-FreeTrialLandingPipelinesWidget.propTypes = {
+FreeTrialLandingPipelinesWidgetV1.propTypes = {
   className: PropTypes.string,
 };

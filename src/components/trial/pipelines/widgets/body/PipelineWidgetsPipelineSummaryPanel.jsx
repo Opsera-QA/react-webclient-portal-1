@@ -9,7 +9,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 export default function PipelineWidgetsPipelineSummaryPanel(
   {
     selectedPipeline,
-    selectedPipelineId,
     setSelectedPipeline,
     className,
     isLoading,
@@ -35,7 +34,7 @@ export default function PipelineWidgetsPipelineSummaryPanel(
       setRefreshCount(newRefreshCount);
 
       setIsLoading(true);
-      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, selectedPipelineId);
+      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, selectedPipeline?._id);
       const newPipeline = response?.data?.data;
 
       if (isMounted?.current === true) {
@@ -56,7 +55,7 @@ export default function PipelineWidgetsPipelineSummaryPanel(
     }
   };
 
-  if (isMongoDbId(selectedPipelineId) !== true) {
+  if (selectedPipeline == null) {
     return null;
   }
 
@@ -79,7 +78,6 @@ export default function PipelineWidgetsPipelineSummaryPanel(
 PipelineWidgetsPipelineSummaryPanel.propTypes = {
   selectedPipeline: PropTypes.object,
   setSelectedPipeline: PropTypes.func,
-  selectedPipelineId: PropTypes.string,
   isLoading: PropTypes.bool,
   setIsLoading: PropTypes.func,
   className: PropTypes.string,
