@@ -13,6 +13,7 @@ import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarTransferPipelineButton(
   {
@@ -20,34 +21,26 @@ function ActionBarTransferPipelineButton(
     loadPipeline,
     isActionAllowedFunction,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [user, setUser] = useState(undefined);
   const [transferringPipeline, setTransferringPipeline] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (isOpseraAdministrator === true) {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      });
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = async () => {
@@ -120,6 +113,17 @@ function ActionBarTransferPipelineButton(
         </div>
       </div>
     );
+
+  if (isOpseraAdministrator !== true) {
+    return (
+      <ActionBarPopoverButton
+        className={"ml-3"}
+        disabled={true}
+        icon={faShareAlt}
+        popoverText={`Transferring Pipelines to another Owner is available in the main Opsera offering.`}
+      />
+    );
+  }
 
   if (pipeline == null || pipeline?.account == null || isActionAllowedFunction("transfer_pipeline_btn", pipeline.owner) !== true) {
     return null;

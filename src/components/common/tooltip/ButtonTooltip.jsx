@@ -2,7 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-export default function ButtonTooltip({ innerText, placement, children, trigger }) {
+export default function ButtonTooltip(
+  {
+    innerText,
+    placement,
+    children,
+    trigger,
+  }) {
   if (innerText == null) {
     return children;
   }
@@ -27,7 +33,6 @@ ButtonTooltip.propTypes = {
 
 ButtonTooltip.defaultProps = {
   placement: "top",
-  trigger: ["hover", "focus"]
 };
 
 
