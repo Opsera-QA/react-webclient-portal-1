@@ -30,6 +30,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -347,8 +349,8 @@ function PipelineWorkflow({
   return (
     <>
       <div>
-        <div className="py-1 d-flex">
-
+        <Row className={"justify-content-between"}>
+          <Col xs={12} sm={6} className={"py-1"}>
           {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
           <OverlayTrigger
             placement="top"
@@ -408,17 +410,32 @@ function PipelineWorkflow({
               </OverlayTrigger>
             </>}
           </>}
-          <div className="ml-auto">
+          </Col>
+          <Col sm={12} md={0} className={"py-1 d-md-none d-sm-block"}>
+              {!editItemId && <div>
+                <PipelineActionControls
+                  pipeline={pipeline}
+                  disabledActionState={false}
+                  customerAccessRules={customerAccessRules}
+                  fetchData={fetchPlan}
+                  setPipeline={setPipeline}
+                  setParentWorkflowStatus={setWorkflowStatus}
+                />
+              </div>}
+          </Col>
+          <Col xs={0} sm={0} md={6} className={"py-1 d-sm-none d-md-block"}>
             {!editItemId && <div>
-              <PipelineActionControls pipeline={pipeline}
-                                      disabledActionState={false}
-                                      customerAccessRules={customerAccessRules}
-                                      fetchData={fetchPlan}
-                                      setPipeline={setPipeline}
-                                      setParentWorkflowStatus={setWorkflowStatus}/>
+              <PipelineActionControls
+                pipeline={pipeline}
+                disabledActionState={false}
+                customerAccessRules={customerAccessRules}
+                fetchData={fetchPlan}
+                setPipeline={setPipeline}
+                setParentWorkflowStatus={setWorkflowStatus}
+              />
             </div>}
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
 
       <div
