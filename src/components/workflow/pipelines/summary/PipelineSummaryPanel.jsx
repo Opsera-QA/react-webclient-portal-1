@@ -360,7 +360,7 @@ function PipelineSummaryPanel(
   const getPipelineActionControls = () => {
     if (showActionControls !== false) {
       return (
-        <div className="text-right py-2">
+        <div className="text-right pb-2">
           <PipelineActionControls
             pipeline={pipeline}
             disabledActionState={false}

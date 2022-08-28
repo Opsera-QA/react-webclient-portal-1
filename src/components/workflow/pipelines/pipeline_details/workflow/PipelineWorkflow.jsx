@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import { AuthContext } from "contexts/AuthContext";
 import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -10,7 +9,6 @@ import {
   faFileAlt,
   faCog,
   faPen,
-  faSpinner,
   faCheck,
   faClipboardCheck,
   faCode,
@@ -20,7 +18,6 @@ import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
@@ -31,10 +28,13 @@ import PipelineSourceConfigurationDetailsOverviewOverlay
 import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
   pipeline,
+  setPipeline,
   fetchPlan,
   customerAccessRules,
   editItemId,
@@ -42,8 +42,6 @@ function PipelineWorkflow({
   softLoading,
 }) {
   const [modalHeader, setModalHeader] = useState("");
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [lastStep, setLastStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
@@ -53,6 +51,13 @@ function PipelineWorkflow({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled; 
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
+  const {
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -342,7 +347,7 @@ function PipelineWorkflow({
   return (
     <>
       <div>
-        <div className="pb-1">
+        <div className="py-1 d-flex">
 
           {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
           <OverlayTrigger
@@ -403,6 +408,16 @@ function PipelineWorkflow({
               </OverlayTrigger>
             </>}
           </>}
+          <div className="ml-auto">
+            {!editItemId && <div>
+              <PipelineActionControls pipeline={pipeline}
+                                      disabledActionState={false}
+                                      customerAccessRules={customerAccessRules}
+                                      fetchData={fetchPlan}
+                                      setPipeline={setPipeline}
+                                      setParentWorkflowStatus={setWorkflowStatus}/>
+            </div>}
+          </div>
         </div>
       </div>
 
@@ -483,6 +498,7 @@ function renderTooltip(props) {
 
 PipelineWorkflow.propTypes = {
   pipeline: PropTypes.object,
+  setPipeline: PropTypes.func,
   fetchPlan: PropTypes.func,
   customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string,

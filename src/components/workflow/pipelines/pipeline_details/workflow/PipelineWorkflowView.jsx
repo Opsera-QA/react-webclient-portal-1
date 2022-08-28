@@ -46,23 +46,16 @@ function PipelineWorkflowView({
       <div className="workflow-view h-100">
         {getPipelineWorkflowEditor(editItem)}
 
-        <div className="py-1 text-right" style={{minHeight:"42px"}}>
-          {!editItem && <div className="float-right pt-1 mr-2">
-            <PipelineActionControls pipeline={pipeline}
-                                    disabledActionState={false}
-                                    customerAccessRules={customerAccessRules}
-                                    fetchData={fetchPlan}
-                                    setPipeline={setPipeline}
-                                    setParentWorkflowStatus={setWorkflowStatus}/>
-          </div>}
-        </div>
         <div style={{ minWidth: "740px" }}>
-          <PipelineWorkflow pipeline={pipeline}
-                            editItemId={editItem.step_id}
-                            fetchPlan={fetchPlan}
-                            customerAccessRules={customerAccessRules}
-                            refreshCount={refreshCount}
-                            softLoading={softLoading}/>
+          <PipelineWorkflow
+            pipeline={pipeline}
+            setPipeline={setPipeline}
+            editItemId={editItem.step_id}
+            fetchPlan={fetchPlan}
+            customerAccessRules={customerAccessRules}
+            refreshCount={refreshCount}
+            softLoading={softLoading}
+          />
         </div>
       </div>
     </>
