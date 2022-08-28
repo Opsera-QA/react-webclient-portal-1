@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { PIPELINE_WIDGET_HEADER_ITEMS } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
@@ -10,6 +9,8 @@ export default function PipelinesWidgetHeaderTabBar(
   {
     selectedHeaderItem,
     setSelectedHeaderItem,
+    selectedPipeline,
+    setSelectedPipeline,
   }) {
   const history = useHistory();
   const {
@@ -28,15 +29,15 @@ export default function PipelinesWidgetHeaderTabBar(
         setSelectedHeaderItem(PIPELINE_WIDGET_HEADER_ITEMS.METRICS);
         break;
       case PIPELINE_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW:
-        setSelectedHeaderItem(undefined);
+        setSelectedPipeline(undefined);
         break;
       case PIPELINE_WIDGET_HEADER_ITEMS.MORE:
         default:
-          history.push(`/workflow/details/${selectedHeaderItem?._id}/summary`);
+          history.push(`/workflow/details/${selectedPipeline?._id}/summary`);
     }
   };
 
-  if (selectedHeaderItem == null) {
+  if (selectedPipeline == null) {
     return null;
   }
 
@@ -89,6 +90,6 @@ export default function PipelinesWidgetHeaderTabBar(
 PipelinesWidgetHeaderTabBar.propTypes = {
   selectedHeaderItem: PropTypes.string,
   setSelectedHeaderItem: PropTypes.func,
-  selectedPipelineId: PropTypes.string,
-  setSelectedPipelineId: PropTypes.func,
+  selectedPipeline: PropTypes.object,
+  setSelectedPipeline: PropTypes.func,
 };

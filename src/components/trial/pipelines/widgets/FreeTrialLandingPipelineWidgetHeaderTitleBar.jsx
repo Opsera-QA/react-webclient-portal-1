@@ -98,7 +98,7 @@ export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
   return (
     <div className={"d-flex w-100"}>
       {selectedPipeline?.name}
-      {getSelectAnotherWorkflowHeaderItem()}
+      {/*{getSelectAnotherWorkflowHeaderItem()}*/}
       {getPipelineActionControls()}
     </div>
   );

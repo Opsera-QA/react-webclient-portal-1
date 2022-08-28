@@ -84,8 +84,8 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
 
     return (
       <FreeTrialLandingPipelineWorkflowWidget
-        selectedWorkflowItem={selectedWorkflowItem}
-        setSelectedWorkflowItem={setSelectedWorkflowItem}
+        selectedPipeline={selectedWorkflowItem}
+        setSelectedPipeline={setSelectedWorkflowItem}
       />
     );
   };

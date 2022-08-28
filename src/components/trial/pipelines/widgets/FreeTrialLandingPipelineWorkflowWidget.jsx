@@ -13,8 +13,8 @@ import FreeTrialLandingPipelineWidgetHeaderTitleBar
 export default function FreeTrialLandingPipelineWorkflowWidget(
   {
     className,
-    selectedWorkflowItem,
-    setSelectedWorkflowItem,
+    selectedPipeline,
+    setSelectedPipeline,
   }) {
   const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +23,8 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
   const getTitleBar = () => {
     return (
       <FreeTrialLandingPipelineWidgetHeaderTitleBar
-        setSelectedPipeline={setSelectedWorkflowItem}
-        selectedPipeline={selectedWorkflowItem}
+        setSelectedPipeline={setSelectedPipeline}
+        selectedPipeline={selectedPipeline}
         selectedHeaderItem={selectedHeaderItem}
         setIsLoading={setIsLoading}
       />
@@ -41,11 +41,13 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
         <PipelinesWidgetHeaderTabBar
           selectedHeaderItem={selectedHeaderItem}
           setSelectedHeaderItem={setSelectedHeaderItem}
+          selectedPipeline={selectedPipeline}
+          setSelectedPipeline={setSelectedPipeline}
         />
         <PipelineWidgetsBody
           selectedHeaderItem={selectedHeaderItem}
-          selectedPipeline={selectedWorkflowItem}
-          setSelectedPipeline={setSelectedWorkflowItem}
+          selectedPipeline={selectedPipeline}
+          setSelectedPipeline={setSelectedPipeline}
           isLoading={isLoading}
           setIsLoading={setPipelineRefreshing}
         />
@@ -56,6 +58,6 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
 
 FreeTrialLandingPipelineWorkflowWidget.propTypes = {
   className: PropTypes.string,
-  selectedWorkflowItem: PropTypes.object,
-  setSelectedWorkflowItem: PropTypes.func,
+  selectedPipeline: PropTypes.object,
+  setSelectedPipeline: PropTypes.func,
 };
