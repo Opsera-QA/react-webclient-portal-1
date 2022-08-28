@@ -428,14 +428,16 @@ function PipelineWorkflow({
   return (
     <>
       <div>
-        <Row>
-          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
+        <Row className={"my-1"}>
+          <Col xs={12} sm={12} md={12} lg={6} className={"my-1"}>
             {getViewPipelineConfigurationButton()}
             {getEditWorkflowButton()}
             {getExportButton()}
           </Col>
-          <Col xs={12} sm={12} md={12} lg={6} className={"py-1"}>
-              {!editItemId && <div>
+          <Col xs={12} sm={12} md={12} lg={6} className={"my-1"}>
+            {!editItemId &&
+              <div className={"d-flex"}>
+                <div className={"d-md-none d-lg-block ml-auto"} />
                 <PipelineActionControls
                   pipeline={pipeline}
                   disabledActionState={false}

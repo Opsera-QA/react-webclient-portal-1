@@ -360,8 +360,9 @@ function PipelineSummaryPanel(
   const getPipelineActionControls = () => {
     if (showActionControls !== false) {
       return (
-        <div className="text-right pb-2">
+        <div className={"d-flex"}>
           <PipelineActionControls
+            className={"ml-auto pb-2"}
             pipeline={pipeline}
             disabledActionState={false}
             customerAccessRules={customerAccessRules}

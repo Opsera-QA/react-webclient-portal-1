@@ -40,6 +40,7 @@ function PipelineActionControls(
     customerAccessRules,
     disabledActionState,
     fetchData,
+    className,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -518,7 +519,7 @@ function PipelineActionControls(
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
-    <>
+    <div className={className}>
       <div className="d-flex">
         {statusMessage &&
         <div className="warning-theme warning-text text-left mr-2">
@@ -691,7 +692,7 @@ function PipelineActionControls(
                                pipelineOrientation={freetrialWizardModal.pipelineOrientation}
                                autoRun={true}
                                handleClose={handleCloseFreeTrialDeploy} />}
-    </>);
+    </div>);
 }
 
 
@@ -709,5 +710,6 @@ PipelineActionControls.propTypes = {
   customerAccessRules: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
+  className: PropTypes.string,
 };
 export default PipelineActionControls;
