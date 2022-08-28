@@ -12,6 +12,9 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export const GIT_TOOL_CREATION_OPTIONS = {
   GITHUB: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
@@ -31,6 +34,8 @@ function GitToolCreationSelectionOptionInput(
     setGitToolOption,
     setGitToolId,
   }) {
+  const { themeConstants } = useComponentStateReference();
+
   const setDataFunction = (newValue) => {
     setGitToolOption(newValue);
     setGitToolId(undefined);
@@ -47,6 +52,12 @@ function GitToolCreationSelectionOptionInput(
 
   return (
     <div className={className}>
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          className={"mb-3 mx-3"}
+          subheaderText={"What kind of Git repository account details would you like to register?"}
+        />
+      </CenteredContentWrapper>
       <Row>
         <Col xs={3} />
         <Col xs={3}>
@@ -54,6 +65,7 @@ function GitToolCreationSelectionOptionInput(
             selectedOption={gitToolOption}
             option={GIT_TOOL_CREATION_OPTIONS.GITHUB}
             onClickFunction={setDataFunction}
+            highlightedBorderColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
             titleBar={
               <IconTitleBar
                 className={""}
@@ -72,6 +84,7 @@ function GitToolCreationSelectionOptionInput(
             selectedOption={gitToolOption}
             option={GIT_TOOL_CREATION_OPTIONS.GITLAB}
             onClickFunction={setDataFunction}
+            highlightedBorderColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
             titleBar={
               <IconTitleBar
                 className={""}
