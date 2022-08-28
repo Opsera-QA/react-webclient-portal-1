@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Popover} from "react-bootstrap";
+import { OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function TooltipWrapper(
   {
@@ -16,6 +17,8 @@ export default function TooltipWrapper(
     overlayWidth,
     trigger,
     delay,
+    rootClose,
+    wrapInDiv,
   }) {
   const getCloseButton = () => {
     if (showCloseButton !== false) {
@@ -46,7 +49,7 @@ export default function TooltipWrapper(
     }
   };
 
-  const getPopover = (innerText) => {
+  const getPopover = () => {
     return (
       <Popover
         id="popover-basic"
@@ -64,6 +67,31 @@ export default function TooltipWrapper(
     );
   };
 
+  const getTooltip = () => {
+    if (hasStringValue(innerText) === true && title == null) {
+      return (
+        <Tooltip id={"tooltip"}>
+          {innerText}
+        </Tooltip>
+      );
+    }
+
+    return (getPopover());
+  };
+
+  const getBody = () => {
+    if (wrapInDiv === true) {
+      return (
+
+        <div className={"tooltip-wrapper"}>
+          {children}
+        </div>
+      );
+    }
+
+    return children;
+  };
+
   if (innerText == null) {
     return children;
   }
@@ -72,11 +100,12 @@ export default function TooltipWrapper(
     <OverlayTrigger
       trigger={trigger}
       placement={placement}
-      rootClose
+      rootClose={rootClose}
       delay={delay}
-      overlay={getPopover(innerText)}
+      overlay={getTooltip()}
+      // defaultShow={false}
     >
-      {children}
+      {getBody()}
     </OverlayTrigger>
   );
 }
@@ -101,6 +130,8 @@ TooltipWrapper.propTypes = {
     PropTypes.array,
   ]),
   delay: PropTypes.object,
+  rootClose: PropTypes.bool,
+  wrapInDiv: PropTypes.bool,
 };
 
 TooltipWrapper.defaultProps = {
@@ -108,6 +139,7 @@ TooltipWrapper.defaultProps = {
   className: "popover-container",
   trigger: ["hover", "focus"],
   delay: { show: 250, hide: 400 },
+  rootClose: true,
 };
 
 

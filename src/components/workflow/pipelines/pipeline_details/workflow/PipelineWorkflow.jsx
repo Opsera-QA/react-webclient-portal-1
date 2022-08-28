@@ -8,8 +8,6 @@ import {
   faSearchPlus,
   faFileAlt,
   faCog,
-  faPen,
-  faCheck,
   faClipboardCheck,
   faCode,
   faSearchMinus, faFolder, faCodeBranch,
@@ -32,6 +30,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PipelineWorkflowWorkflowEditingToggleButton
+  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
+import PipelineWorkflowViewConfigurationButton
+  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -56,6 +58,7 @@ function PipelineWorkflow({
   const {
     toastContext,
     getAccessToken,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const authorizedAction = (action, owner) => {
@@ -116,20 +119,6 @@ function PipelineWorkflow({
     }
   };
 
-  const handleViewPipelineClick = () => {
-
-    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Viewing the pipeline configuration requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-    toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
-  };
-
   const handleExportToGitClick = () => {
 
     if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
@@ -163,14 +152,6 @@ function PipelineWorkflow({
 
   const handleSourceEditClick = () => {
     fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
-  };
-
-  const handleEditWorkflowClick = () => {
-    setEditWorkflow(true);
-  };
-
-  const handleDoneWorkflowEditsClick = () => {
-    setEditWorkflow(false);
   };
 
   const quietSavePlan = async (steps) => {
@@ -339,60 +320,6 @@ function PipelineWorkflow({
     );
   };
 
-  const getViewPipelineConfigurationButton = () => {
-    return (
-      <>
-        {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "" +
-                "View pipeline configuration" })}>
-            <Button variant="outline-secondary" className="mr-1" size="sm" onClick={() => {
-              handleViewPipelineClick(pipeline);
-            }}>
-              <IconBase icon={faFileAlt} className={"mr-1"}/>View Configuration</Button>
-          </OverlayTrigger>
-        }
-      </>
-    );
-  };
-
-  const getEditWorkflowButton = () => {
-    return (
-      <>
-        {editWorkflow &&
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => {
-              handleDoneWorkflowEditsClick();
-            }}>
-            <IconBase icon={faCheck} className={"mr-1"}/>Done Editing</Button>
-        }
-
-        {!editWorkflow &&
-          <>
-            {authorizedAction("edit_workflow_structure", pipeline.owner) && <>
-              {!editWorkflow &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps" })}>
-                  <Button className="mr-1" variant="outline-secondary" size="sm"
-                          onClick={() => {
-                            handleEditWorkflowClick();
-                          }}
-                          disabled={(workflowStatus && workflowStatus !== "stopped")}>
-                    <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
-                </OverlayTrigger>
-              }
-            </>}
-          </>}
-      </>
-    );
-  };
-
   const getExportButton = () => {
     return (
       <>
@@ -426,10 +353,23 @@ function PipelineWorkflow({
     <>
       <div>
         <Row className={"my-1"}>
-          <Col xs={12} sm={12} md={12} lg={6} className={"my-1"}>
-            {getViewPipelineConfigurationButton()}
-            {getEditWorkflowButton()}
-            {getExportButton()}
+          <Col xs={12} sm={12} md={12} lg={6} className={"my-1 d-flex"}>
+            <div>
+              <PipelineWorkflowViewConfigurationButton
+                pipeline={pipeline}
+              />
+            </div>
+            <div>
+              <PipelineWorkflowWorkflowEditingToggleButton
+                pipeline={pipeline}
+                editingWorkflow={editWorkflow}
+                setEditingWorkflow={setEditWorkflow}
+                workflowStatus={workflowStatus}
+              />
+            </div>
+            <div>
+              {getExportButton()}
+            </div>
           </Col>
           <Col xs={12} sm={12} md={12} lg={6} className={"my-1"}>
             {!editItemId &&
