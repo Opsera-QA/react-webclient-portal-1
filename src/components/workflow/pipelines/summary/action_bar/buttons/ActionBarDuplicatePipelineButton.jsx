@@ -1,32 +1,18 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
-import ActionBarDuplicateButton from "components/common/actions/buttons/ActionBarDuplicateButton";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
+import ActionBarDuplicateButtonBase from "components/common/actions/buttons/ActionBarDuplicateButtonBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isDuplicating, setIsDuplicating] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const duplicatePipelineFunction = async () => {
     try {
@@ -50,10 +36,21 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
     return null;
   }
 
+  if (isOpseraAdministrator !== true) {
+    return (
+      <ActionBarDuplicateButtonBase
+        disabled={true}
+        popoverText={"Duplicating Pipeline configurations is available in the main Opsera offering."}
+        className={"ml-3"}
+        isDuplicating={isDuplicating}
+      />
+    );
+  }
+
   return (
-    <ActionBarDuplicateButton
+    <ActionBarDuplicateButtonBase
       duplicateFunction={duplicatePipelineFunction}
-      itemName={"Pipeline"}
+      popoverText={"Duplicate this Pipeline Configuration"}
       className={"ml-3"}
       isDuplicating={isDuplicating}
     />

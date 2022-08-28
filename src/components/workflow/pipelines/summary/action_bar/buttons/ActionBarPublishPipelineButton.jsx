@@ -1,33 +1,19 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import pipelineActions from "components/workflow/pipeline-actions";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isPublishing, setIsPublishing] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const handlePublishPipelineFunction = async () => {
     try {
@@ -47,6 +33,17 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
 
   if (pipeline == null || isActionAllowedFunction("publish_pipeline_btn", pipeline?.owner) !== true) {
     return null;
+  }
+
+  if (isOpseraAdministrator !== true) {
+    return (
+      <ActionBarButton
+        icon={faShareAll}
+        popoverText={`Publishing Pipeline templates to your organization's private catalog is available in the main Opsera offering.`}
+        isBusy={isPublishing}
+        className={"ml-3"}
+      />
+    );
   }
 
   return (
