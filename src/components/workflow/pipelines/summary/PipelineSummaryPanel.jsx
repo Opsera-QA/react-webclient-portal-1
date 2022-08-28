@@ -36,6 +36,7 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -72,9 +73,7 @@ function PipelineSummaryPanel(
     setPipeline,
     showActionControls,
   }) {
-  const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const { featureFlagHideItemInProd, getUserRecord } = contextType;
   const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
@@ -82,28 +81,19 @@ function PipelineSummaryPanel(
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     loadData().catch((error) => {
       if (isMounted.current === true) {
         // toastContext.showLoadingError(error);
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
   const authorizedAction = (action, owner) => {
@@ -125,7 +115,6 @@ function PipelineSummaryPanel(
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
-      const { getAccessToken } = contextType;
       let postBody = {};
 
       switch (type) {
@@ -276,7 +265,7 @@ function PipelineSummaryPanel(
         </CustomBadgeContainer>
         }
         <div>
-          {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+          {authorizedAction("edit_tags", pipeline.owner) && isOpseraAdministrator === true && parentWorkflowStatus !== "running" && getEditIcon("tags")}
         </div>
 
         {editTags &&
@@ -387,7 +376,7 @@ function PipelineSummaryPanel(
 
   const getPipelineTitleField = () => {
     return (
-      <div className="d-flex title-text-header-2">
+      <div className="d-flex title-text-header-2 pb-2">
         {editTitle ?
           <>
             <div className="flex-fill p-2">
@@ -469,7 +458,7 @@ function PipelineSummaryPanel(
       <span>
         <span className="text-muted mr-2">Type:</span>
         {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && isOpseraAdministrator === true
         && parentWorkflowStatus !== "running" && !editType
           ? getEditIcon("type")
           : null}

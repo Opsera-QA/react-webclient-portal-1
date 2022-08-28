@@ -7,6 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import Modal from "components/common/modal/modal";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import {useHistory} from "react-router-dom";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
   const toastContext = useContext(DialogToastContext);
@@ -14,30 +15,24 @@ function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    isMounted,
+    cancelTokenSource,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   const deletePipeline = async () => {
     try {
       setIsDeleting(true);
       await pipelineActions.deletePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
-      history.push("/workflow");
+
+      if (isOpseraAdministrator === true) {
+        history.push("/workflow");
+      }
+      else {
+        history.push("/");
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showDeleteFailureResultDialog("Pipeline", error);

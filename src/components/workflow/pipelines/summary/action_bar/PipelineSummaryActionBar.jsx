@@ -20,7 +20,7 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
   };
 
   return (
-    <div className={"text-muted action-bar justify-content-end d-flex pb-2 pt-2"}>
+    <div className={"text-muted action-bar justify-content-end d-flex pb-2"}>
       <PipelineSubscriptionIcon
         pipelineModel={pipelineModel}
         pipelineId={pipeline?._id}
