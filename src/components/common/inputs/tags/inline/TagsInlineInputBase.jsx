@@ -4,6 +4,9 @@ import EditIcon from "components/common/icons/field/EditIcon";
 import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/TagMultiSelectOverlay";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
 
 function TagsInlineInputBase(
   {
@@ -18,6 +21,32 @@ function TagsInlineInputBase(
     loadData,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
+
+  const getEditIcon = () => {
+    if (isOpseraAdministrator === true) {
+      return (
+        <EditIcon
+          className={"ml-2 text-muted"}
+          handleEditFunction={showEditor}
+          disabled={disabled || saveDataFunction == null}
+          tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Tags`}
+        />
+      );
+    }
+
+    return (
+      <div className={"ml-2 text-muted"}>
+        <OverlayIconBase
+          className={"text-muted pointer"}
+          icon={faPencilAlt}
+          overlayBody={"In the main Opsera offering you can set Tags across the platform to drive unified insights tailored to your needs"}
+        />
+      </div>
+    );
+  };
 
   const showEditor = () => {
     toastContext.showOverlayPanel(
@@ -47,12 +76,7 @@ function TagsInlineInputBase(
           />
         </div>
         <div>
-          <EditIcon
-            className={"ml-2 text-muted"}
-            handleEditFunction={showEditor}
-            disabled={disabled || saveDataFunction == null}
-            tooltipBody={`Select ${tagLocation ? `${tagLocation} ` : ""}Tags`}
-          />
+          {getEditIcon()}
         </div>
       </div>
     </div>
