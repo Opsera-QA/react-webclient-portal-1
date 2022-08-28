@@ -394,9 +394,10 @@ salesforcePipelineHelper.updateStepsForSalesforcePipeline = (pipeline, flow) => 
       updatedPipeline.name = salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP + " [Free Trial]";
       updatedPipeline.workflow.plan = pipelineSteps;
       break;
-    default :
+    default:
       updatedPipeline.workflow.plan = pipelineSteps;
   }
+
   return updatedPipeline;
 };
 

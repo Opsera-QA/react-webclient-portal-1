@@ -43,7 +43,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
 
       if (isMongoDbId(newPipeline?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setPipelineFunction(response?.data);
+        setPipelineFunction(newPipeline);
       }
     }
     catch (error) {
@@ -69,7 +69,11 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
   }
 
   return (
-    <div>
+    <div
+      style={{
+        height: "500px",
+      }}
+    >
       <CenterLoadingIndicator customMessage={getLabel()} />
     </div>
   );

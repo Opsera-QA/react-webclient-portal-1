@@ -11,9 +11,7 @@ import CreateWorkflowWizardPipelineInitializationScreen
 import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
-import {
-  salesforcePipelineHelper
-} from "../../../../../../../../../workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
 export default function CreateSalesforceOrganizationSyncPipelineInitializationScreen(
   {
@@ -22,9 +20,6 @@ export default function CreateSalesforceOrganizationSyncPipelineInitializationSc
     flow,
   }) {
   const setPipelineFunction = (pipeline) => {
-    // setPipeline({...pipeline});
-    // TODO: Add flow related changes to toggle steps
-    // console.log(salesforcePipelineHelper.updateStepsForSalesforcePipeline(pipeline, flow));
     setPipeline({...salesforcePipelineHelper.updateStepsForSalesforcePipeline(pipeline, flow)});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   };

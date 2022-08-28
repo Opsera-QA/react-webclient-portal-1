@@ -4,7 +4,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
-import {taskTemplateActions} from "../../../../../admin/task_templates/taskTemplate.actions";
+import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
@@ -67,7 +67,11 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
   }
 
   return (
-    <div>
+    <div
+      style={{
+        height: "500px",
+      }}
+    >
       <CenterLoadingIndicator customMessage={getLabel()} />
     </div>
   );
