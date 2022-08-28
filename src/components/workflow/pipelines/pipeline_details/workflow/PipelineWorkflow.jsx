@@ -55,9 +55,6 @@ function PipelineWorkflow({
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
   const {
     toastContext,
-    cancelTokenSource,
-    isMounted,
-    isOpseraAdministrator,
     getAccessToken,
   } = useComponentStateReference();
 
