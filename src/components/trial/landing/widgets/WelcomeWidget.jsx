@@ -114,6 +114,7 @@ export default function WelcomeWidget({ className }) {
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
         title={getWelcomeText()}
+        className={className}
         /*titleIcon={faMessageExclamation}*/
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}

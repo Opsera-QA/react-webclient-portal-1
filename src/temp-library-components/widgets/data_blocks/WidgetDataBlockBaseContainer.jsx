@@ -104,8 +104,8 @@ function WidgetDataBlockBaseContainer(
       onClick={handleOnClickFunction}
       style={{
         boxShadow: "0 0 40px rgba(0, 0, 0, 0.075)",
-        height: getHeight(),
-        maxHeight: getHeight(),
+        minHeight: getHeight(),
+        // maxHeight: getHeight(),
         minWidth: getWidth(),
         width: getWidth(),
         maxWidth: getWidth(),

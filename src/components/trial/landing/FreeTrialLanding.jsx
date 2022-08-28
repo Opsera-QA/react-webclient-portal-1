@@ -24,12 +24,16 @@ export default function FreeTrialLanding() {
       >
       */}
         <div className={"my-3"}>
-          <Row className={"pb-3"}>
-            <Col xs={6}>
-              <WelcomeWidget />
+          <Row>
+            <Col xs={12} md={6} className={"my-3 d-flex"}>
+              <WelcomeWidget
+                className={"h-100"}
+              />
             </Col>
-            <Col xs={6}>
-              <AccountStatusWidget />
+            <Col xs={12} md={6} className={"my-3"}>
+              <AccountStatusWidget
+                className={"h-100"}
+              />
             </Col>
           </Row>
           <div className={"mt-3 mx-auto pb-3"}>
