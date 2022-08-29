@@ -66,7 +66,7 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
         innerText={tooltip}
         placement={"bottom"}
       >
-        <div className={"marketingModulesText pointer"} style={{ float: "left", bottom: "20px" }}
+        <div className={"marketingModulesText pointer mx-1"}
              onClick={handleClick(url)}>
           <IconBase
             icon={icon}
@@ -145,8 +145,9 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
           className={"my-3"}
         >
           {getAppExchangeWidget()}
-          <div className={"w-100 mt-2 mr-2"} style={{ textAlign: "right" }}>
-            <div style={{ position: "relative", float: "right" }}>
+
+          <div className={"w-100 mt-2 pr-1"} >
+            <div className={"d-flex flex-row-reverse"}>
               {getSocialAccountLogo(EXTERNAL_LINKS.YOUTUBE_CHANNEL, SOCIAL_ICONS.YOUTUBE, SOCIAL_ICONS.YOUTUBE_COLOR, SOCIAL_ICONS.YOUTUBE_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.LINKEDIN, SOCIAL_ICONS.LINKEDIN, SOCIAL_ICONS.LINKEDIN_COLOR, SOCIAL_ICONS.LINKEDIN_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.TWITTER, SOCIAL_ICONS.TWITTER, SOCIAL_ICONS.TWITTER_COLOR, SOCIAL_ICONS.TWITTER_TOOLTIP)}
