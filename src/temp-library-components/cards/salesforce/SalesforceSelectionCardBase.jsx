@@ -2,12 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
-import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
-export default function OpseraInfinityCard(
+export default function SalesforceSelectionCardBase(
   {
     title,
     subTitle,
@@ -20,19 +18,21 @@ export default function OpseraInfinityCard(
     isLoading,
     className,
   }) {
+  const {
+    themeConstants,
+  } = useComponentStateReference();
+
   const getTitleBar = () => {
     return (
       <IconTitleBar
         className={"m-3 mb-4"}
-        formattedIcon={
-          <OpseraInfinityLogo scale={.75} />
-        }
+        icon={faSalesforce}
+        iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
         title={title}
         subTitle={subTitle}
+        iconSize={"5x"}
         titleClassName={"mx-auto mt-2"}
         subTitleClassName={"mx-auto"}
-        iconSize={"4x"}
-        isLoading={isLoading}
       />
     );
   };
@@ -52,7 +52,7 @@ export default function OpseraInfinityCard(
   );
 }
 
-OpseraInfinityCard.propTypes = {
+SalesforceSelectionCardBase.propTypes = {
   icon: PropTypes.object,
   title: PropTypes.string,
   subTitle: PropTypes.string,

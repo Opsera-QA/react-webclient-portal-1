@@ -9,7 +9,7 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
-import OpseraInfinityCard from "temp-library-components/cards/opsera/OpseraInfinityCard";
+import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(
   {
@@ -32,7 +32,7 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
   };
 
   return (
-    <OpseraInfinityCard
+    <OpseraInfinityLogoSelectionCardBase
       selectedOption={currentScreen}
       option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
       onClickFunction={setCurrentScreen}

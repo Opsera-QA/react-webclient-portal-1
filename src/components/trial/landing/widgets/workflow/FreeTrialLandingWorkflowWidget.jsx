@@ -12,7 +12,7 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import WarningCard from "temp-library-components/cards/status/WarningCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import OpseraInfinityCard from "temp-library-components/cards/opsera/OpseraInfinityCard";
+import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 
@@ -71,7 +71,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   const getBody = () => {
     if (
       isLoading !== true
-      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
+      // && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
       return (
         <Row>

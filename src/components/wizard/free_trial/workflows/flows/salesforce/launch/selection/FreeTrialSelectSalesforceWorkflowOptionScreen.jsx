@@ -22,6 +22,7 @@ import SelectionIconCardBase from "components/common/card_containers/SelectionIc
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import SalesforceSelectionCardBase from "temp-library-components/cards/salesforce/SalesforceSelectionCardBase";
 
 export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
   {
@@ -46,21 +47,11 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
       <Row>
         <Col xs={0} sm={0} md={0} lg={2} xl={3} />
         <Col xs={12} sm={6} md={6} lg={4} xl={3}>
-          <SelectionIconCardBase
+          <SalesforceSelectionCardBase
             selectedOption={currentScreen}
             option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
-            titleBar={
-              <IconTitleBar
-                className={"m-3 mb-4"}
-                icon={faSalesforce}
-                iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
-                title={"Create Salesforce Workflow"}
-                subTitle={"Set up a new Salesforce Workflow"}
-                iconSize={"5x"}
-                titleClassName={"mx-auto mt-2"}
-                subTitleClassName={"mx-auto"}
-              />
-            }
+            title={"Create Salesforce Workflow"}
+            subTitle={"Set up a new Salesforce Workflow"}
             onClickFunction={setCurrentScreen}
           />
         </Col>

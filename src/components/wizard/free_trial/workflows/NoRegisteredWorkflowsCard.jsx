@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OpseraInfinityCard from "temp-library-components/cards/opsera/OpseraInfinityCard";
+import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 
 export default function NoRegisteredWorkflowsCard(
   {
@@ -19,7 +19,7 @@ export default function NoRegisteredWorkflowsCard(
   };
 
   return (
-    <OpseraInfinityCard
+    <OpseraInfinityLogoSelectionCardBase
       className={className}
       title={"You haven't registered any Workflows yet!"}
       subTitle={"Click here to register a new Workflow"}
