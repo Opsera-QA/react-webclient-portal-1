@@ -6,6 +6,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { dateHelpers } from "components/common/helpers/date/date.helpers";
 
 export default function CreateFreeTrialSalesforceToolButton(
   {
@@ -69,9 +71,11 @@ export default function CreateFreeTrialSalesforceToolButton(
   const handleToolCreation = async () => {
     let toolId = salesforceToolId;
 
+    const accountUsername = dataParsingHelper.parseString(salesforceToolModel?.getData("accountUsername"), "");
+    const createDate = dateHelpers.getNowFormattedDateString();
     if (isMongoDbId(salesforceToolId) !== true) {
       const newTool = {
-        name: `Free Trial Salesforce Tool`,
+        name: `${accountUsername} - Salesforce Tool - ${createDate}`,
         tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR,
         tool_type_identifier: "sfdc-type",
         active: true,
@@ -90,12 +94,6 @@ export default function CreateFreeTrialSalesforceToolButton(
     setSalesforceToolId(toolId);
 
     onSuccessFunction();
-    // if (type === "source") {
-    //   setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN);
-    // }
-    // else {
-    //   setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN);
-    // }
   };
 
   return (

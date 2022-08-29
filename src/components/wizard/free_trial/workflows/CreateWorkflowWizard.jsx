@@ -1,11 +1,10 @@
 import React, {useState, useContext} from "react";
-import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import CreateSalesforceWorkflowWizard
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import CreateWorkflowWizardFlowSelectionScreen
   from "components/wizard/free_trial/workflows/flows/selection/CreateWorkflowWizardFlowSelectionScreen";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
 export const CREATE_WORKFLOW_WIZARD_SCREENS = {
   FLOW_SELECTION_SCREEN: "flow_selection_screen",
@@ -17,6 +16,7 @@ export const CREATE_WORKFLOW_WIZARD_SCREENS = {
 export default function CreateWorkflowWizard() {
   const toastContext = useContext(DialogToastContext);
   const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN);
+  const [buttonContainer, setButtonContainer] = useState(undefined);
 
   const closeOverlayFunction = () => {
     toastContext.removeInlineMessage();
@@ -34,6 +34,7 @@ export default function CreateWorkflowWizard() {
           <CreateWorkflowWizardFlowSelectionScreen
             setCurrentScreen={setCurrentScreen}
             closeOverlayFunction={closeOverlayFunction}
+            setButtonContainer={setButtonContainer}
             className={"m-4"}
           />
         );
@@ -55,13 +56,14 @@ export default function CreateWorkflowWizard() {
   };
 
   return (
-    <CreateCenterPanel
+    <CenterOverlayContainer
       closePanel={closeOverlayFunction}
-      objectType={"Workflow"}
-      showCloseButton={true}
+      titleText={"Create a new Workflow"}
+      buttonContainer={buttonContainer}
+      showCloseButton={false}
     >
       {getCurrentScreen()}
-    </CreateCenterPanel>
+    </CenterOverlayContainer>
   );
 }
 

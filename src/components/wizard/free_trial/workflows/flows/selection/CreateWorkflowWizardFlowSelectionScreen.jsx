@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import SalesforceSelectionCardBase from "temp-library-components/cards/salesforce/SalesforceSelectionCardBase";
 import OpseraInfinityLogoSelectionCardBase
   from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
@@ -28,12 +25,38 @@ export const WORKFLOW_CREATION_OPTION_LABELS = {
   GIT_CUSTODIAN: "Git Custodian",
 };
 
+const getButtonContainer = () => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons()}
+      className={"p-3"}
+    >
+    </ButtonContainerBase>
+  );
+};
+
+const getLeftHandButtons = () => {
+  return (
+    <BackButton
+      icon={faArrowLeft}
+      disabled={true}
+      size={"md"}
+    />
+  );
+};
+
 export default function CreateWorkflowWizardFlowSelectionScreen(
   {
     className,
     setCurrentScreen,
+    setButtonContainer,
   }) {
-  const handleContinueButtonFunction = (selectedFlow) => {
+
+  useEffect(() => {
+    setButtonContainer(getButtonContainer());
+  }, []);
+
+  const handleFlowSelectionButton = (selectedFlow) => {
     switch (selectedFlow) {
       case WORKFLOW_CREATION_OPTIONS.SALESFORCE:
         setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
@@ -42,15 +65,6 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
         setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW);
         return;
     }
-  };
-
-  const getLeftHandButtons = () => {
-    return (
-      <BackButton
-        icon={faArrowLeft}
-
-      />
-    );
   };
 
   return (
@@ -67,14 +81,14 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
             option={WORKFLOW_CREATION_OPTIONS.SALESFORCE}
             title={WORKFLOW_CREATION_OPTION_LABELS.SALESFORCE}
             subTitle={"Set up a new Salesforce Workflow"}
-            onClickFunction={handleContinueButtonFunction}
+            onClickFunction={handleFlowSelectionButton}
           />
           <div className={"d-md-block d-lg-block d-xl-none mb-2"} />
         </Col>
         <Col xs={12} sm={12} md={6} lg={6} xl={4}>
           <div className={"d-sm-block d-md-none d-lg-none d-xl-none mt-4"} />
           <OpseraInfinityLogoSelectionCardBase
-            onClickFunction={handleContinueButtonFunction}
+            onClickFunction={handleFlowSelectionButton}
             option={WORKFLOW_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
             title={WORKFLOW_CREATION_OPTION_LABELS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
             subTitle={"Set up a new Software Development Life Cycle Workflow"}
@@ -85,7 +99,7 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
         <Col xs={12} sm={12} md={6} lg={6} xl={4}>
           <div className={"d-md-block d-lg-block d-xl-none mt-4"} />
           <GitSelectionCardBase
-            onClickFunction={handleContinueButtonFunction}
+            onClickFunction={handleFlowSelectionButton}
             option={WORKFLOW_CREATION_OPTIONS.GIT_CUSTODIAN}
             title={WORKFLOW_CREATION_OPTION_LABELS.GIT_CUSTODIAN}
             subTitle={"Set up a new Git Custodian Workflow"}
@@ -93,9 +107,6 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
           />
         </Col>
       </Row>
-      <ButtonContainerBase
-
-      />
     </div>
   );
 }
@@ -103,5 +114,6 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
 CreateWorkflowWizardFlowSelectionScreen.propTypes = {
   className: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
 };
 

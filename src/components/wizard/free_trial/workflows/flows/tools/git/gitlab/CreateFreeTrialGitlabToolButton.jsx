@@ -6,6 +6,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { dateHelpers } from "components/common/helpers/date/date.helpers";
 
 export default function CreateFreeTrialGitlabToolButton(
   {
@@ -56,9 +58,11 @@ export default function CreateFreeTrialGitlabToolButton(
   const handleGitToolCreation = async () => {
     let toolId = gitToolId;
 
+    const accountUsername = dataParsingHelper.parseString(gitToolModel?.getData("accountUsername"), "");
+    const createDate = dateHelpers.getNowFormattedDateString();
     if (isMongoDbId(gitToolId) !== true) {
       const newTool = {
-        name: `Free Trial Gitlab Tool`,
+        name: `${accountUsername} - Gitlab Tool - ${createDate}`,
         tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
         tool_type_identifier: "source",
         active: true,

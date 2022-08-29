@@ -45,7 +45,7 @@ BackButton.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.string,
   icon: PropTypes.object,
-  disabled: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 BackButton.defaultProps = {
