@@ -18,32 +18,8 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     setCurrentScreen,
     flow,
   }) {
-  const getTaskName = (flow) => {
-    switch (flow) {
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC :
-        return salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC;
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK :
-        return salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK;
-      default :
-        return "Salesforce Task";
-    }
-  };
-
-  const getTemplateIdentifier = (flow) => {
-    switch (flow) {
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC :
-        return taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK :
-        return taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_TASK;
-      default :
-        console.error("Not a valid task flow ", flow);
-        return "Not a valid task flow";
-    }
-  };
-
   const setTaskFunction = (task) => {
-    let taskName = getTaskName(flow);
-    setTask({...task, name: taskName + " [Free Trial]"});
+    setTask({...task, name: salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK + " [Free Trial]"});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   };
 
@@ -51,7 +27,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     <CreateWorkflowWizardTaskInitializationScreen
       setTaskFunction={setTaskFunction}
       type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-      templateIdentifier={getTemplateIdentifier(flow)}
+      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_TASK}
     />
   );
 }

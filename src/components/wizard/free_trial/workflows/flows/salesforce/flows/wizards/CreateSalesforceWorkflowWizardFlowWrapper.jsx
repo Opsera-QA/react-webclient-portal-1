@@ -7,6 +7,8 @@ import CreateSalesforceOrganizationSyncTaskWizard
 import * as PropType from "prop-types";
 import CreateSalesforceOrganizationSyncPipelineWizard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
+import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
+  from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
 
 export default function CreateSalesforceWorkflowWizardFlowWrapper(
   {
@@ -23,9 +25,14 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
           />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+        return (
+            <CreateSalesforceOrganizationSyncTaskWizard
+                flow={flow}
+            />
+        );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
         return (
-          <CreateSalesforceOrganizationSyncTaskWizard
+          <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
             flow={flow}
           />
         );

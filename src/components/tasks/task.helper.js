@@ -29,8 +29,6 @@ taskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow) =
 
   switch (flow) {
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC :
-      console.log(updatedTask);
-      console.log(updatedTask.configuration.git);
       updatedTask.configuration.git.toolId = gitToolId;
       updatedTask.configuration.git.service = service;
       return updatedTask;
