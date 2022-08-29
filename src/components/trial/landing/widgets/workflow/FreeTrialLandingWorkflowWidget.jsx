@@ -12,6 +12,9 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import WarningCard from "temp-library-components/cards/status/WarningCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import OpseraInfinityCard from "temp-library-components/cards/opsera/OpseraInfinityCard";
+import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
+import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 
 export default function FreeTrialLandingWorkflowWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -68,19 +71,15 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   const getBody = () => {
     if (
       isLoading !== true
-      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
+      // && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
       return (
         <Row>
-          <Col xs={3} />
-          <Col xs={6}>
-            <WarningCard
-              title={"You haven't registered any Workflows yet!"}
-              subTitle={"Click here to register a new Workflow"}
-              tooltip={"Click to create a Workflow and get started today"}
-            />
+          <Col xs={0} sm={0} md={0} lg={2} xl={3} />
+          <Col xs={12} sm={12} md={12} lg={8} xl={6}>
+            <NoRegisteredWorkflowsCard />
           </Col>
-          <Col xs={3} />
+          <Col xs={0} sm={0} md={0} lg={2} xl={3} />
         </Row>
       );
     }

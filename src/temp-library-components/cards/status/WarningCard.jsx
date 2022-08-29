@@ -13,10 +13,10 @@ export default function WarningCard(
     tooltip,
     description,
     selectedOption,
+    onClickFunction,
     option,
   }) {
   const {
-    toastContext,
     themeConstants,
   } = useComponentStateReference();
 
@@ -46,12 +46,6 @@ export default function WarningCard(
     }
   };
 
-  const onClickFunction = () => {
-    toastContext.showOverlayPanel(
-      <CreateWorkflowWizard />
-    );
-  };
-
   return (
     <SelectionIconCardBase
       selectedOption={selectedOption}
@@ -73,4 +67,5 @@ WarningCard.propTypes = {
   selectedOption: PropTypes.any,
   option: PropTypes.any,
   tooltip: PropTypes.string,
+  onClickFunction: PropTypes.func,
 };
