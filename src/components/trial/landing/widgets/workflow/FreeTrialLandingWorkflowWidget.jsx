@@ -9,6 +9,9 @@ import FreeTrialWorkflowItemSelectionCardView
 import FreeTrialLandingPipelineWorkflowWidget
   from "components/trial/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import WarningCard from "temp-library-components/cards/status/WarningCard";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function FreeTrialLandingWorkflowWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -63,12 +66,31 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   };
 
   const getBody = () => {
+    if (
+      isLoading !== true
+      && (!Array.isArray(workspaceItems) && workspaceItems.length === 0)
+    ) {
+      return (
+        <Row>
+          <Col xs={3} />
+          <Col xs={6}>
+            <WarningCard
+              title={"You haven't registered any Workflows yet!"}
+              subTitle={"Click here to register a new Workflow"}
+              tooltip={"Click to create a Workflow and get started today"}
+            />
+          </Col>
+          <Col xs={3} />
+        </Row>
+      );
+    }
+
     if (selectedWorkflowItem == null) {
       return (
         <FreeTrialWidgetDataBlockBase
           // heightSize={WIDGET_HEIGHT_SIZE}
           titleIcon={faDraftingCompass}
-          title={"Select a Workflow"}
+          title={"Workflows"}
           isLoading={isLoading}
         >
           <FreeTrialWorkflowItemSelectionCardView
