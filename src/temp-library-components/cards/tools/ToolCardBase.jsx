@@ -2,12 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import DescriptionField from "components/common/fields/text/DescriptionField";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
-import Row from "react-bootstrap/Row";
-import { Col } from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
+import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
 
 export default function ToolCardBase(
   {
@@ -35,14 +33,11 @@ export default function ToolCardBase(
     );
   };
 
-
-  const getDescription = () => {
+  const getToolCardBody = () => {
     return (
-      <Row className={"small"}>
-        <Col xs={12}>
-          <DescriptionField dataObject={toolModel} className={"description-height"} />
-        </Col>
-      </Row>
+      <ToolCardBody
+        toolModel={toolModel}
+      />
     );
   };
 
@@ -54,7 +49,7 @@ export default function ToolCardBase(
     <IconCardContainerBase
       cardFooter={<ToolCardFooter />}
       titleBar={getTitleBar()}
-      contentBody={getDescription()}
+      contentBody={getToolCardBody()}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
     />

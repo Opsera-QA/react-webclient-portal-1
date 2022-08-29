@@ -14,6 +14,9 @@ import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBa
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import {
+  pipelineTemplateIdentifierConstants
+} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 
 const getLastRunEntry = (pipelineModel) => {
   const lastRun = pipelineModel?.getData("workflow.last_run");
@@ -59,6 +62,7 @@ export default function PipelineCardBase(
     return (
       <IconTitleBar
         icon={icon}
+        iconSize={"4x"}
         iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${pipelineModel?.getData("name")}`}
         className={"mx-1"}
@@ -71,12 +75,21 @@ export default function PipelineCardBase(
     return (
       <div className={"mx-1 mt-2 mb-1"}>
         <Row className={"small"}>
-          <Col xs={12}>
-            <DescriptionField dataObject={pipelineModel} className={"description-height mb-2"} />
-          </Col>
+          {getTemplateIdentifierField()}
+          {/*<Col xs={12}>*/}
+          {/*  <DescriptionField dataObject={pipelineModel} className={"description-height mb-2"} />*/}
+          {/*</Col>*/}
           {getRunFields()}
         </Row>
       </div>
+    );
+  };
+
+  const getTemplateIdentifierField = () => {
+    return (
+      <Col xs={12}>
+        {pipelineTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(pipelineModel?.getData("templateIdentifier"))}
+      </Col>
     );
   };
 
@@ -84,7 +97,7 @@ export default function PipelineCardBase(
     if (runCount === 0 || runCount == null) {
       return (
         <Col xs={12} className={"d-flex"}>
-          <div className={"text-muted mx-auto"}>
+          <div className={"text-muted m-auto"}>
             {"This pipeline hasn't been run yet"}
           </div>
         </Col>
