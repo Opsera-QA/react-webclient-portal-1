@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import ApprovalGatesActionableInsightTable from "../ApprovalGatesActionableInsightTable";
+import chartsActions from "components/insights/charts/charts-actions";
 
 function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,34 +66,15 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-    // const response = await chartsActions.actionName(
-    //   kpiConfiguration,
-    //   getAccessToken,
-    //   cancelSource,
-    //   dashboardTags,
-    //   dashboardOrgs,
-    //   filterDto,
-    //   pipeline_id
-    // );
-    const response= {
-        "data": {
-          "connectedAssets": {
-            "tool": "opsera",
-            "data": [
-              {
-                "_id": "6041c72c0d4024c7b670b13b",
-                "pipeline_name": "Hello World example",
-                "last_run": "2022-04-08T17:48:48.935+0000",
-                "last_run_in_day": "120 days back",
-                "run_count": 20,
-                "approval_time": "10secs"
-              }
-            ],
-            "status": 200,
-            "status_text": "OK"
-          }
-        }
-      };
+    const response = await chartsActions.approvalGatesTableData(
+      getAccessToken,
+      cancelSource,
+      kpiConfiguration,
+      dashboardTags,
+      dashboardOrgs,
+      filterDto,
+      pipeline_id
+    );
     let dataObject = response?.data ? response?.data?.connectedAssets?.data : [];
     let dataCount = response?.data ? response?.data?.connectedAssets?.count : 0;
     let newFilterDto = filterDto;
@@ -112,8 +94,7 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         title={"Contributors"}
-        tableTitleIcon={icon}
-        
+        tableTitleIcon={icon} 
       />
     </div>
   );

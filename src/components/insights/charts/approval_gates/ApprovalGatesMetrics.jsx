@@ -9,9 +9,10 @@ import { Col, Row } from "react-bootstrap";
 import ApprovalGatesDataBlockBase from "./data_blocks/ApprovalGatesDataBlockBase";
 import ApprovalGatesExecutedActionableInsightOverlay from "./actionable_insights/ApprovalGatesExecutedActionableInsightOverlay";
 import ApprovalGatesTotalPipelinesActionableInsightOverlay from "./actionable_insights/ApprovalGatesTotalPipelinesActionableInsightOverlay";
+import chartsActions from "../charts-actions";
 
 const APPROVAL_GATES = "approval_gates";
-
+//Total Pipelines Approved
 function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -50,15 +51,23 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-    const response = {
-      tool: "opsera",
-      data: {
-        total_pipelines_with_approval_gates: 20,
-        total_number_of_approvals_executed: 100,
-        total_number_of_approvers: 20
-      }
-    };
-    let dataObject = response?.data ? response?.data : [];
+    // const response = {
+    //   tool: "opsera",
+    //   data: {
+    //     total_pipelines_with_approval_gates: 20,
+    //     total_number_of_approvals_executed: 100,
+    //     total_number_of_approvers: 20
+    //   }
+    // };
+    //getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto
+    const response = await chartsActions.approvalGates(
+      getAccessToken,
+      cancelSource,
+      kpiConfiguration,
+      dashboardTags,
+      dashboardOrgs,
+    );
+    let dataObject = response?.data?.data?.data ? response?.data?.data?.data : [];
 
     if (isMounted?.current === true && dataObject) {
       setMetrics(dataObject);
@@ -90,6 +99,7 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
           title={type}
           kpiConfiguration={kpiConfiguration}
           dashboardData={dashboardData}
+          metrics={metrics}
         />
       );
     } else {
@@ -116,7 +126,7 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
             <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvals_executed} subtitle={'Total Approvals executed'} onClickFunction={()=>rowClick('total_approvals')} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvers} subtitle={'Total Approvers'} />
+            <ApprovalGatesDataBlockBase score={metrics.total_pipelines_approved} subtitle={'Total Approvers'} />
           </Col>
         </Row>
       </div>

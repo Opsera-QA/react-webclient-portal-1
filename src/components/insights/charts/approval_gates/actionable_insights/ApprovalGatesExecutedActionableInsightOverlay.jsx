@@ -15,8 +15,10 @@ import CustomTab from "components/common/tabs/CustomTab";
 import ApprovalGatesApprovalTab from "./tabs/ApprovalGatesApprovalTab";
 import { faCodePullRequest, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import ApprovalGatesRejectTab from "./tabs/ApprovalGatesRejectTab";
+import chartsActions from "../../charts-actions";
+import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 
-function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
+function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashboardData, request, metrics }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
@@ -28,6 +30,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
   const [error, setError] = useState(undefined);
   const [listOfPipelines, setListOfPipelines] = useState(undefined);
   const [activeTab, setActiveTab] = useState("approval");
+  const [blocksData, setBlocksData]= useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -55,29 +58,24 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = {
-        "data": {
-          "connectedAssets": {
-            "tool": "opsera",
-            "data": [
-              {
-                "_id": "6041c72c0d4024c7b670b13b",
-                "pipeline_name": "Hello World example",
-              },
-              {
-                "_id": "6041c72c0d4024c7b670b13e",
-                "pipeline_name": "Hello Pipeline 2",
-              }
-            ],
-            "status": 200,
-            "status_text": "OK"
-          }
-        }
-      };
-      let dataObject = response?.data ? response?.data?.connectedAssets?.data : [];
+      let dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
+      
+     
+       const response = await chartsActions.approvalGatesPipeline(
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+      );
+      
+      let dataObject = response?.data?.data ? response?.data?.data?.data : [];
       if (isMounted?.current === true && dataObject) {
         setListOfPipelines(dataObject);
       }
+     
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -158,6 +156,8 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
       <div className={"p-3"}>
         <ApprovalGatesExecutedDataBlocks
           dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          metrics={metrics}
         />
       </div>
         {listOfPipelines && (
@@ -172,6 +172,7 @@ ApprovalGatesExecutedActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   request: PropTypes.string,
+  metrics: PropTypes.object
 };
 
 export default ApprovalGatesExecutedActionableInsightOverlay;

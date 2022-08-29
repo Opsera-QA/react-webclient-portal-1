@@ -8,11 +8,9 @@ import ApprovalGatesDataBlockBase from "../../data_blocks/ApprovalGatesDataBlock
 
 const APPROVAL_GATES = "approval_gates";
 
-function ApprovalGatesExecutedDataBlocks({ dashboardData }) {
+function ApprovalGatesExecutedDataBlocks({ dashboardData , metrics}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -26,59 +24,12 @@ function ApprovalGatesExecutedDataBlocks({ dashboardData }) {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
-
-  const loadBlockMetrics = async (cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-    let dashboardTags =
-      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-    let dashboardOrgs =
-      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-        ?.value;
-    const response = {
-        tool: "opsera",
-        data: {
-          total_pipelines_approved: 20,
-          total_pipelines_rejected: 100,
-          average_approval_time: "20secs"
-        },
-        status: 200,
-        status_text: "OK"
-      };
-    let dataObject = response?.data ? response?.data : [];
-
-    if (isMounted?.current === true && dataObject) {
-      setMetrics(dataObject);
-    }
-  };
-
-  
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      await loadBlockMetrics(cancelSource);
-      // await loadDataPoints(cancelSource);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
 
 
   return (
@@ -100,6 +51,8 @@ function ApprovalGatesExecutedDataBlocks({ dashboardData }) {
 
 ApprovalGatesExecutedDataBlocks.propTypes = {
   dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  metrics: PropTypes.object
 };
 
 export default ApprovalGatesExecutedDataBlocks;
