@@ -39,7 +39,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
 }
 
 CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen.propTypes = {
-  task: PropTypes.string,
+  task: PropTypes.object,
   salesforceToolId: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
