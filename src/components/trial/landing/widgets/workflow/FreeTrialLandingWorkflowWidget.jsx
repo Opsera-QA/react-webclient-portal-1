@@ -71,7 +71,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   const getBody = () => {
     if (
       isLoading !== true
-      // && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
+      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
       return (
         <Row>
