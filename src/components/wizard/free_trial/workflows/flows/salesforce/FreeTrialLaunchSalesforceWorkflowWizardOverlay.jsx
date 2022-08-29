@@ -14,6 +14,7 @@ export const LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
 
 export default function FreeTrialLaunchSalesforceWorkflowWizardOverlay() {
   const [currentScreen, setCurrentScreen] = useState(LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN);
+  const [buttonContainer, setButtonContainer] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
   const closeOverlayFunction = () => {
@@ -39,10 +40,12 @@ export default function FreeTrialLaunchSalesforceWorkflowWizardOverlay() {
       titleText={getTitle()}
       titleIcon={faWandMagicSparkles}
       showToasts={true}
+      buttonContainer={buttonContainer}
     >
       <FreeTrialSelectSalesforceWorkflowScreen
         currentScreen={currentScreen}
         setCurrentScreen={setCurrentScreen}
+        setButtonContainer={setButtonContainer}
       />
     </CenterOverlayContainer>
   );

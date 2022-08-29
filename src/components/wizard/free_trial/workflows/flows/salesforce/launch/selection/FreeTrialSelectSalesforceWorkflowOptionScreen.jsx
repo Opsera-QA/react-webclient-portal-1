@@ -1,33 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import CreateSalesforceWorkflowWizard
-  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { workspaceActions } from "components/workspace/workspace.actions";
-import { workspaceConstants } from "components/workspace/workspace.constants";
-import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import { isTaskTypeOfCategory, TASK_TYPE_CATEGORIES } from "components/tasks/task.types";
-import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
   from "components/wizard/free_trial/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
-import FreeTrialLaunchSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceSelectionCardBase from "temp-library-components/cards/salesforce/SalesforceSelectionCardBase";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+const getButtonContainer = () => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons()}
+      className={"p-3"}
+    >
+    </ButtonContainerBase>
+  );
+};
+
+const getLeftHandButtons = () => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        disabled={true}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
   {
     currentScreen,
     setCurrentScreen,
+    setButtonContainer,
     isLoading,
     workspaceItems,
     className,
@@ -35,6 +49,12 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
   const {
     themeConstants,
   } = useComponentStateReference();
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(getButtonContainer());
+    }
+  }, []);
 
   return (
     <div className={className}>
@@ -73,6 +93,7 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
 FreeTrialSelectSalesforceWorkflowOptionScreen.propTypes = {
   currentScreen: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   workspaceItems: PropTypes.array,

@@ -19,6 +19,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
   {
     currentScreen,
     setCurrentScreen,
+    setButtonContainer,
     className,
   }) {
   const [workspaceItems, setWorkspaceItems] = useState([]);
@@ -107,6 +108,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
             setCurrentScreen={setCurrentScreen}
             isLoading={isLoading}
             workspaceItems={workspaceItems}
+            setButtonContainer={setButtonContainer}
           />
         );
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW:
@@ -140,6 +142,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
 FreeTrialSelectSalesforceWorkflowScreen.propTypes = {
   currentScreen: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   className: PropTypes.string,
 };
 
