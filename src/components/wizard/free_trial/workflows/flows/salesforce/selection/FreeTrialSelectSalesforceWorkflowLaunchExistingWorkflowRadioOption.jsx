@@ -9,6 +9,7 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import OpseraInfinityCard from "temp-library-components/cards/opsera/OpseraInfinityCard";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(
   {
@@ -31,26 +32,15 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
   };
 
   return (
-    <SelectionIconCardBase
+    <OpseraInfinityCard
       selectedOption={currentScreen}
       option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
-      titleBar={
-        <IconTitleBar
-          className={"m-3 mb-4"}
-          formattedIcon={
-            <OpseraInfinityLogo scale={.75} />
-          }
-          title={"Launch Existing Workflow"}
-          subTitle={getExistingWorkflowDescription()}
-          titleClassName={"mx-auto mt-2"}
-          subTitleClassName={"mx-auto"}
-          isLoading={isLoading}
-        />
-      }
       onClickFunction={setCurrentScreen}
       disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
       className={className}
       isLoading={isLoading}
+      title={"Launch Existing Workflow"}
+      subTitle={getExistingWorkflowDescription()}
     />
   );
 }
