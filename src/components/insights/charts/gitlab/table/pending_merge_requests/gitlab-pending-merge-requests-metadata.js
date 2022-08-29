@@ -43,7 +43,7 @@ const gitlabPendingMergeRequestsMetadata = {
       id: "mrCreatedTimeTimeStamp",
     },
     {
-      label: "Merge Request Url",
+      label: "View MR",
       id: "mergeRequestUrl",
     },
   ],

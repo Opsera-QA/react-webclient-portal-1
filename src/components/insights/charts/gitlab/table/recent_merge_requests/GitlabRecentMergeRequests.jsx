@@ -53,9 +53,10 @@ function GitlabRecentMergeRequests({
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
       getTableTextColumn(getField(fields, "MergeRequestTimeTaken")),
+      getTableTextColumn(getField(fields, "mrLastAction")),
       getExternalLinkIconColumnDefinition(
         getField(fields, "mergeRequestUrl"),
-        "View Merge Request",
+        "",
       ),
     ],
     [],
