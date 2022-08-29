@@ -6,25 +6,28 @@ import CreateWorkflowWizardTestGitToolConnectionScreen
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import {salesforceWorkflowFlowConstants} from "../../../../../salesforceWorkflowFlow.constants";
+import {taskHelper} from "../../../../../../../../../../../tasks/task.helper";
 
-export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen(
-  {
-    task,
-    setTask,
-    setCurrentScreen,
-    gitToolId,
-    gitToolOption,
-  }) {
+export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen({
+  task,
+  setTask,
+  setCurrentScreen,
+  gitToolId,
+  gitToolOption,
+  flow,
+}) {
   const onSuccessFunction = () => {
-    task.configuration.gitToolId = gitToolId;
-    task.configuration.service = gitToolOption;
-    task.tool_identifier = gitToolOption;
-    setTask({...task});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+    setTask({...taskHelper.updateGitToolIdForSalesforceTask(task, gitToolId, gitToolOption, flow)});
+    setCurrentScreen(
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
+    );
   };
 
   const onFailureFunction = () => {
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+    setCurrentScreen(
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN,
+    );
   };
 
   return (
@@ -35,6 +38,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(task)}
+      flow={flow}
       className={"m-3"}
     />
   );
@@ -46,5 +50,6 @@ CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen.propTypes = {
   gitToolOption: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  flow: PropTypes.string,
 };
 

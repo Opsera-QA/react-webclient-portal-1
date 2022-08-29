@@ -127,19 +127,23 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
+          {/* WIP */}
+          <SelectionCardColumn>
+              <WorkflowOptionCardBase
+                  option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
+                  selectedOption={selectedFlow}
+                  title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
+                  subTitle={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_SUBTITLES.SALESFORCE_TO_GIT_MERGE_SYNC}
+                  icon={faSalesforce}
+                  iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+                  description={`
+              Handle a Merge Sync on demand from Salesforce to Git
+            `}
+                  onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC); }}
+                  workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
+              />
+          </SelectionCardColumn>
       </Row>
-
-      <WizardSelectionRadioOption
-        onClickFunction={setSelectedFlow}
-        selectedOption={selectedFlow}
-        option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
-        text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
-        description={`
-          Handle a Merge Sync on demand from Salesforce to Git
-        `}
-        disabled={true}
-        className={"my-2"}
-      />
       <ButtonContainerBase
         className={"mt-3"}
         leftSideButtons={

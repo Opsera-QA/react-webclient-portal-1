@@ -5,22 +5,26 @@ import WorkflowWizardToolConnectionScreenBase
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import {taskHelper} from "../../../../../../../../../../../tasks/task.helper";
 
-export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen(
-  {
-    task,
-    setTask,
-    setCurrentScreen,
-    salesforceToolId,
-  }) {
+export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen({
+  task,
+  setTask,
+  setCurrentScreen,
+  salesforceToolId,
+  flow,
+}) {
   const onSuccessFunction = () => {
-    task.configuration.sfdcToolId = salesforceToolId;
-    setTask({...task});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
+    setTask({...taskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow)});
+    setCurrentScreen(
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
+    );
   };
 
   const onFailureFunction = () => {
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN);
+    setCurrentScreen(
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
+    );
   };
 
   return (
@@ -39,5 +43,6 @@ CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScre
   salesforceToolId: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  flow: PropTypes.string,
 };
 

@@ -70,6 +70,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             gitToolOption={gitToolOption}
             task={task}
             setTask={setTask}
+            flow={flow}
             className={"m-3"}
           />
         );
@@ -92,6 +93,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             task={task}
             setTask={setTask}
             salesforceToolId={salesforceSourceToolId}
+            flow={flow}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
@@ -99,6 +101,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
           <CreateWorkflowWizardTaskCompletionScreen
             task={task}
             workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            flow={flow}
           />
         );
     }

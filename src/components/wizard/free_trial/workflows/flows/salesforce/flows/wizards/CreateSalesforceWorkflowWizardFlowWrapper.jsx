@@ -23,6 +23,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
           />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
         return (
           <CreateSalesforceOrganizationSyncTaskWizard
             flow={flow}

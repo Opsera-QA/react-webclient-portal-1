@@ -95,6 +95,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     }
 
     const configuration = dataParsingHelper.parseObject(task?.configuration);
+    // This wont work for merge synch tasks,how do we handle this?
     const sfdcToolId = configuration?.sfdcToolId;
 
     if (isMongoDbId(sfdcToolId == null) !== true) {
