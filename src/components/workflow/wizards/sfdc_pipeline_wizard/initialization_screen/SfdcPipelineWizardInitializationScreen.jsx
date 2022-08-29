@@ -10,7 +10,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import {faFileCode, faStepForward, faSync} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faArrowRight, faSync} from "@fortawesome/pro-light-svg-icons";
 import {parseDate} from "utils/helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -333,7 +333,7 @@ export default function SfdcPipelineWizardInitializationScreen(
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
@@ -345,7 +345,7 @@ export default function SfdcPipelineWizardInitializationScreen(
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
