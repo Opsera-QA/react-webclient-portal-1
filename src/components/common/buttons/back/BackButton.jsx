@@ -14,14 +14,25 @@ export default function BackButton(
     icon,
     disabled,
   }) {
-  if (backButtonFunction == null) {
+  if (backButtonFunction == null && disabled !== true) {
     return null;
   }
 
   return (
     <div className={className}>
-      <Button size={size} variant={variant} disabled={isLoading} onClick={() => backButtonFunction()}>
-        <span><IconBase icon={icon} className={"mr-2"} fixedWidth/>Back</span>
+      <Button
+        size={size}
+        variant={variant}
+        disabled={isLoading === true || disabled === true}
+        onClick={() => backButtonFunction()}
+      >
+        <span>
+          <IconBase
+            icon={icon}
+            className={"mr-2"}
+          />
+          Back
+        </span>
       </Button>
     </div>
   );
