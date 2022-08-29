@@ -46,6 +46,10 @@ export default function FreeTrialLanding() {
             <FreeTrialLandingWorkflowWidget
             />
           </div>
+          <div className={"py-3"}>
+            &nbsp;
+            {/* placeholder for some marketing icons and maybe some contant cinfo but for now just giving it some space*/}
+          </div>
         </div>
       {/*</ScreenContainer>*/}
     </div>

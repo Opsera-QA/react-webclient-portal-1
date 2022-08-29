@@ -986,9 +986,9 @@ a.nav-link {
 }
 
 .content-block-header-inverse, .filter-container-content-block-header {
-    background-color: #F4A5069E;
+    background-color: #3D3B36;
     /*border-bottom: 1px solid #E6E5E3;*/
-    color: #000;
+    color: #fef7fd;
 }
 
 .dashboard-container-header {
@@ -1308,7 +1308,7 @@ div.data-blocks-ellipses {
 
 .filter-title-text {
     font-size: 1.1rem;
-    color: #000;
+    color: #FFFFFF;
     font-family: 'Inter', sans-serif;
 }
 
