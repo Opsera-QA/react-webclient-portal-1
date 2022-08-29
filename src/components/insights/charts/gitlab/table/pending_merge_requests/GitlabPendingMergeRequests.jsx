@@ -54,7 +54,7 @@ function GitlabPendingMergeRequests({
       getTableDateTimeColumn(getField(fields, "mrCreatedTimeTimeStamp")),
       getExternalLinkIconColumnDefinition(
         getField(fields, "mergeRequestUrl"),
-        "View Merge Request",
+        "",
       ),
     ],
     [],

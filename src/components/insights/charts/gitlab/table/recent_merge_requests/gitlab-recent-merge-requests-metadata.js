@@ -47,7 +47,11 @@ const gitlabRecentMergeRequestsMetadata = {
       id: "MergeRequestTimeTaken",
     },
     {
-      label: "Merge Request Url",
+      label: "Status",
+      id: "mrLastAction",
+    },
+    {
+      label: "View MR",
       id: "mergeRequestUrl",
     },
   ],
