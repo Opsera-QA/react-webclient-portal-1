@@ -12,11 +12,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 
 let internalRefreshCount = 1;
 const refreshInterval = 15000;
 
 function PipelineDetailView() {
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"pipelines"} />);
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [pipeline, setPipeline] = useState(undefined);

@@ -13,8 +13,11 @@ import InventorySubNavigationBar from "components/inventory/InventorySubNavigati
 import axios from "axios";
 import ToolModel from "components/inventory/tools/tool.model";
 import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 
 function ToolDetailView() {
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"tools"} />);
   const { id, tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);

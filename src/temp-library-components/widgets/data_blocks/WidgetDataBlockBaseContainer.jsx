@@ -110,6 +110,7 @@ function WidgetDataBlockBaseContainer(
         width: getWidth(),
         maxWidth: getWidth(),
         border: getBorder(),
+        borderRadius: "1rem",
         backgroundColor: getBackgroundColor(),
         color: getFontColor(),
         fontFamily: fontFamily,

@@ -38,8 +38,11 @@ import SfdxQuickDeployTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
 import GitCustodianTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 
 function TaskDetailView() {
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"tasks"} />);
   const location = useLocation();
   const { id } = useParams();
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
