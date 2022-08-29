@@ -34,6 +34,7 @@ export default function CreateWorkflowWizard() {
           <CreateWorkflowWizardFlowSelectionScreen
             setCurrentScreen={setCurrentScreen}
             closeOverlayFunction={closeOverlayFunction}
+            className={"m-4"}
           />
         );
       case CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW:

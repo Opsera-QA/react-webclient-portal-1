@@ -10,6 +10,8 @@ import OpseraInfinityLogoSelectionCardBase
   from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import GitSelectionCardBase from "temp-library-components/cards/git/GitSelectionCardBase";
 import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export const WORKFLOW_CREATION_OPTIONS = {
   SALESFORCE: "salesforce",
@@ -18,7 +20,7 @@ export const WORKFLOW_CREATION_OPTIONS = {
 };
 
 export const WORKFLOW_CREATION_OPTION_LABELS = {
-  SALESFORCE: "Salesforce.com",
+  SALESFORCE: "Salesforce",
   SOFTWARE_DEVELOPMENT_LIFE_CYCLE: "Software Development Life Cycle",
   GIT_CUSTODIAN: "Git Custodian",
 };
@@ -41,33 +43,40 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
 
   return (
     <div className={className}>
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          className={"mb-3 mx-3"}
+          subheaderText={"What kind of Workflow would you like to create today?"}
+        />
+      </CenteredContentWrapper>
       <Row>
-        <Col xs={6} lg={4}>
+        <Col xs={12} sm={12} md={6} lg={6} xl={4}>
           <SalesforceSelectionCardBase
             option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
-            title={"Create Salesforce Workflow"}
+            title={WORKFLOW_CREATION_OPTION_LABELS.SALESFORCE}
             subTitle={"Set up a new Salesforce Workflow"}
             onClickFunction={handleContinueButtonFunction}
-            className={"my-2"}
           />
+          <div className={"d-md-block d-lg-block d-xl-none mb-2"} />
         </Col>
-        <Col xs={6} lg={4}>
+        <Col xs={12} sm={12} md={6} lg={6} xl={4}>
+          <div className={"d-sm-block d-md-none d-lg-none d-xl-none mt-4"} />
           <OpseraInfinityLogoSelectionCardBase
-            className={"my-2"}
             onClickFunction={handleContinueButtonFunction}
             option={WORKFLOW_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
             title={WORKFLOW_CREATION_OPTION_LABELS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE}
-            subTitle={"Set up a Software Development Life Cycle Workflow"}
+            subTitle={"Set up a new Software Development Life Cycle Workflow"}
             disabled={true}
           />
+          <div className={"d-md-block d-lg-block d-xl-none mb-4"} />
         </Col>
-        <Col xs={6} lg={4}>
+        <Col xs={12} sm={12} md={6} lg={6} xl={4}>
+          <div className={"d-md-block d-lg-block d-xl-none mt-4"} />
           <GitSelectionCardBase
-            className={"my-2"}
             onClickFunction={handleContinueButtonFunction}
             option={WORKFLOW_CREATION_OPTIONS.GIT_CUSTODIAN}
             title={WORKFLOW_CREATION_OPTION_LABELS.GIT_CUSTODIAN}
-            subTitle={"Set up a Git Custodian Workflow"}
+            subTitle={"Set up a new Git Custodian Workflow"}
             disabled={true}
           />
         </Col>

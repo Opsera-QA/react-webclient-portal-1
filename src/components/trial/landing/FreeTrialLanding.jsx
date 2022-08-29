@@ -3,12 +3,8 @@ import WelcomeWidget from "components/trial/landing/widgets/WelcomeWidget";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
-import FreeTrialLandingWizardWidgets from "components/trial/landing/widgets/wizard/FreeTrialLandingWizardWidgets";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-//import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import FreeTrialLandingPipelinesWidgetV1 from "components/trial/pipelines/widgets/FreeTrialLandingPipelinesWidgetV1";
-import SFDCLandingWidget from "./widgets/SFDCLandingWidget";
 import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
 import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
 
