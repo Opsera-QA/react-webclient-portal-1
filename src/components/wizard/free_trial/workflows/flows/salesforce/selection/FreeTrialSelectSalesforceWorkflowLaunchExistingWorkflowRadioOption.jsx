@@ -8,6 +8,7 @@ import {
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(
   {
@@ -36,10 +37,11 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
       titleBar={
         <IconTitleBar
           className={"m-3 mb-4"}
-          icon={faRectangleList}
+          formattedIcon={
+            <OpseraInfinityLogo scale={.75} />
+          }
           title={"Launch Existing Workflow"}
           subTitle={getExistingWorkflowDescription()}
-          iconSize={"5x"}
           titleClassName={"mx-auto mt-2"}
           subTitleClassName={"mx-auto"}
           isLoading={isLoading}
