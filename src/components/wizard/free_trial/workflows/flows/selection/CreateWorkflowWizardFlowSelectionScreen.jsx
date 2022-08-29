@@ -64,7 +64,7 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
       <Row>
         <Col xs={12} sm={12} md={6} lg={6} xl={4}>
           <SalesforceSelectionCardBase
-            option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
+            option={WORKFLOW_CREATION_OPTIONS.SALESFORCE}
             title={WORKFLOW_CREATION_OPTION_LABELS.SALESFORCE}
             subTitle={"Set up a new Salesforce Workflow"}
             onClickFunction={handleContinueButtonFunction}
