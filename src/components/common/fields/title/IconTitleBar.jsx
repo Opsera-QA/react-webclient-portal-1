@@ -37,7 +37,18 @@ export default function IconTitleBar(
     }
 
     if (formattedIcon) {
-      return formattedIcon;
+      return (
+        <div
+          className={"d-flex"}
+          style={{
+            height: "96px",
+          }}
+        >
+          <div>
+            {formattedIcon}
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -102,11 +113,7 @@ export default function IconTitleBar(
     <div className={className}>
       <div className="d-flex">
         <div className={"mx-auto h-100 mt-2"}>
-          <div className={"my-auto"}
-            style={{
-              height: "96px",
-            }}
-          >
+          <div className={"my-auto"}>
             {getIcon()}
           </div>
         </div>

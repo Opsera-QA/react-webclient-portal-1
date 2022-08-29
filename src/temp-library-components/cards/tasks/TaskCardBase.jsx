@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DescriptionField from "components/common/fields/text/DescriptionField";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 
 const getLastRunEntry = (taskModel) => {
   const lastRun = taskModel?.getData("last_run");
@@ -63,11 +63,20 @@ export default function TaskCardBase(
   const getDescription = () => {
     return (
       <Row className={"small"}>
+        {getTemplateIdentifierField()}
         <Col xs={12}>
-          <DescriptionField dataObject={taskModel} className={"description-height"} />
+          {/*<DescriptionField dataObject={taskModel} className={"description-height"} />*/}
         </Col>
           {getRunFields()}
       </Row>
+    );
+  };
+
+  const getTemplateIdentifierField = () => {
+    return (
+      <Col xs={12}>
+        {taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(taskModel?.getData("templateIdentifier"))}
+      </Col>
     );
   };
 
@@ -75,7 +84,7 @@ export default function TaskCardBase(
     if (runCount === 0 || runCount == null) {
       return (
         <Col xs={12} className={"d-flex"}>
-          <div className={"text-muted mx-auto"}>
+          <div className={"text-muted m-auto"}>
             {"This task hasn't been run yet"}
           </div>
         </Col>
