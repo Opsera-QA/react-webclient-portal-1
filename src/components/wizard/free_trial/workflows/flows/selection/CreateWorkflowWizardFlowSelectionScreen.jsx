@@ -10,8 +10,9 @@ import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/wor
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import BackButton from "components/common/buttons/back/BackButton";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 
 export const WORKFLOW_CREATION_OPTIONS = {
   SALESFORCE: "salesforce",
@@ -37,11 +38,13 @@ const getButtonContainer = () => {
 
 const getLeftHandButtons = () => {
   return (
-    <BackButton
-      icon={faArrowLeft}
-      disabled={true}
-      size={"md"}
-    />
+    <div className={"d-flex"}>
+      <BackButtonBase
+        disabled={true}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
   );
 };
 
