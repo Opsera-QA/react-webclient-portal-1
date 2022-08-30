@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
@@ -14,42 +13,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
-
-const getButtonContainer = (
-  stepBackFromWizardFunction,
-  gitToolModel,
-  setGitToolId,
-  gitToolId,
-  onSuccessFunction,
-) => {
-  return (
-    <ButtonContainerBase
-      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
-      className={"p-3"}
-    >
-      <CreateFreeTrialGitlabToolButton
-        gitToolModel={gitToolModel}
-        onSuccessFunction={onSuccessFunction}
-        gitToolId={gitToolId}
-        setGitToolId={setGitToolId}
-      />
-    </ButtonContainerBase>
-  );
-};
-
-const getLeftHandButtons = (stepBackFromWizardFunction) => {
-  return (
-    <div className={"d-flex"}>
-      <BackButtonBase
-        backButtonFunction={stepBackFromWizardFunction}
-        className={"mr-2"}
-      />
-      <CancelOverlayButton />
-    </div>
-  );
-};
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -65,13 +29,18 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
 
   useEffect(() => {
     if (setButtonContainer) {
-      setButtonContainer(getButtonContainer(
-        backButtonFunction,
-          gitToolModel,
-          setGitToolId,
-          gitToolId,
-          onSuccessFunction,
-        ));
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={backButtonFunction}
+        >
+          <CreateFreeTrialGitlabToolButton
+            gitToolModel={gitToolModel}
+            onSuccessFunction={onSuccessFunction}
+            gitToolId={gitToolId}
+            setGitToolId={setGitToolId}
+          />
+        </OverlayWizardButtonContainerBase>
+      );
     }
   }, []);
 

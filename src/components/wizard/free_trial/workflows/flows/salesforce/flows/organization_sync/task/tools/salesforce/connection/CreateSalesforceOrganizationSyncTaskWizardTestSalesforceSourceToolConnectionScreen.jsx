@@ -12,6 +12,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforce
   setTask,
   setCurrentScreen,
   salesforceToolId,
+  setButtonContainer,
   flow,
 }) {
   const onSuccessFunction = () => {
@@ -33,6 +34,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforce
       onSuccessFunction={onSuccessFunction}
       toolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
+      setButtonContainer={setButtonContainer}
       toolName={"Sfdc"}
     />
   );
@@ -43,6 +45,7 @@ CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScre
   salesforceToolId: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   flow: PropTypes.string,
 };
 

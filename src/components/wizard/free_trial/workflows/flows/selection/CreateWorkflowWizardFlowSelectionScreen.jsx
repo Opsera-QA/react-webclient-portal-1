@@ -9,10 +9,7 @@ import GitSelectionCardBase from "temp-library-components/cards/git/GitSelection
 import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
-import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export const WORKFLOW_CREATION_OPTIONS = {
   SALESFORCE: "salesforce",
@@ -26,28 +23,6 @@ export const WORKFLOW_CREATION_OPTION_LABELS = {
   GIT_CUSTODIAN: "Git Custodian",
 };
 
-const getButtonContainer = () => {
-  return (
-    <ButtonContainerBase
-      leftSideButtons={getLeftHandButtons()}
-      className={"p-3"}
-    >
-    </ButtonContainerBase>
-  );
-};
-
-const getLeftHandButtons = () => {
-  return (
-    <div className={"d-flex"}>
-      <BackButtonBase
-        disabled={true}
-        className={"mr-2"}
-      />
-      <CancelOverlayButton />
-    </div>
-  );
-};
-
 export default function CreateWorkflowWizardFlowSelectionScreen(
   {
     className,
@@ -56,7 +31,9 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
   }) {
 
   useEffect(() => {
-    setButtonContainer(getButtonContainer());
+    setButtonContainer(
+    <OverlayWizardButtonContainerBase />
+    );
   }, []);
 
   const handleFlowSelectionButton = (selectedFlow) => {

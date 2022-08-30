@@ -5,31 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
-
-
-const getButtonContainer = (stepBackFromWizardFunction,) => {
-  return (
-    <ButtonContainerBase
-      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
-      className={"p-3"}
-    />
-  );
-};
-
-const getLeftHandButtons = () => {
-  return (
-    <div className={"d-flex"}>
-      <BackButtonBase
-        disabled={true}
-        className={"mr-2"}
-      />
-      <CancelOverlayButton />
-    </div>
-  );
-};
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
@@ -48,7 +24,10 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
 
   useEffect(() => {
     if (setButtonContainer) {
-      setButtonContainer(getButtonContainer());
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+        />
+      );
     }
 
     initializeSalesforceTaskTemplate().catch((error) => {

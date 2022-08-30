@@ -18,34 +18,11 @@ import WorkflowOptionCardBase, {
   WORKFLOW_OPTION_TYPES,
 } from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
-
-const getButtonContainer = (stepBackFromWizardFunction,) => {
-  return (
-    <ButtonContainerBase
-      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
-      className={"p-3"}
-    />
-  );
-};
-
-const getLeftHandButtons = (stepBackFromWizardFunction) => {
-  return (
-    <div className={"d-flex"}>
-      <BackButtonBase
-        backButtonFunction={stepBackFromWizardFunction}
-        className={"mr-2"}
-      />
-      <CancelOverlayButton />
-    </div>
-  );
-};
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   {
@@ -60,9 +37,9 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
 
   useEffect(() => {
     if (setButtonContainer) {
-      setButtonContainer(getButtonContainer(
-        stepBackFromWizardFunction,
-      ));
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase backButtonFunction={stepBackFromWizardFunction} />
+      );
     }
   }, [stepBackFromWizardFunction]);
 
