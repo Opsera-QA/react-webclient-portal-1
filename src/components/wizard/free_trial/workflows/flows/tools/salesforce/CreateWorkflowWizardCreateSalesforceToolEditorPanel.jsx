@@ -30,10 +30,17 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
       setButtonContainer(
         <OverlayWizardButtonContainerBase
           backButtonFunction={backButtonFunction}
-        />
+        >
+          <CreateFreeTrialSalesforceToolButton
+            salesforceToolModel={salesforceToolModel}
+            onSuccessFunction={onSuccessFunction}
+            setSalesforceToolId={setSalesforceToolId}
+            salesforceToolId={salesforceToolId}
+          />
+        </OverlayWizardButtonContainerBase>
       );
     }
-  }, []);
+  }, [salesforceToolModel]);
 
   if (salesforceToolModel == null) {
     return null;
@@ -104,12 +111,6 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
         {/*/>*/}
         {/*</Col>*/}
       </Row>
-      <CreateFreeTrialSalesforceToolButton
-        salesforceToolModel={salesforceToolModel}
-        onSuccessFunction={onSuccessFunction}
-        setSalesforceToolId={setSalesforceToolId}
-        salesforceToolId={salesforceToolId}
-      />
     </div>
   );
 }

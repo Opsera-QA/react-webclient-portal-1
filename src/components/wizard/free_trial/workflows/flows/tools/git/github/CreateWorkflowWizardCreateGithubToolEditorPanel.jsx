@@ -30,10 +30,17 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
       setButtonContainer(
         <OverlayWizardButtonContainerBase
           backButtonFunction={backButtonFunction}
-        />
+        >
+          <CreateFreeTrialGithubToolButton
+            gitToolModel={gitToolModel}
+            setGitToolId={setGitToolId}
+            gitToolId={gitToolId}
+            onSuccessFunction={onSuccessFunction}
+          />
+        </OverlayWizardButtonContainerBase>
       );
     }
-  }, []);
+  }, [gitToolModel]);
 
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
@@ -97,12 +104,6 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
           </Col>
         </Row>
       </Form>
-      <CreateFreeTrialGithubToolButton
-        gitToolModel={gitToolModel}
-        setGitToolId={setGitToolId}
-        gitToolId={gitToolId}
-        onSuccessFunction={onSuccessFunction}
-      />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -32,10 +33,17 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
       setButtonContainer(
         <OverlayWizardButtonContainerBase
           backButtonFunction={backButtonFunction}
-        />
+        >
+          <CreateFreeTrialGitlabToolButton
+            gitToolModel={gitToolModel}
+            onSuccessFunction={onSuccessFunction}
+            gitToolId={gitToolId}
+            setGitToolId={setGitToolId}
+          />
+        </OverlayWizardButtonContainerBase>
       );
     }
-  }, []);
+  }, [gitToolModel]);
 
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
@@ -106,12 +114,6 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
           </Col>
         </Row>
       </Form>
-      <CreateFreeTrialGitlabToolButton
-        gitToolModel={gitToolModel}
-        onSuccessFunction={onSuccessFunction}
-        gitToolId={gitToolId}
-        setGitToolId={setGitToolId}
-      />
     </div>
   );
 }

@@ -85,7 +85,7 @@ export default function CreateFreeTrialGitlabToolButton(
     <CreateButton
       addAnotherOption={false}
       showSuccessToasts={false}
-      customLabel={"Continue"}
+      customLabel={"Register Account and Continue"}
       createRecord={handleGitToolCreation}
       recordDto={gitToolModel}
       disable={gitToolModel?.checkCurrentValidity() !== true}
