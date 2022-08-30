@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -13,6 +13,42 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+const getButtonContainer = (
+  stepBackFromWizardFunction,
+  gitToolModel,
+  setGitToolId,
+  gitToolId,
+  onSuccessFunction,
+  ) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
+      className={"p-3"}
+    >
+      <CreateFreeTrialGithubToolButton
+        gitToolModel={gitToolModel}
+        setGitToolId={setGitToolId}
+        gitToolId={gitToolId}
+        onSuccessFunction={onSuccessFunction}
+      />
+    </ButtonContainerBase>
+  );
+};
+
+const getLeftHandButtons = (stepBackFromWizardFunction) => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        backButtonFunction={stepBackFromWizardFunction}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {
@@ -22,7 +58,21 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
     onSuccessFunction,
     gitToolModel,
     setGitToolModel,
+    setButtonContainer,
+    stepBackFromWizardFunction,
   }) {
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer({...getButtonContainer(
+        stepBackFromWizardFunction,
+        gitToolModel,
+        setGitToolId,
+        gitToolId,
+        onSuccessFunction,
+      )});
+    }
+  }, [stepBackFromWizardFunction, gitToolModel, setGitToolId, gitToolId, onSuccessFunction]);
+
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
       return (
@@ -84,14 +134,6 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
             {getDynamicFields()}
           </Col>
         </Row>
-        <ButtonContainerBase>
-          <CreateFreeTrialGithubToolButton
-            gitToolModel={gitToolModel}
-            setGitToolId={setGitToolId}
-            gitToolId={gitToolId}
-            onSuccessFunction={onSuccessFunction}
-          />
-        </ButtonContainerBase>
       </Form>
     </div>
   );
@@ -104,6 +146,8 @@ CreateWorkflowWizardCreateGithubToolEditorPanel.propTypes = {
   setGitToolId: PropTypes.func,
   onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
+  setButtonContainer: PropTypes.func,
+  stepBackFromWizardFunction: PropTypes.func,
 };
 
 

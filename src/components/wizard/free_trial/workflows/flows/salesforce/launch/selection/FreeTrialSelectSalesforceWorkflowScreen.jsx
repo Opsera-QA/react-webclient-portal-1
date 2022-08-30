@@ -126,6 +126,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN:
         return (
           <CreateSalesforceWorkflowWizard
+            setButtonContainer={setButtonContainer}
             stepBackFromWizardFunction={goToOptionSelectionScreenFunction}
           />
         );

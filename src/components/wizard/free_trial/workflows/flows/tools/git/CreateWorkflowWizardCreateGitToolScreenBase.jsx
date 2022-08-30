@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import GitToolCreationSelectionOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -6,7 +6,6 @@ import CreateWorkflowWizardCreateGithubToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
 import CreateWorkflowWizardCreateGitlabToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
@@ -18,7 +17,10 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     gitToolModel,
     setGitToolModel,
     className,
+    stepBackFromWizardFunction,
+    setButtonContainer,
   }) {
+
   const getEditorPanel = () => {
     switch (gitToolOption) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
@@ -29,6 +31,8 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             setGitToolId={setGitToolId}
             onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
+            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            setButtonContainer={setButtonContainer}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
@@ -39,6 +43,8 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             setGitToolId={setGitToolId}
             onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
+            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            setButtonContainer={setButtonContainer}
           />
         );
     }
@@ -66,6 +72,8 @@ CreateWorkflowWizardCreateGitToolScreenBase.propTypes = {
   setGitToolOption: PropTypes.func,
   gitToolId: PropTypes.string,
   className: PropTypes.string,
+  stepBackFromWizardFunction: PropTypes.func,
+  setButtonContainer: PropTypes.func,
 };
 
 

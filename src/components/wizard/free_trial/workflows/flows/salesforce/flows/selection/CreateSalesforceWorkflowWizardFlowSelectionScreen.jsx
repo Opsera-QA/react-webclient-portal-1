@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import {
@@ -20,6 +20,32 @@ import WorkflowOptionCardBase, {
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+import {
+  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
+} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+
+const getButtonContainer = (stepBackFromWizardFunction,) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
+      className={"p-3"}
+    />
+  );
+};
+
+const getLeftHandButtons = (stepBackFromWizardFunction) => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        backButtonFunction={stepBackFromWizardFunction}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   {
@@ -28,15 +54,29 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
     setSelectedFlow,
     setCurrentScreen,
     stepBackFromWizardFunction,
+    setButtonContainer,
   }) {
   const { themeConstants } = useComponentStateReference();
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(getButtonContainer(
+        stepBackFromWizardFunction,
+      ));
+    }
+  }, [stepBackFromWizardFunction]);
+
+  const handleFlowSelection = (newFlowOption) => {
+    setSelectedFlow(newFlowOption);
+    setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN);
+  };
 
   const getComingSoonItems = () => {
     return (
       <>
         <DividerWithCenteredText text={"Coming Soon"} className={"m-4"} />
         <WizardSelectionRadioOption
-          onClickFunction={setSelectedFlow}
+          onClickFunction={handleFlowSelection}
           selectedOption={selectedFlow}
           option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION}
           text={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_PROFILE_MIGRATION}
@@ -44,7 +84,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
           className={"mb-2"}
         />
         <WizardSelectionRadioOption
-          onClickFunction={setSelectedFlow}
+          onClickFunction={handleFlowSelection}
           selectedOption={selectedFlow}
           option={
             salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_PROFILE_MIGRATION_ORGANIZATION_SYNC
@@ -78,7 +118,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
               Set up a basic Organization Sync workflow for syncing your Salesforce Organizations. 
               This operation will allow you to select modified files from your Git repository or Salesforce Organization and move it to the next organization.
             `}
-            onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC); }}
+            onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
@@ -93,7 +133,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             description={`
               Set up an Organization Sync workflow that includes an explicit unit testing step. 
             `}
-            onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING); }}
+            onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
@@ -108,7 +148,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             description={`
               Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
             `}
-            onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP); }}
+            onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
         </SelectionCardColumn>
@@ -123,7 +163,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             description={`
               Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
             `}
-            onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK); }}
+            onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
@@ -139,26 +179,11 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
                   description={`
               Handle a Merge Sync on demand from Salesforce to Git
             `}
-                  onClickFunction={() => { setSelectedFlow(salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC); }}
+                  onClickFunction={handleFlowSelection}
                   workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
               />
           </SelectionCardColumn>
       </Row>
-      <ButtonContainerBase
-        className={"mt-3"}
-        leftSideButtons={
-          <BackButton
-            size={"md"}
-            backButtonFunction={stepBackFromWizardFunction}
-            icon={faArrowLeft}
-          />
-        }
-      >
-        <CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
-          selectedFlow={selectedFlow}
-          setCurrentScreen={setCurrentScreen}
-        />
-      </ButtonContainerBase>
     </div>
   );
 }
@@ -168,6 +193,7 @@ CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   stepBackFromWizardFunction: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   className: PropTypes.string,
 };
 

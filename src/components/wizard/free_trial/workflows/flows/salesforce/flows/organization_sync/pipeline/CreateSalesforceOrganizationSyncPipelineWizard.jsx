@@ -34,6 +34,8 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
 export default function CreateSalesforceOrganizationSyncPipelineWizard(
   {
     flow,
+    setButtonContainer,
+    stepBackFromWizardFunction,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [gitToolModel, setGitToolModel] = useState(undefined);
@@ -53,6 +55,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             setPipeline={setPipeline}
             flow={flow}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
@@ -66,6 +69,8 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            stepBackFromWizardFunction={stepBackFromWizardFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -141,5 +146,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
 
 CreateSalesforceOrganizationSyncPipelineWizard.propTypes = {
   flow: PropType.string,
+  setButtonContainer: PropType.func,
+  stepBackFromWizardFunction: PropType.func,
 };
 

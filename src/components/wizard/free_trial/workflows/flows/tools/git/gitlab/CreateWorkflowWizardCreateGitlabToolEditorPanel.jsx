@@ -14,6 +14,42 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+const getButtonContainer = (
+  stepBackFromWizardFunction,
+  gitToolModel,
+  setGitToolId,
+  gitToolId,
+  onSuccessFunction,
+) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
+      className={"p-3"}
+    >
+      <CreateFreeTrialGitlabToolButton
+        gitToolModel={gitToolModel}
+        onSuccessFunction={onSuccessFunction}
+        gitToolId={gitToolId}
+        setGitToolId={setGitToolId}
+      />
+    </ButtonContainerBase>
+  );
+};
+
+const getLeftHandButtons = (stepBackFromWizardFunction) => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        backButtonFunction={stepBackFromWizardFunction}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -23,7 +59,22 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
     gitToolId,
     setGitToolId,
     onSuccessFunction,
+    stepBackFromWizardFunction,
+    setButtonContainer,
   }) {
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(getButtonContainer(
+          stepBackFromWizardFunction,
+          gitToolModel,
+          setGitToolId,
+          gitToolId,
+          onSuccessFunction,
+        ));
+    }
+  }, [stepBackFromWizardFunction, gitToolModel, setGitToolId, gitToolId, onSuccessFunction]);
+
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
       return (
@@ -92,14 +143,6 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
             {getDynamicFields()}
           </Col>
         </Row>
-        <ButtonContainerBase>
-          <CreateFreeTrialGitlabToolButton
-            gitToolModel={gitToolModel}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            setGitToolId={setGitToolId}
-          />
-        </ButtonContainerBase>
       </Form>
     </div>
   );
@@ -112,6 +155,8 @@ CreateWorkflowWizardCreateGitlabToolEditorPanel.propTypes = {
   setGitToolId: PropTypes.func,
   onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
+  stepBackFromWizardFunction: PropTypes.func,
+  setButtonContainer: PropTypes.func,
 };
 
 

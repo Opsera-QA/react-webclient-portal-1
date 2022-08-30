@@ -13,6 +13,8 @@ import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
 export default function CreateSalesforceWorkflowWizardFlowWrapper(
   {
     flow,
+    setButtonContainer,
+    stepBackFromWizardFunction,
   }) {
   const getCurrentScreen = () => {
     switch (flow) {
@@ -22,18 +24,22 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
         return (
           <CreateSalesforceOrganizationSyncPipelineWizard
             flow={flow}
+            setButtonContainer={setButtonContainer}
+            stepBackFromWizardFunction={stepBackFromWizardFunction}
           />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
         return (
-            <CreateSalesforceOrganizationSyncTaskWizard
-                flow={flow}
-            />
+          <CreateSalesforceOrganizationSyncTaskWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+          />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
         return (
           <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
     }
@@ -52,5 +58,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
 
 CreateSalesforceWorkflowWizardFlowWrapper.propTypes = {
   flow: PropType.string,
+  setButtonContainer: PropType.func,
+  stepBackFromWizardFunction: PropType.func,
 };
 
