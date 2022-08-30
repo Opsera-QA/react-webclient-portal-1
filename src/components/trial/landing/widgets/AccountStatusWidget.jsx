@@ -23,35 +23,128 @@ export default function AccountStatusWidget({ className }) {
     );
   };
 
-  const getAccountStats = () => {
+
+  /***
+   * successful: All pipelines and tasks last run were successful
+   * warning: if only 1 pipeline or task has failed and others are successful
+   * failed: if more than 1 pipeline or task is in a failed state
+   * @param status
+   * @returns {JSX.Element}
+   */
+  const getPipelineHealth = (status = "successful") => {
+    //const status = "successful"; //failed
+
+    if (status === "successful") {
+      return (
+        <span className={"green marketingModulesValueText"}>healthy</span>
+      );
+    }
+
+    if (status === "warning") {
+      return (
+        <span className={"yellow marketingModulesValueText"}>warning</span>
+      );
+    }
+
+    if (status == "failed") {
+      return (
+        <span className={"red marketingModulesValueText"}>un-healthy</span>
+      );
+    }
+
     return (
-      <div className={"marketingModulesText h100"}>
-        <div className={""} style={{marginBottom: "20px"}}>Welcome to the Opsera Salesforce Free Trial.  Your account is registered and active for the
-          duration of this trial period. During this time you can create and run pipelines, review logs and learn about the
-          Unified Insights available around these operations.</div>
-        <div className={"my-2"}>You have 1 Pipeline configured</div>
-        <div className={"my-2"}>Pipelines are <span className={"green"}>healthy</span></div>
-        <div className={"my-2"}>Your free trial will expire on 8/1/2000</div>
-      </div>
+      <span>unknown</span>
     );
+
   };
+
+
+  /***
+   * get the total count of pipelines & tasks as a single "workflow"
+   * @param status
+   * @returns {JSX.Element}
+   */
+  const getItemCounts = () => {
+    const pipelineCount = 1; //assuming these have to get wired up to API calls
+    const taskCount = 0;
+    const summaryCount = pipelineCount + taskCount;
+
+    if (summaryCount > 1) {
+      return (
+        <span>You have {summaryCount} configured offerings</span>
+      );
+    }
+
+    if (pipelineCount == 1) {
+      return (
+        <span>You have {summaryCount} configured pipeline</span>
+      );
+    }
+
+    if (taskCount == 1) {
+      return (
+        <span>You have {summaryCount} configured task</span>
+      );
+    }
+
+    return (
+      <span>You have no configured offerings at this time</span>
+    );
+
+  };
+
+
+  /***
+   * get the total runs of all pipelines & tasks
+   * @param status
+   * @returns {JSX.Element}
+   */
+  const getTotalRunCount = () => {
+    const pipelineRuns = 12; //assuming these have to get wired up to API calls
+    const taskRuns = 0;
+    const summaryRunCount = pipelineRuns + taskRuns;
+
+    return (
+      <div>Completed Runs:&nbsp;
+        <span className={"marketingModulesValueText"}>{summaryRunCount}</span></div>
+    );
+
+  };
+
 
   return (
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
         title={getTitleText()}
-        /*titleIcon={faClipboardList}*/
         fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
         heightSize={6}
       >
-        <div className={"p-3"}>
-          <div>
-            {getAccountStats()}
+        <div className="d-flex justify-content-center h-100 mt-4 mb-2">
+
+          <div className="d-flex align-items-left marketingModulesText">
+            <div className={"my-2 marketingModulesTextLarger"}>{getItemCounts()}</div>
           </div>
 
-          <div className={"marketingModulesText mt-4"}
-            style={{textAlign: "right"}}>
-            For questions or help, email <span className={"marketingModulesTextLink"}>support@opsera.io</span>
+        </div>
+        <div className="d-flex justify-content-center h-100">
+
+          <div className="d-flex align-items-center marketingModulesText">
+
+            <div className={"my-2 p-4 marketingModulesTextLarger"}>
+              Pipelines are&nbsp;
+              {getPipelineHealth()}
+            </div>
+            <div className={"my-2 p-4 marketingModulesTextLarger"}>
+              {getTotalRunCount()}
+            </div>
+          </div>
+        </div>
+
+        <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
+          <div className="marketingModulesText p-3 mx-3"
+                style={{fontSize:"smaller"}}>
+            Your free trial will expire on 8/1/2000.  For assistance, email
+            <a href="mailto:support@opsera.io" style={{paddingLeft:"5px"}} className={"marketingModulesTextLink"}>support@opsera.io</a>
           </div>
         </div>
       </FreeTrialWidgetDataBlockBase>
@@ -62,3 +155,4 @@ export default function AccountStatusWidget({ className }) {
 AccountStatusWidget.propTypes = {
   className: PropTypes.string,
 };
+
