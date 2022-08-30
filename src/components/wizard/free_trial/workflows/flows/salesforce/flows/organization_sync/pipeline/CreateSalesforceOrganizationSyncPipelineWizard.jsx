@@ -76,6 +76,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             gitToolOption={gitToolOption}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            flow={flow}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -118,6 +119,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             salesforceToolId={salesforceDeploymentToolId}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            flow={flow}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
