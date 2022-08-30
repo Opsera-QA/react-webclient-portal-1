@@ -13,7 +13,7 @@ export default function WorkflowTaskCard(
   return (
     <TaskCardBase
       taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
-      onClickFunction={() => setSelectedFlow(task)}
+      onClickFunction={() => { setSelectedFlow({...modelHelpers.parseObjectIntoModel(task, taskMetadata)});}}
       selectedOption={selectedFlow?._id}
       option={task?._id}
     />

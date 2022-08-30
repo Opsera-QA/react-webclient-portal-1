@@ -47,6 +47,7 @@ export default function FreeTrialWorkflowItemSelectionCardView(
         <VerticalCardViewBase
           getCardFunction={getWorkspaceItemCard}
           data={workspaceItems}
+          isLoading={isLoading}
         />
       }
     />

@@ -34,7 +34,6 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
   return (
     <div className={className}>
       <FreeTrialWidgetDataBlockBase
-        titleIcon={faDraftingCompass}
         title={getTitleBar()}
         isLoading={isLoading || pipelineRefreshing}
       >

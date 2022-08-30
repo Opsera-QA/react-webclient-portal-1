@@ -22,26 +22,20 @@ import TaskOrchestrationNotificationInlineInput
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(accessRoleData)]);
+function TaskSummaryPanel(
+  {
+    gitTasksData,
+    setGitTasksData,
+    setActiveTab,
+    loadData,
+  }) {
+  const {
+    cancelTokenSource,
+    getAccessToken,
+    accessRoleData,
+  } = useComponentStateReference();
 
   const updateRecord = async (newDataModel) => {
     const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
@@ -50,6 +44,10 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
   };
 
   const actionAllowed = (action) => {
+    if (gitTasksData == null) {
+      return false;
+    }
+
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
@@ -139,6 +137,9 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     }
   };
 
+  if (gitTasksData == null) {
+    return null;
+  }
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
@@ -204,7 +205,6 @@ TaskSummaryPanel.propTypes = {
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
-  accessRoleData: PropTypes.object
 };
 
 export default TaskSummaryPanel;
