@@ -40,7 +40,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
         </OverlayWizardButtonContainerBase>
       );
     }
-  }, [salesforceToolModel, salesforceToolId, onSuccessFunction, setSalesforceToolId]);
+  }, []);
 
   if (salesforceToolModel == null) {
     return null;
