@@ -30,6 +30,8 @@ export const CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREEN
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
   {
     flow,
+    backButtonFunction,
+    setButtonContainer,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [task, setTask] = useState(undefined);
@@ -47,6 +49,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             setTask={setTask}
             flow={flow}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
@@ -60,6 +63,8 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
             className={"m-3"}
+            backButtonFunction={backButtonFunction}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -72,6 +77,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             setTask={setTask}
             flow={flow}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -84,6 +90,8 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN)}
             type={"source"}
             className={"m-3"}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
@@ -94,6 +102,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             setTask={setTask}
             salesforceToolId={salesforceSourceToolId}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
@@ -102,6 +111,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             task={task}
             workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
     }
@@ -116,5 +126,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
 
 CreateSalesforceOrganizationToGitMergeSyncTaskWizard.propTypes = {
   flow: PropType.string,
+  setButtonContainer: PropType.func,
+  backButtonFunction: PropType.func,
 };
 

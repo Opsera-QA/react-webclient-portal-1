@@ -17,6 +17,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
     setTask,
     setCurrentScreen,
     flow,
+    setButtonContainer,
   }) {
 
   const setTaskFunction = (task) => {
@@ -29,6 +30,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
       setTaskFunction={setTaskFunction}
       type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
       templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK}
+      setButtonContainer={setButtonContainer}
     />
   );
 }
@@ -37,5 +39,6 @@ CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen.propTypes = {
   setTask: PropTypes.func,
   flow: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
 };
 

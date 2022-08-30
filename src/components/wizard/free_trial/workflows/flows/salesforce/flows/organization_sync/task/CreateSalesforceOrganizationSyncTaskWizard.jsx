@@ -31,7 +31,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
   {
     flow,
     setButtonContainer,
-    goBackFromWizardFunction,
+    backButtonFunction,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [task, setTask] = useState(undefined);
@@ -64,7 +64,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             gitToolId={gitToolId}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
-            backButtonFunction={goBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -127,6 +127,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
 CreateSalesforceOrganizationSyncTaskWizard.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
-  goBackFromWizardFunction: PropType.func,
+  backButtonFunction: PropType.func,
 };
 

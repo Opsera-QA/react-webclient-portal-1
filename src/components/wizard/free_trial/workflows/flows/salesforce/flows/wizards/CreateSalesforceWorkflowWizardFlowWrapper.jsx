@@ -33,6 +33,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
           <CreateSalesforceOrganizationSyncTaskWizard
             flow={flow}
             setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
           />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
@@ -40,6 +41,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
           <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
             flow={flow}
             setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
           />
         );
     }
