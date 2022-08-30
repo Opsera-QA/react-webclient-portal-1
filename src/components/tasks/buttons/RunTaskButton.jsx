@@ -13,6 +13,8 @@ import GitToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import {AuthContext} from "contexts/AuthContext";
+import taskActions from "components/tasks/task.actions";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -30,6 +32,7 @@ const ALLOWED_TASK_TYPES = [
 function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, actionAllowed, taskType }) {
   const [taskStarting, setTaskStarting] = useState(false);
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -109,9 +112,9 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
     else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
         setTaskStarting(true);
-        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        // gitTasksData.setData("configuration", configuration);
-        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+        const configuration = taskModel ? taskModel.getPersistData() : {};
+        taskModel.setData("configuration", configuration);
+        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceToGitMergeSyncTaskWizardOverlay
