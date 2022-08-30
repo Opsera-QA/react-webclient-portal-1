@@ -17,7 +17,7 @@ import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReferen
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 
 function ToolDetailView() {
-  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"tools"} />);
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
   const { id, tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);

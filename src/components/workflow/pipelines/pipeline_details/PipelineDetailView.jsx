@@ -19,7 +19,7 @@ let internalRefreshCount = 1;
 const refreshInterval = 15000;
 
 function PipelineDetailView() {
-  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"pipelines"} />);
+  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
   const { tab, id } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [pipeline, setPipeline] = useState(undefined);
