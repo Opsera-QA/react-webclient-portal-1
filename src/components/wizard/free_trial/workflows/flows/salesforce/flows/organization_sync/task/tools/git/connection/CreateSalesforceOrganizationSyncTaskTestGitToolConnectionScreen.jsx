@@ -36,6 +36,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
+      createAccountInSharedJenkinsTool={true}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(task)}
       flow={flow}
       className={"m-3"}

@@ -10,7 +10,6 @@ import WorkflowWizardToolConnectionScreenBase
 import useComponentStateReference from "hooks/useComponentStateReference";
 import jenkinsAccountActions
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
-import {salesforceWorkflowFlowConstants} from "../../salesforce/flows/salesforceWorkflowFlow.constants";
 
 export default function CreateWorkflowWizardTestGitToolConnectionScreen({
   gitToolId,
@@ -20,22 +19,21 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen({
   onFailureFunction,
   setButtonContainer,
   className,
-  flow,
+  createAccountInSharedJenkinsTool,
 }) {
-  const { toastContext, isMounted, cancelTokenSource, getAccessToken } =
-    useComponentStateReference();
+  const {
+    toastContext,
+    isMounted,
+    cancelTokenSource,
+    getAccessToken
+  } = useComponentStateReference();
 
   const onSuccess = async () => {
-    switch (flow) {
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
-      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
-        await createAccount();
-        break;
-      default:
-        onSuccessFunction();
+    if (createAccountInSharedJenkinsTool === true) {
+      await createAccount();
     }
+
+    onSuccessFunction();
   };
 
   const createAccount = async () => {
@@ -89,7 +87,7 @@ CreateWorkflowWizardTestGitToolConnectionScreen.propTypes = {
   onFailureFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
   gitToolOption: PropTypes.string,
-  flow: PropTypes.string,
+  createAccountInSharedJenkinsTool: PropTypes.bool,
 };
 
 

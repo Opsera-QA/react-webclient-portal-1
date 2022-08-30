@@ -43,6 +43,7 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
+      createAccountInSharedJenkinsTool={true}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep(
         pipeline,
       )}
