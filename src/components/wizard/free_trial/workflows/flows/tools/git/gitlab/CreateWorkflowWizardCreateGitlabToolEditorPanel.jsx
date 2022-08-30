@@ -15,6 +15,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -39,6 +40,9 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
             onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
             setGitToolId={setGitToolId}
+            customLabel={"Next"}
+            icon={faArrowRight}
+            variant={"success"}
           />
         </OverlayWizardButtonContainerBase>
       );

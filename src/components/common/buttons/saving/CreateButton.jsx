@@ -28,6 +28,7 @@ function CreateButton(
     showTypeOnLabel,
     customLabel,
     isIncomplete,
+    variant,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
@@ -131,7 +132,7 @@ function CreateButton(
       <div className={"d-flex"}>
         {getAddAnotherCheckbox()}
         {/*TODO: Make sure button is not clickable until form is valid*/}
-        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+        <Button size={size} variant={variant} disabled={isSaving || disable} onClick={() => persistRecord()}>
           <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>
@@ -154,6 +155,7 @@ CreateButton.propTypes = {
   customLabel: PropTypes.string,
   showTypeOnLabel: PropTypes.bool,
   isIncomplete: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 CreateButton.defaultProps = {
