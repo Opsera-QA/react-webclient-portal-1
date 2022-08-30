@@ -159,9 +159,9 @@ chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessTo
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource)=>{
+chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource, filters) => {
   const apiUrl = "/analytics/gitscraper/v1/dashboard/filters";
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, filters);
 };
 
 chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSource, filterModel)=>{
