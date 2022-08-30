@@ -236,6 +236,7 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
   console.log(`Job Type [${jobType}] gitToolId before: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.gitToolId = gitToolId;
   console.log(`Job Type [${jobType}] gitToolId after: ${stepToolConfiguration.gitToolId}`);
+  stepToolConfiguration.gitCredential = gitToolId;
   stepToolConfiguration.service = service;
   stepToolConfiguration.repository = "";
   stepToolConfiguration.repoId = "";

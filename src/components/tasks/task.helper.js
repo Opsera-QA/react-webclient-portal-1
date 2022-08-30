@@ -34,6 +34,7 @@ taskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow) =
       return updatedTask;
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK :
       updatedTask.configuration.gitToolId = gitToolId;
+      updatedTask.configuration.gitCredential = gitToolId;
       updatedTask.configuration.service = service;
       updatedTask.tool_identifier = service;
       return updatedTask;
