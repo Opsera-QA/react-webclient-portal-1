@@ -11,6 +11,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 
 export default function CreateWorkflowWizardPipelineCompletionScreen(
   {
@@ -75,7 +76,13 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
                 />
               </div>
             </div>
-            <ButtonContainerBase className={"m-3"}>
+            <ButtonContainerBase
+              className={"m-3"}
+            >
+              <CancelOverlayButton
+                buttonText={"Close"}
+                className={"mr-2"}
+              />
               <FreeTrialLaunchWorkflowButton
                 workspaceItem={pipeline}
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}

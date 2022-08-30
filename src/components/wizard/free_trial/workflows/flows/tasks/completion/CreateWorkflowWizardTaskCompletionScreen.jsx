@@ -12,6 +12,7 @@ import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 
 export default function CreateWorkflowWizardTaskCompletionScreen(
   {
@@ -77,7 +78,13 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
                 />
               </div>
             </div>
-            <ButtonContainerBase className={"m-3"}>
+            <ButtonContainerBase
+              className={"m-3"}
+            >
+              <CancelOverlayButton
+                buttonText={"Close"}
+                className={"mr-2"}
+              />
               <FreeTrialLaunchWorkflowButton
                 workspaceItem={task}
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
