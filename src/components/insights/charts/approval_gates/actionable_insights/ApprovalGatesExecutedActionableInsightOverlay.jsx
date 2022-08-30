@@ -103,6 +103,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
           setFilterModel={setFilterModel}
           loadData={loadData}
           icon={faDraftingCompass}
+          action="approve"
         />
       );
     } else if (activeTab == "reject") {
@@ -114,6 +115,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
           setFilterModel={setFilterModel}
           loadData={loadData}
           icon={faDraftingCompass}
+          action="reject"
         />
       );
     }

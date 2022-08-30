@@ -15,7 +15,7 @@ function ApprovalGatesDataBlockBase({ score, subtitle, onClickFunction }) {
   );
 }
 ApprovalGatesDataBlockBase.propTypes = {
-  score: PropTypes.string,
+  score: PropTypes.number,
   subtitle: PropTypes.string,
   onClickFunction: PropTypes.func,
 };

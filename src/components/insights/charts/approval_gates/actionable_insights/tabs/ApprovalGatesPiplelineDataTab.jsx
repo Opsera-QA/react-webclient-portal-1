@@ -7,7 +7,7 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import ApprovalGatesActionableInsightTable from "../ApprovalGatesActionableInsightTable";
 import chartsActions from "components/insights/charts/charts-actions";
 
-function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon }) {
+function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon, action }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -66,6 +66,7 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
+        console.log(action,'*** test');
     const response = await chartsActions.approvalGatesTableData(
       getAccessToken,
       cancelSource,
@@ -73,7 +74,8 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
       dashboardTags,
       dashboardOrgs,
       filterDto,
-      pipeline_id
+      pipeline_id,
+      action
     );
     let dataObject = response?.data ? response?.data?.connectedAssets?.data : [];
     let dataCount = response?.data ? response?.data?.connectedAssets?.count : 0;
@@ -103,6 +105,7 @@ ApprovalGatesPiplelineDataTab.propTypes = {
   pipeline_id: PropTypes.string,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  action: PropTypes.string
 };
 export default ApprovalGatesPiplelineDataTab;

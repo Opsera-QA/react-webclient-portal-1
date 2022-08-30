@@ -653,7 +653,7 @@ chartsActions.approvalGatesPipeline = async(getAccessToken, cancelTokenSource,kp
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.approvalGatesTableData = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto,pipeline_id)=>{
+chartsActions.approvalGatesTableData = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto,pipeline_id,action)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "analytics/approvalgate/v1/pipelines/approvals/selectedPipelineInfo";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -677,7 +677,8 @@ chartsActions.approvalGatesTableData = async(getAccessToken, cancelTokenSource,k
     size: tableFilterDto?.getData("pageSize"),
     search: tableFilterDto?.getData("search"),
     sort: tableFilterDto?.getData("sortOption")?.value,
-    pipeline_id
+    pipeline_id,
+    action
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
