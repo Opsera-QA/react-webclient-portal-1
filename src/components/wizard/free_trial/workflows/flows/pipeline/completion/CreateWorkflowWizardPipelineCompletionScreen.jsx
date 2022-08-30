@@ -64,9 +64,9 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
         );
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
-          <>
+          <div className={"my-3"}>
             <OpseraInfinityLogoLarge
-              scale={.5}
+              scale={.4}
             />
             <div className={"d-flex"}>
               <div className={"mx-auto"}>
@@ -88,7 +88,7 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
               />
             </ButtonContainerBase>
-          </>
+          </div>
         );
     }
   };

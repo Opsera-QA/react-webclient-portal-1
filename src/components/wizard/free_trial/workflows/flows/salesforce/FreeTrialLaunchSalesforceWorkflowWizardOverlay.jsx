@@ -40,6 +40,7 @@ export default function FreeTrialLaunchSalesforceWorkflowWizardOverlay() {
       titleText={getTitle()}
       titleIcon={faWandMagicSparkles}
       showToasts={true}
+      showCloseButton={false}
       buttonContainer={buttonContainer}
     >
       <FreeTrialSelectSalesforceWorkflowScreen
