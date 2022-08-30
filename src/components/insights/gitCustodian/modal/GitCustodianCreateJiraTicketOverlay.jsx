@@ -1,18 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import GitCustodianNewJiraTicketEditorPanel from "./GitCustodianNewJiraTicketEditorPanel";
+import { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
 
-function GitCustodianNewJiraTicketModal ({ loadData, isMounted, gitCustodianData }) {  
+function GitCustodianCreateJiraTicketOverlay ({
+  selectedIssues,
+  setSelectedIssues
+}) {
   
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
-      loadData();
-    }
-
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
@@ -21,20 +21,20 @@ function GitCustodianNewJiraTicketModal ({ loadData, isMounted, gitCustodianData
     <CreateCenterPanel
       closePanel={closePanel}
       objectType={'Jira Ticket'}
-      loadData={loadData}
+      size={CENTER_OVERLAY_SIZES.FULL_WIDTH}
     >
       <GitCustodianNewJiraTicketEditorPanel
-        gitCustodianData={gitCustodianData}        
         handleClose={closePanel}
+        selectedIssues={selectedIssues}
+        setSelectedIssues={setSelectedIssues}
       />
     </CreateCenterPanel>
   );
 }
 
-GitCustodianNewJiraTicketModal.propTypes = {
-  loadData: PropTypes.func,
-  isMounted: PropTypes.object,
-  gitCustodianData: PropTypes.object,
+GitCustodianCreateJiraTicketOverlay.propTypes = {
+  selectedIssues: PropTypes.array,
+  setSelectedIssues: PropTypes.func
 };
 
-export default GitCustodianNewJiraTicketModal;
+export default GitCustodianCreateJiraTicketOverlay;

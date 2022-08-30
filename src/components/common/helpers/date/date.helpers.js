@@ -1,6 +1,6 @@
 // TODO: Make javascript library with all these helpers to be consistent across node services and React
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { format, formatDistance } from "date-fns";
+import { format, formatDistance, add, sub } from "date-fns";
 import {parseError} from "components/common/helpers/error-helpers";
 import {parseDate} from "utils/helpers";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
@@ -260,5 +260,115 @@ export function formatDate(date, dateFormat = "MMM dd yyyy") {
     const parsedError = parseError(error);
     console.error(`Could not format date: ${parsedError}`);
     return date;
+  }
+}
+
+export const DATE_FN_TIME_SCALES = {
+  SECONDS: "seconds",
+  MINUTES: "minutes",
+  HOURS: "hours",
+  DAYS: "days",
+  WEEKS: "weeks",
+  MONTHS: "months",
+  YEARS: "years",
+};
+
+export function handleDateAdditionForTimeScale(startDate, timeScale, timeLength) {
+  const parsedStartDate = dataParsingHelper.parseDate(startDate);
+  const parsedTimeScale = dataParsingHelper.parseString(timeScale);
+  const parsedTimeLength = dataParsingHelper.parseInteger(timeLength);
+
+  if (!parsedTimeLength || parsedTimeLength <= 0) {
+    return null;
+  }
+
+  switch (parsedTimeScale) {
+    case DATE_FN_TIME_SCALES.SECONDS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              seconds: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.MINUTES:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              minutes: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.HOURS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              hours: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.DAYS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              days: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.WEEKS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              weeks: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.MONTHS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              months: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    case DATE_FN_TIME_SCALES.YEARS:
+      return (
+        {
+          start: parsedStartDate,
+          end: add(
+            parsedStartDate,
+            {
+              years: parsedTimeLength,
+            },
+          ),
+        }
+      );
+    default:
+      console.info("The Date Range given is invalid.");
+      return;
   }
 }

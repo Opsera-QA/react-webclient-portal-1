@@ -31,7 +31,7 @@ function SyncLdapButton({ disable, userData, loadData }) {
       setSuccessfulConnection(false);
       setFailedConnection(false);
       let response;
-      response = await RegisteredUserActions.syncLdap(userData["_id"], getAccessToken);
+      response = await RegisteredUserActions.syncLdap(userData?.getMongoDbId(), getAccessToken);
 
       if (response?.data?.ldap !== null) {
         setSuccessfulConnection(true);

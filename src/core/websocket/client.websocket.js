@@ -36,11 +36,13 @@ export class ClientWebsocket {
   }
 
   // TODO: Check if logged in
-  initializeWebsocket = () => {
+  initializeWebsocket = (userData) => {
     if (this.websocketClient != null) {
       console.log("websocket already initialized");
       return;
     }
+
+    this.user = userData;
 
     try {
       const websocketUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
@@ -49,6 +51,7 @@ export class ClientWebsocket {
 
       newClient.on("connect", () => {
         console.log(`WebSocket Client Connected: ${newClient.id}`);
+        this.websocketClient.emit("userData", userData);
       });
 
       newClient.on("disconnect", () => {
@@ -76,7 +79,6 @@ export class ClientWebsocket {
   };
 
   closeWebsocket = () => {
-    console.log("isConnected?: " + JSON.stringify(this.isConnected()));
     if (this.isConnected() === true) {
       console.log("closing websocket");
       this.websocketClient?.close();
@@ -98,9 +100,6 @@ export class ClientWebsocket {
   }
 
   subscribeToTopic = (topicName, model) => {
-    // TODO: Check if open
-    console.log("going to subscribe to topic: " + topicName);
-
     if (this.isConnected() !== true) {
       console.error(`Websocket is not connected so cannot subscribe to topic [${topicName}].`);
       return;
@@ -108,6 +107,12 @@ export class ClientWebsocket {
 
     if (LIVE_MESSAGE_TOPICS[topicName] == null) {
       console.error(`Cannot attempt to subscribe to an invalid topic: [${topicName}]`);
+      return;
+    }
+
+    const foundIndex = this.subscriptions.indexOf((subscription) => subscription?.topic === topicName);
+
+    if (foundIndex !== -1) {
       return;
     }
 
@@ -122,33 +127,26 @@ export class ClientWebsocket {
 
 
     this.subscriptions.push(newSubscription);
-    console.log("currentSubscriptions: " + JSON.stringify(this.subscriptions.length));
   };
 
-  unsubscribeFromTopic = (topic) => {
-    // TODO: Check if open
-    console.log("going to unsubscribe from topic: " + topic);
-
+  unsubscribeFromTopic = (topicName) => {
     if (this.isConnected() !== true) {
-      console.error(`Websocket is not connected so cannot unsubscribe from topic [${topic}].`);
       return;
     }
 
-    if (LIVE_MESSAGE_TOPICS[topic] == null) {
-      console.log("not a valid topic");
+    if (LIVE_MESSAGE_TOPICS[topicName] == null) {
+      console.error(`Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`);
       return;
     }
 
-    console.log(`unsubscribing from topic: [${topic}]`);
-    const unsubscriptionRequest = WebsocketHelper.generateLiveMessageForUnsubscriptionRequest(topic);
+    console.log(`unsubscribing from topic: [${topicName}]`);
+    const unsubscriptionRequest = WebsocketHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
     const currentSubscriptions = [...this.subscriptions];
-    const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topic);
+    const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topicName);
 
     if (subscriptionIndex !== -1) {
-      console.log("removing item: " + subscriptionIndex);
       currentSubscriptions.splice(subscriptionIndex, 1);
       this.subscriptions = currentSubscriptions;
-      console.log("currentSubscriptions: " + JSON.stringify(this.subscriptions.length));
     }
 
     this.websocketClient.emit("unsubscriptionRequest", unsubscriptionRequest);

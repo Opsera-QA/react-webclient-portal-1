@@ -240,7 +240,7 @@ const PipelineWorkflowItem = (
   const getToolField = () => {
     if (toolIdentifier?.identifier !== null && toolIdentifier?.identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
       return (
-        <div className="p-1 text-muted small">
+        <div className="pl-1 pt-1 text-muted small">
           <IconBase icon={faToolbox} iconSize={"sm"} className={"mr-1"} />
           Tool: {toolIdentifier?.name || ""}
         </div>
@@ -252,12 +252,29 @@ const PipelineWorkflowItem = (
     );
   };
 
+  const getRepositoryField = () => {
+    if (item && item.tool) {
+      const { configuration } = item.tool;
+      if (configuration && configuration.repository) {
+        return (
+          <div className="pl-1 pt-1 text-muted small">
+            <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"} />
+            Repository: {configuration.repository}
+          </div>
+        );
+      }
+    }
+    return (
+      <div />
+    );
+  };
+
   const getBranchField = () => {
     if (item && item.tool) {
       const { configuration } = item.tool;
       if (configuration && (configuration.branch || configuration.gitBranch || configuration.defaultBranch)) {
         return (
-          <div className="p-1 text-muted small">
+          <div className="pl-1 pt-1 text-muted small">
             <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"} />
             Branch: {configuration.branch || configuration.gitBranch || configuration.defaultBranch}
           </div>
@@ -437,10 +454,13 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
-        <div className="p-1 text-muted small">
-          <IconBase icon={faIdBadge} iconSize={"sm"}
-                           className={"mr-1"} />ID: {item._id}</div>
+        <div className="pl-1 pt-1 text-muted small">
+          <IconBase icon={faIdBadge} iconSize={"sm"} className={"mr-1"} />ID: {item._id}
+        </div>
+
         {getToolField()}
+
+        {getRepositoryField()}
 
         {getBranchField()}
 

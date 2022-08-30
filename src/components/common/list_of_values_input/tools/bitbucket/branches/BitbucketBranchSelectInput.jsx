@@ -32,9 +32,6 @@ function BitbucketRepositorySelectInput({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
-  const [placeholderText, setPlaceholderText] = useState(
-    "Select Bitbucket Branch",
-  );
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
@@ -88,7 +85,7 @@ function BitbucketRepositorySelectInput({
   };
 
   const loadBitbucketBranches = async (
-    searchTerm,
+    searchTerm = "",
     toolId,
     workspace,
     repositoryId,
@@ -131,7 +128,6 @@ function BitbucketRepositorySelectInput({
         valueField={"name"}
         textField={"name"}
         disabled={disabled}
-        placeholderText={placeholderText}
         error={error}
         pluralTopic={"Bitbucket Branches"}
         singularTopic={"Bitbucket Branch"}
@@ -155,7 +151,6 @@ function BitbucketRepositorySelectInput({
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
-      placeholderText={placeholderText}
       error={error}
       pluralTopic={"Bitbucket Branches"}
       singularTopic={"Bitbucket Branch"}

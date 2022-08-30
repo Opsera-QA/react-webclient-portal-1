@@ -32,7 +32,7 @@ function BitbucketToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    let bitbucketConfigurationData = modelHelpers.getToolConfigurationModel(toolData["configuration"], bitbucketConnectionMetadata);
+    let bitbucketConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), bitbucketConnectionMetadata);
 
     if (bitbucketConfigurationData.getData("twoFactorAuthentication") === true) {
       bitbucketConfigurationData.setMetaDataFields(bitbucketConnectionMetadata.fieldsAlt);

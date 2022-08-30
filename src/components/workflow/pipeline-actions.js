@@ -30,6 +30,17 @@ pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+pipelineActions.getPipelineTemplatesByType = async (getAccessToken, cancelTokenSource, type) => {
+  const urlParams = {
+    params: {
+      type: type,
+    },
+  };
+
+  let apiUrl = `/pipelines/workflows/v2`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
   let apiUrl = `/pipelines/workflows/inuse-templates`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -61,6 +72,19 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
   };
 
   const apiUrl = `/pipelines/v2`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActions.getWorkspacePipelines = async (getAccessToken, cancelTokenSource, fields) => {
+  const apiUrl = `/pipelines/v2`;
+  const urlParams = {
+    params: {
+      size: 100,
+      page: 1,
+      fields: fields,
+    },
+  };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

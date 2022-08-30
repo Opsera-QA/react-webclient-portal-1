@@ -25,7 +25,9 @@ pipelineLogHelpers.updateSelectedRunNumberTree = (pipelineTree, runNumber, pipel
     return entry.id === `${runNumber}`;
   });
 
-  currentValue.value = `Run ${runNumber} triggered by ${triggeredBy}`;
+  if (currentValue) {
+    currentValue.value = `Run ${runNumber} triggered by ${triggeredBy}`;
+  }
 
   pipelineLogData.forEach((log) => {
     if (!log.run_count || log.step_name === "start pipeline") {

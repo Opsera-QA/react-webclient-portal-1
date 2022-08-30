@@ -21,7 +21,7 @@ const gitlabConnectionMetadata = {
       maxLength: 256
     },
     {
-      label: "Enable Two Factor Authentication?",
+      label: "Use SSH Key",
       id: "twoFactorAuthentication",
     },
     {
@@ -54,7 +54,7 @@ const gitlabConnectionMetadata = {
       maxLength: 256
     },
     {
-      label: "Enable Two Factor Authentication?",
+      label: "Use SSH Key",
       id: "twoFactorAuthentication"
     },
     {
