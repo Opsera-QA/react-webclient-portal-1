@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
@@ -112,14 +111,6 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
         {/*/>*/}
         {/*</Col>*/}
       </Row>
-      <ButtonContainerBase>
-        <CreateFreeTrialSalesforceToolButton
-          salesforceToolModel={salesforceToolModel}
-          onSuccessFunction={onSuccessFunction}
-          setSalesforceToolId={setSalesforceToolId}
-          salesforceToolId={salesforceToolId}
-        />
-      </ButtonContainerBase>
     </div>
   );
 }

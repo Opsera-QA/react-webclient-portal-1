@@ -97,17 +97,13 @@ export default function CreateFreeTrialSalesforceToolButton(
   };
 
   return (
-    <div className={"m-3"}>
-      <ButtonContainerBase>
-        <CreateButton
-          showSuccessToasts={false}
-          addAnotherOption={false}
-          customLabel={"Continue"}
-          createRecord={handleToolCreation}
-          recordDto={salesforceToolModel}
-        />
-      </ButtonContainerBase>
-    </div>
+    <CreateButton
+      showSuccessToasts={false}
+      addAnotherOption={false}
+      customLabel={"Continue"}
+      createRecord={handleToolCreation}
+      recordDto={salesforceToolModel}
+    />
   );
 }
 
