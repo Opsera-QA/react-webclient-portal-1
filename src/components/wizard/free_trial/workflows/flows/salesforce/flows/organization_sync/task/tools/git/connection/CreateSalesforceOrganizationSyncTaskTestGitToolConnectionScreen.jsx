@@ -12,6 +12,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
   task,
   setTask,
   setCurrentScreen,
+  setButtonContainer,
   gitToolId,
   gitToolOption,
   flow,
@@ -36,6 +37,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
+      setButtonContainer={setButtonContainer}
       createAccountInSharedJenkinsTool={true}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(task)}
       flow={flow}
@@ -50,6 +52,7 @@ CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen.propTypes = {
   gitToolOption: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   flow: PropTypes.string,
 };
 
