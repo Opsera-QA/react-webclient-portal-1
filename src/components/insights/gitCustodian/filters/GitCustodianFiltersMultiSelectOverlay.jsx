@@ -20,6 +20,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
 
+  const [previousFilter, setPreviousFilter] = useState(null);
   const [authorsFilterData, setAuthorsFilterData] = useState([]);
   const [servicesFilterData, setServicesFilterData] = useState([]);
   const [repositoriesFilterData, setRepositoriesFilterData] = useState([]);
@@ -42,22 +43,37 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    const filters = {
+      authors: gitCustodianFilterModel.getData('authors'),
+      email: gitCustodianFilterModel.getData('email'),
+      service: gitCustodianFilterModel.getData('service'),
+      repositories: gitCustodianFilterModel.getData('respositories'),
+      type: gitCustodianFilterModel.getData('type'),
+      status: gitCustodianFilterModel.getData('status')
+    };
+
+    if (JSON.stringify(previousFilter) !== JSON.stringify(filters)) {
+      loadData(source, filters)
+      .then(() => {
+        setPreviousFilter(filters);
+      })
+      .catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [gitCustodianFilterModel, previousFilter, setPreviousFilter]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filters) => {
     try {
       setIsLoading(true);
-      await getFilters(cancelSource);
+      await getFilters(cancelSource, filters);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -72,10 +88,11 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
     }
   };
 
-  const getFilters = async (cancelSource) => {
+  const getFilters = async (cancelSource, filters) => {
     const filterResponse = await chartsActions.getGitCustodianFilters(
       getAccessToken,
-      cancelSource
+      cancelSource,
+      filters
     );
     const filterResponseData = filterResponse?.data?.data?.data?.[0];
     if (isMounted.current === true && filterResponseData) {
