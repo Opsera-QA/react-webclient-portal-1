@@ -11,6 +11,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
   task,
   setTask,
   setCurrentScreen,
+  setButtonContainer,
   salesforceToolId,
   flow,
 }) {
@@ -33,6 +34,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
       onSuccessFunction={onSuccessFunction}
       toolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
+      setButtonContainer={setButtonContainer}
       toolName={"Sfdc"}
     />
   );
@@ -43,6 +45,7 @@ CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConn
   salesforceToolId: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   flow: PropTypes.string,
 };
 

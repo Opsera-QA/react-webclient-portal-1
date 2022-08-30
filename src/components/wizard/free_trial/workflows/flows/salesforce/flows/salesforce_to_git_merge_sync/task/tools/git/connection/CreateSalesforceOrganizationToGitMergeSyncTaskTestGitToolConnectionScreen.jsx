@@ -12,6 +12,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
   task,
   setTask,
   setCurrentScreen,
+  setButtonContainer,
   gitToolId,
   gitToolOption,
   flow,
@@ -32,6 +33,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
   return (
     <CreateWorkflowWizardTestGitToolConnectionScreen
       setCurrentScreen={setCurrentScreen}
+      setButtonContainer={setButtonContainer}
       gitToolId={gitToolId}
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
@@ -49,6 +51,7 @@ CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen.propTy
   gitToolOption: PropTypes.string,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   flow: PropTypes.string,
 };
 

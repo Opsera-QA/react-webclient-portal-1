@@ -84,7 +84,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
     if (selectedWorkflowItem == null) {
       return (
         <FreeTrialWidgetDataBlockBase
-          // heightSize={WIDGET_HEIGHT_SIZE}
+          heightSize={5}
           title={"Workflows"}
           isLoading={isLoading}
         >
