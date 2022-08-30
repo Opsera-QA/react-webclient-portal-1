@@ -6,6 +6,30 @@ import { parseError } from "components/common/helpers/error-helpers";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import { sleep } from "utils/helpers";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+const getButtonContainer = (stepBackFromWizardFunction,) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
+      className={"p-3"}
+    />
+  );
+};
+
+const getLeftHandButtons = () => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        disabled={true}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function WorkflowWizardToolConnectionScreenBase(
   {
@@ -13,6 +37,7 @@ export default function WorkflowWizardToolConnectionScreenBase(
     toolName,
     onSuccessFunction,
     onFailureFunction,
+    setButtonContainer,
     className,
   }) {
   const [currentState, setCurrentState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
@@ -24,6 +49,10 @@ export default function WorkflowWizardToolConnectionScreenBase(
   } = useComponentStateReference();
 
   useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(getButtonContainer());
+    }
+
     setLogs([]);
     setCurrentState(apiRequestHelper.API_REQUEST_STATES.BUSY);
     testConnection().catch((error) => {
@@ -102,5 +131,6 @@ WorkflowWizardToolConnectionScreenBase.propTypes = {
   toolId: PropTypes.string,
   toolName: PropTypes.string,
   className: PropTypes.string,
+  setButtonContainer: PropTypes.func,
 };
 

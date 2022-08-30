@@ -18,6 +18,7 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen({
   gitToolOption,
   onSuccessFunction,
   onFailureFunction,
+  setButtonContainer,
   className,
   flow,
 }) {
@@ -75,6 +76,7 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen({
       toolId={gitToolId}
       onFailureFunction={onFailureFunction}
       toolName={capitalizeFirstLetter(gitToolOption)}
+      setButtonContainer={setButtonContainer}
     />
   );
 }
@@ -85,6 +87,7 @@ CreateWorkflowWizardTestGitToolConnectionScreen.propTypes = {
   className: PropTypes.string,
   onSuccessFunction: PropTypes.func,
   onFailureFunction: PropTypes.func,
+  setButtonContainer: PropTypes.func,
   gitToolOption: PropTypes.string,
   flow: PropTypes.string,
 };

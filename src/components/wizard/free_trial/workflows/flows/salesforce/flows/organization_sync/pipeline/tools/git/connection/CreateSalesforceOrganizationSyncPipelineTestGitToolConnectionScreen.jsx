@@ -1,17 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
+import {
+  CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS,
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import CreateWorkflowWizardTestGitToolConnectionScreen from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
+import CreateWorkflowWizardTestGitToolConnectionScreen
+  from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 
-export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen({
-  pipeline,
-  setPipeline,
-  setCurrentScreen,
-  gitToolId,
-  gitToolOption,
-  flow,
-}) {
+export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
+  {
+    pipeline,
+    setPipeline,
+    setCurrentScreen,
+    setButtonContainer,
+    gitToolId,
+    gitToolOption,
+    flow,
+  }) {
   const onSuccessFunction = () => {
     setPipeline({
       ...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(
@@ -43,6 +48,7 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
       )}
       className={"m-3"}
       flow={flow}
+      setButtonContainer={setButtonContainer}
     />
   );
 }
@@ -54,5 +60,6 @@ CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen.propTypes =
     gitToolOption: PropTypes.string,
     setPipeline: PropTypes.func,
     setCurrentScreen: PropTypes.func,
+    setButtonContainer: PropTypes.func,
     flow: PropTypes.string,
   };

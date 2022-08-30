@@ -70,7 +70,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             gitToolId={gitToolId}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
-            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            backButtonFunction={stepBackFromWizardFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -82,6 +82,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             pipeline={pipeline}
             setPipeline={setPipeline}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -94,6 +95,8 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN)}
             type={"source"}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
@@ -103,6 +106,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             salesforceToolId={salesforceSourceToolId}
             pipeline={pipeline}
             setPipeline={setPipeline}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN:
@@ -115,6 +119,8 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN)}
             type={"destination"}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN)}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_TOOL_CONNECTION_SCREEN:
@@ -125,6 +131,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             pipeline={pipeline}
             setPipeline={setPipeline}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
@@ -132,6 +139,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
           <CreateWorkflowWizardPipelineCompletionScreen
             pipeline={pipeline}
             workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            setButtonContainer={setButtonContainer}
           />
         );
     }

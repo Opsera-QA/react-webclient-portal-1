@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import Col from "react-bootstrap/Col";
@@ -11,6 +11,42 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+const getButtonContainer = (
+  backButtonFunction,
+  salesforceToolModel,
+  onSuccessFunction,
+  salesforceToolId,
+  setSalesforceToolId,
+  ) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(backButtonFunction)}
+      className={"p-3"}
+    >
+      <CreateFreeTrialSalesforceToolButton
+        salesforceToolModel={salesforceToolModel}
+        onSuccessFunction={onSuccessFunction}
+        setSalesforceToolId={setSalesforceToolId}
+        salesforceToolId={salesforceToolId}
+      />
+    </ButtonContainerBase>
+  );
+};
+
+const getLeftHandButtons = () => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        disabled={true}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -20,8 +56,25 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
     onSuccessFunction,
     salesforceToolModel,
     setSalesforceToolModel,
+    backButtonFunction,
+    setButtonContainer,
     type,
   }) {
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(
+        getButtonContainer(
+          backButtonFunction,
+          salesforceToolModel,
+          onSuccessFunction,
+          salesforceToolId,
+          setSalesforceToolId,
+        )
+      );
+    }
+  }, []);
+
   if (salesforceToolModel == null) {
     return null;
   }
@@ -111,6 +164,8 @@ CreateWorkflowWizardCreateSalesforceToolEditorPanel.propTypes = {
   onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
   type: PropTypes.string,
+  setButtonContainer: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };
 
 

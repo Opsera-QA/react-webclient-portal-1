@@ -30,6 +30,8 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
 export default function CreateSalesforceOrganizationSyncTaskWizard(
   {
     flow,
+    setButtonContainer,
+    goBackFromWizardFunction,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [task, setTask] = useState(undefined);
@@ -47,6 +49,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             setTask={setTask}
             flow={flow}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
@@ -60,6 +63,8 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             setGitToolOption={setGitToolOption}
             gitToolId={gitToolId}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={goBackFromWizardFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -72,6 +77,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             setTask={setTask}
             flow={flow}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN:
@@ -84,6 +90,8 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN)}
             type={"source"}
             className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN)}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
@@ -94,6 +102,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             setTask={setTask}
             salesforceToolId={salesforceSourceToolId}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
@@ -102,6 +111,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             task={task}
             workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
             flow={flow}
+            setButtonContainer={setButtonContainer}
           />
         );
     }
@@ -116,5 +126,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
 
 CreateSalesforceOrganizationSyncTaskWizard.propTypes = {
   flow: PropType.string,
+  setButtonContainer: PropType.func,
+  goBackFromWizardFunction: PropType.func,
 };
 

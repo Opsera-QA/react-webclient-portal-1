@@ -59,19 +59,19 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
     gitToolModel,
     setGitToolModel,
     setButtonContainer,
-    stepBackFromWizardFunction,
+    backButtonFunction,
   }) {
   useEffect(() => {
     if (setButtonContainer) {
       setButtonContainer({...getButtonContainer(
-        stepBackFromWizardFunction,
+          backButtonFunction,
         gitToolModel,
         setGitToolId,
         gitToolId,
         onSuccessFunction,
       )});
     }
-  }, [stepBackFromWizardFunction, gitToolModel, setGitToolId, gitToolId, onSuccessFunction]);
+  }, []);
 
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
@@ -147,7 +147,7 @@ CreateWorkflowWizardCreateGithubToolEditorPanel.propTypes = {
   onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
   setButtonContainer: PropTypes.func,
-  stepBackFromWizardFunction: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };
 
 

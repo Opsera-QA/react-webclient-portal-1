@@ -17,7 +17,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     gitToolModel,
     setGitToolModel,
     className,
-    stepBackFromWizardFunction,
+    backButtonFunction,
     setButtonContainer,
   }) {
 
@@ -31,7 +31,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             setGitToolId={setGitToolId}
             onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
-            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
           />
         );
@@ -43,7 +43,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             setGitToolId={setGitToolId}
             onSuccessFunction={onSuccessFunction}
             gitToolId={gitToolId}
-            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
           />
         );
@@ -72,7 +72,7 @@ CreateWorkflowWizardCreateGitToolScreenBase.propTypes = {
   setGitToolOption: PropTypes.func,
   gitToolId: PropTypes.string,
   className: PropTypes.string,
-  stepBackFromWizardFunction: PropTypes.func,
+  backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
 };
 

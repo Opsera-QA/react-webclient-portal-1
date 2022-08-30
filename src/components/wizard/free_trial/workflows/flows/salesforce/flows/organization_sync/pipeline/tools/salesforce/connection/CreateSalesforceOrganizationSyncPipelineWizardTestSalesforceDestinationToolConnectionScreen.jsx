@@ -12,6 +12,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
     pipeline,
     setPipeline,
     setCurrentScreen,
+    setButtonContainer,
     salesforceToolId,
   }) {
   const onSuccessFunction = () => {
@@ -30,6 +31,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
       toolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
       toolName={"Sfdc"}
+      setButtonContainer={setButtonContainer}
     />
   );
 }
@@ -39,5 +41,6 @@ CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConne
   salesforceToolId: PropTypes.string,
   setPipeline: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
 };
 

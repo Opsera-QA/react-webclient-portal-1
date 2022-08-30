@@ -5,12 +5,38 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+
+
+const getButtonContainer = (stepBackFromWizardFunction,) => {
+  return (
+    <ButtonContainerBase
+      leftSideButtons={getLeftHandButtons(stepBackFromWizardFunction)}
+      className={"p-3"}
+    />
+  );
+};
+
+const getLeftHandButtons = () => {
+  return (
+    <div className={"d-flex"}>
+      <BackButtonBase
+        disabled={true}
+        className={"mr-2"}
+      />
+      <CancelOverlayButton />
+    </div>
+  );
+};
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
     type,
     setTaskFunction,
     templateIdentifier,
+    setButtonContainer,
   }) {
   const [status, setStatus] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
@@ -21,6 +47,10 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
   } = useComponentStateReference();
 
   useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(getButtonContainer());
+    }
+
     initializeSalesforceTaskTemplate().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -81,5 +111,6 @@ CreateWorkflowWizardTaskInitializationScreen.propTypes = {
   type: PropTypes.string,
   setTaskFunction: PropTypes.func,
   templateIdentifier: PropTypes.string,
+  setButtonContainer: PropTypes.func,
 };
 
