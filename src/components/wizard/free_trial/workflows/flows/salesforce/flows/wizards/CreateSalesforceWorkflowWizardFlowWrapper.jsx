@@ -14,7 +14,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
   {
     flow,
     setButtonContainer,
-    stepBackFromWizardFunction,
+    backButtonFunction,
   }) {
   const getCurrentScreen = () => {
     switch (flow) {
@@ -25,7 +25,7 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
           <CreateSalesforceOrganizationSyncPipelineWizard
             flow={flow}
             setButtonContainer={setButtonContainer}
-            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
           />
         );
       case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
@@ -59,6 +59,6 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
 CreateSalesforceWorkflowWizardFlowWrapper.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
-  stepBackFromWizardFunction: PropType.func,
+  backButtonFunction: PropType.func,
 };
 

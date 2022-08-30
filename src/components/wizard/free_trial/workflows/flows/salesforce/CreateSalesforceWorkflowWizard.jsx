@@ -11,7 +11,7 @@ export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
 
 export default function CreateSalesforceWorkflowWizard(
   {
-    stepBackFromWizardFunction,
+    backButtonFunction,
     setButtonContainer,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
@@ -30,7 +30,7 @@ export default function CreateSalesforceWorkflowWizard(
             setSelectedFlow={setSelectedFlow}
             setCurrentScreen={setCurrentScreen}
             setButtonContainer={setButtonContainer}
-            stepBackFromWizardFunction={stepBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
             className={"m-4"}
           />
         );
@@ -39,7 +39,7 @@ export default function CreateSalesforceWorkflowWizard(
           <CreateSalesforceWorkflowWizardFlowWrapper
             flow={selectedFlow}
             setButtonContainer={setButtonContainer}
-            stepBackFromWizardFunction={goBackToFlowSelectionScreenFunction}
+            backButtonFunction={goBackToFlowSelectionScreenFunction}
           />
         );
     }
@@ -53,7 +53,7 @@ export default function CreateSalesforceWorkflowWizard(
 }
 
 CreateSalesforceWorkflowWizard.propTypes = {
-  stepBackFromWizardFunction: PropTypes.func,
+  backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
 };
 

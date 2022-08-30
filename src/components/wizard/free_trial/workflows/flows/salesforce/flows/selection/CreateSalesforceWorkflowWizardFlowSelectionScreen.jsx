@@ -4,12 +4,7 @@ import WizardSelectionRadioOption from "temp-library-components/wizard/option/Wi
 import {
   salesforceWorkflowFlowConstants,
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
-import CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton
-  from "components/wizard/free_trial/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton";
 import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import BackButton from "components/common/buttons/back/BackButton";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
@@ -30,7 +25,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
     selectedFlow,
     setSelectedFlow,
     setCurrentScreen,
-    stepBackFromWizardFunction,
+    backButtonFunction,
     setButtonContainer,
   }) {
   const { themeConstants } = useComponentStateReference();
@@ -38,10 +33,10 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   useEffect(() => {
     if (setButtonContainer) {
       setButtonContainer(
-        <OverlayWizardButtonContainerBase backButtonFunction={stepBackFromWizardFunction} />
+        <OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction} />
       );
     }
-  }, [stepBackFromWizardFunction]);
+  }, [backButtonFunction]);
 
   const handleFlowSelection = (newFlowOption) => {
     setSelectedFlow(newFlowOption);
@@ -144,22 +139,21 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
-          {/* WIP */}
-          <SelectionCardColumn>
-              <WorkflowOptionCardBase
-                  option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
-                  selectedOption={selectedFlow}
-                  title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
-                  subTitle={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_SUBTITLES.SALESFORCE_TO_GIT_MERGE_SYNC}
-                  icon={faSalesforce}
-                  iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
-                  description={`
+        <SelectionCardColumn>
+          <WorkflowOptionCardBase
+            option={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC}
+            selectedOption={selectedFlow}
+            title={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
+            subTitle={salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_SUBTITLES.SALESFORCE_TO_GIT_MERGE_SYNC}
+            icon={faSalesforce}
+            iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+            description={`
               Handle a Merge Sync on demand from Salesforce to Git
             `}
-                  onClickFunction={handleFlowSelection}
-                  workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
-              />
-          </SelectionCardColumn>
+            onClickFunction={handleFlowSelection}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
+          />
+        </SelectionCardColumn>
       </Row>
     </div>
   );
@@ -169,7 +163,7 @@ CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   selectedFlow: PropTypes.string,
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  stepBackFromWizardFunction: PropTypes.func,
+  backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
   className: PropTypes.string,
 };

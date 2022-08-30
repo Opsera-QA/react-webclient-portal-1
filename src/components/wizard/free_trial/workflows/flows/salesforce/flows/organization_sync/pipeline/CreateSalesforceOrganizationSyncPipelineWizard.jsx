@@ -35,7 +35,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
   {
     flow,
     setButtonContainer,
-    stepBackFromWizardFunction,
+    backButtonFunction,
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [gitToolModel, setGitToolModel] = useState(undefined);
@@ -70,7 +70,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             gitToolId={gitToolId}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
-            backButtonFunction={stepBackFromWizardFunction}
+            backButtonFunction={backButtonFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
@@ -155,6 +155,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
 CreateSalesforceOrganizationSyncPipelineWizard.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
-  stepBackFromWizardFunction: PropType.func,
+  backButtonFunction: PropType.func,
 };
 

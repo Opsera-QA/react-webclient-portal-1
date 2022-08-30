@@ -41,7 +41,7 @@ export default function CreateWorkflowWizard() {
       case CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW:
         return (
           <CreateSalesforceWorkflowWizard
-            stepBackFromWizardFunction={backButtonFunction}
+            backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
           />
         );
