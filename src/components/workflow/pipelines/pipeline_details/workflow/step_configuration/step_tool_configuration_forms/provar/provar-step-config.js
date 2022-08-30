@@ -7,13 +7,20 @@ const provarStepFormMetadata = {
             isRequired: true
         },
         {
+            label: "Use Salesforce Org",
+            id: "useSfdcOrg",
+        },
+        {
             label: "Salesforce Tool",
             id: "sfdcToolId",
-            isRequired: true
+            isRequiredFunction: (model) => {
+                return model?.getData("useSfdcOrg") === true;
+            },
         },
         {
             label: "SCM Tool",
             id: "gitToolId",
+            isRequired: true
         },
         {
             label: "Repository ID",
@@ -26,6 +33,7 @@ const provarStepFormMetadata = {
         {
             label: "SCM Service Type",
             id: "service",
+            isRequired: true
         },
         {
             label: "GIT URL",
@@ -38,6 +46,7 @@ const provarStepFormMetadata = {
         {
             label: "Repository",
             id: "repository",
+            isRequired: true
         },
         {
             label: "Workspace",
@@ -45,11 +54,15 @@ const provarStepFormMetadata = {
         },
         {
             label: "Workspace/Project",
-            id: "workspaceName"
+            id: "workspaceName",            
+            isRequiredFunction: (model) => {
+                return model?.getData("service") === "bitbucket";
+            },
         },
         {
             label: "Branch",
             id: "gitBranch",
+            isRequired: true
         },
         {
             label: "Ant Build XML Path",
@@ -70,6 +83,7 @@ const provarStepFormMetadata = {
     ],
     newObjectFields: {
         provarToolId: "",
+        useSfdcOrg: false,
         sfdcToolId: "",
         gitToolId: "",
         repoId: "",

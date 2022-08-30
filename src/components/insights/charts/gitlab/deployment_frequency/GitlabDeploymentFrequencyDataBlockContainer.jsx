@@ -90,8 +90,8 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Deployments"]}
-              values={[node.point.data.range, node.point.data.total]}
+              titles={["Date Range", "Number of Deployments", "Average Deployment"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}
           markers={[
