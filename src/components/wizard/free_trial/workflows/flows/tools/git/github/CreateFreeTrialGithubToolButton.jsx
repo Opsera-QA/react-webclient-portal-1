@@ -89,6 +89,7 @@ export default function CreateFreeTrialGithubToolButton(
       createRecord={handleGitToolCreation}
       recordDto={gitToolModel}
       addAnotherOption={false}
+      disable={gitToolModel?.checkCurrentValidity() !== true}
     />
   );
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
@@ -103,6 +102,7 @@ export default function CreateFreeTrialSalesforceToolButton(
       customLabel={"Continue"}
       createRecord={handleToolCreation}
       recordDto={salesforceToolModel}
+      disable={salesforceToolModel?.checkCurrentValidity() !== true}
     />
   );
 }

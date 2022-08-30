@@ -42,7 +42,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
         </OverlayWizardButtonContainerBase>
       );
     }
-  }, []);
+  }, [gitToolModel, onSuccessFunction, gitToolId, setGitToolId]);
 
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {

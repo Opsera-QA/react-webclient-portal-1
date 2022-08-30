@@ -89,6 +89,7 @@ export default function CreateFreeTrialGitlabToolButton(
       customLabel={"Continue"}
       createRecord={handleGitToolCreation}
       recordDto={gitToolModel}
+      disable={gitToolModel?.checkCurrentValidity() !== true}
     />
   );
 }
