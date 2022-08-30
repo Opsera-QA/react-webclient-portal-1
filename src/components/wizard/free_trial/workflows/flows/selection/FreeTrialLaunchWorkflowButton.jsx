@@ -21,7 +21,6 @@ export default function FreeTrialLaunchWorkflowButton(
   const launchWorkflow = () => {
     switch (workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-
         toastContext.showOverlayPanel(
           <SalesforceTaskWizardOverlay
             task={workspaceItem}
@@ -36,7 +35,15 @@ export default function FreeTrialLaunchWorkflowButton(
         );
         break;
     }
+  };
 
+  const getButtonText = () => {
+    switch (workspaceType) {
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        return "Launch Task";
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+        return "Launch Pipeline";
+    }
   };
 
   return (
@@ -51,7 +58,7 @@ export default function FreeTrialLaunchWorkflowButton(
               icon={faArrowRight}
               className={"mr-2"}
             />
-            Launch Workflow
+            {getButtonText()}
           </span>
       </Button>
     </div>
