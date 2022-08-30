@@ -8,6 +8,7 @@ import CreateWorkflowWizardCreateGitlabToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
@@ -22,6 +23,15 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     backButtonFunction,
     setButtonContainer,
   }) {
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={backButtonFunction}
+        />
+      );
+    }
+  }, []);
 
   const getEditorPanel = () => {
     switch (gitToolOption) {
