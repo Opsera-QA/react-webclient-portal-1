@@ -6,17 +6,18 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import taskActions from "components/tasks/task.actions";
 import modelHelpers from "components/common/model/modelHelpers";
 import tasksMetadata from "components/tasks/details/tasks/task-metadata";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 
 export default function CreateWorkflowWizardTaskCompletionScreen(
   {
     task,
     workflowType,
+    setButtonContainer,
   }) {
   const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
@@ -27,6 +28,10 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
   } = useComponentStateReference();
 
   useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(undefined);
+    }
+
     if (task) {
       updateTask().catch(() => {});
     }
@@ -61,12 +66,18 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
           <>
-            <CenteredContentWrapper>
-              <H5FieldSubHeader
-                subheaderText={`You Have successfully completed creating your new ${workflowType} Workflow. Would you like to launch it now?`}
-              />
-            </CenteredContentWrapper>
-            <ButtonContainerBase>
+            <OpseraInfinityLogoLarge
+              scale={.5}
+            />
+            <div className={"d-flex"}>
+              <div className={"mx-auto"}>
+                <H5FieldSubHeader
+                  className={"mt-3 ml-auto"}
+                  subheaderText={`You have successfully completed creating your new ${workflowType} Workflow`}
+                />
+              </div>
+            </div>
+            <ButtonContainerBase className={"m-3"}>
               <FreeTrialLaunchWorkflowButton
                 workspaceItem={task}
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
@@ -87,5 +98,6 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
 CreateWorkflowWizardTaskCompletionScreen.propTypes = {
   task: PropTypes.object,
   workflowType: PropTypes.string,
+  setButtonContainer: PropTypes.func,
 };
 

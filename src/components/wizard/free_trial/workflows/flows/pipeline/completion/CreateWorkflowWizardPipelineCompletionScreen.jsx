@@ -10,11 +10,13 @@ import FreeTrialLaunchWorkflowButton
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 
 export default function CreateWorkflowWizardPipelineCompletionScreen(
   {
     pipeline,
     workflowType,
+    setButtonContainer,
   }) {
   const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
@@ -25,6 +27,10 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
   } = useComponentStateReference();
 
   useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(undefined);
+    }
+
     if (pipeline) {
       updatePipeline().catch(() => {});
     }
@@ -58,12 +64,18 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
           <>
-            <CenteredContentWrapper>
-              <H5FieldSubHeader
-                subheaderText={`You Have successfully completed your ${workflowType} Workflow. Would you like to launch it now?`}
-              />
-            </CenteredContentWrapper>
-            <ButtonContainerBase>
+            <OpseraInfinityLogoLarge
+              scale={.5}
+            />
+            <div className={"d-flex"}>
+              <div className={"mx-auto"}>
+                <H5FieldSubHeader
+                  className={"mt-3 ml-auto"}
+                  subheaderText={`You have successfully completed creating your new ${workflowType} Workflow`}
+                />
+              </div>
+            </div>
+            <ButtonContainerBase className={"m-3"}>
               <FreeTrialLaunchWorkflowButton
                 workspaceItem={pipeline}
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
@@ -78,7 +90,8 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
     <div
       className={"mt-3"}
       style={{
-        height: "500px",
+        minHeight: "600px",
+        height: "600px",
       }}
     >
       {getBody()}
@@ -89,5 +102,6 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
 CreateWorkflowWizardPipelineCompletionScreen.propTypes = {
   pipeline: PropTypes.object,
   workflowType: PropTypes.string,
+  setButtonContainer: PropTypes.func,
 };
 

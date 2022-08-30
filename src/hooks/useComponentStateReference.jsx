@@ -24,6 +24,7 @@ function useComponentStateReference() {
 
     return () => {
       cancelTokenSource.cancel();
+      toastContext.removeAllBanners();
       isMounted.current = false;
     };
   }, []);
