@@ -13,7 +13,6 @@ import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/o
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(
   {
-    currentScreen,
     setCurrentScreen,
     className,
     isLoading,
@@ -33,7 +32,6 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
 
   return (
     <OpseraInfinityLogoSelectionCardBase
-      selectedOption={currentScreen}
       option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW}
       onClickFunction={setCurrentScreen}
       disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
@@ -46,7 +44,6 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
 }
 
 FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption.propTypes = {
-  currentScreen: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   className: PropTypes.string,
   isLoading: PropTypes.bool,

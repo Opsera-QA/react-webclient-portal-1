@@ -14,7 +14,6 @@ import OverlayWizardButtonContainerBase from "temp-library-components/button/ove
 
 export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
   {
-    currentScreen,
     setCurrentScreen,
     setButtonContainer,
     isLoading,
@@ -41,7 +40,6 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
         <Col xs={0} sm={0} md={0} lg={2} xl={3} />
         <Col xs={12} sm={6} md={6} lg={4} xl={3}>
           <SalesforceSelectionCardBase
-            selectedOption={currentScreen}
             option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
             title={"Create Salesforce Workflow"}
             subTitle={"Set up a new Salesforce Workflow"}
@@ -50,7 +48,6 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
         </Col>
         <Col xs={12} sm={6} md={6} lg={4} xl={3}>
           <FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
-            currentScreen={currentScreen}
             setCurrentScreen={setCurrentScreen}
             isLoading={isLoading}
             workspaceItems={workspaceItems}
@@ -64,7 +61,6 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
 }
 
 FreeTrialSelectSalesforceWorkflowOptionScreen.propTypes = {
-  currentScreen: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
   className: PropTypes.string,

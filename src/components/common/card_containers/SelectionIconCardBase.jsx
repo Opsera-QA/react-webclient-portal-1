@@ -36,6 +36,7 @@ export default function SelectionIconCardBase(
         selectedOption != null && selectedOption === option,
       ),
       borderColor: selectedOption != null && selectedOption === option ? highlightedBorderColor : undefined,
+      opacity: selectedOption != null && selectedOption !== option ? ".75" : undefined,
       overflow: "hidden",
       backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
       color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,

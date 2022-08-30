@@ -104,7 +104,6 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
         return (
           <FreeTrialSelectSalesforceWorkflowOptionScreen
             className={""}
-            currentScreen={currentScreen}
             setCurrentScreen={setCurrentScreen}
             isLoading={isLoading}
             workspaceItems={workspaceItems}
