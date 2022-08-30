@@ -41,7 +41,7 @@ function TaskActivityLogTreeTable(
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
-    if (currentRunNumber == null) {
+    if (currentRunNumber == null || (isLoading !== true && (!Array.isArray(taskLogData) || taskLogData.length === 0))) {
       return ("Please select a run number to view its logs.");
     }
 

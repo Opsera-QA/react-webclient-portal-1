@@ -7,6 +7,7 @@ import FreeTrialLandingTaskWidgetTaskSummaryPanel
 import {
   TASK_WIDGET_HEADER_ITEMS
 } from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWidgetHeaderTabBar";
+import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {
@@ -25,15 +26,16 @@ export default function FreeTrialLandingTaskWidgetBody(
             setSelectedTask={setSelectedTask}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-            className={"m-3"}
+            className={"mx-2 mb-2"}
           />
         );
       case TASK_WIDGET_HEADER_ITEMS.LOGS:
         return (
-          <FreeTrialLandingTaskWidgetTaskActivityLogsPanel
-            selectedTask={selectedTask}
-            className={"m-3"}
-          />
+          <div className={"mb-2"}>
+            <TaskActivityPanel
+              taskModel={selectedTask}
+            />
+          </div>
         );
       case TASK_WIDGET_HEADER_ITEMS.METRICS:
         return (selectedHeaderItem);
