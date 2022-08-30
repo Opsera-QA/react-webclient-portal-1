@@ -14,6 +14,9 @@ export default function CreateFreeTrialSalesforceToolButton(
     salesforceToolModel,
     setSalesforceToolId,
     salesforceToolId,
+    customLabel,
+    icon,
+    variant,
   }) {
   const {
     getAccessToken,
@@ -99,7 +102,9 @@ export default function CreateFreeTrialSalesforceToolButton(
     <CreateButton
       showSuccessToasts={false}
       addAnotherOption={false}
-      customLabel={"Continue"}
+      customLabel={customLabel}
+      variant={variant}
+      icon={icon}
       createRecord={handleToolCreation}
       recordDto={salesforceToolModel}
       disable={salesforceToolModel?.checkCurrentValidity() !== true}
@@ -112,6 +117,9 @@ CreateFreeTrialSalesforceToolButton.propTypes = {
   salesforceToolModel: PropTypes.object,
   salesforceToolId: PropTypes.string,
   setSalesforceToolId: PropTypes.func,
+  icon: PropTypes.object,
+  customLabel: PropTypes.string,
+  variant: PropTypes.string,
 };
 
 

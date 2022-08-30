@@ -37,7 +37,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
 }
 
 CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen.propTypes = {
-  pipeline: PropTypes.string,
+  pipeline: PropTypes.object,
   salesforceToolId: PropTypes.string,
   setPipeline: PropTypes.func,
   setCurrentScreen: PropTypes.func,

@@ -11,6 +11,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -36,6 +37,9 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
             onSuccessFunction={onSuccessFunction}
             setSalesforceToolId={setSalesforceToolId}
             salesforceToolId={salesforceToolId}
+            customLabel={"Next"}
+            icon={faArrowRight}
+            variant={"success"}
           />
         </OverlayWizardButtonContainerBase>
       );

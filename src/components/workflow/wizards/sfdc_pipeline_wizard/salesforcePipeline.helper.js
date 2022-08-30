@@ -12,6 +12,7 @@ import {
 
 
 // TODO: Don't use these yet (outside of free trial). They're still being refined
+// TODO: Separate out task specific information into its own helper and jenkins helpers into a jenkins-specific helper
 export const salesforcePipelineHelper = {};
 
 salesforcePipelineHelper.updateBranchForSalesforcePipelineSteps = (pipeline, gitBranch) => {
@@ -233,9 +234,7 @@ salesforcePipelineHelper.updateGitToolIdInJenkinsStep = (pipelineStep, gitToolId
   }
 
   const jobType = stepToolConfiguration?.jobType;
-  console.log(`Job Type [${jobType}] gitToolId before: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.gitToolId = gitToolId;
-  console.log(`Job Type [${jobType}] gitToolId after: ${stepToolConfiguration.gitToolId}`);
   stepToolConfiguration.gitCredential = gitToolId;
   stepToolConfiguration.service = service;
   stepToolConfiguration.repository = "";
@@ -352,9 +351,7 @@ salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep = (pipelineStep, sa
   }
 
   const jobType = stepToolConfiguration?.jobType;
-  console.log(`Job Type [${jobType}] sfdcToolId before: ${stepToolConfiguration.sfdcToolId}`);
   stepToolConfiguration.sfdcToolId = salesforceToolId;
-  console.log(`Job Type [${jobType}] sfdcToolId after: ${stepToolConfiguration.sfdcToolId}`);
   parsedPipelineStep.tool.configuration = stepToolConfiguration;
   return parsedPipelineStep;
 };
