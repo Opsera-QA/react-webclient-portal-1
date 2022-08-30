@@ -13,6 +13,7 @@ import CreateSalesforceWorkflowWizardToolInputBase
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 
 export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {
@@ -36,6 +37,9 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
             setGitToolId={setGitToolId}
             gitToolId={gitToolId}
             onSuccessFunction={onSuccessFunction}
+            customLabel={"Next"}
+            icon={faArrowRight}
+            variant={"success"}
           />
         </OverlayWizardButtonContainerBase>
       );

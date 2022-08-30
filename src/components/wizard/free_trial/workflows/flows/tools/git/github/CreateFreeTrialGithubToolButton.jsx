@@ -14,6 +14,9 @@ export default function CreateFreeTrialGithubToolButton(
     gitToolModel,
     setGitToolId,
     gitToolId,
+    customLabel,
+    icon,
+    variant,
   }) {
   const {
     getAccessToken,
@@ -84,7 +87,9 @@ export default function CreateFreeTrialGithubToolButton(
   return (
     <CreateButton
       showSuccessToasts={false}
-      customLabel={"Continue"}
+      customLabel={customLabel}
+      icon={icon}
+      variant={variant}
       createRecord={handleGitToolCreation}
       recordDto={gitToolModel}
       addAnotherOption={false}
@@ -98,6 +103,9 @@ CreateFreeTrialGithubToolButton.propTypes = {
   gitToolModel: PropTypes.object,
   gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
+  icon: PropTypes.object,
+  customLabel: PropTypes.string,
+  variant: PropTypes.string,
 };
 
 

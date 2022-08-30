@@ -14,6 +14,9 @@ export default function CreateFreeTrialGitlabToolButton(
     gitToolId,
     setGitToolId,
     onSuccessFunction,
+    customLabel,
+    icon,
+    variant,
   }) {
   const {
     getAccessToken,
@@ -85,10 +88,12 @@ export default function CreateFreeTrialGitlabToolButton(
     <CreateButton
       addAnotherOption={false}
       showSuccessToasts={false}
-      customLabel={"Register Account and Continue"}
+      customLabel={customLabel}
+      variant={variant}
       createRecord={handleGitToolCreation}
       recordDto={gitToolModel}
       disable={gitToolModel?.checkCurrentValidity() !== true}
+      icon={icon}
     />
   );
 }
@@ -98,5 +103,8 @@ CreateFreeTrialGitlabToolButton.propTypes = {
   gitToolId: PropTypes.string,
   setGitToolId: PropTypes.func,
   onSuccessFunction: PropTypes.func,
+  icon: PropTypes.object,
+  customLabel: PropTypes.string,
+  variant: PropTypes.string,
 };
 
