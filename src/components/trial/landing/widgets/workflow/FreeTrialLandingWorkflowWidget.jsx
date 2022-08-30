@@ -6,7 +6,7 @@ import { workspaceActions } from "components/workspace/workspace.actions";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import FreeTrialLandingPipelineWorkflowWidget
-  from "components/trial/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
+  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

@@ -3,9 +3,16 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
-import { PIPELINE_WIDGET_HEADER_ITEMS } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 
-export default function PipelinesWidgetHeaderTabBar(
+export const PIPELINE_WIDGET_HEADER_ITEMS = {
+  PIPELINE: "pipeline",
+  LOGS: "logs",
+  METRICS: "metrics",
+  MORE: "more",
+  SELECT_ANOTHER_WORKFLOW: "select_another_workflow",
+};
+
+export default function FreeTrialLandingPipelineWidgetHeaderTabBar(
   {
     selectedHeaderItem,
     setSelectedHeaderItem,
@@ -87,7 +94,7 @@ export default function PipelinesWidgetHeaderTabBar(
   );
 }
 
-PipelinesWidgetHeaderTabBar.propTypes = {
+FreeTrialLandingPipelineWidgetHeaderTabBar.propTypes = {
   selectedHeaderItem: PropTypes.string,
   setSelectedHeaderItem: PropTypes.func,
   selectedPipeline: PropTypes.object,

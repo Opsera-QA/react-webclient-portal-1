@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import { PIPELINE_WIDGET_HEADER_ITEMS } from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
 import PipelineWidgetsPipelineSummaryPanel
-  from "components/trial/pipelines/widgets/body/PipelineWidgetsPipelineSummaryPanel";
+  from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsPipelineSummaryPanel";
 import PipelineWidgetsPipelineActivityLogsPanel
-  from "components/trial/pipelines/widgets/body/PipelineWidgetsPipelineActivityLogsPanel";
+  from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsPipelineActivityLogsPanel";
+import {
+  PIPELINE_WIDGET_HEADER_ITEMS
+} from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
 
 export default function PipelineWidgetsBody(
   {

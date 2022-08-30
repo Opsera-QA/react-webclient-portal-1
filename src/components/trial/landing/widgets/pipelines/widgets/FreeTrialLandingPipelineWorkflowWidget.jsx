@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-import PipelineWidgetsBody from "components/trial/pipelines/widgets/body/PipelineWidgetsBody";
-import {
-  PIPELINE_WIDGET_HEADER_ITEMS,
-} from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTitleBar";
+import PipelineWidgetsBody from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsBody";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import PipelinesWidgetHeaderTabBar from "components/trial/pipelines/widgets/PipelinesWidgetHeaderTabBar";
+import FreeTrialLandingPipelineWidgetHeaderTabBar from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
 import FreeTrialLandingPipelineWidgetHeaderTitleBar
-  from "components/trial/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
+  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
+import {
+  PIPELINE_WIDGET_HEADER_ITEMS
+} from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
 
 export default function FreeTrialLandingPipelineWorkflowWidget(
   {
@@ -37,7 +36,7 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
         title={getTitleBar()}
         isLoading={isLoading || pipelineRefreshing}
       >
-        <PipelinesWidgetHeaderTabBar
+        <FreeTrialLandingPipelineWidgetHeaderTabBar
           selectedHeaderItem={selectedHeaderItem}
           setSelectedHeaderItem={setSelectedHeaderItem}
           selectedPipeline={selectedPipeline}
