@@ -32,14 +32,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
       setButtonContainer(
         <OverlayWizardButtonContainerBase
           backButtonFunction={backButtonFunction}
-        >
-          <CreateFreeTrialGitlabToolButton
-            gitToolModel={gitToolModel}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            setGitToolId={setGitToolId}
-          />
-        </OverlayWizardButtonContainerBase>
+        />
       );
     }
   }, []);
@@ -113,6 +106,12 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
           </Col>
         </Row>
       </Form>
+      <CreateFreeTrialGitlabToolButton
+        gitToolModel={gitToolModel}
+        onSuccessFunction={onSuccessFunction}
+        gitToolId={gitToolId}
+        setGitToolId={setGitToolId}
+      />
     </div>
   );
 }
