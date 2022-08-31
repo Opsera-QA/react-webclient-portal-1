@@ -34,6 +34,13 @@ export default function FreeTrialLaunchWorkflowButton(
               />
             );
             break;
+          case TASK_TYPES.SYNC_SALESFORCE_REPO:
+            toastContext.showOverlayPanel(
+              <SalesforceOrganizationSyncTaskWizardOverlay
+                taskModel={workspaceItem}
+              />,
+            );
+            break;
           default:
             toastContext.showOverlayPanel(
               <RunTaskOverlay
