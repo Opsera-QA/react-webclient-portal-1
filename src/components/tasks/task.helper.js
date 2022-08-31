@@ -66,7 +66,7 @@ taskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId, flow) =>
 
   switch (flow) {
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC :
-      updatedTask.configuration.sfdc.toolId = salesforceToolId;
+      updatedTask.configuration.sfdc.sourceToolId = salesforceToolId;
       return updatedTask;
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK :
       updatedTask.configuration.sfdcToolId = salesforceToolId;
