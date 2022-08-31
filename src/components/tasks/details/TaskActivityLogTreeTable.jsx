@@ -37,7 +37,7 @@ function TaskActivityLogTreeTable(
       return ("There are no secondary logs.");
     }
 
-    if (currentRunNumber === 0) {
+    if (currentRunNumber === 0 || taskRunCount === 0 || taskRunCount == null || (isLoading !== true && (!Array.isArray(taskLogData) || taskLogData.length === 0))) {
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
@@ -70,7 +70,7 @@ function TaskActivityLogTreeTable(
   };
 
   const getTaskActivityTable = () => {
-    if (taskRunCount === 0) {
+    if (taskRunCount === 0 || taskRunCount == null) {
       return (
         <CustomTable
           isLoading={isLoading}
