@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import PipelineWidgetsBody from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsBody";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import FreeTrialLandingPipelineWidgetHeaderTabBar, {
-  PIPELINE_WIDGET_HEADER_ITEMS,
-} from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
+import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
+  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
+} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 import FreeTrialLandingPipelineWidgetHeaderTitleBar
   from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
 
@@ -14,7 +14,7 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
     selectedPipeline,
     setSelectedPipeline,
   }) {
-  const [selectedHeaderItem, setSelectedHeaderItem] = useState(PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE);
+  const [selectedHeaderItem, setSelectedHeaderItem] = useState(FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY);
   const [isLoading, setIsLoading] = useState(false);
   const [pipelineRefreshing, setPipelineRefreshing] = useState(false);
 
@@ -35,11 +35,11 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
         title={getTitleBar()}
         isLoading={isLoading || pipelineRefreshing}
       >
-        <FreeTrialLandingPipelineWidgetHeaderTabBar
+        <FreeTrialLandingWorkflowWidgetHeaderTabBarBase
           selectedHeaderItem={selectedHeaderItem}
           setSelectedHeaderItem={setSelectedHeaderItem}
-          selectedPipeline={selectedPipeline}
-          setSelectedPipeline={setSelectedPipeline}
+          selectedWorkflow={selectedPipeline}
+          setSelectedWorkflow={setSelectedPipeline}
         />
         <PipelineWidgetsBody
           selectedHeaderItem={selectedHeaderItem}

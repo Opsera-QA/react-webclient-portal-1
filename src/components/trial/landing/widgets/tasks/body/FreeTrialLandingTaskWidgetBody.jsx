@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FreeTrialLandingTaskWidgetTaskActivityLogsPanel
-  from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskActivityLogsPanel";
 import FreeTrialLandingTaskWidgetTaskSummaryPanel
   from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskSummaryPanel";
-import {
-  TASK_WIDGET_HEADER_ITEMS
-} from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWidgetHeaderTabBar";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import {
+  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
+} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {
@@ -22,7 +19,7 @@ export default function FreeTrialLandingTaskWidgetBody(
   }) {
   const getBody = () => {
     switch (selectedHeaderItem) {
-      case TASK_WIDGET_HEADER_ITEMS.SUMMARY:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
         return (
           <FreeTrialLandingTaskWidgetTaskSummaryPanel
             selectedTask={selectedTask}
@@ -32,7 +29,7 @@ export default function FreeTrialLandingTaskWidgetBody(
             className={"mx-2 mb-2"}
           />
         );
-      case TASK_WIDGET_HEADER_ITEMS.LOGS:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
         return (
           <div className={"mb-2"}>
             <TaskActivityPanel
@@ -40,7 +37,7 @@ export default function FreeTrialLandingTaskWidgetBody(
             />
           </div>
         );
-      case TASK_WIDGET_HEADER_ITEMS.METRICS:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
         return (selectedHeaderItem);
       default:
         return (

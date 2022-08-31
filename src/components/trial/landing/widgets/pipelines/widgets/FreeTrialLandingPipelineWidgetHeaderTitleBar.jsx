@@ -5,8 +5,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import {
-  PIPELINE_WIDGET_HEADER_ITEMS
-} from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
+  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
+} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 
 export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
   {
@@ -83,7 +83,7 @@ export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
       return (
         <HeaderNavigationBarItem
           currentScreen={selectedHeaderItem}
-          screenName={PIPELINE_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW}
+          screenName={FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW}
           screenLabel={"Select another Workflow..."}
           setCurrentScreen={selectAnotherWorkflowFunction}
           className={"my-auto"}

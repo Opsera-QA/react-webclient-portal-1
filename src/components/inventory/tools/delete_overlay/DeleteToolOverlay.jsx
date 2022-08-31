@@ -1,8 +1,5 @@
-import React, {useState, useContext, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
 import vaultActions from "components/vault/vault.actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolPipelinesTable from "components/inventory/tools/tool_details/ToolPipelinesTable";
@@ -10,43 +7,35 @@ import DestructiveDeleteConfirmationOverlay
   from "components/common/overlays/center/delete/DestructiveDeleteConfirmationOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {useHistory} from "react-router-dom";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DeleteToolOverlay({ toolId, toolModel }) {
   const history = useHistory();
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(undefined);
   const [relevantPipelines, setRelevantPipelines] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    isOpseraAdministrator,
+    isFreeTrial,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     if (isMongoDbId(toolId) === true) {
-      loadRelevantPipelines(source).catch((error) => {
+      loadRelevantPipelines().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId]);
 
-  const loadRelevantPipelines = async (cancelSource = cancelTokenSource) => {
+  const loadRelevantPipelines = async () => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, toolId);
+      const response = await toolsActions.getRelevantPipelinesV2(getAccessToken, cancelTokenSource, toolId);
 
       if (response?.data != null) {
         setRelevantPipelines(response?.data?.data);
@@ -73,7 +62,8 @@ function DeleteToolOverlay({ toolId, toolModel }) {
 
       await toolsActions.deleteToolByIdV2(getAccessToken, cancelTokenSource, toolId);
       toastContext.showDeleteSuccessResultDialog("Tool");
-      history.push("/inventory/tools");
+      const route = isOpseraAdministrator === true || isFreeTrial !== true ? "/inventory/tools" : "/workspace";
+      history.push(route);
       closePanel();
     } catch (error) {
       toastContext.showDeleteFailureResultDialog("Tool", error);

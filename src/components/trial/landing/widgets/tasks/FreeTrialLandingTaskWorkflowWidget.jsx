@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import FreeTrialLandingTaskWidgetHeaderTabBar
-  , { TASK_WIDGET_HEADER_ITEMS } from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWidgetHeaderTabBar";
+import FreeTrialLandingWorkflowWidgetHeaderTabBarBase
+  , {
+  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
+} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 import FreeTrialLandingTaskWidgetBody from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetBody";
 
 export default function FreeTrialLandingTaskWorkflowWidget(
@@ -11,7 +13,7 @@ export default function FreeTrialLandingTaskWorkflowWidget(
     selectedTask,
     setSelectedTask,
   }) {
-  const [selectedHeaderItem, setSelectedHeaderItem] = useState(TASK_WIDGET_HEADER_ITEMS.SUMMARY);
+  const [selectedHeaderItem, setSelectedHeaderItem] = useState(FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY);
   const [isLoading, setIsLoading] = useState(false);
   const [taskIsLoading, setTaskIsLoading] = useState(false);
 
@@ -29,11 +31,11 @@ export default function FreeTrialLandingTaskWorkflowWidget(
         title={getTitleBar()}
         isLoading={isLoading || taskIsLoading}
       >
-        <FreeTrialLandingTaskWidgetHeaderTabBar
+        <FreeTrialLandingWorkflowWidgetHeaderTabBarBase
           selectedHeaderItem={selectedHeaderItem}
           setSelectedHeaderItem={setSelectedHeaderItem}
-          selectedTask={selectedTask}
-          setSelectedTask={setSelectedTask}
+          selectedWorkflow={selectedTask}
+          setSelectedWorkflow={setSelectedTask}
         />
         <FreeTrialLandingTaskWidgetBody
           selectedHeaderItem={selectedHeaderItem}

@@ -5,8 +5,8 @@ import PipelineWidgetsPipelineSummaryPanel
 import PipelineWidgetsPipelineActivityLogsPanel
   from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsPipelineActivityLogsPanel";
 import {
-  PIPELINE_WIDGET_HEADER_ITEMS
-} from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTabBar";
+  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
+} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 
 export default function PipelineWidgetsBody(
   {
@@ -18,7 +18,7 @@ export default function PipelineWidgetsBody(
   }) {
   const getBody = () => {
     switch (selectedHeaderItem) {
-      case PIPELINE_WIDGET_HEADER_ITEMS.PIPELINE:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
         return (
           <PipelineWidgetsPipelineSummaryPanel
             selectedPipeline={selectedPipeline}
@@ -28,14 +28,14 @@ export default function PipelineWidgetsBody(
             className={"m-3"}
           />
         );
-      case PIPELINE_WIDGET_HEADER_ITEMS.LOGS:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
         return (
           <PipelineWidgetsPipelineActivityLogsPanel
             selectedPipeline={selectedPipeline}
             className={"m-3"}
           />
         );
-      case PIPELINE_WIDGET_HEADER_ITEMS.METRICS:
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
         return (selectedHeaderItem);
       default:
         return (

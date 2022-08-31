@@ -7,14 +7,17 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function ActionBarBackButton({path}) {
   const history = useHistory();
-  const { isOpseraAdministrator } = useComponentStateReference();
+  const {
+    isOpseraAdministrator,
+    isFreeTrial,
+  } = useComponentStateReference();
 
   const handleBackButton = () => {
     history.push(path);
   };
 
   // This is hidden on free trial for users besides opsera administrators
-  if (isOpseraAdministrator !== true) {
+  if (isOpseraAdministrator !== true && isFreeTrial === true) {
     return null;
   }
 

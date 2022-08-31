@@ -18,6 +18,7 @@ export default function ActionBarDeleteTaskButton(
     cancelTokenSource,
     isOpseraAdministrator,
     accessRoleData,
+    isFreeTrial,
   } = useComponentStateReference();
   const [canDelete, setCanDelete] = useState(false);
 
@@ -46,7 +47,7 @@ export default function ActionBarDeleteTaskButton(
 
   return (
     <ActionBarDeleteButton2
-      relocationPath={isOpseraAdministrator === true ? "/task/" : "/"}
+      relocationPath={isOpseraAdministrator === true || isFreeTrial !== true ? "/task/" : "/"}
       handleDelete={deleteGitTask}
       dataObject={taskModel}
       visible={visible}
