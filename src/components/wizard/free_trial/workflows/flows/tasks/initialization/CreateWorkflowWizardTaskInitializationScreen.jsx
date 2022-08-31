@@ -6,6 +6,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import PropTypes from "prop-types";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import { dateHelpers } from "components/common/helpers/date/date.helpers";
+import taskActions from "components/tasks/task.actions";
 
 export default function CreateWorkflowWizardTaskInitializationScreen(
   {
@@ -50,7 +52,10 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
 
       if (isMongoDbId(newTask?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        setTaskFunction(newTask);
+        const createDate = dateHelpers.getNowFormattedDateString();
+        newTask.name = `${type} - ${createDate}`;
+        await taskActions.updateTaskV2(getAccessToken, cancelTokenSource, newTask);
+        setTaskFunction({...newTask});
       }
     }
     catch (error) {
