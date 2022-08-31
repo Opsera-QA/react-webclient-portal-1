@@ -10,10 +10,11 @@ function ExportDataButtonBase({
   isLoading,
   launchOverlayFunction,
   showExportPanel,
+  disabled,
 }) {
   const getVariant = () => {
     if (showExportPanel === true) {
-      return "outline-success";
+      return "success";
     }
 
     return "secondary";
@@ -25,7 +26,7 @@ function ExportDataButtonBase({
         <Button
           variant={getVariant()}
           size={"sm"}
-          disabled={isLoading}
+          disabled={isLoading || disabled === true}
           onClick={launchOverlayFunction}
         >
           <span>
@@ -42,6 +43,7 @@ ExportDataButtonBase.propTypes = {
   launchOverlayFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   showExportPanel: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default ExportDataButtonBase;

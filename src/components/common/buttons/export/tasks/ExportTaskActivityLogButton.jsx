@@ -21,6 +21,7 @@ function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
       launchOverlayFunction={launchOverlayFunction}
       isLoading={isLoading}
       className={className}
+      disabled={!Array.isArray(activityLogData) || activityLogData.length === 0}
     />
   );
 }
