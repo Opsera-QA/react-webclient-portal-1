@@ -617,8 +617,6 @@ chartsActions.approvalGatesPipeline = async(getAccessToken, cancelTokenSource,kp
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     page: 1, //tableFilterDto?.getData("currentPage"),
     size: 20, //tableFilterDto?.getData("pageSize"),
-    // search: tableFilterDto?.getData("search"),
-    // sort: tableFilterDto?.getData("sortOption")?.value,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
