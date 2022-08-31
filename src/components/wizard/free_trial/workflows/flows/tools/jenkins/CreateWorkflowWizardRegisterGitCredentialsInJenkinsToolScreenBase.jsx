@@ -46,7 +46,7 @@ export default function CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolS
   const createAccount = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
-      const postBody = {
+      const jenkinsAccount = {
         toolId: jenkinsToolId,
         service: gitToolOption,
         credentailsToolId: gitToolId,
@@ -54,7 +54,7 @@ export default function CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolS
         credentialsDescription: gitToolId,
       };
       const newAccountModel = modelHelpers.parseObjectIntoModel(
-        postBody,
+        jenkinsAccount,
         jenkinsToolAccountMetadata,
       );
       await jenkinsAccountActions.createJenkinsAccountV2(
