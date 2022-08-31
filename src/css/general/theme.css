@@ -985,10 +985,16 @@ a.nav-link {
     color: #fef7fd;
 }
 
-.content-block-header-inverse, .filter-container-content-block-header {
+.content-block-header-inverse {
     background-color: #3D3B36;
     /*border-bottom: 1px solid #E6E5E3;*/
     color: #fef7fd;
+}
+
+.filter-container-content-block-header {
+    background-color: #fff;
+    border-bottom: 1px solid #E6E5E3;
+    color: #3D3B36;
 }
 
 .dashboard-container-header {
@@ -1308,7 +1314,6 @@ div.data-blocks-ellipses {
 
 .filter-title-text {
     font-size: 1.1rem;
-    color: #FFFFFF;
     font-family: 'Inter', sans-serif;
 }
 
@@ -1361,12 +1366,14 @@ div.data-blocks-ellipses {
 
 /* Filter Container Styling */
 .filter-container {
+    border-radius: 1rem;
+    overflow-x: hidden;
 }
 
 .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
 }
 
 .filter-container-no-border {

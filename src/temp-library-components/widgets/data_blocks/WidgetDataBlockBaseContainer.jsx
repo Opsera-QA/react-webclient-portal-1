@@ -63,7 +63,7 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <div className={"filter-container"}>
-          <div className={"w-100 p-2 d-flex filter-container-content-block-header"}>
+          <div className={"w-100 p-2 d-flex content-block-header-inverse"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
@@ -111,6 +111,7 @@ function WidgetDataBlockBaseContainer(
         maxWidth: getWidth(),
         border: getBorder(),
         borderRadius: "1rem",
+        overflow: "hidden",
         backgroundColor: getBackgroundColor(),
         color: getFontColor(),
         fontFamily: fontFamily,
