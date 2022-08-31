@@ -15,6 +15,19 @@ taskHelper.getDetailViewLink = (taskId) => {
   return `/task/details/${taskId}`;
 };
 
+// TODO: We shouldn't have to do this and instead should be setting fields directly on the models
+taskHelper.configureSalesforceOrganizationSyncTask = (
+  task,
+  flow,
+  salesforceToolId,
+  gitToolId,
+  gitToolOption,
+  ) => {
+  let updatedTask = taskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
+  updatedTask = taskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
+  return updatedTask;
+};
+
 taskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow) => {
 
   if (isMongoDbId(gitToolId) !== true && gitToolId !== "") {

@@ -9,8 +9,6 @@ import {
 import { taskHelper } from "components/tasks/task.helper";
 
 export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen({
-  task,
-  setTask,
   setCurrentScreen,
   setButtonContainer,
   gitToolId,
@@ -18,7 +16,6 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
   flow,
 }) {
   const onSuccessFunction = () => {
-    setTask({...taskHelper.updateGitToolIdForSalesforceTask(task, gitToolId, gitToolOption, flow)});
     setCurrentScreen(
       CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
     );
@@ -32,14 +29,11 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
 
   return (
     <CreateWorkflowWizardTestGitToolConnectionScreen
-      setCurrentScreen={setCurrentScreen}
       gitToolId={gitToolId}
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
       setButtonContainer={setButtonContainer}
-      createAccountInSharedJenkinsTool={true}
-      jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(task)}
       flow={flow}
       className={"m-3"}
     />

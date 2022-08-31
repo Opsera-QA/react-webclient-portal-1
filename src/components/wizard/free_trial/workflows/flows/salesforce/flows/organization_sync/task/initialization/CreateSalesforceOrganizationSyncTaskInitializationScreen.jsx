@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   salesforceWorkflowFlowConstants
@@ -9,17 +9,28 @@ import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
+import { taskHelper } from "components/tasks/task.helper";
 
 export default function CreateSalesforceOrganizationSyncTaskInitializationScreen(
   {
     setTask,
     setCurrentScreen,
+    salesforceToolId,
+    gitToolId,
+    gitToolOption,
     flow,
     setButtonContainer,
   }) {
   const setTaskFunction = (task) => {
-    setTask({...task, name: salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_ORGANIZATION_SYNC_TASK + " [Free Trial]"});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+    let updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
+      task,
+      flow,
+      salesforceToolId,
+      gitToolId,
+      gitToolOption
+    );
+    setTask({...updatedTask});
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN);
   };
 
   return (
@@ -37,5 +48,8 @@ CreateSalesforceOrganizationSyncTaskInitializationScreen.propTypes = {
   flow: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
+  salesforceToolId: PropTypes.string,
+  gitToolId: PropTypes.string,
+  gitToolOption: PropTypes.string,
 };
 

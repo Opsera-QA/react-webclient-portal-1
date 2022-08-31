@@ -17,13 +17,20 @@ import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnect
 import {
   salesforceWorkflowFlowConstants
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
+  from "components/wizard/free_trial/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
+import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
+import {
+  CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
+} from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
-  INITIALIZATION_SCREEN: "initialization_screen",
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
   TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
   CREATE_SOURCE_SALESFORCE_TOOL_SCREEN: "create_source_salesforce_tool_screen",
   TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_source_salesforce_tool_connection_screen",
+  INITIALIZATION_SCREEN: "initialization_screen",
+  REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN: "register_git_account_in_jenkins_screen",
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
 };
 
@@ -33,7 +40,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
     setButtonContainer,
     backButtonFunction,
   }) {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   const [task, setTask] = useState(undefined);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
@@ -43,15 +50,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <CreateSalesforceOrganizationSyncTaskInitializationScreen
-            setTask={setTask}
-            flow={flow}
-            setCurrentScreen={setCurrentScreen}
-            setButtonContainer={setButtonContainer}
-          />
-        );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateGitToolScreenBase
@@ -73,10 +71,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
-            task={task}
-            setTask={setTask}
             flow={flow}
-            className={"m-3"}
             setButtonContainer={setButtonContainer}
           />
         );
@@ -98,10 +93,33 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
         return (
           <CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
-            task={task}
-            setTask={setTask}
             salesforceToolId={salesforceSourceToolId}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationSyncTaskInitializationScreen
+            setTask={setTask}
             flow={flow}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+            salesforceToolId={salesforceSourceToolId}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
+        return (
+          <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN)}
+            onFailureFunction={() => {}}
+            jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(
+              task,
+            )}
+            className={"m-3"}
             setButtonContainer={setButtonContainer}
           />
         );

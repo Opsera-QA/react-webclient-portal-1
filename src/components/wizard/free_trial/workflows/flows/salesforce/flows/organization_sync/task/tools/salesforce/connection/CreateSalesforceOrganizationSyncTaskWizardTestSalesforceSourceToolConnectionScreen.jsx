@@ -8,17 +8,13 @@ import {
 import { taskHelper } from "components/tasks/task.helper";
 
 export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen({
-  task,
-  setTask,
   setCurrentScreen,
   salesforceToolId,
   setButtonContainer,
-  flow,
 }) {
   const onSuccessFunction = () => {
-    setTask({...taskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow)});
     setCurrentScreen(
-      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
     );
   };
 
@@ -41,11 +37,8 @@ export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforce
 }
 
 CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen.propTypes = {
-  task: PropTypes.string,
   salesforceToolId: PropTypes.string,
-  setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  flow: PropTypes.string,
 };
 
