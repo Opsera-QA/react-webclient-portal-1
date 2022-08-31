@@ -7,7 +7,7 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforcePipelineWizardOverlay
   from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
-import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";

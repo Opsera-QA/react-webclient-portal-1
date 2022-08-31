@@ -25,11 +25,15 @@ import SalesforceOrganizationSyncTaskNewBranchToggleInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
 import SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton";
+import SalesforceOrganizationSyncTaskGitBranchTextInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
+import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 
 export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   {
-    task,
-    setTask,
+    taskModel,
+    setTaskModel,
     setCurrentScreen,
     className,
   }) {
@@ -37,18 +41,40 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   const { toastContext } = useComponentStateReference();
 
   useEffect(() => {
-    if (task) {
+    if (taskModel) {
       try {
-        const taskModel = modelHelpers.getToolConfigurationModel(task?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
-        setTaskConfigurationModel({...taskModel});
+        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
+        setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {
         toastContext.showInlineErrorMessage(error, "Error initializing Salesforce Task run:");
       }
     }
-  }, [task]);
+  }, [taskModel]);
 
-  if (task == null || taskConfigurationModel == null) {
+  const getDynamicFields = () => {
+    if (taskConfigurationModel?.getData("isNewBranch") === true) {
+      return (
+        <>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskGitBranchTextInput
+              fieldName={"gitBranch"}
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+            />
+          </Col>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
+
+  if (taskModel == null || taskConfigurationModel == null) {
     return null;
   }
 
@@ -84,11 +110,12 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
             setModel={setTaskConfigurationModel}
           />
         </Col>
+        {getDynamicFields()}
       </Row>
       <ButtonContainerBase>
         <SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
-          task={task}
-          setTask={setTask}
+          taskModel={taskModel}
+          setTaskModel={setTaskModel}
           taskConfigurationModel={taskConfigurationModel}
           setCurrentScreen={setCurrentScreen}
         />
@@ -98,8 +125,8 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
 }
 
 SalesforceOrganizationSyncTaskWizardPreRunTaskScreen.propTypes = {
-  task: PropTypes.object,
-  setTask: PropTypes.func,
+  taskModel: PropTypes.object,
+  setTaskModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   className: PropTypes.string,
 };

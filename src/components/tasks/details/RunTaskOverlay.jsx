@@ -354,10 +354,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     const type = taskModel?.getData("type");
 
     switch (type) {
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return repoSelectionInputs();
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return quickDeployForm();

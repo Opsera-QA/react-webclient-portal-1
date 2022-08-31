@@ -5,14 +5,14 @@ import { buttonLabelHelper } from "temp-library-components/helpers/label/button/
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
-import { SALESFORCE_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import { SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 
 export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton(
   {
     setCurrentScreen,
-    task,
-    setTask,
+    taskModel,
+    setTaskModel,
     taskConfigurationModel,
     disabled,
     className,
@@ -28,11 +28,11 @@ export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySet
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      task.setData("configuration", taskConfigurationModel?.getPersistData());
-      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, task);
-      setTask({...task});
+      taskModel.setData("configuration", taskConfigurationModel?.getPersistData());
+      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+      setTaskModel({...taskModel});
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-      setCurrentScreen(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
+      setCurrentScreen(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error, "Error Finishing Workflow Initialization");
@@ -58,14 +58,18 @@ export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySet
     );
   };
 
-  if (task == null) {
+  if (taskModel == null) {
     return null;
   }
 
   return (
     <div className={className}>
       <Button
-        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
+        disabled={
+          buttonState === buttonLabelHelper.BUTTON_STATES.BUSY
+          || taskConfigurationModel?.checkCurrentValidity() !== true
+          || disabled === true
+        }
         onClick={updateTask}
         variant={getButtonVariant()}
       >
@@ -84,8 +88,8 @@ export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySet
 
 SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton.propTypes = {
   setCurrentScreen: PropTypes.func,
-  task: PropTypes.object,
-  setTask: PropTypes.func,
+  taskModel: PropTypes.object,
+  setTaskModel: PropTypes.func,
   taskConfigurationModel: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string,

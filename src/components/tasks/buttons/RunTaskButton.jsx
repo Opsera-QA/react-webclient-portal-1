@@ -13,6 +13,7 @@ import GitToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -127,6 +128,18 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
           setTaskStarting(false);
         }
       }
+    }
+    else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
+      setTaskStarting(true);
+      // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+      // gitTasksData.setData("configuration", configuration);
+      // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceOrganizationSyncTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
     }
     else {
       toastContext.showOverlayPanel(

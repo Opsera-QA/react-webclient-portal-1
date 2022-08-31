@@ -23,5 +23,5 @@ export default function SelectionCardColumn(
 
 SelectionCardColumn.propTypes = {
   children: PropTypes.any,
-  key: PropTypes.string,
+  key: PropTypes.any,
 };

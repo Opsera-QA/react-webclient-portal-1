@@ -7,13 +7,13 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import SalesforceOrganizationSyncTaskWizardPreRunTaskScreen
   from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardPreRunTaskScreen";
 
-export const SALESFORCE_TASK_WIZARD_SCREENS = {
+export const SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
   SALESFORCE_TASK_WIZARD: "salesforce_task_wizard",
 };
 
-export default function SalesforceTaskWizardOverlay({ taskModel }) {
-  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
+export default function SalesforceOrganizationSyncTaskWizardOverlay({ taskModel }) {
+  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN);
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
@@ -29,7 +29,7 @@ export default function SalesforceTaskWizardOverlay({ taskModel }) {
   };
 
   const getBody = () => {
-    if (currentScreen === SALESFORCE_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN) {
+    if (currentScreen === SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN) {
       return (
         <SalesforceOrganizationSyncTaskWizardPreRunTaskScreen
           setCurrentScreen={setCurrentScreen}
@@ -62,6 +62,6 @@ export default function SalesforceTaskWizardOverlay({ taskModel }) {
   );
 }
 
-SalesforceTaskWizardOverlay.propTypes = {
+SalesforceOrganizationSyncTaskWizardOverlay.propTypes = {
   taskModel: PropTypes.object,
 };

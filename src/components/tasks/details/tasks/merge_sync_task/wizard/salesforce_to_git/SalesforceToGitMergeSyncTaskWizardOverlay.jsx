@@ -64,8 +64,6 @@ export default function SalesforceToGitMergeSyncTaskWizardOverlay({ taskModel })
     return null;
   }
 
-  console.log("internalTaskModel: " + JSON.stringify(internalTaskModel?.getPersistData()));
-
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}

@@ -43,7 +43,6 @@ export default function CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolS
     });
   }, []);
 
-
   const createAccount = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);

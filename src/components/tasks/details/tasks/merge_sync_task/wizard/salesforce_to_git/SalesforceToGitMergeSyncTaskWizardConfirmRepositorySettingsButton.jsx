@@ -5,7 +5,7 @@ import { buttonLabelHelper } from "temp-library-components/helpers/label/button/
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
-import { SALESFORCE_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import { SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 
 export default function SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton(
@@ -32,7 +32,7 @@ export default function SalesforceToGitMergeSyncTaskWizardConfirmRepositorySetti
       await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
       setTaskModel({...taskModel});
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-      setCurrentScreen(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
+      setCurrentScreen(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error, "Error Finishing Workflow Initialization");

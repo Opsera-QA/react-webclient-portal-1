@@ -8,6 +8,9 @@ import {
   TASK_WIDGET_HEADER_ITEMS
 } from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWidgetHeaderTabBar";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {
@@ -54,6 +57,12 @@ export default function FreeTrialLandingTaskWidgetBody(
 
   return (
     <div>
+      <ActionBarContainer>
+        <div />
+        <ActionBarDeleteTaskButton
+          taskModel={selectedTask}
+        />
+      </ActionBarContainer>
       {getBody()}
     </div>
   );

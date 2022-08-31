@@ -5,7 +5,7 @@ import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -61,25 +61,6 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
       } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-       try {
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        setIsLoading(false);
-      } finally {
-        handleClose();
-        toastContext.showOverlayPanel(
-          <SalesforceTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
         setIsLoading(false);
       }
     }

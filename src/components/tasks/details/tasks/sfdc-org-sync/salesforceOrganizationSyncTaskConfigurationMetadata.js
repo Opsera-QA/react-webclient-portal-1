@@ -11,7 +11,6 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     {
       label: "Jenkins Tool Name",
       id: "toolName",
-      isRequired: true,
       maxLength: 100,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },  
