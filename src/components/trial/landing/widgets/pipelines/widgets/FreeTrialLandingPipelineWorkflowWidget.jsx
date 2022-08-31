@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import PipelineWidgetsBody from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsBody";
+import FreeTrialLandingPipelineWidgetBody from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetBody";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
@@ -41,7 +41,7 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
           selectedWorkflow={selectedPipeline}
           setSelectedWorkflow={setSelectedPipeline}
         />
-        <PipelineWidgetsBody
+        <FreeTrialLandingPipelineWidgetBody
           selectedHeaderItem={selectedHeaderItem}
           selectedPipeline={selectedPipeline}
           setSelectedPipeline={setSelectedPipeline}

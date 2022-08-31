@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineSummaryPanel from "components/workflow/pipelines/summary/PipelineSummaryPanel";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-export default function PipelineWidgetsPipelineSummaryPanel(
+export default function FreeTrialLandingPipelineWidgetPipelineSummaryPanel(
   {
     selectedPipeline,
     setSelectedPipeline,
@@ -73,7 +73,7 @@ export default function PipelineWidgetsPipelineSummaryPanel(
   );
 }
 
-PipelineWidgetsPipelineSummaryPanel.propTypes = {
+FreeTrialLandingPipelineWidgetPipelineSummaryPanel.propTypes = {
   selectedPipeline: PropTypes.object,
   setSelectedPipeline: PropTypes.func,
   isLoading: PropTypes.bool,

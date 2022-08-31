@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import FreeTrialLandingTaskWidgetTaskSummaryPanel
   from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskSummaryPanel";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
-import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
-import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingTaskWidgetAnalyticsBody
+  from "components/trial/landing/widgets/tasks/analytics/FreeTrialLandingTaskWidgetAnalyticsBody";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {
@@ -38,7 +38,11 @@ export default function FreeTrialLandingTaskWidgetBody(
           </div>
         );
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
-        return (selectedHeaderItem);
+        return (
+          <FreeTrialLandingTaskWidgetAnalyticsBody
+            className={"m-3"}
+          />
+        );
       default:
         return (
           <div>

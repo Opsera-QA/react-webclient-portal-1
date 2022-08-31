@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineWidgetsPipelineSummaryPanel
-  from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsPipelineSummaryPanel";
-import PipelineWidgetsPipelineActivityLogsPanel
-  from "components/trial/landing/widgets/pipelines/widgets/body/PipelineWidgetsPipelineActivityLogsPanel";
+import FreeTrialLandingPipelineWidgetPipelineSummaryPanel
+  from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineSummaryPanel";
+import FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel
+  from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel";
 import {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingPipelineWidgetAnalyticsBody
+  from "components/trial/landing/widgets/pipelines/analytics/FreeTrialLandingPipelineWidgetAnalyticsBody";
 
-export default function PipelineWidgetsBody(
+export default function FreeTrialLandingPipelineWidgetBody(
   {
     selectedPipeline,
     setSelectedPipeline,
@@ -20,7 +22,7 @@ export default function PipelineWidgetsBody(
     switch (selectedHeaderItem) {
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
         return (
-          <PipelineWidgetsPipelineSummaryPanel
+          <FreeTrialLandingPipelineWidgetPipelineSummaryPanel
             selectedPipeline={selectedPipeline}
             setSelectedPipeline={setSelectedPipeline}
             isLoading={isLoading}
@@ -30,13 +32,17 @@ export default function PipelineWidgetsBody(
         );
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
         return (
-          <PipelineWidgetsPipelineActivityLogsPanel
+          <FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel
             selectedPipeline={selectedPipeline}
             className={"m-3"}
           />
         );
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
-        return (selectedHeaderItem);
+        return (
+          <FreeTrialLandingPipelineWidgetAnalyticsBody
+            className={"m-3"}
+          />
+        );
       default:
         return (
           <div>
@@ -57,7 +63,7 @@ export default function PipelineWidgetsBody(
   );
 }
 
-PipelineWidgetsBody.propTypes = {
+FreeTrialLandingPipelineWidgetBody.propTypes = {
   selectedPipeline: PropTypes.object,
   setSelectedPipeline: PropTypes.func,
   selectedPipelineId: PropTypes.string,
