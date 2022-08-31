@@ -37,11 +37,11 @@ function TaskActivityLogTreeTable(
       return ("There are no secondary logs.");
     }
 
-    if (currentRunNumber === 0 || taskRunCount === 0 || taskRunCount == null || (isLoading !== true && (!Array.isArray(taskLogData) || taskLogData.length === 0))) {
+    if (currentRunNumber === 0 || taskRunCount === 0 || taskRunCount == null) {
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
-    if (currentRunNumber == null || (isLoading !== true && (!Array.isArray(taskLogData) || taskLogData.length === 0))) {
+    if (currentRunNumber == null) {
       return ("Please select a run number to view its logs.");
     }
 
