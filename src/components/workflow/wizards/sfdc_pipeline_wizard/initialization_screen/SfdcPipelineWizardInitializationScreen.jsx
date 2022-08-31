@@ -98,7 +98,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     // This wont work for merge synch tasks,how do we handle this?
     const sfdcToolId = configuration?.sfdcToolId;
 
-    if (isMongoDbId(sfdcToolId == null) !== true) {
+    if (isMongoDbId(sfdcToolId) !== true) {
       setError("No Salesforce Account is associated with this Task");
     }
 
