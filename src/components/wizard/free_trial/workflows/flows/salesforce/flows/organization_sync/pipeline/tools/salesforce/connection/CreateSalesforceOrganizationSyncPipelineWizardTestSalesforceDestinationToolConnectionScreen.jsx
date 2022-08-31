@@ -9,15 +9,12 @@ import WorkflowWizardToolConnectionScreenBase
 
 export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen(
   {
-    pipeline,
-    setPipeline,
     setCurrentScreen,
     setButtonContainer,
     salesforceToolId,
   }) {
   const onSuccessFunction = () => {
-    setPipeline({...salesforcePipelineHelper.updateDestinationSalesforceToolIdForSalesforcePipelineSteps(pipeline, salesforceToolId)});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   };
 
   const onFailureFunction = () => {
@@ -37,9 +34,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
 }
 
 CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen.propTypes = {
-  pipeline: PropTypes.object,
   salesforceToolId: PropTypes.string,
-  setPipeline: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
 };

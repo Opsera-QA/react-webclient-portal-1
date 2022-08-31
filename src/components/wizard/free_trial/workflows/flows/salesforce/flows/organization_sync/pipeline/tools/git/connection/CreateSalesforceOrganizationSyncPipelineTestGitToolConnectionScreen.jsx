@@ -10,7 +10,6 @@ import CreateWorkflowWizardTestGitToolConnectionScreen
 export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
   {
     pipeline,
-    setPipeline,
     setCurrentScreen,
     setButtonContainer,
     gitToolId,
@@ -18,13 +17,6 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
     flow,
   }) {
   const onSuccessFunction = () => {
-    setPipeline({
-      ...salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps(
-        pipeline,
-        gitToolId,
-        gitToolOption,
-      ),
-    });
     setCurrentScreen(
       CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
     );
@@ -43,7 +35,6 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
       gitToolOption={gitToolOption}
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
-      createAccountInSharedJenkinsTool={true}
       jenkinsToolId={salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep(
         pipeline,
       )}
@@ -54,13 +45,11 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
   );
 }
 
-CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen.propTypes =
-  {
-    pipeline: PropTypes.string,
-    gitToolId: PropTypes.string,
-    gitToolOption: PropTypes.string,
-    setPipeline: PropTypes.func,
-    setCurrentScreen: PropTypes.func,
-    setButtonContainer: PropTypes.func,
-    flow: PropTypes.string,
-  };
+CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen.propTypes = {
+  pipeline: PropTypes.string,
+  gitToolId: PropTypes.string,
+  gitToolOption: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  flow: PropTypes.string,
+};
