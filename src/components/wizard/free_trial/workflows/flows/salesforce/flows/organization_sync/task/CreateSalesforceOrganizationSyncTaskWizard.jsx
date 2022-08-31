@@ -20,9 +20,6 @@ import {
 import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import {
-  CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   CREATE_GIT_TOOL_SCREEN: "create_git_tool_screen",
@@ -114,7 +111,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
           <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN)}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN)}
             onFailureFunction={() => {}}
             jenkinsToolId={salesforcePipelineHelper.getJenkinsIdFromSalesforceTask(
               task,
