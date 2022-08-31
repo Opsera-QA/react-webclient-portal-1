@@ -9,7 +9,7 @@ import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSe
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
-import MetricTagBadge from "components/common/badges/tag/MetricTagBadge";
+import AppliedMetricTagBadge from "components/common/badges/tag/metrics/AppliedMetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 
@@ -193,12 +193,12 @@ function VanityMetricContainer(
     const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
     const kpiConfigTags = getMetricFilterValue(kpiConfiguration?.filters, "tags");
 
-    return (<MetricTagBadge
-      type={"Dashboard"}
-      kpiTags={useKpiTags ? kpiConfigTags : null}
-      showNoTagsAppliedBadge={true}
-      dashboardTags={useDashboardTags ? kpiConfigDashboardTags : null}
-    />);
+    return (
+      <AppliedMetricTagBadge
+        kpiTags={useKpiTags ? kpiConfigTags : null}
+        dashboardTags={useDashboardTags ? kpiConfigDashboardTags : null}
+      />
+    );
   };
 
   const getDateBadge = () => {

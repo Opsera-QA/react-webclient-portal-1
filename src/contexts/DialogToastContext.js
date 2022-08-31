@@ -76,7 +76,6 @@ function ToastContextProvider({children, navBar}) {
   const addInfoOverlayPanel = useCallback((infoOverlayPanel) => {
       if (infoOverlayPanel != null) {
         document.body.style.overflow = 'hidden';
-        window.scrollTo(0, 0);
       }
 
       setInfoOverlayPanel(infoOverlayPanel);
@@ -90,6 +89,7 @@ function ToastContextProvider({children, navBar}) {
   );
 
   const clearInfoOverlayPanel = useCallback(() => {
+      document.body.style.overflow = 'unset';
       setInfoOverlayPanel(undefined);
     }, [setInfoOverlayPanel]
   );

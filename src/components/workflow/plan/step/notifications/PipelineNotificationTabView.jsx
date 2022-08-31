@@ -17,6 +17,7 @@ import ServiceNowStepNotificationEditorPanel
 import EmailStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
+import GChatStepNotificationEditorPanel from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
 
 function PipelineNotificationTabView(
   {
@@ -30,6 +31,8 @@ function PipelineNotificationTabView(
     setServiceNowNotificationModel,
     emailNotificationModel,
     setEmailNotificationModel,
+    gChatNotificationModel,
+    setGChatNotificationModel,
     pipelineStep
   }) {
   const [activeTab, setTabSelection] = useState("email");
@@ -70,6 +73,13 @@ function PipelineNotificationTabView(
           <MicrosoftTeamsStepNotificationEditorPanel
             teamsNotificationModel={teamsNotificationModel}
             setTeamsNotificationModel={setTeamsNotificationModel}
+          />
+        );
+      case "gchat":
+        return (
+          <GChatStepNotificationEditorPanel
+            gChatNotificationModel={gChatNotificationModel}
+            setGChatNotificationModel={setGChatNotificationModel}
           />
         );
     }
@@ -114,6 +124,8 @@ PipelineNotificationTabView.propTypes = {
   setServiceNowNotificationModel: PropTypes.func,
   emailNotificationModel: PropTypes.object,
   setEmailNotificationModel: PropTypes.func,
+  gChatNotificationModel: PropTypes.object,
+  setGChatNotificationModel: PropTypes.func,
   pipelineStep: PropTypes.object,
 };
 

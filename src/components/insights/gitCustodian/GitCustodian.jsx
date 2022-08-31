@@ -7,10 +7,12 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import GitCustodianDetails from "./GitCustodianDetails";
-import GitCustodianTableMetaData from "./table/gitCustodianTableMetaData";
 import GitCustodianLookUpHelpDocumentation
   from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
 import EditGitCustodianFiltersIcon from "./filters/EditGitCustodianFiltersIcon";
+import { GitCustodianFilterMetadata } from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
+import useComponentStateReference from "../../../hooks/useComponentStateReference";
+import AccessDeniedContainer from "../../common/panels/detail_view_container/AccessDeniedContainer";
 
 function GitCustodian() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -20,13 +22,15 @@ function GitCustodian() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [gitCustodianData, setGitCustodianData] = useState(undefined);
-  const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, false));
+  const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianFilterMetadata.newObjectFields}, GitCustodianFilterMetadata, false));
+  const { isSiteAdministrator } =useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-    let newDataObject = new Model({...GitCustodianTableMetaData.newObjectFields}, GitCustodianTableMetaData, true);
+    // eslint-disable-next-line no-undef
+    let newDataObject = new Model({...GitCustodianFilterMetadata.newObjectFields}, GitCustodianFilterMetadata, true);
     newDataObject.setData("filters", []);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
@@ -91,6 +95,14 @@ function GitCustodian() {
       />
     );
   };
+
+  if (isSiteAdministrator !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"gitCustodian"}/>}
+      />
+    );
+  }
 
   return (
     <ScreenContainer

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
@@ -6,25 +6,27 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    workspace,
-    valueField,
-    textField,
-  }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+    {
+      fieldName,
+      model,
+      setModel,
+      toolId,
+      disabled,
+      setDataFunction,
+      clearDataFunction,
+      workspace,
+      valueField,
+      textField,
+    }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Bitbucket Repository");
+  const [error, setError] = useState("");
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -34,62 +36,80 @@ function BitbucketRepositorySelectInput(
     }
 
     isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    setErrorMessage("");
+    const cancelSource = axios.CancelToken.source();
     setBitbucketRepositories([]);
-    setPlaceholderText("Select Bitbucket Repository");
+    setCancelTokenSource(cancelSource);
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
-      loadData(source).catch((error) => {
+      loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
 
     return () => {
-      source.cancel();
+      cancelSource.cancel();
       isMounted.current = false;
     };
   }, [toolId, workspace]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (
+    searchTerm = "",
+    currentToolId = toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadBitbucketRepositories(cancelSource);
+      await loadBitbucketRepositories(searchTerm, currentToolId, cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Bitbucket Repositories");
-      console.error(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadBitbucketRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV2(getAccessToken, cancelSource, toolId, workspace);
+  const loadBitbucketRepositories = async (
+    searchTerm,
+    toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
+    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV3(getAccessToken, cancelSource, toolId, workspace, searchTerm);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setBitbucketRepositories([...repositories]);
-
       const existingRepository = model?.getData(fieldName);
 
       if (hasStringValue(existingRepository) === true) {
         const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
         if (existingRepositoryExists == null) {
-          setErrorMessage(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
+          setError(
+            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list.",
           );
         }
       }
     }
   };
 
+  const getDataPullLimitMessage = () => {
+    return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
+  };
+
+  const delayedSearchQuery = useCallback(
+      _.debounce((searchTerm) => loadData(searchTerm, toolId), 600),
+      [],
+  );
+
   return (
-    <SelectInputBase
+    <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
+      helpTooltipText={getDataPullLimitMessage()}
       setDataObject={setModel}
       selectOptions={bitbucketRepositories}
       busy={isLoading}
@@ -98,8 +118,11 @@ function BitbucketRepositorySelectInput(
       valueField={valueField}
       textField={textField}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Bitbucket Repository"}
+      pluralTopic={"Bitbucket Repositories"}
+      error={error}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      useToggle={true}
     />
   );
 }

@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ServiceNowServiceOfferingsSelectInput({
   valueField,
@@ -21,8 +23,10 @@ function ServiceNowServiceOfferingsSelectInput({
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [serviceOfferings, setServiceOfferings] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -57,47 +61,34 @@ function ServiceNowServiceOfferingsSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setServiceOfferings([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadServiceOfferings(serviceNowToolId, source).catch((error) => {
-    //     if (isMounted?.current === true) {
-    //       throw error;
-    //     }
-    //   });
-    // }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    if (serviceNowToolId !== "" && serviceNowToolId != null) {
+      loadServiceOfferings("", serviceNowToolId).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [serviceNowToolId]);
 
-  const loadServiceOfferings = async (searchTerm) => {
-    if (searchTerm && searchTerm.length >= 3) {
+  const loadServiceOfferings = async (searchTerm, serviceNowToolId) => {
+    // if (searchTerm) {
       try {
         setIsLoading(true);
         // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowServiceOfferingsByName(
+        const response = await pipelineStepNotificationActions.getServiceNowServiceOfferingsByNameV2(
           serviceNowToolId,
           searchTerm,
           getAccessToken,
           cancelTokenSource
         );
 
+        const results = response.data.message.result;
+
         if (
-          response?.data !== null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
+          Array.isArray(results)
         ) {
-          setServiceOfferings(response.data.message.result);
+          setServiceOfferings(results);
         }
       } catch (error) {
         if (isMounted?.current === true) {
@@ -111,7 +102,7 @@ function ServiceNowServiceOfferingsSelectInput({
           setIsLoading(false);
         }
       }
-    }
+    // }
   };
 
   const getPlaceholderText = () => {
@@ -136,6 +127,11 @@ function ServiceNowServiceOfferingsSelectInput({
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadServiceOfferings(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
     <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
@@ -150,7 +146,7 @@ function ServiceNowServiceOfferingsSelectInput({
       // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => loadServiceOfferings(searchTerm)}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
       useToggle={false}
     />
   );

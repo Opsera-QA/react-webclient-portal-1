@@ -27,7 +27,8 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_CONFIGURATION_ITEMS: "servicenow-configuration-items",
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
   HIERARCHY_FILTERS: "hierarchyFilters",
-  DEPLOYMENT_STAGE: "deployment-stage"
+  DEPLOYMENT_STAGE: "deployment-stage",
+  GITLAB_PROJECT: "gitlab-project"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -59,7 +60,8 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_CONFIGURATION_ITEMS: "Service Now Configuration Items",
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
   HIERARCHY_FILTERS: "Hierarchy Filters",
-  DEPLOYMENT_STAGE: "Deployment Stage"
+  DEPLOYMENT_STAGE: "Deployment Stage",
+  GITLAB_PROJECT: "Gitlab Repository"
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -122,6 +124,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS;
     case KPI_FILTER_TYPES.DEPLOYMENT_STAGE:
       return KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE;
+    case KPI_FILTER_TYPES.GITLAB_PROJECT:
+      return KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT;
     default:
       return kpiFilterType;
   }
@@ -273,6 +277,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.DEPLOYMENT_STAGE,
     text: KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLAB_PROJECT,
+    text: KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT,
     value: [],
   },
 ];

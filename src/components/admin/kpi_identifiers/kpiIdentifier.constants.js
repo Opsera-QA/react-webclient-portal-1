@@ -13,6 +13,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   //APIGEE
   APIGEE_REPORT: "apigee-report",
+  APIGEE_SUMMARY: "apigee-summary",
 
   // Bitbucket
   BITBUCKET_COMMITS_BY_AUTHOR: "bitbucket-commits-by-author",
@@ -54,6 +55,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
   GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
+  GITLAB_LEAD_TIME:"gitlab-lead-time",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",

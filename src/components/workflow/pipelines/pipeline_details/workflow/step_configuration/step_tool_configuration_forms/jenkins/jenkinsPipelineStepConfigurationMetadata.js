@@ -141,10 +141,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label: "Commands",
-      id: "commands",
-    },
-    {
       label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
       isRequired: true,
@@ -225,7 +221,35 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "SFDC DATA TRANSFORM";
       },
-    }
+    },
+    {
+      label: "Enable Quick Deploy",
+      id: "enableQuickDeploy",
+    },
+    {
+      label: "Use build step resource",
+      id: "useBuildStepResource"
+    },
+    {
+      label: "Build Step Info",
+      id: "buildStepId",
+      isRequiredFunction: (model) => {
+        return model?.getData("useBuildStepResource") === true;
+      },
+    },
+    {
+      label: "Commands",
+      id: "commands",        
+      formText: "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command). Please use the parameters ${BUILD_WORKSPACE} & ${WORKSPACE} to refer the previous and current workspace respectively.",
+      isRequiredFunction: (model) => {
+        return model?.getData("useBuildStepResource") === true;
+      },
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -280,6 +304,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dependencies: {},
     dependencyType:"",
     ruleIds: [],
+    enableQuickDeploy: false,
+    useBuildStepResource: false,
+    buildStepId: "",
+    commands: "",
+    environmentVariables: [],    
   }
 };
 

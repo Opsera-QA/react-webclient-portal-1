@@ -27,7 +27,8 @@ import {
   getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getDeploymentStageFromKpiConfiguration
+  getDeploymentStageFromKpiConfiguration,
+  getGitlabProjectFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -158,9 +159,9 @@ chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessTo
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource)=>{
+chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource, filters) => {
   const apiUrl = "/analytics/gitscraper/v1/dashboard/filters";
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, filters);
 };
 
 chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSource, filterModel)=>{
@@ -470,7 +471,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
     serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
-    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration);
+    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+    gitlabProjects = getGitlabProjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -528,7 +530,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
-    deploymentStages:deploymentStages
+    deploymentStages:deploymentStages,
+    gitlabProjects: gitlabProjects
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

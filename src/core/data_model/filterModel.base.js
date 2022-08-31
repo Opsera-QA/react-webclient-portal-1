@@ -64,6 +64,17 @@ export class FilterModelBase {
     sessionHelper.setStoredSessionValue(this.sessionDataKey, currentData);
   };
 
+  resetDataToDefault = () => {
+    this.data = this.getNewObjectFields();
+    this.resetBrowserStorage();
+  };
+
+  resetBrowserStorage = () => {
+    if (hasStringValue(this.sessionDataKey) === true) {
+      this.updateBrowserStorage();
+    }
+  };
+
   unpackCommonUrlParameters = () => {
     let hasUrlParams = false;
 
@@ -390,7 +401,8 @@ export class FilterModelBase {
   };
 
   getNewInstance = () => {
-    return new FilterModelBase(this.metaData);
+    this.resetDataToDefault();
+    return this;
   };
 
   getSortOption = () => {

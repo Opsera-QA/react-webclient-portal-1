@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { errorHelpers } from "components/common/helpers/error-helpers";
 
 function LazyLoadSelectInputBase(
   {
@@ -37,20 +38,35 @@ function LazyLoadSelectInputBase(
     onToggleFunction,
     inputHelpOverlay,
     helpTooltipText,
-}) {
+    error,
+    pluralTopic,
+    singularTopic,
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      console.error(error);
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject?.setData(fieldName, value);
-    setDataObject({...newDataObject});
+    setDataObject({ ...newDataObject });
   };
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
       setDataFunction(field?.id, newValue);
-    }
-    else {
+    } else {
       const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
@@ -59,15 +75,14 @@ function LazyLoadSelectInputBase(
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
       validateAndSetData(field?.id, "");
-    }
-    else if (clearDataFunction) {
+    } else if (clearDataFunction) {
       clearDataFunction();
     }
   };
 
   const getClearDataFunction = () => {
     if (
-         dataObject?.getData(field?.id) !== ""
+      dataObject?.getData(field?.id) !== ""
       && (disabled === false || lenientClearValueButton === true)
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction)
@@ -82,6 +97,32 @@ function LazyLoadSelectInputBase(
     }
 
     return dataObject?.getData(field.id);
+  };
+
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select ${singularTopic}`;
+    }
+
+    return "Select One";
   };
 
   if (field == null) {
@@ -118,7 +159,7 @@ function LazyLoadSelectInputBase(
             onToggleFunction();
           }
         }}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
         onSearchFunction={onSearchFunction}
@@ -128,7 +169,7 @@ function LazyLoadSelectInputBase(
         model={dataObject}
         fieldName={fieldName}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
       />
     </InputContainer>
@@ -141,13 +182,13 @@ LazyLoadSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   groupBy: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.func
+    PropTypes.func,
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.func
+    PropTypes.func,
   ]),
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
@@ -155,7 +196,7 @@ LazyLoadSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.array
+    PropTypes.array,
   ]),
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
@@ -174,12 +215,15 @@ LazyLoadSelectInputBase.propTypes = {
   lenientClearValueButton: PropTypes.bool,
   onToggleFunction: PropTypes.func,
   helpTooltipText: PropTypes.string,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
+  error: PropTypes.any,
 };
 
 LazyLoadSelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
-  placeholderText: "Select One"
+  placeholderText: "Select One",
 };
 
 export default LazyLoadSelectInputBase;

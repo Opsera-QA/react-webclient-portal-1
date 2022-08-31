@@ -9,6 +9,8 @@ import GithubRepositorySelectInput
 import GitlabRepositorySelectInput
   from "components/common/list_of_values_input/tools/gitlab/repositories/GitlabRepositorySelectInput";
 import GithubMonoRepositorySelectInput from "../github/repositories/GithubMonoRepositorySelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 // TODO: Clean up this component. Change "gitToolId" to "toolId", make validateSavedData default to true after all use cases are tested.
 // TODO: Separate out into multiple inputs, make this RepositorySelectInputBase
@@ -25,71 +27,11 @@ function RepositorySelectInput(
     clearDataFunction,
     disabled,
   }) {
-
-  if (visible === false) {
-    return <></>;
-  }
-
-  if (service === "azure-devops") {
-    return (
-      <AzureDevOpsRepositorySelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-      />
-    );
-  }
-
-  if (service === "bitbucket") {
-    return (
-      <BitbucketRepositorySelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-        workspace={workspace}
-      />
-    );
-  }
-
-  if (service === "github") {
-    return (
-      <GithubRepositorySelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-      />
-    );
-  }
-
-  if (service === "gitlab") {
-    return (
-      <GitlabRepositorySelectInput
-        toolId={gitToolId}
-        model={dataObject}
-        setModel={setDataObject}
-        setDataFunction={setDataFunction}
-        fieldName={fieldName}
-        disabled={disabled}
-        clearDataFunction={clearDataFunction}
-      />
-    );
-  }
-  
-  if (service === "github-deploykey") {
-    return (
-        <GithubMonoRepositorySelectInput
+  const getRelevantInput = () => {
+    switch(service) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+        return (
+          <AzureDevOpsRepositorySelectInput
             toolId={gitToolId}
             model={dataObject}
             setModel={setDataObject}
@@ -97,13 +39,67 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
-        />
-    );
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+        return (
+          <BitbucketRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            workspace={workspace}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        return (
+          <GithubRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <GitlabRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
+        return (
+          <GithubMonoRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+          />
+        );
+      default:
+        return (<></>);
+    }
+  };
+
+  if (visible === false || hasStringValue(service) !== true) {
+    return <></>;
   }
 
-  return (
-    <></>
-  );
+  return (getRelevantInput());
 }
 
 RepositorySelectInput.propTypes = {
