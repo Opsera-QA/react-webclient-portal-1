@@ -28,9 +28,11 @@ export default function FreeTrialLandingWorkflowWidgetHeaderTabBarBase(
     themeConstants,
   } = useComponentStateReference();
 
+  // TODO: Ensure both pipelines and tasks are using models to clean this up with a switch statement.
   const handleHeaderItemClick = () => {
     if (selectedWorkflow?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
       history.push(pipelineHelper.getDetailViewLink(selectedWorkflow?._id));
+      return;
     }
 
     if (selectedWorkflow?.getData("workspaceType") === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
