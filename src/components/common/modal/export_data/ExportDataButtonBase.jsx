@@ -16,7 +16,7 @@ function ExportDataButtonBase({
       return "outline-success";
     }
 
-    return "outline-primary";
+    return "secondary";
   };
 
   return (

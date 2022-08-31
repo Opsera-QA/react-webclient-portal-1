@@ -35,7 +35,7 @@ function InlineClientSideSearchFilter(
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary">
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="primary">
             <IconBase
               isLoading={isLoading}
               icon={faSearch}

@@ -21,7 +21,7 @@ function ImportDataButton(
     <div className={className}>
       <ButtonBase
         size={"sm"}
-        variant={"outline-secondary"}
+        variant={"secondary"}
         onClickFunction={importDataFunction}
         isLoading={isLoading}
         disabled={disabled}

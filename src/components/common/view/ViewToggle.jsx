@@ -18,7 +18,7 @@ function ViewToggle(
     return (
       <div className={"d-flex"}>
         <Button
-          variant={view === "list" ? "success" : "outline-secondary"}
+          variant={view === "list" ? "success" : "secondary"}
           className={"mr-2"}
           size={"sm"}
           onClick={() => switchView()}
@@ -27,7 +27,7 @@ function ViewToggle(
           <IconBase icon={faList} />
         </Button>
         <Button
-          variant={view === "card" ? "success" : "outline-secondary"}
+          variant={view === "card" ? "success" : "secondary"}
           size={"sm"}
           onClick={() => switchView()}
           disabled={isLoading}

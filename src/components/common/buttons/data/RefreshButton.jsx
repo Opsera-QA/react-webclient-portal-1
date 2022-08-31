@@ -34,7 +34,7 @@ RefreshButton.propTypes = {
 };
 
 RefreshButton.defaultProps = {
-  variant: "outline-primary",
+  variant: "secondary",
   size: "sm"
 };
 

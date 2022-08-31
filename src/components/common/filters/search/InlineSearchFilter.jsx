@@ -86,7 +86,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="secondary" onClick={handleSearch}>
             <IconBase isLoading={isSearching} icon={faSearch} />
           </Button>
         </InputGroup.Append>

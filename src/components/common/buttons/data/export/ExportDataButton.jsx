@@ -21,7 +21,7 @@ function ExportDataButton(
     <div className={className}>
       <ButtonBase
         size={"sm"}
-        variant={"outline-secondary"}
+        variant={"secondary"}
         onClickFunction={exportDataFunction}
         isLoading={isLoading}
         disabled={disabled}

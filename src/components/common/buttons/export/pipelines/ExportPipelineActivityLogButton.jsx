@@ -1,12 +1,12 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
-import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ExportPipelineActivityLogDataOverlay from "components/common/modal/export_data/ExportPipelineActivityLogDataOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ExportPipelineActivityLogButton(
   {
@@ -32,7 +32,7 @@ function ExportPipelineActivityLogButton(
       <TooltipWrapper innerText={"Export as PDF"}>
         <div className={className}>
           <Button
-            variant={"outline-primary"}
+            variant={"secondary"}
             size={"sm"}
             disabled={isLoading}
             onClick={launchOverlay}>

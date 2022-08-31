@@ -89,12 +89,12 @@ function FilterButtons(
           {getInnerFilters()}
           <div className="d-flex justify-content-between">
             <div className="w-50 mr-1">
-              <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
+              <Button variant={"secondary"} disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
                 <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
               </Button>
             </div>
             <div className="w-50 ml-1">
-              <Button variant="outline-secondary" size="sm" onClick={() => resetFilters()} className="w-100"
+              <Button variant={"secondary"} size="sm" onClick={() => resetFilters()} className="w-100"
                       disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
                 <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
               </Button>
@@ -114,14 +114,14 @@ function FilterButtons(
       <div className="d-flex">
         <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
-            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
+            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="secondary" size="sm">
               <span><IconBase icon={faFilter}/></span>
               {includeButtonText && <span>Filter Results</span>}
             </Button>
           </div>
         </OverlayTrigger>
         <div>
-          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="secondary" size="sm" onClick={() => resetFilters()}>
             <StackedFilterRemovalIcon />
             {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
           </Button>
