@@ -45,8 +45,8 @@ function TaskDetailView() {
   const [taskData, setTaskData] = useState(undefined);
   const [taskMetadata, setTaskMetadata] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
   const {
+    isMounted,
     getAccessToken,
     cancelTokenSource,
     accessRoleData,
