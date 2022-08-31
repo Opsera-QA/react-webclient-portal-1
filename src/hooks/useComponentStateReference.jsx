@@ -42,6 +42,7 @@ function useComponentStateReference() {
     isTestEnvironment: featureFlagHideItemInTest(),
     isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
     userData: userData,
+    isFreeTrial: true,
   });
 }
 
