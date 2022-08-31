@@ -73,7 +73,7 @@ export default function PipelineCardBase(
 
   const getDescription = () => {
     return (
-      <div className={"mx-1 mt-2 mb-1"}>
+      <div className={"mx-1 mb-1"}>
         <Row className={"small"}>
           {getTemplateIdentifierField()}
           {/*<Col xs={12}>*/}
@@ -110,7 +110,7 @@ export default function PipelineCardBase(
           {pipelineStatusField}
         </Col>
         <Col xs={6}>
-          <span className="mr-2">Runs:</span> {runCount}
+          <span>{runCount} Runs</span>
         </Col>
         <Col xs={12}>
           <span>{formattedLastRun}</span>

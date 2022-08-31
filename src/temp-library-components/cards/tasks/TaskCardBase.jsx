@@ -65,9 +65,9 @@ export default function TaskCardBase(
     return (
       <Row className={"small"}>
         {getTemplateIdentifierField()}
-        <Col xs={12}>
+        {/*<Col xs={12}>*/}
           {/*<DescriptionField dataObject={taskModel} className={"description-height"} />*/}
-        </Col>
+        {/*</Col>*/}
           {getRunFields()}
       </Row>
     );
@@ -98,7 +98,7 @@ export default function TaskCardBase(
           {pipelineStatusField}
         </Col>
         <Col xs={6}>
-          <span className="mr-2">Runs:</span> {runCount}
+          <span>{runCount} Runs</span>
         </Col>
         {/*<Col xs={12} className={"mt-2 mb-1"}>*/}
         {/*  <div className={"mx-auto"}>*/}

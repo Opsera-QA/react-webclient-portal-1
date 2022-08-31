@@ -26,7 +26,7 @@ export default function IconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "96px",
+            height: "100px",
           }}
         >
           <div className={"my-auto"}>
@@ -41,7 +41,7 @@ export default function IconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "96px",
+            height: "100px",
           }}
         >
           <div>
