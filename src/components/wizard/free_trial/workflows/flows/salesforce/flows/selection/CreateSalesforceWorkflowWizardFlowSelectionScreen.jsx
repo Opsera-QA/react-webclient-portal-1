@@ -36,7 +36,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
         <OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction} />
       );
     }
-  }, [backButtonFunction]);
+  }, []);
 
   const handleFlowSelection = (newFlowOption) => {
     setSelectedFlow(newFlowOption);
