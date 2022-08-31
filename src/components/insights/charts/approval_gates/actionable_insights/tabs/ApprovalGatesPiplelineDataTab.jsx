@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import ApprovalGatesActionableInsightTable from "../ApprovalGatesActionableInsightTable";
-import chartsActions from "components/insights/charts/charts-actions";
+import approvalGatesChartsActions from "../../metrics/ApprovalGatesMetric.action";
 
 function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon, action }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +66,7 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-    const response = await chartsActions.approvalGatesTableData(
+    const response = await approvalGatesChartsActions.approvalGatesTableData(
       getAccessToken,
       cancelSource,
       kpiConfiguration,

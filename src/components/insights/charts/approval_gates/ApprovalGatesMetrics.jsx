@@ -9,10 +9,8 @@ import { Col, Row } from "react-bootstrap";
 import ApprovalGatesDataBlockBase from "./data_blocks/ApprovalGatesDataBlockBase";
 import ApprovalGatesExecutedActionableInsightOverlay from "./actionable_insights/ApprovalGatesExecutedActionableInsightOverlay";
 import ApprovalGatesTotalPipelinesActionableInsightOverlay from "./actionable_insights/ApprovalGatesTotalPipelinesActionableInsightOverlay";
-import chartsActions from "../charts-actions";
+import approvalGatesChartsActions from "./metrics/ApprovalGatesMetric.action";
 
-const APPROVAL_GATES = "approval_gates";
-//Total Pipelines Approved
 function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -51,7 +49,7 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-    const response = await chartsActions.approvalGates(
+    const response = await approvalGatesChartsActions.approvalGates(
       getAccessToken,
       cancelSource,
       kpiConfiguration,

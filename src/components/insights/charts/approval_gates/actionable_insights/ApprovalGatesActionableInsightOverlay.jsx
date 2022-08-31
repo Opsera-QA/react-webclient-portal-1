@@ -8,7 +8,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ApprovalGatesActionableInsightTable from "./ApprovalGatesActionableInsightTable";
-import chartsActions from "components/insights/charts/charts-actions";
+import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
 
 function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -51,7 +51,7 @@ function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      const response = await chartsActions.approvalGatesTableData(
+      const response = await approvalGatesChartsActions.approvalGatesTableData(
         getAccessToken,
         cancelSource,
         kpiConfiguration,

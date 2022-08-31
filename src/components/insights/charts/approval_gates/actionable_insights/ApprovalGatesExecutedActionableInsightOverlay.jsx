@@ -7,20 +7,28 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ApprovalGatesActionableInsightTable from "./ApprovalGatesActionableInsightTable";
 import ApprovalGatesExecutedDataBlocks from "./data_blocks/ApprovalGatesExecutedDataBlocks";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import ApprovalGatesApprovalTab from "./tabs/ApprovalGatesApprovalTab";
-import { faCodePullRequest, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import { faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import ApprovalGatesRejectTab from "./tabs/ApprovalGatesRejectTab";
-import chartsActions from "../../charts-actions";
+import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
 
-function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashboardData, request, metrics }) {
+function ApprovalGatesExecutedActionableInsightOverlay({
+  kpiConfiguration,
+  dashboardData,
+  request,
+  metrics,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false,
+    ),
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,29 +59,35 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = filterModel,
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
-      
-     
-       const response = await chartsActions.approvalGatesPipeline(
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+
+      const response = await approvalGatesChartsActions.approvalGatesPipeline(
         getAccessToken,
         cancelSource,
         kpiConfiguration,
         dashboardTags,
         dashboardOrgs,
       );
-      
+
       let dataObject = response?.data?.data ? response?.data?.data?.data : [];
       if (isMounted?.current === true && dataObject) {
         setListOfPipelines(dataObject);
       }
-     
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -93,7 +107,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
 
   const getTabs = () => {
     if (activeTab == "approval") {
-      return ( 
+      return (
         <ApprovalGatesApprovalTab
           isLoading={isLoading}
           listOfPipelines={listOfPipelines}
@@ -126,20 +140,20 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
 
   const getTabContainer = () => {
     return (
-        <CustomTabContainer styling={"metric-detail-tabs"}>
-          <CustomTab
-              activeTab={activeTab}
-              tabText={"Approval"}
-              handleTabClick={handleTabClick}
-              tabName={"approval"}
-          />
-          <CustomTab
-              activeTab={activeTab}
-              tabText={"Reject"}
-              handleTabClick={handleTabClick}
-              tabName={"reject"}
-          />
-        </CustomTabContainer>
+      <CustomTabContainer styling={"metric-detail-tabs"}>
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Approval"}
+          handleTabClick={handleTabClick}
+          tabName={"approval"}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Reject"}
+          handleTabClick={handleTabClick}
+          tabName={"reject"}
+        />
+      </CustomTabContainer>
     );
   };
 
@@ -154,16 +168,16 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <ApprovalGatesExecutedDataBlocks
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          metrics={metrics}
-        />
+        <ApprovalGatesExecutedDataBlocks metrics={metrics} />
       </div>
-        {listOfPipelines && (
-          <div className={"p-3"}>
-            <TabPanelContainer currentView={getTabs()} tabContainer={getTabContainer()} />
-          </div>)}
+      {listOfPipelines && (
+        <div className={"p-3"}>
+          <TabPanelContainer
+            currentView={getTabs()}
+            tabContainer={getTabContainer()}
+          />
+        </div>
+      )}
     </FullScreenCenterOverlayContainer>
   );
 }
@@ -172,7 +186,7 @@ ApprovalGatesExecutedActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   request: PropTypes.string,
-  metrics: PropTypes.object
+  metrics: PropTypes.object,
 };
 
 export default ApprovalGatesExecutedActionableInsightOverlay;

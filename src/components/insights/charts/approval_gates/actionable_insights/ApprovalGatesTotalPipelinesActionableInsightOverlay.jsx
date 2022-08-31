@@ -7,8 +7,8 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ApprovalGatesActionableInsightTable from "./ApprovalGatesActionableInsightTable";
-import chartsActions from "../../charts-actions";
+import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
+import ApprovalGatesActionableInsightTotalPipelinesTable from "./ApprovalGatesActionableInsightTotalPipelinesTable";
 
 function ApprovalGatesTotalPipelinesActionableInsightOverlay({
   kpiConfiguration,
@@ -68,7 +68,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
-      const response = await chartsActions.pipelinesWithApprovalgatesTableData(
+      const response = await approvalGatesChartsActions.pipelinesWithApprovalgatesTableData(
         getAccessToken,
         cancelSource,
         kpiConfiguration,
@@ -115,13 +115,12 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <ApprovalGatesActionableInsightTable
+        <ApprovalGatesActionableInsightTotalPipelinesTable
           isLoading={isLoading}
           metrics={metrics}
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
-          type="totalpipelines"
         />
       </div>
     </FullScreenCenterOverlayContainer>

@@ -1,37 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import { Col, Row } from "react-bootstrap";
 import ApprovalGatesDataBlockBase from "../../data_blocks/ApprovalGatesDataBlockBase";
-
-const APPROVAL_GATES = "approval_gates";
-
-function ApprovalGatesExecutedDataBlocks({ dashboardData , metrics}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(dashboardData)]);
+import { dateHelpers } from "components/common/helpers/date/date.helpers";
 
 
+function ApprovalGatesExecutedDataBlocks({ metrics }) {
+  var seconds = ((metrics.average_approval_time % 60000) / 1000).toFixed(0);
   return (
     <div className="new-chart mb-1">
         <Row className="px-4">
@@ -42,7 +17,7 @@ function ApprovalGatesExecutedDataBlocks({ dashboardData , metrics}) {
             <ApprovalGatesDataBlockBase score={metrics.total_pipelines_rejected} subtitle={'Total Approvals Rejected'} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.average_approval_time} subtitle={'Average approval time'} />
+            <ApprovalGatesDataBlockBase score={`${seconds} Seconds`} subtitle={'Average approval time'} />
           </Col>
         </Row>
       </div>
@@ -50,8 +25,6 @@ function ApprovalGatesExecutedDataBlocks({ dashboardData , metrics}) {
 }
 
 ApprovalGatesExecutedDataBlocks.propTypes = {
-  dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object,
   metrics: PropTypes.object
 };
 

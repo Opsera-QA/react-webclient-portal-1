@@ -59,7 +59,7 @@ const ApprovalGatesInsightsTableMetadata = {
         id: "time_for_approval",
       },
       {
-        label: "Time for approval in dhms",
+        label: "Time for approval",
         id: "time_for_approval_in_dhms",
       },
     ],
