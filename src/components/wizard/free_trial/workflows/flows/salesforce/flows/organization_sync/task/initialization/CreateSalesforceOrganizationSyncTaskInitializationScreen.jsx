@@ -22,7 +22,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     setButtonContainer,
   }) {
   const setTaskFunction = (task) => {
-    let updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
+    const updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
       task,
       flow,
       salesforceToolId,

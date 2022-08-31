@@ -67,9 +67,13 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
           <div className={"my-3"}>
-            <OpseraInfinityLogoLarge
-              scale={.4}
-            />
+            <div className={"d-flex"}>
+              <div className={"mx-auto"}>
+                <OpseraInfinityLogoLarge
+                  scale={.4}
+                />
+              </div>
+            </div>
             <div className={"d-flex"}>
               <div className={"mx-auto"}>
                 <H5FieldSubHeader
@@ -96,7 +100,13 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
   };
 
   return (
-    <div>
+    <div
+      className={"mt-3"}
+      style={{
+        minHeight: "600px",
+        height: "600px",
+      }}
+    >
       {getBody()}
     </div>
   );

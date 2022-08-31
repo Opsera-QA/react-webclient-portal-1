@@ -11,6 +11,7 @@ import {
 import {
   CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS
 } from "../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
+import { taskHelper } from "components/tasks/task.helper";
 
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen(
   {
@@ -18,11 +19,21 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
     setCurrentScreen,
     flow,
     setButtonContainer,
+    gitToolId,
+    gitToolOption,
+    salesforceToolId,
   }) {
 
   const setTaskFunction = (task) => {
-    setTask({...task, name: salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTION_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC + " [Free Trial]"});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
+    const updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
+      task,
+      flow,
+      salesforceToolId,
+      gitToolId,
+      gitToolOption
+    );
+    setTask({...updatedTask});
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
   };
 
   return (
@@ -40,5 +51,8 @@ CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen.propTypes = {
   flow: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
+  gitToolId: PropTypes.string,
+  gitToolOption: PropTypes.string,
+  salesforceToolId: PropTypes.string,
 };
 

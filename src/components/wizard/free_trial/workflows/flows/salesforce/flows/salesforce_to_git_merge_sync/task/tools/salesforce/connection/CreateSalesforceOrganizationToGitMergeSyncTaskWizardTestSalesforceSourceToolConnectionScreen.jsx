@@ -8,17 +8,13 @@ import {
 } from "../../../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
 
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen({
-  task,
-  setTask,
   setCurrentScreen,
   setButtonContainer,
   salesforceToolId,
-  flow,
 }) {
   const onSuccessFunction = () => {
-    setTask({...taskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow)});
     setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
+        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
     );
   };
 
@@ -41,11 +37,8 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
 }
 
 CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen.propTypes = {
-  task: PropTypes.object,
   salesforceToolId: PropTypes.string,
-  setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  flow: PropTypes.string,
 };
 

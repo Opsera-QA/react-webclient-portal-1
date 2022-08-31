@@ -34,16 +34,15 @@ export default function CreateSalesforceOrganizationSyncPipelineInitializationSc
   }, []);
 
   const setPipelineFunction = (pipeline) => {
-    setPipeline({
-      ...salesforcePipelineHelper.updateSalesforceOrgSyncPipeline(
-        pipeline,
-        flow,
-        gitToolId,
-        gitToolOption,
-        sourceSalesforceToolId,
-        destinationSalesforceToolId,
-      ),
-    });
+    const updatedPipeline = salesforcePipelineHelper.updateSalesforceOrgSyncPipeline(
+      pipeline,
+      flow,
+      gitToolId,
+      gitToolOption,
+      sourceSalesforceToolId,
+      destinationSalesforceToolId,
+    );
+    setPipeline({ ...updatedPipeline });
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN);
   };
 

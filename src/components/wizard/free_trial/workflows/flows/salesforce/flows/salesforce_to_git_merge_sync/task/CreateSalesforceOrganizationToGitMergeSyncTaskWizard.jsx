@@ -33,7 +33,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
     backButtonFunction,
     setButtonContainer,
   }) {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN);
   const [task, setTask] = useState(undefined);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
@@ -43,15 +43,6 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen
-            setTask={setTask}
-            flow={flow}
-            setCurrentScreen={setCurrentScreen}
-            setButtonContainer={setButtonContainer}
-          />
-        );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN:
         return (
           <CreateWorkflowWizardCreateGitToolScreenBase
@@ -73,10 +64,6 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
             setCurrentScreen={setCurrentScreen}
             gitToolId={gitToolId}
             gitToolOption={gitToolOption}
-            task={task}
-            setTask={setTask}
-            flow={flow}
-            className={"m-3"}
             setButtonContainer={setButtonContainer}
           />
         );
@@ -98,11 +85,20 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
         return (
           <CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
-            task={task}
-            setTask={setTask}
             salesforceToolId={salesforceSourceToolId}
-            flow={flow}
             setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen
+            setTask={setTask}
+            flow={flow}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+            salesforceToolId={salesforceSourceToolId}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
