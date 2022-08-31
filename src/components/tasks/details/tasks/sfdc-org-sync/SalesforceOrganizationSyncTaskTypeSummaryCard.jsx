@@ -40,7 +40,7 @@ function SalesforceOrganizationSyncTaskTypeSummaryCard({ gitTasksData, gitTaskCo
           <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         </Col>
         <Col xs={12} sm={6} md={4}>
-          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
+          <ToolNameField model={gitTaskConfigurationData} fieldName={"gitToolId"} />
         </Col>
         <Col xs={12} sm={6} md={4}>
           <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
