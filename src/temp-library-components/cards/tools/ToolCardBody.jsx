@@ -5,6 +5,7 @@ import { Col } from "react-bootstrap";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import GitlabToolCardBody from "temp-library-components/cards/tools/identifier/GitlabToolCardBody";
 import GithubToolCardBody from "temp-library-components/cards/tools/identifier/GithubToolCardBody";
+import SalesforceToolCardBody from "temp-library-components/cards/tools/identifier/SalesforceToolCardBody";
 
 export default function ToolCardBody(
   {
@@ -21,6 +22,12 @@ export default function ToolCardBody(
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
         return (
           <GithubToolCardBody
+            toolModel={toolModel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+        return (
+          <SalesforceToolCardBody
             toolModel={toolModel}
           />
         );

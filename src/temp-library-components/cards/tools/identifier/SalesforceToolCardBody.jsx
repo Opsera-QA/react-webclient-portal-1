@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Row from "react-bootstrap/Row";
 import { Col } from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-export default function GithubToolCardBody(
+export default function SalesforceToolCardBody(
   {
     toolModel,
   }) {
@@ -30,6 +29,6 @@ export default function GithubToolCardBody(
   );
 }
 
-GithubToolCardBody.propTypes = {
+SalesforceToolCardBody.propTypes = {
   toolModel: PropTypes.object,
 };

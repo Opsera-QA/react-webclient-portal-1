@@ -55,6 +55,7 @@ export default function TaskCardBase(
         iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${taskModel?.getData("name")}`}
         className={"mx-1"}
+        iconSize={"4x"}
       />
     );
   };
