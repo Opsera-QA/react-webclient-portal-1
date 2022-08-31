@@ -54,12 +54,6 @@ export default function FreeTrialLandingTaskWidgetBody(
 
   return (
     <div>
-      <ActionBarContainer>
-        <div />
-        <ActionBarDeleteTaskButton
-          taskModel={selectedTask}
-        />
-      </ActionBarContainer>
       {getBody()}
     </div>
   );

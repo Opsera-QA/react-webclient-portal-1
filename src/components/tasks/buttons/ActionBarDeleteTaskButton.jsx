@@ -41,7 +41,7 @@ export default function ActionBarDeleteTaskButton(
     return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
   };
 
-  if (visible === false || canDelete !== true) {
+  if (visible === false || canDelete !== true || taskModel == null) {
     return null;
   }
 
