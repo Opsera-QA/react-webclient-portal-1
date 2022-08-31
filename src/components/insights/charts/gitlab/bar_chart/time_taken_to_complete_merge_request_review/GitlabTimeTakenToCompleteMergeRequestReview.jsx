@@ -11,6 +11,9 @@ import { defaultConfig, assignStandardColors,
          adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay
+  from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 
 function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -21,6 +24,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -69,6 +73,12 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -82,7 +92,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
                   true, false, "cutoffString", "wholeNumbers")}
             {...config()}
             {...adjustBarWidth(metrics, false)}
-            onClick={() => setShowModal(true)}
+            onClick={onChartClick}
             tooltip={({ indexValue, color, value }) => <ChartTooltip 
                     titles={["Reviewer", "Merge Request Time Taken"]}
                     values={[indexValue, value ]}
