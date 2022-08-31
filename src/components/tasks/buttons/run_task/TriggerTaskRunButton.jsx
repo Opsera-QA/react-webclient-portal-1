@@ -77,7 +77,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceTaskWizardOverlay
-            task={gitTasksData?.getPersistData()}
+            taskModel={gitTasksData}
           />
         );
         setIsLoading(false);

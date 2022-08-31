@@ -12,6 +12,9 @@ import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import { workspaceConstants } from "components/workspace/workspace.constants";
+import modelHelpers from "components/common/model/modelHelpers";
+import tasksMetadata from "components/tasks/details/tasks/task-metadata";
 
 // TODO: Rename
 export default function FreeTrialLaunchSalesforceWorkflowScreen(
@@ -73,7 +76,8 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         leftSideButtons={getBackButton()}
       >
         <FreeTrialLaunchWorkflowButton
-          workspaceItem={selectedWorkflowItem}
+          workspaceItem={setSelectedWorkflowItem?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK ? modelHelpers.parseObjectIntoModel(setSelectedWorkflowItem, tasksMetadata) : selectedWorkflowItem}
+          setWorkspaceItem={setSelectedWorkflowItem}
           workspaceType={selectedWorkflowItem?.workspaceType}
         />
       </ButtonContainerBase>

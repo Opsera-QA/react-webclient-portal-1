@@ -47,6 +47,7 @@ import SalesforceOrganizationSyncTaskRepositorySelectInput
   from "./tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
 import {isMongoDbId} from "../../common/helpers/mongo/mongoDb.helpers";
 import InlineErrorText from "../../common/status_notifications/inline/InlineErrorText";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -55,11 +56,21 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [canEdit, setCanEdit] = useState(false);
   const [report, setReport] = useState({});
   const { getAccessRoleData } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadRoles();
     loadConfig();
   }, []);
+
+  const handleCloseFunction = () => {
+    if (handleClose) {
+      handleClose();
+    }
+    else {
+      toastContext.clearOverlayPanel();
+    }
+  };
 
   const loadRoles = async () => {
     const customerAccessRules = await getAccessRoleData();
@@ -162,11 +173,11 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
             setGitTasksData={setTaskModel}
             gitTasksConfigurationDataDto={taskConfigurationModel}
             loadData={loadData}
-            handleClose={handleClose}
+            handleClose={handleCloseFunction}
             className={"mr-2"}
           />
           <CloseButton
-            closeEditorCallback={handleClose}
+            closeEditorCallback={handleCloseFunction}
             showUnsavedChangesMessage={false}
           />
         </div>
@@ -345,6 +356,8 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     switch (type) {
       case TASK_TYPES.SYNC_SALESFORCE_REPO:
       case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return repoSelectionInputs();
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return quickDeployForm();
@@ -386,7 +399,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
 
   return (
     <FullScreenCenterOverlayContainer
-      closePanel={handleClose}
+      closePanel={handleCloseFunction}
       showPanel={true}
       titleText={`Opsera Task Confirmation`}
       titleIcon={faQuestionCircle}
@@ -411,7 +424,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
 
 RunTaskOverlay.propTypes = {
   taskModel: PropTypes.object,
-  setActiveTab: PropTypes.func,
   setTaskModel: PropTypes.func,
   loadData: PropTypes.func,
   handleClose: PropTypes.func,

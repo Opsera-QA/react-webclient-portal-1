@@ -8,12 +8,17 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforcePipelineWizardOverlay
   from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import SalesforceTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
+import { TASK_TYPES } from "components/tasks/task.types";
+import SalesforceToGitMergeSyncTaskWizardOverlay
+  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 
 // TODO: This will need more work when we add more flows.
 export default function FreeTrialLaunchWorkflowButton(
   {
     className,
     workspaceItem,
+    setWorkspaceItem,
     workspaceType,
   }) {
   const { toastContext } = useComponentStateReference();
@@ -21,11 +26,22 @@ export default function FreeTrialLaunchWorkflowButton(
   const launchWorkflow = () => {
     switch (workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        toastContext.showOverlayPanel(
-          <SalesforceTaskWizardOverlay
-            task={workspaceItem}
-          />
-        );
+        switch (workspaceItem?.type) {
+          case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+            toastContext.showOverlayPanel(
+              <SalesforceToGitMergeSyncTaskWizardOverlay
+                taskModel={workspaceItem}
+              />
+            );
+            break;
+          default:
+            toastContext.showOverlayPanel(
+              <RunTaskOverlay
+                taskModel={workspaceItem}
+                setTaskModel={setWorkspaceItem}
+              />
+            );
+        }
         break;
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         toastContext.showOverlayPanel(
@@ -68,6 +84,7 @@ export default function FreeTrialLaunchWorkflowButton(
 FreeTrialLaunchWorkflowButton.propTypes = {
   className: PropTypes.string,
   workspaceItem: PropTypes.object,
+  setWorkspaceItem: PropTypes.func,
   workspaceType: PropTypes.string,
 };
 

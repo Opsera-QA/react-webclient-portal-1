@@ -8,12 +8,12 @@ import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { SALESFORCE_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 
-export default function SalesforceTaskWizardConfirmRepositorySettingsButton(
+export default function SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton(
   {
     setCurrentScreen,
-    task,
-    setTask,
-    taskConfigurationModel,
+    taskModel,
+    setTaskModel,
+    gitConfigurationModel,
     disabled,
     className,
   }) {
@@ -28,9 +28,9 @@ export default function SalesforceTaskWizardConfirmRepositorySettingsButton(
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      task.setData("configuration", taskConfigurationModel?.getPersistData());
-      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, task);
-      setTask({...task});
+      taskModel.setData("configuration.git", gitConfigurationModel?.getPersistData());
+      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+      setTaskModel({...taskModel});
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       setCurrentScreen(SALESFORCE_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
     } catch (error) {
@@ -58,14 +58,14 @@ export default function SalesforceTaskWizardConfirmRepositorySettingsButton(
     );
   };
 
-  if (task == null) {
+  if (taskModel == null) {
     return null;
   }
 
   return (
     <div className={className}>
       <Button
-        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
+        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || gitConfigurationModel?.checkCurrentValidity() !== true || disabled === true}
         onClick={updateTask}
         variant={getButtonVariant()}
       >
@@ -82,11 +82,11 @@ export default function SalesforceTaskWizardConfirmRepositorySettingsButton(
   );
 }
 
-SalesforceTaskWizardConfirmRepositorySettingsButton.propTypes = {
+SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton.propTypes = {
   setCurrentScreen: PropTypes.func,
-  task: PropTypes.object,
-  setTask: PropTypes.func,
-  taskConfigurationModel: PropTypes.string,
+  taskModel: PropTypes.object,
+  setTaskModel: PropTypes.func,
+  gitConfigurationModel: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
 };

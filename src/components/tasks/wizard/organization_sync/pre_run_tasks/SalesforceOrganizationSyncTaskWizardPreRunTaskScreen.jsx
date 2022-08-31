@@ -23,11 +23,10 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceTaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceTaskWizardConfirmRepositorySettingsButton";
+import SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
+  from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton";
 
-// Please note this will only work with org sync tasks. I will break it up to support other task wizards eventually.
-export default function SalesforceTaskWizardPreRunTaskScreen(
+export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   {
     task,
     setTask,
@@ -58,7 +57,7 @@ export default function SalesforceTaskWizardPreRunTaskScreen(
       <H5FieldSubHeader
         subheaderText={"Salesforce Task Run: Pre Run Tasks"}
       />
-      <div>Please select the repository and branch you wish to use during for this Salesforce workflow</div>
+      <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
@@ -87,7 +86,7 @@ export default function SalesforceTaskWizardPreRunTaskScreen(
         </Col>
       </Row>
       <ButtonContainerBase>
-        <SalesforceTaskWizardConfirmRepositorySettingsButton
+        <SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
           task={task}
           setTask={setTask}
           taskConfigurationModel={taskConfigurationModel}
@@ -98,7 +97,7 @@ export default function SalesforceTaskWizardPreRunTaskScreen(
   );
 }
 
-SalesforceTaskWizardPreRunTaskScreen.propTypes = {
+SalesforceOrganizationSyncTaskWizardPreRunTaskScreen.propTypes = {
   task: PropTypes.object,
   setTask: PropTypes.func,
   setCurrentScreen: PropTypes.func,

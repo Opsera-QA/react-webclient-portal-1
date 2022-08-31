@@ -90,7 +90,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
                 className={"mr-2"}
               />
               <FreeTrialLaunchWorkflowButton
-                workspaceItem={task}
+                workspaceItem={modelHelpers.parseObjectIntoModel(task, tasksMetadata)}
                 workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
               />
             </ButtonContainerBase>
