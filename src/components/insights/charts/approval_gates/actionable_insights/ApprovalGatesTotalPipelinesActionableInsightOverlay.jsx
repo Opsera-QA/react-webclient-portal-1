@@ -108,7 +108,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Approval Gates`}
+      titleText={`Approval Gates - Total pipelines executed`}
       showToasts={true}
       titleIcon={faTable}
       isLoading={false}

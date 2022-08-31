@@ -51,15 +51,6 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-    // const response = {
-    //   tool: "opsera",
-    //   data: {
-    //     total_pipelines_with_approval_gates: 20,
-    //     total_number_of_approvals_executed: 100,
-    //     total_number_of_approvers: 20
-    //   }
-    // };
-    //getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto
     const response = await chartsActions.approvalGates(
       getAccessToken,
       cancelSource,
@@ -79,7 +70,6 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       await loadChartMetrics(cancelSource);
-      // await loadDataPoints(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

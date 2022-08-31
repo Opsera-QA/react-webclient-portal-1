@@ -147,7 +147,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Approval Gates`}
+      titleText={`Approval Gates - Total Approvals executed`}
       showToasts={true}
       titleIcon={faTable}
       isLoading={false}

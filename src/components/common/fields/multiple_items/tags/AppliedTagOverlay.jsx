@@ -5,88 +5,95 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import React from "react";
-function AppliedTagOverlay({
+
+// TODO: Rewrite
+function AppliedMetricTagBadgeOverlay({
   className,
   children,
   kpiTags,
   dashboardTags,
   badgeClassName,
-  tags
 }) {
-  const getDashboardTags = () => {
+  const getAppliedDashboardTagsBadge = () => {
     const dashboardTagsCount = Array.isArray(dashboardTags) && dashboardTags.length ? dashboardTags.length : 0;
-    return (
-      <>
-        <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
-          {`${dashboardTagsCount} Dashboard Tags`}
-        </div>
-        {dashboardTagsCount === 0 ? (
+
+    if (dashboardTagsCount === 0) {
+      return (
+        <>
+          <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
+            {`${dashboardTagsCount} Dashboard Tags`}
+          </div>
           <div className={className}>
             <TagBadgeBase
               className={badgeClassName}
               badgeText={`No Dashboard Tags Applied`}
             />
           </div>
-        ) : (
+        </>
+      );
+    }
+
+    return (
+      <>
+        <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
+          {`${dashboardTagsCount} Dashboard Tags`}
+        </div>
           <CustomBadgeContainer>
             {dashboardTags.map((tag, index) => {
               if (typeof tag !== "string") {
                 return (
-                  // <div>
                   <TagBadge
                     className={"mr-2 mb-2"}
                     tag={tag}
                     key={index}
                   />
-                  // </div>
                 );
               }
             })}
           </CustomBadgeContainer>
-        )}
       </>
     );
   };
-  const getKPITags = () => {
+
+  const getKpiTags = () => {
     const kpiTagsCount = Array.isArray(kpiTags) && kpiTags.length ? kpiTags.length : 0;
-    return (
-      <>
-        <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
-          {`${kpiTagsCount} KPI Tags`}
-        </div>
-        {kpiTagsCount === 0 ? (
+
+    if (kpiTagsCount === 0) {
+      return (
+        <>
+          <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
+            {`${kpiTagsCount} KPI Tags`}
+          </div>
           <div className={className}>
             <TagBadgeBase
               className={badgeClassName}
               badgeText={`No KPI Tags Applied`}
             />
           </div>
-        ) : (
-          <CustomBadgeContainer>
-            {kpiTags?.map((tag, index) => {
-              if (typeof tag !== "string") {
-                return (
-                  <TagBadge
-                    className={"mr-2 mb-2"}
-                    tag={tag}
-                    key={index}
-                  />
-                );
-              }
-            })}
-          </CustomBadgeContainer>
-        )}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <div className="dark-gray-text-primary font-inter-light-400 metric-block-header-text">
+          {`${kpiTagsCount} KPI Tags`}
+        </div>
+        <CustomBadgeContainer>
+          {kpiTags?.map((tag, index) => {
+            if (typeof tag !== "string") {
+              return (
+                <TagBadge
+                  className={"mr-2 mb-2"}
+                  tag={tag}
+                  key={index}
+                />
+              );
+            }
+          })}
+        </CustomBadgeContainer>
       </>
     );
-  };
-  const getTags = () => {
-    return tags.map((tag, index)=>(
-        <TagBadge
-          className={"mr-2 mb-2"}
-          tag={tag}
-          key={index}
-        />
-    ));
   };
 
   const getTagPopover = () => {
@@ -97,14 +104,14 @@ function AppliedTagOverlay({
           sm={12}
           key={`metric-build`}
         >
-          {getDashboardTags()}
+          {getAppliedDashboardTagsBadge()}
         </Col>
         <Col
           xs={12}
           sm={12}
           key={`metric-build`}
         >
-          {getKPITags()}
+          {getKpiTags()}
         </Col>
       </Row>
     );
@@ -112,7 +119,7 @@ function AppliedTagOverlay({
 
   return (
     <TooltipWrapper
-      innerText={tags&& tags.length > 0 ? getTags() : getTagPopover()}
+      innerText={getTagPopover()}
       title={"Applied Tags"}
       showCloseButton={false}
       className={"popover-filter"}
@@ -122,13 +129,12 @@ function AppliedTagOverlay({
   );
 }
 
-AppliedTagOverlay.propTypes = {
+AppliedMetricTagBadgeOverlay.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   kpiTags: PropTypes.array,
   dashboardTags: PropTypes.array,
   badgeClassName: PropTypes.string,
-  tags: PropTypes.array
 };
 
-export default AppliedTagOverlay;
+export default AppliedMetricTagBadgeOverlay;
