@@ -8,11 +8,20 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ApprovalGatesActionableInsightTable from "./ApprovalGatesActionableInsightTable";
+import chartsActions from "../../charts-actions";
 
-function ApprovalGatesTotalPipelinesActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
+function ApprovalGatesTotalPipelinesActionableInsightOverlay({
+  kpiConfiguration,
+  dashboardData,
+  request,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false,
+    ),
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,39 +51,39 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({ kpiConfiguration,
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = filterModel,
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = {
-        "data": {
-            "tool": "opsera",
-            "data": [
-                {
-                    "slack" : 0.0,
-                    "teams" : 1.0,
-                    "email" : 0.0,
-                    "jira" : 0.0,
-                    "servicenow" : 0.0,
-                    "_id" : "624f4031fc6c320012391641",
-                    "pipeline_name": "Blank Template (Vignesh)",
-                    "count_of_approval_gates" : 1.0,
-                    "last_run" : "2022-04-08T17:48:48.935+0000",
-                    "last_run_in_day": "120 days back"
-                }
-            ],
-            count: 12,
-            "status": 200,
-            "status_text": "OK"
-        }
-    };
-      let dataObject = response?.data ? response?.data : { data: [], count: [{ count: 0 }] };
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+      const response = await chartsActions.pipelinesWithApprovalgatesTableData(
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+        filterDto,
+      );
+
+      let dataObject = response?.data
+        ? response?.data?.data
+        : { data: [], count: [{ count: 0 }] };
       let newFilterDto = filterDto;
 
-      newFilterDto.setData("totalCount", dataObject?.count[0]?.count);
+      newFilterDto.setData("totalCount", dataObject?.count);
       setFilterModel({ ...newFilterDto });
-
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject?.data);
       }
@@ -112,6 +121,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({ kpiConfiguration,
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
+          type="totalpipelines"
         />
       </div>
     </FullScreenCenterOverlayContainer>

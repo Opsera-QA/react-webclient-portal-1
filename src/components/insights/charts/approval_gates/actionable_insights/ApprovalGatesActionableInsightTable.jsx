@@ -12,6 +12,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import ApprovalgatesTotalPipelinesMetadata from "./approval-gates-total-pipelines-metadata";
 
 function ApprovalGatesActionableInsightTable({
   metrics,
@@ -19,18 +20,35 @@ function ApprovalGatesActionableInsightTable({
   loadData,
   filterModel,
   setFilterModel,
+  type
 }) {
+  console.log(type,'***type');
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Approval Gates report is currently unavailable at this time";
-  const fields = ApprovalGatesInsightsTableMetadata.fields;
+  const fields =  type ==="totalpipelines" ?
+    ApprovalgatesTotalPipelinesMetadata.fields :
+    ApprovalGatesInsightsTableMetadata.fields;
   const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "pipeline_name")),
-      getTableTextColumn(getField(fields, "count_of_approval_gates")),
-      getTableDateTimeColumn(getField(fields, "last_run")),
-      getTableTextColumn(getField(fields, "last_run_in_day")),
+    () => type ==="totalpipelines" ? [
+      getTableTextColumn(getField(fields,"slack")),
+      getTableTextColumn(getField(fields,"teams")),
+      getTableTextColumn(getField(fields,"email")),
+      getTableTextColumn(getField(fields,"jira")),
+      getTableTextColumn(getField(fields,"servicenow")),
+      getTableTextColumn(getField(fields,"count_of_approval_gates")),
+      getTableTextColumn(getField(fields,"pipeline_name")),
+      getTableDateTimeColumn(getField(fields,"last_run")),
+      getTableTextColumn(getField(fields,"last_run_in_days"))
+    ] : [
+      getTableTextColumn(getField(fields,"previous_step_start_time")),
+      getTableTextColumn(getField(fields,"run_count")),
+      getTableDateTimeColumn(getField(fields,"run_end_time")),
+      getTableDateTimeColumn(getField(fields,"run_start_time")),
+      getTableTextColumn(getField(fields,"step_index")),
+      getTableTextColumn(getField(fields,"time_for_approval")),
+      getTableTextColumn(getField(fields,"time_for_approval_in_dhms"))
     ],
-    []
+    [type]
   );
 
   const onRowSelect = (rowData) => {
@@ -75,6 +93,7 @@ ApprovalGatesActionableInsightTable.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
+  type: PropTypes.string,
 };
 
 export default ApprovalGatesActionableInsightTable;

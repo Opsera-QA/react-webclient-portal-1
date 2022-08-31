@@ -58,28 +58,6 @@ function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData
         dashboardTags,
         dashboardOrgs,
       );
-    //   const response = {
-    //     "data": {
-    //         "tool": "opsera",
-    //         "data": [
-    //             {
-    //                 "slack" : 0.0,
-    //                 "teams" : 1.0,
-    //                 "email" : 0.0,
-    //                 "jira" : 0.0,
-    //                 "servicenow" : 0.0,
-    //                 "_id" : "624f4031fc6c320012391641",
-    //                 "pipeline_name": "Blank Template (Vignesh)",
-    //                 "count_of_approval_gates" : 1.0,
-    //                 "last_run" : "2022-04-08T17:48:48.935+0000",
-    //                 "last_run_in_day": "120 days back"
-    //             }
-    //         ],
-    //         count: 12,
-    //         "status": 200,
-    //         "status_text": "OK"
-    //     }
-    // };
       let dataObject = response?.data ? response?.data : { data: [], count: [{ count: 0 }] };
       let newFilterDto = filterDto;
 
@@ -117,7 +95,6 @@ function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        123456
         <ApprovalGatesActionableInsightTable
           isLoading={isLoading}
           metrics={metrics}

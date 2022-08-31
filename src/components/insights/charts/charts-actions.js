@@ -626,7 +626,7 @@ chartsActions.approvalSummary = async(getAccessToken, cancelTokenSource,kpiConfi
 
 chartsActions.approvalGatesPipeline = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const apiUrl = "analytics/approvalgate/v1/pipelinesWithApprovalgates";
+  const apiUrl = "analytics/approvalgate/v1/pipelines/approvals/listOfPipelines";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -684,6 +684,36 @@ chartsActions.approvalGatesTableData = async(getAccessToken, cancelTokenSource,k
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+chartsActions.pipelinesWithApprovalgatesTableData = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto,pipeline_id,action)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "analytics/approvalgate/v1/pipelinesWithApprovalgates";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sort: tableFilterDto?.getData("sortOption")?.value,
+    pipeline_id,
+    action
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 
 export default chartsActions;

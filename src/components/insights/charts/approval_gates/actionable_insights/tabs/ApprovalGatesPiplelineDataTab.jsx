@@ -66,7 +66,6 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
     let dashboardOrgs =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
         ?.value;
-        console.log(action,'*** test');
     const response = await chartsActions.approvalGatesTableData(
       getAccessToken,
       cancelSource,
@@ -77,8 +76,8 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
       pipeline_id,
       action
     );
-    let dataObject = response?.data ? response?.data?.connectedAssets?.data : [];
-    let dataCount = response?.data ? response?.data?.connectedAssets?.count : 0;
+    let dataObject = response?.data ? response?.data?.data?.data : [];
+    let dataCount = response?.data ? response?.data?.data?.count : 0;
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", dataCount);
     setFilterModel({ ...newFilterDto });

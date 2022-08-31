@@ -16,7 +16,6 @@ import ApprovalGatesApprovalTab from "./tabs/ApprovalGatesApprovalTab";
 import { faCodePullRequest, faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import ApprovalGatesRejectTab from "./tabs/ApprovalGatesRejectTab";
 import chartsActions from "../../charts-actions";
-import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 
 function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashboardData, request, metrics }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,7 +29,6 @@ function ApprovalGatesExecutedActionableInsightOverlay({ kpiConfiguration, dashb
   const [error, setError] = useState(undefined);
   const [listOfPipelines, setListOfPipelines] = useState(undefined);
   const [activeTab, setActiveTab] = useState("approval");
-  const [blocksData, setBlocksData]= useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
