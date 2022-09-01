@@ -9,6 +9,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabCommitsByAuthorActionableOverlay from "./GitlabCommitsByAuthorActionableOverlay";
 
 function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -19,6 +21,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [users, setUsers] = useState([]);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -68,6 +71,12 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabCommitsByAuthorActionableOverlay metrics={metrics} />
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -78,7 +87,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
             data={metrics}
             {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
             {...config(users)}
-            onClick={() => setShowModal(true)}
+            onClick={onChartClick}
           />
       </div>
   );
