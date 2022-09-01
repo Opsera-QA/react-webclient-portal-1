@@ -37,7 +37,7 @@ export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowR
       disabled={!Array.isArray(workspaceItems) || workspaceItems.length === 0}
       className={className}
       isLoading={isLoading}
-      title={"Launch Existing Workflow"}
+      title={"Launch an existing workflow"}
       subTitle={getExistingWorkflowDescription()}
     />
   );

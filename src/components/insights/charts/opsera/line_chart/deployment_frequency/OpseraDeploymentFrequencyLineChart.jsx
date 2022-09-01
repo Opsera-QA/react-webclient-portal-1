@@ -43,8 +43,173 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration, dashboardTags);
-      const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
+      // const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration, dashboardTags);
+      const response = {
+        "status": 200,
+        "status_text": "ES Pipeline Summary Query Results",
+        "message": "ES Query Response from Living Connection",
+        "data": [
+            {
+                "opseraPipelineDeploymentFrequency": {
+                    "tool": "opsera-pipeline-step-summary",
+                    "data": [
+                        {
+                            "id": "Success",
+                            "color": "green",
+                            "data": [
+                                {
+                                    "x": "2022-08-17",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-18",
+                                    "y": 2
+                                },
+                                {
+                                    "x": "2022-08-19",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-20",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-21",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-22",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-23",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-24",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-25",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-26",
+                                    "y": 3
+                                },
+                                {
+                                    "x": "2022-08-27",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-28",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-29",
+                                    "y": 7
+                                },
+                                {
+                                    "x": "2022-08-30",
+                                    "y": 1
+                                },
+                                {
+                                    "x": "2022-08-31",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-09-01",
+                                    "y": 2
+                                },
+                                {
+                                    "x": "2022-09-02",
+                                    "y": 0
+                                }
+                            ]
+                        },
+                        {
+                            "id": "Failure",
+                            "color": "#CB4335",
+                            "data": [
+                                {
+                                    "x": "2022-08-17",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-18",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-19",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-20",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-21",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-22",
+                                    "y": 1
+                                },
+                                {
+                                    "x": "2022-08-23",
+                                    "y": 2
+                                },
+                                {
+                                    "x": "2022-08-24",
+                                    "y": 1
+                                },
+                                {
+                                    "x": "2022-08-25",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-26",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-27",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-28",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-29",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-08-30",
+                                    "y": 2
+                                },
+                                {
+                                    "x": "2022-08-31",
+                                    "y": 0
+                                },
+                                {
+                                    "x": "2022-09-01",
+                                    "y": 5
+                                },
+                                {
+                                    "x": "2022-09-02",
+                                    "y": 0
+                                }
+                            ]
+                        }
+                    ],
+                    "length": 2,
+                    "status": 200,
+                    "status_text": "OK"
+                }
+            }
+        ]
+    };
+      const dataObject = response?.data && response?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
       assignBooleanColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
@@ -70,13 +235,13 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
+      <div className="new-chart mb-2" style={{height: "250px"}}>
         <ResponsiveLine
           data={metrics}
           {...defaultConfig("Number of Deployments", "Date", 
                       false, false, "wholeNumbers", "monthDate")}
           {...config(getColor)}
-          onClick={() => setShowModal(true)}
+          // onClick={() => setShowModal(true)}
           tooltip={({point, color}) => <ChartTooltip 
                                         titles = {["Date", "Number of Deployments"]}
                                         values = {[String(point.data.xFormatted), point.data.y]}

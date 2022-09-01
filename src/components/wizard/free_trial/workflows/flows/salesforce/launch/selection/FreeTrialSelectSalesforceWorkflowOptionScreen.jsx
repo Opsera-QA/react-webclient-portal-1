@@ -32,8 +32,8 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
     <div className={className}>
       <CenteredContentWrapper>
         <H5FieldSubHeader
-          className={"mt-3 mb-4 mx-3"}
-          subheaderText={"Would you like to create a new Salesforce Workflow or launch an existing one?"}
+          className={"mt-3 mb-5 mx-3"}
+          subheaderText={"Would you like to start a new Opsera Salesforce Workflow or launch an existing one?"}
         />
       </CenteredContentWrapper>
       <Row>
@@ -41,8 +41,8 @@ export default function FreeTrialSelectSalesforceWorkflowOptionScreen(
         <Col xs={12} sm={6} md={6} lg={4} xl={3}>
           <SalesforceSelectionCardBase
             option={LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN}
-            title={"Create Salesforce Workflow"}
-            subTitle={"Set up a new Salesforce Workflow"}
+            title={"Get Started Here!"}
+            subTitle={""}
             onClickFunction={setCurrentScreen}
           />
         </Col>

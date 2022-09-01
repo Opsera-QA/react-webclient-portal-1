@@ -60,7 +60,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
       {/* Narrow screens vs wide ...*/}
       <span className={"d-none d-lg-inline"}>
         <HeaderNavigationBarItem
-          className={"mr-1 no-wrap"}
+          className={"mr-1 no-wrap "}
           currentScreen={currentScreen}
           setCurrentScreen={handleScreenClick}
           screenLabel={"Unified Insights"}

@@ -70,13 +70,96 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineInfo", kpiConfiguration, dashboardTags, filterDto);
-      let dataObject = response?.data?.data[0]?.opseraPipelineInfo?.data;
+      // const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineInfo", kpiConfiguration, dashboardTags, filterDto);
+      const response = {
+        "status": 200,
+        "status_text": "ES Pipeline Summary Query Results",
+        "message": "ES Query Response from Living Connection",
+        "data": [
+            {
+                "opseraPipelineInfo": {
+                    "tool": "opsera-pipeline-step-summary",
+                    "data": [
+                        {
+                            "_id": {
+                                "id": "615672c363b31fddb73b3b3a",
+                                "pipelineId": "AKS Azure Functions Test Automation DO NOT DELETE",
+                                "run": 177
+                            },
+                            "pipelineId": "AKS Azure Functions Test Automation DO NOT DELETE-177",
+                            "pipeline_name": "AKS Azure Functions Test Automation DO NOT DELETE",
+                            "run_count": 177,
+                            "duration": 58.21,
+                            "status": "failure",
+                            "timestamp": "2022-09-01T18:22:34.995Z"
+                        },
+                        {
+                            "_id": {
+                                "id": "615672c363b31fddb73b3b3a",
+                                "pipelineId": "AKS Azure Functions Test Automation DO NOT DELETE",
+                                "run": 176
+                            },
+                            "pipelineId": "AKS Azure Functions Test Automation DO NOT DELETE-176",
+                            "pipeline_name": "AKS Azure Functions Test Automation DO NOT DELETE",
+                            "run_count": 176,
+                            "duration": 2.7,
+                            "status": "failure",
+                            "timestamp": "2022-09-01T16:32:52.136Z"
+                        },
+                        {
+                            "_id": {
+                                "id": "61396fc8b4248c4b40a78bee",
+                                "pipelineId": "AKS Azure Deploy Test Automation DO NOT DELETE",
+                                "run": 87
+                            },
+                            "pipelineId": "AKS Azure Deploy Test Automation DO NOT DELETE-87",
+                            "pipeline_name": "AKS Azure Deploy Test Automation DO NOT DELETE",
+                            "run_count": 87,
+                            "duration": 2.7,
+                            "status": "failure",
+                            "timestamp": "2022-09-01T16:30:50.307Z"
+                        },
+                        {
+                            "_id": {
+                                "id": "61396fc8b4248c4b40a78bee",
+                                "pipelineId": "AKS Azure Deploy Test Automation DO NOT DELETE",
+                                "run": 86
+                            },
+                            "pipelineId": "AKS Azure Deploy Test Automation DO NOT DELETE-86",
+                            "pipeline_name": "AKS Azure Deploy Test Automation DO NOT DELETE",
+                            "run_count": 86,
+                            "duration": 1.52,
+                            "status": "failure",
+                            "timestamp": "2022-09-01T16:25:02.059Z"
+                        },
+                        {
+                            "_id": {
+                                "id": "60e713a24a0da574aa6f2b0b",
+                                "pipelineId": "Terraform Test Automation DO NOT DELETE",
+                                "run": 314
+                            },
+                            "pipelineId": "Terraform Test Automation DO NOT DELETE-314",
+                            "pipeline_name": "Terraform Test Automation DO NOT DELETE",
+                            "run_count": 314,
+                            "duration": 55.34,
+                            "status": "failure",
+                            "timestamp": "2022-09-01T15:57:30.888Z"
+                        }
+                    ],
+                    "length": 5,
+                    "status": 200,
+                    "status_text": "OK",
+                    "count": 3189
+                }
+            }
+        ]
+    };
+      let dataObject = response?.data[0]?.opseraPipelineInfo?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraPipelineInfo?.count);
+        newFilterDto.setData("totalCount", response?.data[0]?.opseraPipelineInfo?.count);
         setTableFilterDto({...newFilterDto});
       }
     }
@@ -103,7 +186,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        onRowSelect={onRowSelect}
+        // onRowSelect={onRowSelect}
       />
     );
   };

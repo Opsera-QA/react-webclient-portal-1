@@ -149,7 +149,7 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{height: "300px"}}>
+        <div className="new-chart mb-3" style={{height: "150px"}}>
           <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
             <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
           </div>
@@ -168,7 +168,7 @@ function VanityMetricContainer(
     // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
+        <div className="new-chart mb-3" style={{ height: "150px" }}>
           <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <InfoDialog message="No Data is available for this chart at this time." />
           </div>
@@ -224,9 +224,9 @@ function VanityMetricContainer(
         <div>
           {getDateBadge()}
         </div>
-        <div className={"d-flex"}>
+        {/* <div className={"d-flex"}>
           {getAllTags()}
-        </div>
+        </div> */}
       </div>
     </div>
   );

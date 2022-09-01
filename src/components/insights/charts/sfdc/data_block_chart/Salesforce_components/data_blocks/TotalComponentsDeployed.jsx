@@ -10,9 +10,9 @@ function TotalComponentsDeployed({ score, icon, className, dataPoint, onSelect, 
         className={`${className} p-3`}
         score={score}
         topText={"Total Components Deployed"}
-        bottomText={"Previous Result: " + lastScore}
-        icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        // bottomText={"Previous Result: " + lastScore}
+        // icon={icon}
+        // iconOverlayBody = {iconOverlayBody}
         dataPoint={dataPoint}
 
       />

@@ -16,7 +16,6 @@ function DashboardViewer({ dashboardModel, loadData }) {
   const [kpis, setKpis] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

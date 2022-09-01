@@ -69,17 +69,66 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
           )
           ]?.value;
 
-      const response = await chartsActions.getSfdcMetrics(
-        kpiConfiguration,
-        getAccessToken,
-        cancelSource,
-        dashboardTags,
-        dashboardOrgs,
-      );
+      // const response = await chartsActions.getSfdcMetrics(
+      //   kpiConfiguration,
+      //   getAccessToken,
+      //   cancelSource,
+      //   dashboardTags,
+      //   dashboardOrgs,
+      // );
+
+      const response = {
+        "data": {
+            "data": [
+                {
+                    "currentResults": {
+                        "totalComponentsDeployed": 124,
+                        "averageComponentsDeployedPerExecution": 3,
+                        "totalPipelineExecutionsWithValidation": 13,
+                        "totalPipelineExecutionsWithUnitTests": 11,
+                        "totalPipelineExecutionsWithDeployment": 8,
+                        "totalSalesforcePipelines": 21,
+                        "totalSalesforcePipelineExecutions": 41
+                    },
+                    "previousResults": {
+                        "totalComponentsDeployed": 236,
+                        "averageComponentsDeployedPerExecution": 11.8,
+                        "totalPipelineExecutionsWithValidation": 21,
+                        "totalPipelineExecutionsWithUnitTests": 0,
+                        "totalPipelineExecutionsWithDeployment": 18,
+                        "totalSalesforcePipelines": 39,
+                        "totalSalesforcePipelineExecutions": 26589
+                    },
+                    "trends": {
+                        "totalComponentsDeployed": "Red",
+                        "averageComponentsDeployedPerExecution": "Red",
+                        "totalPipelineExecutionsWithValidation": "Red",
+                        "totalPipelineExecutionsWithUnitTests": "Neutral",
+                        "totalPipelineExecutionsWithDeployment": "Red",
+                        "totalSalesforcePipelines": "Red",
+                        "totalSalesforcePipelineExecutions": "Red"
+                    },
+                    "dateRanges": {
+                        "current": {
+                            "$gte": "2022-08-11T07:00:00.000Z",
+                            "$lt": "2022-08-12T07:00:00.000Z"
+                        },
+                        "previous": {
+                            "$gte": "2022-08-10T07:00:00.000Z",
+                            "$lt": "2022-08-11T07:00:00.000Z"
+                        }
+                    }
+                }
+            ],
+            "length": 1,
+            "status": 200,
+            "status_text": "OK"
+        }
+    };
 
       const dataObject =
-        response?.data && response?.status === 200
-          ? response?.data?.data?.data
+        response?.data && response?.data?.status === 200
+          ? response?.data?.data
           : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -173,7 +222,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
     }
 
     return (
-      <div className="new-chart mb-3" style={{ minHeight: "300px" }}>
+      <div className="new-chart mb-3" style={{ minHeight: "150px" }}>
         <Container>
           <Row className="p-2 gray">
             {dataPointHelpers.isDataPointVisible(totalComponentsDataPoint) &&

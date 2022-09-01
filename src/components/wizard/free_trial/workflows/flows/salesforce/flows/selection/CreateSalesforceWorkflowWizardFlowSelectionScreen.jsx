@@ -87,8 +87,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             icon={faSalesforce}
             iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             description={`
-              Set up a basic Organization Sync workflow for syncing your Salesforce Organizations. 
-              This operation will allow you to select modified files from your Git repository or Salesforce Organization and move it to the next organization.
+              Move files from your Git repository or Salesforce Organization to another organization.
             `}
             onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
@@ -103,7 +102,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             icon={faSalesforce}
             iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             description={`
-              Set up an Organization Sync workflow that includes an explicit unit testing step. 
+              Move files from your Git repository or Salesforce Organization to another organization including an explicit unit testing step. 
             `}
             onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
@@ -118,7 +117,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             icon={faSalesforce}
             iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             description={`
-              Set up an Organization Sync workflow that includes an explicit unit testing step and backup step that run prior to deployment. 
+              The complete Organization Sync workflow with explicit unit testing and backup steps. 
             `}
             onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
@@ -133,7 +132,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             icon={faSalesforce}
             iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             description={`
-              Setup an Organization Sync task to run on demand. This will move metadata into a specific branch for users to make modifications and then use it for a later deployment.
+              Run an Organization Sync task to run on demand.
             `}
             onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
@@ -148,7 +147,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             icon={faSalesforce}
             iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             description={`
-              Handle a Merge Sync on demand from Salesforce to Git
+              Make handling code merges easier!
             `}
             onClickFunction={handleFlowSelection}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}

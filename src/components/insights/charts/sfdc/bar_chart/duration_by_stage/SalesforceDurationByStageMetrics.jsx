@@ -70,18 +70,270 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
           ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
       setGoalsData(goals);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "salesforceDurationByStage",
-        kpiConfiguration,
-        dashboardTags,
-        null,
-        null,
-        dashboardOrgs
-      );
-      let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data : [];
-      let means = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data[6] : [];
+      // const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      //   getAccessToken,
+      //   cancelSource,
+      //   "salesforceDurationByStage",
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   null,
+      //   null,
+      //   dashboardOrgs
+      // );
+      const response = {
+        "status": 200,
+        "status_text": "ES Pipeline Summary Query Results",
+        "message": "ES Query Response from Living Connection",
+        "data": [
+            {
+                "salesforceDurationByStage": {
+                    "tool": "opsera-pipeline-step-summary",
+                    "data": [
+                        [
+                            {
+                                "id": "Create Package",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 2.9,
+                                        "count": 35,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 0,
+                                      "count": 0,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 2.9
+                            }
+                        ],
+                        [
+                            {
+                                "id": "Validate Package",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 2.26,
+                                        "count": 41,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 0,
+                                      "count": 0,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 2.26
+                            }
+                        ],
+                        [
+                            {
+                                "id": "Profile Migration",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 1.35,
+                                        "count": 4,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 0,
+                                      "count": 0,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 1.35
+                            }
+                        ],
+                        [
+                            {
+                                "id": "Back Up",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 1.35,
+                                        "count": 23,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 0,
+                                      "count": 0,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 1.35
+                            }
+                        ],
+                        [
+                            {
+                                "id": "Unit Testing",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 5.16,
+                                        "count": 11,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 0,
+                                      "count": 0,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 5.16
+                            }
+                        ],
+                        [
+                            {
+                                "id": "Deploy",
+                                "data": [
+                                    {
+                                        "_id": "2022-08-17T07:00:00.000Z",
+                                        "lowerBound": "2022-08-17T07:00:00.000Z",
+                                        "upperBound": "2022-08-24T07:00:00.000Z",
+                                        "x": "2022-08-17",
+                                        "y": 1.93,
+                                        "count": 10,
+                                        "range": "2022-08-17 to 2022-08-24"
+                                    },
+                                    {
+                                      "_id": "2022-08-24T07:00:00.000Z",
+                                      "lowerBound": "2022-08-24T07:00:00.000Z",
+                                      "upperBound": "2022-09-01T07:00:00.000Z",
+                                      "x": "2022-08-24",
+                                      "y": 1.88,
+                                      "count": 7,
+                                      "range": "2022-08-24 to 2022-09-01"
+                                  },
+                                    {
+                                        "_id": "2022-09-01",
+                                        "x": "2022-09-01",
+                                        "y": 0,
+                                        "count": 0,
+                                        "lowerBound": "2022-09-0107:00:00.000Z",
+                                        "upperBound": "2022-09-0107:00:00.000Z",
+                                        "range": "2022-09-01 to 2022-09-01"
+                                    }
+                                ],
+                                "min": 0,
+                                "max": 1.93
+                            }
+                        ],
+                        [
+                            {
+                                "_id": 1,
+                                "create_package_count": 35,
+                                "validate_package_count": 41,
+                                "backup_count": 23,
+                                "unit_testing_count": 11,
+                                "profile_migration_count": 4,
+                                "artifact_push_count": 23,
+                                "deploy_count": 17,
+                                "create_package_mean": 2.9,
+                                "validate_package_mean": 2.26,
+                                "unit_testing_mean": 5.16,
+                                "profile_migration_mean": 1.35,
+                                "backup_mean": 1.35,
+                                "artifact_push_mean": 3.65,
+                                "deploy_mean": 1.93
+                            }
+                        ]
+                    ],
+                    "length": 1,
+                    "status": 200,
+                    "status_text": "OK"
+                }
+            }
+        ]
+    };
+      let dataObject = response?.data ? response?.data[0]?.salesforceDurationByStage?.data : [];
+      let means = response?.data ? response?.data[0]?.salesforceDurationByStage?.data[6] : [];
       assignStandardLineColors(dataObject, true);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -126,7 +378,7 @@ function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguratio
     }
 
     return (
-      <div className="new-chart mb-3" style={{ minHeight: "450px" }}>
+      <div className="new-chart mb-2" style={{ minHeight: "300px" }}>
         <Row className="mr-1">
           {dataPointHelpers.isDataPointVisible(createPackageDataPoint) &&
           <Col xs={12} sm={6}>

@@ -27,7 +27,7 @@ export default function OpseraInfinityLogoSelectionCardBase(
         title={title}
         subTitle={subTitle}
         titleClassName={"mx-auto mt-2"}
-        subTitleClassName={"mx-auto"}
+        subTitleClassName={"mx-auto mt-2"}
         iconSize={"4x"}
         isLoading={isLoading}
       />

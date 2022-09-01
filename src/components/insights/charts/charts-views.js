@@ -27,12 +27,12 @@ export const standardColors = [
 ];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 
-export const newChartColors = [ 
+export const newChartColors = [
   METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
   METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
   METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3,
   METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
-  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5
+  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5,
 ];
 
 export const statusColors = {
@@ -63,9 +63,10 @@ export const assignBooleanColors = (data) => {
   if (Array.isArray(data)) {
     data.forEach((data) => {
       if (data.id) {
-        data.color = data.id === "Success" || data.Successful ? mainColor : failColor;
+        data.color =
+          data.id === "Success" || data.Successful ? successColor : failColor;
       } else {
-        data.Success_color = mainColor;
+        data.Success_color = successColor;
         data.Failed_color = failColor;
       }
     });
@@ -187,7 +188,8 @@ export const assignStandardLineColors = (data, uniColor = false) => {
 
 export const getColor = (data) => data.color;
 export const getColorByData = (data) => data.data.color;
-export const getColorById = (data) => (data.id === "Successful" ? mainColor : failColor);
+export const getColorById = (data) =>
+  data.id === "Successful" ? mainColor : failColor;
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 // ----- End of functions that that render colors assigned from above functions -----
@@ -236,7 +238,9 @@ export const spaceOutTimeTakenLegend = (data) => {
 };
 export const spaceOutMergeRequestTimeTakenLegend = (data) => {
   if (Array.isArray(data)) {
-    data.forEach((d) => (d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]));
+    data.forEach(
+      (d) => (d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]),
+    );
   }
 };
 export const spaceOutServiceNowCountBySeverityLegend = (data) => {
@@ -269,7 +273,10 @@ const formats = {
     return date[2] + " " + date[3];
   },
   yearMonthDate: (d) => typeof d === "string" && d.split("T")[0],
-  cutoffString: (d) => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
+  cutoffString: (d) =>
+    typeof d === "string" && d.length > 0
+      ? d.slice(0, 8) + (d.length > 8 ? "..." : "")
+      : "",
   values: (d) => /(?:(?!-).)*/.exec(d)[0],
   subString: (d) => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
@@ -284,9 +291,14 @@ export const defaultConfig = (
   leftLabelFormat = "",
   bottomLabelFormat = "",
   isLegendHidden = false,
-  symbol = "square"
+  symbol = "square",
 ) => ({
-  margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, left: largeLeftSpaceRequired ? 100 : 60 },
+  margin: {
+    top: 40,
+    right: 20,
+    bottom: largeBottomSpaceRequired ? 80 : 60,
+    left: largeLeftSpaceRequired ? 100 : 60,
+  },
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,

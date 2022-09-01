@@ -27,10 +27,10 @@ function SalesforceDurationByStageBarChartBase({ metric, kpiConfiguration, dashb
 
   return (
     <div style={{ height: "150px" }}>
-       <div className="text-right pr-3">
+       {/* <div className="text-right pr-3">
         {min ? <MetricBadgeBase badgeText={`Minimum: ${min} Minutes`} /> : ''}
         {max ? <MetricBadgeBase badgeText={`Maximum: ${max} Minutes`} /> : ''}
-      </div>
+      </div> */}
       <ResponsiveLine
         data={metric}
         {...defaultConfig("Duration (min)", "Date", false, true, "wholeNumbers", "monthDate")}

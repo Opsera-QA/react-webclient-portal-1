@@ -10,9 +10,9 @@ function AvgComponentsDeployedPerExecution({ score, icon, className, dataPoint, 
         className={`${className} p-3`}
         score={score}
         topText={"Average Components Deployed"}
-        bottomText={"Previous Result: " + lastScore}
-        icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        // bottomText={"Previous Result: " + lastScore}
+        // icon={icon}
+        // iconOverlayBody = {iconOverlayBody}
         dataPoint={dataPoint}
 
       />

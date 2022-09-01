@@ -10,9 +10,9 @@ function TotalSalesforcePipelineExecutions({ score, icon, className, dataPoint, 
         className={`${className} p-3`}
         score={score}
         topText={"Total Pipeline Executions"}
-        bottomText={"Previous Result: " + lastScore}
-        icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        // bottomText={"Previous Result: " + lastScore}
+        // icon={icon}
+        // iconOverlayBody = {iconOverlayBody}
         dataPoint={dataPoint}
 
       />

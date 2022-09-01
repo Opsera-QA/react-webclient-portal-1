@@ -10,9 +10,9 @@ function TotalPipelineExecutionDeployment({ score, icon, className, dataPoint, o
         className={`${className} p-3`}
         score={score}
         topText={" Total Deployments"}
-        bottomText={"Previous Result: " + lastScore}
-        icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        // bottomText={"Previous Result: " + lastScore}
+        // icon={icon}
+        // iconOverlayBody = {iconOverlayBody}
         dataPoint={dataPoint}
 
       />

@@ -10,9 +10,9 @@ function TotalPipelinesExecutionsUnitTests({ score, icon, className, dataPoint, 
         className={`${className} p-3`}
         score={score}
         topText={"Total Unit Tests"}
-        bottomText={"Previous Result: " + lastScore}
-        icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        // bottomText={"Previous Result: " + lastScore}
+        // icon={icon}
+        // iconOverlayBody = {iconOverlayBody}
         dataPoint={dataPoint}
 
       />

@@ -13,7 +13,7 @@ function MetricDateRangeBadge(
   }) {
   const getDateBadgeText = () => {
     if (hasDateValue(startDate) !== true || hasDateValue(endDate) !== true) {
-      const formattedStartDate = formatDate(addDays(new Date(), -90));
+      const formattedStartDate = formatDate(addDays(new Date(), -15));
       const formattedEndDate = formatDate(new Date());
       return (`${formattedStartDate} to ${formattedEndDate}`);
     }

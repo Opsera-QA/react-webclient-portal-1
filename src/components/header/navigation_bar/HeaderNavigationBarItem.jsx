@@ -72,7 +72,7 @@ export default function HeaderNavigationBarItem(
   return (
     <div className={className}>
       <div
-        className={"mx-5 h-100 d-flex flex-column"}
+        className={"mx-5 h-100 d-flex flex-column topNavLinkText"}
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >

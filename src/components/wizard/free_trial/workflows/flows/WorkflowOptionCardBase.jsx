@@ -34,7 +34,7 @@ export default function WorkflowOptionCardBase(
         title={title}
         subTitle={subTitle}
         titleClassName={"px-1 mx-auto"}
-        subTitleClassName={"px-1 mx-auto"}
+        subTitleClassName={"px-1 mx-auto iconTitleBarSubTitleText"}
         iconSize={"4x"}
       />
     );
