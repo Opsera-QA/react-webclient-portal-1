@@ -1,6 +1,8 @@
-import {ApiService, axiosApiService} from "../../api/apiService";
+import { ApiService, axiosApiService } from "../../api/apiService";
 //import toolsActions from "../inventory/tools/tools-actions";
 import baseActions from "../../utils/actionsBase";
+import { stringHelper } from "components/common/helpers/string/string.helper";
+import { generateUUID } from "components/common/helpers/string-helpers";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
@@ -65,9 +67,10 @@ userActions.isDomainAvailable = async (domain) => {
 //  this needs to be rewritten to use the soft token
 userActions.createFreeTrialAccount = async (registrationModel) => {
   const finalObject = registrationModel?.getPersistData();
+  const company = finalObject?.company;
   const attributes = {
     title: finalObject?.title,
-    company: finalObject?.company,
+    company: company,
   };
   const configuration = {
     cloudProvider: "GKE",
@@ -77,7 +80,7 @@ userActions.createFreeTrialAccount = async (registrationModel) => {
   finalObject.title = undefined;
   finalObject.attributes = attributes;
   finalObject.configuration = configuration;
-  finalObject.organizationName = "freetrial";
+  finalObject.organizationName = `${stringHelper.replaceSpacesWithUnderscores(company)}-${finalObject?.email}-${generateUUID()}`;
   const apiUrl = "/users/create";
 
   return await new ApiService(apiUrl, {}, null, finalObject).post()
