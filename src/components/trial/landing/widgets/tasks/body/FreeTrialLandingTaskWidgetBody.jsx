@@ -8,6 +8,8 @@ import {
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 import FreeTrialLandingTaskWidgetAnalyticsBody
   from "components/trial/landing/widgets/tasks/analytics/FreeTrialLandingTaskWidgetAnalyticsBody";
+import FreeTrialLandingTaskWidgetTaskActivityLogsPanel
+  from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskActivityLogsPanel";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {
@@ -31,11 +33,10 @@ export default function FreeTrialLandingTaskWidgetBody(
         );
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
         return (
-          <div className={"mb-2"}>
-            <TaskActivityPanel
-              taskModel={selectedTask}
-            />
-          </div>
+          <FreeTrialLandingTaskWidgetTaskActivityLogsPanel
+            taskModel={selectedTask}
+            className={"m-2 mb-3"}
+          />
         );
       case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
         return (

@@ -22,6 +22,7 @@ function TaskActivityLogTreeTable(
     setCurrentRunNumber,
     setCurrentTaskId,
     taskRunCount,
+    showFilterContainerIcon,
   }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -110,7 +111,7 @@ function TaskActivityLogTreeTable(
       setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
       title={"Activity Logs"}
-      titleIcon={faClipboardList}
+      titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
       dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
@@ -134,6 +135,7 @@ TaskActivityLogTreeTable.propTypes = {
   ]),
   setCurrentTaskId: PropTypes.func,
   taskRunCount: PropTypes.number,
+  showFilterContainerIcon: PropTypes.bool,
 };
 
 export default TaskActivityLogTreeTable;

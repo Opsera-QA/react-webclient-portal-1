@@ -15,6 +15,7 @@ export default function FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel(
   return (
     <div className={className}>
       <PipelineActivityLogTreeTable
+        showTableIcon={false}
         pipeline={selectedPipeline}
         pipelineId={selectedPipeline?._id}
         pipelineRunCount={selectedPipeline?.workflow?.run_count}

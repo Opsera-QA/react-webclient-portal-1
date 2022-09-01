@@ -27,6 +27,7 @@ function PipelineActivityLogTreeTable(
     pipelineId,
     pipelineRunCount,
     className,
+    showFilterContainerIcon,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -283,7 +284,7 @@ function PipelineActivityLogTreeTable(
         title={"Pipeline Logs"}
         inlineFilters={getInlineFilters()}
         dropdownFilters={getDropdownFilters()}
-        titleIcon={faClipboardList}
+        titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
         body={getPipelineActivityTable()}
         supportSearch={true}
         exportButton={
@@ -303,6 +304,7 @@ PipelineActivityLogTreeTable.propTypes = {
   pipelineId: PropTypes.string,
   pipelineRunCount: PropTypes.number,
   className: PropTypes.string,
+  showFilterContainerIcon: PropTypes.bool,
 };
 
 export default PipelineActivityLogTreeTable;
