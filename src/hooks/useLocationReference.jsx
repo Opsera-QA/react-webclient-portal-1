@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { useLocation } from "react-router-dom";
+import { constantsHelper } from "temp-library-components/helpers/constants/constants.helper";
 
 export const PUBLIC_PATHS = {
   LOGIN: "/login",
   SIGNUP: "/signup",
+  FREQUENTLY_ASKED_QUESTIONS: "/faq",
+  HELP_DOCUMENTATION: "/help-documentation",
   REGISTRATION: "/registration",
   FREE_TRIAL_REGISTRATION: "/trial/registration",
   LDAP_ACCOUNT_REGISTRATION: "/account/registration",
@@ -16,13 +19,13 @@ const isPathPublic = (path) => {
     return false;
   }
 
+  if (constantsHelper.isValueValid(PUBLIC_PATHS, path) === true) {
+    return true;
+  }
+
   return (
-    path === "/login" ||
-    path === "/signup" ||
-    path === "/registration" ||
-    path === "/trial/registration" ||
-    path.includes("/account/registration") ||
-    path.includes("/signup/awsmarketplace")
+    path.includes(PUBLIC_PATHS.LDAP_ACCOUNT_REGISTRATION)
+    || path.includes(PUBLIC_PATHS.AWS_MARKETPLACE_REGISTRATION)
   );
 };
 
