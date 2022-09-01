@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Navbar from "./Navbar";
@@ -9,10 +9,14 @@ import { axiosApiService } from "api/apiService";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { Security } from "@okta/okta-react";
+import { LoginCallback, Security } from "@okta/okta-react";
 import AppRoutes from "./AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import {generateUUID} from "components/common/helpers/string-helpers";
+import OpseraFooter from "components/footer/OpseraFooter";
+import LoginForm from "components/login/LoginForm";
+import Logout from "components/login/Logout";
+import useLocationReference from "hooks/useLocationReference";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -20,8 +24,8 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [isPublicPathState, setIsPublicPathState] = useState(false);
   const [data, setData] = useState(null);
+  const { isPublicPathState } = useLocationReference();
 
   const history = useHistory();
 
@@ -75,12 +79,6 @@ const AppWithRouterAccess = () => {
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
       setData(null);
-
-      if (isPublicPath(history.location.pathname)) {
-        console.info("Public path identified");
-        setIsPublicPathState(true);
-      }
-
       return;
     }
 
@@ -172,6 +170,38 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const onAuthResume = async () => {
+    history.push('/');
+  };
+
+  const getAccessibleRoutes = () => {
+    if (!authenticatedState && isPublicPathState !== true) {
+      return (
+        <div className={"container-fluid m-0"}>
+          <div className={"d-flex flex-row"}>
+            <div className={"w-100"}>
+              <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
+              <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
+              <Route path="/logout" exact component={Logout} />
+            </div>
+          </div>
+          <OpseraFooter />
+        </div>
+      );
+    }
+
+    return (
+      <AppRoutes
+        authenticatedState={authenticatedState}
+        authClient={authClient}
+        isPublicPathState={isPublicPathState}
+        OKTA_CONFIG={OKTA_CONFIG}
+        userData={data}
+        hideSideBar={hideSideBar}
+      />
+    );
+  };
+
   if (!data && loading && !error) {
     return (<LoadingDialog />);
   }
@@ -181,15 +211,7 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
         <ToastContextProvider navBar={getNavBar()}>
-
-          <AppRoutes
-            authenticatedState={authenticatedState}
-            authClient={authClient}
-            isPublicPathState={isPublicPathState}
-            OKTA_CONFIG={OKTA_CONFIG}
-            userData={data}
-            hideSideBar={hideSideBar}
-          />
+          {getAccessibleRoutes()}
         </ToastContextProvider>
       </AuthContextProvider>
     </Security>
