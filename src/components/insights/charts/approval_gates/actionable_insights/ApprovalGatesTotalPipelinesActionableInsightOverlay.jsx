@@ -9,6 +9,7 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
 import ApprovalGatesActionableInsightTotalPipelinesTable from "./ApprovalGatesActionableInsightTotalPipelinesTable";
+import { metricHelpers } from "components/insights/metric.helpers";
 
 function ApprovalGatesTotalPipelinesActionableInsightOverlay({
   kpiConfiguration,
@@ -57,17 +58,9 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
   ) => {
     try {
       setIsLoading(true);
-      let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-        ]?.value;
-
-      let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations",
-          )
-        ]?.value;
+      let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+      let dashboardTags = dashboardMetricFilter?.tags;
+      let dashboardOrgs = dashboardMetricFilter?.organizations;
       const response = await approvalGatesChartsActions.pipelinesWithApprovalgatesTableData(
         getAccessToken,
         cancelSource,
