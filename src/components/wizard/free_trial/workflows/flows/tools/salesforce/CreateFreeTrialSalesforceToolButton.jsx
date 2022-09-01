@@ -61,6 +61,7 @@ export default function CreateFreeTrialSalesforceToolButton(
       tokenVaultKey,
       configuration?.sfdc_token,
     );
+    configuration.buildType = "sfdx"; // by default make it to have sfdx
 
     return await toolsActions.updateToolConnectionDetails(
       getAccessToken,
