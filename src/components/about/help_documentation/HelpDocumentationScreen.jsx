@@ -5,7 +5,7 @@ import HelpDocumentation from "components/common/help/overlay/HelpDocumentation"
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 
 const HelpDocumentationScreen = () => {
-  useBackgroundColorReference(true);
+  useBackgroundColorReference();
   const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
 
   if (featureFlagHideItemInTest() !== false || featureFlagHideItemInProd() !== false) {
