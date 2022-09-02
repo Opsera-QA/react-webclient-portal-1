@@ -6,8 +6,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import InputContainer from "components/common/inputs/InputContainer";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import InputLabelBase from "components/common/inputs/InputLabelBase";
+import ClearDataIcon from "../../../../../common/icons/field/ClearDataIcon";
 
 export default function CreateSalesforceWorkflowWizardToolInputBase(
   {
@@ -105,18 +104,37 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
     return "Create a new Account or Select a Registered One";
   };
 
+  const getInputLabel = () => {
+    return(
+        <div className={"mb-2"}>
+          <div className="d-flex justify-content-between">
+            <div>{"Account"}</div>
+            <div className={"d-flex"}>
+              <ClearDataIcon
+                  clearValueFunction={clearDataFunction}
+                  className={"ml-2"}
+              />
+            </div>
+          </div>
+        </div>
+    );
+  };
+
   const setDataFunction = (selectedOption) => {
     const newModel = model?.getNewInstance(selectedOption?.configuration, false);
     setToolId(selectedOption?._id);
     setModel({...newModel});
   };
 
+  const clearDataFunction = (selectedOption) => {
+    const newModel = model?.getNewInstance(selectedOption?.configuration, false);
+    setToolId("");
+    setModel({...newModel});
+  };
+
   return (
     <InputContainer>
-      <InputLabelBase
-        className={"mb-2"}
-        label={"Account"}
-      />
+      {getInputLabel()}
       <StandaloneSelectInput
         className={className}
         value={toolId}

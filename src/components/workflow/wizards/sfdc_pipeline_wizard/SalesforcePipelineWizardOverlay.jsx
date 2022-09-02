@@ -65,7 +65,7 @@ export default function SalesforcePipelineWizardOverlay(
     try {
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
-
+      closePanel();
     }
     catch (error) {
       if (isMounted?.current === true) {
