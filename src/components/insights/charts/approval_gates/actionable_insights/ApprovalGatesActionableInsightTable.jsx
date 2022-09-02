@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import ApprovalGatesInsightsTableMetadata from "./approval-gates-actionable-metadata";
 import {
-  getChartPipelineStatusColumn,
-  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import ApprovalgatesTotalPipelinesMetadata from "./approval-gates-total-pipelines-metadata";
+import { useHistory } from "react-router";
 
 function ApprovalGatesActionableInsightTable({
   metrics,
@@ -25,23 +22,19 @@ function ApprovalGatesActionableInsightTable({
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Approval Gates report is currently unavailable at this time";
   const fields = ApprovalGatesInsightsTableMetadata.fields;
+  const history = useHistory();
   const columns = useMemo(
     () => [
-      getTableDateTimeColumn(getField(fields,"previous_step_start_time")),
-      getTableTextColumn(getField(fields,"run_count")),
-      getTableDateTimeColumn(getField(fields,"run_start_time")),
-      getTableDateTimeColumn(getField(fields,"run_end_time")),
-      getTableTextColumn(getField(fields,"step_index")),
       getTableTextColumn(getField(fields,"pipeline_name")),
+      getTableTextColumn(getField(fields,"run_count")),
       getTableTextColumn(getField(fields,"time_for_approval_in_dhms"))
     ],
     []
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?._id?.id} runCount={rowData?.original?._id?.run} />
-    );
+    console.log(rowData.original,'**-1');
+    // history.push(`/workflow/details/${(rowData.original?._id)}/summary`);
   };
 
   const getTable = () => {
