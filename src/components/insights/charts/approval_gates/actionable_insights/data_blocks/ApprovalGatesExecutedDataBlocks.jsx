@@ -17,7 +17,7 @@ function ApprovalGatesExecutedDataBlocks({ metrics }) {
             <ApprovalGatesDataBlockBase score={metrics.total_pipelines_rejected} subtitle={'Total Approvals Rejected'} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={`${seconds} Seconds`} subtitle={'Average approval time'} />
+            <ApprovalGatesDataBlockBase score={`${seconds} Seconds`} subtitle={'Average Approval Time'} />
           </Col>
         </Row>
       </div>

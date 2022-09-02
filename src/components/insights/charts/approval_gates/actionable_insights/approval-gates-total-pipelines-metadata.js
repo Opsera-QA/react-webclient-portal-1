@@ -35,10 +35,6 @@ const ApprovalgatesTotalPipelinesMetadata = {
         id: "pipeline_name"
       },
       {
-        label: "Last Run",
-        id: "last_run"
-      },
-      {
         label: "Last Run in Days",
         id: "last_run_in_days"
       }
