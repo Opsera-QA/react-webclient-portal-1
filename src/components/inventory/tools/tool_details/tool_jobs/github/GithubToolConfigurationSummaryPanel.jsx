@@ -6,8 +6,37 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import VaultField from "components/common/fields/text/VaultField";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
+export default function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
+  const getDynamicFields = () => {
+    if (isFreeTrial !== true) {
+      return (
+        <>
+          <Col lg={12}>
+            <BooleanField dataObject={githubToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
+          </Col>
+          <Col lg={6}>
+            <VaultField dataObject={githubToolConfigurationModel} fieldName={"jAuthToken"} />
+          </Col>
+          <Col lg={6}>
+            <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretPrivateKey"} />
+          </Col>
+          <Col lg={6}>
+            <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretAccessTokenKey"} />
+          </Col>
+          <Col lg={12}>
+            <VaultField dataObject={githubToolConfigurationModel} fieldName={"accountPassword"} />
+          </Col>
+        </>
+      );
+    }
+  };
+
   if (githubToolConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -18,21 +47,7 @@ function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
         <Col lg={6}>
           <TextFieldBase dataObject={githubToolConfigurationModel} fieldName={"accountUsername"} />
         </Col>
-        <Col lg={12}>
-          <BooleanField dataObject={githubToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
-        </Col>
-        {/*<Col lg={6}>*/}
-        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"jAuthToken"} />*/}
-        {/*</Col>*/}
-        {/*<Col lg={6}>*/}
-        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretPrivateKey"} />*/}
-        {/*</Col>*/}
-        {/*<Col lg={6}>*/}
-        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretAccessTokenKey"} />*/}
-        {/*</Col>*/}
-        {/*<Col lg={12}>*/}
-        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"accountPassword"} />*/}
-        {/*</Col>*/}
+        {getDynamicFields()}
       </Row>
     </SummaryPanelContainer>
   );
@@ -41,5 +56,3 @@ function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
 GithubToolConfigurationSummaryPanel.propTypes = {
   githubToolConfigurationModel: PropTypes.object,
 };
-
-export default GithubToolConfigurationSummaryPanel;
