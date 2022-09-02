@@ -10,6 +10,8 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabMergeRequestsPushesAndCommentsActionableOverlay from "./GitlabMergeRequestsPushesAndCommentsActionableOverlay";
 
 function GitlabMergeRequestsPushesAndComments({
   kpiConfiguration,
@@ -25,6 +27,7 @@ function GitlabMergeRequestsPushesAndComments({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -78,6 +81,12 @@ function GitlabMergeRequestsPushesAndComments({
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabMergeRequestsPushesAndCommentsActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -89,7 +98,7 @@ function GitlabMergeRequestsPushesAndComments({
           data={metrics}
           {...defaultConfig("Date", "", false, false, "", "", true)}
           {...config(new Date())}
-          onClick={() => setShowModal(true)}
+          onClick={onChartClick}
           tooltip={({ day, value, color }) => (
             <ChartTooltip
               titles={[day]}
