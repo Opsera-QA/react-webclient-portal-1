@@ -10,6 +10,8 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, assignStandardColors,
          shortenPieChartLegend } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabTotalCommitsByProjectActionableOverlay from "./GitlabTotalCommitsByProjectActionableOverlay";
 
 function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -19,6 +21,7 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -40,6 +43,7 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
+
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -67,6 +71,12 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabTotalCommitsByProjectActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -78,7 +88,7 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
         data={metrics}
         {...defaultConfig()}
         {...config()}
-        onClick={() => setShowModal(true)}
+        onClick={onChartClick}
       />
     </div>
   );

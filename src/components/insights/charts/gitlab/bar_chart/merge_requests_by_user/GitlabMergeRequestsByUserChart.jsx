@@ -10,6 +10,8 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, assignStandardColors,
          adjustBarWidth } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import GitlabMergeRequestsByUserActionableOverlay from "./GitlabMergeRequestsByUserActionableOverlay";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -19,6 +21,7 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,6 +69,12 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabMergeRequestsByUserActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -79,7 +88,7 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
                   true, false, "cutoffString", "wholeNumbers")}
         {...config()}
         {...adjustBarWidth(metrics, false)}
-        onClick={() => setShowModal(true)}
+        onClick={onChartClick}
       />
     </div>
   );
