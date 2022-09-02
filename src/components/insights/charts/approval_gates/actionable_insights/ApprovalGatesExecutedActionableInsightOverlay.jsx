@@ -15,6 +15,7 @@ import ApprovalGatesApprovalTab from "./tabs/ApprovalGatesApprovalTab";
 import { faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
 import ApprovalGatesRejectTab from "./tabs/ApprovalGatesRejectTab";
 import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
+import { useHistory } from "react-router-dom";
 
 function ApprovalGatesExecutedActionableInsightOverlay({
   kpiConfiguration,
@@ -30,6 +31,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({
       false,
     ),
   );
+  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -105,6 +107,11 @@ function ApprovalGatesExecutedActionableInsightOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const onRowSelect = (id) =>{
+    closePanel();
+    history.push(`/workflow/details/${(id)}/summary`);
+  };
+
   const getTabs = () => {
     if (activeTab == "approval") {
       return (
@@ -116,6 +123,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({
           loadData={loadData}
           icon={faDraftingCompass}
           action="approve"
+          onRowSelect={onRowSelect}
         />
       );
     } else if (activeTab == "reject") {
@@ -128,6 +136,8 @@ function ApprovalGatesExecutedActionableInsightOverlay({
           loadData={loadData}
           icon={faDraftingCompass}
           action="reject"
+          onRowSelect={onRowSelect}
+
         />
       );
     }

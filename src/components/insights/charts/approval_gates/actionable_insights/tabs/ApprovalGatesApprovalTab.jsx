@@ -11,7 +11,8 @@ function ApprovalGatesApprovalTab({
   dashboardData,
   kpiConfiguration,
   icon,
-  action
+  action,
+  onRowSelect
 }) {
   const getTabContentContainer = () => {
     return (
@@ -27,6 +28,7 @@ function ApprovalGatesApprovalTab({
               kpiConfiguration={kpiConfiguration}
               icon={icon}
               action={action}
+              onRowSelect={onRowSelect}
             />
           </VanitySetTabView>
         ))}
@@ -55,6 +57,7 @@ ApprovalGatesApprovalTab.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   icon: PropTypes.object,
-  action: PropTypes.string
+  action: PropTypes.string,
+  onRowSelect: PropTypes.func,
 };
 export default ApprovalGatesApprovalTab;

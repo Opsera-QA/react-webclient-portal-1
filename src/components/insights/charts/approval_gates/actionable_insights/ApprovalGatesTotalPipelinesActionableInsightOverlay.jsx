@@ -10,6 +10,7 @@ import genericChartFilterMetadata from "components/insights/charts/generic_filte
 import approvalGatesChartsActions from "../metrics/ApprovalGatesMetric.action";
 import ApprovalGatesActionableInsightTotalPipelinesTable from "./ApprovalGatesActionableInsightTotalPipelinesTable";
 import { metricHelpers } from "components/insights/metric.helpers";
+import { useHistory } from "react-router-dom";
 
 function ApprovalGatesTotalPipelinesActionableInsightOverlay({
   kpiConfiguration,
@@ -24,6 +25,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
       false,
     ),
   );
+  const history  = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -97,6 +99,11 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
     toastContext.clearOverlayPanel();
   };
 
+  const onRowSelect = (id) =>{
+    closePanel();
+    history.push(`/workflow/details/${(id)}/summary`);
+  };
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -114,6 +121,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
+          onRowSelect={onRowSelect}
         />
       </div>
     </FullScreenCenterOverlayContainer>

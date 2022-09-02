@@ -1,9 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import ApprovalGatesInsightsTableMetadata from "./approval-gates-actionable-metadata";
 import {
-  getChartPipelineStatusColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -11,7 +9,6 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import ApprovalgatesTotalPipelinesMetadata from "./approval-gates-total-pipelines-metadata";
 
 function ApprovalGatesActionableInsightTotalPipelinesTable({
@@ -20,6 +17,7 @@ function ApprovalGatesActionableInsightTotalPipelinesTable({
   loadData,
   filterModel,
   setFilterModel,
+  onRowSelect
 }) {
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Approval Gates report is currently unavailable at this time";
@@ -39,11 +37,10 @@ function ApprovalGatesActionableInsightTotalPipelinesTable({
     []
   );
 
-  const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?._id?.id} runCount={rowData?.original?._id?.run} />
-    );
+  const onSelect=(rowData)=>{
+    onRowSelect(rowData.original?._id);
   };
+  
 
   const getTable = () => {
     return (
@@ -52,7 +49,7 @@ function ApprovalGatesActionableInsightTotalPipelinesTable({
         columns={columns}
         data={metrics}
         noDataMessage={noDataMessage}
-        onRowSelect={onRowSelect}
+        onRowSelect={onSelect}
         loadData={loadData}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
@@ -81,6 +78,7 @@ ApprovalGatesActionableInsightTotalPipelinesTable.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
+  onRowSelect: PropTypes.func,
 };
 
 export default ApprovalGatesActionableInsightTotalPipelinesTable;
