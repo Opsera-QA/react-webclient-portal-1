@@ -181,6 +181,15 @@ export const assignStandardLineColors = (data, uniColor = false) => {
   }
 };
 
+
+// Assigning success color to a bar chart
+export const assignSuccessBarColors = (data) => {
+  if (Array.isArray(data)) {
+    data.forEach((data) => {
+      data.color = colorPalette1;
+    });
+  }
+};
 // ----- End of color-assigning functions for Nivo charts -----
 
 // ----- Start of functions that that render colors assigned from above functions -----
