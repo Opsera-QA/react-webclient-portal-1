@@ -4,7 +4,6 @@ import LoginForm from "./components/login/LoginForm";
 import { Route } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
-//template routes
 import Home from "./Home";
 import Logout from "./components/login/Logout";
 import Sidebar from "components/sidebar/Sidebar";
@@ -130,52 +129,10 @@ import HelpDocumentationScreen from "components/about/help_documentation/HelpDoc
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 import LogsBackupManagement from "./components/settings/logs_backup/LogsBackupManagement";
-//import FreeTrialRegistration from "./components/free_trial/Registration";
-//import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-  /*const getFreeTrialRoutes = () => {
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      return (
-        <>
-          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-          <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding} />
-        </>
-      );
-    }
-  };*/
-
-  const onAuthResume = async () => {
-    history.push('/');
-  };
-
-  console.info("Running Environment: ", process.env.NODE_ENV);
-  console.info("ALL VARIABLES:", process.env);
-
-  //Login Form
-  if (!authenticatedState && !isPublicPathState) {
-    return (
-      <div className="container-fluid" style={{ margin: "0" }}>
-        <div className="d-flex flex-row">
-          <div className="w-100 pb-4">
-            <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
-
-            <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-            <Route path="/logout" exact component={Logout} />
-
-          </div>
-        </div>
-        <div className="row fixed-row-footer-bottom">
-          <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>
-            <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Authenticated routes
   return (
@@ -263,7 +220,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity" component={CoverityScanReport} />
 
 
-
           <SecureRoute path="/task" exact component={TaskManagement} />
           <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
           <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
@@ -328,6 +284,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
           <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact component={UserDetailView} />
           <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
+
           <SecureRoute path="/settings/logs-backup-management" exact component={LogsBackupManagement} />
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
