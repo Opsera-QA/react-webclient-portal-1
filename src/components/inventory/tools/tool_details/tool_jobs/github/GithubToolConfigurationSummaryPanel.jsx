@@ -21,18 +21,18 @@ function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
         <Col lg={12}>
           <BooleanField dataObject={githubToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
         </Col>
-        <Col lg={6}>
-          <VaultField dataObject={githubToolConfigurationModel} fieldName={"jAuthToken"} />
-        </Col>
-        <Col lg={6}>
-          <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretPrivateKey"} />
-        </Col>
-        <Col lg={6}>
-          <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretAccessTokenKey"} />
-        </Col>
-        <Col lg={12}>
-          <VaultField dataObject={githubToolConfigurationModel} fieldName={"accountPassword"} />
-        </Col>
+        {/*<Col lg={6}>*/}
+        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"jAuthToken"} />*/}
+        {/*</Col>*/}
+        {/*<Col lg={6}>*/}
+        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretPrivateKey"} />*/}
+        {/*</Col>*/}
+        {/*<Col lg={6}>*/}
+        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"secretAccessTokenKey"} />*/}
+        {/*</Col>*/}
+        {/*<Col lg={12}>*/}
+        {/*  <VaultField dataObject={githubToolConfigurationModel} fieldName={"accountPassword"} />*/}
+        {/*</Col>*/}
       </Row>
     </SummaryPanelContainer>
   );

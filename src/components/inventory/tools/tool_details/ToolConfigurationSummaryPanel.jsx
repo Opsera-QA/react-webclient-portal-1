@@ -106,6 +106,7 @@ import {
 import InformaticaIdqConnectionMetadata from "./tool_jobs/informatica_idq/informatica-idq-connection-metadata";
 import InformaticaIdqToolConfigurationSummaryPanel
   from "./tool_jobs/informatica_idq/InformaticaIdqToolConfigurationSummaryPanel";
+
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
     if (toolIdentifier == null || toolIdentifier === "" || toolConfiguration == null) {
@@ -131,13 +132,13 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jiraConnectionMetadata)}
           />
         );
-      case "github":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
         return (
           <GithubToolConfigurationSummaryPanel
             githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
           />
         );
-      case "gitlab":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
         return (
           <GitlabToolConfigurationSummaryPanel
             gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}

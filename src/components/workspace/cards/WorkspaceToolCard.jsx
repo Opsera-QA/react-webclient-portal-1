@@ -11,8 +11,8 @@ export default function WorkspaceToolCard(
   }) {
   const history = useHistory();
 
-  const viewToolFunction = (pipelineId) => {
-    history.push(`/inventory/tools/details/${pipelineId}/summary`);
+  const viewToolFunction = (toolId) => {
+    history.push(`/inventory/tools/details/${toolId}/summary`);
   };
 
   return (

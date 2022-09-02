@@ -9,7 +9,7 @@ function ToolCardView({ data, toolFilterDto, toolMetadata, setToolFilterDto, loa
   const getRegistryToolCard = (tool) => {
     return (
       <RegistryToolCard
-        toolData={new Model({ ...tool }, toolMetadata, false)}
+        toolModel={new Model({ ...tool }, toolMetadata, false)}
       />
     );
   };
