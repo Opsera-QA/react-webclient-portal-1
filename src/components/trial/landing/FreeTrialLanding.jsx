@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusWidget";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
 import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
 
 export default function FreeTrialLanding() {
@@ -35,11 +34,6 @@ export default function FreeTrialLanding() {
               />
             </Col>
           </Row>
-          <div className={"py-3 mx-auto"}>
-            {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
-          </div>
           <div className={"py-3"}>
             <FreeTrialLandingWorkflowWidget
             />

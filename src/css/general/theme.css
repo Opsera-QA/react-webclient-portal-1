@@ -1365,7 +1365,7 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
-.filter-container {
+.filter-container, .screen-container {
     border-radius: 1rem;
     overflow-x: hidden;
 }

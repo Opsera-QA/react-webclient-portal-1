@@ -23,6 +23,7 @@ function WidgetDataBlockBaseContainer(
     onClickFunction,
     disabled,
     isLoading,
+    rightSideTitleBarItems,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -63,11 +64,12 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <div className={"filter-container"}>
-          <div className={"w-100 p-2 d-flex content-block-header-inverse"}>
+          <div className={"w-100 d-flex content-block-header-inverse"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
               titleIcon={titleIcon}
+              inlineFilters={rightSideTitleBarItems}
             />
           </div>
           {children}
@@ -139,6 +141,7 @@ WidgetDataBlockBaseContainer.propTypes = {
   title: PropTypes.any,
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool,
+  rightSideTitleBarItems: PropTypes.any,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {

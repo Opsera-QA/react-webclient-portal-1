@@ -13,6 +13,10 @@ import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import FreeTrialLandingTaskWorkflowWidget
   from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
+import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
+import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
+import FilterButtons from "components/common/filters/buttons/FilterButtons";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 export default function FreeTrialLandingWorkflowWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -51,8 +55,8 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
     }
   };
 
+  // TODO: Write separate request for this.
   const getWorkspaceItems = async () => {
-    // Limited to pipelines until I build tasks widget
     const response = await workspaceActions.getFreeTrialWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
@@ -61,60 +65,112 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
 
     if (isMounted?.current === true && Array.isArray(items)) {
       setTaskMetadata(response?.data?.taskMetadata);
-      setWorkspaceItems([...items]);
+      const supportedWorkspaceTypes = [
+        workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE,
+        workspaceConstants.WORKSPACE_ITEM_TYPES.TASK,
+      ];
+      const filteredItems = items.filter((workspaceItem) => supportedWorkspaceTypes.includes(workspaceItem.workspaceType) === true);
+      setWorkspaceItems([...filteredItems]);
     }
   };
 
+  const createWorkspaceItem = () => {
+    toastContext.showOverlayPanel(
+      <CreateWorkflowWizard />
+    );
+  };
+
+  const getNewButton = () => {
+    return (
+      <NewRecordButton
+        addRecordFunction={createWorkspaceItem}
+        type={""}
+        isLoading={isLoading}
+        variant={"success"}
+      />
+    );
+  };
+
+  // TODO: Cleanup
   const getBody = () => {
     if (
       isLoading !== true
       && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
       return (
-        <Row>
-          <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-          <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-            <NoRegisteredWorkflowsCard />
-          </Col>
-          <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-        </Row>
+        <>
+          <div className={"py-3 mx-auto"}>
+            {/*<FreeTrialLandingWizardWidgets />*/}
+            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
+            {/*<SFDCLandingWidget />*/}
+          </div>
+          <Row>
+            <Col xs={0} sm={0} md={0} lg={2} xl={3} />
+            <Col xs={12} sm={12} md={12} lg={8} xl={6}>
+              <NoRegisteredWorkflowsCard />
+            </Col>
+            <Col xs={0} sm={0} md={0} lg={2} xl={3} />
+          </Row>
+        </>
       );
     }
 
     if (selectedWorkflowItem == null) {
       return (
-        <FreeTrialWidgetDataBlockBase
-          heightSize={5}
-          title={"Workflows"}
-          isLoading={isLoading}
-        >
-          <FreeTrialWorkflowItemSelectionCardView
-            workspaceItems={workspaceItems}
-            loadData={loadData}
+        <>
+          <FreeTrialWidgetDataBlockBase
+            heightSize={5}
+            title={"Workflows"}
             isLoading={isLoading}
-            setSelectedWorkflowItem={setSelectedWorkflowItem}
-            selectedWorkflowItem={selectedWorkflowItem}
-            taskMetadata={taskMetadata}
-          />
-        </FreeTrialWidgetDataBlockBase>
+            rightSideTitleBarItems={getNewButton()}
+          >
+            <FreeTrialWorkflowItemSelectionCardView
+              workspaceItems={workspaceItems}
+              loadData={loadData}
+              isLoading={isLoading}
+              setSelectedWorkflowItem={setSelectedWorkflowItem}
+              selectedWorkflowItem={selectedWorkflowItem}
+              taskMetadata={taskMetadata}
+            />
+          </FreeTrialWidgetDataBlockBase>
+          <div className={"py-3 mx-auto"}>
+            {/*<FreeTrialLandingWizardWidgets />*/}
+            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
+            {/*<SFDCLandingWidget />*/}
+          </div>
+        </>
       );
     }
 
     if (selectedWorkflowItem.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
       return (
-        <FreeTrialLandingPipelineWorkflowWidget
-          selectedPipeline={selectedWorkflowItem}
-          setSelectedPipeline={setSelectedWorkflowItem}
-        />
+        <>
+          <FreeTrialLandingPipelineWorkflowWidget
+            selectedPipeline={selectedWorkflowItem}
+            setSelectedPipeline={setSelectedWorkflowItem}
+          />
+          <div className={"py-3 mx-auto"}>
+            {/*<FreeTrialLandingWizardWidgets />*/}
+            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
+            {/*<SFDCLandingWidget />*/}
+          </div>
+        </>
       );
     }
 
     if (selectedWorkflowItem?.getData("workspaceType") === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
       return (
-        <FreeTrialLandingTaskWorkflowWidget
-          selectedTask={selectedWorkflowItem}
-          setSelectedTask={setSelectedWorkflowItem}
-        />
+        <>
+          <FreeTrialLandingTaskWorkflowWidget
+            selectedTask={selectedWorkflowItem}
+            setSelectedTask={setSelectedWorkflowItem}
+          />
+          <div className={"py-3 mx-auto"}>
+            {/*<FreeTrialLandingWizardWidgets />*/}
+            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
+            {/*<SFDCLandingWidget />*/}
+          </div>
+        </>
       );
     }
   };

@@ -15,7 +15,7 @@ export const CREATE_WORKFLOW_WIZARD_SCREENS = {
 
 export default function CreateWorkflowWizard() {
   const toastContext = useContext(DialogToastContext);
-  const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
   const [buttonContainer, setButtonContainer] = useState(undefined);
 
   const closeOverlayFunction = () => {

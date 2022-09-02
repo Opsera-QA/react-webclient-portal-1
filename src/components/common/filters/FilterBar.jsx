@@ -85,7 +85,7 @@ function FilterBar(
   };
 
   return (
-    <div className="my-1 inline-filter-input">
+    <div className="inline-filter-input">
       <div className="d-flex my-auto">
         <div className="d-flex my-auto">
           <NewRecordButton

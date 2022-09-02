@@ -6,6 +6,7 @@ function FreeTrialWidgetDataBlockBase(
   {
     title,
     titleIcon,
+    rightSideTitleBarItems,
     heightSize,
     widthSize,
     fontColor,
@@ -24,6 +25,7 @@ function FreeTrialWidgetDataBlockBase(
     <WidgetDataBlockBaseContainer
       title={title}
       titleIcon={titleIcon}
+      rightSideTitleBarItems={rightSideTitleBarItems}
       heightSize={heightSize}
       widthSize={widthSize}
       className={className}
@@ -55,6 +57,7 @@ FreeTrialWidgetDataBlockBase.propTypes = {
   disabled: PropTypes.bool,
   title: PropTypes.any,
   titleIcon: PropTypes.object,
+  rightSideTitleBarItems: PropTypes.any,
   isLoading: PropTypes.bool,
 };
 
