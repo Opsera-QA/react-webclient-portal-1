@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import { faFileCode } from "@fortawesome/pro-light-svg-icons";
+import { faCompass, faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 
 function ApprovalGatesVerticalTabContainer({ listOfPipelines }) {
   const [activeTab, setActiveTab] = useState();
@@ -15,7 +15,7 @@ function ApprovalGatesVerticalTabContainer({ listOfPipelines }) {
   return (
       <VanitySetVerticalTabContainer className={"h-100"}>
         {listOfPipelines.map((item, index) => {
-          return <VanitySetVerticalTab key={index} icon={faFileCode} tabText={item.pipeline_name} tabName={item._id} />;
+          return <VanitySetVerticalTab key={index} icon={faDraftingCompass} tabText={item.pipeline_name} tabName={item._id} />;
         })}
       </VanitySetVerticalTabContainer>
   );

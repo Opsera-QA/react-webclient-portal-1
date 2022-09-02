@@ -7,7 +7,7 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import ApprovalGatesActionableInsightTable from "../ApprovalGatesActionableInsightTable";
 import approvalGatesChartsActions from "../../metrics/ApprovalGatesMetric.action";
 
-function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon, action }) {
+function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfiguration, icon, action, onRowSelect }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -95,7 +95,8 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         title={"Contributors"}
-        tableTitleIcon={icon} 
+        tableTitleIcon={icon}
+        onRowSelect={onRowSelect}
       />
     </div>
   );
@@ -105,6 +106,7 @@ ApprovalGatesPiplelineDataTab.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   icon: PropTypes.object,
-  action: PropTypes.string
+  action: PropTypes.string,
+  onRowSelect: PropTypes.func
 };
 export default ApprovalGatesPiplelineDataTab;
