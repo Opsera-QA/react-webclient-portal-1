@@ -1,14 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DescriptionField from "components/common/fields/text/DescriptionField";
 import {
   PIPELINE_TYPES,
   pipelineTypeConstants,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";

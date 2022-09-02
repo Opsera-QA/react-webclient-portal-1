@@ -74,34 +74,14 @@ export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
     }
   };
 
-  const selectAnotherWorkflowFunction = () => {
-    setSelectedPipeline(undefined);
-  };
-
-  const getSelectAnotherWorkflowHeaderItem = () => {
-    if (selectedPipeline) {
-      return (
-        <HeaderNavigationBarItem
-          currentScreen={selectedHeaderItem}
-          screenName={FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SELECT_ANOTHER_WORKFLOW}
-          screenLabel={"Select another Workflow..."}
-          setCurrentScreen={selectAnotherWorkflowFunction}
-          className={"my-auto"}
-          fontColor={themeConstants.COLOR_PALETTE.WHITE}
-        />
-      );
-    }
-  };
-
   if (selectedPipeline == null) {
     return null;
   }
 
   return (
-    <div className={"d-flex w-100"}>
-      {selectedPipeline?.name}
-      {/*{getSelectAnotherWorkflowHeaderItem()}*/}
-      {getPipelineActionControls()}
+    <div className={"d-flex w-100 justify-content-between"}>
+      <div className={"my-auto"}>{selectedPipeline?.name}</div>
+      <div className={"ml-auto"}>{getPipelineActionControls()}</div>
     </div>
   );
 }

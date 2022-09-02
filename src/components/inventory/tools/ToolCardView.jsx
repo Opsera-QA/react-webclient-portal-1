@@ -5,7 +5,15 @@ import Model from "core/data_model/model";
 import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 
-function ToolCardView({ data, toolFilterDto, toolMetadata, setToolFilterDto, loadData, isLoading }) {
+function ToolCardView(
+  {
+    data,
+    toolFilterDto,
+    toolMetadata,
+    setToolFilterDto,
+    loadData,
+    isLoading,
+  }) {
   const getRegistryToolCard = (tool) => {
     return (
       <RegistryToolCard

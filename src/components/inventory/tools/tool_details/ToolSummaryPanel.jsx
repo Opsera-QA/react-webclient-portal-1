@@ -11,6 +11,7 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
 import ToolConnectionSummaryContainer
   from "components/inventory/tools/details/connection/ToolConnectionSummaryContainer";
+import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
   useEffect(() => {
@@ -63,8 +64,9 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <ToolVaultField model={toolData} fieldName={"vault"} />
         </Col>
         <Col xs={12}>
-          <ToolConnectionSummaryContainer
-            toolModel={toolData}
+          <ToolConfigurationSummaryPanel
+            toolIdentifier={toolData?.getData("tool_identifier")}
+            toolConfiguration={toolData.getData("configuration")}
           />
         </Col>
         <Col lg={12} sm={12}>

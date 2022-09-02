@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import { faTasksAlt } from "@fortawesome/pro-light-svg-icons";
-import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 
 export default function ToolConnectionSummaryContainer(
   {
-    toolModel,
+    children,
     isLoading,
   }) {
   return (
@@ -26,16 +24,13 @@ export default function ToolConnectionSummaryContainer(
         </div>
       </Card.Title>
       <Card.Body className="py-0 px-3 h-100 small">
-        <ToolConfigurationSummaryPanel
-          toolIdentifier={toolModel?.getData("tool_identifier")}
-          toolConfiguration={toolModel?.getData("configuration")}
-        />
+        {children}
       </Card.Body>
     </Card>
   );
 }
 
 ToolConnectionSummaryContainer.propTypes = {
-  toolModel: PropTypes.object,
+  children: PropTypes.any,
   isLoading: PropTypes.bool,
 };

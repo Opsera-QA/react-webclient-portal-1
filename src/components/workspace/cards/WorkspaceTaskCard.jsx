@@ -3,6 +3,7 @@ import React from "react";
 import modelHelpers from "components/common/model/modelHelpers";
 import { useHistory } from "react-router-dom";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
+import { taskHelper } from "components/tasks/task.helper";
 
 export default function WorkspaceTaskCard(
   {
@@ -11,14 +12,14 @@ export default function WorkspaceTaskCard(
   }) {
   const history = useHistory();
 
-  const viewTaskFunction = (taskId) => {
-    history.push(`/task/details/${taskId}`);
+  const onClickFunction = () => {
+    history.push(taskHelper.getDetailViewLink(task?._id));
   };
 
   return (
     <TaskCardBase
       taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
-      onClickFunction={() => viewTaskFunction(task?._id)}
+      onClickFunction={onClickFunction}
       tooltip={"Click to view Task"}
     />
   );

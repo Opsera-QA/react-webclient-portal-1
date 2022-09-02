@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 export default function RegistryToolCard({ toolModel }) {
   const history = useHistory();
 
-  const onClickFunction = (toolId) => {
-    history.push(`/inventory/tools/details/${toolId}/summary`);
+  const onClickFunction = () => {
+    history.push(`/inventory/tools/details/${toolModel?.getMongoDbId()}/summary`);
   };
 
   return (

@@ -106,6 +106,8 @@ import {
 import InformaticaIdqConnectionMetadata from "./tool_jobs/informatica_idq/informatica-idq-connection-metadata";
 import InformaticaIdqToolConfigurationSummaryPanel
   from "./tool_jobs/informatica_idq/InformaticaIdqToolConfigurationSummaryPanel";
+import ToolConnectionSummaryContainer
+  from "components/inventory/tools/details/connection/ToolConnectionSummaryContainer";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -288,7 +290,8 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
         //TODO: We need to rename either the old or the new metadata
-      case "azure":
+      // case "azure":
+      //   break;
       // return (
       //   <AzureV2ToolConfigurationSummaryPanel
       //     azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
@@ -305,7 +308,11 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
   };
   
-  return (getConfigurationSummaryPanel());
+  return (
+    <ToolConnectionSummaryContainer>
+      {getConfigurationSummaryPanel()}
+    </ToolConnectionSummaryContainer>
+  );
 }
 
 ToolConfigurationSummaryPanel.propTypes = {

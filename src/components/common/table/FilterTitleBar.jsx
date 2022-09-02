@@ -21,11 +21,9 @@ function FilterTitleBar(
 
   return (
     <div className={getClassNames()}>
-      <div className={"my-auto filter-title-text text-nowrap w-100"}>
-          <span className={"d-flex"}>
-            <IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2 my-auto d-none d-lg-block"} />
-            <span className={"my-auto"}>{title}</span>
-          </span>
+      <div className={"my-auto filter-title-text text-nowrap w-100 d-flex"}>
+        <IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2 my-auto d-none d-lg-block"} />
+        {title}
       </div>
       <div className={"d-flex"}>
         {inlineFilters}
