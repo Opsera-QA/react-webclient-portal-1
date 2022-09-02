@@ -8,7 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {
   getExternalLinkIconColumnDefinition,
   getLimitedTableTextColumn,
-  getTableDateTimeColumn,
+  getTableDateTimeColumn, getTableDurationTextColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import gitlabRecentMergeRequestsMetadata from "./gitlab-recent-merge-requests-metadata";
@@ -52,7 +52,7 @@ function GitlabRecentMergeRequests({
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-      getTableTextColumn(getField(fields, "MergeRequestTimeTaken")),
+      getTableDurationTextColumn(getField(fields, "MergeRequestTimeTaken")),
       getTableTextColumn(getField(fields, "mrLastAction")),
       getExternalLinkIconColumnDefinition(
         getField(fields, "mergeRequestUrl"),

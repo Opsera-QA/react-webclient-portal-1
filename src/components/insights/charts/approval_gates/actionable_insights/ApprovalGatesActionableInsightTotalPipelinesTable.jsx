@@ -31,7 +31,6 @@ function ApprovalGatesActionableInsightTotalPipelinesTable({
       getTableTextColumn(getField(fields,"servicenow")),
       getTableTextColumn(getField(fields,"count_of_approval_gates")),
       getTableTextColumn(getField(fields,"pipeline_name")),
-      getTableDateTimeColumn(getField(fields,"last_run")),
       getTableTextColumn(getField(fields,"last_run_in_days"))
     ],
     []
