@@ -43,7 +43,7 @@ const gitlabRecentMergeRequestsMetadata = {
       id: "mrCompletionTimeTimeStamp",
     },
     {
-      label: "Time Taken(Hours)",
+      label: "Time Taken",
       id: "MergeRequestTimeTaken",
     },
     {
