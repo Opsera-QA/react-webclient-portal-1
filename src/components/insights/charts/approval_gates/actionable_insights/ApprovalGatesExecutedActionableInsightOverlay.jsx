@@ -161,7 +161,7 @@ function ApprovalGatesExecutedActionableInsightOverlay({
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Approval Gates - Total Approvals executed`}
+      titleText={`Approval Gates - Total Approvals Executed`}
       showToasts={true}
       titleIcon={faTable}
       isLoading={false}

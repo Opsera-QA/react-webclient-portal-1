@@ -111,7 +111,7 @@ function ApprovalGatesMetrics({ kpiConfiguration, setKpiConfiguration, dashboard
             <ApprovalGatesDataBlockBase score={metrics.total_pipelines_with_approval_gates} subtitle={'Total Pipelines'} onClickFunction={()=>rowClick('total_pipelines')}  />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvals_executed} subtitle={'Total Approvals executed'} onClickFunction={()=>rowClick('total_approvals')} />
+            <ApprovalGatesDataBlockBase score={metrics.total_number_of_approvals_executed} subtitle={'Total Approvals Executed'} onClickFunction={()=>rowClick('total_approvals')} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
             <ApprovalGatesDataBlockBase score={metrics.total_pipelines_approved} subtitle={'Total Approvers'} />

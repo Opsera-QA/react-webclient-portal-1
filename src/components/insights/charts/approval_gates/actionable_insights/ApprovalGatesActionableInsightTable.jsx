@@ -27,10 +27,10 @@ function ApprovalGatesActionableInsightTable({
   const fields = ApprovalGatesInsightsTableMetadata.fields;
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields,"previous_step_start_time")),
+      getTableDateTimeColumn(getField(fields,"previous_step_start_time")),
       getTableTextColumn(getField(fields,"run_count")),
-      getTableDateTimeColumn(getField(fields,"run_end_time")),
       getTableDateTimeColumn(getField(fields,"run_start_time")),
+      getTableDateTimeColumn(getField(fields,"run_end_time")),
       getTableTextColumn(getField(fields,"step_index")),
       getTableTextColumn(getField(fields,"pipeline_name")),
       getTableTextColumn(getField(fields,"time_for_approval_in_dhms"))

@@ -7,15 +7,15 @@ const ApprovalGatesInsightsTableMetadata = {
         id: "pipeline_name",
       },
       {
-        label: "pipeline_id",
+        label: "Pipeline Id",
         id: "pipeline_id",
       },
       {
-        label: "previous_step_end_time",
+        label: "Previous Step End Time",
         id: "previous_step_end_time",
       },
       {
-        label: "previous_step_start_time",
+        label: "Previous Step Start Time",
         id: "previous_step_start_time",
       },
       {
@@ -59,7 +59,7 @@ const ApprovalGatesInsightsTableMetadata = {
         id: "time_for_approval",
       },
       {
-        label: "Time for approval",
+        label: "Time for Approval",
         id: "time_for_approval_in_dhms",
       },
     ],

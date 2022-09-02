@@ -19,7 +19,7 @@ const ApprovalgatesTotalPipelinesMetadata = {
         id: "jira"
       },
       {
-        label: "Servicenow",
+        label: "ServiceNow",
         id: "servicenow",
       },
       {
@@ -27,7 +27,7 @@ const ApprovalgatesTotalPipelinesMetadata = {
         id: "_id"
       },
       {
-        label: "Count Of Approval Gates",
+        label: "Number Of Approval Gates",
         id: "count_of_approval_gates"
       },
       {
@@ -39,7 +39,7 @@ const ApprovalgatesTotalPipelinesMetadata = {
         id: "last_run"
       },
       {
-        label: "Last Run in days",
+        label: "Last Run in Days",
         id: "last_run_in_days"
       }
     ],
