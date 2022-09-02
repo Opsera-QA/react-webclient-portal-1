@@ -4,7 +4,12 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
-import {defaultConfig, getColorByData, adjustBarWidth, assignStandardLineColors} from "../../../charts-views";
+import {
+    defaultConfig,
+    getColorByData,
+    adjustBarWidth,
+    assignSuccessBarColors,
+} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Container, Col, Row } from "react-bootstrap";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
@@ -76,7 +81,7 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits;
             const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
             const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
-            assignStandardLineColors(dataObject, true);
+            assignSuccessBarColors(dataObject);
 
             if (isMounted?.current === true && Array.isArray(dataObject)) {
                 setMetrics(dataObject);
@@ -131,14 +136,6 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             }
         };
 
-        const toolTipData = (_id) => {
-            if(!_id)
-                return '< 1 Day';
-            else if(_id === 'Other')
-                return 'Other';
-            else
-                return `< ${_id+1} Days`;
-        };
         const getBarChart = () => {
             return (
                 <div className="new-chart p-0" style={{height: "300px"}}>
@@ -149,8 +146,8 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
                         {...config(getColorByData, getMaxValue(metrics))}
                         {...adjustBarWidth(metrics)}
                         tooltip={({ indexValue, value, data, color }) => <ChartTooltip
-                            titles={["Lead Time", "Number of Commits"]}
-                            values={[ toolTipData(data._id), data.count ]}
+                            titles={["Number of Commits"]}
+                            values={[data.count ]}
                             style={false}
                             color={color} />}
                     />
