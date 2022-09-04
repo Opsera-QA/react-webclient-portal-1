@@ -148,7 +148,6 @@ function ScreenContainer(
           className={"screen-container content-container content-card-1"}
           style={{
             minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
-            marginBottom: "26px",
         }}
         >
           <div className={"px-3 py-2 content-block-header title-text-header-1"}>

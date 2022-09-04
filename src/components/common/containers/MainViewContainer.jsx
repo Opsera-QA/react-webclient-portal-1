@@ -9,8 +9,9 @@ export default function MainViewContainer({ children }) {
     <div
       className={"w-100"}
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         backgroundColor: backgroundColor,
+        paddingBottom: "30px",
       }}
     >
       {children}

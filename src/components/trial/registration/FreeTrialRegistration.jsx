@@ -9,6 +9,7 @@ import FreeTrialRegistrationSelectSignupOptionScreen
 import FreeTrialRegistrationCongratulationsScreen
   from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export const FREE_TRIAL_REGISTRATION_SCREENS = {
   WELCOME_SCREEN: "welcome",
@@ -22,8 +23,12 @@ const FreeTrialRegistration = () => {
   const [currentScreen, setCurrentScreen] = useState(FREE_TRIAL_REGISTRATION_SCREENS.SELECT_SIGNUP_OPTION_SCREEN);
   const [registrationModel, setRegistrationModel] = useState(undefined);
   useBackgroundColorReference(true);
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
+    toastContext.removeAllBanners();
     loadData();
   }, []);
 
