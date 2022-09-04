@@ -17,7 +17,6 @@ function RiskFactorDisplayer({riskFactors, className, showNoTagsAppliedBadge}) {
                 <div className={"mb-2"} key={index}>
                   <WarningBadge
                     badgeText={riskFactor}
-                    key={index}
                   />
                 </div>
               );
