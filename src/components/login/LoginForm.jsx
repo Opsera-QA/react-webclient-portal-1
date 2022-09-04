@@ -289,13 +289,7 @@ const LoginForm = ({ authClient }) => {
 
     } catch (error) {
       toastContext.removeAllBanners();
-
-      if (error?.response?.status === 404) {
-        console.error(error);
-        toastContext.showErrorDialog("Your email address is not found in our system, please contact your account owner or administrator for assistance.");
-      } else {
-        toastContext.showErrorDialog(error);
-      }
+      toastContext.showErrorDialog(error);
     } finally {
       setLoading(false);
     }
