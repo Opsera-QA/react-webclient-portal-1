@@ -166,6 +166,23 @@ const breadcrumbs = {
     pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   },
 
+  platformSystemParameterManagement: {
+    parent: "admin",
+    name: "platformSystemParameterManagement",
+    path: paths.platformSystemParameterManagement,
+    title: "Platform System Parameter Management",
+    linkText: "Platform System Parameter Management",
+    icon: faCogs,
+  },
+  platformSystemParameterDetailView: {
+    parent: "platformSystemParameterManagement",
+    name: "platformSystemParameterDetailView",
+    path: paths.platformSystemParameterDetailView,
+    title: "Platform System Parameter Details",
+    linkText: "Platform System Parameter Details",
+    icon: faCogs
+  },
+
   taskTemplateManagement: {
     parent: "admin",
     name: "taskTemplateManagement",

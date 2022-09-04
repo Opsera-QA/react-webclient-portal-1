@@ -18,6 +18,8 @@ import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPag
 import CustomEnvironmentVariableManagementPageLinkCard
   from "components/admin/environment_variables/CustomEnvironmentVariableManagementPageLinkCard";
 import TaskTemplateManagementPageLinkCard from "components/admin/task_templates/TaskTemplateManagementPageLinkCard";
+import PlatformSystemParameterManagementPageLinkCard
+  from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -53,6 +55,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <ToolManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <PlatformSystemParameterManagementPageLinkCard />
 
       {/*TODO: These are left here for legacy reasons but will need to be fixed and have cards created if we want them visible.*/}
       {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}

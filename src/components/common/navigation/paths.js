@@ -27,6 +27,9 @@ paths.templateDetailView = paths.templateManagement + "/details/";
 paths.taskTemplateManagement = paths.admin + "/templates/tasks";
 paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
 
+paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
+paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
+
 paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
 paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
 

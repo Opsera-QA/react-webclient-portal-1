@@ -140,6 +140,9 @@ import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrial
 import FreeTrialInsightsLanding from "./components/trial/insights/FreeTrialInsightsLanding";
 import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
 import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
+import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
+import PlatformSystemParameterDetailView
+  from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
@@ -267,10 +270,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
           <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
 
-
           <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
           <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
 
+          <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
+          <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact component={PlatformSystemParameterDetailView} />
 
           <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement} />
           <SecureRoute path="/admin/site-notifications/details/:id" exact
