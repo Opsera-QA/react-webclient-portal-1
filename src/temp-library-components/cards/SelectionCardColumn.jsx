@@ -5,11 +5,9 @@ import { Col } from "react-bootstrap";
 export default function SelectionCardColumn(
   {
     children,
-    key,
   }) {
   return (
     <Col
-      key={key}
       xl={3}
       lg={4}
       md={6}
@@ -23,5 +21,4 @@ export default function SelectionCardColumn(
 
 SelectionCardColumn.propTypes = {
   children: PropTypes.any,
-  key: PropTypes.any,
 };

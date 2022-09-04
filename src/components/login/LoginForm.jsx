@@ -17,6 +17,8 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 //const OktaSignIn = require("@okta/okta-signin-widget");
 import OktaSignIn from '@okta/okta-signin-widget';
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const LoginForm = ({ authClient }) => {
   const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
@@ -31,8 +33,11 @@ const LoginForm = ({ authClient }) => {
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
   const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
   const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
-  const toastContext = useContext(DialogToastContext);
   useBackgroundColorReference(true);
+  const {
+    toastContext,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (viewType === "domain" && oktaSignInWidget) {
@@ -240,17 +245,11 @@ const LoginForm = ({ authClient }) => {
     setFederatedIdpEnabled(false);
     toastContext.removeAllBanners();
 
-    const apiUrl = "/users/trial/is-account-active";
-    const params = {
-      email: lookupAccountEmail,
-      hostname: window.location.hostname,
-    };
-
     try {
-      const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
+      const response = await accountsActions.isFreeTrialAccountActive(cancelTokenSource, lookupAccountEmail);
       toastContext.removeAllBanners();
 
-      const {loginAllowed, validHost, accountType} = response.data;
+      const {loginAllowed, validHost, accountType} = response?.data;
 
       //valid account so allow it to continue login
       if (loginAllowed && validHost) {

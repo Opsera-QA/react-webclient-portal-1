@@ -1,14 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
+import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
+import modelHelpers from "components/common/model/modelHelpers";
+import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
 // TODO: Standardize
 export default function AccountStatusWidget({ className }) {
+  const [isLoading, setIsLoading] = useState(undefined);
+  const [accountMetrics, setAccountMetrics] = useState(undefined);
   const {
     themeConstants,
+    getAccessToken,
+    cancelTokenSource,
+    isMounted,
+    toastContext,
   } = useComponentStateReference();
+
+  useEffect(() => {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      await getSystemParameter();
+    } catch (error) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getSystemParameter = async () => {
+    const response = await accountsActions.getFreeTrialAccountMetrics(
+      getAccessToken,
+      cancelTokenSource,
+    );
+
+    const metrics = response?.data?.data;
+    console.log("metrics: " + JSON.stringify(metrics));
+    if (isMounted?.current === true && metrics) {
+      setAccountMetrics(metrics);
+    }
+  };
 
   const getTitleText = () => {
     return (
