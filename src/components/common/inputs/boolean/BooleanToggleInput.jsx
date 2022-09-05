@@ -28,6 +28,10 @@ function BooleanToggleInput(
   };
 
   const updateValue = (newValue) => {
+    if (disabled !== false) {
+      return;
+    }
+
     if (setDataFunction) {
       setDataFunction(fieldName, newValue);
     }
