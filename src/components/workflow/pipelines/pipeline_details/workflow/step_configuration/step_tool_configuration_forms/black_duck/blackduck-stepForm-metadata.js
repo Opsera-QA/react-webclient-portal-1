@@ -47,29 +47,30 @@ const BlackDuckStepFormMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true
     },
     {
       label: "Project Name",
       id: "projectName",
       isRequired: true
-    },    
-    {
-      label: "Tag",
-      id: "tag",      
     },
-    {
-      label: "Use Run Count as Version",
-      id: "runCountAsVersion"
-    },
-    {
-      label: "Environments",
-      id: "environments",
-      formText : "Enter environments as a JSON Object"
+    {      
+      id: "projectId",
     },
     {
       label: "Runtime Variables",
-      id: "runtimeVariables"
+      id: "environmentVariables"
+    },
+    {
+      label: "Commands",
+      id: "commands",
+      formText: "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command)"
+    },
+    {
+      label: "Dependency",
+      id: "dependencyType",
+    },
+    {
+      id: "dependencies",
     },
   ],
   newObjectFields: {
@@ -85,10 +86,11 @@ const BlackDuckStepFormMetadata = {
     gitUrl: "",
     gitFilePath: "",
     projectName: "",
-    tag: "",
-    runCountAsVersion: false,
-    environments : {},
-    runtimeVariables: [],
+    projectId: "",
+    environmentVariables: [],
+    commands: "",
+    dependencies: {},
+    dependencyType:"",
   }
 };
 
