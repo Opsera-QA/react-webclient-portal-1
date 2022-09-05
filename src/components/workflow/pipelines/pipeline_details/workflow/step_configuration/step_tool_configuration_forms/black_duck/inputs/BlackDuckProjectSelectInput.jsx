@@ -78,6 +78,13 @@ function BlackDuckProjectSelectInput({ model, setModel, disabled, blackDuckToolI
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData("projectId", selectedOption.id);
+    newModel.setData("projectName", selectedOption.name);
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"projectName"}
@@ -86,9 +93,10 @@ function BlackDuckProjectSelectInput({ model, setModel, disabled, blackDuckToolI
       placeholderText={placeholderText}
       selectOptions={projectsList}
       textField={"name"}
-      valueField={"name"}
+      valueField={"id"}
       busy={isLoading}
       disabled={disabled || !blackDuckToolId}
+      setDataFunction={setDataFunction}
     />
   );
 }

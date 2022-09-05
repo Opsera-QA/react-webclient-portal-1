@@ -6,9 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import JsonInput from "components/common/inputs/object/JsonInput";
 import BlackDuckToolSelectInput from "./inputs/BlackDuckToolSelectInput";
-import BlackDuckTagSelectInput from "./inputs/BlackDuckTagSelectInput";
 import BlackDuckProjectSelectInput from "./inputs/BlackDuckProjectSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import BlackDuckScmToolTypeSelectInput from "./inputs/BlackDuckScmToolTypeSelectInput";
@@ -18,8 +16,9 @@ import BlackDuckGitRepositoryInput from "./inputs/BlackDuckGitRepositoryInput";
 import BlackDuckGitBranchInput from "./inputs/BlackDuckGitBranchInput";
 import ParameterMappingInputBase
   from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import BlackDuckDependencyMultiSelectInput from "./inputs/BlackDuckDependencyMultiSelectInput";
 
 function BlackDuckStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -115,34 +114,28 @@ function BlackDuckStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
         model={blackDuckStepConfigurationDto}
         setModel={setBlackDuckStepConfigurationDataDto}
       />
-      {getScmInputs()}
-      <BlackDuckTagSelectInput
-        model={blackDuckStepConfigurationDto}
-        setModel={setBlackDuckStepConfigurationDataDto}
-      />
+      {getScmInputs()}      
       <BlackDuckProjectSelectInput
         model={blackDuckStepConfigurationDto}
         setModel={setBlackDuckStepConfigurationDataDto}
         blackDuckToolId={blackDuckStepConfigurationDto?.getData("blackDuckToolId")}
       />
-      <BooleanToggleInput
-        fieldName={"runCountAsVersion"}
-        dataObject={blackDuckStepConfigurationDto}
-        setDataObject={setBlackDuckStepConfigurationDataDto}        
+      <TextAreaInput 
+        dataObject={blackDuckStepConfigurationDto} 
+        fieldName={"commands"} 
+        setDataObject={setBlackDuckStepConfigurationDataDto}
       />
-      <JsonInput 
-        fieldName={"environments"} 
-        model={blackDuckStepConfigurationDto} 
-        setModel={setBlackDuckStepConfigurationDataDto}
-        className={"mb-4"}
-      />      
       <ParameterMappingInputBase
         titleIcon={faHandshake}
         dataObject={blackDuckStepConfigurationDto}
         setDataObject={setBlackDuckStepConfigurationDataDto}
-        fieldName={"runtimeVariables"}        
+        fieldName={"environmentVariables"}        
         type={"Runtime Variables"}
         titleText={"Runtime Variables"}
+      />
+      <BlackDuckDependencyMultiSelectInput 
+        model={blackDuckStepConfigurationDto}
+        setModel={setBlackDuckStepConfigurationDataDto}
       />
     </PipelineStepEditorPanelContainer>
   );

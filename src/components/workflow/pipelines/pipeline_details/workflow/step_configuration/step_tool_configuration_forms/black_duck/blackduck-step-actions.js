@@ -7,9 +7,4 @@ BlackDuckStepActions.getProjects = async (getAccessToken, cancelTokenSource, too
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-BlackDuckStepActions.getTags = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `tools/blackduck/tags`;
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 export default BlackDuckStepActions;
