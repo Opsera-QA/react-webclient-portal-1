@@ -1,9 +1,8 @@
-import { constantsHelper } from "temp-library-components/helpers/constants/constants.helper";
+import { constantsHelper } from "@opsera/definitions/constants/constants.helper";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const workspaceConstants = {};
 
