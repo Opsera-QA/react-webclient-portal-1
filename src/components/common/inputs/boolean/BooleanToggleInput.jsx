@@ -28,7 +28,7 @@ function BooleanToggleInput(
   };
 
   const updateValue = (newValue) => {
-    if (disabled !== false) {
+    if (disabled === true) {
       return;
     }
 
