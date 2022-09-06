@@ -143,6 +143,6 @@ IconTitleBar.propTypes = {
 };
 
 IconTitleBar.defaultProps = {
-  characterLimit: 50,
+  characterLimit: 60,
   iconSize: "3x",
 };

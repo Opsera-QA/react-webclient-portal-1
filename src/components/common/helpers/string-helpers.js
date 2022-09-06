@@ -1,3 +1,5 @@
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+
 export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString = "") {
   if (hasStringValue(string) === true) {
     let capitalizedString = "";
@@ -78,10 +80,12 @@ export function getSingularOrPluralString(count, singularText, pluralText) {
 }
 
 export function cutOffExcessCharacters(initialString, characterLimit, postFix = "...") {
-  let parsedString = initialString;
+  const parsedString = DataParsingHelper.parseString(initialString, "");
+  const parsedPostFix = DataParsingHelper.parseString(postFix, "...");
 
-  if (parsedString != null && typeof parsedString === "string" && parsedString.length > characterLimit) {
-    parsedString = `${parsedString.substring(0, characterLimit)}${postFix}`;
+  if (parsedString?.length > characterLimit) {
+    const postFixLength = parsedPostFix.length;
+    return `${parsedString.substring(0, characterLimit - postFixLength)}${postFix}`;
   }
 
   return parsedString;
