@@ -5,12 +5,12 @@ import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function PipelineCardHeader(
+export default function TaskCardHeader(
   {
-    pipelineModel,
+    taskModel,
   }) {
-  const state = pipelineModel?.getData("state");
-  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+  const state = taskModel?.getData("status");
+  const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
 
   return (
     <CardHeaderBase>
@@ -21,7 +21,7 @@ export default function PipelineCardHeader(
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={state}
-            type={"Pipeline"}
+            type={"Task"}
           />
         </div>
       </div>
@@ -29,6 +29,6 @@ export default function PipelineCardHeader(
   );
 }
 
-PipelineCardHeader.propTypes = {
-  pipelineModel: PropTypes.object,
+TaskCardHeader.propTypes = {
+  taskModel: PropTypes.object,
 };

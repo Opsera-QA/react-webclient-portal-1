@@ -5,9 +5,9 @@ export default function CardHeaderBase(
   {
     backgroundColor,
     color,
-    header,
+    children,
   }) {
-  if (header == null) {
+  if (children == null) {
     return undefined;
   }
 
@@ -21,7 +21,7 @@ export default function CardHeaderBase(
         letterSpacing: "0.6px",
       }}
     >
-      {header}
+      {children}
     </div>
   );
 }
@@ -29,5 +29,5 @@ export default function CardHeaderBase(
 CardHeaderBase.propTypes = {
   backgroundColor: PropTypes.string,
   color: PropTypes.string,
-  header: PropTypes.any,
+  children: PropTypes.any,
 };

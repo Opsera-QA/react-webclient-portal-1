@@ -10,10 +10,23 @@ import SelectionIconCardBase from "components/common/card_containers/SelectionIc
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-const getLastRunEntry = (taskModel) => {
+const getLastRunDetails = (taskModel) => {
+  const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
   const lastRun = taskModel?.getData("last_run");
   const lastRunCompletionDate = taskModel?.getData("last_run.completed");
+
+  if (runCount === 0) {
+    return (
+      <div className={"d-flex"}>
+        <div className={"text-muted m-auto"}>
+          {`This pipeline hasn't been run yet`}
+        </div>
+      </div>
+    );
+  }
 
   if (lastRunCompletionDate != null) {
     return (
@@ -22,26 +35,36 @@ const getLastRunEntry = (taskModel) => {
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={lastRun?.status}
-            type={"Task"}
+            type={"Pipeline"}
           />
         </div>
       </div>
     );
   }
-};
-
-const getTaskStatusField = (taskModel) => {
-  const status = taskModel?.getData("status");
 
   return (
-    <OrchestrationStateFieldBase
-      orchestrationState={status}
-      type={"Task"}
-    />
+    <div className={"d-flex"}>
+      <div className={"text-muted m-auto"}>
+        {`No metrics captured for last run`}
+      </div>
+    </div>
   );
 };
 
-// TODO: Rewrite
+// TODO: Add when wired up in orchestrator
+const getLastRunEntry = (taskModel) => {
+  return (
+    <Col xs={12}>
+      <div className={"mt-2"}>
+        <div className={"d-flex"}>
+          <div className={"mx-auto"}>Last Run</div>
+        </div>
+        {getLastRunDetails(taskModel)}
+      </div>
+    </Col>
+  );
+};
+
 export default function TaskCardBase(
   {
     taskModel,
@@ -51,8 +74,6 @@ export default function TaskCardBase(
     option,
   }) {
   const runCount = taskModel?.getData("run_count");
-  const formattedLastRun = getLastRunEntry(taskModel);
-  const pipelineStatusField = getTaskStatusField(taskModel);
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
@@ -76,10 +97,6 @@ export default function TaskCardBase(
     return (
       <Row className={"small"}>
         {getTemplateIdentifierField()}
-        {/*<Col xs={12}>*/}
-          {/*<DescriptionField dataObject={taskModel} className={"description-height"} />*/}
-        {/*</Col>*/}
-          {getRunFields()}
       </Row>
     );
   };
@@ -87,37 +104,12 @@ export default function TaskCardBase(
   const getTemplateIdentifierField = () => {
     return (
       <Col xs={12}>
-        {taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(taskModel?.getData("templateIdentifier"))}
-      </Col>
-    );
-  };
-
-  const getRunFields = () => {
-    if (runCount === 0 || runCount == null) {
-      return (
-        <Col xs={12} className={"d-flex"}>
-          <div className={"text-muted m-auto"}>
-            {"This task hasn't been run yet"}
+        <div className={"d-flex mb-1"}>
+          <div className={"mx-auto"}>
+            {taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(taskModel?.getData("templateIdentifier"))}
           </div>
-        </Col>
-      );
-    }
-
-    return (
-      <>
-        <Col xs={6}>
-          {pipelineStatusField}
-        </Col>
-        <Col xs={6}>
-          <span>{runCount} Runs</span>
-        </Col>
-        {/*<Col xs={12} className={"mt-2 mb-1"}>*/}
-        {/*  <div className={"mx-auto"}>*/}
-        {/*    <span>Last Run</span>*/}
-        {/*    <span>{formattedLastRun}</span>*/}
-        {/*  </div>*/}
-        {/*</Col>*/}
-      </>
+        </div>
+      </Col>
     );
   };
 
@@ -127,6 +119,7 @@ export default function TaskCardBase(
 
   return (
     <SelectionIconCardBase
+      cardHeader={<TaskCardHeader taskModel={taskModel} />}
       cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
       contentBody={getDescription()}
