@@ -27,7 +27,7 @@ export default function VerticalCardViewBase(
   }
 
   return (
-    <Row className={"mx-0"}>
+    <Row className={"mx-0 p-2"}>
       {data.map((toolData, index) => (
         <SelectionCardColumn
           key={index}
