@@ -1,7 +1,5 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 import taskActions from "components/tasks/task.actions";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -36,7 +34,6 @@ function TaskSummaryPanel(
     cancelTokenSource,
     getAccessToken,
     accessRoleData,
-    isOpseraAdministrator,
     isFreeTrial,
   } = useComponentStateReference();
 

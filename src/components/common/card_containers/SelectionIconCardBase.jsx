@@ -8,6 +8,7 @@ export default function SelectionIconCardBase(
   {
     children,
     isLoading,
+    cardHeader,
     cardFooter,
     titleBar,
     className,
@@ -51,6 +52,7 @@ export default function SelectionIconCardBase(
 
   return (
     <IconCardContainerBase
+      cardHeader={cardHeader}
       isLoading={isLoading}
       cardFooter={cardFooter}
       titleBar={titleBar}
@@ -71,6 +73,7 @@ SelectionIconCardBase.propTypes = {
   contentBody: PropTypes.object,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  cardHeader: PropTypes.any,
   cardFooter: PropTypes.any,
   style: PropTypes.object,
   onClickFunction: PropTypes.func,

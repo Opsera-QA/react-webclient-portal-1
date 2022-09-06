@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function CardFooterBase(
@@ -19,7 +18,6 @@ export default function CardFooterBase(
       style={{
         backgroundColor: backgroundColor,
         color: color,
-        // borderRadius: "0 0 .9rem .9rem",
       }}
     >
       <div
@@ -29,11 +27,6 @@ export default function CardFooterBase(
           letterSpacing: "0.6px",
         }}
       >
-        {/*<IconBase*/}
-        {/*  icon={icon}*/}
-        {/*  className={"mr-2"}*/}
-        {/*  iconSize={"xl"}*/}
-        {/*/>*/}
         {text}
       </div>
     </div>

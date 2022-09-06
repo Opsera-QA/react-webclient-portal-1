@@ -8,24 +8,31 @@ export default function OrchestrationStateBase(
     icon,
     innerText,
     statusText,
+    showStatusText,
     className,
     colorClassName,
   }) {
+  const getStatusText = () => {
+    if (showStatusText !== false) {
+      return (
+        <span>{statusText}</span>
+      );
+    }
+  };
+
   return (
     <span className={className}>
-      <span className={"d-flex flex-nowrap"}>
-        <TooltipWrapper innerText={innerText}>
-          <div>
-            <IconBase
-              iconSize={"lg"}
-              icon={icon}
-              spinIcon={statusText === "Running"}
-              className={`my-auto mr-2 ${colorClassName}`}
-            />
-            <span>{statusText}</span>
-          </div>
-        </TooltipWrapper>
-      </span>
+      <TooltipWrapper innerText={innerText}>
+        <div className={"d-flex flex-nowrap"}>
+          <span>{getStatusText()}</span>
+          <IconBase
+            iconSize={"lg"}
+            icon={icon}
+            spinIcon={statusText === "Running"}
+            className={`my-auto ml-2 ${colorClassName}`}
+          />
+        </div>
+      </TooltipWrapper>
     </span>
   );
 }
@@ -34,6 +41,7 @@ OrchestrationStateBase.propTypes = {
   icon: PropTypes.object,
   innerText: PropTypes.string,
   statusText: PropTypes.string,
+  showStatusText: PropTypes.bool,
   className: PropTypes.string,
   colorClassName: PropTypes.string,
 };

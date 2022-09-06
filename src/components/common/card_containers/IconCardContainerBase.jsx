@@ -12,6 +12,7 @@ export default function IconCardContainerBase(
   {
     children,
     isLoading,
+    cardHeader,
     cardFooter,
     titleBar,
     className,
@@ -87,6 +88,7 @@ export default function IconCardContainerBase(
         style={getStyle()}
         onClick={handleOnClickFunction}
       >
+        {cardHeader}
         <Card.Title className="mb-0 px-2">
           {getCardTitle()}
         </Card.Title>
@@ -104,6 +106,7 @@ IconCardContainerBase.propTypes = {
   contentBody: PropTypes.object,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  cardHeader: PropTypes.any,
   cardFooter: PropTypes.any,
   style: PropTypes.object,
   onClickFunction: PropTypes.func,
