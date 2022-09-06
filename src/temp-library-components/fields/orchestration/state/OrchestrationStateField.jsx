@@ -20,14 +20,16 @@ export default function OrchestrationStateField(
 
   return (
     <FieldContainer>
-      <FieldLabel
-        field={field}
-        showLabel={showLabel}
-      />
-      <OrchestrationStateFieldBase
-        type={type}
-        orchestrationState={model?.getData(fieldName)}
-      />
+      <div className={"d-flex"}>
+        <FieldLabel
+          field={field}
+          showLabel={showLabel}
+        />
+        <OrchestrationStateFieldBase
+          type={type}
+          orchestrationState={model?.getData(fieldName)}
+        />
+      </div>
     </FieldContainer>
   );
 }

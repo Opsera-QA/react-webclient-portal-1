@@ -15,14 +15,16 @@ export default function OrchestrationStateBase(
     <span className={className}>
       <span className={"d-flex flex-nowrap"}>
         <TooltipWrapper innerText={innerText}>
-          <IconBase
-            iconSize={"lg"}
-            icon={icon}
-            spinIcon={statusText === "Running"}
-            className={`my-auto mr-2 ${colorClassName}`}
-          />
+          <div>
+            <IconBase
+              iconSize={"lg"}
+              icon={icon}
+              spinIcon={statusText === "Running"}
+              className={`my-auto mr-2 ${colorClassName}`}
+            />
+            <span>{statusText}</span>
+          </div>
         </TooltipWrapper>
-        <span>{statusText}</span>
       </span>
     </span>
   );

@@ -23,7 +23,7 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineStateField from "temp-library-components/fields/orchestration/state/pipeline/PipelineStateField";
+import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 
 function TaskSummaryPanel(
   {
@@ -161,7 +161,9 @@ function TaskSummaryPanel(
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
         <Col md={6}>
-          <PipelineStateField dataObject={gitTasksData} fieldName={"status"} />
+          <TaskStateField
+            model={gitTasksData}
+          />
         </Col>
         {getOwnerNameField()}
         <Col md={6}>
