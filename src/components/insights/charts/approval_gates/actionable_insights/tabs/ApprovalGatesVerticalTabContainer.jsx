@@ -14,7 +14,7 @@ function ApprovalGatesVerticalTabContainer({ listOfPipelines }) {
 
   return (
       <VanitySetVerticalTabContainer className={"h-100"}>
-        {listOfPipelines.map((item, index) => {
+        {listOfPipelines?.map((item, index) => {
           return <VanitySetVerticalTab key={index} icon={faDraftingCompass} tabText={item.pipeline_name} tabName={item._id} />;
         })}
       </VanitySetVerticalTabContainer>
