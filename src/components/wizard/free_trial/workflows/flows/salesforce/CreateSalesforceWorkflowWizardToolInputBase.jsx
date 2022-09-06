@@ -16,7 +16,6 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
     setModel,
     disabled,
     className,
-    fields,
     textField,
     valueField,
     toolId,
@@ -72,11 +71,17 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolIdentifier, fields);
+    const response = await toolsActions.getToolsOwnedByUser(
+      getAccessToken,
+      cancelSource,
+      toolIdentifier,
+    );
     const newTools = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(newTools)) {
-      const filteredTools = newTools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
+      const filteredTools = newTools?.filter((tool) => {
+        return tool.configuration != null && Object.entries(tool.configuration).length > 0;
+      });
       // const filteredTools = newTools?.filter((tool) => {
       //   const toolConfiguration = tool?.configuration;
       //   const model = model?.getNewInstance(toolConfiguration, false);
@@ -162,7 +167,6 @@ CreateSalesforceWorkflowWizardToolInputBase.propTypes = {
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   className: PropTypes.string,
-  fields: PropTypes.array,
   textField: PropTypes.any,
   valueField: PropTypes.string,
   filterDataFunction: PropTypes.func,

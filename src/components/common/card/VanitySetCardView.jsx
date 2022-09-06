@@ -39,7 +39,6 @@ function VanitySetCardView(
       className={"vanity-card-container"}
       style={{
         minHeight: minHeight,
-        height: minHeight,
       }}
     >
       {getBody()}
