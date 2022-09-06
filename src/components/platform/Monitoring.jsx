@@ -66,7 +66,6 @@ function Monitoring(props) {
             onClick={() => selectCard("Nagios")}
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("Nagios") ? true : false}
               checked={isChecked.Nagios && data["Nagios"]}
               className="newApp__checkbox"
@@ -80,7 +79,6 @@ function Monitoring(props) {
             className="newApp__service-logo newApp__service-logo--disabled"
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("ZooKeeper") ? true : false}
               checked={isChecked.ZooKeeper && data["ZooKeeper"]}
               className="newApp__checkbox"

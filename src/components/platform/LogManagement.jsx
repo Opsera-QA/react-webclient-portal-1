@@ -83,7 +83,6 @@ function LogManagement(props) {
             // onClick={() => selectCard("ElasticSearch")} 
             >
             <input type="checkbox"
-              inline
               disabled={tools.includes("ElasticSearch") ? true : false}
               checked={isChecked.ElasticSearch && data["ElasticSearch"]}
               className="newApp__checkbox"
@@ -109,7 +108,6 @@ function LogManagement(props) {
             // onClick={() => selectCard("Kibana")}
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("Kibana") ? true : false}
               checked={isChecked.Kibana && data["Kibana"]}
               className="newApp__checkbox"
@@ -135,7 +133,6 @@ function LogManagement(props) {
           //  onClick={() => selectCard("LogStash")}
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("LogStash") ? true : false}
               checked={isChecked.LogStash && data["LogStash"]}
               className="newApp__checkbox"
