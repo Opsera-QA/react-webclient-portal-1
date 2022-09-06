@@ -6,7 +6,7 @@ function CenteredContentWrapper(
     children,
   }) {
   return (
-    <div className={"d-flex h-100"}>
+    <div className={"d-flex h-100 w-100"}>
       <div className={"m-auto"}>
         {children}
       </div>

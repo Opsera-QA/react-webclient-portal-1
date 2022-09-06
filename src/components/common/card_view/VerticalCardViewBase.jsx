@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Col } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function VerticalCardViewBase(
   {
@@ -20,11 +20,9 @@ export default function VerticalCardViewBase(
     }
 
     return (
-      <Row>
-        <Col xs={12} className={"info-text text-center p-5"}>
-          {noDataMessage}
-        </Col>
-      </Row>
+      <CenteredContentWrapper>
+        {noDataMessage}
+      </CenteredContentWrapper>
     );
   }
 

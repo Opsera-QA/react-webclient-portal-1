@@ -51,7 +51,6 @@ function WidgetDataBlockBaseContainer(
 
   const getClassNames = () => {
     let classNames = ``;
-    // let classNames = `widget-data-block-base`; // Enable if we want border color change on hover
 
     if (hasStringValue(className) === true) {
       classNames += ` ${className}`;
@@ -63,7 +62,7 @@ function WidgetDataBlockBaseContainer(
   const getBody = () => {
     if (title) {
       return (
-        <div className={"filter-container"}>
+        <>
           <div className={"w-100 d-flex content-block-header-inverse"}>
             <FilterTitleBar
               isLoading={isLoading}
@@ -73,7 +72,7 @@ function WidgetDataBlockBaseContainer(
             />
           </div>
           {children}
-        </div>
+        </>
       );
     }
 

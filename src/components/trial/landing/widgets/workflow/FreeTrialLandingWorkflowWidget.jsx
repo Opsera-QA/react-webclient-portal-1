@@ -125,6 +125,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
             rightSideTitleBarItems={getNewButton()}
           >
             <FreeTrialWorkflowItemSelectionCardView
+              heightSize={5}
               workspaceItems={workspaceItems}
               loadData={loadData}
               isLoading={isLoading}

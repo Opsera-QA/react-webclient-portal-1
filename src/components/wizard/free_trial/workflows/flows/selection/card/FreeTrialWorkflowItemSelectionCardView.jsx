@@ -5,6 +5,9 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import WorkflowPipelineCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowPipelineCard";
 import WorkflowTaskCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowTaskCard";
+import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
+import { heightHelper } from "temp-library-components/helpers/height/height.helper";
 
 export default function FreeTrialWorkflowItemSelectionCardView(
   {
@@ -15,6 +18,8 @@ export default function FreeTrialWorkflowItemSelectionCardView(
     taskMetadata,
     selectedWorkflowItem,
     setSelectedWorkflowItem,
+    heightSize,
+    hasTitleBar,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
@@ -38,11 +43,24 @@ export default function FreeTrialWorkflowItemSelectionCardView(
     }
   };
 
+  const getMinimumHeight = () => {
+    if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
+      const widgetPixelSize = widgetHelper.getWidgetPixelSize(heightSize);
+
+      if (hasTitleBar !== false) {
+        return heightHelper.subtractTitleBarHeightForCssHeight(widgetPixelSize);
+      }
+
+      return widgetPixelSize;
+    }
+  };
+
   return (
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
       paginationModel={workflowFilterModel}
+      minHeight={getMinimumHeight()}
       cards={
         <VerticalCardViewBase
           getCardFunction={getWorkspaceItemCard}
@@ -62,4 +80,6 @@ FreeTrialWorkflowItemSelectionCardView.propTypes = {
   taskMetadata: PropTypes.object,
   selectedWorkflowItem: PropTypes.string,
   setSelectedWorkflowItem: PropTypes.func,
+  heightSize: PropTypes.number,
+  hasTitleBar: PropTypes.bool,
 };
