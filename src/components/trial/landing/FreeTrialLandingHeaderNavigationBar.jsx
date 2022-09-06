@@ -5,6 +5,7 @@ import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavi
 import { useHistory } from "react-router-dom";
 import HeaderNavigationBarItemDivider from "components/header/navigation_bar/HeaderNavigationBarItemDivider";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useLocationReference from "hooks/useLocationReference";
 
 const FREE_TRIAL_LANDING_SCREENS = {
   HOME: "home",
@@ -18,22 +19,29 @@ export default function FreeTrialLandingHeaderNavigationBar(
   }) {
   const history = useHistory();
   const {
+    currentPath,
+  } = useLocationReference();
+  const {
     themeConstants,
   } = useComponentStateReference();
 
   const handleScreenClick = (newScreen) => {
-    if (currentScreen !== newScreen) {
-      switch (newScreen) {
-        case FREE_TRIAL_LANDING_SCREENS.HOME:
+    switch (newScreen) {
+      case FREE_TRIAL_LANDING_SCREENS.HOME:
+        if (currentPath !== "/") {
           history.push("/");
-          break;
-        case FREE_TRIAL_LANDING_SCREENS.WORKSPACE:
+        }
+        break;
+      case FREE_TRIAL_LANDING_SCREENS.WORKSPACE:
+        if (currentPath !== "/workspace") {
           history.push("/workspace");
-          break;
-        case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
+        }
+        break;
+      case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
+        if (currentPath !== "/unified-insights") {
           history.push("/unified-insights");
-          break;
-      }
+        }
+        break;
     }
   };
 
@@ -46,8 +54,8 @@ export default function FreeTrialLandingHeaderNavigationBar(
         screenLabel={"Home"}
         screenName={"home"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
+        disableMousePointer={currentPath === "/"}
       />
-      {/*<HeaderNavigationBarItemDivider className={"mr-1"} />*/}
       <HeaderNavigationBarItem
         className={"mr-1"}
         currentScreen={currentScreen}
@@ -55,9 +63,8 @@ export default function FreeTrialLandingHeaderNavigationBar(
         screenLabel={"Workspace"}
         screenName={"workspace"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
+        disableMousePointer={currentPath === "/workspace"}
       />
-      {/*<HeaderNavigationBarItemDivider className={"mr-1"} />*/}
-      {/* Narrow screens vs wide ...*/}
       <span className={"d-none d-lg-inline"}>
         <HeaderNavigationBarItem
           className={"mr-1 no-wrap "}
@@ -65,9 +72,9 @@ export default function FreeTrialLandingHeaderNavigationBar(
           setCurrentScreen={handleScreenClick}
           screenLabel={"Unified Insights"}
           screenName={"insights"}
+          disableMousePointer={currentPath === "/"}
         />
       </span>
-
       <span className={"d-inline d-lg-none"}>
         <HeaderNavigationBarItem
           className={"mr-1"}
@@ -75,6 +82,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
           setCurrentScreen={handleScreenClick}
           screenLabel={"Insights"}
           screenName={"insights"}
+          disableMousePointer={currentPath === "/unified-insights"}
         />
       </span>
     </Navbar.Collapse>

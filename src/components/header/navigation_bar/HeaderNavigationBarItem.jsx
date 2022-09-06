@@ -14,22 +14,9 @@ export default function HeaderNavigationBarItem(
     className,
     disabled,
     fontColor,
+    disableMousePointer,
   }) {
   const { themeConstants } = useComponentStateReference();
-
-  const getCurrentScreenUnderline = () => {
-    if (currentScreen === screenName) {
-      return (
-        <div
-          className={"w-100 align-self-end"}
-          style={{
-            backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
-            height: "3px",
-          }}
-        />
-      );
-    }
-  };
 
   const getScreenLabel = () => {
     return (
@@ -47,24 +34,16 @@ export default function HeaderNavigationBarItem(
       return (
         {
           color: themeConstants.COLOR_PALETTE.OPSERA_GOLD, //fontColor,
-          // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
           fontWeight: 300,
-          borderBottom: `1px solid ${themeConstants.COLOR_PALETTE.OPSERA_GOLD}`,
-          //fontSize: "16px",
-          //letterSpacing: "0.25rem",
-          cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, currentScreen === screenName),
+          // borderBottom: `1px solid ${themeConstants.COLOR_PALETTE.OPSERA_GOLD}`,
+          cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, disableMousePointer),
         }
       );
     }
 
     return (
       {
-        //color: fontColor,
         cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
-        // fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-        // letterSpacing: "0.25rem",
-        //fontWeight: undefined,
-        //fontSize: "16px",
       }
     );
   };
@@ -92,4 +71,5 @@ HeaderNavigationBarItem.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   fontColor: PropTypes.string,
+  disableMousePointer: PropTypes.bool,
 };
