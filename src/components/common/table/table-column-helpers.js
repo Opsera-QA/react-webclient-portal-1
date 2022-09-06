@@ -20,25 +20,21 @@ import FailIcon from "../../common/icons/table/FailIcon";
 import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
-import Model from "core/data_model/model";
-import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
-import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
-import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
-import CheckboxInputBase from "../inputs/boolean/CheckboxInputBase";
+import OrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -309,9 +305,14 @@ export const getCustomTablePipelineStateColumnDefinition = (field, className) =>
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(tableRow) {
-      const pipelineState = tableRow.row.original[field?.id];
+      const pipelineState = tableRow?.row?.original[field?.id];
 
-      return (getPipelineStateFieldBase(pipelineState));
+      return (
+        <OrchestrationStateFieldBase
+          orchestrationState={pipelineState}
+          type={"Pipeline"}
+        />
+      );
     },
     class: className
   };

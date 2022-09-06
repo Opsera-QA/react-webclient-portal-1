@@ -8,12 +8,14 @@ import {
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
-import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
+import { getPipelineStateFieldBase } from "temp-library-components/fields/orchestration/state/pipeline/PipelineStateField";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import OrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 
 const getLastRunEntry = (pipelineModel) => {
   const lastRun = pipelineModel?.getData("workflow.last_run");
@@ -25,7 +27,12 @@ const getLastRunEntry = (pipelineModel) => {
         <span>Last Run</span>
         <div className={"d-flex justify-content-between"}>
           {getFormattedTimestamp(lastRunCompletionDate)}
-          <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+          <div>
+            <OrchestrationStateFieldBase
+              orchestrationState={lastRun?.status}
+              type={"Pipeline"}
+            />
+          </div>
         </div>
       </div>
     );
@@ -33,9 +40,14 @@ const getLastRunEntry = (pipelineModel) => {
 };
 
 const getPipelineStatusField = (pipelineModel) => {
-  const pipelineState = pipelineModel?.getData("state");
+  const state = pipelineModel?.getData("state");
 
-  return (getPipelineStateFieldBase(pipelineState));
+  return (
+    <OrchestrationStateFieldBase
+      orchestrationState={state}
+      type={"Pipeline"}
+    />
+  );
 };
 
 // TODO: Rewrite

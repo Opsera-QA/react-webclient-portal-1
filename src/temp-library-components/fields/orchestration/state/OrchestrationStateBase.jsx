@@ -3,7 +3,14 @@ import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 
-function PipelineStateFieldBase({ icon, innerText, statusText, className, colorClassName }) {
+export default function OrchestrationStateBase(
+  {
+    icon,
+    innerText,
+    statusText,
+    className,
+    colorClassName,
+  }) {
   return (
     <span className={className}>
       <span className={"d-flex flex-nowrap"}>
@@ -11,7 +18,8 @@ function PipelineStateFieldBase({ icon, innerText, statusText, className, colorC
           <IconBase
             iconSize={"lg"}
             icon={icon}
-            className={statusText === "Running" ? `my-auto fa-spin mr-2 ${colorClassName}` : `my-auto mr-2 ${colorClassName}`}
+            spinIcon={statusText === "Running"}
+            className={`my-auto mr-2 ${colorClassName}`}
           />
         </TooltipWrapper>
         <span>{statusText}</span>
@@ -20,12 +28,10 @@ function PipelineStateFieldBase({ icon, innerText, statusText, className, colorC
   );
 }
 
-PipelineStateFieldBase.propTypes = {
+OrchestrationStateBase.propTypes = {
   icon: PropTypes.object,
   innerText: PropTypes.string,
   statusText: PropTypes.string,
   className: PropTypes.string,
   colorClassName: PropTypes.string,
 };
-
-export default PipelineStateFieldBase;

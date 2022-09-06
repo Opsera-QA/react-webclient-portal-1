@@ -1909,7 +1909,7 @@
   optionalDependencies:
     "fsevents" "*"
 
-"@opsera/definitions@0.0.3":
+"@opsera/definitions@latest":
   "integrity" "sha512-7tcnbv1p3Qy14n25Q4TjCcujWy1aOSg7KY9/Dt3v+paxz7cQF5Npox0QkjyrokAR41zqYPRtwGHP6XTmF1SRlg=="
   "resolved" "https://opserarepo.jfrog.io/artifactory/api/npm/opsera-platform-npm/@opsera/definitions/-/@opsera/definitions-0.0.3.tgz"
   "version" "0.0.3"

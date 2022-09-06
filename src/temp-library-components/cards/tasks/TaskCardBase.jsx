@@ -4,11 +4,12 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
-import { getPipelineStateFieldBase } from "components/common/fields/pipelines/state/PipelineStateField";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
+import OrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 
 const getLastRunEntry = (taskModel) => {
   const lastRun = taskModel?.getData("last_run");
@@ -18,16 +19,26 @@ const getLastRunEntry = (taskModel) => {
     return (
       <div className={"d-flex justify-content-between"}>
         {getFormattedTimestamp(lastRunCompletionDate)}
-        <div>{getPipelineStateFieldBase(lastRun?.status)}</div>
+        <div>
+          <OrchestrationStateFieldBase
+            orchestrationState={lastRun?.status}
+            type={"Task"}
+          />
+        </div>
       </div>
     );
   }
 };
 
 const getTaskStatusField = (taskModel) => {
-  const pipelineState = taskModel?.getData("state");
+  const status = taskModel?.getData("status");
 
-  return (getPipelineStateFieldBase(pipelineState));
+  return (
+    <OrchestrationStateFieldBase
+      orchestrationState={status}
+      type={"Task"}
+    />
+  );
 };
 
 // TODO: Rewrite

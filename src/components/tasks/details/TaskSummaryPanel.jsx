@@ -23,6 +23,7 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineStateField from "temp-library-components/fields/orchestration/state/pipeline/PipelineStateField";
 
 function TaskSummaryPanel(
   {
@@ -35,6 +36,8 @@ function TaskSummaryPanel(
     cancelTokenSource,
     getAccessToken,
     accessRoleData,
+    isOpseraAdministrator,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const updateRecord = async (newDataModel) => {
@@ -137,6 +140,16 @@ function TaskSummaryPanel(
     }
   };
 
+  const getOwnerNameField = () => {
+    if (isFreeTrial !== true) {
+      return (
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
+        </Col>
+      );
+    }
+  };
+
   if (gitTasksData == null) {
     return null;
   }
@@ -148,13 +161,14 @@ function TaskSummaryPanel(
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
         <Col md={6}>
-          <TaskTypeField fieldName={"type"} model={gitTasksData} />
+          <PipelineStateField dataObject={gitTasksData} fieldName={"status"} />
         </Col>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
-        </Col>
+        {getOwnerNameField()}
         <Col md={6}>
           <SmartIdField model={gitTasksData} fieldName={"_id"} />
+        </Col>
+        <Col md={6}>
+          <TaskTypeField fieldName={"type"} model={gitTasksData} />
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />

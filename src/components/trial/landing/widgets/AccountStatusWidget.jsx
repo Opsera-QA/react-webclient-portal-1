@@ -50,7 +50,6 @@ export default function AccountStatusWidget({ className }) {
     );
 
     const metrics = response?.data?.data;
-    console.log("metrics: " + JSON.stringify(metrics));
     if (isMounted?.current === true && metrics) {
       setAccountMetrics(metrics);
     }
