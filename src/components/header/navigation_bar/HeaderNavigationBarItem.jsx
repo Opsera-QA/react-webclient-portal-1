@@ -13,7 +13,6 @@ export default function HeaderNavigationBarItem(
     screenLabel,
     className,
     disabled,
-    fontColor,
     disableMousePointer,
   }) {
   const { themeConstants } = useComponentStateReference();
@@ -28,30 +27,29 @@ export default function HeaderNavigationBarItem(
     );
   };
 
-  //setting most of the font configs by css, only color and weight need ot change
   const getStyling = () => {
+    const styling = {
+      cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
+      fontSize: "1rem",
+      letterSpacing: ".8px",
+      fontFamily: fontThemeConstants.FONT_FAMILIES.MAIN_SITE_FONT_FAMILIES,
+      color: themeConstants.COLOR_PALETTE.WHITE,
+    };
+
     if (currentScreen === screenName) {
-      return (
-        {
-          color: themeConstants.COLOR_PALETTE.OPSERA_GOLD, //fontColor,
-          fontWeight: 300,
-          // borderBottom: `1px solid ${themeConstants.COLOR_PALETTE.OPSERA_GOLD}`,
-          cursor: mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, disableMousePointer),
-        }
-      );
+      styling.color = themeConstants.COLOR_PALETTE.OPSERA_GOLD;
+      styling.fontWeight = 300;
+      // styling.borderBottom = `1px solid ${themeConstants.COLOR_PALETTE.OPSERA_GOLD}`;
+      styling.cursor = mouseHelper.getLinkMousePointer(setCurrentScreen, disabled, disableMousePointer);
     }
 
-    return (
-      {
-        cursor: mouseHelper.getMouseCursor(setCurrentScreen, disabled),
-      }
-    );
+    return styling;
   };
 
   return (
     <div className={className}>
       <div
-        className={"mx-5 h-100 d-flex flex-column topNavLinkText"}
+        className={"mx-5 h-100 d-flex flex-columns"}
         onClick={() => setCurrentScreen(screenName)}
         style={getStyling()}
       >
@@ -70,6 +68,5 @@ HeaderNavigationBarItem.propTypes = {
   screenLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  fontColor: PropTypes.string,
   disableMousePointer: PropTypes.bool,
 };

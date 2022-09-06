@@ -46,7 +46,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
   };
 
   return (
-    <Navbar.Collapse className={"h-100 darkBackgroundText"}>
+    <Navbar.Collapse className={"h-100"}>
       <HeaderNavigationBarItem
         className={"ml-5 mr-1"}
         currentScreen={currentScreen}
@@ -62,29 +62,25 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
-        fontColor={themeConstants.COLOR_PALETTE.WHITE}
+        fontColor={themeConstants.COLOR_PALETTE.OPSERA_GOLD}
         disableMousePointer={currentPath === "/workspace"}
       />
-      <span className={"d-none d-lg-inline"}>
-        <HeaderNavigationBarItem
-          className={"mr-1 no-wrap "}
-          currentScreen={currentScreen}
-          setCurrentScreen={handleScreenClick}
-          screenLabel={"Unified Insights"}
-          screenName={"insights"}
-          disableMousePointer={currentPath === "/"}
-        />
-      </span>
-      <span className={"d-inline d-lg-none"}>
-        <HeaderNavigationBarItem
-          className={"mr-1"}
-          currentScreen={currentScreen}
-          setCurrentScreen={handleScreenClick}
-          screenLabel={"Insights"}
-          screenName={"insights"}
-          disableMousePointer={currentPath === "/unified-insights"}
-        />
-      </span>
+      <HeaderNavigationBarItem
+        className={"mr-1 no-wrap d-none d-lg-inline"}
+        currentScreen={currentScreen}
+        setCurrentScreen={handleScreenClick}
+        screenLabel={"Unified Insights"}
+        screenName={"insights"}
+        disableMousePointer={currentPath === "/"}
+      />
+      <HeaderNavigationBarItem
+        className={"mr-1 d-inline d-lg-none"}
+        currentScreen={currentScreen}
+        setCurrentScreen={handleScreenClick}
+        screenLabel={"Insights"}
+        screenName={"insights"}
+        disableMousePointer={currentPath === "/unified-insights"}
+      />
     </Navbar.Collapse>
   );
 }

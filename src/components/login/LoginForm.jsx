@@ -488,7 +488,14 @@ const LoginForm = ({ authClient }) => {
 
 const WelcomeMessage = () => {
   return (
-    <div className="ml-4 loginScreenText">
+    <div
+      className={"ml-4"}
+      style={{
+        color: "white",
+        textAlign: "center",
+        marginTop: "50px",
+      }}
+    >
       <h1 className="mb-3">Deliver Software</h1>
       <h1 className="mb-3">Faster. Safer. Smarter.</h1>
 
