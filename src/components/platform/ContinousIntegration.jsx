@@ -77,7 +77,6 @@ function ContinousIntegration(props) {
               onClick={() => selectCard("Jenkins")}
             >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("Jenkins") ? true : false}
                 checked={isChecked.Jenkins && data["Jenkins"]}
                 className="newApp__checkbox"
@@ -92,7 +91,6 @@ function ContinousIntegration(props) {
                 onClick={() => selectCard("TeamCity")}
               >
                 <input type="checkbox"
-                  inline
                   disabled={tools.includes("TeamCity") ? true : false}
                   checked={isChecked.TeamCity && data["TeamCity"]}
                   className="newApp__checkbox"
@@ -106,7 +104,6 @@ function ContinousIntegration(props) {
               onClick={() => selectCard("Argocd")}
             >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("Argocd") ? true : false}
                 checked={isChecked.Argocd && data["Argocd"]}
                 className="newApp__checkbox"
@@ -121,7 +118,6 @@ function ContinousIntegration(props) {
               onClick={() => selectCard("Spinnaker")}       
             >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("Spinnaker") ? true : false}
                 checked={isChecked.Spinnaker && data["Spinnaker"]}
                 className="newApp__checkbox"
@@ -146,7 +142,6 @@ function ContinousIntegration(props) {
               // onClick={() => selectCard("FluxCD")}
               >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("FluxCD") ? true : false}
                 checked={isChecked.FluxCD && data["FluxCD"]}
                 className="newApp__checkbox"
