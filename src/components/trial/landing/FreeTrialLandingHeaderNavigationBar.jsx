@@ -61,7 +61,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
-        fontColor={themeConstants.COLOR_PALETTE.OPSERA_GOLD}
+        fontColor={themeConstants.COLOR_PALETTE.WHITE}
         disableMousePointer={currentPath === "/workspace"}
       />
       <HeaderNavigationBarItem
@@ -70,6 +70,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Unified Insights"}
         screenName={"insights"}
+        fontColor={themeConstants.COLOR_PALETTE.WHITE}
         disableMousePointer={currentPath === "/"}
       />
       <HeaderNavigationBarItem
@@ -78,6 +79,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         setCurrentScreen={handleScreenClick}
         screenLabel={"Insights"}
         screenName={"insights"}
+        fontColor={themeConstants.COLOR_PALETTE.WHITE}
         disableMousePointer={currentPath === "/unified-insights"}
       />
     </Navbar.Collapse>
