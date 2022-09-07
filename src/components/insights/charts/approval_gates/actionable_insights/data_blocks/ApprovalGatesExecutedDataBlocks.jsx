@@ -11,10 +11,10 @@ function ApprovalGatesExecutedDataBlocks({ metrics }) {
     <div className="new-chart mb-1">
         <Row className="px-4">
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.total_pipelines_approved} subtitle={'Total Pipelines Approved'} />
+            <ApprovalGatesDataBlockBase score={metrics.total_pipelines_approved} subtitle={'Total Pipeline Runs Approved'} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
-            <ApprovalGatesDataBlockBase score={metrics.total_pipelines_rejected} subtitle={'Total Approvals Rejected'} />
+            <ApprovalGatesDataBlockBase score={metrics.total_pipelines_rejected} subtitle={'Total Pipeline Runs Rejected'} />
           </Col>
           <Col xl={4} lg={4} sm={4} className={"my-1"}>
             <ApprovalGatesDataBlockBase score={`${seconds} Seconds`} subtitle={'Average Approval Time'} />
