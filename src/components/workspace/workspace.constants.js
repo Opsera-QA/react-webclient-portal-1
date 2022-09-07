@@ -1,4 +1,4 @@
-import { constantsHelper } from "@opsera/definitions/constants/constants.helper";
+import constantsHelper from "@opsera/definitions/constants/constants.helper";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import {
   pipelineTemplateIdentifierConstants

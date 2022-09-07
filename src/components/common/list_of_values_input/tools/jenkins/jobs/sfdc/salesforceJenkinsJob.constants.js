@@ -1,4 +1,4 @@
-import { constantsHelper } from "@opsera/definitions/constants/constants.helper";
+import constantsHelper from "@opsera/definitions/constants/constants.helper";
 
 export const salesforceJenkinsJobConstants = {};
 
