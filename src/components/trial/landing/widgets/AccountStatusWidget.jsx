@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
-import modelHelpers from "components/common/model/modelHelpers";
-import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 // TODO: Standardize
 export default function AccountStatusWidget({ className }) {
   const [isLoading, setIsLoading] = useState(undefined);
   const [accountMetrics, setAccountMetrics] = useState(undefined);
   const {
-    themeConstants,
     getAccessToken,
     cancelTokenSource,
     isMounted,
@@ -31,7 +28,7 @@ export default function AccountStatusWidget({ className }) {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getSystemParameter();
+      await getAccountMetrics();
     } catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
@@ -43,7 +40,7 @@ export default function AccountStatusWidget({ className }) {
     }
   };
 
-  const getSystemParameter = async () => {
+  const getAccountMetrics = async () => {
     const response = await accountsActions.getFreeTrialAccountMetrics(
       getAccessToken,
       cancelTokenSource,
@@ -57,12 +54,7 @@ export default function AccountStatusWidget({ className }) {
 
   const getTitleText = () => {
     return (
-      <div
-        style={{
-          // fontWeight: 700,
-          // fontSize: "22px",
-        }}
-      >
+      <div>
         My Account
       </div>
     );
@@ -77,30 +69,37 @@ export default function AccountStatusWidget({ className }) {
    * @returns {JSX.Element}
    */
   const getPipelineHealth = (status = "successful") => {
-    //const status = "successful"; //failed
+    const failedPipelines = DataParsingHelper.parseArray(accountMetrics?.pipelineMetrics?.failed, []);
+    const failedTasks = DataParsingHelper.parseArray(accountMetrics?.taskMetrics?.failed, []);
+    const totalCount = failedPipelines.length + failedTasks.length;
 
-    if (status === "successful") {
+    if (totalCount === 0) {
       return (
-        <span className={"green marketingModulesValueText"}>healthy</span>
+        <span className={"green marketingModulesValueText"}>
+          healthy
+        </span>
       );
     }
 
-    if (status === "warning") {
+    if (totalCount === 1) {
       return (
-        <span className={"yellow marketingModulesValueText"}>warning</span>
+        <span className={"yellow marketingModulesValueText"}>
+          warning
+        </span>
       );
     }
 
-    if (status == "failed") {
+    if (totalCount > 1) {
       return (
-        <span className={"red marketingModulesValueText"}>un-healthy</span>
+        <span className={"red marketingModulesValueText"}>
+          un-healthy
+        </span>
       );
     }
 
     return (
       <span>unknown</span>
     );
-
   };
 
 
@@ -110,8 +109,8 @@ export default function AccountStatusWidget({ className }) {
    * @returns {JSX.Element}
    */
   const getItemCounts = () => {
-    const pipelineCount = 1; //assuming these have to get wired up to API calls
-    const taskCount = 0;
+    const pipelineCount = accountMetrics?.pipelineMetrics?.totalCount;
+    const taskCount = accountMetrics?.taskMetrics?.totalCount;
     const summaryCount = pipelineCount + taskCount;
 
     if (summaryCount > 1) {
@@ -120,13 +119,13 @@ export default function AccountStatusWidget({ className }) {
       );
     }
 
-    if (pipelineCount == 1) {
+    if (pipelineCount === 1) {
       return (
         <span>You have {summaryCount} configured pipeline</span>
       );
     }
 
-    if (taskCount == 1) {
+    if (taskCount === 1) {
       return (
         <span>You have {summaryCount} configured task</span>
       );
@@ -135,18 +134,16 @@ export default function AccountStatusWidget({ className }) {
     return (
       <span>You have no configured offerings at this time</span>
     );
-
   };
 
 
   /***
    * get the total runs of all pipelines & tasks
-   * @param status
    * @returns {JSX.Element}
    */
   const getTotalRunCount = () => {
-    const pipelineRuns = 12; //assuming these have to get wired up to API calls
-    const taskRuns = 0;
+    const pipelineRuns = accountMetrics?.pipelineMetrics?.totalRunCount;
+    const taskRuns = accountMetrics?.taskMetrics?.totalRunCount;
     const summaryRunCount = pipelineRuns + taskRuns;
 
     return (
@@ -156,42 +153,71 @@ export default function AccountStatusWidget({ className }) {
 
   };
 
+  const getExpirationDate = () => {
+    const expiration = DataParsingHelper.parseDate(accountMetrics?.expiration);
 
-  return (
-    <div className={className}>
-      <FreeTrialWidgetDataBlockBase
-        title={getTitleText()}
-        fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
-        heightSize={6}
-      >
+    if (!expiration) {
+      return (
+        <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
+          <div className="marketingModulesText p-3 mx-3"
+               style={{fontSize:"smaller"}}>
+            Your free trial does not expire.
+          </div>
+        </div>
+      );
+    }
+
+    const parsedDate = expiration.toISOString().substring(0, 10);
+
+    return (
+      <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
+        <div className="marketingModulesText p-3 mx-3"
+             style={{fontSize:"smaller"}}>
+          Your free trial will expire on {parsedDate}.  For assistance, email
+          <a href="mailto:support@opsera.io" style={{paddingLeft:"5px"}} className={"marketingModulesTextLink"}>support@opsera.io</a>
+        </div>
+      </div>
+    );
+  };
+
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator type={"Account Overview"} />
+      );
+    }
+
+    return (
+      <>
         <div className="d-flex justify-content-center h-100 mt-4 mb-2">
-
           <div className="d-flex align-items-left marketingModulesText">
             <div className={"my-2 marketingModulesTextLarger"}>{getItemCounts()}</div>
           </div>
-
         </div>
         <div className="d-flex justify-content-center h-100">
-
           <div className="d-flex align-items-center marketingModulesText">
-
             <div className={"my-2 p-4 marketingModulesTextLarger"}>
-              Pipelines are&nbsp;
-              {getPipelineHealth()}
+              {`Pipelines are `}{getPipelineHealth()}
             </div>
             <div className={"my-2 p-4 marketingModulesTextLarger"}>
               {getTotalRunCount()}
             </div>
           </div>
         </div>
+        {getExpirationDate()}
+      </>
+    );
+  };
 
-        <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
-          <div className="marketingModulesText p-3 mx-3"
-                style={{fontSize:"smaller"}}>
-            Your free trial will expire on 8/1/2000.  For assistance, email
-            <a href="mailto:support@opsera.io" style={{paddingLeft:"5px"}} className={"marketingModulesTextLink"}>support@opsera.io</a>
-          </div>
-        </div>
+
+  return (
+    <div className={className}>
+      <FreeTrialWidgetDataBlockBase
+        title={getTitleText()}
+        heightSize={6}
+        isLoading={isLoading}
+      >
+        {getBody()}
       </FreeTrialWidgetDataBlockBase>
     </div>
   );
