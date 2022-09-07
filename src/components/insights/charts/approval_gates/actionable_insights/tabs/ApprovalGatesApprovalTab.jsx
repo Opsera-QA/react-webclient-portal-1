@@ -1,23 +1,107 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import axios from "axios";
+import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import ApprovalGatesVerticalTabContainer from "./ApprovalGatesVerticalTabContainer";
 import ApprovalGatesPiplelineDataTab from "./ApprovalGatesPiplelineDataTab";
+import approvalGatesChartsActions from "../../metrics/ApprovalGatesMetric.action";
+import approvalGatesPipelinesMetadata from "./approval-gates-pipelines-metadata";
+import Model from "core/data_model/model";
 
 function ApprovalGatesApprovalTab({
-  listOfPipelines,
   dashboardData,
   kpiConfiguration,
   icon,
   action,
   onRowSelect
 }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const isMounted = useRef(false);
+  const [error, setError] = useState(undefined);
+  const [listOfPipelines, setListOfPipelines] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({ ...approvalGatesPipelinesMetadata.newObjectFields }, approvalGatesPipelinesMetadata, false));
+  const [activeTab, setActiveTab] = useState("approval");
+
+
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto
+  ) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+
+      const response = await approvalGatesChartsActions.approvalGatesPipeline(
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+        filterDto,
+        action
+      );
+
+      let dataObject = response?.data?.data ? response?.data?.data?.data : [];
+      if (isMounted?.current === true && dataObject) {
+        setListOfPipelines(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data?.count);
+        setTableFilterDto({ ...newFilterDto });
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+  
+  if(!listOfPipelines) return null;
+
   const getTabContentContainer = () => {
+    
     return (
       <VanitySetTabViewContainer>
-        {listOfPipelines.map((item, index) => (
+        {listOfPipelines?.map((item, index) => (
           <VanitySetTabView
             key={index}
             tabKey={item._id}
@@ -46,14 +130,14 @@ function ApprovalGatesApprovalTab({
         listOfPipelines[0]?._id
       }
       verticalTabContainer={
-        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} />
+        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} isLoading={isLoading} tableFilterDto={tableFilterDto} setTableFilterDto={setTableFilterDto} loadData={loadData} />
       }
       currentView={getTabContentContainer()}
     />
   );
 }
 ApprovalGatesApprovalTab.propTypes = {
-  listOfPipelines: PropTypes.array,
+  // listOfPipelines: PropTypes.array,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   icon: PropTypes.object,
