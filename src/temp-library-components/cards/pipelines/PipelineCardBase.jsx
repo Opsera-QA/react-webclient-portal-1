@@ -10,9 +10,6 @@ import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import PipelineCardHeader from "temp-library-components/cards/pipelines/PipelineCardHeader";
@@ -101,21 +98,9 @@ export default function PipelineCardBase(
     return (
       <div className={"mx-1 mb-1"}>
         <Row className={"small"}>
-          {getTemplateIdentifierField()}
-          {/*<Col xs={12}>*/}
-          {/*  <DescriptionField dataObject={pipelineModel} className={"description-height mb-2"} />*/}
-          {/*</Col>*/}
           {formattedLastRun}
         </Row>
       </div>
-    );
-  };
-
-  const getTemplateIdentifierField = () => {
-    return (
-      <Col xs={12}>
-        {pipelineTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(pipelineModel?.getData("templateIdentifier"))}
-      </Col>
     );
   };
 

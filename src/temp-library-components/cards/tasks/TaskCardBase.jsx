@@ -7,7 +7,6 @@ import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBa
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
@@ -73,7 +72,6 @@ export default function TaskCardBase(
     selectedOption,
     option,
   }) {
-  const runCount = taskModel?.getData("run_count");
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
@@ -92,27 +90,6 @@ export default function TaskCardBase(
     );
   };
 
-
-  const getDescription = () => {
-    return (
-      <Row className={"small"}>
-        {getTemplateIdentifierField()}
-      </Row>
-    );
-  };
-
-  const getTemplateIdentifierField = () => {
-    return (
-      <Col xs={12}>
-        <div className={"d-flex mb-1"}>
-          <div className={"mx-auto"}>
-            {taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(taskModel?.getData("templateIdentifier"))}
-          </div>
-        </div>
-      </Col>
-    );
-  };
-
   if (taskModel == null) {
     return undefined;
   }
@@ -122,7 +99,7 @@ export default function TaskCardBase(
       cardHeader={<TaskCardHeader taskModel={taskModel} />}
       cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
-      contentBody={getDescription()}
+      contentBody={<div />}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       selectedOption={selectedOption}
