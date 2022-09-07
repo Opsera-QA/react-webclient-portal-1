@@ -14,6 +14,7 @@ export default function HeaderNavigationBarItem(
     className,
     disabled,
     disableMousePointer,
+    fontColor,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -33,7 +34,7 @@ export default function HeaderNavigationBarItem(
       fontSize: "1rem",
       letterSpacing: ".8px",
       fontFamily: fontThemeConstants.FONT_FAMILIES.MAIN_SITE_FONT_FAMILIES,
-      color: themeConstants.COLOR_PALETTE.WHITE,
+      color: fontColor,
     };
 
     if (currentScreen === screenName) {
@@ -69,4 +70,5 @@ HeaderNavigationBarItem.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   disableMousePointer: PropTypes.bool,
+  fontColor: PropTypes.string,
 };
