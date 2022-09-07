@@ -35,7 +35,7 @@ approvalGatesChartsActions.approvalGates = async(getAccessToken, cancelTokenSour
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
   };
   
-  approvalGatesChartsActions.approvalGatesPipeline = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs,action)=>{
+  approvalGatesChartsActions.approvalGatesPipeline = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs,tableFilterDto, action)=>{
     const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
     const apiUrl = "analytics/approvalgate/v1/pipelines/approvals/listOfPipelines";
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -50,13 +50,14 @@ approvalGatesChartsActions.approvalGates = async(getAccessToken, cancelTokenSour
       dashboardTags = null;
       dashboardOrgs = null;
     }
-  
     const postBody = {
       startDate: date.start,
       endDate: date.end,
       tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
-      page: 1, //tableFilterDto?.getData("currentPage"),
-      size: 20, //tableFilterDto?.getData("pageSize"),
+      page: tableFilterDto?.getData("currentPage"),
+      size: tableFilterDto?.getData("pageSize"),
+      sort: tableFilterDto?.getData("sortOption")?.value,
+      search: tableFilterDto?.getData("search"),
       action
     };
   

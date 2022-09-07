@@ -8,6 +8,8 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import ApprovalGatesVerticalTabContainer from "./ApprovalGatesVerticalTabContainer";
 import ApprovalGatesPiplelineDataTab from "./ApprovalGatesPiplelineDataTab";
 import approvalGatesChartsActions from "../../metrics/ApprovalGatesMetric.action";
+import Model from "core/data_model/model";
+import approvalGatesPipelinesMetadata from "./approval-gates-pipelines-metadata";
 
 const ApprovalGatesRejectTab= ({
   dashboardData,
@@ -23,11 +25,13 @@ const ApprovalGatesRejectTab= ({
   const [error, setError] = useState(undefined);
   const [listOfPipelines, setListOfPipelines] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({ ...approvalGatesPipelinesMetadata.newObjectFields }, approvalGatesPipelinesMetadata, false));
 
 
 
   const loadData = async (
     cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto
   ) => {
     try {
       setIsLoading(true);
@@ -48,12 +52,16 @@ const ApprovalGatesRejectTab= ({
         kpiConfiguration,
         dashboardTags,
         dashboardOrgs,
+        filterDto,
         action
       );
 
       let dataObject = response?.data?.data ? response?.data?.data?.data : [];
       if (isMounted?.current === true && dataObject) {
         setListOfPipelines(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data?.count);
+        setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -122,7 +130,7 @@ const ApprovalGatesRejectTab= ({
         listOfPipelines[0]?._id
       }
       verticalTabContainer={
-        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} />
+        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} isLoading={isLoading} tableFilterDto={tableFilterDto} setTableFilterDto={setTableFilterDto} loadData={loadData} />        
       }
       currentView={getTabContentContainer()}
     />

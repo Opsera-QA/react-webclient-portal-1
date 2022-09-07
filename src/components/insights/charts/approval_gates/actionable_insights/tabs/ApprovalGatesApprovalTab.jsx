@@ -8,6 +8,8 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import ApprovalGatesVerticalTabContainer from "./ApprovalGatesVerticalTabContainer";
 import ApprovalGatesPiplelineDataTab from "./ApprovalGatesPiplelineDataTab";
 import approvalGatesChartsActions from "../../metrics/ApprovalGatesMetric.action";
+import approvalGatesPipelinesMetadata from "./approval-gates-pipelines-metadata";
+import Model from "core/data_model/model";
 
 function ApprovalGatesApprovalTab({
   dashboardData,
@@ -22,9 +24,13 @@ function ApprovalGatesApprovalTab({
   const [error, setError] = useState(undefined);
   const [listOfPipelines, setListOfPipelines] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({ ...approvalGatesPipelinesMetadata.newObjectFields }, approvalGatesPipelinesMetadata, false));
+  const [activeTab, setActiveTab] = useState("approval");
+
 
   const loadData = async (
     cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto
   ) => {
     try {
       setIsLoading(true);
@@ -45,12 +51,16 @@ function ApprovalGatesApprovalTab({
         kpiConfiguration,
         dashboardTags,
         dashboardOrgs,
+        filterDto,
         action
       );
 
       let dataObject = response?.data?.data ? response?.data?.data?.data : [];
       if (isMounted?.current === true && dataObject) {
         setListOfPipelines(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data?.count);
+        setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -120,11 +130,60 @@ function ApprovalGatesApprovalTab({
         listOfPipelines[0]?._id
       }
       verticalTabContainer={
-        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} />
+        <ApprovalGatesVerticalTabContainer listOfPipelines={listOfPipelines} isLoading={isLoading} tableFilterDto={tableFilterDto} setTableFilterDto={setTableFilterDto} loadData={loadData} />
       }
       currentView={getTabContentContainer()}
     />
   );
+
+//   const handleTabClick = () => {
+//     console.log("test");
+//   };
+
+//   const tabs = [];
+//     if(listOfPipelines && listOfPipelines.length){
+//         for(let i = 0; i <= listOfPipelines.length - 1; i++) {
+//             tabs.push(
+//                 <VanitySetVerticalTab
+//                     key = {i}
+//                     tabText={listOfPipelines[i]?._id}
+//                     tabName={listOfPipelines[i]?._id}
+//                     handleTabClick={handleTabClick}
+//                     activeTab={activeTab}
+//                 />
+//             );
+//         }
+//     }
+
+//   return (
+//     <div>
+//         <VanitySetVerticalTabContainer
+//             title={
+//                 <div>
+//                     <IconBase icon={faDatabase} className={'pr-2'}/>
+//                     List Of Repositories
+//                 </div>
+//             }
+//             supportSearch={true}
+//             isLoading={isLoading}
+//             filterModel={tableFilterDto}
+//             setFilterModel={setTableFilterDto}
+//             loadData={loadData}
+//         >
+//             <PaginationContainer
+//                 isLoading={isLoading}
+//                 filterDto={tableFilterDto}
+//                 setFilterDto={setTableFilterDto}
+//                 loadData={loadData}
+//                 paginationStyle={"stackedVerticalTab"}
+//                 topPaginationStyle={"stackedVerticalTab"}
+//                 scrollOnLoad={false}
+//             >
+//                 {tabs}
+//             </PaginationContainer>
+//         </VanitySetVerticalTabContainer>
+//     </div>
+// );
 }
 ApprovalGatesApprovalTab.propTypes = {
   // listOfPipelines: PropTypes.array,

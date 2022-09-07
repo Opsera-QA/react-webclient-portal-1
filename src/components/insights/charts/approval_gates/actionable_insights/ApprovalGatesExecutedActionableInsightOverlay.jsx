@@ -81,13 +81,13 @@ function ApprovalGatesExecutedActionableInsightOverlay({
       <CustomTabContainer styling={"metric-detail-tabs"}>
         <CustomTab
           activeTab={activeTab}
-          tabText={"Approval"}
+          tabText={"Total pipeline runs approved"}
           handleTabClick={handleTabClick}
           tabName={"approval"}
         />
         <CustomTab
           activeTab={activeTab}
-          tabText={"Reject"}
+          tabText={"Total pipeline runs rejected"}
           handleTabClick={handleTabClick}
           tabName={"reject"}
         />
