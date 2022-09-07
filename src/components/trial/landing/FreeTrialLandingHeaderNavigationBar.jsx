@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Navbar, Nav } from "react-bootstrap";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { useHistory } from "react-router-dom";
-import HeaderNavigationBarItemDivider from "components/header/navigation_bar/HeaderNavigationBarItemDivider";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useLocationReference from "hooks/useLocationReference";
 
