@@ -28,6 +28,7 @@ function VanityMetricContainer(
     settingsHelpComponent,
     showSettingsToggle,
     launchActionableInsightsFunction,
+    dataPresent
   }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
@@ -181,7 +182,7 @@ function VanityMetricContainer(
     }
 
     return (
-      <div>
+      <div style={{opacity: dataPresent ? 0.5 : 1}}>
         {chart}
       </div>
     );
@@ -246,6 +247,7 @@ VanityMetricContainer.propTypes = {
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
   launchActionableInsightsFunction: PropTypes.func,
+  dataPresent: PropTypes.bool
 };
 
 export default VanityMetricContainer;

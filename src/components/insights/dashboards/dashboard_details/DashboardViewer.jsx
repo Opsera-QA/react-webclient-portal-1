@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { Row } from "react-bootstrap";
+import {AuthContext} from "contexts/AuthContext";
 import InfoDialog from "components/common/status_notifications/info";
 import { faUsers } from "@fortawesome/pro-light-svg-icons";
 import ChartView from "components/insights/charts/ChartView";
@@ -11,8 +12,11 @@ import IconBase from "components/common/icons/IconBase";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
 import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
+import chartsActions from "components/insights/charts/charts-actions";
 
 function DashboardViewer({ dashboardModel, loadData }) {
+  const {getAccessToken} = useContext(AuthContext);
+  const [dataPresent, setDataPresent] = useState(false);
   const [kpis, setKpis] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -38,6 +42,10 @@ function DashboardViewer({ dashboardModel, loadData }) {
   }, [dashboardModel]);
 
   const initializeModel = async (newDashboardData) => {
+    let activeData = await chartsActions.getDataPresent(getAccessToken, cancelTokenSource);
+    if (activeData) {
+      setDataPresent(true);
+    }
     setKpis(newDashboardData?.getData("configuration"));
   };
 
@@ -100,6 +108,7 @@ function DashboardViewer({ dashboardModel, loadData }) {
                 index={index}
                 loadChart={loadData}
                 setKpis={setKpis}
+                dataPresent={dataPresent}
               />
             );
           })}

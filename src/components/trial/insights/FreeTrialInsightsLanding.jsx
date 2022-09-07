@@ -7,6 +7,7 @@ import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTr
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 import DashboardModel from "components/insights/dashboards/dashboard.model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import chartsActions from "components/insights/charts/charts-actions";
 export default function FreeTrialInsightsLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"insights"} />);
   let response = {
@@ -270,6 +271,8 @@ export default function FreeTrialInsightsLanding() {
 
   return (
     <div className={"max-content-width"}>
+      <div className="d-flex align-items-left my-2 marketingModulesText">Welcome to Opsera’s Unified Insights</div>
+      <div>Unified Insights offers customers a top down view of the health and activities of all of the pipelines in the Opsera platform.  This is a small preview of the many charts and KPI’s available in the Opsera Analytics Marketplace.</div>
       <DashboardViewer dashboardModel={dashboardModel}/>
     </div>
   );

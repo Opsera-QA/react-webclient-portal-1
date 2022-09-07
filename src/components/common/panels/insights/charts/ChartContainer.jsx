@@ -17,6 +17,7 @@ function ChartContainer(
     settingsHelpComponent,
     showSettingsToggle,
     launchActionableInsightsFunction,
+    dataPresent
   }) {
   return (
     <VanityMetricContainer
@@ -33,6 +34,7 @@ function ChartContainer(
       settingsHelpComponent={settingsHelpComponent}
       showSettingsToggle={showSettingsToggle}
       launchActionableInsightsFunction={launchActionableInsightsFunction}
+      dataPresent={dataPresent}
     />
   );
 }
@@ -51,6 +53,7 @@ ChartContainer.propTypes = {
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
   launchActionableInsightsFunction: PropTypes.func,
+  dataPresent: PropTypes.bool
 };
 
 export default ChartContainer;

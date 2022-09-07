@@ -177,7 +177,7 @@ import BoomiBarChart from "components/insights/charts/boomi/bar_chart/BoomiBarCh
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
-function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
+function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis, dataPresent }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -288,6 +288,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+              dataPresent={dataPresent}
             />
           </Col>
         );
@@ -1692,6 +1693,7 @@ ChartView.propTypes = {
   index: PropTypes.number,
   loadChart: PropTypes.func,
   setKpis: PropTypes.func,
+  dataPresent: PropTypes.bool
 };
 
 export default ChartView;
