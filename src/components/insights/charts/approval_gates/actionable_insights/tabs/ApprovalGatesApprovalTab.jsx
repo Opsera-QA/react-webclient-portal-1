@@ -135,55 +135,6 @@ function ApprovalGatesApprovalTab({
       currentView={getTabContentContainer()}
     />
   );
-
-//   const handleTabClick = () => {
-//     console.log("test");
-//   };
-
-//   const tabs = [];
-//     if(listOfPipelines && listOfPipelines.length){
-//         for(let i = 0; i <= listOfPipelines.length - 1; i++) {
-//             tabs.push(
-//                 <VanitySetVerticalTab
-//                     key = {i}
-//                     tabText={listOfPipelines[i]?._id}
-//                     tabName={listOfPipelines[i]?._id}
-//                     handleTabClick={handleTabClick}
-//                     activeTab={activeTab}
-//                 />
-//             );
-//         }
-//     }
-
-//   return (
-//     <div>
-//         <VanitySetVerticalTabContainer
-//             title={
-//                 <div>
-//                     <IconBase icon={faDatabase} className={'pr-2'}/>
-//                     List Of Repositories
-//                 </div>
-//             }
-//             supportSearch={true}
-//             isLoading={isLoading}
-//             filterModel={tableFilterDto}
-//             setFilterModel={setTableFilterDto}
-//             loadData={loadData}
-//         >
-//             <PaginationContainer
-//                 isLoading={isLoading}
-//                 filterDto={tableFilterDto}
-//                 setFilterDto={setTableFilterDto}
-//                 loadData={loadData}
-//                 paginationStyle={"stackedVerticalTab"}
-//                 topPaginationStyle={"stackedVerticalTab"}
-//                 scrollOnLoad={false}
-//             >
-//                 {tabs}
-//             </PaginationContainer>
-//         </VanitySetVerticalTabContainer>
-//     </div>
-// );
 }
 ApprovalGatesApprovalTab.propTypes = {
   // listOfPipelines: PropTypes.array,
