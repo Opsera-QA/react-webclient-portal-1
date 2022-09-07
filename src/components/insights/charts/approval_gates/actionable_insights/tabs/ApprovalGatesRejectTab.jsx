@@ -122,7 +122,7 @@ const ApprovalGatesRejectTab= ({
 
   return (
     <VanitySetTabAndViewContainer
-      title={`Approval Gates - Reject`}
+      title={`Approval Gates - Rejected`}
       defaultActiveKey={
         listOfPipelines &&
         Array.isArray(listOfPipelines) &&
