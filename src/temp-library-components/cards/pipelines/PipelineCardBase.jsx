@@ -32,7 +32,7 @@ const getLastRunDetails = (pipelineModel) => {
 
   if (lastRunCompletionDate != null) {
     return (
-      <div className={"d-flex justify-content-between"}>
+      <div className={"d-flex justify-content-between text-muted"}>
         {getFormattedTimestamp(lastRunCompletionDate)}
         <div>
           <OrchestrationStateFieldBase
@@ -96,7 +96,7 @@ export default function PipelineCardBase(
 
   const getDescription = () => {
     return (
-      <div className={"mx-1 mb-1"}>
+      <div className={"mb-1"}>
         <Row className={"small"}>
           {formattedLastRun}
         </Row>
