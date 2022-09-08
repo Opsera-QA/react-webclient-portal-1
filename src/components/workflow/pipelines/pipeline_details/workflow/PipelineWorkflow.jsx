@@ -383,7 +383,7 @@ function PipelineWorkflow({
             />
           </div>
 
-          <SteppedLineTo from="source" to="step-items" delay={100} orientation="v" zIndex={-1}
+          <SteppedLineTo from="source" to="step-items" delay={100} orientation="v" zIndex={1}
                          borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
 
 

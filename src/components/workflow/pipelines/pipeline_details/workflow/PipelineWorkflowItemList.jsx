@@ -4,9 +4,7 @@ import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
-import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
-import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
@@ -289,7 +287,7 @@ function PipelineWorkflowItemList(
               </div>
             </> :
             <>
-              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={-1}
+              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={1}
                              borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
               <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
             </>
