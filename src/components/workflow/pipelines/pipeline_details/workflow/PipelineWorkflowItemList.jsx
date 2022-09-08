@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { SteppedLineTo } from "react-lineto";
+import LineTo from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
@@ -287,9 +287,9 @@ function PipelineWorkflowItemList(
               </div>
             </> :
             <>
-              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={1}
+              <LineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={1}
                              borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-              <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
+              <div style={{ height: "40px", opacity: "0", zIndex: "-1" }} className={"step-" + index}>&nbsp;</div>
             </>
           }
 
