@@ -7,15 +7,12 @@ import {
 import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import accountsActions from "components/admin/accounts/accounts-actions";
-import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard";
 import SalesforceOrganizationSyncPipelineSelectionCard
@@ -26,9 +23,6 @@ import SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard";
 import CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard";
-import {
-  OVERLAY_PANEL_MIN_HEIGHT,
-} from "components/common/overlays/center/CenterOverlayContainer";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   {
@@ -38,61 +32,29 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
     setCurrentScreen,
     backButtonFunction,
     setButtonContainer,
+    accountMetrics,
   }) {
-  const [isLoading, setIsLoading] = useState(undefined);
-  const [accountMetrics, setAccountMetrics] = useState(undefined);
-  const {
-    getAccessToken,
-    cancelTokenSource,
-    isMounted,
-    toastContext,
-    themeConstants,
-  } = useComponentStateReference();
-
   useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     if (setButtonContainer) {
       setButtonContainer(
-        <OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction} />
+        <OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction} />,
       );
     }
   }, []);
 
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getAccountMetrics();
-    } catch (error) {
-      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getAccountMetrics = async () => {
-    const response = await accountsActions.getFreeTrialAccountWorkflowMetrics(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const metrics = response?.data?.data;
-
-    if (isMounted?.current === true && metrics) {
-      setAccountMetrics(metrics);
-    }
-  };
-
   const handleFlowSelection = (newFlowOption) => {
     setSelectedFlow(newFlowOption);
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN);
+  };
+
+  const handleAccountPipelineLimitReachedFlowSelection = (newFlowOption) => {
+    setSelectedFlow(newFlowOption);
+    setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.PIPELINE_LIMIT_REACHED_SCREEN);
+  };
+
+  const handleAccountTaskLimitReachedFlowSelection = (newFlowOption) => {
+    setSelectedFlow(newFlowOption);
+    setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN);
   };
 
   const getComingSoonItems = () => {
@@ -121,15 +83,6 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
     );
   };
 
-  if (isLoading === true || accountMetrics == null) {
-    return (
-      <CenterLoadingIndicator
-        minHeight={OVERLAY_PANEL_MIN_HEIGHT}
-        customMessage={"Initializing Workflow Options"}
-      />
-    );
-  }
-
   return (
     <div className={className}>
       <CenteredContentWrapper>
@@ -145,6 +98,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             pipelineCounts={accountMetrics?.pipelineCounts}
             handleFlowSelection={handleFlowSelection}
             hasExpiration={accountMetrics?.expiration != null}
+            handleAccountPipelineLimitReachedFlowSelection={handleAccountPipelineLimitReachedFlowSelection}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -153,6 +107,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             pipelineCounts={accountMetrics?.pipelineCounts}
             handleFlowSelection={handleFlowSelection}
             hasExpiration={accountMetrics?.expiration != null}
+            handleAccountPipelineLimitReachedFlowSelection={handleAccountPipelineLimitReachedFlowSelection}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -161,6 +116,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             pipelineCounts={accountMetrics?.pipelineCounts}
             handleFlowSelection={handleFlowSelection}
             hasExpiration={accountMetrics?.expiration != null}
+            handleAccountPipelineLimitReachedFlowSelection={handleAccountPipelineLimitReachedFlowSelection}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -169,6 +125,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             taskCounts={accountMetrics?.taskCounts}
             handleFlowSelection={handleFlowSelection}
             hasExpiration={accountMetrics?.expiration != null}
+            handleAccountTaskLimitReachedFlowSelection={handleAccountTaskLimitReachedFlowSelection}
           />
         </SelectionCardColumn>
         <SelectionCardColumn>
@@ -177,6 +134,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
             taskCounts={accountMetrics?.taskCounts}
             handleFlowSelection={handleFlowSelection}
             hasExpiration={accountMetrics?.expiration != null}
+            handleAccountTaskLimitReachedFlowSelection={handleAccountTaskLimitReachedFlowSelection}
           />
         </SelectionCardColumn>
       </Row>
@@ -191,6 +149,7 @@ CreateSalesforceWorkflowWizardFlowSelectionScreen.propTypes = {
   backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
   className: PropTypes.string,
+  accountMetrics: PropTypes.object,
 };
 
 

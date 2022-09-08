@@ -10,7 +10,7 @@ pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIER_LABELS = {
   FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE: "Salesforce Organization Sync",
 };
 
-pipelineTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier = (workspaceIdentifier) => {
+pipelineTemplateIdentifierConstants.getLabelForPipelineTemplateIdentifier = (workspaceIdentifier) => {
   return constantsHelper.getLabelForValue(
     pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS,
     pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIER_LABELS,

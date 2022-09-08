@@ -46,7 +46,7 @@ workspaceConstants.getIdentifierLabelForWorkspaceType = (type, workspaceIdentifi
     case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
       return taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
     case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-      return pipelineTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
+      return pipelineTemplateIdentifierConstants.getLabelForPipelineTemplateIdentifier(workspaceIdentifier);
     default:
       return "";
   }

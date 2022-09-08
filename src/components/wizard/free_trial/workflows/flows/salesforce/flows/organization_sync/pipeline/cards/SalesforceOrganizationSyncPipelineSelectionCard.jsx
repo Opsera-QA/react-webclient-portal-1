@@ -8,7 +8,7 @@ import WorkflowOptionCardBase, {
   WORKFLOW_OPTION_TYPES,
 } from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
 import {
-  pipelineTemplateIdentifierConstants
+  pipelineTemplateIdentifierConstants,
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -18,14 +18,25 @@ export default function SalesforceOrganizationSyncPipelineSelectionCard(
     pipelineCounts,
     hasExpiration,
     handleFlowSelection,
+    handleAccountPipelineLimitReachedFlowSelection,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
 
-  const fieldName = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
-  const currentCount = pipelineCounts?.[fieldName];
+  const templateIdentifier = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
+  const currentCount = pipelineCounts?.[templateIdentifier];
   const allowedCount = hasExpiration === false ? 10 : 3;
+  const disabled = currentCount == null || currentCount >= allowedCount;
+
+  const onClickFunction = (selectedOption) => {
+    if (disabled === true) {
+      handleAccountPipelineLimitReachedFlowSelection(templateIdentifier);
+      return;
+    }
+
+    handleFlowSelection(selectedOption);
+  };
 
   return (
     <WorkflowOptionCardBase
@@ -38,8 +49,7 @@ export default function SalesforceOrganizationSyncPipelineSelectionCard(
       description={`
         Move files from your Git repository or Salesforce Organization to another organization.
       `}
-      onClickFunction={handleFlowSelection}
-      disabled={currentCount == null || currentCount >= allowedCount}
+      onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
     />
   );
@@ -49,6 +59,7 @@ SalesforceOrganizationSyncPipelineSelectionCard.propTypes = {
   selectedFlow: PropTypes.string,
   pipelineCounts: PropTypes.object,
   handleFlowSelection: PropTypes.func,
+  handleAccountPipelineLimitReachedFlowSelection: PropTypes.func,
   hasExpiration: PropTypes.bool,
 };
 

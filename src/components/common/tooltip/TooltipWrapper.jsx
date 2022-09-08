@@ -82,7 +82,6 @@ export default function TooltipWrapper(
   const getBody = () => {
     if (wrapInDiv === true) {
       return (
-
         <div className={"tooltip-wrapper"}>
           {children}
         </div>

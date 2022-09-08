@@ -19,14 +19,25 @@ export default function CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTa
     taskCounts,
     hasExpiration,
     handleFlowSelection,
+    handleAccountTaskLimitReachedFlowSelection,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
 
-  const fieldName = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
-  const currentCount = taskCounts?.[fieldName];
+  const templateIdentifier = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
+  const currentCount = taskCounts?.[templateIdentifier];
   const allowedCount = hasExpiration === false ? 10 : 1;
+  const disabled = currentCount == null || currentCount >= allowedCount;
+
+  const onClickFunction = (selectedOption) => {
+    if (disabled === true) {
+      handleAccountTaskLimitReachedFlowSelection(templateIdentifier);
+      return;
+    }
+
+    handleFlowSelection(selectedOption);
+  };
 
   return (
     <WorkflowOptionCardBase
@@ -39,8 +50,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTa
       description={`
         Make handling code merges easier!
       `}
-      onClickFunction={handleFlowSelection}
-      disabled={currentCount == null || currentCount >= allowedCount}
+      onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
     />
   );
@@ -51,6 +61,7 @@ CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard.propType
   taskCounts: PropTypes.object,
   handleFlowSelection: PropTypes.func,
   hasExpiration: PropTypes.bool,
+  handleAccountTaskLimitReachedFlowSelection: PropTypes.func,
 };
 
 

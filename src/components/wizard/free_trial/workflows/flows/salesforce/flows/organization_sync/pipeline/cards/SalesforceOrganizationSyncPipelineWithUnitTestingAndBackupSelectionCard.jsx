@@ -11,7 +11,6 @@ import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 
 export default function SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard(
   {
@@ -19,14 +18,25 @@ export default function SalesforceOrganizationSyncPipelineWithUnitTestingAndBack
     pipelineCounts,
     hasExpiration,
     handleFlowSelection,
+    handleAccountPipelineLimitReachedFlowSelection,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
 
-  const fieldName = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
-  const currentCount = pipelineCounts?.[fieldName];
+  const templateIdentifier = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
+  const currentCount = pipelineCounts?.[templateIdentifier];
   const allowedCount = hasExpiration === false ? 10 : 3;
+  const disabled = currentCount == null || currentCount >= allowedCount;
+
+  const onClickFunction = (selectedOption) => {
+    if (disabled === true) {
+      handleAccountPipelineLimitReachedFlowSelection(templateIdentifier);
+      return;
+    }
+
+    handleFlowSelection(selectedOption);
+  };
 
   return (
     <WorkflowOptionCardBase
@@ -39,8 +49,7 @@ export default function SalesforceOrganizationSyncPipelineWithUnitTestingAndBack
       description={`
         The complete Organization Sync workflow with explicit unit testing and backup steps. 
       `}
-      onClickFunction={handleFlowSelection}
-      disabled={currentCount == null || currentCount >= allowedCount}
+      onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
     />
   );
@@ -51,6 +60,7 @@ SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard.propType
   pipelineCounts: PropTypes.object,
   handleFlowSelection: PropTypes.func,
   hasExpiration: PropTypes.bool,
+  handleAccountPipelineLimitReachedFlowSelection: PropTypes.func,
 };
 
 

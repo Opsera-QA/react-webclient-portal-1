@@ -1,14 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
-import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import {
   LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(

@@ -24,6 +24,8 @@ export default function WorkflowOptionCardBase(
     option,
     workflowOptionType,
     disabled,
+    warningMessage,
+    children,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -81,8 +83,11 @@ export default function WorkflowOptionCardBase(
       onClickFunction={onClickFunction}
       disabled={disabled}
       tooltip={tooltip}
+      warningMessage={warningMessage}
       highlightedBorderColor={getHighlightedBorderColorForWorkflowOptionType()}
-    />
+    >
+      {children}
+    </SelectionIconCardBase>
   );
 }
 
@@ -97,5 +102,7 @@ WorkflowOptionCardBase.propTypes = {
   selectedOption: PropTypes.any,
   option: PropTypes.any,
   workflowOptionType: PropTypes.string,
+  warningMessage: PropTypes.string,
   disabled: PropTypes.bool,
+  children: PropTypes.any,
 };

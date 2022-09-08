@@ -22,3 +22,13 @@ workspaceActions.getFreeTrialWorkspaceItems = async (getAccessToken, cancelToken
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
+
+workspaceActions.getFreeTrialWorkspaceTasksByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `trial/workspace/tasks/${identifier}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+workspaceActions.getFreeTrialWorkspacePipelinesByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `trial/workspace/pipelines/${identifier}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};

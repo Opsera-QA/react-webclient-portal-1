@@ -19,14 +19,26 @@ export default function SalesforceOrganizationSyncPipelineWithUnitTestingSelecti
     pipelineCounts,
     hasExpiration,
     handleFlowSelection,
+    handleAccountPipelineLimitReachedFlowSelection,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
 
-  const fieldName = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
-  const currentCount = pipelineCounts?.[fieldName];
+  const templateIdentifier = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
+  const currentCount = pipelineCounts?.[templateIdentifier];
   const allowedCount = hasExpiration === false ? 10 : 3;
+  const disabled = currentCount == null || currentCount >= allowedCount;
+
+  const onClickFunction = (selectedOption) => {
+    if (disabled === true) {
+      handleAccountPipelineLimitReachedFlowSelection(templateIdentifier);
+      return;
+    }
+
+    handleFlowSelection(selectedOption);
+  };
+
 
   return (
     <WorkflowOptionCardBase
@@ -39,8 +51,7 @@ export default function SalesforceOrganizationSyncPipelineWithUnitTestingSelecti
       description={`
         Move files from your Git repository or Salesforce Organization to another organization including an explicit unit testing step. 
       `}
-      onClickFunction={handleFlowSelection}
-      disabled={currentCount == null || currentCount >= allowedCount}
+      onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
     />
   );
@@ -51,6 +62,7 @@ SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard.propTypes = {
   pipelineCounts: PropTypes.object,
   handleFlowSelection: PropTypes.func,
   hasExpiration: PropTypes.bool,
+  handleAccountPipelineLimitReachedFlowSelection: PropTypes.func,
 };
 
 

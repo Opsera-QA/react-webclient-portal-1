@@ -12,6 +12,8 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
+import modelHelpers from "components/common/model/modelHelpers";
+import taskMetadata from "components/tasks/details/tasks/task-metadata";
 
 // TODO: This will need more work when we add more flows.
 export default function FreeTrialLaunchWorkflowButton(
@@ -30,14 +32,14 @@ export default function FreeTrialLaunchWorkflowButton(
           case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
             toastContext.showOverlayPanel(
               <SalesforceToGitMergeSyncTaskWizardOverlay
-                taskModel={workspaceItem}
-              />
+                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata)}
+              />,
             );
             break;
           case TASK_TYPES.SYNC_SALESFORCE_REPO:
             toastContext.showOverlayPanel(
               <SalesforceOrganizationSyncTaskWizardOverlay
-                taskModel={workspaceItem}
+                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, taskMetadata)}
               />,
             );
             break;
