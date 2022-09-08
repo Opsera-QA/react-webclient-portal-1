@@ -55,7 +55,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
               onClickFunction={handleSelection}
               className={"mt-3"}
               icon={faUser}
-              text={"Sign in with Email Address"}
+              text={"Email Address"}
               option={SIGNUP_OPTIONS.OPSERA}
             />
             <DividerWithCenteredText text={"OR"} className={"m-4"} />

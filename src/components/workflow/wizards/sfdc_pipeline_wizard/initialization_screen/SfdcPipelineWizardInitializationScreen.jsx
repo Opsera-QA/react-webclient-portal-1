@@ -310,11 +310,8 @@ export default function SfdcPipelineWizardInitializationScreen(
           <div>
             {`
           The Salesforce Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
-          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed.
+          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed. Would you like to pick up where the last flow was left off or start a new run configuration?
           `}
-          </div>
-          <div className={"mt-2"}>
-            {`Would you like to start a new instance or continue where the last instance left off?`}
           </div>
           <div className={"mt-2"}>
             {`If you continue, you will be able to adjust all parameters that were previously applied.`}
@@ -333,7 +330,7 @@ export default function SfdcPipelineWizardInitializationScreen(
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Resume Last Configuration</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
@@ -342,10 +339,10 @@ export default function SfdcPipelineWizardInitializationScreen(
             <SaveButtonContainer>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
                       onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
-                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
+                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start New</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
+                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Resume Last Configuration</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
@@ -374,7 +371,7 @@ export default function SfdcPipelineWizardInitializationScreen(
           :
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start New</span>
             </Button>
             <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
           </SaveButtonContainer>
@@ -399,7 +396,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <CustomTab
         activeTab={activeTab}
-        tabText={"Use Past Run's XML"}
+        tabText={"Use Prior Run Configuration"}
         handleTabClick={handleTabClick}
         tabName={"past_run"}
         toolTipText={"Deploy using a past Pipeline run's Package XML"}
@@ -412,13 +409,13 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <div>
         <div className={"mt-2"}>
-          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
+          This pipeline requires additional information before it can run.  You can start a new run or re-use prior run configurations.
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>
             <CustomTab
               activeTab={activeTab}
-              tabText={"Manual Pipeline Wizard Run"}
+              tabText={"Build New Run Configuration"}
               handleTabClick={handleTabClick}
               tabName={"manual"}
               toolTipText={"Use Salesforce Component Selection Deployment"}

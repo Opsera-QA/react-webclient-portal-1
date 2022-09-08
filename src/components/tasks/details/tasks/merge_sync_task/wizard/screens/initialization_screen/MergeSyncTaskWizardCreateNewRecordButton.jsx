@@ -80,7 +80,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
       return "Starting New Instance";
     }
 
-    return "Start A New Instance";
+    return "Start New";
   };
 
   return (
