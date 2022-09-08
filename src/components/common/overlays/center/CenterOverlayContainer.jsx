@@ -9,6 +9,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CenterOverlayContainerWrapper from "components/common/overlays/center/CenterOverlayContainerWrapper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 export const CENTER_OVERLAY_SIZES = {
   FULL_WIDTH: "full_width", // TODO: Remove?
@@ -66,7 +67,12 @@ function CenterOverlayContainer(
 
   const getBody = () => {
     if (isLoading) {
-      return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
+      return (
+        <CenterLoadingIndicator
+          minHeight={OVERLAY_PANEL_MIN_HEIGHT}
+          customMessage={"Initializing Workflow Options"}
+        />
+      );
     }
 
     return children;

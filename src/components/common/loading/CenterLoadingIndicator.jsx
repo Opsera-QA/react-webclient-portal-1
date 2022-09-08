@@ -42,4 +42,5 @@ CenterLoadingIndicator.propTypes = {
 
 CenterLoadingIndicator.defaultProps = {
   type: "Data",
+  minHeight: "250px",
 };

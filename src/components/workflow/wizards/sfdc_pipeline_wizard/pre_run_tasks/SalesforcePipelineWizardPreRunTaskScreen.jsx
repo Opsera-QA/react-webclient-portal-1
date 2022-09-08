@@ -65,20 +65,20 @@ export default function SalesforcePipelineWizardPreRunTaskScreen(
   }
 
   const welcomeText = () => {
-      return(
-          <div className={"my-3"}>
-              <div className={"d-flex"}>
-                  <div className={"mx-auto"}>
-                      <OpseraInfinityLogo />
-                  </div>
-              </div>
-              <div className={"d-flex"}>
-                  <div className={"mx-auto mt-3"}>
-                      <span className={"focusText"}>Welcome to the Start Pipeline Wizard. Please complete these steps in order to start your pipeline.</span>
-                  </div>
-              </div>
+    return (
+      <div className={"my-3"}>
+        <div className={"d-flex"}>
+          <div className={"mx-auto"}>
+            <OpseraInfinityLogo />
           </div>
-      );
+        </div>
+        <div className={"d-flex"}>
+          <div className={"mx-auto mt-3"}>
+            <span className={"focusText"}>Welcome to the Start Pipeline Wizard. Please complete these steps in order to start your pipeline.</span>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
