@@ -23,6 +23,7 @@ export default function WorkflowOptionCardBase(
     selectedOption,
     option,
     workflowOptionType,
+    disabled,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -78,6 +79,7 @@ export default function WorkflowOptionCardBase(
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       onClickFunction={onClickFunction}
+      disabled={disabled}
       tooltip={tooltip}
       highlightedBorderColor={getHighlightedBorderColorForWorkflowOptionType()}
     />
@@ -95,4 +97,5 @@ WorkflowOptionCardBase.propTypes = {
   selectedOption: PropTypes.any,
   option: PropTypes.any,
   workflowOptionType: PropTypes.string,
+  disabled: PropTypes.bool,
 };

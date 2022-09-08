@@ -45,9 +45,8 @@ export default function FreeTrialLandingHeaderNavigationBar(
   };
 
   return (
-    <Navbar.Collapse className={"h-100"}>
+    <Navbar.Collapse className={"h-100 justify-content-between d-flex mx-5"}>
       <HeaderNavigationBarItem
-        className={"ml-5 mr-1"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Home"}
@@ -56,7 +55,6 @@ export default function FreeTrialLandingHeaderNavigationBar(
         disableMousePointer={currentPath === "/"}
       />
       <HeaderNavigationBarItem
-        className={"mr-1"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
@@ -65,7 +63,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         disableMousePointer={currentPath === "/workspace"}
       />
       <HeaderNavigationBarItem
-        className={"mr-1 no-wrap d-none d-lg-inline"}
+        className={"no-wrap d-none d-lg-inline"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Unified Insights"}
@@ -74,7 +72,7 @@ export default function FreeTrialLandingHeaderNavigationBar(
         disableMousePointer={currentPath === "/"}
       />
       <HeaderNavigationBarItem
-        className={"mr-1 d-inline d-lg-none"}
+        className={"d-inline d-lg-none"}
         currentScreen={currentScreen}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Insights"}
