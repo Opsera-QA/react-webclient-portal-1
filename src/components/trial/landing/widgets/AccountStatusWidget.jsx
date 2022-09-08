@@ -5,6 +5,7 @@ import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBl
 import accountsActions from "components/admin/accounts/accounts-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 // TODO: Standardize
 export default function AccountStatusWidget({ className }) {
@@ -132,7 +133,36 @@ export default function AccountStatusWidget({ className }) {
     }
 
     return (
-      <span>You have no configured offerings at this time</span>
+      <span>You have no configured offerings at this time.</span>
+    );
+  };
+
+  const getWorkflowHealthStatus = () => {
+    const pipelineCount = accountMetrics?.pipelineMetrics?.totalCount;
+    const taskCount = accountMetrics?.taskMetrics?.totalCount;
+    const totalCount = pipelineCount + taskCount;
+
+    if (totalCount > 0) {
+      return (
+        <div className="d-flex justify-content-center h-100">
+          <div className="d-flex align-items-center marketingModulesText">
+            <div className={"my-2 p-4 marketingModulesTextLarger"}>
+              {`Pipelines are `}{getPipelineHealth()}
+            </div>
+            <div className={"my-2 p-4 marketingModulesTextLarger"}>
+              {getTotalRunCount()}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <CenteredContentWrapper>
+        <div className={"my-4 marketingModulesTextLarger"}>
+          Get started below to create your first Salesforce workflow.
+        </div>
+      </CenteredContentWrapper>
     );
   };
 
@@ -194,16 +224,7 @@ export default function AccountStatusWidget({ className }) {
             <div className={"my-2 marketingModulesTextLarger"}>{getItemCounts()}</div>
           </div>
         </div>
-        <div className="d-flex justify-content-center h-100">
-          <div className="d-flex align-items-center marketingModulesText">
-            <div className={"my-2 p-4 marketingModulesTextLarger"}>
-              {`Pipelines are `}{getPipelineHealth()}
-            </div>
-            <div className={"my-2 p-4 marketingModulesTextLarger"}>
-              {getTotalRunCount()}
-            </div>
-          </div>
-        </div>
+        {getWorkflowHealthStatus()}
         {getExpirationDate()}
       </>
     );
