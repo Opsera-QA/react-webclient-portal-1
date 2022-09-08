@@ -14,7 +14,7 @@ const SalesforcePipelineWizardComponentCountTable = ({ loadData, componentCounts
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "componentName")),
+      getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "componentCount")),
     ],
     [],
