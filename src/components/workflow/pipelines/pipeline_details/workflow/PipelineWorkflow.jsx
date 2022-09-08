@@ -12,18 +12,13 @@ import {
   faCode,
   faSearchMinus, faFolder, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
-import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
-import WorkflowAuthorizedActions from "./workflow-authorized-actions";
-import PipelineDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
-import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
