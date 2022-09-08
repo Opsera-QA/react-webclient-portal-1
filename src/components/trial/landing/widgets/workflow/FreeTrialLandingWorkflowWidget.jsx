@@ -17,6 +17,7 @@ import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/F
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import modelHelpers from "components/common/model/modelHelpers";
 
 export default function FreeTrialLandingWorkflowWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -159,11 +160,11 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
       );
     }
 
-    if (selectedWorkflowItem?.getData("workspaceType") === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
+    if (selectedWorkflowItem?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
       return (
         <>
           <FreeTrialLandingTaskWorkflowWidget
-            selectedTask={selectedWorkflowItem}
+            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, taskMetadata)}
             setSelectedTask={setSelectedWorkflowItem}
           />
           <div className={"py-3 mx-auto"}>
