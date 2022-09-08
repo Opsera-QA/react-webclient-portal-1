@@ -26,6 +26,9 @@ import SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard";
 import CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard
   from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard";
+import {
+  OVERLAY_PANEL_MIN_HEIGHT,
+} from "components/common/overlays/center/CenterOverlayContainer";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   {
@@ -121,6 +124,7 @@ export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   if (isLoading === true || accountMetrics == null) {
     return (
       <CenterLoadingIndicator
+        minHeight={OVERLAY_PANEL_MIN_HEIGHT}
         customMessage={"Initializing Workflow Options"}
       />
     );

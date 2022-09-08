@@ -4,9 +4,10 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function CenterLoadingIndicator(
+export default function CenterLoadingIndicator(
   {
     customMessage,
+    minHeight,
     type,
   }) {
   const getLoadingMessage = () => {
@@ -18,8 +19,17 @@ function CenterLoadingIndicator(
   };
 
   return (
-    <CenteredContentWrapper>
-      <LoadingIcon className={"mr-2"}/>{getLoadingMessage()}
+    <CenteredContentWrapper
+      minHeight={minHeight}
+    >
+      <div
+        style={{
+          fontSize: "1.25rem",
+          letterSpacing: "2px",
+        }}
+      >
+        <LoadingIcon className={"mr-2"}/>{getLoadingMessage()}
+      </div>
     </CenteredContentWrapper>
   );
 }
@@ -27,10 +37,9 @@ function CenterLoadingIndicator(
 CenterLoadingIndicator.propTypes = {
   customMessage: PropTypes.string,
   type: PropTypes.string,
+  minHeight: PropTypes.string,
 };
 
 CenterLoadingIndicator.defaultProps = {
   type: "Data",
 };
-
-export default CenterLoadingIndicator;

@@ -74,7 +74,7 @@ export default function SalesforcePipelineWizardPreRunTaskScreen(
               </div>
               <div className={"d-flex"}>
                   <div className={"mx-auto mt-3"}>
-                      <span className={"focusText"}>Welcome to the Start Pipeline Wizard.  Complete the these steps in order to start your pipeline.</span>
+                      <span className={"focusText"}>Welcome to the Start Pipeline Wizard. Please complete these steps in order to start your pipeline.</span>
                   </div>
               </div>
           </div>

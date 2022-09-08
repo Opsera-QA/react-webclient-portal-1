@@ -24,7 +24,6 @@ export default function OpseraFooter() {
   return (
     <Row
       style={{
-        marginTop: "26px",
         bottom: 0,
         position: "fixed",
         width: "100%",

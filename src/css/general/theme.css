@@ -1617,7 +1617,7 @@ div.data-blocks-ellipses {
 
 .full-screen-center-overlay {
     /* full-height of container - button panel height */
-    height: calc(100vh - 100px);
+    height: calc(100vh - 110px);
 }
 
 .full-screen-overlay-panel-body {
@@ -1675,8 +1675,8 @@ div.data-blocks-ellipses {
     z-index: 1500;
 
     /* full-height - (10px x 2 top + bottom margins) */
-    height: calc(100% - 20px);
-    max-height: calc(100% - 20px);
+    height: calc(100vh - 20px);
+    max-height: calc(100vh - 20px);
 }
 
 .overlay-panel-body {

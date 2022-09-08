@@ -46,9 +46,9 @@ export default function CreateSalesforceWorkflowWizard(
   };
 
   return (
-    <div>
+    <>
       {getCurrentScreen()}
-    </div>
+    </>
   );
 }
 

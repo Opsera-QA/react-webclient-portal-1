@@ -1,21 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function CenteredContentWrapper(
+export default function CenteredContentWrapper(
   {
+    minHeight,
     children,
   }) {
   return (
-    <div className={"d-flex h-100 w-100"}>
-      <div className={"m-auto"}>
-        {children}
-      </div>
+    <div
+      style={{
+        minHeight: minHeight,
+      }}
+      className={"d-flex align-items-center justify-content-center"}
+    >
+      {children}
     </div>
   );
 }
 
 CenteredContentWrapper.propTypes = {
   children: PropTypes.any,
+  minHeight: PropTypes.string,
 };
-
-export default CenteredContentWrapper;
