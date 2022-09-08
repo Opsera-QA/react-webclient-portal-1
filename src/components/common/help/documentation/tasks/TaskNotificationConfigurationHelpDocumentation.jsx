@@ -25,7 +25,7 @@ function TaskNotificationConfigurationHelpDocumentation({closeHelpPanel}) {
         <ul style={{listStyleType: "none"}}><li><b>Google Chat Notification Configuration</b>
           <ul>
             <li><b>Prerequisites</b> - A successfully configured Google Chat tool in the Tool Registry.</li>
-            <li><b>Teams Tool</b> - Select a properly configured Gchat tool from the drop-down.</li>
+            <li><b>Gchat Tool</b> - Select a properly configured Gchat tool from the drop-down.</li>
           </ul></li>
         </ul>
         <ul style={{listStyleType: "none"}}><li><b>Slack Notification Configuration</b>
