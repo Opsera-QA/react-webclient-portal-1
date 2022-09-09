@@ -5,11 +5,22 @@ import VanitySetCardView from "components/common/card/VanitySetCardView";
 import ToolIdentifierCard from "components/admin/tools/identifiers/ToolIdentifierCard";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 
-function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, loadData, isLoading, toolIdentifierMetadata }) {
-  const getToolIdentifierCard = (toolIdentifier) => {
+export default function ToolIdentifierCardView(
+  {
+    toolIdentifiers,
+    toolIdentifierFilterModel,
+    loadData,
+    isLoading,
+    toolIdentifierMetadata,
+    onClickFunction,
+    tooltip,
+  }) {
+  const getCardFunction = (toolIdentifier) => {
     return (
       <ToolIdentifierCard
         toolIdentifierModel={new Model({ ...toolIdentifier }, toolIdentifierMetadata, false)}
+        onClickFunction={onClickFunction}
+        tooltip={tooltip}
       />
     );
   };
@@ -19,11 +30,11 @@ function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, lo
       isLoading={isLoading}
       loadData={loadData}
       paginationModel={toolIdentifierFilterModel}
-      className={"makeup-container-table m-2"}
+      className={"m-2"}
       cards={
         <VerticalCardViewBase
           data={toolIdentifiers}
-          getCardFunction={getToolIdentifierCard}
+          getCardFunction={getCardFunction}
         />
       }
     />
@@ -35,7 +46,7 @@ ToolIdentifierCardView.propTypes = {
   toolIdentifierFilterModel: PropTypes.object,
   toolIdentifierMetadata: PropTypes.object,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.string,
 };
-
-export default ToolIdentifierCardView;

@@ -8,6 +8,7 @@ import NewToolIdentifierOverlay from "components/admin/tools/identifiers/NewTool
 import ToolIdentifierTable from "components/admin/tools/identifiers/ToolIdentifierTable";
 import ToolIdentifierCardView from "components/admin/tools/identifiers/ToolIdentifierCardView";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
+import { useHistory } from "react-router-dom";
 
 function ToolIdentifierTableCardView(
   {
@@ -18,7 +19,12 @@ function ToolIdentifierTableCardView(
     toolIdentifiers,
     isMounted, taskMetadata
   }) {
+  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
+
+  const onClickFunction = (toolIdentifierModel) => {
+    history.push(`/admin/tools/identifiers/details/${toolIdentifierModel?.getMongoDbId()}`);
+  };
 
   const getCardView = () => {
     return (
@@ -27,6 +33,8 @@ function ToolIdentifierTableCardView(
         toolIdentifiers={toolIdentifiers}
         isLoading={isLoading}
         loadData={loadData}
+        onClickFunction={onClickFunction}
+        tooltip={"Click to view Tool Identifier Details"}
       />
     );
   };

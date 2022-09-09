@@ -20,7 +20,7 @@ export default function ToolCardBase(
       return (
         <IconTitleBar
           iconString={icon}
-          title={`${toolModel.getData("name")}`}
+          title={`${toolModel?.getData("name")}`}
         />
       );
     }
@@ -28,7 +28,7 @@ export default function ToolCardBase(
     return (
       <IconTitleBar
         formattedIcon={icon}
-        title={`${toolModel.getData("name")}`}
+        title={`${toolModel?.getData("name")}`}
       />
     );
   };

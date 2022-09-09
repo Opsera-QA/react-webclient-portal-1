@@ -2,75 +2,50 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import DescriptionField from "components/common/fields/text/DescriptionField";
-import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {
   getLargeVendorIconFromToolIdentifier
 } from "components/common/helpers/icon-helpers";
-import ToolIdentifierLinkButton from "components/common/buttons/admin/tool_identifier/ToolIdentifierLinkButton";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 
-function ToolIdentifierCard({ toolIdentifierModel, isLoading, loadTaskInNewWindow }) {
+export default function ToolIdentifierCard(
+  {
+    toolIdentifierModel,
+    onClickFunction,
+    tooltip,
+  }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(toolIdentifierModel?.getData("identifier"));
+    const icon = getLargeVendorIconFromToolIdentifier(toolIdentifierModel?.getData("identifier"));
 
-    if (typeof icon === "string") {
-      icon = (
-        <div className="d-flex w-100 h-100 mt-2 mb-4">
-          <div className="my-auto tool-title-text">{icon}</div>
-        </div>
+    if (hasStringValue(icon) === true) {
+      return (
+        <IconTitleBar
+          iconString={icon}
+          title={`${toolIdentifierModel?.getData("name")}`}
+        />
       );
     }
 
     return (
       <IconTitleBar
-        icon={icon}
+        formattedIcon={icon}
         title={`${toolIdentifierModel?.getData("name")}`}
-        isLoading={isLoading}
       />
     );
   };
 
-
-  const getDescription = () => {
-    return (
-      <div className="description-height small pl-1">
-      <DescriptionField dataObject={toolIdentifierModel} fieldName={"description"} />
-    </div>
-    );
-  };
-
-  if (isLoading) {
-    return <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} />;
-  }
-
   return (
     <IconCardContainerBase
       titleBar={getTitleBar()}
-      contentBody={getDescription()}
-      isLoading={isLoading}
-      className={"vertical-selection-card"}
-    >
-      <div className="date-and-button">
-        <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={toolIdentifierModel} />
-        </div>
-        <div>
-          <ToolIdentifierLinkButton
-            toolIdentifierId={toolIdentifierModel?.getData("_id")}
-            className={"w-100 mt-1"}
-            openInNewWindow={loadTaskInNewWindow}
-            variant={"primary"}
-          />
-        </div>
-      </div>
-    </IconCardContainerBase>
+      cardFooter={<ToolCardFooter />}
+      onClickFunction={() => onClickFunction(toolIdentifierModel)}
+      tooltip={tooltip}
+    />
   );
 }
 
 ToolIdentifierCard.propTypes = {
   toolIdentifierModel: PropTypes.object,
-  isLoading: PropTypes.bool,
-  loadTaskInNewWindow: PropTypes.bool
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.any,
 };
-
-export default ToolIdentifierCard;

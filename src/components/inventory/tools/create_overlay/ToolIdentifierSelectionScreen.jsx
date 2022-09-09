@@ -109,7 +109,7 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
       <div className={"scroll-y full-screen-overlay-selection-container hide-x-overflow"}>
         <ToolIdentifierSelectionCardView
           toolIdentifiers={getFilteredData()}
-          setDataFunction={setDataFunction}
+          onClickFunction={setDataFunction}
           toolIdentifierMetadata={toolIdentifierMetadata}
           isLoading={isLoading}
           loadData={loadData}
