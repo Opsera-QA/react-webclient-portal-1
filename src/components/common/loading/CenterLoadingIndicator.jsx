@@ -22,15 +22,15 @@ export default function CenterLoadingIndicator(
     <CenteredContentWrapper
       minHeight={minHeight}
     >
-      <div
-        style={{
-          fontSize: "1.15rem",
-          letterSpacing: "2px",
-        }}
-        className={"d-flex"}
-      >
-        <LoadingIcon className={"mr-3 mt-auto"}/>
-        <div className={"my-auto"}>
+      <div className={"d-flex"}>
+        <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
+        <div
+          className={"my-auto"}
+          style={{
+            fontSize: "1.15rem",
+            letterSpacing: "2px",
+          }}
+        >
           {getLoadingMessage()}
         </div>
       </div>
@@ -46,5 +46,5 @@ CenterLoadingIndicator.propTypes = {
 
 CenterLoadingIndicator.defaultProps = {
   type: "Data",
-  minHeight: "250px",
+  minHeight: "200px",
 };
