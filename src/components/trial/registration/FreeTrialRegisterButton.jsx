@@ -17,6 +17,8 @@ export default function FreeTrialRegisterButton(
 
   const createFreeTrialAccount = async () => {
     try {
+      toastContext.removeInlineMessage();
+      toastContext.removeAllBanners();
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await registerAccountFunction();
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);

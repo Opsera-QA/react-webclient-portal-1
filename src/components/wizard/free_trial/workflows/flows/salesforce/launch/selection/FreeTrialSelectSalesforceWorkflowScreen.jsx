@@ -120,6 +120,7 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
             loadData={loadData}
             taskMetadata={taskMetadata}
             currentScreen={currentScreen}
+            setButtonContainer={setButtonContainer}
           />
         );
       case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN:

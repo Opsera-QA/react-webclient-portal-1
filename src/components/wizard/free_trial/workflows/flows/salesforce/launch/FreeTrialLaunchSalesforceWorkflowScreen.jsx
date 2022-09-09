@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
@@ -12,6 +12,7 @@ import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 // TODO: Rename
 export default function FreeTrialLaunchSalesforceWorkflowScreen(
@@ -22,8 +23,23 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
     workspaceItems,
     loadData,
     taskMetadata,
+    setButtonContainer,
   }) {
-  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState("");
+  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
+
+  useEffect(() => {
+    setButtonContainer(
+      <OverlayWizardButtonContainerBase
+        backButtonFunction={backButtonFunction}
+      >
+        <FreeTrialLaunchWorkflowButton
+          workspaceItem={selectedWorkflowItem}
+          setWorkspaceItem={setSelectedWorkflowItem}
+          workspaceType={selectedWorkflowItem?.workspaceType}
+        />
+      </OverlayWizardButtonContainerBase>
+    );
+  }, [selectedWorkflowItem]);
 
   const getBody = () => {
     if (isLoading === true) {
@@ -68,16 +84,6 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
         title={"Select Salesforce Workflow"}
         className={""}
       />
-      <ButtonContainerBase
-        className={"mt-3"}
-        leftSideButtons={getBackButton()}
-      >
-        <FreeTrialLaunchWorkflowButton
-          workspaceItem={selectedWorkflowItem}
-          setWorkspaceItem={setSelectedWorkflowItem}
-          workspaceType={selectedWorkflowItem?.workspaceType}
-        />
-      </ButtonContainerBase>
     </div>
   );
 }
@@ -90,6 +96,7 @@ FreeTrialLaunchSalesforceWorkflowScreen.propTypes = {
   workspaceItems: PropTypes.array,
   loadData: PropTypes.func,
   taskMetadata: PropTypes.object,
+  setButtonContainer: PropTypes.func,
 };
 
 

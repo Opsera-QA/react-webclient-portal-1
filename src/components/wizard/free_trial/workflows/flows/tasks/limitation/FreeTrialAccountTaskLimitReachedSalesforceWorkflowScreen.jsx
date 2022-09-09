@@ -17,6 +17,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 
 export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen(
   {
@@ -27,10 +28,12 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
     taskCounts,
     isAccountWhitelisted,
     className,
+    selectedWorkflowId,
+    setSelectedWorkflowId,
   }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
   const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const {
     isMounted,
     toastContext,
@@ -57,6 +60,12 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
           backButtonFunction={backButtonFunction}
         >
           <div className={"d-flex"}>
+            <DeleteButtonBase
+              className={"mr-2"}
+              normalText={"Delete Task"}
+              disabled={selectedWorkflowId == null}
+              onClickFunction={() => setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN)}
+            />
             <FreeTrialLaunchWorkflowButton
               workspaceItem={selectedWorkflowItem}
               setWorkspaceItem={setSelectedWorkflowItem}
@@ -102,6 +111,11 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   };
 
+  const selectWorkflowFunction = (newWorkflow) => {
+    setSelectedWorkflowItem(newWorkflow);
+    setSelectedWorkflowId(newWorkflow?._id);
+  };
+
   return (
     <div className={className}>
       <CenteredContentWrapper>
@@ -120,7 +134,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
         <FreeTrialWorkflowItemSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
-          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          setSelectedWorkflowItem={selectWorkflowFunction}
           selectedWorkflowItem={selectedWorkflowItem}
         />
       </div>
@@ -136,6 +150,8 @@ FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen.propTypes = {
   taskCounts: PropTypes.object,
   className: PropTypes.string,
   setSelectedFlow: PropTypes.func,
+  setSelectedWorkflowId: PropTypes.func,
+  selectedWorkflowId: PropTypes.string,
 };
 
 

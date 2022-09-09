@@ -15,7 +15,6 @@ import FreeTrialLandingTaskWorkflowWidget
   from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
 import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
-import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
 

@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
-import { SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
-import taskActions from "components/tasks/task.actions";
+import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
 export default function VanityButtonBase(
   {
@@ -20,6 +17,7 @@ export default function VanityButtonBase(
     busyText,
     successText,
     errorText,
+    tooltip,
   }) {
 
   const getLabel = () => {
@@ -40,32 +38,36 @@ export default function VanityButtonBase(
   };
 
   const getButtonIcon = () => {
-    return buttonLabelHelper.getVariantForState(
+    return buttonLabelHelper.getIconForState(
       icon,
       buttonState,
     );
   };
 
-  if (onClickFunction == null) {
+  if (onClickFunction == null && disabled !== true) {
     return null;
   }
 
   return (
     <div className={className}>
-      <Button
-        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
-        onClick={onClickFunction}
-        variant={getButtonVariant()}
+      <ButtonTooltip
+        innerText={tooltip}
       >
-        <span>
-          <IconBase
-            isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
-            icon={getButtonIcon()}
-            className={"mr-2"}
-          />
-          {getLabel()}
-        </span>
-      </Button>
+        <Button
+          disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
+          onClick={onClickFunction}
+          variant={getButtonVariant()}
+        >
+          <span>
+            <IconBase
+              isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
+              icon={getButtonIcon()}
+              className={"mr-2"}
+            />
+            {getLabel()}
+          </span>
+        </Button>
+      </ButtonTooltip>
     </div>
   );
 }
@@ -81,5 +83,9 @@ VanityButtonBase.propTypes = {
   busyText: PropTypes.string,
   successText: PropTypes.string,
   errorText: PropTypes.string,
+  tooltip: PropTypes.any,
 };
 
+VanityButtonBase.defaultProps = {
+  buttonState: buttonLabelHelper.BUTTON_STATES.READY,
+};

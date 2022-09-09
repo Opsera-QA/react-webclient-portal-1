@@ -27,7 +27,6 @@ export default function FreeTrialRegistrationSignupScreen (
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const registerAccountFunction = async () => {
-    toastContext.removeAllBanners();
     if (registrationModel.isModelValid()) {
       const emailIsAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
 

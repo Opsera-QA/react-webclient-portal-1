@@ -24,5 +24,5 @@ export default function WorkflowPipelineCard(
 WorkflowPipelineCard.propTypes = {
   pipeline: PropTypes.object,
   setSelectedFlow: PropTypes.func,
-  selectedFlow: PropTypes.string,
+  selectedFlow: PropTypes.object,
 };

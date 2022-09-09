@@ -78,7 +78,7 @@ FreeTrialWorkflowItemSelectionCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   taskMetadata: PropTypes.object,
-  selectedWorkflowItem: PropTypes.string,
+  selectedWorkflowItem: PropTypes.object,
   setSelectedWorkflowItem: PropTypes.func,
   heightSize: PropTypes.number,
   hasTitleBar: PropTypes.bool,

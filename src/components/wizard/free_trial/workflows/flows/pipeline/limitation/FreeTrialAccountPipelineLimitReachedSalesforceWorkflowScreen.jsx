@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import CreateSalesforceWorkflowWizard
-  , {
+import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
 import { workspaceConstants } from "components/workspace/workspace.constants";
-import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import { isTaskTypeOfCategory, TASK_TYPE_CATEGORIES } from "components/tasks/task.types";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import FreeTrialLaunchSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
-import FreeTrialSelectSalesforceWorkflowOptionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowOptionScreen";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
@@ -26,12 +16,10 @@ import {
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
-import SalesforcePipelineWizardOverlay
-  from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 
 export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen(
   {
@@ -42,10 +30,12 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
     pipelineCounts,
     isAccountWhitelisted,
     className,
+    selectedWorkflowId,
+    setSelectedWorkflowId,
   }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
   const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const {
     isMounted,
     toastContext,
@@ -72,6 +62,12 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
           backButtonFunction={backButtonFunction}
         >
           <div className={"d-flex"}>
+            <DeleteButtonBase
+              className={"mr-2"}
+              normalText={"Delete Pipeline"}
+              disabled={selectedWorkflowId == null}
+              onClickFunction={() => setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN)}
+            />
             <FreeTrialLaunchWorkflowButton
               workspaceItem={selectedWorkflowItem}
               setWorkspaceItem={setSelectedWorkflowItem}
@@ -81,7 +77,7 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
         </OverlayWizardButtonContainerBase>
       );
     }
-  }, [selectedWorkflowItem]);
+  }, [selectedWorkflowItem, selectedWorkflowId]);
 
   const loadData = async () => {
     try {
@@ -116,6 +112,11 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
     setSelectedFlow(undefined);
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   };
+  
+  const selectWorkflowFunction = (newWorkflow) => {
+    setSelectedWorkflowItem(newWorkflow);
+    setSelectedWorkflowId(newWorkflow?._id);
+  };
 
   return (
     <div className={className}>
@@ -135,7 +136,7 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
         <FreeTrialWorkflowItemSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
-          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          setSelectedWorkflowItem={selectWorkflowFunction}
           selectedWorkflowItem={selectedWorkflowItem}
         />
       </div>
@@ -151,6 +152,8 @@ FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen.propTypes = {
   pipelineCounts: PropTypes.object,
   className: PropTypes.string,
   setSelectedFlow: PropTypes.func,
+  setSelectedWorkflowId: PropTypes.func,
+  selectedWorkflowId: PropTypes.string,
 };
 
 

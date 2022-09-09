@@ -9,15 +9,21 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { OVERLAY_PANEL_MIN_HEIGHT } from "components/common/overlays/center/CenterOverlayContainer";
 import FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
+  from "components/wizard/free_trial/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
 import FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
+  from "components/wizard/free_trial/workflows/flows/tasks/limitation/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
+import FreeTrialDeletePipelineWorkflowConfirmationScreen
+  from "components/wizard/free_trial/workflows/flows/pipeline/deletion/FreeTrialDeletePipelineWorkflowConfirmationScreen";
+import FreeTrialDeleteTaskWorkflowConfirmationScreen
+  from "components/wizard/free_trial/workflows/flows/tasks/deletion/FreeTrialDeleteTaskWorkflowConfirmationScreen";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
   WIZARD_FLOW_SCREEN: "wizard_flow_screen",
   PIPELINE_LIMIT_REACHED_SCREEN: "pipeline_limit_reached_screen",
+  DELETE_PIPELINE_CONFIRMATION_SCREEN: "delete_pipeline_confirmation_screen",
   TASK_LIMIT_REACHED_SCREEN: "task_limit_reached_screen",
+  DELETE_TASK_CONFIRMATION_SCREEN: "delete_task_confirmation_screen",
 };
 
 export default function CreateSalesforceWorkflowWizard(
@@ -27,6 +33,7 @@ export default function CreateSalesforceWorkflowWizard(
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   const [selectedFlow, setSelectedFlow] = useState(undefined);
+  const [selectedWorkflowId, setSelectedWorkflowId] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [accountMetrics, setAccountMetrics] = useState(undefined);
   const {
@@ -107,6 +114,19 @@ export default function CreateSalesforceWorkflowWizard(
             isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
             setButtonContainer={setButtonContainer}
             setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN:
+        return (
+          <FreeTrialDeletePipelineWorkflowConfirmationScreen
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+            setButtonContainer={setButtonContainer}
+            loadData={loadData}
           />
         );
       case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN:
@@ -118,6 +138,19 @@ export default function CreateSalesforceWorkflowWizard(
             isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
             setButtonContainer={setButtonContainer}
             setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN:
+        return (
+          <FreeTrialDeleteTaskWorkflowConfirmationScreen
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+            setButtonContainer={setButtonContainer}
+            loadData={loadData}
           />
         );
     }
