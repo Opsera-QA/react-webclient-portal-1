@@ -36,14 +36,15 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
   }
 
   if (isOpseraAdministrator !== true) {
-    return (
-      <ActionBarButton
-        icon={faShareAll}
-        popoverText={`Publishing Pipeline templates to your organization's private catalog is available in the main Opsera offering.`}
-        isBusy={isPublishing}
-        className={"ml-3"}
-      />
-    );
+    return null;
+    // return (
+    //   <ActionBarButton
+    //     icon={faShareAll}
+    //     popoverText={`Publishing Pipeline templates to your organization's private catalog is available in the main Opsera offering.`}
+    //     isBusy={isPublishing}
+    //     className={"ml-3"}
+    //   />
+    // );
   }
 
   return (

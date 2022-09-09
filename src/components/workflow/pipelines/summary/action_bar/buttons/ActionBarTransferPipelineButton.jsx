@@ -115,14 +115,15 @@ function ActionBarTransferPipelineButton(
     );
 
   if (isOpseraAdministrator !== true) {
-    return (
-      <ActionBarPopoverButton
-        className={"ml-3"}
-        disabled={true}
-        icon={faShareAlt}
-        popoverText={`Transferring Pipelines to another Owner is available in the main Opsera offering.`}
-      />
-    );
+    return null;
+    // return (
+      // <ActionBarPopoverButton
+      //   className={"ml-3"}
+      //   disabled={true}
+      //   icon={faShareAlt}
+      //   popoverText={`Transferring Pipelines to another Owner is available in the main Opsera offering.`}
+      // />
+    // );
   }
 
   if (pipeline == null || pipeline?.account == null || isActionAllowedFunction("transfer_pipeline_btn", pipeline.owner) !== true) {

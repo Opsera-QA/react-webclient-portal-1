@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
+import React, {useContext, useState, useEffect,} from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
@@ -13,13 +13,11 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import EditPipelineRolesOverlay from "components/workflow/EditPipelineRolesOverlay";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import InformationDialog from "components/common/status_notifications/info";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
-import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
@@ -29,12 +27,10 @@ import {
   getPipelineTypeLabel,
   PIPELINE_TYPE_SELECT_OPTIONS
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import axios from "axios";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
-import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

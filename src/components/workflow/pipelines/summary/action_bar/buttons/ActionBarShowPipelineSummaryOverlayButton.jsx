@@ -19,13 +19,14 @@ export default function ActionBarShowPipelineSummaryOverlayButton({pipeline, isA
   }
 
   if (isOpseraAdministrator !== true) {
-    return (
-      <ActionBarViewDetailsButtonBase
-        className={"ml-3"}
-        tooltipText={"Viewing Pipeline configuration details is available in the full Opsera Offering."}
-        disabled={true}
-      />
-    );
+    return null;
+    // return (
+    //   <ActionBarViewDetailsButtonBase
+    //     className={"ml-3"}
+    //     tooltipText={"Viewing Pipeline configuration details is available in the full Opsera Offering."}
+    //     disabled={true}
+    //   />
+    // );
   }
 
   return (

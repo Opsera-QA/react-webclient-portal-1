@@ -37,14 +37,15 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
   }
 
   if (isOpseraAdministrator !== true) {
-    return (
-      <ActionBarDuplicateButtonBase
-        disabled={true}
-        popoverText={"Duplicating Pipeline configurations is available in the main Opsera offering."}
-        className={"ml-3"}
-        isDuplicating={isDuplicating}
-      />
-    );
+    return null;
+    // return (
+    //   <ActionBarDuplicateButtonBase
+    //     disabled={true}
+    //     popoverText={"Duplicating Pipeline configurations is available in the main Opsera offering."}
+    //     className={"ml-3"}
+    //     isDuplicating={isDuplicating}
+    //   />
+    // );
   }
 
   return (
