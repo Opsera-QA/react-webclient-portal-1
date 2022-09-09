@@ -1,41 +1,22 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import CreateSalesforceWorkflowWizard
-  , {
+import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
-import { workspaceConstants } from "components/workspace/workspace.constants";
-import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import { isTaskTypeOfCategory, TASK_TYPE_CATEGORIES, TASK_TYPES } from "components/tasks/task.types";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import FreeTrialLaunchSalesforceWorkflowScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
-import FreeTrialSelectSalesforceWorkflowOptionScreen
-  from "components/wizard/free_trial/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowOptionScreen";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
-import SalesforcePipelineWizardOverlay
-  from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
-import SalesforceToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
-import SalesforceOrganizationSyncTaskWizardOverlay
-  from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
-import modelHelpers from "components/common/model/modelHelpers";
-import tasksMetadata from "components/tasks/details/tasks/task-metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import FreeTrialLaunchWorkflowButton
+  from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import { workspaceConstants } from "components/workspace/workspace.constants";
 
 export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen(
   {
@@ -47,6 +28,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
     isAccountWhitelisted,
     className,
   }) {
+  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -67,6 +49,24 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={backButtonFunction}
+        >
+          <div className={"d-flex"}>
+            <FreeTrialLaunchWorkflowButton
+              workspaceItem={selectedWorkflowItem}
+              setWorkspaceItem={setSelectedWorkflowItem}
+              workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
+            />
+          </div>
+        </OverlayWizardButtonContainerBase>
+      );
+    }
+  }, [selectedWorkflowItem]);
 
   const loadData = async () => {
     try {
@@ -102,35 +102,6 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   };
 
-  useEffect(() => {
-    if (setButtonContainer) {
-      setButtonContainer(
-        <OverlayWizardButtonContainerBase
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    }
-  }, []);
-
-  const loadPipelineOverlay = (selectedItem) => {
-    switch (selectedItem?.type) {
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-        toastContext.showOverlayPanel(
-          <SalesforceToGitMergeSyncTaskWizardOverlay
-            taskModel={modelHelpers.parseObjectIntoModel(selectedItem, tasksMetadata)}
-          />
-        );
-        break;
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        toastContext.showOverlayPanel(
-          <SalesforceOrganizationSyncTaskWizardOverlay
-            taskModel={modelHelpers.parseObjectIntoModel(selectedItem, tasksMetadata)}
-          />,
-        );
-        break;
-    }
-  };
-
   return (
     <div className={className}>
       <CenteredContentWrapper>
@@ -149,7 +120,8 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
         <FreeTrialWorkflowItemSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
-          setSelectedWorkflowItem={loadPipelineOverlay}
+          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          selectedWorkflowItem={selectedWorkflowItem}
         />
       </div>
     </div>

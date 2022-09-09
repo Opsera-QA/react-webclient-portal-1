@@ -94,7 +94,7 @@ export default function FreeTrialWorkspaceViewContainer(
         currentView={getCurrentView()}
         tabColumnSize={2}
         // bodyClassName={bodyClassName}
-        // minimumHeight={minimumHeight}
+        minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
         // maximumHeight={maximumHeight}
         // overflowXBodyStyle={overflowXBodyStyle}
         // overflowYContainerStyle={overflowYContainerStyle}

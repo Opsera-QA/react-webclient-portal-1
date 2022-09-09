@@ -3,6 +3,9 @@ import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
 import FreeTrialWorkspaceRegistryTable from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryTable";
 import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
 export default function FreeTrialWorkspaceRegistryViews(
   {
@@ -42,6 +45,7 @@ export default function FreeTrialWorkspaceRegistryViews(
       cardView={getCardView()}
       tableView={getTableView()}
       filterModel={workspaceFilterModel}
+      tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
     />
   );
 }

@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import TableCardView from "components/common/table/TableCardView";
 import FreeTrialWorkspaceItemTable from "components/workspace/trial/views/all/FreeTrialWorkspaceItemTable";
 import FreeTrialWorkspaceItemCardView from "components/workspace/trial/views/all/FreeTrialWorkspaceItemCardView";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
 export default function FreeTrialWorkspaceItemViews(
   {
@@ -45,6 +48,7 @@ export default function FreeTrialWorkspaceItemViews(
       isLoading={isLoading}
       cardView={getCardView()}
       tableView={getTableView()}
+      tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       filterModel={workspaceFilterModel}
     />
   );

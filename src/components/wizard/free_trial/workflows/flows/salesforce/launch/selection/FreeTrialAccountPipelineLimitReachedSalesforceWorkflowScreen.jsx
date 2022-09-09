@@ -29,6 +29,9 @@ import FreeTrialWorkflowItemSelectionCardView
 import SalesforcePipelineWizardOverlay
   from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import FreeTrialLaunchWorkflowButton
+  from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen(
   {
@@ -40,6 +43,7 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
     isAccountWhitelisted,
     className,
   }) {
+  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -60,6 +64,24 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (setButtonContainer) {
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={backButtonFunction}
+        >
+          <div className={"d-flex"}>
+            <FreeTrialLaunchWorkflowButton
+              workspaceItem={selectedWorkflowItem}
+              setWorkspaceItem={setSelectedWorkflowItem}
+              workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
+            />
+          </div>
+        </OverlayWizardButtonContainerBase>
+      );
+    }
+  }, [selectedWorkflowItem]);
 
   const loadData = async () => {
     try {
@@ -95,24 +117,6 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
     setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   };
 
-  useEffect(() => {
-    if (setButtonContainer) {
-      setButtonContainer(
-        <OverlayWizardButtonContainerBase
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    }
-  }, []);
-
-  const loadPipelineOverlay = (selectedItem) => {
-    toastContext.showOverlayPanel(
-      <SalesforcePipelineWizardOverlay
-        pipeline={selectedItem}
-      />,
-    );
-  };
-
   return (
     <div className={className}>
       <CenteredContentWrapper>
@@ -131,7 +135,8 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
         <FreeTrialWorkflowItemSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
-          setSelectedWorkflowItem={loadPipelineOverlay}
+          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          selectedWorkflowItem={selectedWorkflowItem}
         />
       </div>
     </div>
