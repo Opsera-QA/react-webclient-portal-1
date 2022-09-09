@@ -63,7 +63,7 @@ export default function PlatformSystemParameterEditorPanel(
             setModel={setPlatformSystemParameterModel}
           />
         </Col>
-        <Col xl={6} lg={12}>
+        <Col lg={12}>
           <PlatformSystemParameterValueInput
             model={platformSystemParameterModel}
             setModel={setPlatformSystemParameterModel}

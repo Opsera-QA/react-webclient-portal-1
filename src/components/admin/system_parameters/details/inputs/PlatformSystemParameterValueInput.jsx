@@ -11,6 +11,8 @@ import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { validateEmail } from "utils/helpers";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
+import SsoUserSideBySideListInputBase
+  from "components/common/list_of_values_input/users/sso/SsoUserSideBySideListInputBase";
 
 export default function PlatformSystemParameterValueInput(
   {
@@ -76,6 +78,14 @@ export default function PlatformSystemParameterValueInput(
         />
       );
     case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES:
+      return (
+        <SsoUserSideBySideListInputBase
+          model={model}
+          setModel={setModel}
+          fieldName={"value"}
+          valueField={"email"}
+        />
+      );
     default:
       return null;
   }

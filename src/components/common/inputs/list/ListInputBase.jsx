@@ -9,6 +9,8 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import ClearSelectionInputButton from "components/common/inputs/buttons/ClearSelectionInputButton";
+import SelectAllValuesInputButton from "components/common/inputs/buttons/SelectAllValuesInputButton";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -207,11 +209,10 @@ function ListInputBase(
   const getClearDataIcon = () => {
     if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
-            <IconBase icon={faTimes} fixedWidth className="mr-1"/>Clear Selection
-          </span>
-        </TooltipWrapper>
+        <ClearSelectionInputButton
+          className={"ml-2 my-auto"}
+          clearValueFunction={clearValue}
+        />
       );
     }
   };
@@ -242,9 +243,10 @@ function ListInputBase(
   const getSelectAllIcon = () => {
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
-        <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
-          <IconBase icon={faPlus} fixedWidth className="mr-1"/>Select All
-        </span>
+        <SelectAllValuesInputButton
+          selectAllFunction={selectAllOptions}
+          className={"ml-2 my-auto"}
+        />
       );
     }
   };
@@ -267,7 +269,7 @@ function ListInputBase(
     return (
       <div className={"px-2 py-1 title-bar-selection-row d-flex justify-content-between"}>
         <div className={"text-muted"}>{getItemCount()} selected</div>
-        <div className={"mb-1"}>{getSelectAllIcon()}{getClearDataIcon()}</div>
+        <div className={"d-flex"}>{getSelectAllIcon()}{getClearDataIcon()}</div>
       </div>
     );
   };
