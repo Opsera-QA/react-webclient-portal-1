@@ -65,7 +65,7 @@ function ServiceNowAssignmentGroupSelectInput({
     setGroups([]);
     setError("");
     if (isMongoDbId(serviceNowToolId) === true) {
-      loadGroups("").catch((error) => {
+      loadGroups("", serviceNowToolId).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -73,11 +73,10 @@ function ServiceNowAssignmentGroupSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm) => {
+  const loadGroups = async (searchTerm, serviceNowToolId) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
-        console.log(serviceNowToolId);
 
         // setToggleSelected(true);
         const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
