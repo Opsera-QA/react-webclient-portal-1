@@ -76,18 +76,29 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
 
   return (
     <div className={className}>
-      <InputGroup size="sm" className={"flex-nowrap"}>
+      <InputGroup
+        size={"sm"}
+        className={"flex-nowrap"}
+      >
         <input
           disabled={disabled || isLoading}
-          placeholder="Search"
+          placeholder={"Search"}
           value={filterDto?.getData(fieldName) || ""}
-          className="text-input inline-search-filter inline-filter-input"
+          className={"text-input inline-search-filter inline-filter-input"}
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="secondary" onClick={handleSearch}>
-            <IconBase isLoading={isSearching} icon={faSearch} />
+          <Button
+            className={"inline-filter-input"}
+            disabled={isLoading || disabled}
+            variant={"secondary"}
+            onClick={handleSearch}
+          >
+            <IconBase
+              isLoading={isSearching}
+              icon={faSearch}
+            />
           </Button>
         </InputGroup.Append>
       </InputGroup>

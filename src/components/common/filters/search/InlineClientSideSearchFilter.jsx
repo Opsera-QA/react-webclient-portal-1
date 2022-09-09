@@ -26,16 +26,20 @@ function InlineClientSideSearchFilter(
 
   return (
     <div className={className}>
-      <InputGroup size="sm" className={"flex-nowrap"}>
+      <InputGroup size={"sm"} className={"flex-nowrap"}>
         <input
           disabled={disabled || isLoading}
-          placeholder="Search"
+          placeholder={"Search"}
           value={filterModel?.getData(fieldName) || ""}
-          className="text-input inline-client-side-search-input inline-filter-input w-100"
+          className={"text-input inline-client-side-search-input inline-filter-input w-100"}
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="primary">
+          <Button
+            className={"inline-filter-input"}
+            disabled={isLoading || disabled}
+            variant={"secondary"}
+          >
             <IconBase
               isLoading={isLoading}
               icon={faSearch}

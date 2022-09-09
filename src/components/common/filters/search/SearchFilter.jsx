@@ -51,18 +51,26 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
 
   return (
     <div className={className}>
-      <InputGroup size="sm" className={"flex-nowrap"}>
+      <InputGroup size={"sm"} className={"flex-nowrap"}>
         <input
           disabled={disabled || isLoading}
-          placeholder="Search"
+          placeholder={"Search"}
           value={hasStringValue(currentSearchTerm) === true ? currentSearchTerm : ""}
-          className="text-input inline-search-filter inline-filter-input"
+          className={"text-input inline-search-filter inline-filter-input"}
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => setCurrentSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input" disabled={isLoading || disabled} variant={"secondary"} onClick={handleSearch}>
-            <IconBase isLoading={isSearching} icon={faSearch} />
+          <Button
+            className={"inline-filter-input"}
+            disabled={isLoading || disabled}
+            variant={"secondary"}
+            onClick={handleSearch}
+          >
+            <IconBase
+              isLoading={isSearching}
+              icon={faSearch}
+            />
           </Button>
         </InputGroup.Append>
       </InputGroup>
