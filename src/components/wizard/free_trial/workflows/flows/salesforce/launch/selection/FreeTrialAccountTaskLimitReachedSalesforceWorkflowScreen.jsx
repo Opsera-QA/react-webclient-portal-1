@@ -35,6 +35,7 @@ import SalesforceOrganizationSyncTaskWizardOverlay
   from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import tasksMetadata from "components/tasks/details/tasks/task-metadata";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen(
   {
@@ -55,7 +56,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
     cancelTokenSource,
   } = useComponentStateReference();
 
-  const currentCount = taskCounts?.[selectedFlow];
+  const currentCount = DataParsingHelper.parseInteger(taskCounts?.[selectedFlow], 0);
   const allowedCount = isAccountWhitelisted === true ? 10 : 3;
 
   useEffect(() => {

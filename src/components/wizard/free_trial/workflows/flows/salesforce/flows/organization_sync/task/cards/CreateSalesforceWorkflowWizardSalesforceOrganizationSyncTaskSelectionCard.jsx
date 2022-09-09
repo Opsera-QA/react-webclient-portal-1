@@ -9,6 +9,7 @@ import WorkflowOptionCardBase, {
 } from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard(
   {
@@ -23,9 +24,9 @@ export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSync
   } = useComponentStateReference();
 
   const templateIdentifier = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
-  const currentCount = taskCounts?.[templateIdentifier];
+  const currentCount = DataParsingHelper.parseInteger(taskCounts?.[templateIdentifier], 0);
   const allowedCount = hasExpiration === false ? 10 : 1;
-  const disabled = currentCount == null || currentCount >= allowedCount;
+  const disabled = taskCounts == null || currentCount >= allowedCount;
 
   const onClickFunction = (selectedOption) => {
     if (disabled === true) {
@@ -47,7 +48,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSync
       description={`
         Run an Organization Sync task to run on demand.
       `}
-      onClickFunction={onClickFunction}
+      onClickFunction={currentCount == null ? undefined : onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
     />
   );

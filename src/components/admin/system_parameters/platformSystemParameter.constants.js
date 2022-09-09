@@ -6,6 +6,7 @@ platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES = {
   ARRAY: "array",
   BOOLEAN: "boolean",
   NUMBER: "number",
+  USER_EMAIL_ADDRESSES: "user_emails",
   OBJECT: "object",
   STRING: "string",
 };
@@ -14,6 +15,7 @@ platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPE_LABELS = {
   ARRAY: "Array",
   BOOLEAN: "True/False",
   NUMBER: "Number",
+  USER_EMAIL_ADDRESSES: "User Email Addresses",
   OBJECT: "JSON",
   STRING: "String",
 };
@@ -38,6 +40,7 @@ platformSystemParameterConstants.getLabelForSystemParameterType = (type) => {
 // TODO: This should be probably be standardized in a helper
 platformSystemParameterConstants.getInitialValueForParameterType = (type) => {
   switch (type) {
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES:
     case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.ARRAY:
       return [];
     case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.BOOLEAN:
@@ -68,4 +71,5 @@ platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPE_SELECT_OPTIONS =
   platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.NUMBER),
   platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.OBJECT),
   platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.STRING),
+  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES),
 ];

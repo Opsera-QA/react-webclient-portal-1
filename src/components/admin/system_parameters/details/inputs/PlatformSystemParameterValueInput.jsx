@@ -75,6 +75,7 @@ export default function PlatformSystemParameterValueInput(
           setDataObject={setModel}
         />
       );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES:
     default:
       return null;
   }

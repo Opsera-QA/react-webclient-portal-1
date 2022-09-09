@@ -27,7 +27,7 @@ export default function CreateSalesforceWorkflowWizard(
   }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN);
   const [selectedFlow, setSelectedFlow] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
   const [accountMetrics, setAccountMetrics] = useState(undefined);
   const {
     getAccessToken,
@@ -129,6 +129,14 @@ export default function CreateSalesforceWorkflowWizard(
         minHeight={OVERLAY_PANEL_MIN_HEIGHT}
         customMessage={"Initializing Workflow Options"}
       />
+    );
+  }
+
+  if (accountMetrics == null) {
+    return (
+      <div>
+        Could not initialize Workflow options. Please close this overlay and try once again.
+      </div>
     );
   }
 

@@ -12,6 +12,7 @@ import {
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard(
   {
@@ -26,9 +27,9 @@ export default function CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTa
   } = useComponentStateReference();
 
   const templateIdentifier = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
-  const currentCount = taskCounts?.[templateIdentifier];
+  const currentCount = DataParsingHelper.parseInteger(taskCounts?.[templateIdentifier], 0);
   const allowedCount = hasExpiration === false ? 10 : 1;
-  const disabled = currentCount == null || currentCount >= allowedCount;
+  const disabled = taskCounts == null || currentCount >= allowedCount;
 
   const onClickFunction = (selectedOption) => {
     if (disabled === true) {

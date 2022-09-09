@@ -12,6 +12,7 @@ import {
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard(
   {
@@ -26,9 +27,9 @@ export default function SalesforceOrganizationSyncPipelineWithUnitTestingSelecti
   } = useComponentStateReference();
 
   const templateIdentifier = pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE;
-  const currentCount = pipelineCounts?.[templateIdentifier];
+  const currentCount = DataParsingHelper.parseInteger(pipelineCounts?.[templateIdentifier], 0);
   const allowedCount = hasExpiration === false ? 10 : 3;
-  const disabled = currentCount == null || currentCount >= allowedCount;
+  const disabled = pipelineCounts == null || currentCount >= allowedCount;
 
   const onClickFunction = (selectedOption) => {
     if (disabled === true) {

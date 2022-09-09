@@ -24,11 +24,15 @@ export default function CenterLoadingIndicator(
     >
       <div
         style={{
-          fontSize: "1.25rem",
+          fontSize: "1.15rem",
           letterSpacing: "2px",
         }}
+        className={"d-flex"}
       >
-        <LoadingIcon className={"mr-2"}/>{getLoadingMessage()}
+        <LoadingIcon className={"mr-3 mt-auto"}/>
+        <div className={"my-auto"}>
+          {getLoadingMessage()}
+        </div>
       </div>
     </CenteredContentWrapper>
   );

@@ -28,6 +28,7 @@ import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import SalesforcePipelineWizardOverlay
   from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen(
   {
@@ -48,7 +49,7 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
     cancelTokenSource,
   } = useComponentStateReference();
 
-  const currentCount = pipelineCounts?.[selectedFlow];
+  const currentCount = DataParsingHelper.parseInteger(pipelineCounts?.[selectedFlow], 0);
   const allowedCount = isAccountWhitelisted === true ? 10 : 3;
 
   useEffect(() => {
