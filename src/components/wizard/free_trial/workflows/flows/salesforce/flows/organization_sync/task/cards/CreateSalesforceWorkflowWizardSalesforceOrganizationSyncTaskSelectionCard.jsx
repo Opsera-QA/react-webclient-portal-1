@@ -47,8 +47,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSync
       description={`
         Run an Organization Sync task to run on demand.
       `}
-      onClickFunction={handleFlowSelection}
-      disabled={onClickFunction}
+      onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
     />
   );
