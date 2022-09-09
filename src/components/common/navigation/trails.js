@@ -173,6 +173,7 @@ const breadcrumbs = {
     title: "Platform System Parameter Management",
     linkText: "Platform System Parameter Management",
     icon: faCogs,
+    pageDescription: "Manage platform-wide system settings"
   },
   platformSystemParameterDetailView: {
     parent: "platformSystemParameterManagement",
