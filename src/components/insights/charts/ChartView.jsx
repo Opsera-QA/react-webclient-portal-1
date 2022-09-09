@@ -177,6 +177,9 @@ import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatisti
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
+// Approval Gates KPI
+import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1665,6 +1668,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      case "approval-gates":
+        return (
+          <Col md={12} className="p-2">
+            <ApprovalGatesMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
