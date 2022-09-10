@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import InputContainer from "components/common/inputs/InputContainer";
-import ClearDataIcon from "../../../../../common/icons/field/ClearDataIcon";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 
 export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   {
@@ -58,13 +58,11 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     try {
       setIsLoading(true);
       await loadTools(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -81,7 +79,7 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     const toolCount = response?.data?.count;
 
     if (isMounted?.current === true && Array.isArray(newTools)) {
-      if (setCurrentToolCount && typeof toolCount === "number"){
+      if (setCurrentToolCount && typeof toolCount === "number") {
         setCurrentToolCount(toolCount);
       }
 
@@ -95,9 +93,9 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
       //   if (model?.isValid() !== true) {
       //     console.log("tool invalid: " + JSON.stringify(tool?.configuration));
       //     return false;
-        // }
-        //
-        // return tool.configuration != null && Object.entries(tool.configuration).length > 0;
+      // }
+      //
+      // return tool.configuration != null && Object.entries(tool.configuration).length > 0;
       // });
       setTools([...filteredTools]);
     }
@@ -116,31 +114,39 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   };
 
   const getInputLabel = () => {
-    return(
-        <div className={"mb-2"}>
-          <div className="d-flex justify-content-between">
-            <div>{"Account"}</div>
-            <div className={"d-flex"}>
-              <ClearDataIcon
-                  clearValueFunction={clearDataFunction}
-                  className={"ml-2"}
-              />
-            </div>
+    return (
+      <div className={"mb-2"}>
+        <div className="d-flex justify-content-between">
+          <div>{"Account"}</div>
+          <div className={"d-flex"}>
+            <ClearDataIcon
+              clearValueFunction={clearDataFunction}
+              className={"ml-2"}
+            />
           </div>
         </div>
+      </div>
     );
   };
 
   const setDataFunction = (selectedOption) => {
     const newModel = model?.getNewInstance(selectedOption?.configuration, false);
     setToolId(selectedOption?._id);
-    setModel({...newModel});
+    setModel({ ...newModel });
   };
 
   const clearDataFunction = (selectedOption) => {
     const newModel = model?.getNewInstance(selectedOption?.configuration, false);
     setToolId("");
-    setModel({...newModel});
+    setModel({ ...newModel });
+  };
+
+  // TODO: When we add support for more tools we might need to make a function that will pull account name based on identifier
+  const getTextField = (tool) => {
+    const toolName = tool?.name;
+    const accountName = tool?.configuration?.accountUsername;
+
+    return (`${toolName} (${accountName})`);
   };
 
   return (
@@ -153,7 +159,7 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
         selectOptions={tools}
         busy={isLoading}
         valueField={valueField}
-        textField={textField}
+        textField={hasStringValue(textField) === true ? textField : getTextField}
         visible={visible}
         error={error}
         placeholderText={getPlaceholderText()}
@@ -182,6 +188,5 @@ CreateSalesforceWorkflowWizardSelectToolInputBase.propTypes = {
 };
 
 CreateSalesforceWorkflowWizardSelectToolInputBase.defaultProps = {
-  textField: "name",
   valueField: "_id",
 };
