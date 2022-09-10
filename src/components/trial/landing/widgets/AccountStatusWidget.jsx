@@ -7,7 +7,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
-// TODO: Standardize
+// TODO: This needs to be rewritten to be standardized and cleaned up
 export default function AccountStatusWidget({ className }) {
   const [isLoading, setIsLoading] = useState(undefined);
   const [accountMetrics, setAccountMetrics] = useState(undefined);
@@ -19,11 +19,11 @@ export default function AccountStatusWidget({ className }) {
   } = useComponentStateReference();
 
   useEffect(() => {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
   }, []);
 
   const loadData = async () => {
@@ -178,7 +178,10 @@ export default function AccountStatusWidget({ className }) {
 
     return (
       <div>Completed Runs:&nbsp;
-        <span className={"marketingModulesValueText"}>{summaryRunCount}</span></div>
+        <span className={"marketingModulesValueText"}>
+          {summaryRunCount}
+        </span>
+      </div>
     );
 
   };
@@ -188,9 +191,13 @@ export default function AccountStatusWidget({ className }) {
 
     if (!expiration) {
       return (
-        <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
-          <div className="marketingModulesText p-3 mx-3"
-               style={{fontSize:"smaller"}}>
+        <div className={"d-flex justify-content-end position-absolute w-100 fixed-bottom"}>
+          <div
+            className={"marketingModulesText p-3 mx-3"}
+            style={{
+              fontSize: "smaller",
+            }}
+          >
             Your free trial does not expire.
           </div>
         </div>
@@ -200,11 +207,20 @@ export default function AccountStatusWidget({ className }) {
     const parsedDate = expiration.toISOString().substring(0, 10);
 
     return (
-      <div className="d-flex justify-content-end position-absolute w-100 fixed-bottom">
-        <div className="marketingModulesText p-3 mx-3"
-             style={{fontSize:"smaller"}}>
-          Your free trial will expire on {parsedDate}.  For assistance, email
-          <a href="mailto:support@opsera.io" style={{paddingLeft:"5px"}} className={"marketingModulesTextLink"}>support@opsera.io</a>
+      <div className={"d-flex justify-content-end position-absolute w-100 fixed-bottom"}>
+        <div
+          className={"marketingModulesText p-3 mx-3"}
+          style={{
+            fontSize: "smaller",
+          }}
+        >
+          Your free trial will expire on {parsedDate}. For assistance, email
+          <a
+            href={"mailto:support@opsera.io"}
+            className={"marketingModulesTextLink ml-2"}
+          >
+            support@opsera.io
+          </a>
         </div>
       </div>
     );
@@ -219,8 +235,8 @@ export default function AccountStatusWidget({ className }) {
 
     return (
       <>
-        <div className="d-flex justify-content-center h-100 mt-4 mb-2">
-          <div className="d-flex align-items-left marketingModulesText">
+        <div className={"d-flex justify-content-center h-100 mt-4 mb-2"}>
+          <div className={"d-flex align-items-left marketingModulesText"}>
             <div className={"my-2 marketingModulesTextLarger"}>{getItemCounts()}</div>
           </div>
         </div>
