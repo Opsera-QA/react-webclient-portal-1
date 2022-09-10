@@ -62,8 +62,7 @@ function DeleteToolOverlay({ toolId, toolModel }) {
 
       await toolsActions.deleteToolByIdV2(getAccessToken, cancelTokenSource, toolId);
       toastContext.showDeleteSuccessResultDialog("Tool");
-      const route = isOpseraAdministrator === true || isFreeTrial !== true ? "/inventory/tools" : "/workspace";
-      history.push(route);
+      history.goBack();
       closePanel();
     } catch (error) {
       toastContext.showDeleteFailureResultDialog("Tool", error);

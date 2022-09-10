@@ -1,15 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import Modal from "components/common/modal/modal";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import {useHistory} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
+// TODO: Wire up Role Definitions
+function ActionBarDeletePipelineButton(
+  {
+    pipeline,
+    isActionAllowedFunction,
+    refreshAfterDeletion,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const history = useHistory();
@@ -27,11 +32,10 @@ function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
       await pipelineActions.deletePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
 
-      if (isOpseraAdministrator === true) {
-        history.push("/workflow");
-      }
-      else {
-        history.push("/");
+      if (refreshAfterDeletion === true) {
+        history.push(history.location);
+      } else {
+        history.goBack();
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -62,7 +66,7 @@ function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
     }
   };
 
-  if (pipeline == null || isActionAllowedFunction("delete_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || isActionAllowedFunction == null || isActionAllowedFunction("delete_pipeline_btn", pipeline?.owner) !== true) {
     return null;
   }
 
@@ -81,7 +85,8 @@ function ActionBarDeletePipelineButton({pipeline, isActionAllowedFunction}) {
 
 ActionBarDeletePipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func
+  isActionAllowedFunction: PropTypes.func,
+  refreshAfterDeletion: PropTypes.bool,
 };
 
 export default ActionBarDeletePipelineButton;

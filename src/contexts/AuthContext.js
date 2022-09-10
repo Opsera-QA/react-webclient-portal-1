@@ -1,9 +1,8 @@
-import React, {createContext, useEffect, useRef, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import {useHistory} from "react-router-dom";
 import commonActions from "components/common/common.actions";
-import axios from "axios";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
 import { THEMES } from "temp-library-components/theme/theme.constants";
@@ -12,6 +11,8 @@ import { darkThemeConstants } from "temp-library-components/theme/dark.theme.con
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
+import useIsMountedStateReference from "hooks/useIsMountedStateReference";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
@@ -24,26 +25,10 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const isMounted = useIsMountedStateReference();
+  const cancelTokenSource = useCancelTokenStateReference();
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  // TODO: We should probably combine with the above
   useEffect(() => {
     setUserAccessRoles(undefined);
 
@@ -81,7 +66,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   };
 
   const loginUserContext = () => {
-    //window.location = "/login";
     history.push("/login");
   };
 

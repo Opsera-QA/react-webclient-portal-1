@@ -1,11 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import useIsMountedStateReference from "hooks/useIsMountedStateReference";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 
 function useComponentStateReference() {
-  const isMounted = useRef(false);
-  const [cancelTokenSource] = useState(axios.CancelToken.source());
+  const isMounted = useIsMountedStateReference();
+  const cancelTokenSource = useCancelTokenStateReference();
   const {
     getAccessToken,
     userAccessRoles,
@@ -20,12 +21,8 @@ function useComponentStateReference() {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    isMounted.current = true;
-
     return () => {
-      cancelTokenSource.cancel();
       toastContext.removeAllBanners();
-      isMounted.current = false;
     };
   }, []);
 

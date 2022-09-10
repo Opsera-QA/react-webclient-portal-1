@@ -12,6 +12,7 @@ export default function ActionBarDeleteTaskButton(
     visible,
     taskModel,
     className,
+    refreshAfterDeletion,
   }) {
   const {
     getAccessToken,
@@ -47,7 +48,7 @@ export default function ActionBarDeleteTaskButton(
 
   return (
     <ActionBarDeleteButton2
-      relocationPath={isOpseraAdministrator === true || isFreeTrial !== true ? "/task/" : "/"}
+      refreshAfterDeletion={refreshAfterDeletion}
       handleDelete={deleteGitTask}
       dataObject={taskModel}
       visible={visible}
@@ -59,5 +60,6 @@ export default function ActionBarDeleteTaskButton(
 ActionBarDeleteTaskButton.propTypes = {
   taskModel: PropTypes.object,
   className: PropTypes.string,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  refreshAfterDeletion: PropTypes.bool,
 };

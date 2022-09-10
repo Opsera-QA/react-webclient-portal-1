@@ -12,7 +12,14 @@ import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary
 import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
 
-function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipeline, loadPipeline}) {
+function PipelineSummaryActionBar(
+  {
+    pipelineModel,
+    isActionAllowedFunction,
+    pipeline,
+    loadPipeline,
+    refreshAfterDeletion,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const toggleHelp = () => {
@@ -51,6 +58,7 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
       <ActionBarDeletePipelineButton
         pipeline={pipeline}
         isActionAllowedFunction={isActionAllowedFunction}
+        refreshAfterDeletion={refreshAfterDeletion}
       />
     </div>
   );
@@ -60,7 +68,8 @@ PipelineSummaryActionBar.propTypes = {
   isActionAllowedFunction: PropTypes.func,
   loadPipeline: PropTypes.func,
   pipeline: PropTypes.object,
-  pipelineModel: PropTypes.object
+  pipelineModel: PropTypes.object,
+  refreshAfterDeletion: PropTypes.bool,
 };
 
 export default PipelineSummaryActionBar;

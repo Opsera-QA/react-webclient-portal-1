@@ -4,8 +4,13 @@ import ActionBarButton from "./ActionBarButton";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-export default function ActionBarBackButton({path}) {
+export default function ActionBarBackButton(
+  {
+    path,
+    className,
+  }) {
   const history = useHistory();
   const {
     isOpseraAdministrator,
@@ -13,16 +18,17 @@ export default function ActionBarBackButton({path}) {
   } = useComponentStateReference();
 
   const handleBackButton = () => {
+    if ((isOpseraAdministrator !== true && isFreeTrial === true) || hasStringValue(path) !== true) {
+      history.goBack();
+      return;
+    }
+
     history.push(path);
   };
 
-  // This is hidden on free trial for users besides opsera administrators
-  if (isOpseraAdministrator !== true && isFreeTrial === true) {
-    return null;
-  }
-
   return (
     <ActionBarButton
+      className={className}
       action={handleBackButton}
       icon={faArrowLeft}
       float={"left"}
@@ -33,4 +39,5 @@ export default function ActionBarBackButton({path}) {
 
 ActionBarBackButton.propTypes = {
   path: PropTypes.string,
+  className: PropTypes.string,
 };

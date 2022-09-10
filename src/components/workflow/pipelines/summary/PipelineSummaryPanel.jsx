@@ -33,6 +33,7 @@ import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -356,9 +357,11 @@ function PipelineSummaryPanel(
   const getPipelineActionControls = () => {
     if (showActionControls !== false) {
       return (
-        <div className={"d-flex"}>
+        <div className={"d-flex justify-content-between pb-2"}>
+          <ActionBarBackButton
+            className={"my-auto"}
+          />
           <PipelineActionControls
-            className={"ml-auto pb-2"}
             pipeline={pipeline}
             disabledActionState={false}
             customerAccessRules={customerAccessRules}
@@ -548,6 +551,7 @@ function PipelineSummaryPanel(
               pipeline={pipeline}
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
+              refreshAfterDeletion={showActionControls !== true}
               isActionAllowedFunction={authorizedAction} // TODO: Handle this without passing the function in
             />
           </Col>
