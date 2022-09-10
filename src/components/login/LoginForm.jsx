@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Row, Col } from "react-bootstrap";
-import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
-import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisterAccountButton from "components/login/RegisterAccountButton";
 import PropTypes from "prop-types";
 import userActions from "../user/user-actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-
-//const OktaSignIn = require("@okta/okta-signin-widget");
-import OktaSignIn from '@okta/okta-signin-widget';
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { AuthContext } from "contexts/AuthContext";
+
+import OktaSignIn from '@okta/okta-signin-widget';
 
 const LoginForm = ({ authClient }) => {
   const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
@@ -311,9 +308,9 @@ const LoginForm = ({ authClient }) => {
               </div>
 
               <div id="osw-container">
-                  <div className="h4 auth-header">
+                  <h4 className="auth-header">
                     Sign in
-                  </div>
+                  </h4>
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
