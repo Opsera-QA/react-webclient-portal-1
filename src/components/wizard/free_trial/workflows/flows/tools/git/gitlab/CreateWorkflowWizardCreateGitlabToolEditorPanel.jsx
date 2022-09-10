@@ -14,7 +14,6 @@ import CreateSalesforceWorkflowWizardSelectToolInputBase
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
@@ -12,7 +12,6 @@ import CreateSalesforceWorkflowWizardSelectToolInputBase
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
-import { useState } from "@types/react";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
