@@ -551,7 +551,7 @@ function PipelineSummaryPanel(
               pipeline={pipeline}
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
-              refreshAfterDeletion={showActionControls !== true}
+              refreshAfterDeletion={showActionControls === false}
               isActionAllowedFunction={authorizedAction} // TODO: Handle this without passing the function in
             />
           </Col>

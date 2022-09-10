@@ -30,7 +30,7 @@ export default function ActionBarDeleteButton2(
           setShowDeleteModal(false);
 
           if (refreshAfterDeletion === true) {
-            history.go(0);
+            history.push(history.location);
           } else if (relocationPath) {
             history.push(relocationPath);
           } else {

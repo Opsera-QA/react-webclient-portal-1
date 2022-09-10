@@ -42,6 +42,7 @@ export default function FreeTrialLandingTaskWorkflowWidget(
           <div className={"mr-2 mt-2"}>
             <ActionBarDeleteTaskButton
               taskModel={selectedTask}
+              refreshAfterDeletion={true}
             />
           </div>
         </div>
