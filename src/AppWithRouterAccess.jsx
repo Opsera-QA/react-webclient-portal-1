@@ -137,15 +137,6 @@ const AppWithRouterAccess = () => {
     await loadUsersData(tokens?.accessToken?.value);
   };
 
-  const getNavBar = () => {
-    return (
-      <OpseraHeaderBar
-        hideAuthComponents={!authenticatedState}
-        userData={data}
-      />
-    );
-  };
-
   const getError = () => {
     if (
       error &&
@@ -219,11 +210,14 @@ const AppWithRouterAccess = () => {
   return (
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
-      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-        <ToastContextProvider navBar={getNavBar()}>
+        <AuthContextProvider
+          userData={data}
+          refreshToken={refreshToken}
+          authClient={authClient}
+          isAuthenticated={authenticatedState}
+        >
           {getRoutes()}
-        </ToastContextProvider>
-      </AuthContextProvider>
+        </AuthContextProvider>
     </Security>
   );
 

@@ -17,6 +17,8 @@ function useComponentStateReference() {
     featureFlagHideItemInTest,
     isSiteAdministrator,
     userData,
+    backgroundColor,
+    isAuthenticated,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
@@ -40,6 +42,8 @@ function useComponentStateReference() {
     isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
     userData: userData,
     isFreeTrial: true,
+    backgroundColor: backgroundColor,
+    isAuthenticated: isAuthenticated,
   });
 }
 

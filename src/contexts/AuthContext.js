@@ -18,7 +18,14 @@ const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 const websocketClient = new ClientWebsocket();
 
-const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
+const AuthContextProvider = (
+  {
+    userData,
+    refreshToken,
+    authClient,
+    children,
+    isAuthenticated,
+  }) => {
   const history = useHistory();
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
@@ -304,7 +311,11 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
     }}>
-      <MainViewContainer>
+      <MainViewContainer
+        isAuthenticated={isAuthenticated}
+        backgroundColor={backgroundColor}
+        userData={userData}
+      >
         {children}
       </MainViewContainer>
     </AuthContext.Provider>
@@ -316,6 +327,7 @@ AuthContextProvider.propTypes = {
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
   children: PropTypes.any,
+  isAuthenticated: PropTypes.bool,
 };
 
 export const AuthContext = createContext();
