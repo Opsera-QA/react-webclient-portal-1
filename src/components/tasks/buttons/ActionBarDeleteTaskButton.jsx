@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import taskActions from "components/tasks/task.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
+import DeleteTaskConfirmationOverlay from "components/tasks/buttons/DeleteTaskConfirmationOverlay";
 
 // TODO: use role definitions
 export default function ActionBarDeleteTaskButton(
@@ -15,11 +15,8 @@ export default function ActionBarDeleteTaskButton(
     refreshAfterDeletion,
   }) {
   const {
-    getAccessToken,
-    cancelTokenSource,
-    isOpseraAdministrator,
     accessRoleData,
-    isFreeTrial,
+    toastContext,
   } = useComponentStateReference();
   const [canDelete, setCanDelete] = useState(false);
 
@@ -38,8 +35,13 @@ export default function ActionBarDeleteTaskButton(
     }
   }, [accessRoleData, taskModel]);
 
-  const deleteGitTask = async () => {
-    return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
+  const showDeleteConfirmationOverlay = () => {
+    toastContext.showOverlayPanel(
+      <DeleteTaskConfirmationOverlay
+        taskModel={taskModel}
+        refreshAfterDeletion={refreshAfterDeletion}
+      />
+    );
   };
 
   if (visible === false || canDelete !== true || taskModel == null) {
@@ -47,11 +49,9 @@ export default function ActionBarDeleteTaskButton(
   }
 
   return (
-    <ActionBarDeleteButton2
-      refreshAfterDeletion={refreshAfterDeletion}
-      handleDelete={deleteGitTask}
-      dataObject={taskModel}
-      visible={visible}
+    <ActionBarDeleteButtonBase
+      handleDeleteFunction={showDeleteConfirmationOverlay}
+      type={"Task"}
       className={className}
     />
   );

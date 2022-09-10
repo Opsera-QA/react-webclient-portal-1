@@ -11,6 +11,7 @@ export default function ActionBarDeletePipelineButton(
     pipeline,
     isActionAllowedFunction,
     refreshAfterDeletion,
+    className,
   }) {
   const {
     toastContext,
@@ -33,7 +34,7 @@ export default function ActionBarDeletePipelineButton(
     <ActionBarDeleteButtonBase
       handleDeleteFunction={showDeleteConfirmationOverlay}
       type={"Pipeline"}
-      className={"ml-3"}
+      className={className}
     />
   );
 }
@@ -42,4 +43,5 @@ ActionBarDeletePipelineButton.propTypes = {
   pipeline: PropTypes.object,
   isActionAllowedFunction: PropTypes.func,
   refreshAfterDeletion: PropTypes.bool,
+  className: PropTypes.string,
 };
