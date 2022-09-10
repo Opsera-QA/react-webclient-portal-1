@@ -15,7 +15,6 @@ function CustomParameterComboBoxInput(
     disabled,
     textField,
     valueField,
-    allowCreate,
     showLabel,
     setDataFunction,
     requireVaultSavedParameters,
@@ -83,7 +82,6 @@ function CustomParameterComboBoxInput(
       textField={textField}
       error={error}
       disabled={disabled}
-      allowCreate={allowCreate}
       showLabel={showLabel}
       setDataFunction={setDataFunction}
     />
@@ -98,7 +96,6 @@ CustomParameterComboBoxInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  allowCreate: PropTypes.bool,
   showLabel: PropTypes.bool,
   setDataFunction: PropTypes.func,
   requireVaultSavedParameters: PropTypes.bool,
