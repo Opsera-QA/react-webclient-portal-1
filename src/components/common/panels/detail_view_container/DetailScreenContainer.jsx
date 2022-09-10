@@ -31,6 +31,7 @@ function DetailScreenContainer(
   }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+  const activeField = dataObject?.getActiveField();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
@@ -49,22 +50,6 @@ function DetailScreenContainer(
       <div className="mb-3">
         <div className="sub-navigation-block" />
       </div>
-    );
-  };
-
-  const getTitleBar = () => {
-    const activeField = dataObject?.getActiveField();
-    return (
-      <TitleBar
-        isLoading={isLoading}
-        parentBreadcrumb={parentBreadcrumb}
-        titleIcon={breadcrumb?.icon}
-        title={dataObject?.getDetailViewTitle()}
-        inactive={activeField ? dataObject?.getData(activeField) === false : false}
-        titleActionBar={titleActionBar}
-        helpComponent={helpComponent}
-        isBeta={isBeta}
-      />
     );
   };
 
@@ -155,7 +140,7 @@ function DetailScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width ml-2 max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
       <div
         className={"screen-container content-container content-card-1"}
@@ -163,8 +148,17 @@ function DetailScreenContainer(
           minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
         }}
       >
-        <div className="px-3 py-2 content-block-header title-text-header-1">
-          {getTitleBar()}
+        <div className={"px-3 py-2 content-block-header title-text-header-1"}>
+          <TitleBar
+            isLoading={isLoading}
+            parentBreadcrumb={parentBreadcrumb}
+            titleIcon={breadcrumb?.icon}
+            title={dataObject?.getDetailViewTitle()}
+            inactive={activeField ? dataObject?.getData(activeField) === false : false}
+            titleActionBar={titleActionBar}
+            helpComponent={helpComponent}
+            isBeta={isBeta}
+          />
         </div>
         <div
           style={{ minHeight: getBodyHeight()}}
@@ -172,7 +166,6 @@ function DetailScreenContainer(
           {getBody()}
         </div>
         {getAccessBasedField()}
-        <div className="content-block-footer"/>
       </div>
     </div>
   );

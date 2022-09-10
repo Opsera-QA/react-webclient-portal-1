@@ -59,7 +59,6 @@ function InputTitleBar(
           disabled={disableSearch}
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          className={"input-search-filter"}
         />
       );
     }
@@ -79,7 +78,7 @@ function InputTitleBar(
 
 
   return (
-    <div className={`${className} px-2 d-flex justify-content-between`}>
+    <div className={`${className} pr-2 pl-3 d-flex justify-content-between`}>
       {getFormattedLabel()}
       <div className={"d-flex"}>
         {getSearchBar()}

@@ -304,7 +304,7 @@ function ListInputBase(
   // TODO: Pull out title bar and use on ListInput?
   return (
     <InputContainer className={"list-input my-2"} fieldName={fieldName}>
-      <div className={"content-container"}>
+      <div className={"screen-container content-container"}>
         <InputTitleBar
           disabled={disabled || selectOptions.length === 0}
           icon={icon}

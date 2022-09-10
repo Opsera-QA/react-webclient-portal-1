@@ -134,7 +134,7 @@ function VanitySetDetailScreenContainer(
   return (
     <div className="max-content-width max-content-height scroll-y hide-x-overflow">
       {getTopNavigation()}
-      <div className="content-container content-card-1">
+      <div className="screen-container content-container content-card-1">
         <div className="px-2 py-2 content-block-header title-text-header-1">
           {getTitleBar()}
         </div>
