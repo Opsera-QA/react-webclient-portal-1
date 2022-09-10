@@ -334,6 +334,10 @@ button.bg-primary:focus {
     text-decoration: none;
 }
 
+.nav-pills .nav-link {
+    border-radius: 0.5rem;
+}
+
 .list-group-item-primary {
     color: #010913;
     background-color: #46415C;
@@ -343,7 +347,6 @@ button.bg-primary:focus {
     background-color: #46415C !important;
     color: white;
     text-decoration: none;
-    border-color: #010913;
     border: none;
 }
 
@@ -477,9 +480,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table th, .dhx_grid-header-cell-text_content {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
+    font-family: Inter, sans-serif;
+    letter-spacing: .025rem;
     color: #3D3B36;
-    line-height: 2.4em;
-    vertical-align: middle;
     white-space: nowrap;
 }
 
@@ -516,8 +519,8 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table .table-row:hover {
-    background-color: #E6E5E3;
-    color: #3D3B36;
+    background: rgb(230, 229, 227);
+    color: black;
 }
 
 .custom-table .table-footer {
@@ -994,6 +997,7 @@ a.nav-link {
 .filter-container-content-block-header {
     background-color: #fff;
     border-bottom: 1px solid #E6E5E3;
+    letter-spacing: .025rem;
     color: #3D3B36;
 }
 
@@ -1368,6 +1372,7 @@ div.data-blocks-ellipses {
 .filter-container, .screen-container {
     border-radius: 1rem;
     overflow-x: hidden;
+    letter-spacing: .01rem;
 }
 
 .container-border {

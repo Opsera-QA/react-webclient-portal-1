@@ -19,7 +19,7 @@ function MakeupTableBody(
     if (isLoading && (!Array.isArray(rows) || rows.length === 0)) {
       return (
         <tr>
-          <td colSpan="100%">
+          <td colSpan={12}>
             <div style={{height: "500px"}}>
               <CenterLoadingIndicator />
             </div>
@@ -32,8 +32,8 @@ function MakeupTableBody(
       return (
         <tr>
           <td
-            colSpan="100%"
-            className="info-text text-center p-5"
+            colSpan={12}
+            className={"info-text text-center p-5"}
           >
             {noDataMessage}
           </td>

@@ -5,8 +5,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import { dateHelpers } from "components/common/helpers/date/date.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function CreateFreeTrialSalesforceToolButton(
   {
@@ -17,6 +16,8 @@ export default function CreateFreeTrialSalesforceToolButton(
     customLabel,
     icon,
     variant,
+    currentCount,
+    type,
   }) {
   const {
     getAccessToken,
@@ -74,11 +75,10 @@ export default function CreateFreeTrialSalesforceToolButton(
   const handleToolCreation = async () => {
     let toolId = salesforceToolId;
 
-    const accountUsername = dataParsingHelper.parseString(salesforceToolModel?.getData("accountUsername"), "");
-    const createDate = dateHelpers.getNowFormattedDateString();
     if (isMongoDbId(salesforceToolId) !== true) {
+      const currentToolCount = DataParsingHelper.parseInteger(currentCount, 0);
       const newTool = {
-        name: `${accountUsername} - Salesforce Tool - ${createDate}`,
+        name: `Salesforce ${type} Tool ${currentToolCount + 1}`,
         tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR,
         tool_type_identifier: "sfdc-type",
         active: true,
@@ -121,6 +121,8 @@ CreateFreeTrialSalesforceToolButton.propTypes = {
   icon: PropTypes.object,
   customLabel: PropTypes.string,
   variant: PropTypes.string,
+  currentCount: PropTypes.number,
+  type: PropTypes.string,
 };
 
 

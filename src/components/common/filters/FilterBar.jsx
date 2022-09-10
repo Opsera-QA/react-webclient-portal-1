@@ -54,7 +54,7 @@ function FilterBar(
           setFilterModel={setFilterModel}
           isLoading={isLoading}
           supportClientSideSearching={supportClientSideSearching}
-          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
         />
       );
     }
@@ -65,7 +65,7 @@ function FilterBar(
           isLoading={isLoading}
           paginationModel={filterModel}
           loadData={loadData}
-          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
           metadata={metadata}
         />
       );
@@ -78,7 +78,7 @@ function FilterBar(
         filterDto={filterModel}
         setFilterDto={setFilterModel}
         loadData={loadData}
-        className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+        className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
         metadata={metadata}
       />
     );
