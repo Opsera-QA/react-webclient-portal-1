@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import pipelineActions from "components/workflow/pipeline-actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
 import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
-import { dateHelpers } from "components/common/helpers/date/date.helpers";
 
 export default function CreateWorkflowWizardPipelineInitializationScreen(
   {
@@ -44,14 +42,6 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
 
       if (isMongoDbId(newPipeline?._id)) {
         setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-        const createDate = dateHelpers.getNowFormattedDateString();
-        newPipeline.name = `${type} - ${createDate}`;
-        await pipelineActions.updatePipelineV2(
-          getAccessToken,
-          cancelTokenSource,
-          newPipeline?._id,
-          newPipeline,
-          );
         setPipelineFunction({...newPipeline});
       }
     }
