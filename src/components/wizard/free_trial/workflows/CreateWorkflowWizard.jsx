@@ -1,10 +1,11 @@
-import React, {useState, useContext} from "react";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import React, { useState } from "react";
 import CreateSalesforceWorkflowWizard
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import CreateWorkflowWizardFlowSelectionScreen
   from "components/wizard/free_trial/workflows/flows/selection/CreateWorkflowWizardFlowSelectionScreen";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { useHistory } from "react-router-dom";
 
 export const CREATE_WORKFLOW_WIZARD_SCREENS = {
   FLOW_SELECTION_SCREEN: "flow_selection_screen",
@@ -14,13 +15,17 @@ export const CREATE_WORKFLOW_WIZARD_SCREENS = {
 };
 
 export default function CreateWorkflowWizard() {
-  const toastContext = useContext(DialogToastContext);
   const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
   const [buttonContainer, setButtonContainer] = useState(undefined);
+  const history = useHistory();
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   const closeOverlayFunction = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+    history.push(history.location);
   };
 
   const backButtonFunction = () => {
