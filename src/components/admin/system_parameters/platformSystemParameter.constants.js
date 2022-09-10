@@ -20,11 +20,6 @@ platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPE_LABELS = {
   STRING: "String",
 };
 
-platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS = {
-  FREE_TRIAL_WHITELISTED_EMAIL_ADDRESSES: "free-trial-whitelisted-email-addresses",
-  FREE_TRIAL_DAY_LIMIT: "free-trial-day-limit",
-};
-
 platformSystemParameterConstants.isPlatformSystemParameterTypeValid = (type) => {
   return constantsHelper.isValueValid(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES, type);
 };
@@ -54,7 +49,7 @@ platformSystemParameterConstants.getInitialValueForParameterType = (type) => {
   }
 };
 
-platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType = (type) => {
+platformSystemParameterConstants.getSelectOptionForSystemParameterType = (type) => {
   if (platformSystemParameterConstants.isPlatformSystemParameterTypeValid(type) !== true) {
     return null;
   }
@@ -66,10 +61,50 @@ platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType = (t
 };
 
 platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPE_SELECT_OPTIONS = [
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.ARRAY),
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.BOOLEAN),
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.NUMBER),
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.OBJECT),
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.STRING),
-  platformSystemParameterConstants.getSelectOptionForSalesforceJenkinsJobType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.ARRAY),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.BOOLEAN),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.NUMBER),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.OBJECT),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.STRING),
+  platformSystemParameterConstants.getSelectOptionForSystemParameterType(platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES),
+];
+
+
+platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS = {
+  FREE_TRIAL_WHITELISTED_EMAIL_ADDRESSES: "free-trial-whitelisted-email-addresses",
+  FREE_TRIAL_DAY_LIMIT: "free-trial-day-limit",
+};
+
+platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETER_LABELS = {
+  FREE_TRIAL_WHITELISTED_EMAIL_ADDRESSES: "Free Trial Whitelisted Email Addresses",
+  FREE_TRIAL_DAY_LIMIT: "Free Trial Day Limit",
+};
+
+platformSystemParameterConstants.isPlatformSystemParameterNameInUse = (name) => {
+  return constantsHelper.isValueValid(platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS, name);
+};
+
+platformSystemParameterConstants.getLabelForInUseSystemParameterName = (type) => {
+  return constantsHelper.getLabelForValue(
+    platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS,
+    platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETER_LABELS,
+    type,
+  );
+};
+
+
+platformSystemParameterConstants.getSelectOptionForInUseSystemParameterName = (name) => {
+  if (platformSystemParameterConstants.isPlatformSystemParameterNameInUse(name) !== true) {
+    return null;
+  }
+
+  return ({
+    text: platformSystemParameterConstants.getLabelForInUseSystemParameterName(name),
+    value: name,
+  });
+};
+
+platformSystemParameterConstants.IN_USE_PLATFORM_SYSTEM_PARAMETER_SELECT_OPTIONS = [
+  platformSystemParameterConstants.getSelectOptionForInUseSystemParameterName(platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS.FREE_TRIAL_WHITELISTED_EMAIL_ADDRESSES),
+  platformSystemParameterConstants.getSelectOptionForInUseSystemParameterName(platformSystemParameterConstants.IN_USE_SYSTEM_PARAMETERS.FREE_TRIAL_DAY_LIMIT),
 ];

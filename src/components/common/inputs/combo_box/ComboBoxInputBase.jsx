@@ -49,14 +49,14 @@ function ComboBoxInputBase(
     setModel({...newDataObject});
   };
 
-  const updateValue = (newValue) => {
+  const updateValue = (selectedOption) => {
+    const parsedValue = hasStringValue(selectedOption, false) ? selectedOption : selectedOption[valueField];
+
     if (setDataFunction) {
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
-      setDataFunction(fieldName, parsedValue);
+      setDataFunction(fieldName, selectedOption);
     }
     else {
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
-      validateAndSetData(parsedValue);
+      validateAndSetData(fieldName,parsedValue);
     }
   };
 
@@ -132,6 +132,11 @@ ComboBoxInputBase.propTypes = {
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   helpTooltipText: PropTypes.string,
+};
+
+ComboBoxInputBase.defaultProps = {
+  valueField: "value",
+  textField: "text",
 };
 
 export default ComboBoxInputBase;

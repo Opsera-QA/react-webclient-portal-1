@@ -11,6 +11,8 @@ import PlatformSystemParameterTypeSelectInput
   from "components/admin/system_parameters/details/inputs/PlatformSystemParameterTypeSelectInput";
 import PlatformSystemParameterValueInput
   from "components/admin/system_parameters/details/inputs/PlatformSystemParameterValueInput";
+import PlatformSystemParameterComboBoxInput
+  from "components/common/list_of_values_input/platform/system_parameters/PlatformSystemParameterComboBoxInput";
 
 export default function PlatformSystemParameterEditorPanel(
   {
@@ -51,10 +53,10 @@ export default function PlatformSystemParameterEditorPanel(
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase
+          <PlatformSystemParameterComboBoxInput
             fieldName={"name"}
-            dataObject={platformSystemParameterModel}
-            setDataObject={setPlatformSystemParameterModel}
+            model={platformSystemParameterModel}
+            setModel={setPlatformSystemParameterModel}
           />
         </Col>
         <Col lg={6}>
