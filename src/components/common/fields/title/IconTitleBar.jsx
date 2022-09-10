@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { cutOffExcessCharacters, hasStringValue } from "components/common/helpers/string-helpers";
+import {
+  cutOffExcessCharacters,
+  ensureStringFallsMeetsCharacterLimits,
+  hasStringValue,
+} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
 
@@ -20,6 +24,8 @@ export default function IconTitleBar(
     characterLimit,
     className,
   }) {
+  const parsedTitle = ensureStringFallsMeetsCharacterLimits(title, characterLimit);
+
   const getIcon = () => {
     if (hasStringValue(iconString) === true) {
       return (
@@ -101,7 +107,7 @@ export default function IconTitleBar(
         <div className={"d-flex w-100 mt-3"}>
           <div className={titleClassName}>
             <div className={"icon-card-title"}>
-              {cutOffExcessCharacters(title, characterLimit)}
+              {parsedTitle}
             </div>
           </div>
         </div>

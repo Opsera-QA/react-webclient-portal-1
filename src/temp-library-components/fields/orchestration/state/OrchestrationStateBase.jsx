@@ -24,13 +24,13 @@ export default function OrchestrationStateBase(
     <span className={className}>
       <TooltipWrapper innerText={innerText}>
         <div className={"d-flex flex-nowrap"}>
-          <span>{getStatusText()}</span>
           <IconBase
             iconSize={"lg"}
             icon={icon}
             spinIcon={statusText === "Running"}
-            className={`my-auto ml-2 ${colorClassName}`}
+            className={`my-auto mr-1 ${colorClassName}`}
           />
+          <span>{getStatusText()}</span>
         </div>
       </TooltipWrapper>
     </span>

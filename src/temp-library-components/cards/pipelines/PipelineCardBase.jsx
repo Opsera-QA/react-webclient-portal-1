@@ -24,7 +24,7 @@ const getLastRunDetails = (pipelineModel) => {
     return (
       <div className={"d-flex"}>
         <div className={"text-muted m-auto"}>
-          {`This pipeline hasn't been run yet`}
+          {`This pipeline has not been run yet`}
         </div>
       </div>
     );
@@ -54,11 +54,19 @@ const getLastRunDetails = (pipelineModel) => {
 };
 
 const getLastRunEntry = (pipelineModel) => {
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+  const lastRunColor =
+    runCount > 0
+      ? ""
+      : "white";
+
   return (
     <Col xs={12}>
       <div className={"mt-2"}>
         <div className={"d-flex"}>
-          <div className={"mx-auto"}>Last Run</div>
+          <div className={"mx-auto"}>
+            <span style={{color: lastRunColor}}>Last Run</span>
+          </div>
         </div>
         {getLastRunDetails(pipelineModel)}
       </div>

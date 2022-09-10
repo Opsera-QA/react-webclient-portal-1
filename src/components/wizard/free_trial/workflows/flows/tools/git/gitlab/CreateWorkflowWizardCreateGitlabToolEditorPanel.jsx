@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import Col from "react-bootstrap/Col";
@@ -9,8 +9,8 @@ import CreateFreeTrialGitlabToolButton
 import GitlabTwoFactorAuthenticationBooleanToggleInput
   from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CreateSalesforceWorkflowWizardToolInputBase
-  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
+import CreateSalesforceWorkflowWizardSelectToolInputBase
+  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
@@ -28,6 +28,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
     backButtonFunction,
     setButtonContainer,
   }) {
+  const [currentToolCount, setCurrentToolCount] = useState(0);
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -43,11 +44,12 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
             customLabel={"Next"}
             icon={faArrowRight}
             variant={"success"}
+            currentCount={currentToolCount}
           />
         </OverlayWizardButtonContainerBase>
       );
     }
-  }, [gitToolModel]);
+  }, [gitToolModel, currentToolCount]);
 
   const getDynamicFields = () => {
     if (gitToolModel?.getData("twoFactorAuthentication") === true) {
@@ -85,12 +87,13 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
       <Form>
         <Row>
           <Col sm={12}>
-            <CreateSalesforceWorkflowWizardToolInputBase
+            <CreateSalesforceWorkflowWizardSelectToolInputBase
               model={gitToolModel}
               setModel={setGitToolModel}
               toolId={gitToolId}
               setToolId={setGitToolId}
               toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB}
+              setCurrentToolCount={setCurrentToolCount}
             />
           </Col>
           <Col sm={12}>

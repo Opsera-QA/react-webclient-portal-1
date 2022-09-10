@@ -21,7 +21,7 @@ const getLastRunDetails = (taskModel) => {
     return (
       <div className={"d-flex"}>
         <div className={"text-muted m-auto"}>
-          {`This pipeline hasn't been run yet`}
+          {`This pipeline has not been run yet`}
         </div>
       </div>
     );

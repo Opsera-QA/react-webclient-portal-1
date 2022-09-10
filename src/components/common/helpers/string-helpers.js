@@ -91,6 +91,18 @@ export function cutOffExcessCharacters(initialString, characterLimit, postFix = 
   return parsedString;
 }
 
+export function ensureStringFallsMeetsCharacterLimits (initialString, characterLimit, postFix = "...") {
+  const parsedString = DataParsingHelper.parseString(initialString, "");
+  const parsedCharacterCount = DataParsingHelper.parseInteger(characterLimit, 0);
+
+  if (parsedString?.length >= characterLimit) {
+    return cutOffExcessCharacters(initialString, parsedCharacterCount, postFix);
+  } else {
+    const extraCharacters = characterLimit - parsedString.length;
+    return `${parsedString}${" ".repeat(extraCharacters)}`;
+  }
+}
+
 export function camalize (str) {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
 }

@@ -8,7 +8,7 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import InputContainer from "components/common/inputs/InputContainer";
 import ClearDataIcon from "../../../../../common/icons/field/ClearDataIcon";
 
-export default function CreateSalesforceWorkflowWizardToolInputBase(
+export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   {
     toolIdentifier,
     visible,
@@ -20,6 +20,7 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
     valueField,
     toolId,
     setToolId,
+    setCurrentToolCount,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -77,8 +78,13 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
       toolIdentifier,
     );
     const newTools = response?.data?.data;
+    const toolCount = response?.data?.count;
 
     if (isMounted?.current === true && Array.isArray(newTools)) {
+      if (setCurrentToolCount && typeof toolCount === "number"){
+        setCurrentToolCount(toolCount);
+      }
+
       const filteredTools = newTools?.filter((tool) => {
         return tool.configuration != null && Object.entries(tool.configuration).length > 0;
       });
@@ -157,7 +163,7 @@ export default function CreateSalesforceWorkflowWizardToolInputBase(
   );
 }
 
-CreateSalesforceWorkflowWizardToolInputBase.propTypes = {
+CreateSalesforceWorkflowWizardSelectToolInputBase.propTypes = {
   toolIdentifier: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -172,9 +178,10 @@ CreateSalesforceWorkflowWizardToolInputBase.propTypes = {
   filterDataFunction: PropTypes.func,
   toolId: PropTypes.string,
   setToolId: PropTypes.func,
+  setCurrentToolCount: PropTypes.func,
 };
 
-CreateSalesforceWorkflowWizardToolInputBase.defaultProps = {
+CreateSalesforceWorkflowWizardSelectToolInputBase.defaultProps = {
   textField: "name",
   valueField: "_id",
 };

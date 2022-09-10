@@ -7,11 +7,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateFreeTrialSalesforceToolButton
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateFreeTrialSalesforceToolButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import CreateSalesforceWorkflowWizardToolInputBase
-  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardToolInputBase";
+import CreateSalesforceWorkflowWizardSelectToolInputBase
+  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import { useState } from "@types/react";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -25,6 +26,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
     setButtonContainer,
     type,
   }) {
+  const [currentToolCount, setCurrentToolCount] = useState(0);
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -40,11 +42,12 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
             customLabel={"Next"}
             icon={faArrowRight}
             variant={"success"}
+            currentCount={currentToolCount}
           />
         </OverlayWizardButtonContainerBase>
       );
     }
-  }, [salesforceToolModel]);
+  }, [salesforceToolModel, currentToolCount]);
 
   if (salesforceToolModel == null) {
     return null;
@@ -57,12 +60,13 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
       />
       <Row>
         <Col sm={12}>
-          <CreateSalesforceWorkflowWizardToolInputBase
+          <CreateSalesforceWorkflowWizardSelectToolInputBase
             model={salesforceToolModel}
             setModel={setSalesforceToolModel}
             toolId={salesforceToolId}
             setToolId={setSalesforceToolId}
             toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}
+            setCurrentToolCount={setCurrentToolCount}
           />
         </Col>
         <Col sm={12}>
