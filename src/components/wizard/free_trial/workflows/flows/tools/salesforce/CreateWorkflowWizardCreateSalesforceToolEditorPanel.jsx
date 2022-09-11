@@ -13,7 +13,12 @@ import OverlayWizardButtonContainerBase from "temp-library-components/button/ove
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText
   from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import IconTitleBar from "components/common/fields/title/IconTitleBar";
+import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import CreateWorkflowWizardRegisterAccountContainer
+  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -28,6 +33,9 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
     toolType,
   }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
+  const {
+    themeConstants,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -45,7 +53,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
             variant={"success"}
             currentCount={currentToolCount}
           />
-        </OverlayWizardButtonContainerBase>
+        </OverlayWizardButtonContainerBase>,
       );
     }
   }, [salesforceToolModel, currentToolCount]);
@@ -56,71 +64,91 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
 
   return (
     <div className={className}>
-      <CreateWorkflowWizardRegisterToolHeaderText
-        toolType={toolType}
-        toolName={"Salesforce"}
-      />
-      <Row>
-        <Col sm={12}>
-          <CreateSalesforceWorkflowWizardSelectToolInputBase
-            model={salesforceToolModel}
-            setModel={setSalesforceToolModel}
-            toolId={salesforceToolId}
-            setToolId={setSalesforceToolId}
-            toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}
-            setCurrentToolCount={setCurrentToolCount}
+      <CreateWorkflowWizardRegisterAccountContainer>
+        <div>
+          <SelectionIconCardBase
+            selectedOption={"salesforce"}
+            option={"salesforce"}
+            highlightedBorderColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+            titleBar={
+              <IconTitleBar
+                formattedIcon={
+                  getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                }
+                title={`Salesforce`}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
           />
-        </Col>
-        <Col sm={12}>
-          <TextInputBase
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"toolURL"}
-          />
-        </Col>
-        <Col sm={12}>
-          <TextInputBase
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"accountUsername"}
-          />
-        </Col>
-        <Col sm={12}>
-          <VaultTextInput
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"sfdc_client_id"}
-          />
-        </Col>
-        <Col sm={12}>
-          <VaultTextInput
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"sfdc_client_secret"}
-          />
-        </Col>
-        <Col sm={12}>
-          <VaultTextInput
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"sfdc_token"}
-          />
-        </Col>
-        <Col sm={12}>
-          <VaultTextInput
-            dataObject={salesforceToolModel}
-            setDataObject={setSalesforceToolModel}
-            fieldName={"sfdc_password"}
-          />
-        </Col>
-        {/*<Col sm={12}>*/}
-        {/*<SFDCBuildTypeSelectInput*/}
-        {/*  dataObject={salesforceToolModel}*/}
-        {/*  setDataObject={setSalesforceToolModel}*/}
-        {/*  fieldName={"buildType"}*/}
-        {/*/>*/}
-        {/*</Col>*/}
-      </Row>
+        </div>
+        <CreateWorkflowWizardRegisterToolHeaderText
+          toolType={toolType}
+          toolName={"Salesforce"}
+          className={"mt-3"}
+        />
+        <Row>
+          <Col sm={12}>
+            <CreateSalesforceWorkflowWizardSelectToolInputBase
+              model={salesforceToolModel}
+              setModel={setSalesforceToolModel}
+              toolId={salesforceToolId}
+              setToolId={setSalesforceToolId}
+              toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}
+              setCurrentToolCount={setCurrentToolCount}
+            />
+          </Col>
+          <Col sm={12}>
+            <TextInputBase
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"toolURL"}
+            />
+          </Col>
+          <Col sm={12}>
+            <TextInputBase
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"accountUsername"}
+            />
+          </Col>
+          <Col sm={12}>
+            <VaultTextInput
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"sfdc_password"}
+            />
+          </Col>
+          <Col sm={12}>
+            <VaultTextInput
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"sfdc_client_id"}
+            />
+          </Col>
+          <Col sm={12}>
+            <VaultTextInput
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"sfdc_client_secret"}
+            />
+          </Col>
+          <Col sm={12}>
+            <VaultTextInput
+              dataObject={salesforceToolModel}
+              setDataObject={setSalesforceToolModel}
+              fieldName={"sfdc_token"}
+            />
+          </Col>
+          {/*<Col sm={12}>*/}
+          {/*<SFDCBuildTypeSelectInput*/}
+          {/*  dataObject={salesforceToolModel}*/}
+          {/*  setDataObject={setSalesforceToolModel}*/}
+          {/*  fieldName={"buildType"}*/}
+          {/*/>*/}
+          {/*</Col>*/}
+        </Row>
+      </CreateWorkflowWizardRegisterAccountContainer>
     </div>
   );
 }

@@ -13,13 +13,13 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
 }) {
   const onSuccessFunction = () => {
     setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
+        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_DESTINATION_GIT_ACCOUNT_SCREEN,
     );
   };
 
   const onFailureFunction = () => {
     setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
+        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN,
     );
   };
 
@@ -31,7 +31,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTest
       onFailureFunction={onFailureFunction}
       setButtonContainer={setButtonContainer}
       toolName={"Sfdc"}
-      successText={"Continuing to the next screen to finish initializing your new Salesforce Task in a few seconds..."}
+      successText={"Continuing to the next screen to register your Destination Git Account in a few seconds..."}
     />
   );
 }

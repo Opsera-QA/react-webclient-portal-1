@@ -14,13 +14,13 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
 }) {
   const onSuccessFunction = () => {
     setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
+        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
     );
   };
 
   const onFailureFunction = () => {
     setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
+        CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_DESTINATION_GIT_ACCOUNT_SCREEN,
     );
   };
 
@@ -32,7 +32,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
       onSuccessFunction={onSuccessFunction}
       onFailureFunction={onFailureFunction}
       className={"m-3"}
-      successText={"Continuing to the next screen to register your Salesforce Account in a few seconds..."}
+      successText={"Continuing to the next screen to finish initializing your new Salesforce Task in a few seconds..."}
     />
   );
 }

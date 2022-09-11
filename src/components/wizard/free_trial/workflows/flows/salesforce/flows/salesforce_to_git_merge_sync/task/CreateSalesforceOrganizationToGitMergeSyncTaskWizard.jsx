@@ -17,13 +17,16 @@ import CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen
   from "./tools/git/connection/CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen";
 import CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen
   from "./tools/salesforce/connection/CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
+import {
+  CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES
+} from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 
 export const CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS = {
+  REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN: "register_source_salesforce_tool_screen",
+  TEST_SOURCE_SALESFORCE_ACCOUNT_SCREEN: "test_source_salesforce_tool_account_screen",
+  REGISTER_DESTINATION_GIT_ACCOUNT_SCREEN: "register_destination_git_account_screen",
+  TEST_DESTINATION_GIT_ACCOUNT_CONNECTION_SCREEN: "test_destination_git_account_connection_screen",
   INITIALIZATION_SCREEN: "initialization_screen",
-  REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
-  TEST_GIT_TOOL_CONNECTION_SCREEN: "test_git_tool_connection_screen",
-  REGISTER_SALESFORCE_ACCOUNT_SCREEN: "create_source_salesforce_tool_screen",
-  TEST_SALESFORCE_TOOL_CONNECTION_SCREEN: "test_source_salesforce_tool_connection_screen",
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
 };
 
@@ -33,7 +36,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
     backButtonFunction,
     setButtonContainer,
   }) {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN);
   const [task, setTask] = useState(undefined);
   const [gitToolModel, setGitToolModel] = useState(undefined);
   const [gitToolOption, setGitToolOption] = useState(undefined);
@@ -43,49 +46,50 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN:
-        return (
-          <CreateWorkflowWizardCreateGitToolScreenBase
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN)}
-            setGitToolId={setGitToolId}
-            gitToolOption={gitToolOption}
-            setGitToolOption={setGitToolOption}
-            gitToolId={gitToolId}
-            className={"m-3"}
-            backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
-          />
-        );
-      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
-        return (
-          <CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen
-            setCurrentScreen={setCurrentScreen}
-            gitToolId={gitToolId}
-            gitToolOption={gitToolOption}
-            setButtonContainer={setButtonContainer}
-          />
-        );
-      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel
             salesforceToolModel={sourceSalesforceToolModel}
             setSalesforceToolModel={setSourceSalesforceToolModel}
             salesforceToolId={salesforceSourceToolId}
             setSalesforceToolId={setSalesforceSourceToolId}
-            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SALESFORCE_TOOL_CONNECTION_SCREEN)}
-            type={"source"}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_SCREEN)}
+            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
             className={"m-3"}
-            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN)}
+            backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SALESFORCE_TOOL_CONNECTION_SCREEN:
+      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_SCREEN:
         return (
           <CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceSourceToolId}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_DESTINATION_GIT_ACCOUNT_SCREEN:
+        return (
+          <CreateWorkflowWizardCreateGitToolScreenBase
+            gitToolModel={gitToolModel}
+            setGitToolModel={setGitToolModel}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_DESTINATION_GIT_ACCOUNT_CONNECTION_SCREEN)}
+            setGitToolId={setGitToolId}
+            gitToolOption={gitToolOption}
+            setGitToolOption={setGitToolOption}
+            gitToolId={gitToolId}
+            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.DESTINATION}
+            className={"m-3"}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN)}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TEST_DESTINATION_GIT_ACCOUNT_CONNECTION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen
+            setCurrentScreen={setCurrentScreen}
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
             setButtonContainer={setButtonContainer}
           />
         );

@@ -6,9 +6,9 @@ import CreateWorkflowWizardCreateGithubToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
 import CreateWorkflowWizardCreateGitlabToolEditorPanel
   from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import CreateWorkflowWizardRegisterAccountContainer
+  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
@@ -73,13 +73,9 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
         setGitToolModel={setGitToolModel}
         setGitToolId={setGitToolId}
       />
-      <Row>
-        <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-        <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-          {getEditorPanel()}
-        </Col>
-        <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-      </Row>
+      <CreateWorkflowWizardRegisterAccountContainer>
+        {getEditorPanel()}
+      </CreateWorkflowWizardRegisterAccountContainer>
     </div>
   );
 }

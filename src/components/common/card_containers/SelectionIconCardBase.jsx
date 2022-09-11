@@ -45,7 +45,7 @@ export default function SelectionIconCardBase(
   };
 
   const handleOnClickFunction = () => {
-    if (disabled !== true) {
+    if (disabled !== true && onClickFunction) {
       onClickFunction(option);
     }
   };

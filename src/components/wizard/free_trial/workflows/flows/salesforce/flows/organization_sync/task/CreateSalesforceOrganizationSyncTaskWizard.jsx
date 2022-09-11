@@ -20,9 +20,6 @@ import {
 import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import {
-  CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES
-} from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -83,7 +80,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard(
             salesforceToolId={salesforceSourceToolId}
             setSalesforceToolId={setSalesforceSourceToolId}
             onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN)}
-            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
             backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN)}

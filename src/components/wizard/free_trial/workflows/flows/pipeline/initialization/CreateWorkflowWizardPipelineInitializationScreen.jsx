@@ -63,6 +63,16 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
     );
   };
 
+  const getBody = () => {
+    if (status === buttonLabelHelper.BUTTON_STATES.BUSY) {
+      return (
+        <CenterLoadingIndicator
+          customMessage={getLabel()}
+        />
+      );
+    }
+  };
+
   if (setPipelineFunction == null) {
     return null;
   }
