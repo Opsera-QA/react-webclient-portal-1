@@ -89,7 +89,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
     <div className={className}>
       <CreateWorkflowWizardRegisterToolHeaderText
         toolType={toolType}
-        className={"mt-4"}
+        className={"mt-3"}
         toolName={"Gitlab"}
       />
       <Form>

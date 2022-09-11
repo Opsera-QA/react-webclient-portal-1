@@ -16,7 +16,6 @@ import OverlayWizardButtonContainerBase from "temp-library-components/button/ove
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText
   from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {
@@ -88,7 +87,7 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
     <div className={className}>
       <CreateWorkflowWizardRegisterToolHeaderText
         toolType={toolType}
-        className={"mt-4"}
+        className={"mt-3"}
         toolName={"Github"}
       />
       <Form>

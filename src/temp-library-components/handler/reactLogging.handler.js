@@ -1,17 +1,19 @@
 import ErrorParsingHelper from "@opsera/persephone/helpers/error/errorParsing.helper";
 
 export const ReactLoggingHandler = {};
+const LOG_ORIGIN_METADATA = false;
 
 ReactLoggingHandler.logApiErrorMessage = (
   originComponentName,
   functionName,
   error,
+  prependedMessage = "API Response Error:",
   defaultErrorMessage,
   ) => {
   return ReactLoggingHandler.logErrorMessage(
     originComponentName,
     functionName,
-    "API Response Error:",
+    prependedMessage,
     error,
     defaultErrorMessage,
   );
@@ -24,8 +26,9 @@ ReactLoggingHandler.logErrorMessage = (
   error,
   defaultErrorMessage
 ) => {
+  const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
   const parsedError = ErrorParsingHelper.parseAndSanitizeErrorMessage(error, defaultErrorMessage);
-  const constructedError = `[${originComponentName}.${functionName}] ${prependedMessage}:\n ${parsedError}`;
+  const constructedError = `${originText}${prependedMessage}:\n ${parsedError}`;
   console.error(constructedError);
 
   return parsedError;
@@ -36,7 +39,8 @@ ReactLoggingHandler.logInfoMessage = (
   functionName,
   infoMessage,
 ) => {
-  console.info(`[${originComponentName}.${functionName}] ${String(infoMessage)}`);
+  const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
+  console.info(`${originText}${String(infoMessage)}`);
 };
 
 ReactLoggingHandler.logDebugMessage = (
@@ -44,7 +48,8 @@ ReactLoggingHandler.logDebugMessage = (
   functionName,
   debugMessage,
 ) => {
-  console.debug(`[${originComponentName}.${functionName}] ${String(debugMessage)}`);
+  const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
+  console.debug(`${originText}${String(debugMessage)}`);
 };
 
 ReactLoggingHandler.logWarningMessage = (
@@ -52,5 +57,6 @@ ReactLoggingHandler.logWarningMessage = (
   functionName,
   warningMessage,
 ) => {
-  console.debug(`[${originComponentName}.${functionName}] ${String(warningMessage)}`);
+  const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
+  console.debug(`${originText}${String(warningMessage)}`);
 };
