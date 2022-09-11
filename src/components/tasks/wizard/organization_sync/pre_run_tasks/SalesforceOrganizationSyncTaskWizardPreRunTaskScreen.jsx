@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import jenkinsPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/jenkinsPipelineStepConfigurationMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SalesforcePipelineWizardBranchSelectInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBranchSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import SalesforcePipelineWizardConfirmRepositorySettingsButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardConfirmRepositorySettingsButton";
 import salesforceOrganizationSyncTaskConfigurationMetadata
   from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput

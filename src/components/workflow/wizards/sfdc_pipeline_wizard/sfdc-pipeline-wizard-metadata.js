@@ -88,7 +88,7 @@ const sfdcPipelineWizardMetadata = {
       id: "unitTestSteps",
     },
     {
-      label: "Git Task ID",
+      label: "Task ID",
       id: "gitTaskId",
     },
     {

@@ -17,7 +17,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
   };
 
   const onFailureFunction = () => {
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.CREATE_DESTINATION_SALESFORCE_TOOL_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_DESTINATION_SALESFORCE_ACCOUNT_SCREEN);
   };
 
   return (

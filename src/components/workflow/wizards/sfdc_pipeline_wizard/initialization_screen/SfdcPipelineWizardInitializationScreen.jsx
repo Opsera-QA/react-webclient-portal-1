@@ -20,9 +20,8 @@ import SfdcPipelineWizardFileUploadComponent
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import toolsActions from "components/inventory/tools/tools-actions";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function SfdcPipelineWizardInitializationScreen(
   {
@@ -91,11 +90,10 @@ export default function SfdcPipelineWizardInitializationScreen(
     const gitTaskId = task?._id;
 
     if (isMongoDbId(gitTaskId) !== true) {
-      setError("Could not find Git Task");
+      setError("Could not find Task");
     }
 
-    const configuration = dataParsingHelper.parseObject(task?.configuration);
-    // This wont work for merge synch tasks,how do we handle this?
+    const configuration = DataParsingHelper.parseObject(task?.configuration, {});
     const sfdcToolId = configuration?.sfdcToolId;
 
     if (isMongoDbId(sfdcToolId) !== true) {
@@ -150,11 +148,15 @@ export default function SfdcPipelineWizardInitializationScreen(
       setError("Could not find Pipeline");
     }
 
-    if (stepId == null || sfdcToolId == null) {
+    if (stepId == null) {
       setError(`
         Could not find Salesforce Jenkins step needed to run the Pipeline Wizard. 
         Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.
       `);
+    }
+
+    if (isMongoDbId(sfdcToolId) !== true) {
+      setError("No Salesforce Account is associated with this Pipeline");
     }
 
     if (runCount != null) {
