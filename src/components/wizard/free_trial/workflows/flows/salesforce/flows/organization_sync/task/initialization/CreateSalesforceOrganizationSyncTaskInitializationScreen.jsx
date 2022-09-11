@@ -9,7 +9,7 @@ import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
-import { taskHelper } from "components/tasks/task.helper";
+import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
 
 export default function CreateSalesforceOrganizationSyncTaskInitializationScreen(
   {
@@ -22,7 +22,7 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     setButtonContainer,
   }) {
   const setTaskFunction = (task) => {
-    const updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
+    const updatedTask = SalesforceTaskHelper.configureSalesforceOrganizationSyncTask(
       task,
       flow,
       salesforceToolId,

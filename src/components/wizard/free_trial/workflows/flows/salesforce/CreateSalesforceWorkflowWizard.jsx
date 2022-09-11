@@ -7,7 +7,9 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { OVERLAY_PANEL_MIN_HEIGHT } from "components/common/overlays/center/CenterOverlayContainer";
+import {
+  OVERLAY_PANEL_MIN_HEIGHT_MINUS_TITLE,
+} from "components/common/overlays/center/CenterOverlayContainer";
 import FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
   from "components/wizard/free_trial/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
 import FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
@@ -159,7 +161,7 @@ export default function CreateSalesforceWorkflowWizard(
   if (isLoading === true) {
     return (
       <CenterLoadingIndicator
-        minHeight={OVERLAY_PANEL_MIN_HEIGHT}
+        minHeight={OVERLAY_PANEL_MIN_HEIGHT_MINUS_TITLE}
         customMessage={"Initializing Workflow Options"}
       />
     );

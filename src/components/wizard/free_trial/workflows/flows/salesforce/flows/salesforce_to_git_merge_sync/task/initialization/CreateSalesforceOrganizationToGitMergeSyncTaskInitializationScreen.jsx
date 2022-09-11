@@ -11,7 +11,7 @@ import {
 import {
   CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS
 } from "../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
-import { taskHelper } from "components/tasks/task.helper";
+import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
 
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen(
   {
@@ -25,7 +25,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
   }) {
 
   const setTaskFunction = (task) => {
-    const updatedTask = taskHelper.configureSalesforceOrganizationSyncTask(
+    const updatedTask = SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask(
       task,
       flow,
       salesforceToolId,
