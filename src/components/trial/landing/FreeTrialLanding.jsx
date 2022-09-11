@@ -22,12 +22,12 @@ export default function FreeTrialLanding() {
       */}
         <div className={"my-3"}>
           <Row>
-            <Col xs={12} sm={12} md={12} lg={6} className={"my-3"}>
+            <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
               <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
               <WelcomeWidget
               />
             </Col>
-            <Col xs={12} sm={12} md={12} lg={6} className={"my-3"}>
+            <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
               <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
               {/*<AccountStatusWidget*/}
               {/*/>*/}

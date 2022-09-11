@@ -165,15 +165,26 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
     const pipelineText = getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines");
     const taskText = getSingularOrPluralString(taskCount, "Task", "Tasks");
 
+
+    const pipelineRunCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalRunCount, 0);
+    const taskRunCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalRunCount, 0);
+    const totalRunCount = pipelineRunCount + taskRunCount;
+    const runText = getSingularOrPluralString(totalRunCount, "Run", "Runs");
+
     return (
       <div>
-        <div>You have</div>
-        <div className={"ml-4 my-2"}>
+        <div style={{fontSize: "smaller"}}>
+          You have
+        </div>
+        <div className={"mt-1 mb-1"}>
           <div><b>{totalCount}</b> Total Workflows</div>
           <div><b>{pipelineCount}</b> {pipelineText}</div>
           <div><b>{taskCount}</b> {taskText}</div>
+          <div>with <b>{totalRunCount}</b> Completed {runText}</div>
         </div>
-        <div>Workflows are {getWorkflowHealthText()}</div>
+        <div style={{fontSize: "smaller"}}>
+          Workflows are {getWorkflowHealthText()}
+        </div>
       </div>
     );
   };
@@ -226,7 +237,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
 
     if (totalRunCount === 1) {
       return (
-        <div className={"marketingModulesTextLarger mr-3 ml-auto mt-1"}>
+        <div className={"marketingModulesTextLarger mr-3 ml-auto"}>
           <span>
             There has been
             <span className={"marketingModulesValueText"}>
@@ -240,7 +251,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
 
     if (totalRunCount > 0) {
       return (
-        <div className={"marketingModulesTextLarger mr-3 ml-auto mt-1"}>
+        <div className={"marketingModulesTextLarger mr-3 ml-auto"}>
           <span>
             There have been
             <span className={"marketingModulesValueText"}>
@@ -253,19 +264,41 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
     }
   };
 
+  const getEmailLink = () => {
+    return (
+      <div className={"d-flex"}>
+        <div
+          className={"ml-auto"}
+          style={{
+            fontSize: "smaller",
+          }}
+        >
+          For assistance, email
+          <a
+            href={"mailto:support@opsera.io"}
+            className={"marketingModulesTextLink ml-2"}
+          >
+            support@opsera.io
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   const getExpirationDate = () => {
     const expiration = DataParsingHelper.parseDate(accountMetrics?.expiration);
 
     if (!expiration) {
       return (
-        <div className={"d-flex justify-content-end position-absolute w-100 fixed-bottom"}>
-          <div
-            className={"marketingModulesText p-3 mx-3"}
-            style={{
-              fontSize: "smaller",
-            }}
-          >
-            Your free trial does not expire.
+        <div className={"d-flex"}>
+          <div className={"ml-auto mt-auto"}>
+            <div
+              style={{
+                fontSize: "smaller",
+              }}
+            >
+              Your free trial does not expire.
+            </div>
           </div>
         </div>
       );
@@ -274,20 +307,15 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
     const parsedDate = expiration.toISOString().substring(0, 10);
 
     return (
-      <div className={"d-flex justify-content-end position-absolute w-100 fixed-bottom"}>
-        <div
-          className={"p-3 mx-3"}
-          style={{
-            fontSize: "smaller",
-          }}
-        >
-          Your free trial will expire on {parsedDate}. For assistance, email
-          <a
-            href={"mailto:support@opsera.io"}
-            className={"marketingModulesTextLink ml-2"}
+      <div className={"d-flex"}>
+        <div className={"ml-auto mt-auto"}>
+          <div
+            style={{
+              fontSize: "smaller",
+            }}
           >
-            support@opsera.io
-          </a>
+            Your free trial will expire on {parsedDate}.
+          </div>
         </div>
       </div>
     );
@@ -303,26 +331,30 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
     return (
       <>
         <div className={"d-flex"}>
-          <div className={"mr-2"}>
-            <OpseraInfinityLogoLarge
-              scale={.3}
-              className={"mt-3"}
-            />
+          <div>
+            <div className={"d-flex"}>
+              <div className={" ml-auto"}>
+                <OpseraInfinityLogoLarge
+                  scale={.29}
+                  className={"mt-3"}
+                  flipHorizontally={true}
+                />
+              </div>
+            </div>
+            <div className={"mx-3 mt-3"}>
+              {getExpirationDate()}
+              {getEmailLink()}
+            </div>
           </div>
-          <div className={"mt-3 mr-3"}>
+          <div className={"m-3"}>
             <div className={"marketingModulesTextLarger"}>
               {getItemCounts()}
             </div>
-            <div className={"mt-2"}>
+            <div className={"my-2"}>
               {getWorkflowHealthStatus()}
             </div>
-            {getExpirationDate()}
           </div>
         </div>
-        <div className={"d-flex"}>
-          {getTotalRunCount()}
-        </div>
-        {getExpirationDate()}
       </>
     );
   };
