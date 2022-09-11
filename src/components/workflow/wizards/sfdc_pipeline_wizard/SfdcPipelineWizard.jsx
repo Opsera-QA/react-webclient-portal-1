@@ -242,7 +242,7 @@ export default function SfdcPipelineWizard(
 
   if (pipelineWizardModel == null) {
     return (
-      <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
+      <LoadingDialog message={"Initializing Salesforce Pipeline Wizard"} size={"sm"} />
     );
   }
 

@@ -7,8 +7,6 @@ import jenkinsPipelineStepConfigurationMetadata
 import modelHelpers from "components/common/model/modelHelpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import Row from "react-bootstrap/Row";
-import SalesforcePipelineWizardBitbucketWorkspaceSelectInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBitbucketWorkspaceSelectInput";
 import Col from "react-bootstrap/Col";
 import SalesforcePipelineWizardRepositorySelectInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardRepositorySelectInput";
@@ -20,7 +18,7 @@ import SalesforcePipelineWizardConfirmRepositorySettingsButton
 import InlineErrorText from "components/common/status_notifications/inline/InlineErrorText";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import OpseraInfinityLogo from "../../../../logo/OpseraInfinityLogo";
-import OpseraInfinityLogoLarge from "../../../../logo/OpseraInfinityLogoLarge";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function SalesforcePipelineWizardPreRunTaskScreen(
   {
@@ -64,29 +62,29 @@ export default function SalesforcePipelineWizardPreRunTaskScreen(
     );
   }
 
-  const welcomeText = () => {
+  const getWelcomeText = () => {
     return (
-      <div className={"my-3"}>
-        <div className={"d-flex"}>
+      <div className={"mt-3 mb-4"}>
+        <CenteredContentWrapper>
           <div className={"mx-auto"}>
             <OpseraInfinityLogo />
           </div>
-        </div>
-        <div className={"d-flex"}>
+        </CenteredContentWrapper>
+        <CenteredContentWrapper>
           <div className={"mx-auto mt-3"}>
-            <span className={"focusText"}>Welcome to the Start Pipeline Wizard. Please complete these steps in order to start your pipeline.</span>
+            <div className={"focusText"}>Welcome to the Start Pipeline Wizard! Please complete these steps in order to start your Pipeline.</div>
           </div>
-        </div>
+        </CenteredContentWrapper>
       </div>
     );
   };
 
   return (
     <div className={className}>
+      {getWelcomeText()}
       <H5FieldSubHeader
         subheaderText={"Salesforce Pipeline Run: Pre Run Tasks"}
       />
-        {welcomeText()}
       <div>Please select the repository and branch you wish to use during for this Salesforce workflow</div>
       <Row>
         {/*<Col xs={12}>*/}

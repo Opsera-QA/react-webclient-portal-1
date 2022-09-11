@@ -53,7 +53,7 @@ export default function SalesforceToGitMergeSyncTaskWizardConfirmRepositorySetti
 
   const getButtonVariant = () => {
     return buttonLabelHelper.getVariantForState(
-      "primary",
+      "success",
       buttonState,
     );
   };

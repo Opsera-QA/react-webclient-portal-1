@@ -22,6 +22,8 @@ import SalesforceOrganizationSyncTaskGitBranchTextInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 
 export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   {
@@ -67,12 +69,30 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
     }
   };
 
+  const getWelcomeText = () => {
+    return (
+      <div className={"mt-3 mb-4"}>
+        <CenteredContentWrapper>
+          <div className={"mx-auto"}>
+            <OpseraInfinityLogo />
+          </div>
+        </CenteredContentWrapper>
+        <CenteredContentWrapper>
+          <div className={"mx-auto mt-3"}>
+            <div className={"focusText"}>Welcome to the Start Task Wizard! Please complete these steps in order to start your Task.</div>
+          </div>
+        </CenteredContentWrapper>
+      </div>
+    );
+  };
+
   if (taskModel == null || taskConfigurationModel == null) {
     return null;
   }
 
   return (
     <div className={className}>
+      {getWelcomeText()}
       <H5FieldSubHeader
         subheaderText={"Salesforce Task Run: Pre Run Tasks"}
       />

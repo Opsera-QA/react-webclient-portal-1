@@ -220,7 +220,7 @@ function DashboardScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y" style={{ overflowX: "hidden" }}>
+    <div className="max-content-width max-content-height scroll-y" style={{ overflowX: "hidden" }}>
       <div className="mb-3">
         {<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       </div>

@@ -22,6 +22,8 @@ import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 
 export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
@@ -76,12 +78,30 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     );
   };
 
+  const getWelcomeText = () => {
+    return (
+      <div className={"mt-3 mb-4"}>
+        <CenteredContentWrapper>
+          <div className={"mx-auto"}>
+            <OpseraInfinityLogo />
+          </div>
+        </CenteredContentWrapper>
+        <CenteredContentWrapper>
+          <div className={"mx-auto mt-3"}>
+            <div className={"focusText"}>Welcome to the Start Task Wizard! Please complete these steps in order to start your Task.</div>
+          </div>
+        </CenteredContentWrapper>
+      </div>
+    );
+  };
+
   if (taskModel == null || gitConfigurationModel == null) {
     return null;
   }
 
   return (
     <div className={className}>
+      {getWelcomeText()}
       <H5FieldSubHeader
         subheaderText={"Salesforce to Git Merge Sync Task Run: Pre Run Tasks"}
       />

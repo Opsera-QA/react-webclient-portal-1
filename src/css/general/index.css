@@ -344,7 +344,6 @@ a:hover, .active, .link-text:hover {
 
 .border-bottom {
     border-width: 2px;
-    border-bottom-width: 2px;
     border-bottom-color: #343a40;
     border-bottom-style: solid;
 }

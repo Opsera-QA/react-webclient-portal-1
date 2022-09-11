@@ -49,7 +49,7 @@ export default function SalesforcePipelineWizardConfirmRepositorySettingsButton(
 
   const getButtonVariant = () => {
     return buttonLabelHelper.getVariantForState(
-      "primary",
+      "success",
       buttonState,
     );
   };

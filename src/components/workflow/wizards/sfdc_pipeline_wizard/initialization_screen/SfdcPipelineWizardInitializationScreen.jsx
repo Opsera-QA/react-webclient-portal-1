@@ -358,7 +358,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <div>
         <div className={"mt-2"}>
-          {`Would you like to start a new SFDC Pipeline Run Wizard Instance?`}
+          {`Would you like to start a new Salesforce Pipeline Run Wizard Instance?`}
         </div>
         {pipelineWizardModel.getData("isProfiles") === true ? 
           <SaveButtonContainer>
