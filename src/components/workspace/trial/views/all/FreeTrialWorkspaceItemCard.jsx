@@ -48,7 +48,6 @@ export default function FreeTrialWorkspaceItemCard({ toolData, isLoading, loadTo
       titleBar={getTitleBar()}
       contentBody={getDescription()}
       isLoading={isLoading}
-      className={"vertical-selection-card"}
     >
       <div className="date-and-button">
         <div className="small pl-1">
