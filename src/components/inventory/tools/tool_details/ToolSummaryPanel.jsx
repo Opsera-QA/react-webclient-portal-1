@@ -9,8 +9,6 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
-import ToolConnectionSummaryContainer
-  from "components/inventory/tools/details/connection/ToolConnectionSummaryContainer";
 import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
@@ -63,14 +61,14 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <ToolVaultField model={toolData} fieldName={"vault"} />
         </Col>
+        <Col lg={12} sm={12}>
+          <TextFieldBase dataObject={toolData} fieldName={"description"} />
+        </Col>
         <Col xs={12}>
           <ToolConfigurationSummaryPanel
             toolIdentifier={toolData?.getData("tool_identifier")}
             toolConfiguration={toolData.getData("configuration")}
           />
-        </Col>
-        <Col lg={12} sm={12}>
-          <TextFieldBase dataObject={toolData} fieldName={"description"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
