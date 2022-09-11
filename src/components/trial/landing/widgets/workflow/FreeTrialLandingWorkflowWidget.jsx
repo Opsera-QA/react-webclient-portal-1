@@ -120,7 +120,11 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
         <>
           <FreeTrialWidgetDataBlockBase
             heightSize={5}
-            title={"Workflows"}
+            title={
+              isLoading === true
+                ? "Loading Registered Workflows"
+                : `${workspaceItems.length} Registered Workflows`
+            }
             isLoading={isLoading}
             rightSideTitleBarItems={getNewButton()}
           >
