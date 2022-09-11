@@ -81,7 +81,7 @@ export default function IconTitleBar(
       return (
         <div
           style={{
-            fontSize: "13px",
+            fontSize: "16px",
           }}
         >
           <div

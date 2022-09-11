@@ -1,8 +1,7 @@
 .marketingModulesText {
     font-family: 'Inter', sans-serif !important;
     font-weight: 100;
-    letter-spacing: 1.3px;
-    line-height: 1.5;
+    letter-spacing: .075rem;
     color: #000;
 }
 
@@ -10,6 +9,10 @@
     color: #0d4183;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.marketingModulesTextLink:hover {
+    color: #2e1956;
 }
 
 .marketingModulesTextLarger {
@@ -24,7 +27,6 @@
 .focusText {
     font-family: 'Inter', sans-serif !important;
     font-weight: 500;
-    line-height: 1.2;
     color: #7f8d93;
     font-size: 1.1rem;
 }
@@ -36,8 +38,4 @@
 
 .wizard-selection-option:hover .wizard-font {
     color: #FFF !important;
-}
-
-.iconTitleBarSubTitleText {
-    font-size: larger;
 }

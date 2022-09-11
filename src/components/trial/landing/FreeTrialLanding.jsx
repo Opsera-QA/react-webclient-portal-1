@@ -6,6 +6,7 @@ import AccountStatusWidget from "components/trial/landing/widgets/AccountStatusW
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
+import FreeTrialLandingAccountStatsWidget from "components/trial/landing/widgets/FreeTrialLandingAccountStatsWidget";
 
 export default function FreeTrialLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"home"} />);
@@ -24,13 +25,13 @@ export default function FreeTrialLanding() {
             <Col xs={12} sm={12} md={12} lg={6} className={"my-3"}>
               <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
               <WelcomeWidget
-                className={"h-100"}
               />
             </Col>
             <Col xs={12} sm={12} md={12} lg={6} className={"my-3"}>
               <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
-              <AccountStatusWidget
-                className={"h-100"}
+              {/*<AccountStatusWidget*/}
+              {/*/>*/}
+              <FreeTrialLandingAccountStatsWidget
               />
             </Col>
           </Row>

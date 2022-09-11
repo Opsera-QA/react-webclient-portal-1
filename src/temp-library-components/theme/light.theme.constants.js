@@ -4,6 +4,7 @@ export const lightThemeConstants = {};
 lightThemeConstants.COLOR_PALETTE = {
   WHITE: "#FFFFFF",
   RED: "#FF0000",
+  DANGER_SECONDARY: "#FFAAAA",
 
   // Blue
   SALESFORCE_BLUE: "#1798c1",

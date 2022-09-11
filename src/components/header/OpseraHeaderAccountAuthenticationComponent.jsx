@@ -93,7 +93,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         }}
       >
         {getUserIconTitle()}
-        <span className={"d-none d-lg-inline mx-1"}>{fullUserName}</span>
+        <span className={"d-none d-lg-inline ml-2 mr-1"}>{fullUserName}</span>
       </span>
     );
   };

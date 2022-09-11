@@ -2,10 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faMessageExclamation } from "@fortawesome/pro-light-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import IconBase from "../../../common/icons/IconBase";
+import IconBase from "components/common/icons/IconBase";
 
 const EXTERNAL_LINKS = {
   HOW_TO_VIDEO: 'https://www.youtube.com/embed/vT6XXPbZBuo'
@@ -30,39 +29,15 @@ export default function WelcomeWidget({ className }) {
 
   const getHowToLinks = () => {
     return (
-      <div className={"marketingModulesText marketingModulesTextLink"}>
-        <div className={"my-2"}>How to Link Here</div>
-        <div className={"my-2"}>More how to Links Here</div>
-        <div className={"my-2"}>Even more how to Links Here</div>
+      <div>
+        <div className={"my-2 marketingModulesTextLink"}>How to Link Here</div>
+        <div className={"my-2 marketingModulesTextLink"}>More how to Links Here</div>
+        <div className={"my-2 marketingModulesTextLink"}>Even more how to Links Here</div>
       </div>
     );
   };
 
-  //For wider screens return the video as a thumbnail
-  const getVideo = () => {
-    return (
-      <div
-        className={"ml-3"}
-        style={{
-          border: `1px solid ${themeConstants.BORDER_COLORS.GRAY}`,
-          width: "250px",
-          height: "220px",
-          backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
-          borderRadius: "10px",
-          color: themeConstants.COLOR_PALETTE.TEXT_GRAY,
-        }}
-      >
-        <div className={"d-flex h-100 w-100"}>
-          <div className={"m-auto"}>
-            TODO: Add video
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  //For wider screens return the video as a thumbnail
-  const getVideoThumb = () => {
+  const getVideoThumbnail = () => {
     return (
       <div
         className={"ml-3"}
@@ -87,17 +62,13 @@ export default function WelcomeWidget({ className }) {
     );
   };
 
-
-  //for narrow screens return just a link
   const getVideoLink = () => {
-
     const handleClick = (url) => e => {
-      //window.location.href = url;
       window.open(url, '_blank');
     };
 
       return (
-      <div className={"marketingModulesText pointer"}
+      <div className={"pointer"}
         onClick={handleClick(EXTERNAL_LINKS.HOW_TO_VIDEO)}>
         <IconBase
           icon={faYoutube}
@@ -111,35 +82,30 @@ export default function WelcomeWidget({ className }) {
   };
 
   return (
-    <div className={className}>
-      <FreeTrialWidgetDataBlockBase
-        title={getWelcomeText()}
-        className={className}
-        /*titleIcon={faMessageExclamation}*/
-        fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
-        // fontFamily={fontThemeConstants.FONT_FAMILIES.INTER}
-        heightSize={6}
-      >
-        <div className={"p-3"}>
-          <div className={"d-flex"}>
-            <div>
-              <div className={"marketingModulesText"} style={{marginBottom: "20px"}}>
-                Get insights to help make the right decisions.
-                Watch the video on how to customise your dashboard
-              </div>
-              {getHowToLinks()}
+    <FreeTrialWidgetDataBlockBase
+      title={getWelcomeText()}
+      className={className}
+      fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
+      heightSize={6}
+    >
+      <div className={"p-3 marketingModulesText"}>
+        <div className={"d-flex"}>
+          <div>
+            <div className={"mb-3"}>
+              Get insights to help make the right decisions.
+              Watch the video on how to customise your dashboard
             </div>
-            <div className={"d-none d-xl-inline"}>
-              {getVideoThumb()}
-            </div>
+            {getHowToLinks()}
           </div>
-
-          <div className={"d-inline d-xl-none"}>
-            {getVideoLink()}
+          <div className={"d-none d-xl-inline"}>
+            {getVideoThumbnail()}
           </div>
         </div>
-      </FreeTrialWidgetDataBlockBase>
-    </div>
+        <div className={"d-inline d-xl-none"}>
+          {getVideoLink()}
+        </div>
+      </div>
+    </FreeTrialWidgetDataBlockBase>
   );
 }
 
