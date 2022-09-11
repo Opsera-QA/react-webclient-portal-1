@@ -194,7 +194,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             awsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, awsConnectionMetadata)}
           />
         );
-      case "sfdc-configurator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
         return (
           <SfdcToolConfigurationSummaryPanel
             sfdcToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sfdcConnectionMetadata)}

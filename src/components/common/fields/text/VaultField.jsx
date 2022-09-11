@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function VaultField({dataObject, fieldName, className}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   const isStoredInVault = () => {
     let currentValue = dataObject.getData(fieldName);
@@ -16,6 +20,10 @@ function VaultField({dataObject, fieldName, className}) {
       return <span>This credential is securely stored in the vault.</span>;
     }
   };
+
+  if (field == null || isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>
