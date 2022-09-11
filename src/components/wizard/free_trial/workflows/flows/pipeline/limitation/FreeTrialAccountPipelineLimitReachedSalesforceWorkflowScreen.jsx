@@ -124,13 +124,13 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
         <div className={"d-flex m-3"}>
           <h5><IconBase icon={faWarning} className={"mr-2"} /></h5>
           <H5FieldSubHeader
-            className={"mb-3"}
+            className={"mb-2"}
             subheaderText={`You have registered ${currentCount} out of the allowed ${allowedCount} ${pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIER_LABELS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE} Pipelines.`}
           />
         </div>
       </CenteredContentWrapper>
       <CenteredContentWrapper>
-        <div>You may select and run an existing Pipeline or delete one to add another.</div>
+        <div className={"mb-3 focusText"}>You may select and run an existing Pipeline or delete one to add another</div>
       </CenteredContentWrapper>
       <div>
         <FreeTrialWorkflowItemSelectionCardView

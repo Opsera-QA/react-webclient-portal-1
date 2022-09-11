@@ -143,6 +143,10 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
 
   // TODO: When we add support for more tools we might need to make a function that will pull account name based on identifier
   const getTextField = (tool) => {
+    if (isLoading === true) {
+      return "Searching for Registered Accounts";
+    }
+
     const toolName = tool?.name;
     const accountName = tool?.configuration?.accountUsername;
 

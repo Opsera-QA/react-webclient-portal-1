@@ -122,13 +122,13 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
         <div className={"d-flex m-3"}>
           <h5><IconBase icon={faWarning} className={"mr-2"} /></h5>
           <H5FieldSubHeader
-            className={"mb-3"}
+            className={"mb-2"}
             subheaderText={`You have registered ${currentCount} out of the allowed ${allowedCount} ${taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(selectedFlow)} Tasks.`}
           />
         </div>
       </CenteredContentWrapper>
       <CenteredContentWrapper>
-        <div>You may select and run an existing Task or delete one to add another.</div>
+        <div className={"mb-3 focusText"}>You may select and run an existing Task or delete one to add another</div>
       </CenteredContentWrapper>
       <div>
         <FreeTrialWorkflowItemSelectionCardView
