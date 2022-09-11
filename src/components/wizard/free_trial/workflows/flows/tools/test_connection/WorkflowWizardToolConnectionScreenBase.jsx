@@ -16,6 +16,9 @@ export default function WorkflowWizardToolConnectionScreenBase(
     onFailureFunction,
     setButtonContainer,
     className,
+    title,
+    successText,
+    failureText,
   }) {
   const [currentState, setCurrentState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const [logs, setLogs] = useState([]);
@@ -58,11 +61,11 @@ export default function WorkflowWizardToolConnectionScreenBase(
         const status = response?.status;
 
         newLogs.push(
-          "Connection Succeeded!\n",
+          `${title} Succeeded!\n`,
           `Status: ${status}\n`,
           `Message: ${message}\n`,
           `Test Complete.\n`,
-          `Continuing to next screen in a few seconds\n`,
+          successText,
         );
 
         setLogs([...newLogs]);
@@ -74,11 +77,11 @@ export default function WorkflowWizardToolConnectionScreenBase(
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
         newLogs.push(
-          `Connection Failed!\n`,
+          `${title} Failed!\n`,
           `Error: ${parsedError}\n`,
           `Test Complete.\n`,
           `Please confirm your credentials and try again.\n`,
-          `Returning to credential entry in a few seconds\n`,
+          `${failureText}`,
         );
 
         setLogs([...newLogs]);
@@ -98,7 +101,7 @@ export default function WorkflowWizardToolConnectionScreenBase(
       <StandaloneConsoleLogField
         consoleLog={logs}
         isLoading={currentState === apiRequestHelper.API_REQUEST_STATES.BUSY}
-        title={"Connection Test"}
+        title={title}
       />
     </div>
   );
@@ -110,6 +113,15 @@ WorkflowWizardToolConnectionScreenBase.propTypes = {
   toolId: PropTypes.string,
   toolName: PropTypes.string,
   className: PropTypes.string,
+  title: PropTypes.string,
   setButtonContainer: PropTypes.func,
+  failureText: PropTypes.string,
+  successText: PropTypes.string,
+};
+
+WorkflowWizardToolConnectionScreenBase.defaultProps = {
+  title: "Connection Test",
+  successText: "Continuing to the next screen in a few seconds...",
+  failureText: `Returning to credential entry in a few seconds...`,
 };
 

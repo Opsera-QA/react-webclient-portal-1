@@ -15,6 +15,9 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import CreateWorkflowWizardRegisterToolHeaderText
+  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
   {
@@ -26,6 +29,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
     onSuccessFunction,
     backButtonFunction,
     setButtonContainer,
+    toolType,
   }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
 
@@ -83,6 +87,11 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel(
 
   return (
     <div className={className}>
+      <CreateWorkflowWizardRegisterToolHeaderText
+        toolType={toolType}
+        className={"mt-4"}
+        toolName={"Gitlab"}
+      />
       <Form>
         <Row>
           <Col sm={12}>
@@ -133,6 +142,7 @@ CreateWorkflowWizardCreateGitlabToolEditorPanel.propTypes = {
   className: PropTypes.string,
   backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
+  toolType: PropTypes.string,
 };
 
 

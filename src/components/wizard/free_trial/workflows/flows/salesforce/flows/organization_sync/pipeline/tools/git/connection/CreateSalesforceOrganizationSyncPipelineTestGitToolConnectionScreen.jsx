@@ -41,6 +41,7 @@ export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConne
       className={"m-3"}
       flow={flow}
       setButtonContainer={setButtonContainer}
+      successText={"Continuing to the next screen to register your Source Salesforce Account in a few seconds..."}
     />
   );
 }

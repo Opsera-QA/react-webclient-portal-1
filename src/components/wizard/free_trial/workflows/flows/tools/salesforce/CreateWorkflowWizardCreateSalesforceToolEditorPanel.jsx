@@ -6,12 +6,14 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateFreeTrialSalesforceToolButton
   from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateFreeTrialSalesforceToolButton";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CreateSalesforceWorkflowWizardSelectToolInputBase
   from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import CreateWorkflowWizardRegisterToolHeaderText
+  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -23,7 +25,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
     setSalesforceToolModel,
     backButtonFunction,
     setButtonContainer,
-    type,
+    toolType,
   }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
 
@@ -54,8 +56,9 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
 
   return (
     <div className={className}>
-      <H5FieldSubHeader
-        subheaderText={`Enter your ${type} Salesforce Account details`}
+      <CreateWorkflowWizardRegisterToolHeaderText
+        toolType={toolType}
+        toolName={"Salesforce"}
       />
       <Row>
         <Col sm={12}>
@@ -129,7 +132,7 @@ CreateWorkflowWizardCreateSalesforceToolEditorPanel.propTypes = {
   setSalesforceToolId: PropTypes.func,
   onSuccessFunction: PropTypes.func,
   className: PropTypes.string,
-  type: PropTypes.string,
+  toolType: PropTypes.string,
   setButtonContainer: PropTypes.func,
   backButtonFunction: PropTypes.func,
 };

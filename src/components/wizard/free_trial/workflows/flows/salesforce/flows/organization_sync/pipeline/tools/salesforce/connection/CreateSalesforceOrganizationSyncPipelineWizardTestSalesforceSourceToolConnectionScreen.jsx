@@ -6,6 +6,8 @@ import {
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import WorkflowWizardToolConnectionScreenBase
   from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 
 export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen(
   {
@@ -22,13 +24,13 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
   };
 
   return (
-    <WorkflowWizardToolConnectionScreenBase
-      className={"m-3"}
+    <CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
       onSuccessFunction={onSuccessFunction}
-      toolId={salesforceToolId}
+      salesforceToolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
       setButtonContainer={setButtonContainer}
-      toolName={"Sfdc"}
+      type={"Source"}
+      successText={"Continuing to the next screen to register your Destination Salesforce Account in a few seconds..."}
     />
   );
 }

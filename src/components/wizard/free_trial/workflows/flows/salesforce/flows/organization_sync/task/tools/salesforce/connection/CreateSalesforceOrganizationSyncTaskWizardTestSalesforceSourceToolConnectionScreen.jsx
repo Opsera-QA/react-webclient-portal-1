@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WorkflowWizardToolConnectionScreenBase
-  from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
-import { taskHelper } from "components/tasks/task.helper";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 
 export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen({
   setCurrentScreen,
@@ -20,18 +19,17 @@ export default function CreateSalesforceOrganizationSyncTaskWizardTestSalesforce
 
   const onFailureFunction = () => {
     setCurrentScreen(
-      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
     );
   };
 
   return (
-    <WorkflowWizardToolConnectionScreenBase
-      className={"m-3"}
+    <CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
       onSuccessFunction={onSuccessFunction}
-      toolId={salesforceToolId}
+      salesforceToolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
       setButtonContainer={setButtonContainer}
-      toolName={"Sfdc"}
+      successText={"Continuing to the next screen to finish initializing your new Salesforce Task in a few seconds..."}
     />
   );
 }

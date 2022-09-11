@@ -14,6 +14,9 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import CreateWorkflowWizardRegisterToolHeaderText
+  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {
@@ -25,6 +28,7 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
     setGitToolModel,
     setButtonContainer,
     backButtonFunction,
+    toolType,
   }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
 
@@ -82,6 +86,11 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
 
   return (
     <div className={className}>
+      <CreateWorkflowWizardRegisterToolHeaderText
+        toolType={toolType}
+        className={"mt-4"}
+        toolName={"Github"}
+      />
       <Form>
         <Row>
           <Col sm={12}>
@@ -125,6 +134,7 @@ CreateWorkflowWizardCreateGithubToolEditorPanel.propTypes = {
   className: PropTypes.string,
   setButtonContainer: PropTypes.func,
   backButtonFunction: PropTypes.func,
+  toolType: PropTypes.string,
 };
 
 

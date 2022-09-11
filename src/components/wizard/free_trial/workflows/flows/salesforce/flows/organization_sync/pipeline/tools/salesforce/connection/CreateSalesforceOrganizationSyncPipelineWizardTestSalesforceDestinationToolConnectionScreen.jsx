@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
-import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import WorkflowWizardToolConnectionScreenBase
-  from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
+  from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 
 export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen(
   {
@@ -22,13 +21,13 @@ export default function CreateSalesforceOrganizationSyncPipelineWizardTestSalesf
   };
 
   return (
-    <WorkflowWizardToolConnectionScreenBase
-      className={"m-3"}
+    <CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
       onSuccessFunction={onSuccessFunction}
-      toolId={salesforceToolId}
+      salesforceToolId={salesforceToolId}
       onFailureFunction={onFailureFunction}
-      toolName={"Sfdc"}
       setButtonContainer={setButtonContainer}
+      type={"Destination"}
+      successText={"Continuing to the next screen to finish initializing your new Salesforce Pipeline in a few seconds..."}
     />
   );
 }

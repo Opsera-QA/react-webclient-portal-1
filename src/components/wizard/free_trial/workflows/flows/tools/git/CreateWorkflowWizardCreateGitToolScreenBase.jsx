@@ -22,6 +22,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
     className,
     backButtonFunction,
     setButtonContainer,
+    toolType,
   }) {
   useEffect(() => {
     if (setButtonContainer) {
@@ -45,6 +46,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             gitToolId={gitToolId}
             backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
+            toolType={toolType}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
@@ -57,6 +59,7 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
             gitToolId={gitToolId}
             backButtonFunction={backButtonFunction}
             setButtonContainer={setButtonContainer}
+            toolType={toolType}
           />
         );
     }
@@ -92,6 +95,7 @@ CreateWorkflowWizardCreateGitToolScreenBase.propTypes = {
   className: PropTypes.string,
   backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,
+  toolType: PropTypes.string,
 };
 
 

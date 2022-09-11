@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import CreateWorkflowWizardTestGitToolConnectionScreen
   from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
-import { taskHelper } from "components/tasks/task.helper";
 
 export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen({
   setCurrentScreen,
@@ -17,13 +15,13 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
 }) {
   const onSuccessFunction = () => {
     setCurrentScreen(
-      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_SOURCE_SALESFORCE_TOOL_SCREEN,
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
     );
   };
 
   const onFailureFunction = () => {
     setCurrentScreen(
-      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.CREATE_GIT_TOOL_SCREEN,
+      CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
     );
   };
 
@@ -36,6 +34,7 @@ export default function CreateSalesforceOrganizationSyncTaskTestGitToolConnectio
       setButtonContainer={setButtonContainer}
       flow={flow}
       className={"m-3"}
+      successText={"Continuing to the next screen to register your Salesforce Account in a few seconds..."}
     />
   );
 }
