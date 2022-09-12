@@ -13,7 +13,8 @@ export async function persistNewRecordAndViewDetails(model, toastContext, showSu
     );
 
   if (response != null && response !== false && history != null) {
-    const updatedDto = model.getNewInstance(response?.data, false);
+    const newData = response?.data?.data ? response?.data?.data : response?.data;
+    const updatedDto = model.getNewInstance(newData, false);
     let link = updatedDto.getDetailViewLink();
 
     if (hasStringValue(link) === true) {

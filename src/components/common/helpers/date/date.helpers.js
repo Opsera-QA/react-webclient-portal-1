@@ -43,6 +43,10 @@ dateHelpers.humanizeDurationForMilliseconds = (milliseconds) => {
   );
 };
 
+dateHelpers.getNowFormattedDateString = () => {
+  return format(new Date(), 'MM/dd/yyyy hh:mm');
+};
+
 export function convertFutureDateToDhmsFromNowString(date) {
   const currentDateInSeconds = new Date().getTime() / 1000;
   const totalSeconds = date.getTime() / 1000;

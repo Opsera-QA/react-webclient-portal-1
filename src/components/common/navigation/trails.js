@@ -5,7 +5,7 @@ import {
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
   faHexagon, faListAlt, faRss, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole, faRectangleList
+  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole, faRectangleList, faHouseUser,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -166,6 +166,44 @@ const breadcrumbs = {
     pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   },
 
+  platformSystemParameterManagement: {
+    parent: "admin",
+    name: "platformSystemParameterManagement",
+    path: paths.platformSystemParameterManagement,
+    title: "Platform System Parameter Management",
+    linkText: "Platform System Parameter Management",
+    icon: faCogs,
+    pageDescription: "Manage platform-wide system settings"
+  },
+  platformSystemParameterDetailView: {
+    parent: "platformSystemParameterManagement",
+    name: "platformSystemParameterDetailView",
+    path: paths.platformSystemParameterDetailView,
+    title: "Platform System Parameter Details",
+    linkText: "Platform System Parameter Details",
+    icon: faCogs
+  },
+
+  taskTemplateManagement: {
+    parent: "admin",
+    name: "taskTemplateManagement",
+    path: paths.taskTemplateManagement,
+    title: "Task Template Management",
+    linkText: "Task Template Management",
+    icon: faStream,
+    pageDescription: `
+      Create and manage personalized task templates according to your organization’s needs. 
+    `
+  },
+  taskTemplateDetailView: {
+    parent: "taskTemplateManagement",
+    name: "taskTemplateDetailView",
+    path: paths.taskTemplateDetailView,
+    title: "Task emplate Details",
+    linkText: "Task Template Details",
+    icon: faStream
+  },
+
   templateManagement: {
     parent: "admin",
     name: "templateManagement",
@@ -285,6 +323,14 @@ const breadcrumbs = {
     path: paths.accountSettings,
     title: "Account Settings",
     linkText: "Account Settings",
+    icon: faCogs
+  },
+  freeTrialSettings: {
+    parent: undefined,
+    name: "freeTrialSettings",
+    path: paths.accountSettings,
+    title: "Free Trial Settings",
+    linkText: "Free Trial Settings",
     icon: faCogs
   },
 
@@ -984,6 +1030,15 @@ const breadcrumbs = {
     title: "Workspace",
     linkText: "Workspace",
     icon: faRectangleList
+  },
+
+  freeTrialLanding: {
+    parent: undefined,
+    name: "freeTrialLanding",
+    path: paths.home,
+    title: "Home",
+    linkText: "Home",
+    icon: faHouseUser,
   },
 };
 

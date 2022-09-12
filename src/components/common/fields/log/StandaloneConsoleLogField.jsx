@@ -38,7 +38,10 @@ function StandaloneConsoleLogField(
 }
 
 StandaloneConsoleLogField.propTypes = {
-  consoleLog: PropTypes.string,
+  consoleLog: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+  ]),
   title: PropTypes.string,
   height: PropTypes.string,
   maxHeight: PropTypes.string,

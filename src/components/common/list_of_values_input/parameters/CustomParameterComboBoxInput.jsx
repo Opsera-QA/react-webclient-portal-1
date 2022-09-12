@@ -4,6 +4,7 @@ import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ComboBoxInputBase from "components/common/inputs/combo_box/ComboBoxInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function CustomParameterComboBoxInput(
   {
@@ -14,45 +15,33 @@ function CustomParameterComboBoxInput(
     disabled,
     textField,
     valueField,
-    allowCreate,
     showLabel,
     setDataFunction,
     requireVaultSavedParameters,
     requireInsensitiveParameters,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
   const [customParameters, setCustomParameters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
       setError(undefined);
-      await loadParameters(cancelSource);
+      await loadParameters();
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -66,10 +55,10 @@ function CustomParameterComboBoxInput(
     }
   };
 
-  const loadParameters = async (cancelSource = cancelTokenSource) => {
+  const loadParameters = async () => {
     const response = await parametersActions.getParameters(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       undefined,
       requireVaultSavedParameters,
       requireInsensitiveParameters,
@@ -93,7 +82,6 @@ function CustomParameterComboBoxInput(
       textField={textField}
       error={error}
       disabled={disabled}
-      allowCreate={allowCreate}
       showLabel={showLabel}
       setDataFunction={setDataFunction}
     />
@@ -108,7 +96,6 @@ CustomParameterComboBoxInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  allowCreate: PropTypes.bool,
   showLabel: PropTypes.bool,
   setDataFunction: PropTypes.func,
   requireVaultSavedParameters: PropTypes.bool,
