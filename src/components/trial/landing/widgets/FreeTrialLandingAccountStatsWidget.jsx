@@ -341,19 +341,19 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
                 />
               </div>
             </div>
-            <div className={"mx-3 mt-3"}>
-              {getExpirationDate()}
-              {getEmailLink()}
-            </div>
           </div>
           <div className={"m-3"}>
             <div className={"marketingModulesTextLarger"}>
               {getItemCounts()}
             </div>
-            <div className={"my-2"}>
+            <div className={"mt-2"}>
               {getWorkflowHealthStatus()}
             </div>
           </div>
+        </div>
+        <div className={"m-2"}>
+          {getExpirationDate()}
+          {getEmailLink()}
         </div>
       </>
     );
