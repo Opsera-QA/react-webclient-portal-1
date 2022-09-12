@@ -115,6 +115,16 @@ export class Model {
     return currentValue;
   };
 
+  getStringValue = (fieldName, defaultValue = "") => {
+    const currentValue = this.getData(fieldName);
+
+    if (hasStringValue(currentValue) !== true) {
+      return defaultValue;
+    }
+
+    return currentValue;
+  };
+
   getErrors = () => {
     return validateData(this);
   };

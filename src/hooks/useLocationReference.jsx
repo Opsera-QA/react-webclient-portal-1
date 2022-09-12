@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { useLocation } from "react-router-dom";
-import { constantsHelper } from "temp-library-components/helpers/constants/constants.helper";
+import constantsHelper from "@opsera/definitions/constants/constants.helper";
 
 export const PUBLIC_PATHS = {
   LOGIN: "/login",
@@ -44,5 +44,6 @@ export default function useLocationReference() {
   return ({
     isPublicPathState: isPublicPath,
     currentPath: location.pathname,
+    locationKey: location.key,
   });
 }
