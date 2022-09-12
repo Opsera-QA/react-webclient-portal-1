@@ -33,6 +33,7 @@ import JiraIssuesCreatedVsResolvedLineChart from "./jira/line_chart/issues_creat
 import JiraIssuesAssignedToMe from "./jira/table/issues_assigned_to_me/JiraIssuesAssignedToMe";
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
 import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
+import JiraMeanTimeToResolutionBarChart from "./jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionBarChart";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -176,6 +177,7 @@ import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatisti
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
+
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -519,7 +521,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
+        return (
+          <Col md={12} className="p-2">
+            <JiraMeanTimeToResolutionBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
         return (
