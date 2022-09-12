@@ -259,6 +259,12 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={LdapOrganizationAccountDetailView} />
           <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
 
+          <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
+          <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
+
+          <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
+          <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact component={PlatformSystemParameterDetailView} />
+
           <SecureRoute path="/pipeline" component={Pipeline} />
           <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
           <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
