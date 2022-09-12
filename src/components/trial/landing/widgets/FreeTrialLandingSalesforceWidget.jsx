@@ -86,7 +86,7 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
         className={"focusText"}
         titleBar={
           <div className={"mt-4 mb-3"}>
-            <img alt="Get started with Salesforce on Opsera!"
+            <img alt="Get started with Salesforce Deployments with Opsera!"
                  src="/img/salesforce/salesforce_logo_white_475x332.png"
                  width="220"
                  height="154"
@@ -100,7 +100,7 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
         }
         onClickFunction={launchWorkflowCreationWizard}
         // className={className}
-        tooltip={"Get started with Salesforce on Opsera!"}
+        tooltip={"Get started with Salesforce Deployments with Opsera!"}
         tooltipPosition={"bottom"}
       />
     );

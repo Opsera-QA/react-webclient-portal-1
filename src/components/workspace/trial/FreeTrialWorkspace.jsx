@@ -69,8 +69,7 @@ export default function FreeTrialWorkspace() {
       className={"mt-3"}
       breadcrumbDestination={"workspace"}
       pageDescription={`
-        The Opsera Workspace allows you to register, track, and configure all of the tools, pipelines, and tasks available to your account in
-        one centralized location.
+        The Opsera workspace allows you to configure and track all workflows in one central location.
       `}
       includeSubNavigationGap={false}
     >

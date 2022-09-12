@@ -55,7 +55,7 @@ function GitToolCreationSelectionOptionInput(
       <CenteredContentWrapper>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
-          subheaderText={"What kind of Git repository account details would you like to register with this Workflow?"}
+          subheaderText={"Pick your choice of GIT Repository to Register and to be used for Version Control System for the Workflow"}
         />
       </CenteredContentWrapper>
       <Row>

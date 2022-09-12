@@ -42,7 +42,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
   } = useComponentStateReference();
 
   const currentCount = DataParsingHelper.parseInteger(taskCounts?.[selectedFlow], 0);
-  const allowedCount = isAccountWhitelisted === true ? 10 : 3;
+  const allowedCount = isAccountWhitelisted === true ? 10 : 1;
 
   useEffect(() => {
     setWorkspaceItems([]);

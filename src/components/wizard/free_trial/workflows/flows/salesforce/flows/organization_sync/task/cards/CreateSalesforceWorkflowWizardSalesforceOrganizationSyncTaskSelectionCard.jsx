@@ -23,7 +23,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSync
     themeConstants,
   } = useComponentStateReference();
 
-  const templateIdentifier = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK;
+  const templateIdentifier = taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_TASK;
   const currentCount = DataParsingHelper.parseInteger(taskCounts?.[templateIdentifier], 0);
   const allowedCount = hasExpiration === false ? 10 : 1;
   const disabled = taskCounts == null || currentCount >= allowedCount;
@@ -46,7 +46,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceOrganizationSync
       icon={faSalesforce}
       iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
       description={`
-        Run an Organization Sync task to run on demand.
+        Sync your development org’s with other streams by running on demand Org Sync Task.
       `}
       onClickFunction={currentCount == null ? undefined : onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}

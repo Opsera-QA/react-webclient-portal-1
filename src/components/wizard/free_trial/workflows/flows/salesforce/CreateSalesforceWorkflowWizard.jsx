@@ -136,7 +136,7 @@ export default function CreateSalesforceWorkflowWizard(
           <FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
             selectedFlow={selectedFlow}
             setSelectedFlow={setSelectedFlow}
-            pipelineCounts={accountMetrics?.taskCounts}
+            taskCounts={accountMetrics?.taskCounts}
             isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
             setButtonContainer={setButtonContainer}
             setCurrentScreen={setCurrentScreen}

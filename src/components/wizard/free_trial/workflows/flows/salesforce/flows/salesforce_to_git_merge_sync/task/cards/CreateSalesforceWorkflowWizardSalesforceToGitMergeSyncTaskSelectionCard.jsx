@@ -49,7 +49,7 @@ export default function CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTa
       icon={faSalesforce}
       iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
       description={`
-        Make handling code merges easier!
+        Merge your conflicts before you commit to the Org!
       `}
       onClickFunction={onClickFunction}
       workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}

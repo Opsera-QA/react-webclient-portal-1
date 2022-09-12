@@ -127,7 +127,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
 
      const dataObject =
         response?.data && response?.status === 200
-          ? response?.data?.data?.data
+          ? response?.data?.data[0]
           : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -228,8 +228,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"mr-5"}>
               <TotalComponentsDeployed
                 score={
-                  metrics[0]?.currentResults?.totalComponentsDeployed
-                    ? metrics[0]?.currentResults?.totalComponentsDeployed
+                  metrics[0]?.totalComponentsDeployed
+                    ? metrics[0]?.totalComponentsDeployed
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.totalComponentsDeployed)}
@@ -243,8 +243,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col>
               <AvgComponentsDeployedPerExecution
                 score={
-                  metrics[0]?.currentResults?.averageComponentsDeployedPerExecution
-                    ? metrics[0]?.currentResults?.averageComponentsDeployedPerExecution
+                  metrics[0]?.averageComponentsDeployedPerExecution
+                    ? metrics[0]?.averageComponentsDeployedPerExecution
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.averageComponentsDeployedPerExecution)}
@@ -258,8 +258,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"ml-5"}>
               <TotalSalesforcePipelineExecutions
                 score={
-                  metrics[0]?.currentResults?.totalSalesforcePipelineExecutions
-                    ? metrics[0]?.currentResults?.totalSalesforcePipelineExecutions
+                  metrics[0]?.totalSalesforcePipelineExecutions
+                    ? metrics[0]?.totalSalesforcePipelineExecutions
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.totalSalesforcePipelineExecutions)}
@@ -275,8 +275,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"mr-5"}>
               <TotalPipelineExecutionDeployment
                 score={
-                  metrics[0]?.currentResults?.totalPipelineExecutionsWithDeployment
-                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithDeployment
+                  metrics[0]?.totalPipelineExecutionsWithDeployment
+                    ? metrics[0]?.totalPipelineExecutionsWithDeployment
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithDeployment)}
@@ -290,8 +290,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col >
               <TotalPipelineExecutionValidation
                 score={
-                  metrics[0]?.currentResults?.totalPipelineExecutionsWithValidation
-                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithValidation
+                  metrics[0]?.totalPipelineExecutionsWithValidation
+                    ? metrics[0]?.totalPipelineExecutionsWithValidation
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithValidation)}
@@ -305,8 +305,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
             <Col className={"ml-5"}>
               <TotalPipelinesExecutionsUnitTests
                 score={
-                  metrics[0]?.currentResults?.totalPipelineExecutionsWithUnitTests
-                    ? metrics[0]?.currentResults?.totalPipelineExecutionsWithUnitTests
+                  metrics[0]?.totalPipelineExecutionsWithUnitTests
+                    ? metrics[0]?.totalPipelineExecutionsWithUnitTests
                     : 0
                 }
                 icon={getIcon(metrics[0]?.trends?.totalPipelineExecutionsWithUnitTests)}
