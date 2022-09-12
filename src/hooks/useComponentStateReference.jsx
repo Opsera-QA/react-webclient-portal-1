@@ -4,7 +4,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 
-function useComponentStateReference() {
+export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
   const cancelTokenSource = useCancelTokenStateReference();
   const {
@@ -46,5 +46,3 @@ function useComponentStateReference() {
     isAuthenticated: isAuthenticated,
   });
 }
-
-export default useComponentStateReference;
