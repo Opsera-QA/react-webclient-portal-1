@@ -1,3 +1,11 @@
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import { faBracketsCurly, faDraftingCompass, faMicrochip } from "@fortawesome/pro-light-svg-icons";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+
+// TODO: Refactor
+export const pipelineTypeConstants = {};
+
 export const PIPELINE_TYPES = {
   APIGEE: "apigee",
   INFORMATICA: "informatica",
@@ -32,6 +40,29 @@ export const getPipelineTypeLabel = (pipelineType) => {
       return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
     default:
       return pipelineType;
+  }
+};
+
+pipelineTypeConstants.getIconForPipeline = (pipeline) => {
+  const parsedPipeline = dataParsingHelper.parseObject(pipeline);
+  return pipelineTypeConstants.getIconForPipelineType(parsedPipeline?.type);
+};
+
+// TODO: Eventually pull out tool from pipeline for SDLC flows
+pipelineTypeConstants.getIconForPipelineType = (typeString) => {
+  if (hasStringValue(typeString) !== true) {
+    return (faDraftingCompass);
+  }
+
+  switch (typeString) {
+    case PIPELINE_TYPES.SALESFORCE:
+      return (faSalesforce);
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return (faMicrochip);
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return (faBracketsCurly);
+    default:
+      return (faDraftingCompass);
   }
 };
 

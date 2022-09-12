@@ -24,6 +24,12 @@ paths.systemManagement = paths.admin + "/manage-systems";
 paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
+paths.taskTemplateManagement = paths.admin + "/templates/tasks";
+paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
+
+paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
+paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
+
 paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
 paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
 
@@ -68,6 +74,7 @@ paths.connectedAssets = "insights/insightsConnectedAssets";
 paths.gitCustodian = "insights/insightsGitCustodian";
 
 // Settings Paths
+paths.freeTrialSettings = "/trial/settings";
 paths.accountSettings = "settings";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;

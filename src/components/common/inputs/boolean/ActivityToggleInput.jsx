@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 // TODO: Combine with BooleanToggleInput or make a true base for both
 function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
@@ -40,6 +40,10 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
 
     return classNames;
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer fieldName={fieldName}>

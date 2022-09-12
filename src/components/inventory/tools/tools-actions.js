@@ -141,6 +141,26 @@ toolsActions.getRoleLimitedToolsByIdentifier = async (getAccessToken, cancelToke
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+toolsActions.getToolsOwnedByUser = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolIdentifier,
+) => {
+  const apiUrl = `/registry/configs/ownership`;
+  const urlParams = {
+    params: {
+      toolIdentifier: toolIdentifier,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
+};
+
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
