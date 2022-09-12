@@ -333,7 +333,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
         <div className={"d-flex"}>
           <div>
             <div className={"d-flex"}>
-              <div className={" ml-auto"}>
+              <div className={"d-none d-sm-inline"}>
                 <OpseraInfinityLogoLarge
                   scale={.29}
                   className={"mt-3"}
