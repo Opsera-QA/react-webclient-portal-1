@@ -337,7 +337,6 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
                 <OpseraInfinityLogoLarge
                   scale={.29}
                   className={"mt-3"}
-                  flipHorizontally={true}
                 />
               </div>
             </div>
