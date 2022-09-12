@@ -129,6 +129,11 @@ import HelpDocumentationScreen from "components/about/help_documentation/HelpDoc
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
+import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
+import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
+import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
+import PlatformSystemParameterDetailView
+  from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
