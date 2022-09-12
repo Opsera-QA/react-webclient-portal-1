@@ -97,12 +97,7 @@ export default function WelcomeWidget({ className }) {
             </div>
             {getHowToLinks()}
           </div>
-          <div className={"d-none d-xl-inline"}>
             {getVideoThumbnail()}
-          </div>
-        </div>
-        <div className={"d-inline d-xl-none"}>
-          {getVideoLink()}
         </div>
       </div>
     </FreeTrialWidgetDataBlockBase>
