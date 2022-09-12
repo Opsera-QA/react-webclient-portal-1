@@ -351,7 +351,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
             </div>
           </div>
         </div>
-        <div className={"m-2"}>
+        <div className={"mx-2"}>
           {getExpirationDate()}
           {getEmailLink()}
         </div>
