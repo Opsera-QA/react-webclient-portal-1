@@ -123,6 +123,32 @@ export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-priorities");
 }
 
+export function getJiraPrioritiesFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
+        .value;
+  }
+  return null;
+}
+
+export function getJiraProjectsFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+        .value;
+  }
+  return null;
+}
+
 export function getServiceNowToolsFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-tools");
 }
