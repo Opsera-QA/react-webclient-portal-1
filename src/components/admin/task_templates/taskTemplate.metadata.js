@@ -1,9 +1,9 @@
-const templateEditorMetadata = {
+export const taskTemplateMetadata = {
   idProperty: "_id",
-  type: "Pipeline Template",
+  type: "Task Template",
   activeField: "active",
   detailView: function (record) {
-    return `/admin/templates/details/${record.getData("_id")}`;
+    return `/admin/templates/tasks/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
     return `${record?.getOriginalValue("name")}`;
@@ -28,6 +28,7 @@ const templateEditorMetadata = {
       maxLength: 200,
       lowercase: true,
       spacesAllowed: false,
+      isRequired: true,
     },
     {
       label: "Description",
@@ -40,7 +41,6 @@ const templateEditorMetadata = {
     {
       label: "Type",
       id: "type",
-      formText: "Type of pipeline supported.  Current supported values: sfdc or freetrial."
     },
     {
       label: "Created At",
@@ -81,41 +81,21 @@ const templateEditorMetadata = {
       formText: "If enabled, user can only have one copy of this template in use at a time.  They will not be allowed to create a second pipeline while another one exists with this template.",
     },
     {
-      label: "Access",
-      id: "access"
-    },
-    {
-      label: "Plan",
-      id: "plan",
-      type: "JSON",
-      toShow: true,
-      isCollapsed: true,
-      value: [
-        {
-          "tool": {},
-          "trigger": [],
-          "type": [],
-          "notification": [],
-          "name": "",
-          "description": "",
-          "active": true,
-        },
-      ],
+      label: "Configuration",
+      id: "configuration",
     },
   ],
   newObjectFields: {
-    type: [],
+    type: "",
     tags: [],
     name: "",
-    description: "",
     identifier: "",
+    description: "",
     active: true,
     publicUse: true,
     singleUse: false,
     account: "",
-    access: [],
-    plan: [{}],
+    roles: [],
+    configuration: {},
   },
 };
-
-export default templateEditorMetadata;
