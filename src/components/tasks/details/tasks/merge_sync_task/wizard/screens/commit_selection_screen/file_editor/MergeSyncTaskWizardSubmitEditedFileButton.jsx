@@ -39,7 +39,7 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
     try {
       setIsSaving(true);
 
-      if (comparisonFileModel?.getData("language") !== "xml") {
+      if (comparisonFileModel?.getData("language") === "xml") {
         const isXmlValid = xmlHelpers.isXmlValid(fileContent);
 
         if (isXmlValid !== true) {

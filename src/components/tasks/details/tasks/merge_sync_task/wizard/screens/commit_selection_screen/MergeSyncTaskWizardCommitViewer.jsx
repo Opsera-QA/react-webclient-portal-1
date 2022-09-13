@@ -19,13 +19,6 @@ import MergeSyncTaskWizardCommitFileDiffSelectionsButton
 import MergeSyncTaskWizardAdvancedFileEditingButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedFileEditingButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import SideBySideCodeComparisonField from "components/common/fields/file/comparison/SideBySideCodeComparisonField";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import MergeSyncTaskWizardSelectFileOptionButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSelectFileOptionButton";
 import MergeSyncTaskWizardAdvancedEditingModePanel
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedEditingModePanel";
 
@@ -118,6 +111,7 @@ const MergeSyncTaskWizardCommitViewer = ({
             leftSideButtons={
               <MergeSyncTaskWizardAdvancedFileEditingButton
                 comparisonFileModel={comparisonFileModel}
+                setComparisonFileModel={setComparisonFileModel}
                 isLoading={isLoading}
                 inEditingMode={inEditingMode}
                 setInEditingMode={setInEditingMode}
