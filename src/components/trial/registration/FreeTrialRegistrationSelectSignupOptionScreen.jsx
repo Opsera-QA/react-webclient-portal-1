@@ -33,11 +33,14 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
     <div className={"h-100 w-100 d-flex"}>
       <div className={"mx-auto"}>
         <FreeTrialSignupHeader />
-        <WizardCard
-          width={"525px"}
-        >
-          <div className={"px-4 py-3"}>
-            <div className={"mt-2 mb-5 w-100"} style={{textAlign: "center"}}>
+        <WizardCard>
+          <div
+            className={"px-4 py-3"}
+            style={{
+              width: "525px",
+            }}
+          >
+            <div className={"mt-2 mb-5 w-100"} style={{ textAlign: "center" }}>
               <img
                 alt={"Opsera Inc."}
                 src={"/img/logos/opsera_bird_transparent_158x120.png"}

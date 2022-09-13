@@ -54,17 +54,16 @@ export default function FreeTrialRegistrationSignupScreen (
       <Form className={"mx-auto"}>
         <FreeTrialSignupHeader />
         <WizardCard
-          height={"680px"}
-          width={"825px"}
+          height={"500px"}
         >
           {toastContext?.getInlineBanner()}
-          <WizardCardInfoItem
-            // title={"Signup"}
-            // description={"Signup for Free Trial to experience how Opsera can enhance your development process."}
-            description={"Complete the form below in order to complete your initial account registration."}
-            className={"mt-3"}
-          />
-          <div className={"px-4 pt-3"}>
+          <div className={"p-4"}>
+            <WizardCardInfoItem
+              // title={"Signup"}
+              // description={"Signup for Free Trial to experience how Opsera can enhance your development process."}
+              description={"Complete the form below in order to complete your initial account registration."}
+              className={"mb-3"}
+            />
             <TextInputBase
               fieldName={"firstName"}
               setDataObject={setRegistrationModel}

@@ -83,7 +83,7 @@ export const fieldValidation = (value, model, field) => {
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {
-      errorMessages.push(`The email address ${value} is not valid.`);
+      errorMessages.push(`The email address is not valid.`);
     }
   }
 

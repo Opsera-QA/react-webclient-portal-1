@@ -35,14 +35,14 @@ export const freeTrialRegistrationMetadata = {
       label: "Password",
       id: "password",
       // isRequired: true,
-      isOpseraPassword: true,
-      matchField: "confirmPassword"
+      // isOpseraPassword: true,
+      // matchField: "confirmPassword"
     },
     {
       label: "Confirm Password",
       id: "confirmPassword",
       // isRequired: true,
-      matchField: "password"
+      // matchField: "password"
     },
     {
       label: "Street",

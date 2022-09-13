@@ -20,17 +20,14 @@ export default function WizardCard(
         style={{
           backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
           minHeight: height,
-          height: height,
-          maxHeight: height,
           width: width,
           borderRadius: "24px",
         }}
         className={"mt-2"}
       >
         <div
-          className={"mx-auto"}
+          className={"mx-5"}
           style={{
-            width: `calc(${width} - 75px)`,
             height: "5px",
             backgroundColor: themeConstants.COLOR_PALETTE.GOLD_HIGHLIGHT,
             borderRadius: "2px",
@@ -39,7 +36,7 @@ export default function WizardCard(
         <div
           style={{
             overflowY: "auto",
-            height: height ? `calc(${height} - 5px)` : undefined,
+            minHeight: height ? `calc(${height} - 5px)` : undefined,
           }}
           className={bodyClassName}
         >
