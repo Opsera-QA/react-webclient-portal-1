@@ -6,6 +6,7 @@ import CreateButton from "components/common/buttons/saving/CreateButton";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function CreateFreeTrialSalesforceToolButton(
   {
@@ -78,7 +79,7 @@ export default function CreateFreeTrialSalesforceToolButton(
     if (isMongoDbId(salesforceToolId) !== true) {
       const currentToolCount = DataParsingHelper.parseInteger(currentCount, 0);
       const newTool = {
-        name: `Salesforce ${type} Tool ${currentToolCount + 1}`,
+        name: `Salesforce Tool ${currentToolCount + 1}`,
         tool_identifier: toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR,
         tool_type_identifier: "sfdc-type",
         active: true,
