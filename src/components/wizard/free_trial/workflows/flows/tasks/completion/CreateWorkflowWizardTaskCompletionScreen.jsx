@@ -24,7 +24,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
     workflowType,
     setButtonContainer,
   }) {
-  const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
+  const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
     getAccessToken,
     cancelTokenSource,
