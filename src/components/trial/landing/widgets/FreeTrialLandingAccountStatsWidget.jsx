@@ -8,6 +8,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
+import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
 export default function FreeTrialLandingAccountStatsWidget({ className }) {
@@ -94,63 +95,6 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
     }
   };
 
-  const getPipelineHealth = (status = "successful") => {
-    const pipelineRunCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalRunCount, 0);
-    const taskRunCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalRunCount, 0);
-    const totalRunCount = pipelineRunCount + taskRunCount;
-
-    if (totalRunCount === 0) {
-      return null;
-    }
-
-    const failedPipelines = DataParsingHelper.parseArray(accountMetrics?.pipelineMetrics?.failed, []);
-    const failedTasks = DataParsingHelper.parseArray(accountMetrics?.taskMetrics?.failed, []);
-    const totalFailureCount = failedPipelines.length + failedTasks.length;
-
-    const pipelineCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalCount, 0);
-    const taskCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalCount, 0);
-    const totalWorkflowCount = pipelineCount + taskCount;
-
-    const successCount = totalWorkflowCount - totalFailureCount;
-    const successPercentage = successCount / totalWorkflowCount * 100;
-    // const successColor =
-    //   successPercentage > 66
-    //     ? "green"
-    //     : successPercentage > 33
-    //       ? "yellow"
-    //       : "red";
-    //
-    // const successfulPipelineMetrics = {
-    //   value: successCount,
-    //   displayValue: `${successCount}`,
-    //   text: "Healthy",
-    //   color: successColor,
-    // };
-    //
-    // const failedPipelineMetrics = {
-    //   value: totalFailureCount,
-    //   displayValue: `${totalFailureCount}`,
-    //   text: "Unhealthy",
-    //   color: themeConstants.COLOR_PALETTE.DANGER_SECONDARY,
-    // };
-    //
-    // if (totalFailureCount) {
-    //   return (
-    //     <HalfPieChartBase
-    //       title={"Workflow Health"}
-    //       leftConfiguration={failedPipelineMetrics}
-    //       rightConfiguration={successfulPipelineMetrics}
-    //     />
-    //   );
-    // }
-
-    return (
-      <>
-      </>
-    );
-  };
-
-
   const getItemCounts = () => {
     const pipelineCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalCount, 0);
     const taskCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalCount, 0);
@@ -161,32 +105,6 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
         <span>You have no configured offerings at this time.</span>
       );
     }
-
-    const pipelineText = getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines");
-    const taskText = getSingularOrPluralString(taskCount, "Task", "Tasks");
-
-
-    const pipelineRunCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalRunCount, 0);
-    const taskRunCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalRunCount, 0);
-    const totalRunCount = pipelineRunCount + taskRunCount;
-    const runText = getSingularOrPluralString(totalRunCount, "Run", "Runs");
-
-    return (
-      <div>
-        <div style={{fontSize: "smaller"}}>
-          You have
-        </div>
-        <div className={"mt-1 mb-1"}>
-          <div><b>{totalCount}</b> Total Workflows</div>
-          <div><b>{pipelineCount}</b> {pipelineText}</div>
-          <div><b>{taskCount}</b> {taskText}</div>
-          <div>with <b>{totalRunCount}</b> Completed {runText}</div>
-        </div>
-        <div style={{fontSize: "smaller"}}>
-          Workflows are {getWorkflowHealthText()}
-        </div>
-      </div>
-    );
   };
 
   const getWorkflowHealthStatus = () => {
@@ -212,56 +130,28 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
       return (
         <CenteredContentWrapper>
           <div className={"my-4 marketingModulesTextLarger"}>
-            Select a Workflow below and hit Run to get started.
+            Select a workflow below and hit run to get started.
           </div>
         </CenteredContentWrapper>
       );
     }
 
+    const pipelineText = getSingularOrPluralString(pipelineCount, "pipeline", "pipelines");
+    const taskText = getSingularOrPluralString(taskCount, "task", "tasks");
+    const runText = getSingularOrPluralString(totalRunCount, "run", "runs");
+
     return (
-      <div className={"d-flex"}>
-        <div className={"d-flex"}>
-          <div className={"marketingModulesTextLarger"}>
-            {getPipelineHealth()}
+      <div>
+        <div>
+          Your Opsera workflows are {getWorkflowHealthText()}
+        </div>
+        <div className={"mt-3"}>
+          <div>
+            You have completed <b>{totalRunCount}</b> {runText} across <b>{pipelineCount}</b> {pipelineText} and <b>{taskCount}</b> {taskText}
           </div>
         </div>
       </div>
     );
-  };
-
-
-  const getTotalRunCount = () => {
-    const pipelineRunCount = DataParsingHelper.parseInteger(accountMetrics?.pipelineMetrics?.totalRunCount, 0);
-    const taskRunCount = DataParsingHelper.parseInteger(accountMetrics?.taskMetrics?.totalRunCount, 0);
-    const totalRunCount = pipelineRunCount + taskRunCount;
-
-    if (totalRunCount === 1) {
-      return (
-        <div className={"marketingModulesTextLarger mr-3 ml-auto"}>
-          <span>
-            There has been
-            <span className={"marketingModulesValueText"}>
-              {` 1 `}
-            </span>
-            Completed Run
-          </span>
-        </div>
-      );
-    }
-
-    if (totalRunCount > 0) {
-      return (
-        <div className={"marketingModulesTextLarger mr-3 ml-auto"}>
-          <span>
-            There have been
-            <span className={"marketingModulesValueText"}>
-              {` ${totalRunCount} `}
-            </span>
-            Completed Runs
-          </span>
-        </div>
-      );
-    }
   };
 
   const getEmailLink = () => {
@@ -324,14 +214,27 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
   const getBody = () => {
     if (isLoading === true) {
       return (
-        <CenterLoadingIndicator type={"Account Overview"} />
+        <CenterLoadingIndicator
+          type={"Account Overview"}
+        />
       );
     }
 
     return (
-      <>
-        <div className={"d-flex"}>
-          <div>
+      <div
+        style={{
+          minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
+          height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
+        }}
+      >
+        <div
+          className={"d-flex"}
+          style={{
+            minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
+            height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
+          }}
+        >
+          <div className={"d-flex"}>
             <div className={"d-flex"}>
               <div className={"d-none d-sm-inline"}>
                 <OpseraInfinityLogoLarge
@@ -340,21 +243,27 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
                 />
               </div>
             </div>
+            <CenteredContentWrapper>
+              <div className={"marketingModulesTextLarger"}>
+                {getItemCounts()}
+              </div>
+              <div className={"mt-3 marketingModulesTextLarger"}>
+                {getWorkflowHealthStatus()}
+              </div>
+            </CenteredContentWrapper>
           </div>
-          <div className={"m-3"}>
-            <div className={"marketingModulesTextLarger"}>
-              {getItemCounts()}
+        </div>
+        <div className={"d-flex m-2"}>
+          <div className={"ml-auto mt-auto"}>
+            <div>
+              {getExpirationDate()}
             </div>
-            <div className={"mt-2"}>
-              {getWorkflowHealthStatus()}
+            <div>
+              {getEmailLink()}
             </div>
           </div>
         </div>
-        <div className={"mx-2"}>
-          {getExpirationDate()}
-          {getEmailLink()}
-        </div>
-      </>
+      </div>
     );
   };
 
@@ -365,10 +274,9 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
         title={getTitleText()}
         heightSize={6}
         isLoading={isLoading}
+        className={"marketingModulesText"}
       >
-        <div className={"marketingModulesText"}>
-          {getBody()}
-        </div>
+        {getBody()}
       </FreeTrialWidgetDataBlockBase>
     </div>
   );
