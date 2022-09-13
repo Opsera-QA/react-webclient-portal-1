@@ -9,14 +9,165 @@ import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColor, assignBooleanColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, dataPresent, setDataPresent }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [mockDataShown, setMockDataShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const mockData = [
+    {
+        "id": "Success",
+        "color": "#00897b",
+        "data": [
+            {
+                "x": "2022-08-17",
+                "y": 0
+            },
+            {
+                "x": "2022-08-18",
+                "y": 2
+            },
+            {
+                "x": "2022-08-19",
+                "y": 0
+            },
+            {
+                "x": "2022-08-20",
+                "y": 0
+            },
+            {
+                "x": "2022-08-21",
+                "y": 0
+            },
+            {
+                "x": "2022-08-22",
+                "y": 0
+            },
+            {
+                "x": "2022-08-23",
+                "y": 0
+            },
+            {
+                "x": "2022-08-24",
+                "y": 0
+            },
+            {
+                "x": "2022-08-25",
+                "y": 0
+            },
+            {
+                "x": "2022-08-26",
+                "y": 3
+            },
+            {
+                "x": "2022-08-27",
+                "y": 0
+            },
+            {
+                "x": "2022-08-28",
+                "y": 0
+            },
+            {
+                "x": "2022-08-29",
+                "y": 7
+            },
+            {
+                "x": "2022-08-30",
+                "y": 1
+            },
+            {
+                "x": "2022-08-31",
+                "y": 0
+            },
+            {
+                "x": "2022-09-01",
+                "y": 2
+            },
+            {
+                "x": "2022-09-02",
+                "y": 0
+            }
+        ]
+    },
+    {
+        "id": "Failure",
+        "color": "#CB4335",
+        "data": [
+            {
+                "x": "2022-08-17",
+                "y": 0
+            },
+            {
+                "x": "2022-08-18",
+                "y": 0
+            },
+            {
+                "x": "2022-08-19",
+                "y": 0
+            },
+            {
+                "x": "2022-08-20",
+                "y": 0
+            },
+            {
+                "x": "2022-08-21",
+                "y": 0
+            },
+            {
+                "x": "2022-08-22",
+                "y": 1
+            },
+            {
+                "x": "2022-08-23",
+                "y": 2
+            },
+            {
+                "x": "2022-08-24",
+                "y": 1
+            },
+            {
+                "x": "2022-08-25",
+                "y": 0
+            },
+            {
+                "x": "2022-08-26",
+                "y": 0
+            },
+            {
+                "x": "2022-08-27",
+                "y": 0
+            },
+            {
+                "x": "2022-08-28",
+                "y": 0
+            },
+            {
+                "x": "2022-08-29",
+                "y": 0
+            },
+            {
+                "x": "2022-08-30",
+                "y": 2
+            },
+            {
+                "x": "2022-08-31",
+                "y": 0
+            },
+            {
+                "x": "2022-09-01",
+                "y": 5
+            },
+            {
+                "x": "2022-09-02",
+                "y": 0
+            }
+        ]
+    }
+];
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -44,175 +195,15 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
       setIsLoading(true);
       // let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetricsFreeTrial(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration);
-    //   const response = {
-    //     "status": 200,
-    //     "status_text": "ES Pipeline Summary Query Results",
-    //     "message": "ES Query Response from Living Connection",
-    //     "data": [
-    //         {
-    //             "opseraPipelineDeploymentFrequency": {
-    //                 "tool": "opsera-pipeline-step-summary",
-    //                 "data": [
-    //                     {
-    //                         "id": "Success",
-    //                         "color": "green",
-    //                         "data": [
-    //                             {
-    //                                 "x": "2022-08-17",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-18",
-    //                                 "y": 2
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-19",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-20",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-21",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-22",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-23",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-24",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-25",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-26",
-    //                                 "y": 3
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-27",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-28",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-29",
-    //                                 "y": 7
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-30",
-    //                                 "y": 1
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-31",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-09-01",
-    //                                 "y": 2
-    //                             },
-    //                             {
-    //                                 "x": "2022-09-02",
-    //                                 "y": 0
-    //                             }
-    //                         ]
-    //                     },
-    //                     {
-    //                         "id": "Failure",
-    //                         "color": "#CB4335",
-    //                         "data": [
-    //                             {
-    //                                 "x": "2022-08-17",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-18",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-19",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-20",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-21",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-22",
-    //                                 "y": 1
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-23",
-    //                                 "y": 2
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-24",
-    //                                 "y": 1
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-25",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-26",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-27",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-28",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-29",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-30",
-    //                                 "y": 2
-    //                             },
-    //                             {
-    //                                 "x": "2022-08-31",
-    //                                 "y": 0
-    //                             },
-    //                             {
-    //                                 "x": "2022-09-01",
-    //                                 "y": 5
-    //                             },
-    //                             {
-    //                                 "x": "2022-09-02",
-    //                                 "y": 0
-    //                             }
-    //                         ]
-    //                     }
-    //                 ],
-    //                 "length": 2,
-    //                 "status": 200,
-    //                 "status_text": "OK"
-    //             }
-    //         }
-    //     ]
-    // };
-    const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
+
+    const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : mockData;
     assignBooleanColors(dataObject);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+      }
+      if (dataObject === mockData) {
+        setMockDataShown(true);
+        setDataPresent(false);
       }
     }
     catch (error) {
@@ -262,6 +253,7 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        dataPresent={mockDataShown}
       />
       <ModalLogs header="Deployments Graph" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
     </>
@@ -272,7 +264,9 @@ OpseraDeploymentFrequencyLineChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  dataPresent: PropTypes.bool,
+  setDataPresent: PropTypes.func
 };
 
 export default OpseraDeploymentFrequencyLineChart;

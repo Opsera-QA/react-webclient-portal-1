@@ -17,10 +17,11 @@ import TotalPipelinesExecutionsUnitTests from "./data_blocks/TotalPipelinesExecu
 import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { SALESFORCE_COMPONENTS_METRIC_CONSTANTS as dataPointConstants} from "./Salesforce-components-datapoints";
 
-function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, dataPresent, setDataPresent }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [mockDataShown, setMockDataShown] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +33,17 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
   const [deploymentDataPoint, setDeploymentDatapoint] = useState(undefined);
   const [validationDataPoint, setValidationDatapoint] = useState(undefined);
   const [unitTestsDataPoint, setUnitTestsDatapoint] = useState(undefined);
+  const mockData = [
+    {
+            "totalComponentsDeployed": [124],
+            "averageComponentsDeployedPerExecution": [3],
+            "totalPipelineExecutionsWithValidation": [13],
+            "totalPipelineExecutionsWithUnitTests": [11],
+            "totalPipelineExecutionsWithDeployment": [8],
+            "totalSalesforcePipelines": [21],
+            "totalSalesforcePipelineExecutions": [41]
+    }
+];
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -76,62 +88,17 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
         kpiConfiguration,
       );
 
-    //   const response = {
-    //     "data": {
-    //         "data": [
-    //             {
-    //                 "currentResults": {
-    //                     "totalComponentsDeployed": 124,
-    //                     "averageComponentsDeployedPerExecution": 3,
-    //                     "totalPipelineExecutionsWithValidation": 13,
-    //                     "totalPipelineExecutionsWithUnitTests": 11,
-    //                     "totalPipelineExecutionsWithDeployment": 8,
-    //                     "totalSalesforcePipelines": 21,
-    //                     "totalSalesforcePipelineExecutions": 41
-    //                 },
-    //                 "previousResults": {
-    //                     "totalComponentsDeployed": 236,
-    //                     "averageComponentsDeployedPerExecution": 11.8,
-    //                     "totalPipelineExecutionsWithValidation": 21,
-    //                     "totalPipelineExecutionsWithUnitTests": 0,
-    //                     "totalPipelineExecutionsWithDeployment": 18,
-    //                     "totalSalesforcePipelines": 39,
-    //                     "totalSalesforcePipelineExecutions": 26589
-    //                 },
-    //                 "trends": {
-    //                     "totalComponentsDeployed": "Red",
-    //                     "averageComponentsDeployedPerExecution": "Red",
-    //                     "totalPipelineExecutionsWithValidation": "Red",
-    //                     "totalPipelineExecutionsWithUnitTests": "Neutral",
-    //                     "totalPipelineExecutionsWithDeployment": "Red",
-    //                     "totalSalesforcePipelines": "Red",
-    //                     "totalSalesforcePipelineExecutions": "Red"
-    //                 },
-    //                 "dateRanges": {
-    //                     "current": {
-    //                         "$gte": "2022-08-11T07:00:00.000Z",
-    //                         "$lt": "2022-08-12T07:00:00.000Z"
-    //                     },
-    //                     "previous": {
-    //                         "$gte": "2022-08-10T07:00:00.000Z",
-    //                         "$lt": "2022-08-11T07:00:00.000Z"
-    //                     }
-    //                 }
-    //             }
-    //         ],
-    //         "length": 1,
-    //         "status": 200,
-    //         "status_text": "OK"
-    //     }
-    // };
-
      const dataObject =
-        response?.data && response?.status === 200
-          ? response?.data?.data[0]
-          : [];
+        response?.data && response?.data?.status === 200 
+          ? response?.data?.data[0]?.data
+          : mockData;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+      }
+      if (dataObject === mockData) {
+        setMockDataShown(true);
+        setDataPresent(false);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -335,6 +302,7 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        dataPresent={mockDataShown}
       />
       <ModalLogs
         header="Salesforce Components Metrics"
@@ -354,6 +322,8 @@ SalesforceComponentsDataBlockChart.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
+  dataPresent: PropTypes.bool,
+  setDataPresent: PropTypes.func
 };
 
 export default SalesforceComponentsDataBlockChart;

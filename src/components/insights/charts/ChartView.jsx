@@ -180,7 +180,7 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
-function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis, dataPresent }) {
+function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis, dataPresent, setDataPresent }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -279,6 +279,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+              dataPresent={dataPresent}
+              setDataPresent={setDataPresent}
             />
           </Col>
         );
@@ -292,6 +294,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               setKpis={setKpis}
               index={index}
               dataPresent={dataPresent}
+              setDataPresent={setDataPresent}
             />
           </Col>
         );
@@ -1487,6 +1490,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+              dataPresent={dataPresent}
+              setDataPresent={setDataPresent}
             />
           </Col>
         );
@@ -1559,6 +1564,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+              dataPresent={dataPresent}
+              setDataPresent={setDataPresent}
             />
           </Col>
         );
@@ -1709,7 +1716,8 @@ ChartView.propTypes = {
   index: PropTypes.number,
   loadChart: PropTypes.func,
   setKpis: PropTypes.func,
-  dataPresent: PropTypes.bool
+  dataPresent: PropTypes.bool,
+  setDataPresent: PropTypes.func
 };
 
 export default ChartView;

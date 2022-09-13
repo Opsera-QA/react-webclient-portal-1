@@ -13,10 +13,11 @@ import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplay
 import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
 import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
 import chartsActions from "components/insights/charts/charts-actions";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function DashboardViewer({ dashboardModel, loadData }) {
   const {getAccessToken} = useContext(AuthContext);
-  const [dataPresent, setDataPresent] = useState(false);
+  const [dataPresent, setDataPresent] = useState(true);
   const [kpis, setKpis] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -42,10 +43,6 @@ function DashboardViewer({ dashboardModel, loadData }) {
   }, [dashboardModel]);
 
   const initializeModel = async (newDashboardData) => {
-    let activeData = await chartsActions.getDataPresent(getAccessToken, cancelTokenSource);
-    if (activeData) {
-      setDataPresent(true);
-    }
     setKpis(newDashboardData?.getData("configuration"));
   };
 
@@ -98,6 +95,12 @@ function DashboardViewer({ dashboardModel, loadData }) {
 
     return (
       <div className="px-2" style={{ minWidth: "505px" }}>
+        {!dataPresent && <InlineWarning
+          className={"ml-2"}
+          warningMessage={`
+          PLEASE NOTE: Mock data is currently being shown in charts that are grayed out.  Once a pipeline is run, these charts will contain real time data. 
+          `}
+        />}
         <Row className="px-2">
           {kpis.map(function (kpiConfiguration, index) {
             return (
@@ -109,6 +112,7 @@ function DashboardViewer({ dashboardModel, loadData }) {
                 loadChart={loadData}
                 setKpis={setKpis}
                 dataPresent={dataPresent}
+                setDataPresent={setDataPresent}
               />
             );
           })}
