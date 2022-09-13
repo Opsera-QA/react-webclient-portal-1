@@ -95,16 +95,16 @@ export default function FreeTrialRegistrationSignupScreen (
             {/*  setDataObject={setRegistrationModel}*/}
             {/*  dataObject={registrationModel}*/}
             {/*/>*/}
-            <PasswordInput
-              fieldName={"password"}
-              setDataObject={setRegistrationModel}
-              dataObject={registrationModel}
-            />
-            <PasswordInput
-              fieldName={"confirmPassword"}
-              setDataObject={setRegistrationModel}
-              dataObject={registrationModel}
-            />
+            {/*<PasswordInput*/}
+            {/*  fieldName={"password"}*/}
+            {/*  setDataObject={setRegistrationModel}*/}
+            {/*  dataObject={registrationModel}*/}
+            {/*/>*/}
+            {/*<PasswordInput*/}
+            {/*  fieldName={"confirmPassword"}*/}
+            {/*  setDataObject={setRegistrationModel}*/}
+            {/*  dataObject={registrationModel}*/}
+            {/*/>*/}
             <ButtonContainerBase
               leftSideButtons={
                 <BackButton
