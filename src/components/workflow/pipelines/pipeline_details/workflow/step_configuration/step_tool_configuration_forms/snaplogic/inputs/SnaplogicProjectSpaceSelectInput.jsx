@@ -46,7 +46,7 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, toolConfigId, disab
     } catch (error) {
       if (isMounted?.current === true) {
         setPlaceholderText("Could not pull Snaplogic Project Spaces");
-        setErrorMessage(`An Error Occurred Pulling Snaplogic Project Spaces: ${error}`);
+        setErrorMessage(error);
         console.error(error);
       }
     } finally {
@@ -102,6 +102,7 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, toolConfigId, disab
       valueField={"name"}
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
     />
