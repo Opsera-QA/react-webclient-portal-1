@@ -19,6 +19,7 @@ function SyntaxHighlighterCodeFieldBase(
     showInlineLineNumbers,
     isLoading,
     backgroundColor,
+    height,
   }) {
   return (
     <div className={className}>
@@ -27,6 +28,8 @@ function SyntaxHighlighterCodeFieldBase(
         titleText={titleText}
         isLoading={isLoading}
         backgroundColor={backgroundColor}
+        minimumHeight={height}
+        maximumHeight={height}
         titleRightSideButton={
           <CopyToClipboardIcon
             copyString={code}
@@ -60,6 +63,7 @@ SyntaxHighlighterCodeFieldBase.propTypes = {
   showInlineLineNumbers: PropTypes.bool,
   isLoading: PropTypes.bool,
   backgroundColor: PropTypes.string,
+  height: PropTypes.string,
 };
 
 SyntaxHighlighterCodeFieldBase.defaultProps = {
