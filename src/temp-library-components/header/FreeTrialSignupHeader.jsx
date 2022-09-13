@@ -9,7 +9,7 @@ export default function FreeTrialSignupHeader({ className }) {
       <h2
         style={{
           textAlign: "center",
-          fontColor: "white",
+          color: "white",
         }}
       >{`Let's get started!`}</h2>
     </div>
