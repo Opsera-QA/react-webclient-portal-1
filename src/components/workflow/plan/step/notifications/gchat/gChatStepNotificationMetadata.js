@@ -20,12 +20,17 @@ const gChatStepNotificationMetadata = {
       label: "GChat Notifications",
       id: "enabled",
     },
+    {
+      label: "Include last 10 lines of log (limited to 1000 characters)",
+      id: "logEnabled",
+    },
   ],
   newObjectFields: {
     type: "gchat",
     event: "all",
     toolId: "",
     enabled: false,
+    logEnabled: false,
   }
 };
 

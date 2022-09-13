@@ -5,6 +5,7 @@ import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/
 import GChatStepNotificationToolSelectInput
   from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -39,6 +40,14 @@ function GChatStepNotificationEditorPanel(
         <GChatStepNotificationToolSelectInput
           model={gChatNotificationModel}
           setModel={setGChatNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <BooleanToggleInput
+          dataObject={gChatNotificationModel}
+          setDataObject={setGChatNotificationModel}
+          disabled={gChatNotificationModel?.getData("enabled") === false}
+          fieldName={"logEnabled"}
         />
       </Col>
     </Row>
