@@ -48,7 +48,7 @@ function GithubToolConfiguration({ toolData }) {
         </div>
       );
     }
-    return (<VaultTextInput type={"password"} dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"accountPassword"} />);
+    return (<VaultTextInput type={"password"} dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"accountPassword"} helpTooltipText={"GitHub Personal Access Token scope of “repo” is required."} />);
   };
 
   if (githubConfigurationDto == null) {
