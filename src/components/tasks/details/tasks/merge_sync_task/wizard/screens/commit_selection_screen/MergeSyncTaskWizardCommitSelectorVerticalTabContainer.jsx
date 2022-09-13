@@ -13,7 +13,6 @@ import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
