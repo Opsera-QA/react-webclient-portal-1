@@ -41,51 +41,54 @@ const MergeSyncTaskWizardAdvancedEditingModePanel = (
     return (<LoadingDialog size={"sm"} message={"Loading Selected File Changes"} />);
   }
 
-  if (hasStringValue(comparisonFileModel?.getData("manualContent")) === true) {
-    return (
-      <MergeSyncTaskWizardFileEditor
-        comparisonFileModel={comparisonFileModel}
-        setComparisonFileModel={setComparisonFileModel}
-        isLoading={isLoading}
-        fileContentFieldName={comparisonFileModel?.getData("fileContentFieldName")}
-        wizardModel={wizardModel}
-      />
-    );
-  }
+  // TODO: If we eventually want to add editing from either side, comment this back in,
+  //  it will need some tweaking since I had to change things to disable it
+  // if (hasStringValue(comparisonFileModel?.getData("manualContent")) !== true) {
+  //     return (
+  //       <div>
+  //         <SideBySideCodeComparisonField
+  //           titleText={"Select Source or Destination File to Start Editing"}
+  //           isLoading={isLoading}
+  //           leftSideCode={comparisonFileModel?.getData("sourceContent")}
+  //           leftSideTitleText={"File on Source Branch"}
+  //           rightSideCode={comparisonFileModel?.getData("destinationContent")}
+  //           rightSideTitleText={"File on Destination Branch"}
+  //           maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
+  //           minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
+  //           language={comparisonFileModel?.getData("language")}
+  //         />
+  //         <SaveButtonContainer
+  //           extraButtons={
+  //             <MergeSyncTaskWizardSelectFileOptionButton
+  //               comparisonFileModel={comparisonFileModel}
+  //               setComparisonFileModel={setComparisonFileModel}
+  //               fileContentFieldName={"sourceContent"}
+  //               isLoading={isLoading}
+  //               buttonText={"Start Editing From Changes on Source Branch"}
+  //             />
+  //           }
+  //         >
+  //           <MergeSyncTaskWizardSelectFileOptionButton
+  //             comparisonFileModel={comparisonFileModel}
+  //             setComparisonFileModel={setComparisonFileModel}
+  //             fileContentFieldName={"destinationContent"}
+  //             isLoading={isLoading}
+  //             buttonText={"Start Editing From Content on Destination Branch"}
+  //           />
+  //         </SaveButtonContainer>
+  //       </div>
+  //     );
+  //   }
 
-  return (
-    <div>
-      <SideBySideCodeComparisonField
-        titleText={"Select Source or Destination File to Start Editing"}
-        isLoading={isLoading}
-        leftSideCode={comparisonFileModel?.getData("sourceContent")}
-        leftSideTitleText={"File on Source Branch"}
-        rightSideCode={comparisonFileModel?.getData("destinationContent")}
-        rightSideTitleText={"File on Destination Branch"}
-        maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-        minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-        language={comparisonFileModel?.getData("language")}
-      />
-      <SaveButtonContainer
-        extraButtons={
-          <MergeSyncTaskWizardSelectFileOptionButton
-            comparisonFileModel={comparisonFileModel}
-            setComparisonFileModel={setComparisonFileModel}
-            fileContentFieldName={"sourceContent"}
-            isLoading={isLoading}
-            buttonText={"Start Editing From Changes on Source Branch"}
-          />
-        }
-      >
-        <MergeSyncTaskWizardSelectFileOptionButton
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileContentFieldName={"destinationContent"}
-          isLoading={isLoading}
-          buttonText={"Start Editing From Content on Destination Branch"}
-        />
-      </SaveButtonContainer>
-    </div>
+
+    return (
+    <MergeSyncTaskWizardFileEditor
+      comparisonFileModel={comparisonFileModel}
+      setComparisonFileModel={setComparisonFileModel}
+      isLoading={isLoading}
+      fileContentFieldName={comparisonFileModel?.getData("fileContentFieldName")}
+      wizardModel={wizardModel}
+    />
   );
 };
 
