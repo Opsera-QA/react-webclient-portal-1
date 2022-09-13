@@ -65,9 +65,9 @@ export default function FreeTrialLaunchWorkflowButton(
   const getButtonText = () => {
     switch (workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        return "Launch Task";
+        return "Start Task Now!";
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-        return "Launch Pipeline";
+        return "Start Pipeline Now!";
     }
   };
 

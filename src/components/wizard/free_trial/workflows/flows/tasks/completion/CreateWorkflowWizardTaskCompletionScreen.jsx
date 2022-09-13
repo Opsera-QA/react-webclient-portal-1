@@ -13,6 +13,10 @@ import FreeTrialLaunchWorkflowButton
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
+import DoneOverlayButton from "components/common/buttons/done/overlay/DoneOverlayButton";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+
+const HEIGHT = "400px";
 
 export default function CreateWorkflowWizardTaskCompletionScreen(
   {
@@ -20,7 +24,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
     workflowType,
     setButtonContainer,
   }) {
-  const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
+  const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.SUCCESS);
   const {
     getAccessToken,
     cancelTokenSource,
@@ -66,45 +70,47 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
         );
       case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
         return (
-          <div className={"my-3"}>
-            <div className={"d-flex"}>
-              <div className={"mx-auto"}>
-                <OpseraInfinityLogoLarge
-                  scale={.4}
-                />
+          <CenteredContentWrapper
+            minHeight={HEIGHT}
+          >
+            <OpseraInfinityLogoLarge
+              scale={.4}
+            />
+            <div>
+              <H5FieldSubHeader
+                subheaderText={`You have successfully completed creating your new ${workflowType} Task!`}
+              />
+              <H5FieldSubHeader
+                subheaderText={`Now you can either return to the home page or start the Task.`}
+                className={"my-3"}
+              />
+              <div className={"focusText"}>
+                You can start your Task anytime you want from the Opsera home page.
+              </div>
+              <div className={"d-flex"}>
+                <ButtonContainerBase
+                  className={"mt-5 ml-auto"}
+                >
+                  <DoneOverlayButton
+                    className={"mr-2"}
+                  />
+                  <FreeTrialLaunchWorkflowButton
+                    workspaceItem={task}
+                    workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
+                  />
+                </ButtonContainerBase>
               </div>
             </div>
-            <div className={"d-flex"}>
-              <div className={"mx-auto"}>
-                <H5FieldSubHeader
-                  className={"mt-3 ml-auto"}
-                  subheaderText={`You have successfully completed creating your new ${workflowType} Workflow`}
-                />
-              </div>
-            </div>
-            <ButtonContainerBase
-              className={"m-3"}
-            >
-              <CancelOverlayButton
-                buttonText={"Close"}
-                className={"mr-2"}
-              />
-              <FreeTrialLaunchWorkflowButton
-                workspaceItem={task}
-                workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
-              />
-            </ButtonContainerBase>
-          </div>
+          </CenteredContentWrapper>
         );
     }
   };
 
   return (
     <div
-      className={"mt-3"}
       style={{
-        minHeight: "600px",
-        height: "600px",
+        minHeight: HEIGHT,
+        height: HEIGHT,
       }}
     >
       {getBody()}
