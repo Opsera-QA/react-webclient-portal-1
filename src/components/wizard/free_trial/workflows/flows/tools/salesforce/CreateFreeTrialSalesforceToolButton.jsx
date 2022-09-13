@@ -6,7 +6,6 @@ import CreateButton from "components/common/buttons/saving/CreateButton";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function CreateFreeTrialSalesforceToolButton(
   {
@@ -18,7 +17,6 @@ export default function CreateFreeTrialSalesforceToolButton(
     icon,
     variant,
     currentCount,
-    type,
   }) {
   const {
     getAccessToken,
@@ -123,7 +121,6 @@ CreateFreeTrialSalesforceToolButton.propTypes = {
   customLabel: PropTypes.string,
   variant: PropTypes.string,
   currentCount: PropTypes.number,
-  type: PropTypes.string,
 };
 
 
