@@ -10,30 +10,28 @@ function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineW
   }
 
   return (
-    <div className="my-3">
-      <RadioButtonInputContainer dataObject={pipelineWizardModel} fieldName={fieldName}>
-        <div className={"d-flex"}>
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-            disabled={disabled}
-            value={"sfdc"}
-            label={<div><strong>From Salesforce</strong></div>}
-          />
-          <div className={"mx-3"}/>
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-            disabled={disabled}
-            visible={pipelineWizardModel?.getData("fromGitTasks") === false}
-            value={"git"}
-            label={<div><strong>From Git</strong></div>}
-          />
-        </div>
-      </RadioButtonInputContainer>
-    </div>
+    <RadioButtonInputContainer dataObject={pipelineWizardModel} fieldName={fieldName}>
+      <div className={"d-flex"}>
+        <RadioButtonOption
+          fieldName={fieldName}
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+          disabled={disabled}
+          value={"sfdc"}
+          label={<div><strong>From Salesforce</strong></div>}
+        />
+        <div className={"mx-3"} />
+        <RadioButtonOption
+          fieldName={fieldName}
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+          disabled={disabled}
+          visible={pipelineWizardModel?.getData("fromGitTasks") === false}
+          value={"git"}
+          label={<div><strong>From Git</strong></div>}
+        />
+      </div>
+    </RadioButtonInputContainer>
   );
 }
 

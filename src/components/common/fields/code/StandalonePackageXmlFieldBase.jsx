@@ -1,14 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
-import FieldTitleBar from "components/common/fields/FieldTitleBar";
-import InputContainer from "components/common/inputs/InputContainer";
-import LoadingDialog from "components/common/status_notifications/loading";
 import {Light as SyntaxHighlighter} from "react-syntax-highlighter";
 import xml from "react-syntax-highlighter/dist/cjs/languages/hljs/xml";
 import docco from "react-syntax-highlighter/dist/cjs/styles/hljs/docco";
 import {_xmlFormattingHelper} from "components/common/helpers/code-helpers";
 import ErrorDialog from "components/common/status_notifications/error";
+import InfoContainer from "components/common/containers/InfoContainer";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -47,63 +48,55 @@ function StandalonePackageXmlFieldBase({xml, title, errorMessage, className, isL
   const getBody = () => {
     if (isLoading === true) {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            <LoadingDialog size={"sm"} message={"Loading Data"} />
-          </div>
-        </div>
+        <CenterLoadingIndicator />
       );
     }
 
-    if (errorMessage !== "") {
+    if (hasStringValue(errorMessage) === "true") {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            <ErrorDialog error={errorMessage}/>
-          </div>
-        </div>
+        <CenteredContentWrapper>
+          <ErrorDialog error={errorMessage}/>
+        </CenteredContentWrapper>
       );
     }
 
     if (error !== "") {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            <ErrorDialog error={error}/>
-          </div>
-        </div>
+        <CenteredContentWrapper>
+          <ErrorDialog error={error}/>
+        </CenteredContentWrapper>
       );
     }
 
     if (formattedXml == null) {
       return (
-        <div className={"h-100 w-100 d-flex"}>
-          <div className={"m-auto w-100"}>
-            XML could not be formatted
-          </div>
-        </div>
+        <CenteredContentWrapper>
+          XML could not be formatted
+        </CenteredContentWrapper>
       );
     }
 
     return (
-      <SyntaxHighlighter language="xml" style={docco}>
+      <SyntaxHighlighter
+        language={"xml"}
+        style={docco}
+      >
         {formattedXml}
       </SyntaxHighlighter>
     );
   };
 
   return (
-    <InputContainer className={className}>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <FieldTitleBar customTitle={title} icon={faFileCode} isLoading={isLoading} />
-          <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
-            {getBody()}
-          </div>
-        </div>
-      </div>
-      <div className={"object-properties-footer"} />
-    </InputContainer>
+    <InfoContainer
+      minimumHeight={"150px"}
+      maximumHeight={"500px"}
+      titleText={title}
+      isLoading={isLoading}
+      titleIcon={faFileCode}
+      className={className}
+    >
+      {getBody()}
+    </InfoContainer>
   );
 }
 
@@ -113,6 +106,10 @@ StandalonePackageXmlFieldBase.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+};
+
+StandalonePackageXmlFieldBase.defaultProps = {
+  className: "my-2"
 };
 
 export default StandalonePackageXmlFieldBase;

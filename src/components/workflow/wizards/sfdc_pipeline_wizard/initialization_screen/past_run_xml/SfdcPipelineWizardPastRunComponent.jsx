@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
@@ -12,8 +12,16 @@ import SfdcPipelineWizardUploadComponentTypesRadioInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
+function SfdcPipelineWizardPastRunComponent(
+  {
+    pipelineWizardModel,
+    setPipelineWizardModel,
+    setPipelineWizardScreen,
+    handleClose,
+  }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,51 +43,22 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
   }, []);
 
   const resetStoredFileContents = () => {
-    let newDataObject = {...pipelineWizardModel};
+    let newDataObject = { ...pipelineWizardModel };
     newDataObject.setData("xmlFileContent", "");
     newDataObject.setData("csvFileContent", []);
     newDataObject.setData("isXml", false);
     newDataObject.setData("isCsv", false);
     newDataObject.setData("fromFileUpload", false);
-    setPipelineWizardModel({...newDataObject});
+    setPipelineWizardModel({ ...newDataObject });
   };
 
   const validateXml = (xml) => {
-    let newDataObject = {...pipelineWizardModel};
+    let newDataObject = { ...pipelineWizardModel };
     newDataObject.setData("xmlFileContent", xml);
     newDataObject.setData("csvFileContent", []);
     newDataObject.setData("isXml", true);
     newDataObject.setData("fromFileUpload", true);
-    setPipelineWizardModel({...newDataObject});
-  };
-
-  const getXMLView = () => {
-    return (
-      <>
-        <StandalonePackageXmlField
-          runNumber={pipelineWizardModel?.getData("selectedRunNumber")}
-          pipelineWizardModel={pipelineWizardModel}
-          setXmlFunction={validateXml}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
-        {buttonContainer()}
-      </>
-    );
-  };
-
-  const buttonContainer = () => {
-    return (
-      <SaveButtonContainer>
-        <SfdcPipelineWizardSubmitFileTypeButton
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          isXml={true}
-          isLoading={isLoading}
-        />
-        <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-      </SaveButtonContainer>
-    );
+    setPipelineWizardModel({ ...newDataObject });
   };
 
   const getDependenciesToggle = () => {
@@ -98,35 +77,57 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
   const getBody = () => {
     if (pipelineWizardModel.getData("recordId") && pipelineWizardModel.getData("recordId").length > 0) {
       return (
-        <div>
-          <div className="my-4 w-100">
-            <div className="my-3">
-              <PipelineRunSelectInput
-                model={pipelineWizardModel}
-                setModel={setPipelineWizardModel}
-                maximumRunCount={pipelineWizardModel?.getData("run_count") > 0 ? pipelineWizardModel?.getData("run_count") - 1 : undefined}
-                disabled={isLoading}
-              />
-            </div>
-            <div className="my-3">
-              <SfdcPipelineWizardUploadComponentTypesRadioInput
-                pipelineWizardModel={pipelineWizardModel}
-                setPipelineWizardModel={setPipelineWizardModel}
-              />
-            </div>
+        <Row>
+          <Col xs={12}>
+            <PipelineRunSelectInput
+              model={pipelineWizardModel}
+              setModel={setPipelineWizardModel}
+              maximumRunCount={pipelineWizardModel?.getData("run_count") > 0 ? pipelineWizardModel?.getData("run_count") - 1 : undefined}
+              disabled={isLoading}
+            />
+          </Col>
+          <Col xs={12} sm={7}>
+            <SfdcPipelineWizardUploadComponentTypesRadioInput
+              pipelineWizardModel={pipelineWizardModel}
+              setPipelineWizardModel={setPipelineWizardModel}
+            />
+          </Col>
+          <Col xs={12} sm={5}>
             {getDependenciesToggle()}
-          </div>
-          {getXMLView()}
-        </div>
+          </Col>
+          <Col xs={12}>
+            <StandalonePackageXmlField
+              runNumber={pipelineWizardModel?.getData("selectedRunNumber")}
+              pipelineWizardModel={pipelineWizardModel}
+              setXmlFunction={validateXml}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              className={"m-0"}
+            />
+          </Col>
+          <Col xs={12}>
+            <SaveButtonContainer>
+              <SfdcPipelineWizardSubmitFileTypeButton
+                pipelineWizardModel={pipelineWizardModel}
+                setPipelineWizardScreen={setPipelineWizardScreen}
+                isXml={true}
+                isLoading={isLoading}
+              />
+              <CancelButton
+                className={"ml-2"}
+                showUnsavedChangesMessage={false}
+                cancelFunction={handleClose}
+                size={"sm"}
+              />
+            </SaveButtonContainer>
+          </Col>
+        </Row>
       );
     }
   };
 
   return (
     <div>
-      <div className="my-2">
-        Select a past run to use its XML for deployment.
-      </div>
       {getBody()}
     </div>
   );
@@ -135,8 +136,8 @@ function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWi
 SfdcPipelineWizardPastRunComponent.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
-  setPipelineWizardScreen : PropTypes.func,
-  handleClose : PropTypes.func,
+  setPipelineWizardScreen: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default SfdcPipelineWizardPastRunComponent;
