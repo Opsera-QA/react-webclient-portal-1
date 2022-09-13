@@ -113,6 +113,7 @@ function JenkinsGitCredentialsSelectInput({
         selectOptions={accountsList}
         valueField={"gitCredential"}
         textField={"gitCredential"}
+        helpTooltipText={"Account must be configured in the Accounts tab of the selected Jenkins tool."}
         clearDataFunction={clearDataFunction}
         disabled={disabled || accountsList.length===0}
       />
