@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { faPencil, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function MergeSyncTaskWizardAdvancedFileEditingButton(
+export default function MergeSyncTaskWizardAdvancedFileEditingButton(
   {
     comparisonFileModel,
+    setComparisonFileModel,
     inEditingMode,
     setInEditingMode,
     disabled,
@@ -14,12 +17,23 @@ function MergeSyncTaskWizardAdvancedFileEditingButton(
     className,
     isLoading,
   }) {
+  const destinationContent = comparisonFileModel?.getData("destinationContent");
+  const fileIsDeleted = hasStringValue(destinationContent) !== true;
+
   const getButtonText = () => {
     if (inEditingMode === true) {
       return "Cancel Advanced Editing Mode";
     }
 
     return "Advanced Editing Mode";
+  };
+
+  const triggerInlineEditingFunction = () => {
+    setInEditingMode(!inEditingMode);
+    const fileContent = comparisonFileModel?.getData("destinationContent");
+    comparisonFileModel?.setData("manualContent", fileContent);
+    comparisonFileModel?.setData("fileContentFieldName", "destinationContent");
+    setComparisonFileModel({ ...comparisonFileModel });
   };
 
   if (comparisonFileModel == null || setInEditingMode == null) {
@@ -29,16 +43,22 @@ function MergeSyncTaskWizardAdvancedFileEditingButton(
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button
-          size={size}
-          variant={"outline-secondary"}
-          disabled={
-            comparisonFileModel?.getData("whitelisted") === true // TODO: Change whitelisted to check if whitelisting is false to properly disable when support is added in the microservice
-            || disabled === true
-            || isLoading === true
-          }
-          onClick={() => setInEditingMode(!inEditingMode)}
+        <TooltipWrapper
+          innerText={fileIsDeleted === true ? "Cannot edit files that have been deleted." : undefined}
         >
+          <div>
+            <Button
+              size={size}
+              variant={"outline-secondary"}
+              disabled={
+                // comparisonFileModel?.getData("whitelisted") !== true // TODO: Change whitelisted to check if whitelisting is false to properly disable when support is added in the microservice
+                // ||
+                disabled === true
+                || isLoading === true
+                || fileIsDeleted === true
+              }
+              onClick={triggerInlineEditingFunction}
+            >
           <span>
             <IconBase
               isLoading={isLoading}
@@ -47,7 +67,9 @@ function MergeSyncTaskWizardAdvancedFileEditingButton(
             />
             {getButtonText()}
           </span>
-        </Button>
+            </Button>
+          </div>
+        </TooltipWrapper>
       </div>
     </div>
   );
@@ -61,11 +83,10 @@ MergeSyncTaskWizardAdvancedFileEditingButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  setComparisonFileModel: PropTypes.func,
 };
 
 MergeSyncTaskWizardAdvancedFileEditingButton.defaultProps = {
   size: "sm",
   icon: faQuestionCircle,
 };
-
-export default MergeSyncTaskWizardAdvancedFileEditingButton;

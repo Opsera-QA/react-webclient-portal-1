@@ -66,4 +66,14 @@ pipelineTemplateActions.getTemplateByIdV2 = async (getAccessToken, cancelTokenSo
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineTemplateActions.deployTemplateByIdentifierV2 = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `/pipelines/workflows/platform/identifier/${identifier}/deploy`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineTemplateActions.getPipelineTemplateByIdentifierV2 = async (getAccessToken, cancelTokenSource, identifier) => {
+  let apiUrl = `/pipelines/workflows/platform/identifier/${identifier}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default pipelineTemplateActions;

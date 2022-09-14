@@ -4,7 +4,6 @@ import LoginForm from "./components/login/LoginForm";
 import { Route } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
-//template routes
 import Home from "./Home";
 import Logout from "./components/login/Logout";
 import Sidebar from "components/sidebar/Sidebar";
@@ -127,52 +126,18 @@ import Faq from "components/about/faq/Faq";
 import CustomEnvironmentVariableManagement
   from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
-//import FreeTrialRegistration from "./components/free_trial/Registration";
-//import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
 import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
+import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
+import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
+import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
+import PlatformSystemParameterDetailView
+  from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
-
-  /*const getFreeTrialRoutes = () => {
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      return (
-        <>
-          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-          <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding} />
-        </>
-      );
-    }
-  };*/
-
-  const onAuthResume = async () => {
-    history.push('/');
-  };
-
-  //Login Form
-  if (!authenticatedState && !isPublicPathState) {
-    return (
-      <div className="container-fluid" style={{ margin: "0" }}>
-        <div className="d-flex flex-row">
-          <div className="w-100 pb-4">
-            <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
-
-            <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-            <Route path="/logout" exact component={Logout} />
-
-          </div>
-        </div>
-        <div className="row fixed-row-footer-bottom">
-          <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>
-            <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Authenticated routes
   return (
@@ -298,6 +263,13 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                        component={LdapOrganizationAccountDetailView} />
           <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
+
+
+          <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
+          <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
+
+          <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
+          <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact component={PlatformSystemParameterDetailView} />
 
           <SecureRoute path="/pipeline" component={Pipeline} />
           <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />

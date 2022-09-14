@@ -9,13 +9,12 @@ import modelHelpers from "components/common/model/modelHelpers";
 import { logsExportScheduledTaskMetadata } from "components/settings/logs_management/LogsExportScheduledTask.metadata";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function CreateLogsExportScheduleOverlay(
-  {
-    loadData,
-    isMounted,
-    scheduledTasks,
-    s3ToolId
-  }) {
+function CreateLogsExportScheduleOverlay({
+  loadData,
+  isMounted,
+  scheduledTasks,
+  s3ToolId,
+}) {
   const toastContext = useContext(DialogToastContext);
   const [scheduledTaskModel, setScheduledTaskModel] = useState(undefined);
 
@@ -23,9 +22,12 @@ function CreateLogsExportScheduleOverlay(
     setScheduledTaskModel(undefined);
 
     if (isMongoDbId(s3ToolId) === true) {
-      const newModel = modelHelpers.parseObjectIntoModel({}, logsExportScheduledTaskMetadata);
+      const newModel = modelHelpers.parseObjectIntoModel(
+        {},
+        logsExportScheduledTaskMetadata,
+      );
       newModel?.setData("task.s3ToolId", s3ToolId);
-      setScheduledTaskModel({...newModel});
+      setScheduledTaskModel({ ...newModel });
     }
   }, [s3ToolId]);
 
@@ -45,7 +47,7 @@ function CreateLogsExportScheduleOverlay(
   return (
     <CreateCenterPanel
       closePanel={closePanel}
-      objectType={tagMetadata.type}
+      objectType={logsExportScheduledTaskMetadata.type}
       loadData={loadData}
       size={CENTER_OVERLAY_SIZES.STANDARD}
     >
@@ -67,5 +69,3 @@ CreateLogsExportScheduleOverlay.propTypes = {
 };
 
 export default CreateLogsExportScheduleOverlay;
-
-

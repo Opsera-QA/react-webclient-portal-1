@@ -63,6 +63,14 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
             setDataObject={setTemplateModel}
           />
         </Col>
+        <Col lg={6}>
+          <TextInputBase
+            fieldName={"identifier"}
+            dataObject={templateModel}
+            setDataObject={setTemplateModel}
+            // inputHelpOverlay={PipelineTemplateIdentifierHelpOverlay}
+          />
+        </Col>
         <Col lg={12}>
           <TextInputBase
             fieldName={"description"}

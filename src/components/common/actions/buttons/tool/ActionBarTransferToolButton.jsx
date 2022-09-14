@@ -1,69 +1,36 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import CancelButton from "components/common/buttons/CancelButton";
-import axios from "axios";
 import TransferOwnershipButton from "components/common/buttons/transfer/TransferOwnershipButton";
 import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [toolCopy, setToolCopy] = useState(undefined);
   const [isTransferringOwnership, setIsTransferringOwnership] = useState(false);
   const [canTransferTool, setCanTransferTool] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    isSassUser,
+    getAccessToken
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (toolModel?.canPerformAction("update_tool_owner") === true) {
+      setToolCopy(toolModel?.clone());
+      setCanTransferTool(true);
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolModel]);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-
-      if (toolModel?.canPerformAction("update_tool_owner") === true) {
-        setToolCopy(toolModel?.clone());
-        setCanTransferTool(true);
-      }
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
 
   const transferToolOwnership = async () => {
     try {
@@ -115,7 +82,7 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
     );
   };
 
-  if (isSassUser() !== false || toolCopy == null || canTransferTool !== true) {
+  if (isSassUser !== false || toolCopy == null || canTransferTool !== true) {
     return null;
   }
 

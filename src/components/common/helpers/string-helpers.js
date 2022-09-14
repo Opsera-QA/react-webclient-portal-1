@@ -1,3 +1,5 @@
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+
 export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString = "") {
   if (hasStringValue(string) === true) {
     let capitalizedString = "";
@@ -78,13 +80,27 @@ export function getSingularOrPluralString(count, singularText, pluralText) {
 }
 
 export function cutOffExcessCharacters(initialString, characterLimit, postFix = "...") {
-  let parsedString = initialString;
+  const parsedString = DataParsingHelper.parseString(initialString, "");
+  const parsedPostFix = DataParsingHelper.parseString(postFix, "...");
 
-  if (parsedString != null && typeof parsedString === "string" && parsedString.length > characterLimit) {
-    parsedString = `${parsedString.substring(0, characterLimit)}${postFix}`;
+  if (parsedString?.length > characterLimit) {
+    const postFixLength = parsedPostFix.length;
+    return `${parsedString.substring(0, characterLimit - postFixLength)}${postFix}`;
   }
 
   return parsedString;
+}
+
+export function ensureStringFallsMeetsCharacterLimits (initialString, characterLimit, postFix = "...") {
+  const parsedString = DataParsingHelper.parseString(initialString, "");
+  const parsedCharacterCount = DataParsingHelper.parseInteger(characterLimit, 0);
+
+  if (parsedString?.length >= characterLimit) {
+    return cutOffExcessCharacters(initialString, parsedCharacterCount, postFix);
+  } else {
+    const extraCharacters = characterLimit - parsedString.length;
+    return `${parsedString}${" ".repeat(extraCharacters)}`;
+  }
 }
 
 export function camalize (str) {

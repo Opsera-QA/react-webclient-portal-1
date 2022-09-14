@@ -1,20 +1,27 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import useIsMountedStateReference from "hooks/useIsMountedStateReference";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 
-function useComponentStateReference() {
-  const isMounted = useRef(false);
-  const [cancelTokenSource] = useState(axios.CancelToken.source());
-  const { getAccessToken, userAccessRoles, isSassUser, } = useContext(AuthContext);
+export default function useComponentStateReference() {
+  const isMounted = useIsMountedStateReference();
+  const cancelTokenSource = useCancelTokenStateReference();
+  const {
+    getAccessToken,
+    userAccessRoles,
+    isSassUser,
+    isOpseraAdministrator,
+    featureFlagHideItemInProd,
+    featureFlagHideItemInTest,
+    isSiteAdministrator,
+    userData,
+  } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    isMounted.current = true;
-
     return () => {
-      cancelTokenSource.cancel();
-      isMounted.current = false;
+      toastContext.removeAllBanners();
     };
   }, []);
 
@@ -24,8 +31,12 @@ function useComponentStateReference() {
     getAccessToken: getAccessToken,
     toastContext: toastContext,
     accessRoleData: userAccessRoles,
-    isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
+    isOpseraAdministrator: isOpseraAdministrator(),
+    isSiteAdministrator: isSiteAdministrator,
+    isProductionEnvironment: featureFlagHideItemInProd(),
+    isTestEnvironment: featureFlagHideItemInTest(),
+    isSassUser: isSassUser(),
+    userData: userData,
+    isFreeTrial: false,
   });
 }
-
-export default useComponentStateReference;

@@ -268,6 +268,7 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
+      userData: userData,
       // getWebsocketClient: getWebSocketClient,
     }}>
       {children}

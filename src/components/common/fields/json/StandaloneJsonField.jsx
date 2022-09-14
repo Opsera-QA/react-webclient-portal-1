@@ -49,7 +49,7 @@ StandaloneJsonField.propTypes = {
 };
 
 StandaloneJsonField.defaultProps = {
-  enableClipboard: false,
+  enableClipboard: true,
   displayDataTypes: false,
 };
 

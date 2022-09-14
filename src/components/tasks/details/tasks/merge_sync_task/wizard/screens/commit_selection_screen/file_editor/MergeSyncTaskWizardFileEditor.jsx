@@ -45,6 +45,7 @@ function MergeSyncTaskWizardFileEditor(
               showInlineLineNumbers={false}
               code={comparisonFileModel?.getData(fileContentFieldName)}
               language={language}
+              height={"600px"}
             />
           </Col>
           <Col xs={12} md={6} className={"pl-1"}>
@@ -57,6 +58,7 @@ function MergeSyncTaskWizardFileEditor(
               fieldName={"manualContent"}
               mode={"xml"}
               theme={CODE_THEME_TYPES.DARK}
+              height={"600px"}
             />
           </Col>
         </Row>

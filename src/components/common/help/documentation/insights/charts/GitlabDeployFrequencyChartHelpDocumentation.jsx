@@ -6,17 +6,28 @@ function GitlabDeployFrequencyChartHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
       closeHelpPanel={closeHelpPanel}
-      helpTopic={"Deployment Statistics"}
+      helpTopic={"GitLab Deployment Frequency"}
     >
       <div>
-        <div className={"mb-2"}>This chart displays an overall summary of Deploy stages in pipelines. Measure the success percentage based on the number of successful deployments and the total number of pipeline executions involving the deployment stages. <b>Deployment Statistics</b> provide actionable insights, which allow users to click and view a report including a breakdown of individual pipeline executions. To customize goals based on your organization&#39;s goal, provide values in Settings.</div>
+        <div className={"mb-2"}>This chart displays an overall summary of deployment in pipelines. To customize goals based on your organization&#39;s goal, provide values in Settings.</div>
         <div>
           <ul style={{listStyleType: "none"}}>
-            <li><b>Deployment Statistics</b> - Success Rate indicates the success percentage for scores for the chosen period of time.
+            <li><b>Deployment Frequency Chart</b> - Displays the average number of deployments that occur daily for the chosen period of time.</li>
+            <li><b>Deployment Frequency Value</b> - Displays the overall average number of deployments for the chosen period of time, along with a trend.
               <ul>
-                <li><b>Success Rate</b> = (Successful Deploy Executions/Total Deploy Executions)*100</li>
-              </ul></li>
-            <li><b>Deployment Frequency Statistics</b> - Displays the average number of deployments that occur daily for the chosen period of time, along with a trend.</li>
+                <li><b>Deployment Frequency</b> = <i>(Successful deployments for selected time interval/ Total number of days selected)</i></li>
+                <li><b>Previous Frequency</b> = <i>(Successful deployments for <b>Previous Time Interval*</b>/ Total number of days selected)</i></li>
+                <ul style={{listStyleType: "none"}}>
+                  <li><b>* Previous Time Interval</b> - The time interval before the selected time.
+                    <ul style={{listStyleType: "none"}}>
+                      <li><b>Example 1</b>: Current week, <b>Previous</b> - Previous week</li>
+                      <li><b>Example 2</b>: Current Quarter, <b>Previous</b> - Previous Quarter</li>
+                      <li><b>Example 3</b>: For x days from y.(y to y + x), <b>Previous</b> - For x days from y-x.(y-x to y)</li>
+                    </ul>
+                  </li>
+                </ul>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

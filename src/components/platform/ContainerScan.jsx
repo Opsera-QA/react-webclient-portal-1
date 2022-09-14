@@ -64,7 +64,6 @@ function ContainerScan(props) {
             onClick={() => selectCard("Anchore")}
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("Anchore") ? true : false}
               checked={isChecked.Anchore && data["Anchore"]}
               className="newApp__checkbox"

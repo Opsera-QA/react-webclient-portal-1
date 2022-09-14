@@ -78,7 +78,6 @@ function RepositoryManagement(props) {
           className="newApp__service-logo newApp__service-logo--disabledButAvailable"
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("ArtiFactory") ? true : false}
               checked={isChecked.ArtiFactory && data["ArtiFactory"]}
               className="newApp__checkbox"
@@ -91,7 +90,6 @@ function RepositoryManagement(props) {
           <div  className={`newApp__service-logo ${tools.includes("Nexus") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
             onClick={() => selectCard("Nexus")} >
             <input type="checkbox"
-              inline
               disabled={tools.includes("Nexus") ? true : false}
               checked={isChecked.Nexus && data["Nexus"]}
               className="newApp__checkbox"

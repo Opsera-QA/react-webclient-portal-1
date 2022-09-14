@@ -1,9 +1,9 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function ActionBarPopoverButton(
+export default function ActionBarPopoverButton(
   {
     iconClasses,
     popoverText,
@@ -11,20 +11,8 @@ function ActionBarPopoverButton(
     icon,
     className,
   }) {
-  // TODO: Move to helper
-  const renderTooltip = (message) => {
-    return (
-      <Tooltip id="button-tooltip">
-        {message}
-      </Tooltip>
-    );
-  };
-
   return (
-    <OverlayTrigger
-      placement="top"
-      delay={{ show: 250, hide: 400 }}
-      overlay={renderTooltip(popoverText)}>
+    <TooltipWrapper innerText={popoverText}>
       <span className={"action-bar-icon pointer"}>
           <span className={className}>
             <IconBase
@@ -35,7 +23,7 @@ function ActionBarPopoverButton(
             <span>{text}</span>
           </span>
       </span>
-    </OverlayTrigger>
+    </TooltipWrapper>
   );
 }
 
@@ -46,5 +34,3 @@ ActionBarPopoverButton.propTypes = {
   text: PropTypes.string,
   className: PropTypes.string,
 };
-
-export default ActionBarPopoverButton;

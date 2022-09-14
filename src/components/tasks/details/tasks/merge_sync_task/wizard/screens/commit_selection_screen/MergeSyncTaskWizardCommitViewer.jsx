@@ -1,6 +1,5 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import PropTypes from "prop-types";
-import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import mergeSyncTaskWizardActions
@@ -17,6 +16,9 @@ import MergeSyncTaskWizardDiffSelectorVerticalTabContainer
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import MergeSyncTaskWizardCommitFileDiffSelectionsButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardCommitFileDiffSelectionsButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import MergeSyncTaskWizardAdvancedEditingModePanel
+  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedEditingModePanel";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
@@ -27,39 +29,26 @@ const MergeSyncTaskWizardCommitViewer = ({
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [comparisonFileModel, setComparisonFileModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [inEditingMode, setInEditingMode] = useState(false);
+  const { isMounted, cancelTokenSource} = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
     setComparisonFileModel(undefined);
+    setInEditingMode(false);
 
     if (hasStringValue(diffFile?.committedFile)) {
-      loadData(source).catch((error) => {
+      loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [diffFile]);
 
-  const loadData = async (
-    cancelSource = cancelTokenSource,
-  ) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getDiffFileList(cancelSource);
+      await getDiffFileList();
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     } finally {
@@ -69,25 +58,36 @@ const MergeSyncTaskWizardCommitViewer = ({
     }
   };
 
-  const getDiffFileList = async (
-    cancelSource = cancelTokenSource,
-  ) => {
+  const getDiffFileList = async () => {
     const response = await mergeSyncTaskWizardActions.retrieveSelectedFileContent(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       wizardModel?.getData("taskId"),
       wizardModel?.getData("runCount"),
       diffFile?.committedFile,
     );
-    const newFileMetadata = response?.data?.data;
 
-    if (isMounted?.current === true && newFileMetadata) {
-      const newComparisonFileModel = modelHelpers.parseObjectIntoModel(newFileMetadata, comparisonFileMetadata);
+    const fileContent = response?.data?.data;
+
+    if (isMounted?.current === true && fileContent) {
+      const newComparisonFileModel = modelHelpers.parseObjectIntoModel(fileContent, comparisonFileMetadata);
       setComparisonFileModel(newComparisonFileModel);
     }
   };
 
-  const getDiffOptions = () => {
+  const getCurrentView = () => {
+    if (inEditingMode === true) {
+      return (
+        <MergeSyncTaskWizardAdvancedEditingModePanel
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          comparisonFileModel={comparisonFileModel}
+          setComparisonFileModel={setComparisonFileModel}
+          isLoading={isLoading}
+        />
+      );
+    }
+
     const deltas = comparisonFileModel?.getArrayData("deltas");
 
     if (!Array.isArray(deltas) || deltas.length === 0) {
@@ -95,14 +95,37 @@ const MergeSyncTaskWizardCommitViewer = ({
     }
 
     return (
-      <MergeSyncTaskWizardDiffSelectorVerticalTabContainer
-        deltaList={deltas}
-        isLoading={isLoading}
-        loadDataFunction={loadData}
-        selectDeltaFunction={selectDeltaFunction}
-        destinationContent={comparisonFileModel?.getData("destinationContent")}
-        sourceContent={comparisonFileModel?.getData("sourceContent")}
-      />
+      <div>
+        <MergeSyncTaskWizardDiffSelectorVerticalTabContainer
+          deltaList={deltas}
+          isLoading={isLoading}
+          loadDataFunction={loadData}
+          selectDeltaFunction={selectDeltaFunction}
+          destinationContent={comparisonFileModel?.getData("destinationContent")}
+          sourceContent={comparisonFileModel?.getData("sourceContent")}
+        />
+        <div>
+          <ButtonContainerBase
+            className={"mt-2"}
+            // leftSideButtons={
+            //   <MergeSyncTaskWizardAdvancedFileEditingButton
+            //     comparisonFileModel={comparisonFileModel}
+            //     setComparisonFileModel={setComparisonFileModel}
+            //     isLoading={isLoading}
+            //     inEditingMode={inEditingMode}
+            //     setInEditingMode={setInEditingMode}
+            //   />
+            // }
+          >
+            <MergeSyncTaskWizardCommitFileDiffSelectionsButton
+              wizardModel={wizardModel}
+              setWizardModel={setWizardModel}
+              isLoading={isLoading}
+              comparisonFileModel={comparisonFileModel}
+            />
+          </ButtonContainerBase>
+        </div>
+      </div>
     );
   };
 
@@ -127,15 +150,7 @@ const MergeSyncTaskWizardCommitViewer = ({
         dataObject={comparisonFileModel}
         fieldName={"file"}
       />
-      {getDiffOptions()}
-      <ButtonContainerBase className={"mt-2"}>
-        <MergeSyncTaskWizardCommitFileDiffSelectionsButton
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          isLoading={isLoading}
-          comparisonFileModel={comparisonFileModel}
-        />
-      </ButtonContainerBase>
+      {getCurrentView()}
     </div>
   );
 };

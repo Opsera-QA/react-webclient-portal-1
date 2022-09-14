@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
+import ExportDataOverlay from "./ExportDataOverlay";
 
 // TODO: Should we be just sending in data and formatting in here?
-function ExportLogDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportLogDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -27,9 +28,7 @@ function ExportLogDataModal({ showModal, closeModal, formattedData, rawData, isL
   };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -37,9 +36,7 @@ function ExportLogDataModal({ showModal, closeModal, formattedData, rawData, isL
   );
 }
 
-ExportLogDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+ExportLogDataOverlay.propTypes = {
   dataToExport: PropTypes.any,
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
@@ -47,6 +44,6 @@ ExportLogDataModal.propTypes = {
   exportFrom: PropTypes.any,
 };
 
-export default ExportLogDataModal;
+export default ExportLogDataOverlay;
 
 
