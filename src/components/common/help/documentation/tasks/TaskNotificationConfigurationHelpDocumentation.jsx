@@ -8,7 +8,7 @@ function TaskNotificationConfigurationHelpDocumentation({closeHelpPanel}) {
       helpTopic={"Task Completion Notification Configuration"}
       closeHelpPanel={closeHelpPanel}
     >
-      <div className={"mb-2"}>Configure a <b>Task Completion Notification</b> to be notified upon a Task Completion. The platform&apos;s toggle must be enabled to configure. <b>Notification Level</b> selected will indicate if notification will be received when <b>Step Completed</b>, <b>On Error</b>, or for <b>All Activity</b> of the configured task.
+      <div className={"mb-2"}>To receive a notification upon a task&apos;s completion, configure a <b>Task Completion Notification</b>. The platform&apos;s toggle must be enabled to configure. <b>Notification Level</b> selected will indicate if notification will be received when <b>Step Completed</b>, <b>On Error</b>, or for <b>All Activity</b> of the configured task.
       </div>
       <div>
         <ul style={{listStyleType: "none"}}><li><b>Email Notification Configuration</b>

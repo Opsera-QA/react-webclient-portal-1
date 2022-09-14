@@ -8,7 +8,7 @@ function PipelineStepNotificationConfigurationHelpDocumentation({closeHelpPanel}
       helpTopic={"Pipeline Step Notification Configuration"}
       closeHelpPanel={closeHelpPanel}
     >
-      <div className={"mb-2"}>Configure a <b>Pipeline Step Notification Configuration</b> to be notified upon a pipeline step completion. The platform&apos;s toggle must be enabled to configure. <b>Notification Level</b> selected will indicate if notification will be received when <b>Step Completed</b>, <b>On Error</b>, or for <b>All Activity</b> of the configured step. Currently notifications can be sent via Email, Jira, Microsoft Teams and Slack.
+      <div className={"mb-2"}>To receive a notification upon a pipeline step&apos;s completion, configure a <b>Pipeline Step Notification Configuration</b>. The platform&apos;s toggle must be enabled to configure. <b>Notification Level</b> selected will indicate if notification will be received when <b>Step Completed</b>, <b>On Error</b>, or for <b>All Activity</b> of the configured step. Currently notifications can be sent via Email, Jira, Microsoft Teams and Slack.
       </div>
       <div>
         <ul style={{listStyleType: "none"}}>
