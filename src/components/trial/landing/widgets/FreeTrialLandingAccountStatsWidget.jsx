@@ -102,7 +102,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
 
     if (totalCount === 0) {
       return (
-        <span>You have no configured offerings at this time.</span>
+        <div>You have no configured offerings at this time.</div>
       );
     }
   };
