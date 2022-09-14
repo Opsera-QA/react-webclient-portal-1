@@ -10,11 +10,11 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import toolsActions from "components/inventory/tools/tools-actions";
 import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
-import axios from "axios";
 import ToolModel from "components/inventory/tools/tool.model";
 import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ToolDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
@@ -24,35 +24,26 @@ function ToolDetailView() {
   const [toolData, setToolData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [toolMetadata, setToolMetadata] = useState(undefined);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isOpseraAdministrator,
+    isMounted,
+    cancelTokenSource,
+    accessRoleData,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getTool(cancelSource);
+      await getTool();
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
@@ -63,18 +54,18 @@ function ToolDetailView() {
     }
   };
 
-  const getTool = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, id);
+  const getTool = async () => {
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, id);
     const tool = response?.data?.data;
 
     if (isMounted?.current === true && tool) {
-      const metadata = response?.data?.metadata;
-      const roleDefinitions = response?.data?.roles;
-      const userRecord = await getUserRecord(); //RBAC Logic
-      const customerAccessRules = await setAccessRoles(userRecord);
-      const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData, customerAccessRules, roleDefinitions);
-      setToolData(toolModel);
-      setToolMetadata(metadata);
+      if (tool.owner === userData._id || isOpseraAdministrator === true) {
+        const metadata = response?.data?.metadata;
+        const roleDefinitions = response?.data?.roles;
+        const toolModel = new ToolModel(tool, metadata, false, getAccessToken, cancelTokenSource, loadData, accessRoleData, roleDefinitions);
+        setToolData(toolModel);
+        setToolMetadata(metadata);
+      }
     }
   };
 

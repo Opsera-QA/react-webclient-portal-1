@@ -14,6 +14,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 let internalRefreshCount = 1;
 const refreshInterval = 15000;
@@ -30,33 +31,23 @@ function PipelineDetailView() {
   const [refreshCount, setRefreshCount] = useState(0);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
   const [refreshTimer, setRefreshTimer] = useState(null);
-
-  /* Role based Access Controls */
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
-
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    getAccessToken,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
 
     return () => {
-      source.cancel();
-      isMounted.current = false;
-
       if (refreshTimer) {
         console.log("clearing refresh timer");
         clearTimeout(refreshTimer);
@@ -70,15 +61,10 @@ function PipelineDetailView() {
     }
   }, [pipeline]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-
-      const userRecord = await getUserRecord(); //RBAC Logic
-      const rules = await setAccessRoles(userRecord);
-      setCustomerAccessRules(rules);
-
-      await getPipeline(cancelSource);
+      await getPipeline();
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error.message);
@@ -92,7 +78,7 @@ function PipelineDetailView() {
     }
   };
 
-  const getPipeline = async (cancelSource = cancelTokenSource) => {
+  const getPipeline = async () => {
     try {
       if (isMounted?.current !== true) {
         return;
@@ -102,11 +88,11 @@ function PipelineDetailView() {
       setRefreshCount(newRefreshCount);
 
       setSoftLoading(true);
-      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelSource, id);
+      const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, id);
       const newPipeline = response?.data?.data;
 
       if (isMounted?.current === true) {
-        if (newPipeline) {
+        if (newPipeline && (newPipeline.owner === userData._id || isOpseraAdministrator === true)) {
           setPipeline(newPipeline);
         } else {
           toastContext.showLoadingErrorDialog("Pipeline not found");
@@ -176,7 +162,7 @@ function PipelineDetailView() {
     if (tab === "model") {
       return (
         <PipelineWorkflowView
-          customerAccessRules={customerAccessRules}
+          customerAccessRules={accessRoleData}
           parentWorkflowStatus={workflowStatus}
           pipeline={pipeline}
           setPipeline={setPipeline}
@@ -200,7 +186,7 @@ function PipelineDetailView() {
             pipeline={pipeline}
             setPipeline={setPipeline}
             refreshCount={refreshCount}
-            customerAccessRules={customerAccessRules}
+            customerAccessRules={accessRoleData}
             parentWorkflowStatus={workflowStatus}
             ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}

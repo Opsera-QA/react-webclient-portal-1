@@ -50,6 +50,8 @@ function TaskDetailView() {
     getAccessToken,
     cancelTokenSource,
     accessRoleData,
+    userData,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -83,8 +85,10 @@ function TaskDetailView() {
     const taskMetadata = response?.data?.metadata;
 
     if (isMounted.current === true && task != null) {
-      setTaskMetadata(taskMetadata);
-      setTaskData(new TaskModel(task, taskMetadata, false, getAccessToken, cancelTokenSource, loadData, false, false, setTaskData));
+      if (task.owner === userData._id || isOpseraAdministrator === true) {
+        setTaskMetadata(taskMetadata);
+        setTaskData(new TaskModel(task, taskMetadata, false, getAccessToken, cancelTokenSource, loadData, false, false, setTaskData));
+      }
     }
   };
 
