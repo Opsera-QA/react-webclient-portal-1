@@ -244,11 +244,11 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
               </div>
             </div>
             <CenteredContentWrapper>
-              <div>
-                <div className={"marketingModulesTextLarger mx-2"}>
+              <div className={"m-2"}>
+                <div className={"marketingModulesTextLarger"}>
                   {getItemCounts()}
                 </div>
-                <div className={"mt-3 marketingModulesTextLarger mx-2"}>
+                <div className={"mt-1 marketingModulesTextLarger"}>
                   {getWorkflowHealthStatus()}
                 </div>
               </div>
