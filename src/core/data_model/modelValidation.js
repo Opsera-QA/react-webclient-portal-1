@@ -83,15 +83,15 @@ export const fieldValidation = (value, model, field) => {
   if (field.isEmail === true) {
     if (!validateEmail(value))
     {
-      errorMessages.push(`The email address ${value} is not valid.`);
+      errorMessages.push(`The email address is not valid.`);
     }
   }
 
   if (field.isEmailArray === true) {
     if (Array.isArray(value) && value?.length > 0) {
-      value?.forEach((potentialEmail) => {
+      value?.forEach((potentialEmail, index) => {
         if (validateEmail(potentialEmail) !== true) {
-          errorMessages.push(`The email address ${potentialEmail} is not valid.`);
+          errorMessages.push(`Email address ${index} is not valid.`);
         }
       });
     }
@@ -202,7 +202,7 @@ const getDateValidationErrors = (model, value, field) => {
   }
 
   const parsedDate = new Date(value);
-  
+
   if (hasStringValue(field.mustBeAfter) === true) {
     const afterFieldValue = model?.getData(field.mustBeAfter);
 
@@ -234,7 +234,7 @@ const getDateValidationErrors = (model, value, field) => {
   if (field.mustBeInTheFuture === true && parsedDate <= new Date()) {
     errorMessages.push(`${model.getLabel(field.id)} must be set to a date after now.`);
   }
-  
+
   return errorMessages;
 };
 
