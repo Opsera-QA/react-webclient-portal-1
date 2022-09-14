@@ -177,6 +177,7 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 //Boomi KPI
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
+import ChangeFailureRateLineChart from "./jira/change_failure_rate/ChangeFailureRateLineChart";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -234,6 +235,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
   const getChart = () => {
     switch (kpiConfig?.kpi_identifier) {
+      
       // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (
@@ -413,6 +415,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Jira KPIs
+      case "change-failure-rate":
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ChangeFailureRateLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "jira-tickets-assigned-by-user":
         return (
           <Col xl={6} md={12} className="p-2">

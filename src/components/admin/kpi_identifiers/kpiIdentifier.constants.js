@@ -76,6 +76,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   JIRA_TICKETS_ASSIGNED_BY_USER: "jira-tickets-assigned-by-user",
   JIRA_VELOCITY_REPORT: "jira-velocity-report",
   JIRA_MEAN_TIME_TO_RESOLUTION:"jira-mean-time-to-resolution",
+  JIRA_CHANGE_FAILURE_RATE:"change-failure-rate",
 
   // JMeter
   JMETER_CONNECT_TIME: "jmeter-connect-time",

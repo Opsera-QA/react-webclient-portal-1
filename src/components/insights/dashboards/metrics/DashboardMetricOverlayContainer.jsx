@@ -31,6 +31,7 @@ import LeadTimeAndReleaseTracebilityEditorPanel
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
+import ChangeFailureRateLineChartEditorPanel from "components/insights/charts/jira/change_failure_rate/ChangeFailureRateLineChartEditorPanel";
 import QuickDeployStatisticsEditorPanel
   from "../../charts/opsera/quick_deploy_statistics/QuickDeployStatisticsEditorPanel";
 import SalesforceComponentsEditorPanel
@@ -207,6 +208,15 @@ function DashboardMetricOverlayContainer(
           unpackedFilterData={unpackedFilterData}
           kpiConfiguration={kpiConfiguration}
         />);
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+          return (
+            <ChangeFailureRateLineChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />);
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
             <GitlabLeadTimeEditorPanel
