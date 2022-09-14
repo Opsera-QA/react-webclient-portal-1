@@ -1,6 +1,5 @@
 import React from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PasswordInput from "components/common/inputs/text/PasswordInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
@@ -13,9 +12,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialRegisterButton from "components/trial/registration/FreeTrialRegisterButton";
 import userActions from "components/user/user-actions";
 import BackButton from "components/common/buttons/back/BackButton";
-import { useHistory } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import { Form } from "react-bootstrap";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialRegistrationSignupScreen (
   {
@@ -23,12 +22,17 @@ export default function FreeTrialRegistrationSignupScreen (
     setRegistrationModel,
     setCurrentScreen,
   }) {
-  const history = useHistory();
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const registerAccountFunction = async () => {
     if (registrationModel.isModelValid()) {
-      const emailIsAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
+      const email = DataParsingHelper.parseAndLowercaseString(registrationModel?.getData("email"), "");
+
+      if (email.endsWith("@opsera.io")) {
+        throw "Opsera.io email addresses are not supported.";
+      }
+
+      const emailIsAvailable = await userActions.isEmailAvailable(email);
 
       if (!emailIsAvailable) {
         toastContext.showEmailAlreadyExistsErrorDialog();
