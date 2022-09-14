@@ -143,6 +143,10 @@ import TaskTemplateManagement from "components/admin/task_templates/TaskTemplate
 import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
 import PlatformSystemParameterDetailView
   from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
+import FreeTrialCustomerWorkspaceManagement
+  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
+import FreeTrialCustomerWorkspaceView
+  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
@@ -272,6 +276,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
           <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
           <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
+
+          <SecureRoute path="/admin/customer/workspaces" exact component={FreeTrialCustomerWorkspaceManagement} />
+          <SecureRoute path="/admin/customer/workspaces/user/:userId" exact component={FreeTrialCustomerWorkspaceView} />
 
           <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
           <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact component={PlatformSystemParameterDetailView} />

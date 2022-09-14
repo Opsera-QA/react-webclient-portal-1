@@ -184,6 +184,24 @@ const breadcrumbs = {
     icon: faCogs
   },
 
+  freeTrialCustomerWorkspaceManagement: {
+    parent: "admin",
+    name: "freeTrialCustomerWorkspaceManagement",
+    path: paths.freeTrialCustomerWorkspaceManagement,
+    title: "Free Trial Customer Workspace Management",
+    linkText: "Free Trial Customer Workspace Management",
+    icon: faUsers,
+    pageDescription: "Opsera Customer Workspace Management allows you to configure and track all customer pipelines, tasks, and tools in one central location."
+  },
+  freeTrialCustomerWorkspaceDetailView: {
+    parent: "freeTrialCustomerWorkspaceManagement",
+    name: "freeTrialCustomerWorkspaceDetailView",
+    path: paths.freeTrialCustomerWorkspaceDetailView,
+    title: "Free Trial Customer Workspace Details",
+    linkText: "Free Trial Customer Workspace Details",
+    icon: faUsers,
+  },
+
   taskTemplateManagement: {
     parent: "admin",
     name: "taskTemplateManagement",
@@ -1029,7 +1047,8 @@ const breadcrumbs = {
     path: paths.workspace,
     title: "Workspace",
     linkText: "Workspace",
-    icon: faRectangleList
+    icon: faRectangleList,
+    pageDescription: "The Opsera workspace allows you to configure and track all workflows in one central location.",
   },
 
   freeTrialLanding: {

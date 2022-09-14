@@ -4,7 +4,12 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const workspaceActions = {};
 
-workspaceActions.getFreeTrialWorkspaceItems = async (getAccessToken, cancelTokenSource, type = "all", searchKeyword) => {
+workspaceActions.getFreeTrialWorkspaceItems = async (
+  getAccessToken,
+  cancelTokenSource,
+  type = "all",
+  searchKeyword,
+) => {
   const apiUrl = `trial/workspace/items`;
   const params = {};
 
@@ -20,7 +25,37 @@ workspaceActions.getFreeTrialWorkspaceItems = async (getAccessToken, cancelToken
     params: params,
   };
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
+};
+
+workspaceActions.getFreeTrialCustomerWorkspaceItems = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+  searchKeyword,
+) => {
+  const apiUrl = `trial/workspace/items/${userId}`;
+  const params = {};
+
+  if (hasStringValue(searchKeyword) === true) {
+    params.search = searchKeyword;
+  }
+
+  const urlParams = {
+    params: params,
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
 };
 
 workspaceActions.getFreeTrialWorkspaceTasksByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {

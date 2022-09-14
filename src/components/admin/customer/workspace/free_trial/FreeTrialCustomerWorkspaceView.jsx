@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/FreeTrialWorkspaceViewContainer";
-import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
-import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { useParams } from "react-router-dom";
 import { workspaceActions } from "components/workspace/workspace.actions";
 
-export default function FreeTrialWorkspace() {
-  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
+export default function FreeTrialCustomerWorkspaceView() {
+  const { userId } = useParams();
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,18 +46,18 @@ export default function FreeTrialWorkspace() {
   };
 
   const getWorkspaceItems = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    const response = await workspaceActions.getFreeTrialWorkspaceItems(
+    const response = await workspaceActions.getFreeTrialCustomerWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
-      newWorkspaceFilterModel?.getFilterValue("type"),
+      userId,
       newWorkspaceFilterModel?.getFilterValue("search"),
     );
-    const items = response?.data?.data;
+    const users = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(items)) {
+    if (isMounted?.current === true && Array.isArray(users)) {
       setToolMetadata(response?.data?.toolMetadata);
       setTaskMetadata(response?.data?.taskMetadata);
-      setWorkspaceItems([...items]);
+      setWorkspaceItems([...users]);
       newWorkspaceFilterModel.updateActiveFilters();
       setWorkspaceFilterModel({...newWorkspaceFilterModel});
     }
