@@ -35,7 +35,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
         <FreeTrialSignupHeader />
         <WizardCard>
           <div
-            className={"px-4 py-3"}
+            className={"px-4 pt-3 pb-4"}
             style={{
               width: "525px",
             }}
