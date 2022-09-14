@@ -51,7 +51,7 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
             className={`${metricData.prevDeploymentTrend?.trend} p-2`}
-            topText={"Deployment Frequency"}
+            topText={"Average Deployment Frequency"}
             icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
             bottomText={`Previous Frequency: ${metricData?.prevDeployment}`}
             middleText={
@@ -69,12 +69,14 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
   const getTrendChart = () => {
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
-        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-          Goal<b> ({goalsData})</b>{" "}
-          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
+        <div className={'mr-2'} style={{ float: "right", fontSize: "10px" }}>
+          Goal<b> ({goalsData})</b>
+          <IconBase className={'ml-2'} icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
-          Average Daily Builds{" "}
-          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
+          Total Deployments <b> ({metricData.count})</b>
+          <br></br>
+          Average Daily Deployments
+          <IconBase className={'ml-2'} icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <ResponsiveLine
           data={dailyDeploymentsChartData}
