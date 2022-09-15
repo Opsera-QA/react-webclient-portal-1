@@ -8,7 +8,8 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
-import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork, faBellOn} from "@fortawesome/pro-light-svg-icons";
+import DashboardNotificationsEditorPanel from "components/common/inputs/metric/notifications/DashboardNotificationsEditorPanel";
 
 function DashboardMetricTabPanel(
   {
@@ -37,6 +38,20 @@ function DashboardMetricTabPanel(
     }
   };
 
+  const getDashboardNotificationsSettingsTab = () => {
+    if (metricModel?.getData("dashboardNotifications") === true) {
+      return (
+        <CustomTab
+          icon={faBellOn}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Dashboard Notifications"}
+          tabName={"dashboard-notification-settings"}
+        />
+      );
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer styling={"metric-detail-tabs"}>
@@ -45,6 +60,7 @@ function DashboardMetricTabPanel(
           activeTab={activeTab}
         />
         {getDataPointSettingsTab()}
+        {getDashboardNotificationsSettingsTab()}
       </CustomTabContainer>
     );
   };
@@ -71,6 +87,15 @@ function DashboardMetricTabPanel(
         return (
           <div>
             <DashboardMetricDataPointsInputPanel
+              model={metricModel}
+              setModel={setMetricModel}
+            />
+          </div>
+        );
+      case "dashboard-notification-settings":
+        return (
+          <div>
+            <DashboardNotificationsEditorPanel
               model={metricModel}
               setModel={setMetricModel}
             />

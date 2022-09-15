@@ -84,6 +84,10 @@ const kpiIdentifierMetadata = {
       label: "Access Rules",
       id: "accessRules",
     },
+    {
+      label: "Dashboard Notifications",
+      id: "dashboardNotificationsEnabled",
+    },
   ],
   newObjectFields: {
     name: "",
@@ -100,6 +104,7 @@ const kpiIdentifierMetadata = {
     policySupport: false,
     thumbnailPath: "",
     accessRules: [],
+    dashboardNotificationsEnabled: false
     // "persona": ["manager","developer", "executive"]
   }
 };
