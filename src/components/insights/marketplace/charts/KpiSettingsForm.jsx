@@ -976,7 +976,7 @@ function KpiSettingsForm({
       );
     }
   };
-
+  
   const getBody = () => {
     return (
       <DashboardMetricEditorPanelContainer

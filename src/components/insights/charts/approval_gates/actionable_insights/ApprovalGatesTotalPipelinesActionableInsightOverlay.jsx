@@ -20,7 +20,7 @@ function ApprovalGatesTotalPipelinesActionableInsightOverlay({
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
+      { ...genericChartFilterMetadata.newObjectFields, pageSize:25 },
       genericChartFilterMetadata,
       false,
     ),

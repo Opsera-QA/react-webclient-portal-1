@@ -325,7 +325,7 @@ function DashboardMetricOverlayContainer(
       />
     );
   }
-
+  
   return (
     <OverlayPanelBodyContainer
       getHelpComponentFunction={getHelpComponentFunction}
@@ -340,7 +340,7 @@ function DashboardMetricOverlayContainer(
         dashboardModel={dashboardData}
         setKpiConfiguration={setKpiConfiguration}
         className={"px-3 pb-3"}
-      >
+      >333333
         <DashboardMetricTabPanel
           metricModel={metricModel}
           setMetricModel={setMetricModel}
