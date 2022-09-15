@@ -10,6 +10,10 @@ export const changeFailureRateLineMetaData = {
       id: "jira-projects",
     },
     {
+      label: "Jira Change Filter Rate",
+      id: "jira-change-failure-rate",
+    },
+    {
       label: "Date Range",
       id: "date",
     },

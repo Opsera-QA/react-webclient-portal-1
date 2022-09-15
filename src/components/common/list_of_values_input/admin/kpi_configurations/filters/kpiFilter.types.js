@@ -29,8 +29,9 @@ export const KPI_FILTER_TYPES = {
   HIERARCHY_FILTERS: "hierarchyFilters",
   DEPLOYMENT_STAGE: "deployment-stage",
   GITLAB_PROJECT: "gitlab-project",
-  JIRA_PRIORITIES:"jira-priorities",
-  JIRA_PROJECTS:"jira-projects"
+  JIRA_PRIORITIES: "jira-priorities",
+  JIRA_PROJECTS: "jira-projects",
+  JIRA_CHANGE_FAILURE_RATE: "jira-change-failure-rate"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -65,7 +66,8 @@ export const KPI_FILTER_TYPE_LABELS = {
   DEPLOYMENT_STAGE: "Deployment Stage",
   GITLAB_PROJECT: "Gitlab Repository",
   JIRA_PRIORITIES:"Jira Priorities",
-  JIRA_PROJECTS:"Jira Projects"
+  JIRA_PROJECTS:"Jira Projects",
+  JIRA_CHANGE_FAILURE_RATE_INPUT:"Jira Change Failure Rate Input"
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -134,6 +136,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES;
     case KPI_FILTER_TYPES.JIRA_PROJECTS:
       return KPI_FILTER_TYPE_LABELS.JIRA_PROJECTS;
+    case KPI_FILTER_TYPES.JIRA_CHANGE_FAILURE_RATE_INPUT:
+        return KPI_FILTER_TYPE_LABELS.JIRA_CHANGE_FAILURE_RATE_INPUT;
     default:
       return kpiFilterType;
   }
@@ -300,6 +304,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.JIRA_PROJECTS,
     text: KPI_FILTER_TYPE_LABELS.JIRA_PROJECTS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_CHANGE_FAILURE_RATE,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_CHANGE_FAILURE_RATE_INPUT,
     value: [],
   },
 ];
