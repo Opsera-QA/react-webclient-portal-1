@@ -11,8 +11,9 @@ import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-he
 import IconBase from "components/common/icons/IconBase";
 import sessionHelper from "utils/session.helper";
 
-const EXTERNAL_LINKS = {
-  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
+export const EXTERNAL_LINKS = {
+  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`,
+  REQUEST_HELP: "https://opsera.atlassian.net/servicedesk/customer/portal/2/group/10/create/32",
 };
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
@@ -179,7 +180,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
               <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
+              <NavDropdown.Item href={EXTERNAL_LINKS.REQUEST_HELP} target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
               {getFrequentlyAskedQuestionsLink()}
               {getHelpDocumentationLink()}
