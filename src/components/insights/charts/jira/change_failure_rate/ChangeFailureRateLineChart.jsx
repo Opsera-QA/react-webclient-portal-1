@@ -14,6 +14,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 // import { defaultConfig, getColor, assignIssueColors } from "../../../charts-views";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import ChangeFailureRateDataBlockContainer from "./ChangeFailureRateDataBlockContainer";
+import jiraAction from "../jira.action";
 
 function ChangeFailureRateLineChart({
   kpiConfiguration,
@@ -48,132 +49,33 @@ function ChangeFailureRateLineChart({
     try {
       setIsLoading(true);
       await loadDataPoints(cancelSource);
-      const response = {
-        status: 200,
-        status_text: "ES Pipeline Summary Query Results",
-        message: "ES Query Response from Living Connection",
-        data: [
-          {
-            jiraChangeFailureRateLineChart: {
-              tool: "jira",
-              data: [
-                {
-                  statisticsData: {
-                    count: 77,
-                    type: "",
-                    averageDeployment: 1,
-                    prevDeployment: 0,
-                    prevDeploymentTrend: {
-                      trend: "green",
-                    },
-                  },
-                  chartData: {
-                    avgDeployments: [
-                      {
-                        x: "2022-06-15",
-                        y: 0,
-                        range: "2022-06-15 to 2022-06-19",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-06-19",
-                        y: 0,
-                        range: "2022-06-19 to 2022-06-26",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-06-26",
-                        y: 0,
-                        range: "2022-06-26 to 2022-07-03",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-07-03",
-                        y: 0,
-                        range: "2022-07-03 to 2022-07-10",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-07-10",
-                        y: 0,
-                        range: "2022-07-10 to 2022-07-17",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-07-17",
-                        y: 0,
-                        range: "2022-07-17 to 2022-07-24",
-                        total: 0,
-                      },
-                      {
-                        x: "2022-07-24",
-                        y: 1.14,
-                        range: "2022-07-24 to 2022-07-31",
-                        total: 8,
-                      },
-                      {
-                        x: "2022-07-31",
-                        y: 1,
-                        range: "2022-07-31 to 2022-08-07",
-                        total: 7,
-                      },
-                      {
-                        x: "2022-08-07",
-                        y: 1,
-                        range: "2022-08-07 to 2022-08-14",
-                        total: 7,
-                      },
-                      {
-                        x: "2022-08-14",
-                        y: 0.29,
-                        range: "2022-08-14 to 2022-08-21",
-                        total: 2,
-                      },
-                      {
-                        x: "2022-08-21",
-                        y: 1.43,
-                        range: "2022-08-21 to 2022-08-28",
-                        total: 10,
-                      },
-                      {
-                        x: "2022-08-28",
-                        y: 4.29,
-                        range: "2022-08-28 to 2022-09-04",
-                        total: 30,
-                      },
-                      {
-                        x: "2022-09-04",
-                        y: 1.86,
-                        range: "2022-09-04 to 2022-09-11",
-                        total: 13,
-                      },
-                      {
-                        x: "2022-09-11",
-                        y: 0,
-                        range: "2022-09-11 to 2022-09-14",
-                        total: 0,
-                      },
-                    ],
-                  },
-                },
-              ],
-              length: 1,
-              status: 200,
-              status_text: "OK",
-            },
-          },
-        ],
-      };
+      let dashboardTags =
+          dashboardData?.data?.filters[
+              dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+              ]?.value;
+      let dashboardOrgs =
+          dashboardData?.data?.filters[
+              dashboardData?.data?.filters.findIndex(
+                  (obj) => obj.type === "organizations",
+              )
+              ]?.value;
+      let goals =
+          kpiConfiguration?.dataPoints[0]?.strategic_criteria?.data_point_evaluation_rules?.success_rule?.primary_trigger_value;
+      // if (goals) {
+      //   setGoalsData({deployment_frequency_rate: goals});
+      // } else {
+      //   setGoalsData(DEFAULT_GOALS);
+      // }
+      const response = await jiraAction.getJiraChangeFailureRate(getAccessToken,cancelTokenSource,kpiConfiguration,dashboardTags,dashboardOrgs);
 
       const dataObject =
         response?.data && response?.status === 200
-          ? response?.data[0]?.jiraChangeFailureRateLineChart?.data
-          : [];
+          ? response?.data?.data?.jiraChangeFailureRate?.data
+          : {};
       //   assignIssueColors(dataObject);
-
       if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject[0].statisticsData);
-        setChartData(dataObject[0].chartData);
+        setMetrics(dataObject);
+        setChartData(dataObject.chartData);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -209,7 +111,7 @@ function ChangeFailureRateLineChart({
   }, [JSON.stringify(dashboardData)]);
 
   const getChartBody = () => {
-    if (!metrics || !metrics) {
+    if (!metrics && !metrics.total) {
       return null;
     }
     return (

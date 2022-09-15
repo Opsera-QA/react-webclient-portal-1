@@ -22,7 +22,7 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
 
   useEffect(() => {
     let dataHigh = {x: "", y: 0};
-    dataHigh = _.maxBy(chartData?.avgDeployments, 'y');
+    dataHigh = _.maxBy(chartData, 'y');
     const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
     setMaxVal(Math.ceil(high));
   }, [goalsData, chartData]);
@@ -30,10 +30,10 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
   let dailyDeploymentsChartData = [
     {
       "id": "average daily deployments",
-      "data": chartData?.avgDeployments
+      "data": chartData
     }  
   ];
-  const getReverseIcon = (severity) => {
+    const getReverseIcon = (severity) => {
     switch (severity) {
       case "red":
         return faArrowCircleDown;
@@ -50,13 +50,13 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
     return (
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
-            className={`${metricData.prevDeploymentTrend?.trend} p-2`}
+            className={`green p-2`}
             topText={"Change Failure Rate"}
-            icon={getReverseIcon(metricData.prevDeploymentTrend?.trend)}
-            bottomText={`Previous Failure Rate: ${metricData?.prevDeployment}`}
+            icon={getReverseIcon("green")}
+            bottomText={`Previous Failure Rate: ${metricData?.preAverage}`}
             middleText={
               <MetricScoreText
-                  score={metricData?.averageDeployment}
+                  score={metricData?.average}
                   className={"metric-block-content-text"}
                   dataPoint={dataPoint}
               />}
