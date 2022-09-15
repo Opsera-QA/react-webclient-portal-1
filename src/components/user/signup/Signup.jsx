@@ -14,29 +14,32 @@ import SignupCloudProviderSelectInput
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function Signup() {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    loadData();
+    setRegistrationDataDto({...
+        new Model(
+          defaultSignupFormFields.newObjectFields,
+          defaultSignupFormFields,
+          true,
+          )
+    });
   }, []);
-
-  const loadData = async () => {
-    setIsLoading(true);
-    await setRegistrationDataDto(new Model(defaultSignupFormFields.newObjectFields, defaultSignupFormFields, true));
-    setIsLoading(false);
-  };
 
   const loadRegistrationResponse = () => {
     history.push("/registration");
   };
 
   const createAccount = async () => {
-    // console.log("persistData: ", JSON.stringify(registrationDataDto.getPersistData()));
     const isDomainAvailable = await userActions.isDomainAvailable(registrationDataDto.getData("domain"));
 
     if (!isDomainAvailable) {
@@ -53,16 +56,18 @@ function Signup() {
 
     if (registrationDataDto.isModelValid()) {
       try {
-        await userActions.createOpseraAccount(registrationDataDto);
+        await userActions.createOpseraAccount(cancelTokenSource, registrationDataDto);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {
-        toastContext.showCreateFailureResultDialog("Opsera Account", error);
+        if (isMounted?.current === true) {
+          toastContext.showCreateFailureResultDialog("Opsera Account", error);
+        }
       }
     }
   };
 
-  if (isLoading || registrationDataDto == null) {
+  if (registrationDataDto == null) {
     return <LoadingDialog />;
   }
 
