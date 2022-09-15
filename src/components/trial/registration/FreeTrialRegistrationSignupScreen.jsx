@@ -40,7 +40,7 @@ export default function FreeTrialRegistrationSignupScreen (
       }
 
       try {
-        const response = await userActions.createFreeTrialAccount(registrationModel);
+        const response = await userActions.createFreeTrialAccount(cancelTokenSource, registrationModel);
         setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
         return response;
       } catch (error) {
