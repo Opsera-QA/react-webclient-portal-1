@@ -25,6 +25,8 @@ import DataPointVisibilityWrapper from "../../../../../common/metrics/data_point
 import jiraAction from "../../jira.action";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
+import JiraMTTRChartHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
 
 function JiraMeanTimeToResolutionBarChart({
   kpiConfiguration,
@@ -520,6 +522,7 @@ function JiraMeanTimeToResolutionBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        chartHelpComponent={(closeHelpPanel) => <JiraMTTRChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
         // launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
