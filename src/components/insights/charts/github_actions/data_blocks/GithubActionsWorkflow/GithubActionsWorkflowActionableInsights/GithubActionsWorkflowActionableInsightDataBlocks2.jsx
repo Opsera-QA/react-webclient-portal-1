@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
 import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
 import TwoLinePercentageDataBlock from "../../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import chartsActions from "../../../../charts-actions";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
 import {metricHelpers} from "../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../github-actions-workflow-actions";
 
 function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -24,7 +24,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      const response = await chartsActions.githubActionsActionableTwoDataBlocks(
+      const response = await githubActionsWorkflowActions.githubActionsActionableTwoDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,

@@ -2,13 +2,12 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
-import chartsActions from "components/insights/charts/charts-actions";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-import IconBase from "components/common/icons/IconBase";
 import GitlabActionsWorkflowActionableInsightTable1 from "./GithubActionsWorkflowActionableInsightTable1";
 import {metricHelpers} from "../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../github-actions-workflow-actions";
+
 
 function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, workflowName }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -51,7 +50,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
-            const response = await chartsActions.githubActionsActionableOneTable(
+            const response = await githubActionsWorkflowActions.githubActionsActionableOneTable(
                 kpiConfiguration,
                 getAccessToken,
                 cancelSource,
