@@ -90,7 +90,7 @@ import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/Git
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
-
+import GithubActionsWorkflowChart from "./github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowChart";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
@@ -1294,6 +1294,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
           </Col>
           );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
+        return (
+          <Col md={12} className="p-2">
+            <GithubActionsWorkflowChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "github-connected-assets":
         return (
           <Col md={12} className="p-2">

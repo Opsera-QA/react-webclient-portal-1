@@ -6,7 +6,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   // Github Actions
   ALL_GITHUB_ACTIONS_DATA_BLOCK: "all-github-actions-data-block",
-  LEAD_TIME_AND_RELEASE_TRACEABILITY: "lead-time-and-release-traceability-data-block",
+  LEAD_TIME_AND_RELEASE_TRACEABILITY:
+    "lead-time-and-release-traceability-data-block",
+  GITHUB_ACTIONS_WORKFLOW: "github-actions-workflow",
 
   ANCHORE_VULNERABILITIES_BY_DATE: "anchore-vulnerabilities-by-date",
   AUTOMATED_TEST_RESULTS: "automated-test-results",
@@ -18,14 +20,17 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   // Bitbucket
   BITBUCKET_COMMITS_BY_AUTHOR: "bitbucket-commits-by-author",
-  BITBUCKET_MERGE_REQUESTS_BY_MAXIMUM_TIME: "bitbucket-merge-request-by-maximum-time",
+  BITBUCKET_MERGE_REQUESTS_BY_MAXIMUM_TIME:
+    "bitbucket-merge-request-by-maximum-time",
   BITBUCKET_MERGE_REQUESTS_BY_USER: "bitbucket-merge-requests-by-user",
-  BITBUCKET_MERGE_REQUESTS_PUSHES_AND_COMMENTSS: "bitbucket-merge-requests-pushes-and-comments",
+  BITBUCKET_MERGE_REQUESTS_PUSHES_AND_COMMENTSS:
+    "bitbucket-merge-requests-pushes-and-comments",
   BITBUCKET_MOST_ACTIVE_CONTRIBUTORS: "bitbucket-most-active-contributors",
   BITBUCKET_PENDING_MERGE_REQUESTS: "bitbucket-pending-merge-requests",
   BITBUCKET_RECENT_MERGE_REQUESTS: "bitbucket-recent-merge-requests",
   BITBUCKET_REJECTED_MERGE_REQUESTS: "bitbucket-rejected-merge-requests",
-  BITBUCKET_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "bitbucket-time-taken-to-complete-merge-request-review",
+  BITBUCKET_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+    "bitbucket-time-taken-to-complete-merge-request-review",
   BITBUCKET_TOTAL_COMMITS_BY_PROJECT: "bitbucket-total-commits-by-project",
 
   BUILD_DEPLOYMENT_STATISTICS: "build-deployment-statistics",
@@ -37,25 +42,29 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   // Github
   GITHUB_COMMITS_BY_AUTHOR: "github-commits-by-author",
   GITHUB_MERGE_REQUESTS_BY_USER: "github-merge-requests-by-user",
-  GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS: "github-merge-requests-pushes-and-comments",
+  GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
+    "github-merge-requests-pushes-and-comments",
   GITHUB_MOST_ACTIVE_CONTRIBUTORS: "github-most-active-contributors",
   GITHUB_PENDING_MERGE_REQUESTS: "github-pending-merge-requests",
   GITHUB_RECENT_MERGE_REQUESTS: "github-recent-merge-requests",
-  GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "github-time-taken-to-complete-merge-request-review",
+  GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+    "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",
   GITLAB_MERGE_REQUESTS_BY_MAXIMUM_TIME: "gitlab-merge-request-by-maximum-time",
   GITLAB_MERGE_REQUESTS_BY_USER: "gitlab-merge-requests-by-user",
-  GITLAB_MERGE_REQUESTS_PUSHES_AND_COMMENTS: "gitlab-merge-requests-pushes-and-comments",
+  GITLAB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
+    "gitlab-merge-requests-pushes-and-comments",
   GITLAB_MOST_ACTIVE_CONTRIBUTOR: "gitlab-most-active-contributors",
   GITLAB_PENDING_MERGE_REQUESTS: "gitlab-pending-merge-requests",
   GITLAB_RECENT_MERGE_REQUESTS: "gitlab-recent-merge-requests",
-  GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "gitlab-time-taken-to-complete-merge-request-review",
+  GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+    "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
   GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
-  GITLAB_LEAD_TIME:"gitlab-lead-time",
+  GITLAB_LEAD_TIME: "gitlab-lead-time",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
@@ -88,9 +97,11 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   // Metricbeat
   METRICBEAT_KUBERNETES_CPU_USAGE: "metricbeat-kubernetes-cpu-usage",
-  METRICBEAT_KUBERNETES_IN_NETWORK_USAGE: "metricbeat-kubernetes-in-network-usage",
+  METRICBEAT_KUBERNETES_IN_NETWORK_USAGE:
+    "metricbeat-kubernetes-in-network-usage",
   METRICBEAT_KUBERNETES_MEMORY_USAGE: "metricbeat-kubernetes-memory-usage",
-  METRICBEAT_KUBERNETES_OUT_NETWORK_USAGE: "metricbeat-kubernetes-out-network-usage",
+  METRICBEAT_KUBERNETES_OUT_NETWORK_USAGE:
+    "metricbeat-kubernetes-out-network-usage",
 
   // Opsera
   OPSERA_DEPLOYMENT_FREQUENCY: "opsera-deployment-frequency",
@@ -125,7 +136,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_MANUAL_TEST: "sfdc-manual-test",
   SALESFORCE_PROFILE_MIGRATIONS: "sfdc-profile-migrations",
   SALESFORCE_UNIT_TESTING: "sfdc-unit-testing",
-  SALESFORCE_COMPONENTS_CHART :  "salesforce-components-chart",
+  SALESFORCE_COMPONENTS_CHART: "salesforce-components-chart",
 
   // Sonar
   SONAR_BUGS: "sonar-bugs",
@@ -143,18 +154,19 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SONAR_RATINGS: "sonar-ratings-v2",
   SONAR_RELIABILITY_RATING: "sonar-reliability-rating",
   SONAR_RELIABILITY_REMEDIATION_EFFORT: "sonar-reliability-remediation-effort",
-  SONAR_RELIABILITY_REMEDIATION_EFFORT_BY_PROJECT: "sonar-reliability-remediation-effort-by-project",
+  SONAR_RELIABILITY_REMEDIATION_EFFORT_BY_PROJECT:
+    "sonar-reliability-remediation-effort-by-project",
   SONAR_SECURITY_SCORECARD: "sonar-security-scorecard",
   SONAR_VULNERABILITIES_BY_PROJECT: "sonar-vulnerabilities-by-project",
-  SONAR_VULNERABILITIES_METRIC_SCORECARD: "sonar-vulnerabilities-metric-scorecard",
+  SONAR_VULNERABILITIES_METRIC_SCORECARD:
+    "sonar-vulnerabilities-metric-scorecard",
 
   // XUnit
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
-   // GitScrapper
-   GIT_SCRAPER_METRICS: "git-scraper",
+  // GitScrapper
+  GIT_SCRAPER_METRICS: "git-scraper",
 
   //Boomi
-  BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
-  
+  BOOMI_PIPELINE_EXECUTIONS: "boomi-pipeline-executions",
 };
