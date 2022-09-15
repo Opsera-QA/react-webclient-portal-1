@@ -95,6 +95,7 @@ import LeadTimeAndReleaseTraceabilityDataBlock
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
 import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
+import GithubActionsWorkflowChart from "./github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowChart";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1275,6 +1276,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                     index={index}
                 />
             </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
+        return (
+          <Col md={12} className="p-2">
+            <GithubActionsWorkflowChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-connected-assets":
         return (

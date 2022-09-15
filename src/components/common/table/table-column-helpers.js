@@ -361,6 +361,21 @@ export const getChartTrendStatusColumn = (field, className) => {
   };
 };
 
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      if (icon) {
+        return <IconBase icon={icon} />;
+      }
+
+      return "";
+    },
+    class: className ? className : undefined
+  };
+};
+
 export const getGitCustodianOriginColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
