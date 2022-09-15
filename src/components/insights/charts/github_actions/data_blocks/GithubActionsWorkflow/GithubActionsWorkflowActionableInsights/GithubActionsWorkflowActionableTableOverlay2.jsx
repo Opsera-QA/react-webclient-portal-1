@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
 import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkflowActionableInsightTable2";
 import {metricHelpers} from "../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../github-actions-workflow-actions";
@@ -17,8 +17,8 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
     new Model(
-      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-      actionableInsightsGenericChartFilterMetadata,
+      { ...githubActionsWorkflowMetadata.newObjectFields },
+      githubActionsWorkflowMetadata,
       false
     )
   );
@@ -63,7 +63,7 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       );
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
-        ? response?.data?.data[0][0]?.count[0]?.count
+        ? response?.data?.data[0]?.count[0]?.count
         : [];
 
       let newFilterDto = filterDto;
