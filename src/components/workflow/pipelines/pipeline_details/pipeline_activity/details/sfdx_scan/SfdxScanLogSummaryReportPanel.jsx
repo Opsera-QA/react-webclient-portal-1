@@ -104,7 +104,7 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
   return (
     <VanitySetTabAndViewContainer
       icon={faClipboardListCheck}
-      title={`Informatica Execution Summary`}
+      title={`Code Analyser Execution Details`}
       defaultActiveKey={"summary"}
       verticalTabContainer={<SfdxScanSummaryLogVerticalTabContainer />}
       currentView={getTabContentContainer()}
