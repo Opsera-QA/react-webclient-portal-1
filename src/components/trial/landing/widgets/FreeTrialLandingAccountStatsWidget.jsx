@@ -182,7 +182,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
               className={"marketingModulesTextLink ml-1"}
               rel={"noreferrer"}
             >
-              click here
+             click here
             </a>.
           </div>
         </div>
