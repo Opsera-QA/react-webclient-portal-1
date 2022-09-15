@@ -42,7 +42,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Git Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
@@ -254,7 +254,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Git Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
@@ -412,7 +412,7 @@ const commandLineStepFormMetadata = {
       },
     },
     {
-      label: "Input Parameters with Variable Mapping",
+      label: "Save Dynamic Parameters",
       id: "saveEnvironmentVariables"
     },
     {

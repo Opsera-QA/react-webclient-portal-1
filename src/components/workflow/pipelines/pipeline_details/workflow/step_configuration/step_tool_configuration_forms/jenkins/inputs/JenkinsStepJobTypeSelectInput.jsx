@@ -64,6 +64,7 @@ function JenkinsStepJobTypeSelectInput({ model, setModel }) {
       selectOptions={JENKINS_JOB_OPTIONS}
       valueField={"value"}
       textField={"label"}
+      helpTooltipText={"Job type must be configured in the Jobs tab of the selected Jenkins tool."}
     />
   );
 }
