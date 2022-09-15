@@ -2,19 +2,15 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import chartsActions from "components/insights/charts/charts-actions";
 import { useHistory } from "react-router-dom";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-import IconBase from "components/common/icons/IconBase";
 import GithubActionsBottomTable from "./GithubActionsWorkflowBottomTable";
 import {metricHelpers} from "../../../../metric.helpers";
+import githubActionsWorkflowActions from "./github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay({ title, coveritySeverity, kpiConfiguration, dashboardData }) {
-    const toastContext = useContext(DialogToastContext);
-    const history = useHistory();
+function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
@@ -55,7 +51,7 @@ function GithubActionsWorkflowTableOverlay({ title, coveritySeverity, kpiConfigu
             let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
-            const response = await chartsActions.githubActionsBaseKPITable(
+            const response = await githubActionsWorkflowActions.githubActionsBaseKPITable(
                 kpiConfiguration,
                 getAccessToken,
                 cancelSource,
@@ -67,10 +63,6 @@ function GithubActionsWorkflowTableOverlay({ title, coveritySeverity, kpiConfigu
             let dataCount = response?.data
                 ? response?.data?.data[0][0]?.count[0]?.count
                 : [];
-            dataObject = dataObject.map((bd, index) => ({
-                ...bd,
-                _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-            }));
 
             let newFilterDto = filterDto;
             newFilterDto.setData("totalCount", dataCount);
@@ -104,8 +96,6 @@ function GithubActionsWorkflowTableOverlay({ title, coveritySeverity, kpiConfigu
 }
 
 GithubActionsWorkflowTableOverlay.propTypes = {
-    title: PropTypes.string,
-    coveritySeverity: PropTypes.string,
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
 };

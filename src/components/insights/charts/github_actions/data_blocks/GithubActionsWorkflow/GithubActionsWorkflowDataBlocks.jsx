@@ -4,11 +4,11 @@ import axios from "axios";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import PropTypes from "prop-types";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
-import chartsActions from "../../../charts-actions";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
 import {metricHelpers} from "../../../../metric.helpers";
+import githubActionsWorkflowActions from "./github-actions-workflow-actions";
 
 function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,7 +23,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      const response = await chartsActions.githubActionsBaseKPIDataBlocks(
+      const response = await githubActionsWorkflowActions.githubActionsBaseKPIDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
