@@ -458,6 +458,9 @@ sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSou
   return null;
 };
 
-
+sfdcPipelineActions.checkIfSfdx = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `pipelines/sfdc/wizard/issfdx/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
 
 export default sfdcPipelineActions;
