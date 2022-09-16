@@ -221,6 +221,10 @@ import LiquibasePipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/LiquibasePipelineStepConfigurationSummary";
 import LiquibaseStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
+import BlackDuckPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
+import BlackDuckStepFormMetadata 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -700,6 +704,13 @@ function PipelineStepConfigurationSummary({
                 pipelineData={pipelineData}
                 liquibasePipelineDataObject={getModelWrappedObject(LiquibaseStepFormMetadata)}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackDuckPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            blackDuckPipelineDataObject={getModelWrappedObject(BlackDuckStepFormMetadata)}
+          />
         );
       default:
         return (
