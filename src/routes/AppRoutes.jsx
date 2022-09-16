@@ -1,78 +1,49 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import LoginForm from "./components/login/LoginForm";
-import { Route, useHistory } from "react-router-dom";
+import LoginForm from "components/login/LoginForm";
+import { Route } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
-//template routes
-import Home from "./Home";
-import Logout from "./components/login/Logout";
+import Logout from "components/login/Logout";
 import Sidebar from "components/sidebar/Sidebar";
-import Dashboard from "./components/dashboard/DashboardHome";
-import About from "./components/about/About";
-import Pricing from "./components/about/Pricing";
-import OnlineHelp from "./components/about/Help";
-import Inventory from "./components/inventory/Inventory";
+import Dashboard from "components/dashboard/DashboardHome";
+import About from "components/about/About";
+import Pricing from "components/about/Pricing";
+import OnlineHelp from "components/about/Help";
+import Inventory from "components/inventory/Inventory";
 import Signup from "components/user/signup/Signup";
-import ApiConnector from "./components/api_connector/ApiConnector";
-import Pipeline from "./components/pipeline/index";
-import Platform from "./components/platform/Platform";
-import Analytics from "./components/analytics/Analytics";
-import Logs from "./components/logs/Logs";
-import Update from "./components/update/Update";
-import AdminTools from "./components/admin/AdminTools";
-import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
-import RegisteredUserDetailView
-  from "./components/admin/registered_users/details/RegisteredUserDetailView";
-import ManageSystems from "./components/admin/manage_systems/ManageSystems";
-import ReportsRegistration from "./components/admin/analytics/ReportsRegistration";
-import Registration from "./components/landing/Registration";
-import TagEditor from "./components/settings/tags/TagManagement";
-import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetailView";
-import KpiIdentifierManagement from "components/admin/kpi_identifiers/KpiIdentifierManagement";
-import KpiIdentifierDetailView from "components/admin/kpi_identifiers/details/KpiIdentifierDetailView";
-import PipelineTemplateManagement from "components/admin/pipeline_templates/PipelineTemplateManagement";
-import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
-import LdapOrganizationDetailView
-  from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
-import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
-import ApiConnectionTest from "components/admin/api_demo/ApiConnectionTest";
-import AccountSettingsView from "./components/settings/AccountSettings";
-import LdapGroupManagement from "./components/settings/ldap_groups/LdapGroupManagement";
-import LdapGroupDetailView from "./components/settings/ldap_groups/details/LdapGroupDetailView";
-import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
-import PipelineTemplateDetailView from "components/admin/pipeline_templates/details/PipelineTemplateDetailView";
+import ApiConnector from "components/api_connector/ApiConnector";
+import Pipeline from "components/pipeline/index";
+import Platform from "components/platform/Platform";
+import Analytics from "components/analytics/Analytics";
+import Logs from "components/logs/Logs";
+import Update from "components/update/Update";
+import Registration from "components/landing/Registration";
+import TagEditor from "components/settings/tags/TagManagement";
+import TagDetailView from "components/settings/tags/tags_detail_view/TagDetailView";
+import AccountSettingsView from "components/settings/AccountSettings";
+import LdapGroupManagement from "components/settings/ldap_groups/LdapGroupManagement";
+import LdapGroupDetailView from "components/settings/ldap_groups/details/LdapGroupDetailView";
+import ToolDetailView from "components/inventory/tools/tool_details/ToolDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
-import ToolCategoryDetailView
-  from "components/admin/tools/categories/details/ToolCategoryDetailView";
-import ToolIdentifierDetailView
-  from "./components/admin/tools/identifiers/details/ToolIdentifierDetailView";
-import Pipelines from "./components/workflow/pipelines/Pipelines";
-import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
-import LdapOrganizationAccountDetailView
-  from "./components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailView";
-import LdapOrganizationAccountManagement
-  from "./components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagement";
-import LdapDepartmentManagement from "./components/settings/ldap_departments/LdapDepartmentManagement";
+import Pipelines from "components/workflow/pipelines/Pipelines";
+import PipelineDetailView from "components/workflow/pipelines/pipeline_details/PipelineDetailView";
+import LdapDepartmentManagement from "components/settings/ldap_departments/LdapDepartmentManagement";
 import LdapDepartmentDetailView
-  from "./components/settings/ldap_departments/details/LdapDepartmentDetailView";
-import Reports from "./components/reports/Reports";
-import Reports_Old from "./components/reports/Reports_Old";
+  from "components/settings/ldap_departments/details/LdapDepartmentDetailView";
+import Reports from "components/reports/Reports";
 import Marketplace from "components/insights/marketplace/Marketplace";
 import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
-import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
-import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
-import SiteNotificationDetailView
-  from "./components/admin/site_notifications/details/SiteNotificationDetailView";
+import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
-import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
-import Insights from "./components/insights/dashboards/Insights";
-import Lookup from "./components/insights/lookup/Lookup";
-import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
+import ToolsUsedInPipelineReport from "components/reports/tools/pipelines/ToolsUsedInPipelineReport";
+import Insights from "components/insights/dashboards/Insights";
+import Lookup from "components/insights/lookup/Lookup";
+import DashboardDetailView from "components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
-import GitCustodian from "./components/insights/gitCustodian/GitCustodian";
-import ConnectedAssets from "./components/insights/connectedAssets/ConnectedAssets";
+import GitCustodian from "components/insights/gitCustodian/GitCustodian";
+import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
@@ -84,7 +55,6 @@ import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwne
 import UserTaskOwnershipReport from "components/reports/users/tasks/UserTaskOwnershipReport";
 import ConsolidatedUserReport from "components/reports/users/user/consolidated_user_report/ConsolidatedUserReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
-import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
@@ -97,9 +67,6 @@ import AnalyticsDataEntryDetailView
   from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
 import Blueprint from "components/blueprint/Blueprint";
 import DeleteTools from "components/settings/delete_tools/DeleteTools";
-import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
-import PipelineStorageDetailView
-  from "components/admin/pipeline_storage/details/PipelineStorageDetailView";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
@@ -116,38 +83,23 @@ import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUse
 import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 import Release360 from "components/insights/release_360/Release360";
-import ToolCategoryManagement from "components/admin/tools/categories/ToolCategoryManagement";
-import ToolIdentifierManagement from "components/admin/tools/identifiers/ToolIdentifierManagement";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
 import PipelineDataMappingDetailView
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
 import Faq from "components/about/faq/Faq";
-import CustomEnvironmentVariableManagement
-  from "components/admin/environment_variables/CustomEnvironmentVariableManagement";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
-//import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
-import CoverityScanReport from "./components/insights/reports/CoverityScanReport";
-import LogsExportManagement from "./components/settings/logs_management/LogsExportManagement";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import CoverityScanReport from "components/insights/reports/CoverityScanReport";
+import LogsExportManagement from "components/settings/logs_management/LogsExportManagement";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrialSettingsManagement";
-import FreeTrialInsightsLanding from "./components/trial/insights/FreeTrialInsightsLanding";
-import TaskTemplateDetailView from "components/admin/task_templates/details/TaskTemplateDetailView";
-import TaskTemplateManagement from "components/admin/task_templates/TaskTemplateManagement";
-import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
-import PlatformSystemParameterDetailView
-  from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
-import FreeTrialCustomerWorkspaceManagement
-  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
-import FreeTrialCustomerWorkspaceView
-  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
+import FreeTrialInsightsLanding from "components/trial/insights/FreeTrialInsightsLanding";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
+import Home from "Home";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
