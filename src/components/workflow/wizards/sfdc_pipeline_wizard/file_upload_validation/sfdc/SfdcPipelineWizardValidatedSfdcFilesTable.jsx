@@ -91,6 +91,8 @@ const SfdcPipelineWizardValidatedSfdcFilesTable = ({ pipelineWizardModel, setPip
       if (data?.error) {
         const parsedError = parseError(data?.error);
         toastContext.showInlineErrorMessage(`Service Error Fetching Validated File List: ${parsedError}`);
+        setIsLoading(false);
+        setFilePullCompleted(true);
       }
 
       if (Array.isArray(files)) {
