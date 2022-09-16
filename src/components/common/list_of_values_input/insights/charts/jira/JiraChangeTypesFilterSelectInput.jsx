@@ -6,7 +6,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import jiraAction from "../../../../../insights/charts/jira/jira.action";
 
-function JiraChangeFailureRateFilterSelectInput({
+function JiraChangeTypesFilterSelectInput({
   placeholderText,
   valueField,
   textField,
@@ -65,7 +65,7 @@ function JiraChangeFailureRateFilterSelectInput({
       cancelSource,
     );
     if (response.data != null) {
-      setProjects(response?.data?.data?.jiraChangeFailureRate?.data?.chartData
+      setProjects(response?.data?.data?.jiraChangeTypesList?.data
         );
     }
   };
@@ -88,7 +88,7 @@ function JiraChangeFailureRateFilterSelectInput({
   );
 }
 
-JiraChangeFailureRateFilterSelectInput.propTypes = {
+JiraChangeTypesFilterSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -99,9 +99,9 @@ JiraChangeFailureRateFilterSelectInput.propTypes = {
   visible: PropTypes.bool,
 };
 
-JiraChangeFailureRateFilterSelectInput.defaultProps = {
+JiraChangeTypesFilterSelectInput.defaultProps = {
   textField: "text",
   valueField: "value",
 };
 
-export default JiraChangeFailureRateFilterSelectInput;
+export default JiraChangeTypesFilterSelectInput;

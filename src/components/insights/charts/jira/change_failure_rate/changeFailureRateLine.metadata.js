@@ -10,8 +10,8 @@ export const changeFailureRateLineMetaData = {
       id: "jira-projects",
     },
     {
-      label: "Jira Change Filter Rate",
-      id: "jira-change-failure-rate",
+      label: "Jira Change Types",
+      id: "jira-change-types",
     },
     {
       label: "Date Range",
@@ -21,5 +21,7 @@ export const changeFailureRateLineMetaData = {
   newObjectFields: {
     tags: [],
     date: undefined,
+    "jira-projects": [],
+    "jira-change-types": []
   }
 };
