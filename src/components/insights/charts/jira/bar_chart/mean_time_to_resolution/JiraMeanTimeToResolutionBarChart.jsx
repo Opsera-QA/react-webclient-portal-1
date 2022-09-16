@@ -524,6 +524,7 @@ function JiraMeanTimeToResolutionBarChart({
         showSettingsToggle={showSettingsToggle}
         chartHelpComponent={(closeHelpPanel) => <JiraMTTRChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
         // launchActionableInsightsFunction={onRowSelect}
+        isBeta={true}
       />
       <ModalLogs
         header="Mean Time to Resolution"
