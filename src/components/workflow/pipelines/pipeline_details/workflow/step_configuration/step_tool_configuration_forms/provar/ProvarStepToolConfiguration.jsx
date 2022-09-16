@@ -13,6 +13,7 @@ import ProvarSourceControlManagementToolSelectInput from "components/workflow/pi
 import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import ProvarEnvironmentVariablesInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/provar/inputs/ProvarEnvironmentVariablesInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import ProvarSfdcToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/provar/inputs/ProvarSfdcToolSelectInput";
 
 function ProvarConfiguration({
   pipelineId,
@@ -79,10 +80,7 @@ function ProvarConfiguration({
         model={provarStepConfigurationDto}
         setModel={setProvarConfigurationDataDto}
       />
-      <RoleRestrictedToolByIdentifierInputBase
-        toolIdentifier={"sfdc-configurator"}
-        toolFriendlyName={"Salesforce Credentials"}
-        fieldName={"sfdcToolId"}
+      <ProvarSfdcToolSelectInput 
         model={provarStepConfigurationDto}
         setModel={setProvarConfigurationDataDto}
       />
