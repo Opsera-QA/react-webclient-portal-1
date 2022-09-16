@@ -415,7 +415,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Jira KPIs
-      case "change-failure-rate":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
         return (
           <Col xl={12} md={12} className="p-2">
             <ChangeFailureRateLineChart
