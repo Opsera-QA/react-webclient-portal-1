@@ -17,6 +17,8 @@ import VanitySetTabAndViewContainer, {
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import TaskNotificationVerticalTabContainer
   from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
+import GChatStepNotificationEditorPanel 
+  from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
 
 const tabAndViewContainerHeight =`calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 50px)`;
 
@@ -32,6 +34,8 @@ function TaskNotificationTabView(
     setServiceNowNotificationModel,
     emailNotificationModel,
     setEmailNotificationModel,
+    gChatNotificationModel,
+    setGChatNotificationModel,
   }) {
   const [activeTab, setTabSelection] = useState("email");
 
@@ -71,6 +75,13 @@ function TaskNotificationTabView(
           <MicrosoftTeamsStepNotificationEditorPanel
             teamsNotificationModel={teamsNotificationModel}
             setTeamsNotificationModel={setTeamsNotificationModel}
+          />
+        );
+      case "gchat":
+        return (
+          <GChatStepNotificationEditorPanel
+            gChatNotificationModel={gChatNotificationModel}
+            setGChatNotificationModel={setGChatNotificationModel}
           />
         );
     }
@@ -117,6 +128,8 @@ TaskNotificationTabView.propTypes = {
   setServiceNowNotificationModel: PropTypes.func,
   emailNotificationModel: PropTypes.object,
   setEmailNotificationModel: PropTypes.func,
+  gChatNotificationModel: PropTypes.object,
+  setGChatNotificationModel: PropTypes.func,
 };
 
 export default TaskNotificationTabView;

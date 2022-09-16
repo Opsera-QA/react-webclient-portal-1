@@ -46,6 +46,7 @@ import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
 import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfiguration";
 import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
+import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -91,6 +92,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
   "informatica-idq",
   toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK
 ];
 
@@ -193,6 +195,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <LiquibaseToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
         return <BlackduckToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
+        return <GChatToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
