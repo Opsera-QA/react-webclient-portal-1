@@ -93,7 +93,7 @@ import Faq from "components/about/faq/Faq";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "components/insights/reports/CoverityScanReport";
-import LogsExportManagement from "components/settings/logs_management/LogsExportManagement";
+import LogsBackupManagement from "./components/settings/logs_backup/LogsBackupManagement";
 import OpseraFooter from "components/footer/OpseraFooter";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
 
@@ -218,8 +218,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
           <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact component={UserDetailView} />
           <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
-          
-          <SecureRoute path="/settings/logs-export-management" exact component={LogsExportManagement} />
+
+          <SecureRoute path="/settings/logs-backup-management" exact component={LogsBackupManagement} />
           <SecureRoute path="/settings/tags" exact component={TagEditor} />
           <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
           <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
