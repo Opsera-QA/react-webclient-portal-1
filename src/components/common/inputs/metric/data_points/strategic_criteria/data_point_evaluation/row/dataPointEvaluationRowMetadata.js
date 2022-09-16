@@ -26,6 +26,10 @@ const dataPointEvaluationRowMetadata = {
       label: "Enable Rule",
       id: "enabled",
     },
+    {
+      label: "Enable Notification",
+      id: "notificationEnabled",
+    },
   ],
   newObjectFields: {
     type: "",
@@ -33,6 +37,7 @@ const dataPointEvaluationRowMetadata = {
     primary_trigger_value: 0,
     secondary_trigger_value: 0,
     enabled: true,
+    notificationEnabled: false,
   }
 };
 
