@@ -18,7 +18,7 @@ export const EXTERNAL_LINKS = {
   OPSERA_SALESFORCE_PIPELINES: "https://www.opsera.io/platform/salesforce-pipelines",
   SALESFORCE_RELEASE_MANAGEMENT: "https://marketing.opsera.io/opsera-salesforce-lp",
   SALESFORCE_USER_GUIDE: "https://opsera.atlassian.net/wiki/spaces/OE/pages/1097302215/Salesforce+Pipeline+User+Guides",
-  HOW_TO_VIDEO: 'https://www.youtube.com/embed/vT6XXPbZBuo'
+  HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
 };
 
 function HeaderNavBar({ hideAuthComponents, userData }) {

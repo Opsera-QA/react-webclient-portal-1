@@ -65,7 +65,7 @@ export default function WelcomeWidget({ className }) {
       >
         <div className={"d-flex h-100 w-100"}>
           <div className={"m-auto"}>
-            <iframe width="250" height="220" src="https://www.youtube.com/embed/vT6XXPbZBuo"
+            <iframe width="250" height="220" src="https://www.youtube.com/embed/8oeBwmapAHU"
                     title="YouTube video player" frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen></iframe>
