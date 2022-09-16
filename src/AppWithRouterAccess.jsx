@@ -8,7 +8,7 @@ import { axiosApiService } from "api/apiService";
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
-import AppRoutes from "./AppRoutes";
+import AppRoutes from "routes/AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";

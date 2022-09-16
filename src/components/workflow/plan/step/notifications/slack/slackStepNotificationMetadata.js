@@ -29,6 +29,10 @@ const slackStepNotificationMetadata = {
       label: "Slack Notifications",
       id: "enabled",
     },
+    {
+      label: "Include last 10 lines of log (limited to 1000 characters)",
+      id: "logEnabled",
+    },
   ],
   newObjectFields: {
     type: "slack",
@@ -36,6 +40,7 @@ const slackStepNotificationMetadata = {
     toolId: "",
     event: "finished",
     enabled: false,
+    logEnabled: false,
   }
 };
 

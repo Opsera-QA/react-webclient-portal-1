@@ -1,28 +1,20 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useEffect, useState, useRef} from "react";
 import Model from "core/data_model/model";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ConnectedAssetsDetails from "./ConnectedAssetsDetails";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import {format, addDays, isSameDay} from "date-fns";
+import {format, addDays} from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";
 import connectedAssetsMetadata from "./connectedAssets-metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 
 function ConnectedAssets() {
-  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(new Model({ ...connectedAssetsMetadata.newObjectFields }, connectedAssetsMetadata, false));
   const [date, setDate] = useState([
@@ -39,54 +31,13 @@ function ConnectedAssets() {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const node = useRef();
   const ref = useRef(null);
+  const { isMounted, isSiteAdministrator } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    let newDataObject = new Model({...connectedAssetsMetadata.newObjectFields}, connectedAssetsMetadata, true);
-    newDataObject.setData("filters", []);
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(newDataObject, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    const newModel = new Model({...connectedAssetsMetadata.newObjectFields}, connectedAssetsMetadata, true);
+    newModel.setData("filters", []);
+    setDashboardData({...newModel});
   }, []);
-
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
-      setDashboardData(newDataObject);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
 
   const toggleCalendar = (event) => {
     setCalenderActivation(true);
@@ -143,7 +94,7 @@ function ConnectedAssets() {
     newDashboardFilterTagsModel.setData( "date" , { startDate: startDate , endDate: endDate, key: "selection" } );
     setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
     let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardFilterTagsModel, "date", { startDate: startDate , endDate: endDate, key: "selection" });
-    loadData(newDataModel);
+    setDashboardData({...newDataModel});
   };
 
   const clearCalendar = () => {
@@ -227,8 +178,12 @@ function ConnectedAssets() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm" message="Loading Insights"/>);
+  if (isSiteAdministrator !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"connectedAssets"}/>}
+      />
+    );
   }
 
   return (

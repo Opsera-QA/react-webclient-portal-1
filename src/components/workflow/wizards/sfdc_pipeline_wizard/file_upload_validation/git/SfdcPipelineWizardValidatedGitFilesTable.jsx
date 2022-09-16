@@ -9,6 +9,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SfdcPipelineWizardFileValidationTableBase
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
+import {parseError} from "components/common/helpers/error-helpers";
 
 const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount, filePullCompleted, setFilePullCompleted  }) => {
   const {getAccessToken} = useContext(AuthContext);
@@ -86,6 +87,13 @@ const SfdcPipelineWizardValidatedGitFilesTable = ({ pipelineWizardModel, setPipe
 
     if (isMounted?.current === true && data) {
       setFilteredFileCount(data.count);
+
+      if (data?.error) {
+        const parsedError = parseError(data?.error);
+        toastContext.showInlineErrorMessage(`Service Error Fetching Validated File List: ${parsedError}`);
+        setIsLoading(false);
+        setFilePullCompleted(true);
+      }
 
       if (Array.isArray(files)) {
         let newSfdcFilterDto = {...newFilterDto};

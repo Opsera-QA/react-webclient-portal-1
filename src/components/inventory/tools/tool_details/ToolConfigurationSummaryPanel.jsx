@@ -108,6 +108,10 @@ import InformaticaIdqToolConfigurationSummaryPanel
   from "./tool_jobs/informatica_idq/InformaticaIdqToolConfigurationSummaryPanel";
 import ToolConnectionSummaryContainer
   from "components/inventory/tools/details/connection/ToolConnectionSummaryContainer";
+import gchatConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/gchat/gchat-connection-metadata";
+import GChatToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/gchat/GChatToolConfigurationSummaryPanel";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -302,6 +306,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             <InformaticaIdqToolConfigurationSummaryPanel
                 informaticaIdqToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaIdqConnectionMetadata)}
             />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
+        return (
+          <GChatToolConfigurationSummaryPanel
+            gChatToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gchatConnectionMetadata)}
+          />
         );
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
