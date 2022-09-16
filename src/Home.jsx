@@ -1,19 +1,23 @@
 import React from "react";
 import { useOktaAuth } from "@okta/okta-react";
 import FreeTrialLanding from "components/trial/landing/FreeTrialLanding";
-import OverviewLanding from "components/landing/OverviewLanding";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 export default function Home() {
   const { authState } = useOktaAuth();
 
-  if (authState?.isAuthenticated) {
+  if (authState?.isAuthenticated !== true) {
     return (
-      <FreeTrialLanding
+      <CenterLoadingIndicator
+        customMessage={"Loading..."}
+        minHeight={screenContainerHeights.SCREEN_CONTAINER_HEIGHT}
       />
-    // <OverviewLanding
-    // />
     );
   }
 
-  return <div>Loading...</div>;
+  return (
+    <FreeTrialLanding
+    />
+  );
 }
