@@ -93,7 +93,7 @@ import Faq from "components/about/faq/Faq";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
 import CoverityScanReport from "components/insights/reports/CoverityScanReport";
-import LogsBackupManagement from "./components/settings/logs_backup/LogsBackupManagement";
+import LogsBackupManagement from "components/settings/logs_backup/LogsBackupManagement";
 import OpseraFooter from "components/footer/OpseraFooter";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
 
