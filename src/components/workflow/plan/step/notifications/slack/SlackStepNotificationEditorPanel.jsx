@@ -6,6 +6,7 @@ import SlackStepNotificationToolInput
   from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -48,6 +49,14 @@ function SlackStepNotificationEditorPanel(
           dataObject={slackNotificationModel}
           setDataObject={setSlackNotificationModel}
           disabled={slackNotificationModel?.getData("enabled") === false}
+        />
+      </Col>
+      <Col xs={12}>
+        <BooleanToggleInput
+          dataObject={slackNotificationModel}
+          setDataObject={setSlackNotificationModel}
+          disabled={slackNotificationModel?.getData("enabled") === false}
+          fieldName={"logEnabled"}
         />
       </Col>
     </Row>
