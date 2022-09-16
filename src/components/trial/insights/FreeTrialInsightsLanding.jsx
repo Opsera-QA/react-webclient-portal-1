@@ -271,7 +271,7 @@ export default function FreeTrialInsightsLanding() {
 
   return (
     <div className={"max-content-width"}>
-      <div className={"px-3 mt-2"}>
+      <div className={"px-3 mt-3"}>
         <div className="d-flex align-items-left mb-2 marketingModulesTextLarger">{`Welcome to Opsera’s Unified Insights`}</div>
         <div>Unified Insights offers customers a top down view of the health and activities of all of the pipelines in the Opsera platform.  This is a small preview of the many charts and KPI’s available in the Opsera Analytics Marketplace.</div>
       </div>
