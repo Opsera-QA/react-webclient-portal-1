@@ -1398,6 +1398,17 @@ function StepToolConfiguration({
               closeEditorPanel={closeEditorPanel}
             />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackDuckStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
     }
   };
 
