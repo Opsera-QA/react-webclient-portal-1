@@ -75,7 +75,9 @@ function ChangeFailureRateLineChart({
       //   assignIssueColors(dataObject);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setChartData(dataObject.chartData);
+        if (dataObject.chartData) {
+          setChartData(dataObject.chartData);
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {

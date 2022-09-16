@@ -65,6 +65,17 @@ jiraActions.getJiraProjects = async (getAccessToken, cancelTokenSource) => {
   );
 };
 
+jiraActions.getJiraChangeFailureRateFilter = async (getAccessToken, cancelTokenSource,model) => {
+  const apiUrl = jiraBaseURL + "jiraChangeTypes";
+  const jiraProjects = model.getData('jira-projects');
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    {jiraProjects},
+  );
+};
+
 jiraActions.getJiraChangeTypes = async (
   getAccessToken,
   cancelTokenSource,

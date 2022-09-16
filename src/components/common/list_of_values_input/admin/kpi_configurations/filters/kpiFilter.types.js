@@ -304,7 +304,7 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.JIRA_PROJECTS,
     text: KPI_FILTER_TYPE_LABELS.JIRA_PROJECTS,
-    value: [],
+    value: "",
   },
   {
     type: KPI_FILTER_TYPES.JIRA_CHANGE_FAILURE_RATE,

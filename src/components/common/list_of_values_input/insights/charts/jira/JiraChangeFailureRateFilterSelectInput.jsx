@@ -22,6 +22,7 @@ function JiraChangeFailureRateFilterSelectInput({
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const jiraProjects = model.getData('jira-projects');
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -43,7 +44,18 @@ function JiraChangeFailureRateFilterSelectInput({
     };
   }, []);
 
+  useEffect(()=>{
+    if(jiraProjects){
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          setError(error);
+        }
+      });
+    }
+  },[jiraProjects]);
+
   const loadData = async (cancelSource = cancelTokenSource) => {
+
     try {
       setError(undefined);
       setIsLoading(true);
@@ -60,16 +72,18 @@ function JiraChangeFailureRateFilterSelectInput({
   };
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraAction.getJiraChangeFailureRate(
-      getAccessToken,
-      cancelSource,
-    );
-    if (response.data != null) {
-      setProjects(response?.data?.data?.jiraChangeFailureRate?.data?.chartData
-        );
-    }
+      const response = await jiraAction.getJiraChangeFailureRateFilter(
+        getAccessToken,
+        cancelSource,
+        model
+      );
+
+      if (response?.data) {
+        setProjects(response?.data?.data?.jiraChangeTypesList?.data);
+      }
+    
   };
-  const disabled = model.getData('jira-projects').length === 0;
+  const disabled = model.getData('jira-projects') === "" || projects.length === 0;
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
