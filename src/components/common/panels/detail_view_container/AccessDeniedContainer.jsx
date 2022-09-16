@@ -1,43 +1,60 @@
 import React from "react";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
+import TitleBar from "components/common/fields/TitleBar";
+import AccessDeniedMessage from "components/common/status_notifications/AccessDeniedMessage";
+import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
-function AccessDeniedContainer(
+const HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - ${screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT} - 22px)`;
+const BODY_HEIGHT = `calc(${HEIGHT} - 48px)`;
+
+export default function AccessDeniedContainer(
   {
     navigationTabContainer,
+    includeSubNavigationGap,
+    customMessage,
   }) {
   const getTopNavigation = () => {
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-3"}>
           {navigationTabContainer}
         </div>
       );
     }
 
-    return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
-      </div>
-    );
+    if (includeSubNavigationGap === true) {
+      return (
+        <div className={"mb-3"}>
+          <div className={"sub-navigation-block"} />
+        </div>
+      );
+    }
   };
 
   return (
-    <div className="max-content-width mb-2 ml-2">
+    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
-      <div className="content-container content-card-1 ">
-        <div className="pl-2 py-2 content-block-header title-text-header-1">
-          <IconBase className={"mr-1"}/>Access Denied!
+      <div
+        className={"screen-container content-container content-card-1"}
+        style={{
+          minHeight: HEIGHT,
+        }}
+      >
+        <div className={"px-3 content-block-header title-text-header-1"}>
+          <TitleBar
+            titleIcon={faExclamationTriangle}
+            title={"Access Denied!"}
+          />
         </div>
-        <div className="p-2 mt-2 shaded-container detail-container-body">
-          <div className="p-3">
-            <div className="info-text text-center m-auto">
-              <AccessDeniedDialog />
-            </div>
-          </div>
-        </div>
-        <div className="content-block-footer"/>
+        <CenteredContentWrapper
+          minHeight={BODY_HEIGHT}
+        >
+          <AccessDeniedMessage
+            text={customMessage}
+          />
+        </CenteredContentWrapper>
       </div>
     </div>
   );
@@ -45,6 +62,10 @@ function AccessDeniedContainer(
 
 AccessDeniedContainer.propTypes = {
   navigationTabContainer: PropTypes.object,
+  includeSubNavigationGap: PropTypes.bool,
+  customMessage: PropTypes.string,
 };
 
-export default AccessDeniedContainer;
+AccessDeniedContainer.defaultProps = {
+  includeSubNavigationGap: true,
+};
