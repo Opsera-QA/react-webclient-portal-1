@@ -1,13 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {AuthContext} from "contexts/AuthContext";
+import React, {useContext, useEffect, useState} from "react";
 import PipelineActivityLogTreeTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
-import InfoDialog from "components/common/status_notifications/info";
 import {useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "components/workflow/pipelines/summary/PipelineSummaryPanel";
-import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
@@ -15,6 +12,7 @@ import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_detai
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 
 let internalRefreshCount = 1;
 const refreshInterval = 15000;
@@ -218,11 +216,10 @@ function PipelineDetailView() {
 
     if (!pipeline) {
       return (
-        <div className={"p-5"}>
-          <InfoDialog
-            message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
-          />
-        </div>
+        <AccessDeniedContainer
+          navigationTabContainer={<WorkflowSubNavigationBar currentTab={"pipelineViewer"} />}
+          customMessage={"No Pipeline details found.  Please ensure you have access to view the requested pipeline."}
+        />
       );
     }
 

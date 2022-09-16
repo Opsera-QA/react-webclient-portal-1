@@ -42,7 +42,7 @@ export default function AccessDeniedContainer(
           minHeight: HEIGHT,
         }}
       >
-        <div className={"px-3 content-block-header title-text-header-1"}>
+        <div className={"px-3 content-block-header title-text-header-1 py-2"}>
           <TitleBar
             titleIcon={faExclamationTriangle}
             title={"Access Denied!"}
