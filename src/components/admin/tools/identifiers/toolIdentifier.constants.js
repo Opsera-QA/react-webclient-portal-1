@@ -21,6 +21,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AZURE_WEBAPPS: "azure_webapps",
   AZURE_ZIP_DEPLOYMENT: "azure-zip-deployment",
   BITBUCKET: "bitbucket",
+  BLACKDUCK: "blackduck",
   BUILDKITE: "buildkite",
   CHILD_PIPELINE: "child-pipeline",
   COMMAND_LINE: "command-line",

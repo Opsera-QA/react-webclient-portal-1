@@ -99,6 +99,7 @@ import InformaticaIdqStepConfiguration
   from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 import LiquibaseStepConfiguration
   from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
+import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
