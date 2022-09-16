@@ -6,6 +6,7 @@ import JiraNotificationMethodConfigurationPanel from "components/notifications/n
 import TeamsNotificationMethodConfigurationPanel from "components/notifications/notification_details/notification_method_forms/teams/TeamsNotificationMethodConfigurationPanel";
 import NotificationMethodSelectInput
   from "components/common/list_of_values_input/notifications/method/NotificationMethodSelectInput";
+import GChatNotificationMethodConfigurationPanel from "components/notifications/notification_details/notification_method_forms/gchat/GChatNotificationMethodConfigurationPanel";
 
 function NotificationMethodConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   const getMethodConfigurationPanel = () => {
@@ -37,6 +38,14 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
       case "teams":
         return (
           <TeamsNotificationMethodConfigurationPanel
+            notificationDataDto={notificationDataDto}
+            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            notificationMethodDataDto={notificationMethodDataDto}
+          />
+        );
+      case "gchat":
+        return (
+          <GChatNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
             setNotificationMethodDataDto={setNotificationMethodDataDto}
             notificationMethodDataDto={notificationMethodDataDto}

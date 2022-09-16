@@ -35,6 +35,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   EXTERNAL_API_INTEGRATOR: "external_api_integrator",
   EXTERNAL_REST_API_INTEGRATION: "external_rest_api_integration",
   FLYWAY_DATABASE_MIGRATOR: "flyway-database-migrator",
+  GCHAT: "gchat",
   GCP_ACCOUNT: "gcp_account",
   GCP_DEPLOY: "gcp-deploy",
   GITHUB: "github",
