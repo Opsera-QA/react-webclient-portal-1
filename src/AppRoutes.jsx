@@ -134,6 +134,7 @@ import TaskTemplateManagement from "components/admin/task_templates/TaskTemplate
 import PlatformSystemParameterManagement from "components/admin/system_parameters/PlatformSystemParameterManagement";
 import PlatformSystemParameterDetailView
   from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
+import OpseraFooter from "components/footer/OpseraFooter";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
 
@@ -310,15 +311,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
                        component={UserDataMappingDetailView} />
 
           <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
-
-          {/*{getFreeTrialRoutes()}*/}
         </div>
       </div>
-      <div className="row fixed-row-footer-bottom">
-        <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>
-          <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
-        </div>
-      </div>
+      <OpseraFooter />
     </div>
   );
 
