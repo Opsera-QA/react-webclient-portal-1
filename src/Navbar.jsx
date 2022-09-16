@@ -14,6 +14,11 @@ import sessionHelper from "utils/session.helper";
 export const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`,
   REQUEST_HELP: "https://opsera.atlassian.net/servicedesk/customer/portal/2/group/10/create/32",
+  SUPPORT_EMAIL: "mailto:support@opsera.io",
+  OPSERA_SALESFORCE_PIPELINES: "https://www.opsera.io/platform/salesforce-pipelines",
+  SALESFORCE_RELEASE_MANAGEMENT: "https://marketing.opsera.io/opsera-salesforce-lp",
+  SALESFORCE_USER_GUIDE: "https://opsera.atlassian.net/wiki/spaces/OE/pages/1097302215/Salesforce+Pipeline+User+Guides",
+  HOW_TO_VIDEO: 'https://www.youtube.com/embed/vT6XXPbZBuo'
 };
 
 function HeaderNavBar({ hideAuthComponents, userData }) {

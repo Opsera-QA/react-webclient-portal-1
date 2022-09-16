@@ -5,13 +5,13 @@
     color: #000;
 }
 
-.marketingModulesTextLink {
+.marketingModulesTextLink, .externalLink {
     color: #0d4183;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.marketingModulesTextLink:hover {
+.marketingModulesTextLink:hover, .externalLink:hover {
     color: #2e1956;
 }
 

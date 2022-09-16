@@ -5,10 +5,8 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import IconBase from "components/common/icons/IconBase";
-
-const EXTERNAL_LINKS = {
-  HOW_TO_VIDEO: 'https://www.youtube.com/embed/vT6XXPbZBuo'
-};
+import { ExternalLink } from "temp-library-components/link/ExternalLink";
+import { EXTERNAL_LINKS } from "Navbar";
 
 export default function WelcomeWidget({ className }) {
   const {
@@ -30,9 +28,24 @@ export default function WelcomeWidget({ className }) {
   const getHowToLinks = () => {
     return (
       <div>
-        <div className={"my-2 marketingModulesTextLink"}>How to Link Here</div>
-        <div className={"my-2 marketingModulesTextLink"}>More how to Links Here</div>
-        <div className={"my-2 marketingModulesTextLink"}>Even more how to Links Here</div>
+        <div className={"my-2"}>
+          <ExternalLink
+            link={EXTERNAL_LINKS.OPSERA_SALESFORCE_PIPELINES}
+            label={"Opsera Salesforce Pipeline"}
+          />
+        </div>
+        <div className={"my-2"}>
+          <ExternalLink
+            link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
+            label={"Salesforce Release Management"}
+          />
+        </div>
+        <div className={"my-2"}>
+          <ExternalLink
+            link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
+            label={"Salesforce User Guide"}
+          />
+        </div>
       </div>
     );
   };
@@ -64,12 +77,12 @@ export default function WelcomeWidget({ className }) {
 
   const getVideoLink = () => {
     const handleClick = (url) => e => {
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     };
 
-      return (
+    return (
       <div className={"pointer"}
-        onClick={handleClick(EXTERNAL_LINKS.HOW_TO_VIDEO)}>
+           onClick={handleClick(EXTERNAL_LINKS.HOW_TO_VIDEO)}>
         <IconBase
           icon={faYoutube}
           iconSize={"lg"}
@@ -91,9 +104,9 @@ export default function WelcomeWidget({ className }) {
       <div className={"p-3 marketingModulesText"}>
         <div className={"d-flex"}>
           <div>
-            <div className={"mb-3"}>
-              Get insights to help make the right decisions.
-              Watch the video on how to customise your dashboard
+            <div className={"mb-2"}>
+              <div>Welcome to the Opsera Salesforce trial platform.</div>
+              <div className={"mt-2"}>You can use this 14 day demo to learn more about the Salesforce offerings from Opsera.</div>
             </div>
             {getHowToLinks()}
           </div>

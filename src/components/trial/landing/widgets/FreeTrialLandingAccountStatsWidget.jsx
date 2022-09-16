@@ -9,8 +9,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
-import { Link } from "react-router-dom";
 import { EXTERNAL_LINKS } from "Navbar";
+import { ExternalLink } from "temp-library-components/link/ExternalLink";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
 export default function FreeTrialLandingAccountStatsWidget({ className }) {
@@ -165,26 +165,18 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
             fontSize: "smaller",
           }}
         >
-          For assistance, email
-          <a
-            href={"mailto:support@opsera.io"}
-            className={"marketingModulesTextLink ml-1"}
-          >
-            support@opsera.io
-          </a>
+          <span>For assistance, email</span>
+          <ExternalLink
+            link={EXTERNAL_LINKS.SUPPORT_EMAIL}
+            label={"support@opsera.io"}
+            className={"my-auto ml-1"}
+          />
           <div className={"ml-1"}>or</div>
-          <div
-            className={"ml-1"}
-          >
-            <a
-              href={EXTERNAL_LINKS.REQUEST_HELP}
-              target={"_blank"}
-              className={"marketingModulesTextLink ml-1"}
-              rel={"noreferrer"}
-            >
-             click here
-            </a>.
-          </div>
+          <ExternalLink
+            link={EXTERNAL_LINKS.REQUEST_HELP}
+            label={"click here"}
+            className={"ml-1 my-auto"}
+          />.
         </div>
       </div>
     );
