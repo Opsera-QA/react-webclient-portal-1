@@ -12,6 +12,19 @@ export default function TaskCardHeader(
   const state = taskModel?.getData("status");
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
 
+  const getOrchestrationStateFieldBase = () => {
+    if (runCount > 0) {
+      return (
+        <OrchestrationStateFieldBase
+          orchestrationState={state}
+          type={"Task"}
+          showStoppedState={false}
+        />
+      );
+    }
+  };
+
+
   return (
     <CardHeaderBase>
       <div className={"w-100 d-flex justify-content-between pl-3 pr-2 pt-1 small"}>
@@ -19,10 +32,7 @@ export default function TaskCardHeader(
           <span>{runCount} Runs</span>
         </div>
         <div>
-          <OrchestrationStateFieldBase
-            orchestrationState={state}
-            type={"Task"}
-          />
+          {getOrchestrationStateFieldBase()}
         </div>
       </div>
     </CardHeaderBase>

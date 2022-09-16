@@ -14,6 +14,7 @@ import StoppedOrchestrationStateFieldBase
 export default function OrchestrationStateFieldBase(
   {
     orchestrationState,
+    showStoppedState,
     type,
     className,
   }) {
@@ -47,6 +48,10 @@ export default function OrchestrationStateFieldBase(
         />
       );
     default:
+      if (showStoppedState === false) {
+        return null;
+      }
+
       return (
         <StoppedOrchestrationStateFieldBase
           type={type}
@@ -60,4 +65,5 @@ OrchestrationStateFieldBase.propTypes = {
   orchestrationState: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,
+  showStoppedState: PropTypes.bool,
 };

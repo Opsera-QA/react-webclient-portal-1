@@ -16,11 +16,12 @@ export default function PipelineCardHeader(
   const orchestrationState = state === "running" ? state : lastRunState;
 
   const getOrchestrationStateFieldBase = () => {
-    if (runCount > 0 && orchestrationState !== "stopped") {
+    if (runCount > 0) {
       return (
         <OrchestrationStateFieldBase
           orchestrationState={orchestrationState}
           type={"Pipeline"}
+          showStoppedState={false}
         />
       );
     }
