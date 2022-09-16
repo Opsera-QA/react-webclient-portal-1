@@ -36,6 +36,11 @@ const browserNotSupported = (function (agent) {
   }
 })(window.navigator.userAgent.toLowerCase());
 
+if (window.location.hostname.toLowerCase() === "freetrial.opsera.io") {
+  console.log("Directing user to proper URL for Free Trial App");
+  window.location.replace("https://portal.freetrial.opsera.io");
+}
+
 if (browserNotSupported) {
   let uiMessage = "<div style='margin:25px; top: 150px; position: absolute;'>This portal is designed to use the latest, \
   secure web technology and as such requires modern versions of Chrome, Firefox, Safari, Opera or the brand new Microsoft \
