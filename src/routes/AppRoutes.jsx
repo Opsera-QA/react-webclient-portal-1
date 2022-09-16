@@ -147,6 +147,7 @@ import FreeTrialCustomerWorkspaceManagement
   from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
 import FreeTrialCustomerWorkspaceView
   from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
+import AdminToolsRoutes from "routes/AdminToolsRoutes";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
@@ -254,48 +255,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
           <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
 
+          <AdminToolsRoutes />
 
-          <SecureRoute path="/admin" exact component={AdminTools} />
-          <SecureRoute path="/admin/custom-environment-variables" exact component={CustomEnvironmentVariableManagement} />
-          <SecureRoute path="/admin/manage_systems" component={ManageSystems} />
-          <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement} />
-          <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView} />
-          <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration} />
-          <SecureRoute path="/admin/tools/categories" exact component={ToolCategoryManagement} />
-          <SecureRoute path="/admin/tools/identifiers" exact component={ToolIdentifierManagement} />
-          <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView} />
-          <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
-                       component={ToolIdentifierDetailView} />
-          <SecureRoute path="/admin/kpis" exact component={KpiIdentifierManagement} />
-          <SecureRoute path="/admin/kpis/:id" exact component={KpiIdentifierDetailView} />
-          <SecureRoute path="/admin/templates" exact component={PipelineTemplateManagement} />
-          <SecureRoute path="/admin/templates/details/:templateId" exact component={PipelineTemplateDetailView} />
-          <SecureRoute path="/admin/reports" exact component={Reports_Old} />
-          <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
-          <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
-
-          <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
-          <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
-
-          <SecureRoute path="/admin/customer/workspaces" exact component={FreeTrialCustomerWorkspaceManagement} />
-          <SecureRoute path="/admin/customer/workspaces/user/:userId" exact component={FreeTrialCustomerWorkspaceView} />
-
-          <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
-          <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact component={PlatformSystemParameterDetailView} />
-
-          <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement} />
-          <SecureRoute path="/admin/site-notifications/details/:id" exact
-                       component={SiteNotificationDetailView} />
-          <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManager} />
-
-          <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView} />
-          <SecureRoute path="/admin/organizations/details/:organizationName" exact
-                       component={LdapOrganizationDetailView} />
-          <SecureRoute path="/admin/organization-accounts/:organizationName?" exact
-                       component={LdapOrganizationAccountManagement} />
-          <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
-                       component={LdapOrganizationAccountDetailView} />
-          <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
 
           <SecureRoute path="/pipeline" component={Pipeline} />
           <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
@@ -335,7 +296,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                        component={UserDataMappingDetailView} />
 
-          <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
           <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 

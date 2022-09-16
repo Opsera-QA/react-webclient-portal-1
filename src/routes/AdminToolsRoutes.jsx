@@ -42,6 +42,10 @@ import PlatformSystemParameterManagement from "components/admin/system_parameter
 import PlatformSystemParameterDetailView
   from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialCustomerWorkspaceManagement
+  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
+import FreeTrialCustomerWorkspaceView
+  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
 
 export default function AdminToolsRoutes() {
   const {
@@ -73,6 +77,8 @@ export default function AdminToolsRoutes() {
       <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement} />
       <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView} />
 
+      <SecureRoute path="/admin/customer/workspaces" exact component={FreeTrialCustomerWorkspaceManagement} />
+      <SecureRoute path="/admin/customer/workspaces/user/:userId" exact component={FreeTrialCustomerWorkspaceView} />
 
       <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement} />
       <SecureRoute path="/admin/site-notifications/details/:id" exact
