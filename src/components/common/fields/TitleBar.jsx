@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import BetaBadge from "components/common/badges/TooltipBadgeBase";
+import BetaBadge from "components/common/badges/BetaBadge";
 
 function TitleBar(
   {
@@ -26,7 +26,10 @@ function TitleBar(
         {getInactiveText()}
         {titleActionBar}
         <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
-        <BetaBadge isBeta={isBeta} />
+        <BetaBadge
+          isBeta={isBeta}
+          className={"mr-1 ml-2 my-auto"}
+        />
       </div>
     );
   };

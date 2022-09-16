@@ -1,17 +1,18 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import { faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import ChartSettingsOverlay from "components/insights/marketplace/charts/ChartSettingsOverlay";
 import IconBase from "components/common/icons/IconBase";
-import {parseError} from "components/common/helpers/error-helpers";
-import {getMetricFilterValue} from "components/common/helpers/metrics/metricFilter.helpers";
+import { parseError } from "components/common/helpers/error-helpers";
+import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import AppliedMetricTagBadge from "components/common/badges/tag/metrics/AppliedMetricTagBadge";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
+import BetaBadge from "components/common/badges/BetaBadge";
 
 function VanityMetricContainer(
   {
@@ -28,7 +29,8 @@ function VanityMetricContainer(
     settingsHelpComponent,
     showSettingsToggle,
     launchActionableInsightsFunction,
-    dataPresent
+    dataPresent,
+    isBeta,
   }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
@@ -110,10 +112,16 @@ function VanityMetricContainer(
     if (isLoading) {
       return (
         <div className={"h-100 d-flex justify-content-between"}>
-          <span className={"my-auto"}>
-            <IconBase isLoading={true} className="mr-1"/>
+          <div className={"d-flex"}>
+            <BetaBadge
+              isBeta={isBeta}
+              className={"mr-2 my-auto"}
+            />
+            <span className={"my-auto"}>
+            <IconBase isLoading={true} className={"mr-2"} />
             Loading Chart
           </span>
+          </div>
         </div>
       );
     }
@@ -121,9 +129,15 @@ function VanityMetricContainer(
     if (error) {
       return (
         <div className={"h-100 d-flex justify-content-between"}>
-          <div className={"my-auto"}>
-            <IconBase icon={faExclamationCircle} fixedWidth className="mr-1"/>
-            Error Loading Chart!
+          <div className={"d-flex"}>
+            <BetaBadge
+              isBeta={isBeta}
+              className={"mr-2 my-auto"}
+            />
+            <div className={"my-auto"}>
+              <IconBase icon={faExclamationCircle} fixedWidth className={"mr-2"} />
+              Error Loading Chart!
+            </div>
           </div>
           <div className={"d-flex my-auto"}>
             {getSettingsToggle()}
@@ -134,8 +148,14 @@ function VanityMetricContainer(
 
     return (
       <div className={"h-100 d-flex justify-content-between"}>
-        <div className={"my-auto"}>
-          {kpiConfiguration?.kpi_name}
+        <div className={"d-flex"}>
+          <BetaBadge
+            isBeta={isBeta}
+            className={"mr-2 my-auto"}
+          />
+          <div className={"my-auto"}>
+            {kpiConfiguration?.kpi_name}
+          </div>
         </div>
         <div className={"d-flex my-auto"}>
           {getHelpToggle()}
@@ -150,8 +170,9 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{height: "150px"}}>
-          <div className="max-content-width p-5 mt-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
           </div>
         </div>
@@ -169,8 +190,9 @@ function VanityMetricContainer(
     // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
-        <div className="new-chart mb-3" style={{ height: "150px" }}>
-          <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <InfoDialog message="No Data is available for this chart at this time." />
           </div>
         </div>
@@ -247,7 +269,8 @@ VanityMetricContainer.propTypes = {
   settingsHelpComponent: PropTypes.func,
   showSettingsToggle: PropTypes.bool,
   launchActionableInsightsFunction: PropTypes.func,
-  dataPresent: PropTypes.bool
+  dataPresent: PropTypes.bool,
+  isBeta: PropTypes.bool,
 };
 
 export default VanityMetricContainer;
