@@ -10,14 +10,11 @@ import { Col, Row } from "react-bootstrap";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import PipelineCardHeader from "temp-library-components/cards/pipelines/PipelineCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
-  const lastRun = pipelineModel?.getData("workflow.last_run");
   const lastRunCompletionDate = pipelineModel?.getData("workflow.last_run.completed");
 
   if (runCount === 0) {
@@ -32,13 +29,9 @@ const getLastRunDetails = (pipelineModel) => {
 
   if (lastRunCompletionDate != null) {
     return (
-      <div className={"d-flex justify-content-between text-muted"}>
-        {getFormattedTimestamp(lastRunCompletionDate)}
-        <div>
-          <OrchestrationStateFieldBase
-            orchestrationState={lastRun?.status}
-            type={"Pipeline"}
-          />
+      <div className={"d-flex text-muted"}>
+        <div className={"mx-auto"}>
+          {getFormattedTimestamp(lastRunCompletionDate)}
         </div>
       </div>
     );
@@ -102,7 +95,7 @@ export default function PipelineCardBase(
   };
 
 
-  const getDescription = () => {
+  const getContentBody = () => {
     return (
       <div className={"mb-1"}>
         <Row className={"small"}>
@@ -119,7 +112,7 @@ export default function PipelineCardBase(
   return (
     <SelectionIconCardBase
       titleBar={getTitleBar()}
-      contentBody={getDescription()}
+      contentBody={getContentBody()}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       cardHeader={<PipelineCardHeader pipelineModel={pipelineModel} />}
