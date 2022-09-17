@@ -31,7 +31,6 @@ import LeadTimeAndReleaseTracebilityEditorPanel
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
-import ChangeFailureRateLineChartEditorPanel from "components/insights/charts/jira/change_failure_rate/ChangeFailureRateLineChartEditorPanel";
 import QuickDeployStatisticsEditorPanel
   from "../../charts/opsera/quick_deploy_statistics/QuickDeployStatisticsEditorPanel";
 import SalesforceComponentsEditorPanel
@@ -42,6 +41,8 @@ import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
+import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
+  // from "../../charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -210,7 +211,7 @@ function DashboardMetricOverlayContainer(
         />);
         case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
           return (
-            <ChangeFailureRateLineChartEditorPanel
+            <JiraChangeFailureRateEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

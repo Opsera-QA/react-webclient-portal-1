@@ -1,5 +1,5 @@
-export const changeFailureRateLineMetaData = {
-  type: "Failure Rate Line",
+export const jiraChangeFailureRateMetadata = {
+  type: "Change Failure Rate",
   fields: [
     {
       label: "Tags",
@@ -21,7 +21,5 @@ export const changeFailureRateLineMetaData = {
   newObjectFields: {
     tags: [],
     date: undefined,
-    "jira-projects": [],
-    "jira-change-types": []
   }
 };

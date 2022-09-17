@@ -15,16 +15,16 @@ function MetricJiraChangeFailureRateFilterInput(
   return (
     <>
     <SupportedMetricFilterInputContainer
-      filterType={KPI_FILTER_TYPES.JIRA_CHANGE_FAILURE_RATE}
+      filterType={KPI_FILTER_TYPES.JIRA_CHANGE_TYPES}
       supportedFilters={metricModel?.getData("filters")}
     >
-      <JiraChangeFailureRateFilterSelectInput
-        fieldName={fieldName}
-        valueField={"value"}
-        textField={"text"}
-        model={metricFilterModel}
-        setModel={setMetricFilterModel}
-      />
+      {/*<JiraChangeFailureRateFilterSelectInput*/}
+      {/*  fieldName={fieldName}*/}
+      {/*  valueField={"value"}*/}
+      {/*  textField={"text"}*/}
+      {/*  model={metricFilterModel}*/}
+      {/*  setModel={setMetricFilterModel}*/}
+      {/*/>*/}
     </SupportedMetricFilterInputContainer>
     </>
   );

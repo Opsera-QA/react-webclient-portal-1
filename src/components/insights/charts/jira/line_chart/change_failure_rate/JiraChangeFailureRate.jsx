@@ -1,0 +1,163 @@
+import React, { useState, useContext, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import axios from "axios";
+import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFailureRate_kpi_datapoint_identifiers";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
+import jiraAction from "../../jira.action";
+import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateDataBlockContainer";
+
+const DEFAULT_GOALS = {
+  change_failure_rate: 10,
+};
+
+function JiraChangeFailureRate({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metricData, setMetricData] =
+    useState(undefined);
+  const [chartData, setChartData] =
+    useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [goalsData, setGoalsData] = useState(undefined);
+  const [changeFailureRateDataPoint, setChangeFailureRateDataPoint] =
+      useState(undefined);
+
+  useEffect(() => {
+    console.log("USEEFFECT CFR");
+    if (cancelTokenSource) {
+      console.log("CANCELLING",cancelTokenSource);
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(dashboardData)]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    console.log("LOADDATA CFR");
+    try {
+      setIsLoading(true);
+      await loadDataPoints(cancelSource);
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+      let goals =
+        kpiConfiguration?.dataPoints[0]?.strategic_criteria?.data_point_evaluation_rules?.success_rule?.primary_trigger_value;
+      if (goals) {
+        setGoalsData({change_failure_rate: goals});
+      } else {
+        setGoalsData(DEFAULT_GOALS);
+      }
+
+      const response = await jiraAction.getJiraChangeFailureRate(getAccessToken,cancelTokenSource,kpiConfiguration,dashboardTags,dashboardOrgs);
+
+      const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
+      if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
+        setMetricData(metrics);
+        setChartData(metrics?.chartData);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const dataPoint = dataPointHelpers.getDataPoint(
+        dataPoints,
+        constants.SUPPORTED_DATA_POINT_IDENTIFIERS
+            .CHANGE_FAILURE_RATE_DATA_POINT,
+    );
+    setChangeFailureRateDataPoint(dataPoint);
+  };
+
+  const getChartBody = () => {
+    if (!metricData || !Array.isArray(chartData)) {
+      return null;
+    }
+    return (
+      <Row className={"mx-0 p-2 justify-content-between"}>
+        {dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) && (
+          <Col
+            className={"px-0"}
+            xl={12}
+            md={12}
+          >
+            <JiraChangeFailureRateDataBlockContainer
+              metricData={metricData}
+              chartData={chartData}
+              goalsData={goalsData?.change_failure_rate}
+              kpiConfiguration={kpiConfiguration}
+              dataPoint={changeFailureRateDataPoint}
+            />
+          </Col>
+        )}
+      </Row>
+    );
+  };
+
+  return (
+    <div>
+      <VanityMetricContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+    </div>
+  );
+}
+
+JiraChangeFailureRate.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func,
+};
+
+export default JiraChangeFailureRate;

@@ -7,16 +7,16 @@ import { defaultConfig } from 'components/insights/charts/charts-views';
 import _ from "lodash";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
-import config from "./ChangeFailureRateConfig";
+import config from "./JiraChageFailureRateChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import { goalSuccessColor } from "../../charts-views";
-import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import { goalSuccessColor } from "../../../charts-views";
+import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
-function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
+function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -27,13 +27,13 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
     setMaxVal(Math.ceil(high));
   }, [goalsData, chartData]);
 
-  let dailyDeploymentsChartData = [
+  let avgCFRChartData = [
     {
-      "id": "average daily deployments",
+      "id": "average cfr",
       "data": chartData
     }  
   ];
-    const getReverseIcon = (severity) => {
+  const getReverseIcon = (severity) => {
     switch (severity) {
       case "red":
         return faArrowCircleDown;
@@ -57,11 +57,10 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
             middleText={
               <MetricScoreText
                   score={metricData?.average}
-                  className={"metric-block-content-text"}
                   dataPoint={dataPoint}
+                  className={"metric-block-content-text"}
               />}
             dataPoint={dataPoint}
-            
         />
       </DataBlockBoxContainer>
     );
@@ -74,24 +73,24 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
           Goal<b> ({goalsData})</b>{" "}
           <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
-          Success Rate{" "}
+          Avg Change Failure Rate{" "}
           <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
         </div>
         <ResponsiveLine
-          data={dailyDeploymentsChartData}
+          data={avgCFRChartData}
           {...defaultConfig("", "Date", 
                 false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{            
             tickValues: [0, maxVal],
-            legend: 'Success Rate %',
+            legend: 'Avg CFR',
             legendOffset: -38,
             legendPosition: 'middle'
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of Deployments", "Average Deployment"]}
+              titles={["Date Range", "Number of CFRs", "Average CFRs"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}
@@ -110,8 +109,7 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
 
   return (
     <HorizontalDataBlocksContainer
-      title={""}
-      // onClick={() => onRowSelect()}
+      title={"Change Failure Rate"}
     >
       <Container>
         <Row className="align-items-center">
@@ -127,13 +125,12 @@ function ChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData,
   );
 }
 
-ChangeFailureRateDataBlockContainer.propTypes = {
+JiraChangeFailureRateDataBlockContainer.propTypes = {
   metricData: PropTypes.object,
-  chartData: PropTypes.object,
+  chartData: PropTypes.array,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
   dataPoint: PropTypes.object
-
 };
 
-export default ChangeFailureRateDataBlockContainer;
+export default JiraChangeFailureRateDataBlockContainer;

@@ -177,7 +177,7 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 //Boomi KPI
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
-import ChangeFailureRateLineChart from "./jira/change_failure_rate/ChangeFailureRateLineChart";
+import JiraChangeFailureRate from "./jira/line_chart/change_failure_rate/JiraChangeFailureRate";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -418,7 +418,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
         return (
           <Col xl={12} md={12} className="p-2">
-            <ChangeFailureRateLineChart
+            <JiraChangeFailureRate
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

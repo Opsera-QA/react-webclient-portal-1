@@ -14,7 +14,7 @@ export default () => ({
   colors:  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
   axisLeft: {
     tickValues: [0, 50, 100],
-    legend: 'Success Rate %',
+    legend: 'CFR',
     legendOffset: -40,
     legendPosition: 'middle'
   },
