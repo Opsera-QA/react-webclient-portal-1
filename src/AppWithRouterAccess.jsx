@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Route, useHistory } from "react-router-dom";
+import { Route, Router, Switch, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import ToastContextProvider from "./contexts/DialogToastContext";
@@ -18,6 +18,7 @@ import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
 import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
+import PageNotFound from "components/not_found/PageNotFound";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -168,9 +169,17 @@ const AppWithRouterAccess = () => {
         <div className={"container-fluid m-0"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"}>
-              <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
-              <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-              <Route path="/logout" exact component={Logout} />
+              <Router history={history}>
+                <Switch>
+                  <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
+                  <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
+                  <Route path="/logout" exact component={Logout} />
+                  <Route
+                    path={"*"}
+                    component={PageNotFound}
+                  />
+                </Switch>
+              </Router>
             </div>
           </div>
           <OpseraFooter />
