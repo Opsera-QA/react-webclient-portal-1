@@ -7,6 +7,7 @@ function ProjectRepositorySelectInput(
     fieldName,
     model,
     setModel,
+    setDataFunction,
     disabled,
     textField,
     valueField,
@@ -19,6 +20,7 @@ function ProjectRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
+      setDataFunction={setDataFunction}
       valueField={valueField}
       textField={textField}
       disabled={disabled}
@@ -30,6 +32,7 @@ ProjectRepositorySelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
