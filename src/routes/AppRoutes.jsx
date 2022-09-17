@@ -14,7 +14,6 @@ import Inventory from "components/inventory/Inventory";
 import Signup from "components/user/signup/Signup";
 import ApiConnector from "components/api_connector/ApiConnector";
 import Pipeline from "components/pipeline/index";
-import Platform from "components/platform/Platform";
 import Analytics from "components/analytics/Analytics";
 import Logs from "components/logs/Logs";
 import Update from "components/update/Update";
@@ -100,6 +99,8 @@ import OpseraFreeTrialSettingsManagement from "components/header/OpseraFreeTrial
 import FreeTrialInsightsLanding from "components/trial/insights/FreeTrialInsightsLanding";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
 import Home from "Home";
+import ToolchainRoutes from "routes/ToolchainRoutes";
+import PageNotFound from "components/not_found/PageNotFound";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
@@ -151,9 +152,9 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
                        component={ToolProjectsView} />
 
+          <ToolchainRoutes />
           <SecureRoute path="/dashboard" component={Dashboard} />
           <SecureRoute path="/tools/:id?" component={ApiConnector} />
-          <SecureRoute path="/platform" component={Platform} />
           <SecureRoute path="/logs" exact component={Logs} />
           <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
           <SecureRoute path="/update" component={Update} />
@@ -251,7 +252,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
           <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 
-          {/*{getFreeTrialRoutes()}*/}
+          <SecureRoute path="*" component={PageNotFound} />
         </div>
       </div>
       <OpseraFooter />

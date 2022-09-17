@@ -68,7 +68,6 @@ export default function FreeTrialWorkspace() {
     <ScreenContainer
       className={"mt-3"}
       breadcrumbDestination={"workspace"}
-      includeSubNavigationGap={false}
     >
       <FreeTrialWorkspaceViewContainer
         workspaceFilterModel={workspaceFilterModel}

@@ -15,7 +15,6 @@ export default function OpseraFreeTrialSettingsManagement() {
       breadcrumbDestination={"freeTrialSettings"}
       pageDescription={"Manage Free Trial settings from this dashboard."}
       className={"mt-3"}
-      includeSubNavigationGap={false}
     >
       <div className={"m-3"}>
         <div>This will eventually hold a link to all pages but for now showing the side bar so all main areas are accessible to Opsera Administrators</div>

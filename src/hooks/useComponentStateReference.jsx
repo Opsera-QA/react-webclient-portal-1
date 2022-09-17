@@ -16,6 +16,7 @@ export default function useComponentStateReference() {
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
     isSiteAdministrator,
+    isPowerUser,
     userData,
     backgroundColor,
     isAuthenticated,
@@ -44,5 +45,6 @@ export default function useComponentStateReference() {
     isFreeTrial: true,
     backgroundColor: backgroundColor,
     isAuthenticated: isAuthenticated,
+    isPowerUser: isPowerUser,
   });
 }

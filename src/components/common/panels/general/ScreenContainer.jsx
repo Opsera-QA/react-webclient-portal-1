@@ -11,6 +11,7 @@ import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ScreenContainer(
   {
@@ -26,11 +27,14 @@ function ScreenContainer(
     titleActionBar,
     helpComponent,
     bodyClassName,
-    includeSubNavigationGap,
     className,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
+  const {
+    isOpseraAdministrator,
+    isFreeTrial
+  } = useComponentStateReference();
 
   useEffect(() => {
     toastContext.removeInlineMessage();
@@ -52,7 +56,7 @@ function ScreenContainer(
       );
     }
 
-    if (includeSubNavigationGap === true) {
+    if (isFreeTrial !== true || isOpseraAdministrator === true) {
       return (
         <div className="mb-3">
           <div className="sub-navigation-block" />
@@ -185,13 +189,11 @@ ScreenContainer.propTypes = {
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
-  includeSubNavigationGap: PropTypes.bool,
   className: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {
   bodyClassName: "mt-2",
-  includeSubNavigationGap: true,
 };
 
 export default ScreenContainer;

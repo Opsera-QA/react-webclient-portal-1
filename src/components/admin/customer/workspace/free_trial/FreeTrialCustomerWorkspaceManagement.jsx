@@ -56,7 +56,6 @@ export default function FreeTrialCustomerWorkspaceManagement() {
     <ScreenContainer
       className={"mt-3"}
       breadcrumbDestination={"freeTrialCustomerWorkspaceManagement"}
-      includeSubNavigationGap={false}
     >
       <FreeTrialCustomerWorkspaceUsersTable
         loadData={loadData}

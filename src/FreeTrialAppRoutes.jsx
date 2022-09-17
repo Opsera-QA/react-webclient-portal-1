@@ -17,6 +17,7 @@ import FreeTrialRegistration from "components/trial/registration/FreeTrialRegist
 import OpseraFooter from "components/footer/OpseraFooter";
 import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import FreeTrialInsightsLanding from "components/trial/insights/FreeTrialInsightsLanding";
+import PageNotFound from "components/not_found/PageNotFound";
 
 export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
   return (
@@ -43,6 +44,7 @@ export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
           <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
+          <SecureRoute path="*" component={PageNotFound} />
         </div>
       </div>
       <OpseraFooter />
