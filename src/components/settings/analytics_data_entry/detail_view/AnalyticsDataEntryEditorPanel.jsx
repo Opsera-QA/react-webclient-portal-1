@@ -48,6 +48,7 @@ function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
 
   const createAnalyticsDataEntry = async () => {
     const data = kpiConfigurationData ? kpiConfigurationData?.getPersistData() : {};
+    console.log(data);
     analyticsDataEntryModel.setData("data", data);
     return await analyticsDataActions.createAnalyticsDataEntryV2(getAccessToken, cancelTokenSource, analyticsDataEntryModel);
   };
