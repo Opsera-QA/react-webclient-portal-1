@@ -34,6 +34,12 @@ function PipelineStepNotificationConfigurationHelpDocumentation({closeHelpPanel}
             <li><b>Teams Tool</b> - Select a properly configured Teams tool from the drop-down.</li>
           </ul></li>
         </ul>
+        <ul style={{listStyleType: "none"}}><li><b>Google Chat Notification Configuration</b>
+          <ul>
+            <li><b>Prerequisite</b> - A successfully configured Google Chat tool in the Tool Registry.</li>
+            <li><b>Gchat Tool</b> - Select a properly configured Gchat tool from the drop-down.</li>
+          </ul></li>
+        </ul>
         <ul style={{listStyleType: "none"}}><li><b>Slack Notification Configuration</b>
           <ul>
             <li><b>Prerequisites</b> - A successfully configured Slack tool in the Tool Registry, and the Opsera app added to the Slack channel where notifications wil be received. To receive a notification within a specific Slack channel, navigate to the slack channel. In the text field, type “/app” to search through your connected app directory and locate Opsera. </li>

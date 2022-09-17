@@ -16,7 +16,7 @@ function ApprovalGatesPiplelineDataTab({ pipeline_id, dashboardData, kpiConfigur
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model(
-      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields, pageSize: 25 },
       actionableInsightsGenericChartFilterMetadata,
       false
     )
