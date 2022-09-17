@@ -25,10 +25,10 @@ export default function PageNotFound() {
             <OpseraInfinityLogoLarge
               scale={.5}
             />
-            <div className={"mx-auto"}>
+            <div className={"ml-5"}>
               <div
                 style={{
-                  fontSize: "60px",
+                  fontSize: "100px",
                 }}
                 className={"danger-red"}
               >
@@ -36,15 +36,17 @@ export default function PageNotFound() {
                   icon={faDiamondExclamation}
                   className={"mr-4"}
                 />
-                  404
+                404
               </div>
               <H5FieldSubHeader
                 subheaderText={"The page you were looking for was not found!"}
               />
-              <div className={"mt-3"}>
-                <Link to={"/"}>
-                  Click here to go home
-                </Link>
+              <div className={"d-flex"}>
+                <div className={"mt-2 mx-auto"}>
+                  <Link to={"/"}>
+                    <span>Click here to go home</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </CenteredContentWrapper>
