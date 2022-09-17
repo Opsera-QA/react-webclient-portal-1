@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoginForm from "components/login/LoginForm";
-import { Route } from "react-router-dom";
+import { Route, Router, Switch, useHistory } from "react-router-dom";
 import { SecureRoute, LoginCallback } from "@okta/okta-react";
 
 import Logout from "components/login/Logout";
@@ -103,7 +103,10 @@ import ToolchainRoutes from "routes/ToolchainRoutes";
 import PageNotFound from "components/not_found/PageNotFound";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
-  useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
+  const history = useHistory();
+
+  useEffect(() => {
+  }, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 
   // Not used in free trial
   const getSideBar = () => {
@@ -121,138 +124,149 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"}>
-          <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
-          <Route path="/implicit/callback" component={LoginCallback} />
-          <Route path="/logout" exact component={Logout} />
+          <Router history={history}>
+            <Switch>
+              <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
+              <Route path="/implicit/callback" component={LoginCallback} />
+              <Route path="/logout" exact component={Logout} />
 
-          <Route path="/trial/registration" exact component={FreeTrialRegistration} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/faq" exact component={Faq} />
-          <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
-          <Route path="/about" exact component={About} />
-          <Route path="/about/pricing" component={Pricing} />
-          <Route path="/help" component={OnlineHelp} />
-          <Route path="/registration" exact component={Registration} />
-          <Route path="/account/registration/:domain" exact component={AccountRegistration} />
-          <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
+              <Route path="/trial/registration" exact component={FreeTrialRegistration} />
+              <Route path="/signup" exact component={Signup} />
+              <Route path="/faq" exact component={Faq} />
+              <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
+              <Route path="/about" exact component={About} />
+              <Route path="/about/pricing" component={Pricing} />
+              <Route path="/help" component={OnlineHelp} />
+              <Route path="/registration" exact component={Registration} />
+              <Route path="/account/registration/:domain" exact component={AccountRegistration} />
+              <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
 
-          <Route path="/" exact component={Home} />
+              <Route path="/" exact component={Home} />
 
-          <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
+              <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
 
-          <SecureRoute path="/user/:tab?" exact component={UserSettings} />
-          <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView} />
+              <SecureRoute path="/user/:tab?" exact component={UserSettings} />
+              <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView} />
 
-          <SecureRoute path="/inventory" exact component={Inventory} />
-          <SecureRoute path="/inventory/tools" exact component={ToolInventory} />
-          <SecureRoute path="/inventory/platform" exact component={PlatformInventory} />
-          <SecureRoute path="/inventory/parameters" exact component={ParametersInventory} />
-          <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory} />
-          <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
-          <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
-                       component={ToolProjectsView} />
+              <SecureRoute path="/inventory" exact component={Inventory} />
+              <SecureRoute path="/inventory/tools" exact component={ToolInventory} />
+              <SecureRoute path="/inventory/platform" exact component={PlatformInventory} />
+              <SecureRoute path="/inventory/parameters" exact component={ParametersInventory} />
+              <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory} />
+              <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
+              <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
+                           component={ToolProjectsView} />
 
-          <ToolchainRoutes />
-          <SecureRoute path="/dashboard" component={Dashboard} />
-          <SecureRoute path="/tools/:id?" component={ApiConnector} />
-          <SecureRoute path="/logs" exact component={Logs} />
-          <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
-          <SecureRoute path="/update" component={Update} />
-
-
-          <SecureRoute path="/reports" exact component={Reports} />
-          <SecureRoute path="/reports/tags" exact component={TagReportsScreen} />
-          <SecureRoute path="/reports/tools" exact component={ToolReportsScreen} />
-          <SecureRoute path="/reports/pipelines" exact component={PipelineReportsScreen} />
-          <SecureRoute path="/reports/users" exact component={UserReportsScreen} />
+              <ToolchainRoutes />
+              <SecureRoute path="/dashboard" component={Dashboard} />
+              <SecureRoute path="/tools/:id?" component={ApiConnector} />
+              <SecureRoute path="/logs" exact component={Logs} />
+              <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
+              <SecureRoute path="/update" component={Update} />
 
 
-          <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport} />
-          <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport} />
+              <SecureRoute path="/reports" exact component={Reports} />
+              <SecureRoute path="/reports/tags" exact component={TagReportsScreen} />
+              <SecureRoute path="/reports/tools" exact component={ToolReportsScreen} />
+              <SecureRoute path="/reports/pipelines" exact component={PipelineReportsScreen} />
+              <SecureRoute path="/reports/users" exact component={UserReportsScreen} />
 
 
-          <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport} />
-          <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport} />
-          <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact
-                       component={TagsUsedInDashboardsReport} />
+              <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport} />
+              <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport} />
 
 
-          <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport} />
-          <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport} />
-          <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport} />
-          <SecureRoute path="/reports/users/task-ownership" exact component={UserTaskOwnershipReport} />
-          <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
+              <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport} />
+              <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport} />
+              <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact
+                           component={TagsUsedInDashboardsReport} />
 
 
-          <SecureRoute path="/notifications" exact component={NotificationPolicyManagement} />
-          <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
-          <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView} />
+              <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport} />
+              <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport} />
+              <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport} />
+              <SecureRoute path="/reports/users/task-ownership" exact component={UserTaskOwnershipReport} />
+              <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
 
 
-          <SecureRoute path="/insights/analytics" exact component={Analytics} />
-          <SecureRoute path="/insights" exact component={Insights} />
-          <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
-          <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
-          <SecureRoute path="/insights/lookup" exact component={Lookup} />
-          <SecureRoute path="/insights/release360" exact component={Release360} />
-          <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
-          <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
-          <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
-
-          {/*Insights Reports*/}
-          <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType" component={SonarPipelineScanReport} />
-          <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity" component={CoverityScanReport} />
+              <SecureRoute path="/notifications" exact component={NotificationPolicyManagement} />
+              <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
+              <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView} />
 
 
-          <SecureRoute path="/task" exact component={TaskManagement} />
-          <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
-          <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
+              <SecureRoute path="/insights/analytics" exact component={Analytics} />
+              <SecureRoute path="/insights" exact component={Insights} />
+              <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
+              <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
+              <SecureRoute path="/insights/lookup" exact component={Lookup} />
+              <SecureRoute path="/insights/release360" exact component={Release360} />
+              <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
+              <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
+              <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
 
-          <AdminToolsRoutes />
+              {/*Insights Reports*/}
+              <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType"
+                           component={SonarPipelineScanReport} />
+              <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity"
+                           component={CoverityScanReport} />
 
 
-          <SecureRoute path="/pipeline" component={Pipeline} />
-          <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
-          <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
-          <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
+              <SecureRoute path="/task" exact component={TaskManagement} />
+              <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
+              <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
+
+              <AdminToolsRoutes />
 
 
-          <SecureRoute path="/settings" exact component={AccountSettingsView} />
-          <SecureRoute path="/settings/delete" component={DeleteTools} />
-          <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement} />
-          <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
-                       component={LdapGroupDetailView} />
-          <SecureRoute path="/settings/:orgDomain?/site-roles/" exact component={SiteRoleManagement} />
-          <SecureRoute path="/settings/:orgDomain/site-roles/details/:groupName" exact
-                       component={SiteRoleDetailView} />
-          <SecureRoute path="/settings/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
-          <SecureRoute path="/settings/:orgDomain/departments/details/:departmentName" exact
-                       component={LdapDepartmentDetailView} />
-          <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement} />
-          <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView} />
-          <SecureRoute path="/settings/analytics-data-entries/" exact component={AnalyticsDataEntryManagement} />
-          <SecureRoute path="/settings/analytics-data-entries/details/:id" exact
-                       component={AnalyticsDataEntryDetailView} />
-          <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
-          <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact component={UserDetailView} />
-          <SecureRoute path="/settings/user-management/pending/:userId/details" exact component={SsoUserDetailView} />
-          
-          <SecureRoute path="/settings/logs-export-management" exact component={LogsExportManagement} />
-          <SecureRoute path="/settings/tags" exact component={TagEditor} />
-          <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
-          <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
-          <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
-          <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
-                       component={ProjectDataMappingDetailView} />
-          <SecureRoute path="/settings/data_mapping/pipeline/details/:pipelineDataMappingId" exact
-                       component={PipelineDataMappingDetailView} />
-          <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
-                       component={UserDataMappingDetailView} />
+              <SecureRoute path="/pipeline" component={Pipeline} />
+              <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
+              <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
+              <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
-          <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
-          <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 
-          <SecureRoute path="*" component={PageNotFound} />
+              <SecureRoute path="/settings" exact component={AccountSettingsView} />
+              <SecureRoute path="/settings/delete" component={DeleteTools} />
+              <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement} />
+              <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
+                           component={LdapGroupDetailView} />
+              <SecureRoute path="/settings/:orgDomain?/site-roles/" exact component={SiteRoleManagement} />
+              <SecureRoute path="/settings/:orgDomain/site-roles/details/:groupName" exact
+                           component={SiteRoleDetailView} />
+              <SecureRoute path="/settings/:orgDomain?/departments" exact component={LdapDepartmentManagement} />
+              <SecureRoute path="/settings/:orgDomain/departments/details/:departmentName" exact
+                           component={LdapDepartmentDetailView} />
+              <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement} />
+              <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView} />
+              <SecureRoute path="/settings/analytics-data-entries/" exact component={AnalyticsDataEntryManagement} />
+              <SecureRoute path="/settings/analytics-data-entries/details/:id" exact
+                           component={AnalyticsDataEntryDetailView} />
+              <SecureRoute path="/settings/user-management/" exact component={UserManagement} />
+              <SecureRoute path="/settings/user-management/active/:orgDomain/:userEmail/details" exact
+                           component={UserDetailView} />
+              <SecureRoute path="/settings/user-management/pending/:userId/details" exact
+                           component={SsoUserDetailView} />
+
+              <SecureRoute path="/settings/logs-export-management" exact component={LogsExportManagement} />
+              <SecureRoute path="/settings/tags" exact component={TagEditor} />
+              <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
+              <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />
+              <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement} />
+              <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
+                           component={ProjectDataMappingDetailView} />
+              <SecureRoute path="/settings/data_mapping/pipeline/details/:pipelineDataMappingId" exact
+                           component={PipelineDataMappingDetailView} />
+              <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
+                           component={UserDataMappingDetailView} />
+
+              <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
+              <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
+
+              <Route
+                path={"*"}
+                component={PageNotFound}
+              />
+            </Switch>
+          </Router>
         </div>
       </div>
       <OpseraFooter />
@@ -262,7 +276,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
 
 AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
-  isPublicPathState:  PropTypes.bool,
+  isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
   OKTA_CONFIG: PropTypes.object,
   userData: PropTypes.object,
