@@ -26,6 +26,7 @@ function RepositorySelectInput(
     setDataFunction,
     clearDataFunction,
     disabled,
+    valueField
   }) {
   const getRelevantInput = () => {
     switch(service) {
@@ -76,6 +77,7 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
+            valueField={valueField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
