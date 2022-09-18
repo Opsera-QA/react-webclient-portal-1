@@ -174,13 +174,14 @@ const AppWithRouterAccess = () => {
     history.push('/');
   };
 
+  // TODO: Utilize PublicRoutes
   const getAccessibleRoutes = () => {
     if (!authenticatedState && isPublicPathState !== true) {
       return (
         <div className={"container-fluid m-0"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"}>
-              <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
+              <LoginForm authClient={authClient} />
               <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
               <Route path="/logout" exact component={Logout} />
             </div>
@@ -195,7 +196,6 @@ const AppWithRouterAccess = () => {
         authenticatedState={authenticatedState}
         authClient={authClient}
         isPublicPathState={isPublicPathState}
-        OKTA_CONFIG={OKTA_CONFIG}
         userData={data}
         hideSideBar={hideSideBar}
       />
