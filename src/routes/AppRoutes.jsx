@@ -124,8 +124,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"}>
-          <Router history={history}>
-            <Switch>
+          {/*<Router history={history}>*/}
+          {/*  <Switch>*/}
               <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
               <Route path="/implicit/callback" component={LoginCallback} />
               <Route path="/logout" exact component={Logout} />
@@ -261,12 +261,12 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
               <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
               <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 
-              <Route
-                path={"*"}
-                component={PageNotFound}
-              />
-            </Switch>
-          </Router>
+          {/*    <Route*/}
+          {/*      path={"*"}*/}
+          {/*      component={PageNotFound}*/}
+          {/*    />*/}
+          {/*  </Switch>*/}
+          {/*</Router>*/}
         </div>
       </div>
       <OpseraFooter />
