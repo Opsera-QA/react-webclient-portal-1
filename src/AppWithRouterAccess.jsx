@@ -94,7 +94,6 @@ const AppWithRouterAccess = () => {
     authClient.authStateManager.updateAuthState();
   }
 
-  // TODO: We need to put this in an actions file and wire up cancel token
   const loadUsersData = async (token) => {
     try {
       if (token == null) {
