@@ -1,29 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function ButtonTooltip({ innerText, placement, children, trigger }) {
-  const renderTooltip = (message) => {
-    return (
-      <Tooltip id="button-tooltip" className={"button-tooltip"}>
-        {message}
-      </Tooltip>
-    );
-  };
-
+export default function ButtonTooltip(
+  {
+    innerText,
+    placement,
+    children,
+    trigger,
+  }) {
   if (innerText == null) {
     return children;
   }
 
   return (
-    <OverlayTrigger
+    <TooltipWrapper
       placement={placement}
-      delay={{ show: 250, hide: 400 }}
-      overlay={renderTooltip(innerText)}
       trigger={trigger}
+      innerText={innerText}
     >
       {children}
-    </OverlayTrigger>
+    </TooltipWrapper>
   );
 }
 
@@ -36,9 +33,6 @@ ButtonTooltip.propTypes = {
 
 ButtonTooltip.defaultProps = {
   placement: "top",
-  trigger: ["hover", "focus"]
 };
-
-export default ButtonTooltip;
 
 

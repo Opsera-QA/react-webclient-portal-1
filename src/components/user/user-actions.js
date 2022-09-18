@@ -118,6 +118,18 @@ userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto)
   );
 };
 
+userActions.getLoggedInUser = async (
+  token,
+  cancelTokenSource,
+  ) => {
+  const apiUrl = "/users";
+  return await baseActions.customTokenApiGetCallV2(
+    token,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 userActions.createAwsMarketplaceOpseraAccount = async (cancelTokenSource, registrationModel) => {
   const apiUrl = "/users/create";
   let finalObject = {...registrationModel.getPersistData()};

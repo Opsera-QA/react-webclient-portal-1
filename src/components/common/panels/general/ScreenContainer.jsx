@@ -159,7 +159,6 @@ function ScreenContainer(
           {getBody()}
         </div>
         {getRoleRequirementField()}
-        <div className={"content-block-footer"}/>
       </div>
     </div>
   );
