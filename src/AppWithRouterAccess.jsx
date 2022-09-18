@@ -2,23 +2,21 @@ import React, { useState, useRef } from "react";
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import ToastContextProvider from "./contexts/DialogToastContext";
-import { axiosApiService } from "api/apiService";
-
-//Okta Libraries
-import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { LoginCallback, Security } from "@okta/okta-react";
 import AppRoutes from "routes/AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
-import OpseraHeaderBar from "components/header/OpseraHeaderBar";
+import { generateUUID } from "components/common/helpers/string-helpers";
 import FreeTrialAppRoutes from "FreeTrialAppRoutes";
 import LoginForm from "components/login/LoginForm";
 import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
-import useLocationReference, { PUBLIC_PATHS } from "hooks/useLocationReference";
-import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
+import useLocationReference from "hooks/useLocationReference";
 import PageNotFound from "components/not_found/PageNotFound";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import userActions from "components/user/user-actions";
+
+//Okta Libraries
+import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
+import { LoginCallback, Security } from "@okta/okta-react";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -29,6 +27,7 @@ const AppWithRouterAccess = () => {
   const [data, setData] = useState(null);
   const history = useHistory();
   const { isPublicPathState } = useLocationReference();
+  const { cancelTokenSource } = useCancelTokenStateReference();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
@@ -104,8 +103,10 @@ const AppWithRouterAccess = () => {
       }
 
       setLoading(true);
-      let apiUrl = "/users";
-      const response = await axiosApiService(token).get(apiUrl, {});
+      const response = await userActions.getLoggedInUser(
+        token,
+        cancelTokenSource,
+      );
       setData(response.data);
     } catch (error) {
       //console.log(error.response.data); //Forbidden
