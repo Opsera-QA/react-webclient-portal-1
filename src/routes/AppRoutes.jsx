@@ -6,7 +6,6 @@ import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
 import ApiConnector from "components/api_connector/ApiConnector";
 import Pipeline from "components/pipeline";
-import Analytics from "components/analytics/Analytics";
 import Logs from "components/logs/Logs";
 import Update from "components/update/Update";
 import TagEditor from "components/settings/tags/TagManagement";
@@ -20,17 +19,10 @@ import PipelineDetailView from "components/workflow/pipelines/pipeline_details/P
 import LdapDepartmentManagement from "components/settings/ldap_departments/LdapDepartmentManagement";
 import LdapDepartmentDetailView
   from "components/settings/ldap_departments/details/LdapDepartmentDetailView";
-import Marketplace from "components/insights/marketplace/Marketplace";
-import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
-import Insights from "components/insights/dashboards/Insights";
-import Lookup from "components/insights/lookup/Lookup";
-import DashboardDetailView from "components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectDataMappingDetailView
   from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
-import GitCustodian from "components/insights/gitCustodian/GitCustodian";
-import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import UserSettings from "components/user/user_settings/UserSettings";
@@ -49,14 +41,11 @@ import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
-import Release360 from "components/insights/release_360/Release360";
 import SiteRoleManagement from "components/settings/ldap_site_roles/SiteRoleManagement";
 import SiteRoleDetailView from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
 import PipelineDataMappingDetailView
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
-import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
-import CoverityScanReport from "components/insights/reports/CoverityScanReport";
 import LogsBackupManagement from "components/settings/logs_backup/LogsBackupManagement";
 import OpseraFooter from "components/footer/OpseraFooter";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
@@ -64,6 +53,7 @@ import ToolchainRoutes from "routes/ToolchainRoutes";
 import PublicRoutes from "routes/PublicRoutes";
 import ReportsRoutes from "routes/ReportsRoutes";
 import RegistryRoutes from "routes/RegistryRoutes";
+import InsightsRoutes from "routes/InsightsRoutes";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
   const history = useHistory();
@@ -87,11 +77,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
 
               <RegistryRoutes />
               <ToolchainRoutes />
-              <SecureRoute path="/dashboard" component={Dashboard} />
-              <SecureRoute path="/tools/:id?" component={ApiConnector} />
-              <SecureRoute path="/logs" exact component={Logs} />
-              <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
-              <SecureRoute path="/update" component={Update} />
+
+
+          <SecureRoute path="/logs" exact component={Logs} />
+          <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
+
               <ReportsRoutes
               />
 
@@ -99,23 +89,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
               <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
               <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView} />
 
-
-              <SecureRoute path="/insights/analytics" exact component={Analytics} />
-              <SecureRoute path="/insights" exact component={Insights} />
-              <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
-              <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
-              <SecureRoute path="/insights/lookup" exact component={Lookup} />
-              <SecureRoute path="/insights/release360" exact component={Release360} />
-              <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
-              <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
-              <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
-
-              {/*Insights Reports*/}
-              <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType"
-                           component={SonarPipelineScanReport} />
-              <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity"
-                           component={CoverityScanReport} />
-
+              <InsightsRoutes />
 
               <SecureRoute path="/task" exact component={TaskManagement} />
               <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
@@ -162,6 +136,11 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
                            component={PipelineDataMappingDetailView} />
               <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                            component={UserDataMappingDetailView} />
+
+          {/*TODO: These are legacy routes that should probably be removed*/}
+          <SecureRoute path="/dashboard" component={Dashboard} />
+          <SecureRoute path="/tools/:id?" component={ApiConnector} />
+          <SecureRoute path="/update" component={Update} />
 
               {/*<Route*/}
               {/*  path={"*"}*/}
