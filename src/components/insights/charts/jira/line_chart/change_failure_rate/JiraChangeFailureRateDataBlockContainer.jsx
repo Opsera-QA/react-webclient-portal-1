@@ -16,7 +16,7 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 
-function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
+function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, dataPoint, trend }) {
   
   const [maxVal, setMaxVal] = useState(goalsData);
 
@@ -27,9 +27,9 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
     setMaxVal(Math.ceil(high));
   }, [goalsData, chartData]);
 
-  let avgCFRChartData = [
+  let cfrChartData = [
     {
-      "id": "average cfr",
+      "id": "cfr",
       "data": chartData
     }  
   ];
@@ -52,11 +52,11 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
         <ThreeLineDataBlockBase
             className={`green p-2`}
             topText={"Change Failure Rate"}
-            icon={getReverseIcon("green")}
-            bottomText={`Previous Failure Rate: ${metricData?.preAverage}`}
+            icon={getReverseIcon(trend)}
+            bottomText={`Prev Failure Rate: ${metricData?.prevCfr !== 'NaN'? metricData?.prevCfr +` %` :'NA'}`}
             middleText={
               <MetricScoreText
-                  score={metricData?.average}
+                  score={`${metricData?.cfr} %`}
                   dataPoint={dataPoint}
                   className={"metric-block-content-text"}
               />}
@@ -73,24 +73,28 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
           Goal<b> ({goalsData})</b>{" "}
           <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
           <br></br>
-          Avg Change Failure Rate{" "}
+          Change Failures{" "}
           <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-        </div>
+          <br></br>
+          Total Changes<b> ({metricData.total})</b>{" "}
+          <br></br>
+          Total Failures in Changes<b> ({metricData.totalFailure})</b>{" "}
+          </div>
         <ResponsiveLine
-          data={avgCFRChartData}
+          data={cfrChartData}
           {...defaultConfig("", "Date", 
                 false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{            
             tickValues: [0, maxVal],
-            legend: 'Avg CFR',
+            legend: 'Failures',
             legendOffset: -38,
             legendPosition: 'middle'
           }}
           tooltip={(node) => (            
             <ChartTooltip
-              titles={["Date Range", "Number of CFRs", "Average CFRs"]}
+              titles={["Date Range", "Total Changes", "Failures"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
             />
           )}
@@ -130,7 +134,8 @@ JiraChangeFailureRateDataBlockContainer.propTypes = {
   chartData: PropTypes.array,
   goalsData: PropTypes.number,
   kpiConfiguration: PropTypes.object,
-  dataPoint: PropTypes.object
+  dataPoint: PropTypes.object,
+  trend:PropTypes.string
 };
 
 export default JiraChangeFailureRateDataBlockContainer;

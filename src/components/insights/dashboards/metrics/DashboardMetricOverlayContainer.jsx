@@ -209,15 +209,6 @@ function DashboardMetricOverlayContainer(
           unpackedFilterData={unpackedFilterData}
           kpiConfiguration={kpiConfiguration}
         />);
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
-          return (
-            <JiraChangeFailureRateEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />);
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
             <GitlabLeadTimeEditorPanel
@@ -280,6 +271,16 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
         return(
           <JiraMeanTimeToResolutionEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return (
+          <JiraChangeFailureRateEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

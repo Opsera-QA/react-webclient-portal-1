@@ -35,17 +35,17 @@ function JiraChangeFailureRateEditorPanel(
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
       />
-      {/*<MetricJiraProjectsFilterInput*/}
-      {/*  metricFilterModel={metricFilterModel}*/}
-      {/*  setMetricFilterModel={setMetricFilterModel}*/}
-      {/*  metricModel={metricModel}*/}
-      {/*  type="single"*/}
-      {/*/>*/}
-      {/*<MetricJiraChangeTypesFilterInput*/}
-      {/*  metricFilterModel={metricFilterModel}*/}
-      {/*  setMetricFilterModel={setMetricFilterModel}*/}
-      {/*  metricModel={metricModel}*/}
-      {/*/>*/}
+      <MetricJiraProjectsFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+        type="single"
+      />
+      <MetricJiraChangeTypesFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+      />
       <MetricDateRangeFilterInput
         metricModel={metricModel}
         metricFilterModel={metricFilterModel}

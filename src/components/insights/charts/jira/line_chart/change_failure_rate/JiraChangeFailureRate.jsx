@@ -9,6 +9,8 @@ import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFai
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import jiraAction from "../../jira.action";
 import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateDataBlockContainer";
+import InfoDialog from "../../../../../common/status_notifications/info";
+import {getJiraChangeTypesFromKpiConfiguration} from "../../../charts-helpers";
 
 const DEFAULT_GOALS = {
   change_failure_rate: 10,
@@ -35,9 +37,7 @@ function JiraChangeFailureRate({
       useState(undefined);
 
   useEffect(() => {
-    console.log("USEEFFECT CFR");
     if (cancelTokenSource) {
-      console.log("CANCELLING",cancelTokenSource);
       cancelTokenSource.cancel();
     }
 
@@ -58,7 +58,6 @@ function JiraChangeFailureRate({
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
-    console.log("LOADDATA CFR");
     try {
       setIsLoading(true);
       await loadDataPoints(cancelSource);
@@ -79,8 +78,11 @@ function JiraChangeFailureRate({
       } else {
         setGoalsData(DEFAULT_GOALS);
       }
-
-      const response = await jiraAction.getJiraChangeFailureRate(getAccessToken,cancelTokenSource,kpiConfiguration,dashboardTags,dashboardOrgs);
+      const jiraChangeTypes = getJiraChangeTypesFromKpiConfiguration(kpiConfiguration);
+      let response;
+      if(jiraChangeTypes?.length){
+        response = await jiraAction.getJiraChangeFailureRate(getAccessToken,cancelSource,kpiConfiguration,dashboardTags,dashboardOrgs,jiraChangeTypes);
+      }
 
       const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
       if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
@@ -98,6 +100,23 @@ function JiraChangeFailureRate({
       }
     }
   };
+  const getTrend = (curr, previous) => {
+    curr = !isNaN(curr)? parseFloat(curr) : 0;
+    previous = !isNaN(previous)? parseFloat(previous) : 0;
+
+    let trend = "";
+    if(curr > previous){
+      trend = "green";
+    }
+    else if(curr === previous){
+      trend = "light-gray-text-secondary";
+    }
+    else if(curr < previous){
+      trend = "red";
+    }
+    else{ trend = "black";}
+    return trend;
+  };
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
@@ -110,7 +129,18 @@ function JiraChangeFailureRate({
   };
 
   const getChartBody = () => {
-    if (!metricData || !Array.isArray(chartData)) {
+    // This kpi required change types and project to be selected.
+    if (!getJiraChangeTypesFromKpiConfiguration(kpiConfiguration)?.length) {
+      return (
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Data is available. Please select filters to get results" />
+          </div>
+        </div>
+      );
+    }
+
+    if (!metricData || !Array.isArray(chartData) || isNaN(metricData.cfr)) {
       return null;
     }
     return (
@@ -127,6 +157,7 @@ function JiraChangeFailureRate({
               goalsData={goalsData?.change_failure_rate}
               kpiConfiguration={kpiConfiguration}
               dataPoint={changeFailureRateDataPoint}
+              trend={getTrend(metricData.cfr,metricData.prevCfr)}
             />
           </Col>
         )}

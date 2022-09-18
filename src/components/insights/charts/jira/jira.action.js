@@ -2,7 +2,6 @@ import baseActions from "utils/actionsBase";
 
 import {
   getDateObjectFromKpiConfiguration,
-  getJiraChangeTypesFromKpiConfiguration,
   getJiraPrioritiesFromKpiConfiguration,
   getJiraProjectsFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -65,27 +64,22 @@ jiraActions.getJiraProjects = async (getAccessToken, cancelTokenSource) => {
   );
 };
 
-// jiraActions.getJiraChangeFailureRateFilter = async (getAccessToken, cancelTokenSource,model) => {
-//   const apiUrl = jiraBaseURL + "jiraChangeTypes";
-//   const jiraProjects = model.getData('jira-projects');
-//   return await baseActions.handleNodeAnalyticsApiPostRequest(
-//     getAccessToken,
-//     cancelTokenSource,
-//     apiUrl,
-//     {jiraProjects},
-//   );
-// };
-
 jiraActions.getJiraChangeTypes = async (
   getAccessToken,
   cancelTokenSource,
-  kpiConfiguration,
+  project
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeTypes";
-
-  const postBody = {
-    jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
-  };
+  let postBody = {};
+  // For change failure rate, project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -101,6 +95,7 @@ jiraActions.getJiraChangeFailureRate = async (
   kpiConfiguration,
   dashboardTags,
   dashboardOrgs,
+  jiraChangeTypes,
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -116,8 +111,8 @@ jiraActions.getJiraChangeFailureRate = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
-    jiraChangeTypes: getJiraChangeTypesFromKpiConfiguration(kpiConfiguration),
+    jiraProjects: [getJiraProjectsFromKpiConfiguration(kpiConfiguration)],
+    jiraChangeTypes: jiraChangeTypes,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

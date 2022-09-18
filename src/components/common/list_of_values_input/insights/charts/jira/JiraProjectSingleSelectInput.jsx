@@ -14,7 +14,6 @@ function JiraProjectSingleSelectInput({
   fieldName,
   model,
   setModel,
-  setDataFunction,
   disabled,
 }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,6 +57,15 @@ function JiraProjectSingleSelectInput({
         setIsLoading(false);
       }
     }
+  };
+
+  const setDataFunction = (fieldName, value) => {
+    let newModel = model;
+    model.setData('jira-change-types',[]);
+    const parsedValue = typeof value === "string" ? value : value[valueField];
+
+    newModel?.setData(fieldName, parsedValue);
+    setModel({...newModel});
   };
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {

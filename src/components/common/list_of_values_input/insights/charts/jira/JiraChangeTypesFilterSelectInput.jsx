@@ -13,17 +13,18 @@ function JiraChangeTypesFilterSelectInput({
   fieldName,
   model,
   setModel,
-  setDataFunction,
+  project
 }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
-  const [projects, setProjects] = useState([]);
+  const [changeTypes, setChangeTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    setChangeTypes([]);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -31,7 +32,7 @@ function JiraChangeTypesFilterSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData().catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         setError(error);
       }
@@ -41,7 +42,7 @@ function JiraChangeTypesFilterSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [project]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -63,10 +64,10 @@ function JiraChangeTypesFilterSelectInput({
     const response = await jiraAction.getJiraChangeTypes(
       getAccessToken,
       cancelSource,
+      project
     );
     if (response.data != null) {
-      setProjects(response?.data?.data?.jiraChangeTypesList?.data
-        );
+      setChangeTypes(response?.data?.data?.jiraChangeTypesList?.data);
     }
   };
   const disabled = model.getData('jira-projects').length === 0;
@@ -75,8 +76,7 @@ function JiraChangeTypesFilterSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      setDataFunction={setDataFunction}
-      selectOptions={projects}
+      selectOptions={changeTypes}
       busy={isLoading}
       valueField={valueField}
       error={error}
@@ -97,6 +97,7 @@ JiraChangeTypesFilterSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
+  project: PropTypes.string
 };
 
 JiraChangeTypesFilterSelectInput.defaultProps = {
