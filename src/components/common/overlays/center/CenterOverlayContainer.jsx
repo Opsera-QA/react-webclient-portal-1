@@ -39,6 +39,7 @@ function CenterOverlayContainer(
     buttonContainer,
     pageLink,
     linkTooltipText,
+    customLoadingMessage,
     size,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -68,7 +69,7 @@ function CenterOverlayContainer(
       return (
         <CenterLoadingIndicator
           minHeight={OVERLAY_PANEL_MIN_HEIGHT}
-          customMessage={"Initializing Workflow Options"}
+          customMessage={customLoadingMessage}
         />
       );
     }
@@ -126,6 +127,7 @@ CenterOverlayContainer.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   size: PropTypes.string,
+  customLoadingMessage: PropTypes.string,
 };
 
 CenterOverlayContainer.defaultProps = {

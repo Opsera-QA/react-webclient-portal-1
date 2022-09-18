@@ -4,6 +4,7 @@ screenContainerHeights.NAV_BAR_HEIGHT = "58px";
 screenContainerHeights.MARGIN = `1rem`;
 screenContainerHeights.OPSERA_FOOTER_HEIGHT = `21px`;
 screenContainerHeights.SCREEN_CONTAINER_HEIGHT = `calc(100vh - (${screenContainerHeights.MARGIN} * 2) - ${screenContainerHeights.NAV_BAR_HEIGHT} - ${screenContainerHeights.OPSERA_FOOTER_HEIGHT})`;
+// screenContainerHeights.SCREEN_CONTAINER_HEIGHT = "calc(100vh - 160px)"; // Old size
 screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT = "1.5em";
 screenContainerHeights.PAGE_DESCRIPTION_HEIGHT = "calc(2em + 1rem)";
 screenContainerHeights.ROLE_REQUIREMENT_FIELD_HEIGHT = "2.2em";
