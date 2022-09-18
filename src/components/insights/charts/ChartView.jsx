@@ -34,6 +34,7 @@ import JiraIssuesAssignedToMe from "./jira/table/issues_assigned_to_me/JiraIssue
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
 import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
 import JiraMeanTimeToResolutionBarChart from "./jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionBarChart";
+import JiraChangeFailureRate from "./jira/line_chart/change_failure_rate/JiraChangeFailureRate";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -177,7 +178,6 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 //Boomi KPI
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
-import JiraChangeFailureRate from "./jira/line_chart/change_failure_rate/JiraChangeFailureRate";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -235,7 +235,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
   const getChart = () => {
     switch (kpiConfig?.kpi_identifier) {
-      
       // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (
