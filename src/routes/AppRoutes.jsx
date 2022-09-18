@@ -4,7 +4,6 @@ import { Router, Switch, useHistory } from "react-router-dom";
 import { SecureRoute } from "@okta/okta-react";
 import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
-import Inventory from "components/inventory/Inventory";
 import ApiConnector from "components/api_connector/ApiConnector";
 import Pipeline from "components/pipeline";
 import Analytics from "components/analytics/Analytics";
@@ -15,7 +14,6 @@ import TagDetailView from "components/settings/tags/tags_detail_view/TagDetailVi
 import AccountSettingsView from "components/settings/AccountSettings";
 import LdapGroupManagement from "components/settings/ldap_groups/LdapGroupManagement";
 import LdapGroupDetailView from "components/settings/ldap_groups/details/LdapGroupDetailView";
-import ToolDetailView from "components/inventory/tools/tool_details/ToolDetailView";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import Pipelines from "components/workflow/pipelines/Pipelines";
 import PipelineDetailView from "components/workflow/pipelines/pipeline_details/PipelineDetailView";
@@ -35,7 +33,6 @@ import GitCustodian from "components/insights/gitCustodian/GitCustodian";
 import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
-import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import TaskDetailView from "components/tasks/details/TaskDetailView";
@@ -46,10 +43,6 @@ import AnalyticsDataEntryDetailView
   from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
 import Blueprint from "components/blueprint/Blueprint";
 import DeleteTools from "components/settings/delete_tools/DeleteTools";
-import ParametersInventory from "components/inventory/parameters/ParametersInventory";
-import ToolInventory from "components/inventory/tools/ToolInventory";
-import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
-import PlatformInventory from "components/inventory/platform/PlatformInventory";
 import TaskManagement from "components/tasks/TaskManagement";
 import TaskAllActivityPanel from "components/tasks/activity_logs/TaskAllActivityPanel";
 import UserManagement from "components/settings/users/UserManagement";
@@ -70,6 +63,7 @@ import AdminToolsRoutes from "routes/AdminToolsRoutes";
 import ToolchainRoutes from "routes/ToolchainRoutes";
 import PublicRoutes from "routes/PublicRoutes";
 import ReportsRoutes from "routes/ReportsRoutes";
+import RegistryRoutes from "routes/RegistryRoutes";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
   const history = useHistory();
@@ -91,15 +85,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
               <SecureRoute path="/user/:tab?" exact component={UserSettings} />
               <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView} />
 
-              <SecureRoute path="/inventory" exact component={Inventory} />
-              <SecureRoute path="/inventory/tools" exact component={ToolInventory} />
-              <SecureRoute path="/inventory/platform" exact component={PlatformInventory} />
-              <SecureRoute path="/inventory/parameters" exact component={ParametersInventory} />
-              <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory} />
-              <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
-              <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
-                           component={ToolProjectsView} />
-
+              <RegistryRoutes />
               <ToolchainRoutes />
               <SecureRoute path="/dashboard" component={Dashboard} />
               <SecureRoute path="/tools/:id?" component={ApiConnector} />
