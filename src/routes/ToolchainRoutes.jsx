@@ -22,7 +22,10 @@ export default function ToolchainRoutes() {
 
   return (
     <>
-      <SecureRoute path="/platform" component={Platform} />
+      <SecureRoute
+        path="/platform"
+        component={Platform}
+      />
     </>
   );
 }

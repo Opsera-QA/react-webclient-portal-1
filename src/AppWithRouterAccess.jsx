@@ -171,7 +171,7 @@ const AppWithRouterAccess = () => {
             <div className={"w-100"}>
               {/*<Router history={history}>*/}
               {/*  <Switch>*/}
-                  <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
+                  <LoginForm authClient={authClient} />
                   <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
                   <Route path="/logout" exact component={Logout} />
               {/*    <Route*/}
@@ -197,7 +197,6 @@ const AppWithRouterAccess = () => {
           authenticatedState={authenticatedState}
           authClient={authClient}
           isPublicPathState={isPublicPathState}
-          OKTA_CONFIG={OKTA_CONFIG}
           userData={data}
           hideSideBar={hideSideBar}
         />
@@ -207,7 +206,6 @@ const AppWithRouterAccess = () => {
     return (
       <FreeTrialAppRoutes
         authClient={authClient}
-        OKTA_CONFIG={OKTA_CONFIG}
       />
     );
   };

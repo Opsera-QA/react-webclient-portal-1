@@ -102,7 +102,7 @@ import Home from "Home";
 import ToolchainRoutes from "routes/ToolchainRoutes";
 import PageNotFound from "components/not_found/PageNotFound";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CONFIG, userData, hideSideBar }) => {
+const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, OKTA_CON
         <div className={"w-100 hide-x-overflow"}>
           {/*<Router history={history}>*/}
           {/*  <Switch>*/}
-              <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
+              <Route path="/login" render={() => <LoginForm authClient={authClient} />} />
               <Route path="/implicit/callback" component={LoginCallback} />
               <Route path="/logout" exact component={Logout} />
 
@@ -278,7 +278,6 @@ AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
   isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
-  OKTA_CONFIG: PropTypes.object,
   userData: PropTypes.object,
   hideSideBar: PropTypes.bool,
 };

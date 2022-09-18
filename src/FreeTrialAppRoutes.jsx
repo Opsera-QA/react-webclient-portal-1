@@ -19,7 +19,7 @@ import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import FreeTrialInsightsLanding from "components/trial/insights/FreeTrialInsightsLanding";
 import PageNotFound from "components/not_found/PageNotFound";
 
-export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
+export default function FreeTrialAppRoutes({ authClient }) {
   const history = useHistory();
 
   return (
@@ -29,7 +29,7 @@ export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
         <div className={"w-100 hide-x-overflow"}>
           <Router history={history}>
             <Switch>
-              <Route path="/login" render={() => <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />} />
+              <Route path="/login" render={() => <LoginForm authClient={authClient} />} />
               <Route path="/implicit/callback" component={LoginCallback} />
               <Route path="/logout" exact component={Logout} />
 
@@ -63,6 +63,5 @@ export default function FreeTrialAppRoutes({ authClient, OKTA_CONFIG }) {
 
 FreeTrialAppRoutes.propTypes = {
   authClient: PropTypes.object,
-  OKTA_CONFIG: PropTypes.object,
 };
 
