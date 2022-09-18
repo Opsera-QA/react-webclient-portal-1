@@ -22,12 +22,10 @@ import PipelineDetailView from "components/workflow/pipelines/pipeline_details/P
 import LdapDepartmentManagement from "components/settings/ldap_departments/LdapDepartmentManagement";
 import LdapDepartmentDetailView
   from "components/settings/ldap_departments/details/LdapDepartmentDetailView";
-import Reports from "components/reports/Reports";
 import Marketplace from "components/insights/marketplace/Marketplace";
 import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
-import ToolsUsedInPipelineReport from "components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "components/insights/dashboards/Insights";
 import Lookup from "components/insights/lookup/Lookup";
 import DashboardDetailView from "components/insights/dashboards/dashboard_details/DashboardDetailView";
@@ -38,18 +36,9 @@ import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
-import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
-import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
-import UserGroupMembershipReport from "components/reports/users/groups/UserGroupMembershipReport";
-import UserPipelineOwnershipReport from "components/reports/users/pipelines/UserPipelineOwnershipReport";
-import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwnershipReport";
-import UserTaskOwnershipReport from "components/reports/users/tasks/UserTaskOwnershipReport";
-import ConsolidatedUserReport from "components/reports/users/user/consolidated_user_report/ConsolidatedUserReport";
-import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import TaskDetailView from "components/tasks/details/TaskDetailView";
-import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
 import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
 import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
 import AnalyticsDataEntryManagement from "components/settings/analytics_data_entry/AnalyticsDataEntryManagement";
@@ -61,10 +50,6 @@ import ParametersInventory from "components/inventory/parameters/ParametersInven
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
 import PlatformInventory from "components/inventory/platform/PlatformInventory";
-import TagReportsScreen from "components/reports/tags/TagReportsScreen";
-import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
-import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
-import UserReportsScreen from "components/reports/users/UserReportsScreen";
 import TaskManagement from "components/tasks/TaskManagement";
 import TaskAllActivityPanel from "components/tasks/activity_logs/TaskAllActivityPanel";
 import UserManagement from "components/settings/users/UserManagement";
@@ -84,6 +69,7 @@ import OpseraFooter from "components/footer/OpseraFooter";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
 import ToolchainRoutes from "routes/ToolchainRoutes";
 import PublicRoutes from "routes/PublicRoutes";
+import ReportsRoutes from "routes/ReportsRoutes";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
   const history = useHistory();
@@ -120,31 +106,8 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
               <SecureRoute path="/logs" exact component={Logs} />
               <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint} />
               <SecureRoute path="/update" component={Update} />
-
-
-              <SecureRoute path="/reports" exact component={Reports} />
-              <SecureRoute path="/reports/tags" exact component={TagReportsScreen} />
-              <SecureRoute path="/reports/tools" exact component={ToolReportsScreen} />
-              <SecureRoute path="/reports/pipelines" exact component={PipelineReportsScreen} />
-              <SecureRoute path="/reports/users" exact component={UserReportsScreen} />
-
-
-              <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport} />
-              <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport} />
-
-
-              <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport} />
-              <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport} />
-              <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact
-                           component={TagsUsedInDashboardsReport} />
-
-
-              <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport} />
-              <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport} />
-              <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport} />
-              <SecureRoute path="/reports/users/task-ownership" exact component={UserTaskOwnershipReport} />
-              <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
-
+              <ReportsRoutes
+              />
 
               <SecureRoute path="/notifications" exact component={NotificationPolicyManagement} />
               <SecureRoute path="/notifications/activity" exact component={NotificationPoliciesActivityLogs} />
