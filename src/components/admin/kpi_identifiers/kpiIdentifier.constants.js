@@ -43,6 +43,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
   LEAD_TIME_AND_RELEASE_TRACEABILITY: "lead-time-and-release-traceability-data-block",
+  GITHUB_ACTIONS_WORKFLOW: "github-actions-workflow",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",

@@ -22,6 +22,7 @@ function TaskActivityLogTreeTable(
     setCurrentRunNumber,
     setCurrentTaskId,
     taskRunCount,
+    showFilterContainerIcon,
   }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -37,7 +38,7 @@ function TaskActivityLogTreeTable(
       return ("There are no secondary logs.");
     }
 
-    if (currentRunNumber === 0) {
+    if (currentRunNumber === 0 || taskRunCount === 0 || taskRunCount == null) {
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
@@ -70,7 +71,7 @@ function TaskActivityLogTreeTable(
   };
 
   const getTaskActivityTable = () => {
-    if (taskRunCount === 0) {
+    if (taskRunCount === 0 || taskRunCount == null) {
       return (
         <CustomTable
           isLoading={isLoading}
@@ -110,7 +111,7 @@ function TaskActivityLogTreeTable(
       setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
       title={"Activity Logs"}
-      titleIcon={faClipboardList}
+      titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
       dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
@@ -134,6 +135,7 @@ TaskActivityLogTreeTable.propTypes = {
   ]),
   setCurrentTaskId: PropTypes.func,
   taskRunCount: PropTypes.number,
+  showFilterContainerIcon: PropTypes.bool,
 };
 
 export default TaskActivityLogTreeTable;

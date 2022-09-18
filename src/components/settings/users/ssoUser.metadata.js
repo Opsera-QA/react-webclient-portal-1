@@ -27,6 +27,14 @@ export const ssoUserMetadata = {
       id: "organizationName",
     },
     {
+      label: "Company",
+      id: "company",
+    },
+    {
+      label: "Created",
+      id: "createdAt",
+    },
+    {
       label: "Domain",
       id: "domain",
     },

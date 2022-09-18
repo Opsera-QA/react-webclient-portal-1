@@ -11,7 +11,7 @@ function MakeupTableHeader(
   }) {
   const getHeaderColumn = (column, key) => {
     return (
-      <th className="px-2" key={key} {...column.getHeaderProps(column.getSortByToggleProps())}>
+      <th className={"px-2 py-1"} key={key} {...column.getHeaderProps(column.getSortByToggleProps())}>
         <div style={{display: "flex", flexWrap: "nowrap"}}>
           <div>{column.render("Header")}</div>
           <div className="ml-1">
@@ -26,7 +26,7 @@ function MakeupTableHeader(
     return (
       <thead>
         <tr>
-          <th colSpan="12">
+          <th colSpan={12}>
             <div className="no-header-text" />
           </th>
         </tr>

@@ -19,17 +19,14 @@ import {
 import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
-import JiraAverageTimeToResolveDataBlock from "../../data_blocks/JiraAverageTimeToResolveDataBlock";
-import JiraMinMTTRDataBlock from "../../data_blocks/JiraMinMTTRDataBlock";
-import JiraMaxMTTRDataBlock from "../../data_blocks/JiraMaxMTTRDataBlock";
-import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
-// import MTTRActionableInsightOverlay from "./actionable_insights/MTTRActionableInsightOverlay";
 import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as dataPointConstants } from "./JiraMeanTimeToResolution_datapoint_identifiers";
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 import jiraAction from "../../jira.action";
-import JiraTotalIncidentsDataBlock from "../../data_blocks/JiraTotalIncidentsDataBlock";
-import JiraTotalResolvedIncidentsDataBlock from "../../data_blocks/JiraTotalResolvedIncidentsDatBlock";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
+import JiraMTTRChartHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
 
 function JiraMeanTimeToResolutionBarChart({
   kpiConfiguration,
@@ -48,22 +45,18 @@ function JiraMeanTimeToResolutionBarChart({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [overallMean, setOverallMean] = useState(undefined);
-  const [minMTTR, setMinMTTR] = useState(undefined);
-  const [maxMTTR, setMaxMTTR] = useState(undefined);
+  const [dataBlock, setDataBlock] = useState({});
   const [goalsData, setGoalsData] = useState(undefined);
-  const [totalIncidents, setTotalIncidents] = useState(0);
-  const [totalResolvedIncidents, setTotalResolvedIncidents] = useState(0);
   const [lastFiveDays, setLastFiveDays] = useState(0);
   const [fiveToFifteenDays, setFiveToFifteenDays] = useState(0);
   const [fifteenToThirtyDays, setFifteenToThirtyDays] = useState(0);
   const [beforeThirtyDays, setBeforeThirtyDays] = useState(0);
-  const [priorityOne, setPriorityOne] = useState(0);
-  const [priorityTwo, setPriorityTwo] = useState(0);
-  const [priorityThree, setPriorityThree] = useState(0);
-  const [priorityFour, setPriorityFour] = useState(0);
-  const [priorityFive, setPriorityFive] = useState(0);
-  const toastContext = useContext(DialogToastContext);
+  // const [priorityOne, setPriorityOne] = useState(0);
+  // const [priorityTwo, setPriorityTwo] = useState(0);
+  // const [priorityThree, setPriorityThree] = useState(0);
+  // const [priorityFour, setPriorityFour] = useState(0);
+  // const [priorityFive, setPriorityFive] = useState(0);
+  // const toastContext = useContext(DialogToastContext);
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -109,10 +102,8 @@ function JiraMeanTimeToResolutionBarChart({
           dashboardTags,
           dashboardOrgs,
         );
-      const dataObject = response?.data?.data?.jiraMTTR?.data[0]?.docs,
-        barchart = response?.data?.data?.jiraMTTR?.data[0]?.severityData,
-        overallMeanValue =
-          response?.data?.data?.jiraMTTR?.data[0]?.overallMttrHours;
+      const dataObject = response?.data?.data?.jiraMTTR?.data?.docs,
+        barchart = response?.data?.data?.jiraMTTR?.data?.severityData;
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
@@ -123,24 +114,14 @@ function JiraMeanTimeToResolutionBarChart({
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setSevMetrics(barchart);
-        setOverallMean(overallMeanValue);
       }
 
       if (!dataObject) {
         setMetrics([]);
         setSevMetrics([]);
       }
-      const responseData = response?.data?.data?.jiraMTTR?.data[0];
-      setTotalIncidents(
-        responseData?.totalIncidents ? responseData?.totalIncidents : 0,
-      );
-      setTotalResolvedIncidents(
-        responseData?.totalResolvedIncidents
-          ? responseData?.totalResolvedIncidents
-          : 0,
-      );
-      setMinMTTR(responseData?.minMTTR ? responseData?.minMTTR : 0);
-      setMaxMTTR(responseData?.maxMTTR ? responseData?.maxMTTR : 0);
+      const responseData = response?.data?.data?.jiraMTTR?.data;
+      setDataBlock(responseData);
       setLastFiveDays(
         responseData?.lastFiveDays ? responseData?.lastFiveDays : 0,
       );
@@ -155,13 +136,14 @@ function JiraMeanTimeToResolutionBarChart({
       setBeforeThirtyDays(
         responseData?.beforeThirtyDays ? responseData?.beforeThirtyDays : 0,
       );
-      if (responseData) {
-        setPriorityOne(responseData["Priority-Blocker"] || 0);
-        setPriorityTwo(responseData["Priority-Highest"] || 0);
-        setPriorityThree(responseData["Priority-High"] || 0);
-        setPriorityFour(responseData["Priority-Medium"] || 0);
-        setPriorityFive(responseData["Priority-Low"] || 0);
-      }
+      // THIS IS USED WHEN ACTIONABLE INSIGHTS ARE DEVELOPED
+      // if (responseData) {
+      //   setPriorityOne(responseData["Blocker"] || 0);
+      //   setPriorityTwo(responseData["Highest"] || 0);
+      //   setPriorityThree(responseData["High"] || 0);
+      //   setPriorityFour(responseData["Medium"] || 0);
+      //   setPriorityFive(responseData["Low"] || 0);
+      // }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -183,72 +165,72 @@ function JiraMeanTimeToResolutionBarChart({
   //   );
   // };
 
-  const getMetricBottomRow = () => {
-    return (
-      <Row>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Resolved Tickets by Severity:`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={4}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-1: ${priorityOne}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-2: ${priorityTwo}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-3: ${priorityThree}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-4: ${priorityFour}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Sev-5: ${priorityFive}`}
-          />
-        </Col>
-      </Row>
-    );
-  };
+  // const getMetricBottomRow = () => {
+  //   return (
+  //     <Row>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Resolved Tickets by Severity:`}
+  //         />
+  //       </Col>
+  {/*      <Col*/}
+  //         xl={2}
+  //         lg={4}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Sev-1: ${priorityOne}`}
+  //         />
+  {/*      </Col>*/}
+  {/*      <Col*/}
+  {/*        xl={2}*/}
+  {/*        lg={2}*/}
+  {/*        md={2}*/}
+  {/*      >*/}
+  {/*        <MetricBadgeBase*/}
+  //           className={"mr-3"}
+  //           badgeText={`Sev-2: ${priorityTwo}`}
+  //         />
+  //       </Col>
+  {/*      <Col*/}
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  {/*      >*/}
+  {/*        <MetricBadgeBase*/}
+  //           className={"mr-3"}
+  //           badgeText={`Sev-3: ${priorityThree}`}
+  {/*        />*/}
+  {/*      </Col>*/}
+  {/*      <Col*/}
+  {/*        xl={2}*/}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Sev-4: ${priorityFour}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Sev-5: ${priorityFive}`}
+  //         />
+  //       </Col>
+  //     </Row>
+  //   );
+  // };
   const getMetricTopRow = () => {
     return (
       <Row>
@@ -309,12 +291,40 @@ function JiraMeanTimeToResolutionBarChart({
   const getChartBody = () => {
     if (
       !Array.isArray(metrics) ||
-      metrics.length === 0 ||
       !Array.isArray(sevMetrics) ||
-      sevMetrics.length === 0
+      metrics.length === 0 ||
+      sevMetrics.length === 0 ||
+      !dataBlock?.totalIncidents
     ) {
       return null;
     }
+    const getReverseIcon = (severity) => {
+      switch (severity) {
+        case "red":
+          return faArrowCircleDown;
+        case "green":
+          return faArrowCircleUp;
+        case "light-gray-text-secondary":
+          return faMinusCircle;
+        default:
+          break;
+      }
+    };
+
+    const getTrend = (curr, previous) => {
+      let trend = "";
+      if(curr > previous){
+        trend = "green";
+      }
+      else if(curr === previous){
+        trend = "light-gray-text-secondary";
+      }
+      else if(curr < previous){
+        trend = "red";
+      }
+      else{ trend = "black";}
+      return trend;
+    };
 
     const dataPoints = kpiConfiguration?.dataPoints;
     const mttrChartDataPoint = dataPointHelpers.getDataPoint(
@@ -361,28 +371,63 @@ function JiraMeanTimeToResolutionBarChart({
               className={"mb-3 d-flex justify-content-center"}
             >
               <Col md={12}>
-                <JiraTotalIncidentsDataBlock data={totalIncidents} />
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.totalIncidents}
+                  prevIncidents={dataBlock.previousTotalIncidents}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
+                  getReverseIcon = {getReverseIcon}
+                  topText={"Total Incidents"}
+                  bottomText={"Prev Total Incidents"}
+                />
               </Col>
               <Col md={12}>
-                <JiraTotalResolvedIncidentsDataBlock
-                  data={totalResolvedIncidents}
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.totalResolvedIncidents}
+                  prevIncidents={dataBlock.previousTotalResolvedIncidents}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
+                  getReverseIcon = {getReverseIcon}
+                  topText={"Resolved Incidents"}
+                  bottomText={"Prev Resolved Incidents"}
                 />
               </Col>
               <DataPointVisibilityWrapper
                 dataPoint={averageMTTRDataBlockDataPoint}
               >
                 <Col md={12}>
-                  <JiraAverageTimeToResolveDataBlock
-                    data={overallMean}
-                    dataPoint={averageMTTRDataBlockDataPoint}
+                  <JiraMTTRDataBlock
+                    incidents={dataBlock.overallMttrHours}
+                    prevIncidents={dataBlock.previousOverallMttrHours}
+                    dataPoint={numberOfIncidentsDataPoint}
+                    trend={getTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
+                    getReverseIcon = {getReverseIcon}
+                    topText={"Average MTTR (Hours)"}
+                    bottomText={"Prev Average MTTR"}
                   />
                 </Col>
               </DataPointVisibilityWrapper>
               <Col md={12}>
-                <JiraMinMTTRDataBlock data={minMTTR} />
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.minMTTR}
+                  prevIncidents={dataBlock.previousMinMTTR}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.minMTTR,dataBlock.previousMinMTTR)}
+                  getReverseIcon = {getReverseIcon}
+                  topText={"Min MTTR (Hours)"}
+                  bottomText={"Prev Min MTTR"}
+                />
               </Col>
               <Col md={12}>
-                <JiraMaxMTTRDataBlock data={maxMTTR} />
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.maxMTTR}
+                  prevIncidents={dataBlock.previousMaxMTTR}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
+                  getReverseIcon = {getReverseIcon}
+                  topText={"Max MTTR (Hours)"}
+                  bottomText={"Prev Max MTTR"}
+                />
               </Col>
             </Row>
             {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && (
@@ -477,7 +522,9 @@ function JiraMeanTimeToResolutionBarChart({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        chartHelpComponent={(closeHelpPanel) => <JiraMTTRChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
         // launchActionableInsightsFunction={onRowSelect}
+        isBeta={true}
       />
       <ModalLogs
         header="Mean Time to Resolution"

@@ -58,6 +58,11 @@ function MetricDataPointEvaluationRuleInputBase(
     updateRuleFunctionRow(ruleModel);
   };
 
+  const toggleNotifications = (fieldName, newValue) => {
+    ruleModel?.setData("notificationEnabled", newValue);
+    updateRuleFunctionRow(ruleModel);
+  };
+
   if (ruleModel == null || updateRuleFunction == null) {
     return null;
   }
@@ -85,12 +90,20 @@ function MetricDataPointEvaluationRuleInputBase(
             triggerFilter={ruleModel?.getData("trigger_filter")}
           />
         </Col>
-        <Col sm={6}>
+        <Col sm={12}>
           <StandaloneBooleanToggleInput
             checkedValue={ruleModel?.getData("enabled")}
             fieldLabel={ruleModel?.getLabel("enabled")}
             setDataFunction={toggleRule}
             fieldId={`${fieldName}-enabled`}
+          />
+        </Col>
+        <Col sm={12}>
+          <StandaloneBooleanToggleInput
+            checkedValue={ruleModel?.getData("notificationEnabled")}
+            fieldLabel={ruleModel?.getLabel("notificationEnabled")}
+            setDataFunction={toggleNotifications}
+            fieldId={`${fieldName}-notification-enabled`}
           />
         </Col>
       </Row>

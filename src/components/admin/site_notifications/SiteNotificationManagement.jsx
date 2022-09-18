@@ -4,7 +4,7 @@ import siteNotificationActions from "./site-notification-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SiteNotificationTable from "./SiteNotificationTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import AccessDeniedMessage from "components/common/status_notifications/AccessDeniedMessage";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
@@ -81,7 +81,7 @@ function SiteNotificationManagement() {
   }
 
   if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+    return (<AccessDeniedMessage roleData={accessRoleData}/>);
   }
 
   return (

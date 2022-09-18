@@ -88,7 +88,7 @@ const sfdcPipelineWizardMetadata = {
       id: "unitTestSteps",
     },
     {
-      label: "Git Task ID",
+      label: "Task ID",
       id: "gitTaskId",
     },
     {
@@ -108,7 +108,7 @@ const sfdcPipelineWizardMetadata = {
       id: "fromFileUpload",
     },
     {
-      label: "Past Pipeline Run",
+      label: "Select a past run to use its XML for deployment",
       id: "selectedRunNumber",
     },
     {

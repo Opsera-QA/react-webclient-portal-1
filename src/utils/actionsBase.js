@@ -25,6 +25,20 @@ baseActions.apiTokenlessGetCallV2 = async (sourceToken, apiUrl, urlParams) => {
   return await apiServiceV2.axiosTokenlessApiGetCall(sourceToken, apiUrl, urlParams);
 };
 
+baseActions.customTokenApiGetCallV2 = async (
+  customToken,
+  cancelTokenSource,
+  apiUrl,
+  urlParams,
+) => {
+  return await apiServiceV2.axiosCustomTokenApiGetCall(
+    customToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
+};
+
 baseActions.customTokenApiGetCall = async (customToken, apiUrl, urlParams) => {
   return axiosApiService(customToken).get(apiUrl, urlParams)
     .then((result) =>  {return result;})

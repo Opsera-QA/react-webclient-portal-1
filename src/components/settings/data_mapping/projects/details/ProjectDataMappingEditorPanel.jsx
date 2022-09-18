@@ -20,6 +20,11 @@ import JenkinsRegistryToolJobSelectInput
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 
+const determineKeyFromFullPath = keyPath => {
+  const splitPath = keyPath.split('/');
+  return splitPath[splitPath.length - 1];
+};
+
 function ProjectDataMappingEditorPanel(
   {
     projectDataMappingModel,
@@ -43,6 +48,12 @@ function ProjectDataMappingEditorPanel(
       isMounted.current = false;
     };
   }, []);
+
+  const setDataHandler = (id, selectedOption) => {
+    projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
+    projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
+    setProjectDataMappingModel({ ...projectDataMappingModel });
+  };
 
   // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
@@ -94,6 +105,8 @@ function ProjectDataMappingEditorPanel(
           <ProjectRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
+            setDataFunction={setDataHandler}
+            valueField="nameSpacedPath"
           />
         </Col>
       );

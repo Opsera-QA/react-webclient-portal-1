@@ -236,7 +236,6 @@ function LdapCustomerOnboardEditorPanel() {
               </Col>
             </Row>
           </EditorPanelContainer>
-          <div className="content-block-footer"/>
         </div>
       </div>
     );
@@ -344,7 +343,6 @@ function LdapCustomerOnboardEditorPanel() {
               </Col>
             </Row>
           </EditorPanelContainer>
-          <div className="content-block-footer"/>
         </div>
       </div>
     );
@@ -363,7 +361,6 @@ function LdapCustomerOnboardEditorPanel() {
             </Col>
           </Row>
         </div>
-        <div className="content-block-footer"/>
       </div>
     );
   };
@@ -412,7 +409,6 @@ function LdapCustomerOnboardEditorPanel() {
             </Col>
           </Row>
         </EditorPanelContainer>
-        <div className="content-block-footer"/>
       </div>
     );
   };

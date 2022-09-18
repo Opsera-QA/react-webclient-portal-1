@@ -10,3 +10,4 @@ taskHelper.getDetailViewLink = (taskId) => {
 
   return `/task/details/${taskId}`;
 };
+

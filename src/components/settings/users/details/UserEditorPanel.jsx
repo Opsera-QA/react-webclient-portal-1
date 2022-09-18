@@ -19,43 +19,22 @@ import LdapGroupMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [userModel, setUserModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [logs, setLogs] = useState([]);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    setIsLoading(true);
     setUserModel(userData);
-    setIsLoading(false);
-  };
+  }, []);
 
   const handleUserCreation = async () => {
     try {
@@ -176,7 +155,12 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
     };
     const newLdapUser = new Model({...newLdapUserData}, ldapUserMetadata, false);
 
-    return await accountsActions.createUserV2(getAccessToken, cancelTokenSource, orgDomain, newLdapUser);
+    return await accountsActions.createUserV2(
+      getAccessToken,
+      cancelTokenSource,
+      orgDomain,
+      newLdapUser,
+      );
   };
 
   const createSsoUser = async () => {
@@ -200,7 +184,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
     };
     const newSsoUser = new Model({...newSsoUserData}, ssoUserMetadata, false);
 
-    return await userActions.createOpseraAccount(newSsoUser);
+    return await userActions.createOpseraAccount(cancelTokenSource, newSsoUser);
   };
 
   const assignUserToSelectedGroups = async (groups) => {
@@ -267,7 +251,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
     }
   };
 
-  if (isLoading || orgDomain == null || userModel == null || organization == null) {
+  if (orgDomain == null || userModel == null || organization == null) {
     return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
   }
 
