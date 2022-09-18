@@ -43,6 +43,8 @@ import GithubActionsWorkflowEditorPanel
   from "../../charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowEditorPanel";
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
+import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
+  // from "../../charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -278,6 +280,16 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return(
+          <JiraChangeFailureRateEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return(
           <GithubActionsWorkflowEditorPanel
@@ -288,7 +300,6 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
-
     }
   };
 
@@ -328,7 +339,7 @@ function DashboardMetricOverlayContainer(
       />
     );
   }
-
+  
   return (
     <OverlayPanelBodyContainer
       getHelpComponentFunction={getHelpComponentFunction}

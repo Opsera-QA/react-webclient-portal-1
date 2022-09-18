@@ -64,4 +64,63 @@ jiraActions.getJiraProjects = async (getAccessToken, cancelTokenSource) => {
   );
 };
 
+jiraActions.getJiraChangeTypes = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraChangeTypes";
+  let postBody = {};
+  // For change failure rate, project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+jiraActions.getJiraChangeFailureRate = async (
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  jiraChangeTypes,
+) => {
+  const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const postBody = {
+    startDate: dateRange?.start,
+    endDate: dateRange?.end,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
+    dashboardOrgs: dashboardOrgs,
+    jiraProjects: [getJiraProjectsFromKpiConfiguration(kpiConfiguration)],
+    jiraChangeTypes: jiraChangeTypes,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default jiraActions;

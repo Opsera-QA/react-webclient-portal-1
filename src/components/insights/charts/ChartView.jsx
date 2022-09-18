@@ -34,6 +34,7 @@ import JiraIssuesAssignedToMe from "./jira/table/issues_assigned_to_me/JiraIssue
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
 import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
 import JiraMeanTimeToResolutionBarChart from "./jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionBarChart";
+import JiraChangeFailureRate from "./jira/line_chart/change_failure_rate/JiraChangeFailureRate";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -414,6 +415,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Jira KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <JiraChangeFailureRate
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "jira-tickets-assigned-by-user":
         return (
           <Col xl={6} md={12} className="p-2">

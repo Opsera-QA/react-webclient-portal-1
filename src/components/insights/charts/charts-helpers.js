@@ -136,6 +136,28 @@ export function getJiraPrioritiesFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getJiraChangeTypesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value &&
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ].value;
+  }
+  return null;
+}
+
 export function getJiraProjectsFromKpiConfiguration(kpiConfiguration) {
   if (
       kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
