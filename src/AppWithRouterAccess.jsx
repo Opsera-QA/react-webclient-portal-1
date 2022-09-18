@@ -169,17 +169,17 @@ const AppWithRouterAccess = () => {
         <div className={"container-fluid m-0"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"}>
-              <Router history={history}>
-                <Switch>
+              {/*<Router history={history}>*/}
+              {/*  <Switch>*/}
                   <LoginForm issuer={OKTA_CONFIG.issuer} authClient={authClient} />
                   <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
                   <Route path="/logout" exact component={Logout} />
-                  <Route
-                    path={"*"}
-                    component={PageNotFound}
-                  />
-                </Switch>
-              </Router>
+              {/*    <Route*/}
+              {/*      path={"*"}*/}
+              {/*      component={PageNotFound}*/}
+              {/*    />*/}
+              {/*  </Switch>*/}
+              {/*</Router>*/}
             </div>
           </div>
           <OpseraFooter />
