@@ -20,6 +20,26 @@ apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl,
   }
 };
 
+apiServiceV2.axiosCustomTokenApiGetCall = async (customToken, cancelTokenSource, apiUrl, urlParams) => {
+  try {
+    return await getAxiosInstance(
+      customToken,
+      cancelTokenSource?.token,
+    ).get(
+      apiUrl,
+      {
+        params: urlParams,
+      },
+    );
+  } catch (error) {
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
+    }
+  }
+};
+
 apiServiceV2.axiosApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
   const accessToken = await getAccessToken();
 

@@ -1,11 +1,55 @@
 import paths from "./paths";
 import {
   faAnalytics,
-  faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
-  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faRss, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks,
-  faUserHardHat, faCircle, faQuestion, faBook, faMagnifyingGlass, faShieldKeyhole, faRectangleList, faHouseUser,
+  faBuilding,
+  faChartBar,
+  faClipboardList,
+  faCogs,
+  faDraftingCompass,
+  faEdit,
+  faFileInvoice,
+  faHeartbeat,
+  faLink,
+  faSitemap,
+  faStream,
+  faTags,
+  faTimes,
+  faUser,
+  faUserCircle,
+  faUserFriends,
+  faUserPlus,
+  faWrench,
+  faChartNetwork,
+  faFlag,
+  faEnvelope,
+  faUserTag,
+  faProjectDiagram,
+  faTally,
+  faTools,
+  faUsers,
+  faChartArea,
+  faHome,
+  faIdCard,
+  faKey,
+  faHexagon,
+  faListAlt,
+  faRss,
+  faFileArchive,
+  faUserChart,
+  faRadar,
+  faServer,
+  faHandshake,
+  faFileCode,
+  faTasks,
+  faUserHardHat,
+  faCircle,
+  faQuestion,
+  faBook,
+  faMagnifyingGlass,
+  faShieldKeyhole,
+  faRectangleList,
+  faHouseUser,
+  faDiamondExclamation,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -182,6 +226,24 @@ const breadcrumbs = {
     title: "Platform System Parameter Details",
     linkText: "Platform System Parameter Details",
     icon: faCogs
+  },
+
+  freeTrialCustomerWorkspaceManagement: {
+    parent: "admin",
+    name: "freeTrialCustomerWorkspaceManagement",
+    path: paths.freeTrialCustomerWorkspaceManagement,
+    title: "Free Trial Customer Workspace Management",
+    linkText: "Free Trial Customer Workspace Management",
+    icon: faUsers,
+    pageDescription: "Opsera Customer Workspace Management allows you to configure and track all customer pipelines, tasks, and tools in one central location."
+  },
+  freeTrialCustomerWorkspaceDetailView: {
+    parent: "freeTrialCustomerWorkspaceManagement",
+    name: "freeTrialCustomerWorkspaceDetailView",
+    path: paths.freeTrialCustomerWorkspaceDetailView,
+    title: "Free Trial Customer Workspace Details",
+    linkText: "Free Trial Customer Workspace Details",
+    icon: faUsers,
   },
 
   taskTemplateManagement: {
@@ -1029,7 +1091,8 @@ const breadcrumbs = {
     path: paths.workspace,
     title: "Workspace",
     linkText: "Workspace",
-    icon: faRectangleList
+    icon: faRectangleList,
+    pageDescription: "The Opsera workspace allows you to configure and track all workflows in one central location.",
   },
 
   freeTrialLanding: {
@@ -1039,6 +1102,15 @@ const breadcrumbs = {
     title: "Home",
     linkText: "Home",
     icon: faHouseUser,
+  },
+
+  pageNotFound: {
+    parent: undefined,
+    name: "pageNotFound",
+    path: undefined,
+    title: "Page Not Found!",
+    linkText: undefined,
+    icon: faDiamondExclamation,
   },
 };
 

@@ -170,7 +170,6 @@ function DetailScreenContainer(
           {getBody()}
         </div>
         {getAccessBasedField()}
-        <div className="content-block-footer"/>
       </div>
     </div>
   );

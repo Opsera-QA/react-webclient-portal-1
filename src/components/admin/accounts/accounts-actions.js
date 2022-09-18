@@ -1,4 +1,5 @@
 import baseActions from "utils/actionsBase";
+import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
 
 const accountsActions = {};
 
@@ -136,6 +137,32 @@ accountsActions.getLdapUserGroupsWithDomainV2 = async (getAccessToken, cancelTok
 
 accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const apiUrl = `/users/account/${domain}/role-groups`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+accountsActions.isFreeTrialAccountActive = async (cancelTokenSource, email) => {
+  const token = apiTokenHelper.generateApiCallToken("is-account-active");
+  const apiUrl = "/users/trial/is-account-active";
+  const postBody = {
+    email: email,
+    hostname: window.location.hostname,
+  };
+
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    postBody,
+  );
+};
+
+accountsActions.getFreeTrialAccountMetrics = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/trial/users/account/metrics`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+accountsActions.getFreeTrialAccountWorkflowMetrics = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/trial/users/workflow/metrics`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

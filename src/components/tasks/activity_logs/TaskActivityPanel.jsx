@@ -10,7 +10,11 @@ import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskAct
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import CustomTable from "components/common/table/CustomTable";
 
-function TaskActivityPanel({ taskModel }) {
+function TaskActivityPanel(
+  {
+    taskModel,
+    showFilterContainerIcon,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -189,12 +193,14 @@ function TaskActivityPanel({ taskModel }) {
       setCurrentRunNumber={setCurrentRunNumber}
       currentRunNumber={currentRunNumber}
       taskRunCount={taskModel?.getData("run_count")}
+      showFilterContainerIcon={showFilterContainerIcon}
     />
   );
 }
 
 TaskActivityPanel.propTypes = {
   taskModel: PropTypes.object,
+  showFilterContainerIcon: PropTypes.bool,
 };
 
 export default TaskActivityPanel;

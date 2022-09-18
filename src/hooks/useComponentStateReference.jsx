@@ -15,6 +15,7 @@ export default function useComponentStateReference() {
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
     isSiteAdministrator,
+    isPowerUser,
     userData,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -38,5 +39,6 @@ export default function useComponentStateReference() {
     isSassUser: isSassUser(),
     userData: userData,
     isFreeTrial: false,
+    isPowerUser: isPowerUser,
   });
 }

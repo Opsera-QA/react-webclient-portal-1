@@ -20,6 +20,7 @@ import {
 import "css/general/sidebar.css";
 import IconBase from "components/common/icons/IconBase";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const hiddenNav = () => {
   return <></>;
@@ -27,9 +28,9 @@ const hiddenNav = () => {
 
 // TODO: This should be reworked into one sidebar
 //  with the tabs using SidebarNavigationLinkBase which can handle visibility based on roles
-function Sidebar({ userData, hideSideBar }) {
-  const contextType = useContext(AuthContext);
-  const { setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = contextType;
+function Sidebar({ hideSideBar }) {
+  const { setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const { userData } = useComponentStateReference();
   const [renderOutput, setRenderOutput] = useState(hiddenNav);
 
   useEffect(() => {
