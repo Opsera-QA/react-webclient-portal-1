@@ -93,6 +93,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.totalJobs}
                     subtitle={'Total Jobs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of jobs in the repository'}
                   />
                 </div>
@@ -105,6 +106,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.jobsExecuted}
                     subtitle={'Total Jobs Executed'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of jobs executed in the repository'}
                   />
                 </div>
@@ -117,6 +119,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.jobsSkipped}
                     subtitle={'Total Jobs Skipped'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of jobs that were skipped'}
                   />
                 </div>
@@ -129,6 +132,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     percentage={metrics?.PercentageExecuted}
                     subtitle={'% Jobs Executed'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The percentage of jobs that were executed'}
                   />
                 </div>
@@ -141,6 +145,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     percentage={metrics?.PercentageSkipped}
                     subtitle={'% Jobs Skipped'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The percentage of jobs that were skipped'}
                   />
                 </div>
@@ -153,6 +158,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.Success}
                     subtitle={'Total Success'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of successful jobs'}
                   />
                 </div>
@@ -165,6 +171,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.Failed}
                     subtitle={'Total Failed'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of failed jobs'}
                   />
                 </div>
@@ -177,6 +184,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     percentage={metrics?.SuccessPercentage}
                     subtitle={'% Success'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The percent of successful jobs'}
                   />
                 </div>
@@ -189,6 +197,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     percentage={metrics?.FailedPercentage}
                     subtitle={'% Failed'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The percent of failed jobs'}
                   />
                 </div>
@@ -201,6 +210,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     score={metrics?.jobsCanceled}
                     subtitle={'Jobs Canceled'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of jobs that were cancelled'}
                   />
                 </div>
@@ -213,6 +223,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                     percentage={metrics?.PercentageCanceled}
                     subtitle={'% Canceled'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The percentage of jobs cancelled.'}
                   />
                 </div>

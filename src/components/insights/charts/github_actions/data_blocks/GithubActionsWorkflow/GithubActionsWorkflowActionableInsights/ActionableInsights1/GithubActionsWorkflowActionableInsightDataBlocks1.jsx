@@ -90,6 +90,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.runs}
                     subtitle={'Total Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of runs in selected workflow'}
                   />
                 </div>
@@ -101,6 +102,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                   <TwoLineScoreDataBlock
                     score={metrics?.applications}
                     subtitle={'Total Applications'}
+                    iconOverlayTitle={''}
                     icon={faInfoCircle}
                     iconOverlayBody={'The total number of applications in selected workflow'}
                   />
@@ -114,6 +116,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.repos}
                     subtitle={'Total Repositories'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of repositories in selected workflow'}
                   />
                 </div>
@@ -126,6 +129,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.success}
                     subtitle={'Total Success Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of successful runs'}
                   />
                 </div>
@@ -138,6 +142,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.failures}
                     subtitle={'Total Failed Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of failed runs'}
                   />
                 </div>
@@ -150,6 +155,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     percentage={metrics?.successPercentage}
                     subtitle={'% Success'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'Percent of successful runs out of all runs'}
                   />
                 </div>
@@ -162,6 +168,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     percentage={metrics?.failedPercentage}
                     subtitle={'% Failures'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'Percent of failed runs out of all runs'}
                   />
                 </div>
@@ -174,6 +181,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.avgSuccessTime}
                     subtitle={'Average Time For Success Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The average time taken for successful runs to complete'}
                   />
                 </div>
@@ -186,6 +194,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     score={metrics?.avgFailedTime}
                     subtitle={'Average Time For Failed Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'Average time take for failed runs to complete'}
                   />
                 </div>

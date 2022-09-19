@@ -88,6 +88,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.workflows}
                     subtitle={'Total Unique Workflow Names'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of unique workflow names'}
                     />
                 </div>
@@ -100,6 +101,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.runs}
                     subtitle={'Total Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of runs'}
                   />
                 </div>
@@ -112,6 +114,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.repos}
                     subtitle={'Total Repositories'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of repositories'}
                   />
                 </div>
@@ -124,6 +127,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.success}
                     subtitle={'Total Success Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of successful runs'}
                   />
                 </div>
@@ -136,6 +140,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.failures}
                     subtitle={'Total Failed Runs'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The total number of failed runs'}
                   />
                 </div>
@@ -148,6 +153,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     percentage={metrics?.successPercentage}
                     subtitle={'% Success'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'Percent of successful runs out of all runs'}
                   />
                 </div>
@@ -160,6 +166,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     percentage={metrics?.failedPercentage}
                     subtitle={'% Failures'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'Percent of failed runs out of all runs'}
                   />
                 </div>
@@ -172,6 +179,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.avgSuccessTime}
                     subtitle={'Average Time For Success Runs (mins)'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The average time taken for successful runs to complete'}
                   />
                 </div>
@@ -184,6 +192,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     score={metrics?.avgFailedTime}
                     subtitle={'Average Time For Failed Runs (mins)'}
                     icon={faInfoCircle}
+                    iconOverlayTitle={''}
                     iconOverlayBody={'The average time taken for failed runs to complete'}
                   />
                 </div>
