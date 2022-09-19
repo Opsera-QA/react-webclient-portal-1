@@ -2,8 +2,7 @@ import baseActions from "utils/actionsBase";
 
 import {
   getDateObjectFromKpiConfiguration,
-  getJiraPrioritiesFromKpiConfiguration,
-  getJiraProjectsFromKpiConfiguration,
+  getResultFromKpiConfiguration,
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
@@ -32,8 +31,8 @@ jiraActions.getJiraMTTR = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
-    jiraPriorities: getJiraPrioritiesFromKpiConfiguration(kpiConfiguration),
+    jiraProjects: getResultFromKpiConfiguration(kpiConfiguration, 'jira-projects'),
+    jiraPriorities: getResultFromKpiConfiguration(kpiConfiguration, 'jira-priorities'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -111,7 +110,7 @@ jiraActions.getJiraChangeFailureRate = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: [getJiraProjectsFromKpiConfiguration(kpiConfiguration)],
+    jiraProjects: [getResultFromKpiConfiguration(kpiConfiguration,'jira-projects')],
     jiraChangeTypes: jiraChangeTypes,
   };
 
