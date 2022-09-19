@@ -20,7 +20,7 @@ export const EXTERNAL_LINKS = {
   SALESFORCE_PIPELINE_WORKFLOW_CREATION: "https://youtu.be/9otE3Z4LuTM",
   SALESFORCE_TASK_CREATION: "https://youtu.be/_nYnj8JVs7g",
   SALESFORCE_RELEASE_MANAGEMENT: "https://marketing.opsera.io/opsera-salesforce-lp",
-  SALESFORCE_USER_GUIDE: "https://opsera.atlassian.net/wiki/spaces/OE/pages/1097302215/Salesforce+Pipeline+User+Guides",
+  SALESFORCE_USER_GUIDE: "https://docs.opsera.io/salesforce/opsera-salesforce-pipeline-set-up-procedure",
   HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
 };
 
