@@ -30,22 +30,41 @@ export default function WelcomeWidget({ className }) {
       <div>
         <div className={"my-2"}>
           <ExternalLink
-            link={EXTERNAL_LINKS.REGISTER_GIT_REPOSITORY}
-            label={"Register Git Repository"}
+            link={EXTERNAL_LINKS.OPSERA_SALESFORCE_PIPELINES}
+            label={"Opsera Salesforce Pipeline"}
           />
         </div>
         <div className={"my-2"}>
           <ExternalLink
-            link={EXTERNAL_LINKS.SALESFORCE_PIPELINE_WORKFLOW_CREATION}
-            label={"Salesforce Pipeline Workflow Creation"}
+            link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
+            label={"Salesforce Release Management"}
           />
         </div>
         <div className={"my-2"}>
           <ExternalLink
-            link={EXTERNAL_LINKS.SALESFORCE_TASK_CREATION}
-            label={"Salesforce Task Creation"}
+            link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
+            label={"Salesforce User Guide"}
           />
         </div>
+
+        {/*<div className={"my-2"}>*/}
+        {/*  <ExternalLink*/}
+        {/*    link={EXTERNAL_LINKS.REGISTER_GIT_REPOSITORY}*/}
+        {/*    label={"Register Git Repository"}*/}
+        {/*  />*/}
+        {/*</div>*/}
+        {/*<div className={"my-2"}>*/}
+        {/*  <ExternalLink*/}
+        {/*    link={EXTERNAL_LINKS.SALESFORCE_PIPELINE_WORKFLOW_CREATION}*/}
+        {/*    label={"Salesforce Pipeline Workflow Creation"}*/}
+        {/*  />*/}
+        {/*</div>*/}
+        {/*<div className={"my-2"}>*/}
+        {/*  <ExternalLink*/}
+        {/*    link={EXTERNAL_LINKS.SALESFORCE_TASK_CREATION}*/}
+        {/*    label={"Salesforce Task Creation"}*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
     );
   };
