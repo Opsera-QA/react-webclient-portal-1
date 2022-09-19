@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkflowActionableInsightTable2";
-import {metricHelpers} from "../../../../../metric.helpers";
-import githubActionsWorkflowActions from "../github-actions-workflow-actions";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import GitlabActionsWorkflowActionableInsightTable3 from "./GithubActionsWorkslfowActionableInsightTable3";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName }) {
+function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName, jobName}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -50,16 +50,16 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
-          kpiConfiguration,
-          getAccessToken,
-          cancelSource,
-          filterDto,
-          dashboardTags,
-          dashboardOrgs,
-          workflow,
-          repoName,
-          appName,
-          branchName
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        filterDto,
+        dashboardTags,
+        dashboardOrgs,
+        workflow,
+        repoName,
+        appName,
+        branchName
       );
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
@@ -85,7 +85,7 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
   };
 
   return (
-    <GitlabActionsWorkflowActionableInsightTable2
+    <GitlabActionsWorkflowActionableInsightTable3
       data={metrics}
       isLoading={isLoading}
       loadData={loadData}
@@ -98,14 +98,15 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
   );
 }
 
-GithubActionsWorkflowTableOverlay2.propTypes = {
+GithubActionsWorkflowTableOverlay3.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
-export default GithubActionsWorkflowTableOverlay2;
+export default GithubActionsWorkflowTableOverlay3;

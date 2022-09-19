@@ -9,8 +9,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight2 from "./GithubActionsWorkflowActionableInsight2";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import GithubActionsWorkflowActionableInsight2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsight2";
 
 // TODO: Convert to cards
 function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName }) {
@@ -66,17 +66,40 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
     );
   };
 
-  return (
+  const getBody = () => {
+    return (
       <FilterContainer
-          isLoading={isLoading}
-          title={tableTitle}
-          titleIcon={faDraftingCompass}
-          body={getTable()}
-          className={"px-2 pb-2"}
-          loadData={loadData}
-          setFilterDto={setFilterModel}
-          filterDto={filterModel}
+        isLoading={isLoading}
+        title={tableTitle}
+        titleIcon={faDraftingCompass}
+        body={getTable()}
+        loadData={loadData}
+        setFilterDto={setFilterModel}
+        filterDto={filterModel}
+        supportSearch={true}
       />
+    );
+  };
+
+  return (
+    <div>
+      <div className={"p-2"}>
+        <div className={"d-flex details-title-text"}>
+          <div className={'mr-4'}>
+            <b>Most Skipped Job:</b> {''}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Failed Job:</b> {''}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Time Consuming Job:</b> {''}
+          </div>
+        </div>
+      </div>
+      <div className={"p-2"}>
+        {getBody()}
+      </div>
+    </div>
   );
 }
 

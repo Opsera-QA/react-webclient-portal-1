@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
+import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
-  from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+  from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubActionsWorkflowActionableInsightDataBlocks1 from "./GithubActionsWorkflowActionableInsightDataBlocks1";
 import axios from "axios";
 import GithubActionsWorkflowActionableTableOverlay1 from "./GithubActionsWorkflowActionableTableOverlay1";
