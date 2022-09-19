@@ -31,7 +31,7 @@ function JiraProjectSingleSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData().catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         setError(error);
       }
@@ -60,12 +60,10 @@ function JiraProjectSingleSelectInput({
   };
 
   const setDataFunction = (fieldName, value) => {
-    let newModel = model;
     model.setData('jira-change-types',[]);
-    const parsedValue = typeof value === "string" ? value : value[valueField];
-
-    newModel?.setData(fieldName, parsedValue);
-    setModel({...newModel});
+    const parsedValue = value[valueField];
+    model?.setData(fieldName, parsedValue);
+    setModel({...model});
   };
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {

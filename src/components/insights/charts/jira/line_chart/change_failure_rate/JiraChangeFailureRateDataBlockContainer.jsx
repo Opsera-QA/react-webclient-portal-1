@@ -15,16 +15,19 @@ import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import {getResultFromKpiConfiguration} from "../../../charts-helpers";
 
-function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, dataPoint, trend }) {
+function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
   
-  const [maxVal, setMaxVal] = useState(goalsData);
+  const [maxGoalsValue, setMaxGoalsValue] = useState(goalsData);
+  const [jiraChangeTypes, setJiraChangeTypes] = useState([]);
 
   useEffect(() => {
     let dataHigh = {x: "", y: 0};
     dataHigh = _.maxBy(chartData, 'y');
     const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
-    setMaxVal(Math.ceil(high));
+    setMaxGoalsValue(Math.ceil(high));
+    setJiraChangeTypes(getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types'));
   }, [goalsData, chartData]);
 
   let cfrChartData = [
@@ -53,10 +56,10 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
             className={`green p-2`}
             topText={"Change Failure Rate"}
             icon={getReverseIcon(trend)}
-            bottomText={`Prev Failure Rate: ${metricData?.prevCfr !== 'NaN'? metricData?.prevCfr +` %` :'NA'}`}
+            bottomText={`Prev Failure Rate: ${metricData?.prevChangeFailureRate !== 'NaN'? metricData?.prevChangeFailureRate +` %` :'NA'}`}
             middleText={
               <MetricScoreText
-                  score={`${metricData?.cfr} %`}
+                  score={`${metricData?.changeFailureRate} %`}
                   dataPoint={dataPoint}
                   className={"metric-block-content-text"}
               />}
@@ -65,29 +68,47 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       </DataBlockBoxContainer>
     );
   };
+  const getLegends = () => {
+    if(!jiraChangeTypes || (Array.isArray(jiraChangeTypes) && jiraChangeTypes.length == 0)) {
+      return (
+        <>
+          <div className="row"/>
+          Total Selected Changes<b> ({jiraChangeTypes?.length || 0})</b>
+          <div className="row"/>
+          Please select a change type to get started
+        </>
+      );
+    }
+
+    return (
+      <>
+        Goal<b> ({goalsData})</b>
+        <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
+        <div className="row"/>
+        Change Failures{" "}
+        <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
+        <div className="row"/>
+        Total Changes<b> ({metricData.total})</b>
+        <div className="row"/>
+        Total Failures in Changes<b> ({metricData.totalFailure})</b>
+      </>
+    );
+  };
 
   const getTrendChart = () => {
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-          Goal<b> ({goalsData})</b>{" "}
-          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
-          <br></br>
-          Change Failures{" "}
-          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-          <br></br>
-          Total Changes<b> ({metricData.total})</b>{" "}
-          <br></br>
-          Total Failures in Changes<b> ({metricData.totalFailure})</b>{" "}
+          {getLegends()}
           </div>
         <ResponsiveLine
           data={cfrChartData}
           {...defaultConfig("", "Date", 
                 false, true, "numbers", "monthDate2")}
           {...config()}
-          yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
+          yScale={{ type: 'linear', min: '0', max: maxGoalsValue, stacked: false, reverse: false }}
           axisLeft={{            
-            tickValues: [0, maxVal],
+            tickValues: [0, maxGoalsValue],
             legend: 'Failures',
             legendOffset: -38,
             legendPosition: 'middle'
