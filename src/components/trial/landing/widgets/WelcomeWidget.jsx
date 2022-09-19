@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -7,12 +7,19 @@ import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBl
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import { EXTERNAL_LINKS } from "Navbar";
+import { Button } from "react-bootstrap";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import FreetrialWizardHelpDocumentation
+    from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
 export default function WelcomeWidget({ className }) {
   const {
     themeConstants,
     userData,
   } = useComponentStateReference();
+
+    const toastContext = useContext(DialogToastContext);
 
   const getWelcomeText = () => {
     const welcomeText = hasStringValue(userData?.firstName) === true ? `Hello ${userData?.firstName}` : "Hello";
@@ -23,6 +30,22 @@ export default function WelcomeWidget({ className }) {
         {welcomeText}
       </div>
     );
+  };
+
+  const closePanel = () => {
+      toastContext.clearOverlayPanel();
+  };
+
+  const toggleVideosView = () => {
+      toastContext.showOverlayPanel(
+          <CenterOverlayContainer
+              closePanel={closePanel}
+              titleText={"Getting Started Videos"}
+              // titleIcon={titleIcon}
+          >
+              <FreetrialWizardHelpDocumentation/>
+          </CenterOverlayContainer>
+      );
   };
 
   const getHowToLinks = () => {
@@ -46,25 +69,11 @@ export default function WelcomeWidget({ className }) {
             label={"Salesforce User Guide"}
           />
         </div>
-
-        {/*<div className={"my-2"}>*/}
-        {/*  <ExternalLink*/}
-        {/*    link={EXTERNAL_LINKS.REGISTER_GIT_REPOSITORY}*/}
-        {/*    label={"Register Git Repository"}*/}
-        {/*  />*/}
-        {/*</div>*/}
-        {/*<div className={"my-2"}>*/}
-        {/*  <ExternalLink*/}
-        {/*    link={EXTERNAL_LINKS.SALESFORCE_PIPELINE_WORKFLOW_CREATION}*/}
-        {/*    label={"Salesforce Pipeline Workflow Creation"}*/}
-        {/*  />*/}
-        {/*</div>*/}
-        {/*<div className={"my-2"}>*/}
-        {/*  <ExternalLink*/}
-        {/*    link={EXTERNAL_LINKS.SALESFORCE_TASK_CREATION}*/}
-        {/*    label={"Salesforce Task Creation"}*/}
-        {/*  />*/}
-        {/*</div>*/}
+          <div className={"my-2"}>
+              <a className={"externalLink"} onClick={toggleVideosView} href="#">
+                  Getting Started Videos
+              </a>
+          </div>
       </div>
     );
   };

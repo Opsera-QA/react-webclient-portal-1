@@ -120,7 +120,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
                           className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
         {/*<NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"*/}
         {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
-        {getFrequentlyAskedQuestionsLink()}
+        {/*{getFrequentlyAskedQuestionsLink()}*/}
         {getHelpDocumentationLink()}
         <NavDropdown.Divider/>
 

@@ -190,7 +190,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               {/*<NavDropdown.Item href={EXTERNAL_LINKS.REQUEST_HELP} target="_blank"*/}
               {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
-              {getFrequentlyAskedQuestionsLink()}
+              {/*{getFrequentlyAskedQuestionsLink()}*/}
               {getHelpDocumentationLink()}
               <NavDropdown.Divider/>
 
