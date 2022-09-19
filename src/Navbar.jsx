@@ -12,7 +12,7 @@ import IconBase from "components/common/icons/IconBase";
 import sessionHelper from "utils/session.helper";
 
 export const EXTERNAL_LINKS = {
-  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`,
+  KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`,
   REQUEST_HELP: "https://opsera.atlassian.net/servicedesk/customer/portal/2/group/10/create/32",
   SUPPORT_EMAIL: "mailto:support@opsera.io",
   OPSERA_SALESFORCE_PIPELINES: "https://www.opsera.io/platform/salesforce-pipelines",
@@ -188,8 +188,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
               <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-              <NavDropdown.Item href={EXTERNAL_LINKS.REQUEST_HELP} target="_blank"
-                                className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
+              {/*<NavDropdown.Item href={EXTERNAL_LINKS.REQUEST_HELP} target="_blank"*/}
+              {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
               {getFrequentlyAskedQuestionsLink()}
               {getHelpDocumentationLink()}
               <NavDropdown.Divider/>
