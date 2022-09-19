@@ -8,6 +8,10 @@ import PlatformSystemParameterEditorPanel
   from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 import PlatformSettingsSummaryPanel from "components/admin/platform_settings/details/PlatformSettingsSummaryPanel";
 import PlatformSettingsEditorPanel from "components/admin/platform_settings/details/PlatformSettingsEditorPanel";
+import PlatformSettingFeaturesPanel
+  from "components/admin/platform_settings/details/features/PlatformSettingFeaturesPanel";
+import { faFileAlt, faFileBinary } from "@fortawesome/pro-light-svg-icons";
+import CustomTab from "components/common/tabs/CustomTab";
 
 export default function PlatformSettingsDetailPanel(
   {
@@ -29,6 +33,13 @@ export default function PlatformSettingsDetailPanel(
     return (
       <CustomTabContainer>
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Features"}
+          tabName={"features"}
+          handleTabClick={handleTabClick}
+          icon={faFileBinary}
+        />
         <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
     );
@@ -41,6 +52,12 @@ export default function PlatformSettingsDetailPanel(
           <PlatformSettingsSummaryPanel
             platformSettingsModel={platformSettingsModel}
             setActiveTab={setActiveTab}
+          />
+        );
+      case "features":
+        return (
+          <PlatformSettingFeaturesPanel
+            platformSettingsId={platformSettingsModel?.getMongoDbId()}
           />
         );
       case "settings":

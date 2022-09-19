@@ -11,6 +11,8 @@ import {faStream} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { platformSettingsMetadata } from "components/admin/platform_settings/platformSettings.metadata";
 import NewPlatformSettingsOverlay from "components/admin/platform_settings/create/NewPlatformSettingsOverlay";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function PlatformSettingsTable(
   {
@@ -25,8 +27,6 @@ export default function PlatformSettingsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "platformId")),
-      // getLimitedTableTextColumn(getField(fields, "description"), 100),
-      // getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), platformSystemParameterConstants.getLabelForSystemParameterType),
     ],
     []
   );
@@ -58,16 +58,23 @@ export default function PlatformSettingsTable(
   };
 
   return (
+    <div>
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          subheaderText={"This is limited to one record as that is all that is currently supported in the platform."}
+        />
+      </CenteredContentWrapper>
       <FilterContainer
         loadData={loadData}
-        addRecordFunction={addRecordFunction}
+        addRecordFunction={Array.isArray(platformSettings) && platformSettings.length === 0 ? addRecordFunction : undefined}
         isLoading={isLoading}
         body={getTable()}
         titleIcon={faStream}
-        title={"System Parameters"}
-        type={"System Parameter"}
-        className={"px-2 pb-2"}
+        title={"Platform Settings"}
+        type={"Platform Setting"}
+        className={"p-2"}
       />
+    </div>
   );
 }
 

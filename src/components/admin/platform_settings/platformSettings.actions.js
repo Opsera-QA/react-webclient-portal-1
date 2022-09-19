@@ -2,14 +2,14 @@ import baseActions from "utils/actionsBase";
 
 export const platformSettingsActions = {};
 
-platformSettingsActions.createPlatformSystemParameter = async (
+platformSettingsActions.createPlatformSetting = async (
   getAccessToken,
   cancelTokenSource,
-  platformSystemParameterModel,
+  platformSettingsModel,
 ) => {
-  const apiUrl = "/platform/system-parameters/";
+  const apiUrl = "/configuration/platform/settings";
   const postBody = {
-    ...platformSystemParameterModel?.getPersistData(),
+    ...platformSettingsModel?.getPersistData(),
   };
 
   return await baseActions.apiPostCallV2(
@@ -20,14 +20,14 @@ platformSettingsActions.createPlatformSystemParameter = async (
   );
 };
 
-platformSettingsActions.updatePlatformSystemParameter = async (
+platformSettingsActions.updatePlatformSetting = async (
   getAccessToken,
   cancelTokenSource,
-  platformSystemParameterModel,
+  platformSettingsModel,
 ) => {
-  const apiUrl = `/platform/system-parameters/${platformSystemParameterModel?.getMongoDbId()}/`;
+  const apiUrl = `/configuration/platform/settings/${platformSettingsModel?.getMongoDbId()}/`;
   const postBody = {
-    ...platformSystemParameterModel.getPersistData(),
+    ...platformSettingsModel.getPersistData(),
   };
 
   return await baseActions.apiPutCallV2(
@@ -38,12 +38,12 @@ platformSettingsActions.updatePlatformSystemParameter = async (
   );
 };
 
-platformSettingsActions.deletePlatformSystemParameter = async (
+platformSettingsActions.deletePlatformSettingById = async (
   getAccessToken,
   cancelTokenSource,
-  platformSystemParameterModel,
+  platformSettingsId,
 ) => {
-  const apiUrl = `/platform/system-parameters/${platformSystemParameterModel?.getMongoDbId()}/`;
+  const apiUrl = `/configuration/platform/settings/${platformSettingsId}/`;
   return await baseActions.apiDeleteCallV2(
     getAccessToken,
     cancelTokenSource,
@@ -51,11 +51,11 @@ platformSettingsActions.deletePlatformSystemParameter = async (
   );
 };
 
-platformSettingsActions.getPlatformSettingRecords = async (
+platformSettingsActions.getPlatformSettings = async (
   getAccessToken,
   cancelTokenSource,
 ) => {
-  const apiUrl = "/configuration/platform";
+  const apiUrl = "/configuration/platform/settings";
   return await baseActions.apiGetCallV2(
     getAccessToken,
     cancelTokenSource,
@@ -68,7 +68,7 @@ platformSettingsActions.getPlatformSettingRecordById = async (
   cancelTokenSource,
   systemParameterId,
 ) => {
-  const apiUrl = `/configuration/platform/${systemParameterId}`;
+  const apiUrl = `/configuration/platform/settings/${systemParameterId}`;
   return await baseActions.apiGetCallV2(
     getAccessToken,
     cancelTokenSource,

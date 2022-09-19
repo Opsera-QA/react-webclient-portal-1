@@ -47,12 +47,11 @@ export default function PlatformSettingsManagement() {
   };
 
   const getPlatformSettingsRecords = async () => {
-    const response = await platformSettingsActions.getPlatformSettingRecords(
+    const response = await platformSettingsActions.getPlatformSettings(
       getAccessToken,
       cancelTokenSource,
     );
     const settings = response?.data?.data;
-    console.log("response: " + JSON.stringify(response));
 
     if (isMounted?.current === true && Array.isArray(settings)) {
       setPlatformSettings([...settings]);
