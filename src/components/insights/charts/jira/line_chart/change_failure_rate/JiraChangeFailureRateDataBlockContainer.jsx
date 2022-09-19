@@ -68,7 +68,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       </DataBlockBoxContainer>
     );
   };
-  const getStagesLegend = () => {
+  const getLegends = () => {
     if(!jiraChangeTypes || (Array.isArray(jiraChangeTypes) && jiraChangeTypes.length == 0)) {
       return (
         <>
@@ -99,7 +99,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
     return(
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-          {getStagesLegend()}
+          {getLegends()}
           </div>
         <ResponsiveLine
           data={cfrChartData}
