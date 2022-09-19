@@ -16,6 +16,9 @@ export const EXTERNAL_LINKS = {
   REQUEST_HELP: "https://opsera.atlassian.net/servicedesk/customer/portal/2/group/10/create/32",
   SUPPORT_EMAIL: "mailto:support@opsera.io",
   OPSERA_SALESFORCE_PIPELINES: "https://www.opsera.io/platform/salesforce-pipelines",
+  REGISTER_GIT_REPOSITORY: "https://youtu.be/-kDG-550j-U",
+  SALESFORCE_PIPELINE_WORKFLOW_CREATION: "https://youtu.be/9otE3Z4LuTM",
+  SALESFORCE_TASK_CREATION: "https://youtu.be/_nYnj8JVs7g",
   SALESFORCE_RELEASE_MANAGEMENT: "https://marketing.opsera.io/opsera-salesforce-lp",
   SALESFORCE_USER_GUIDE: "https://opsera.atlassian.net/wiki/spaces/OE/pages/1097302215/Salesforce+Pipeline+User+Guides",
   HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
