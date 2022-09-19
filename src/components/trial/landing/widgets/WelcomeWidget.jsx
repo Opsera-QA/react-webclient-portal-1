@@ -50,30 +50,26 @@ export default function WelcomeWidget({ className }) {
 
   const getHowToLinks = () => {
     return (
-      <div>
-        <div className={"my-2"}>
-          <ExternalLink
-            link={EXTERNAL_LINKS.OPSERA_SALESFORCE_PIPELINES}
-            label={"Opsera Salesforce Pipeline"}
-          />
-        </div>
-        <div className={"my-2"}>
-          <ExternalLink
-            link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
-            label={"Salesforce Release Management"}
-          />
-        </div>
-        <div className={"my-2"}>
-          <ExternalLink
-            link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
-            label={"Salesforce User Guide"}
-          />
-        </div>
-          <div className={"my-2"}>
-              <a className={"externalLink"} onClick={toggleVideosView} href="#">
-                  Getting Started Videos
-              </a>
+      <div className={"d-flex"}>
+        <div className={"mt-auto"}>
+          <div className={"mt-2"}>
+            <ExternalLink
+              link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
+              label={"Salesforce Release Management"}
+            />
           </div>
+          <div className={"my-2"}>
+            <ExternalLink
+              link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
+              label={"Salesforce User Guide"}
+            />
+          </div>
+          <div className={"my-2"}>
+            <a className={"externalLink"} onClick={toggleVideosView} href="#">
+              Getting Started Videos
+            </a>
+          </div>
+        </div>
       </div>
     );
   };
