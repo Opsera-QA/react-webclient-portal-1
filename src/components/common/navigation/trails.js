@@ -49,7 +49,7 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation,
+  faDiamondExclamation, faFolderCog,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -226,6 +226,24 @@ const breadcrumbs = {
     title: "Platform System Parameter Details",
     linkText: "Platform System Parameter Details",
     icon: faCogs
+  },
+
+  platformSettingsManagement: {
+    parent: "admin",
+    name: "platformSettingsManagement",
+    path: paths.platformSettingsManagement,
+    title: "Platform Settings Management",
+    linkText: "Platform Settings Management",
+    icon: faFolderCog,
+    pageDescription: "Manage platform-wide system settings"
+  },
+  platformSettingsDetailView: {
+    parent: "platformSettingsManagement",
+    name: "platformSettingsDetailView",
+    path: paths.platformSettingsDetailView,
+    title: "Platform Settings Details",
+    linkText: "Platform Settings Details",
+    icon: faFolderCog
   },
 
   freeTrialCustomerWorkspaceManagement: {

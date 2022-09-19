@@ -22,6 +22,8 @@ import PlatformSystemParameterManagementPageLinkCard
   from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
 import FreeTrialCustomerWorkspaceManagementPageLinkCard
   from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagementPageLinkCard";
+import PlatformSettingsManagementPageLinkCard
+  from "components/admin/platform_settings/PlatformSettingsManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -54,6 +56,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <PipelineTemplateManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <PlatformSettingsManagementPageLinkCard />
       <PlatformSystemParameterManagementPageLinkCard />
       <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
