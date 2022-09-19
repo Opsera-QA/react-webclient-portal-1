@@ -83,7 +83,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
       <>
         <div>
           <Row style={{justifyContent: "space-evenly"}}>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -96,7 +96,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -109,7 +109,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -122,7 +122,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -135,20 +135,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.failures}
-                    subtitle={'Total Failed Runs'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The total number of failed runs'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
@@ -161,7 +148,33 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.avgSuccessTime}
+                    subtitle={'Average Time For Success Runs (mins)'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The average time taken for successful runs to complete'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.failures}
+                    subtitle={'Total Failed Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of failed runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
@@ -174,20 +187,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.avgSuccessTime}
-                    subtitle={'Average Time For Success Runs'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The average time taken for successful runs to complete'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -195,7 +195,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                     subtitle={'Average Time For Failed Runs'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
-                    iconOverlayBody={'Average time take for failed runs to complete'}
+                    iconOverlayBody={'Average time take for failed runs to complete (mins)'}
                   />
                 </div>
               </DataBlockBoxContainer>

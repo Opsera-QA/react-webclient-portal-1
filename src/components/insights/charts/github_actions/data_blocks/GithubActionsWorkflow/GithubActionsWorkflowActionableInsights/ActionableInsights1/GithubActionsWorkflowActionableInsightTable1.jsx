@@ -10,7 +10,7 @@ import CustomTable from "components/common/table/CustomTable";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsight2";
+import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 
 // TODO: Convert to cards
 function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName }) {
@@ -39,7 +39,7 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-        <GithubActionsWorkflowActionableInsight2
+        <GithubActionsWorkflowActionableInsights2
             workflowName={workflowName}
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}

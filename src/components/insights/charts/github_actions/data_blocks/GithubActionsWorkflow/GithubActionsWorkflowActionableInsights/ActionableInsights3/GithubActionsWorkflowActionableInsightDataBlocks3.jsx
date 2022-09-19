@@ -11,7 +11,7 @@ import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow }) {
+function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -86,7 +86,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
       <>
         <div>
           <Row style={{justifyContent: "space-evenly"}}>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -99,7 +99,20 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.PercentageExecuted}
+                    subtitle={'% Jobs Executed'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percentage of jobs that were executed'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -116,50 +129,24 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                    score={metrics?.jobsSkipped}
-                    subtitle={'Total Jobs Skipped'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The total number of jobs that were skipped'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.PercentageExecuted}
-                    subtitle={'% Jobs Executed'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The percentage of jobs that were executed'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.PercentageSkipped}
-                    subtitle={'% Jobs Skipped'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The percentage of jobs that were skipped'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
                     score={metrics?.Success}
                     subtitle={'Total Success'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
                     iconOverlayBody={'The total number of successful jobs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.SuccessPercentage}
+                    subtitle={'% Success'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percent of successful jobs'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -181,11 +168,24 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
-                    percentage={metrics?.SuccessPercentage}
-                    subtitle={'% Success'}
+                    percentage={metrics?.FailedPercentage}
+                    subtitle={'% Failed'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
-                    iconOverlayBody={'The percent of successful jobs'}
+                    iconOverlayBody={'The percent of failed jobs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.jobsSkipped}
+                    subtitle={'Total Jobs Skipped'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of jobs that were skipped'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -194,11 +194,11 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
-                    percentage={metrics?.FailedPercentage}
-                    subtitle={'% Failed'}
+                    percentage={metrics?.PercentageSkipped}
+                    subtitle={'% Jobs Skipped'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
-                    iconOverlayBody={'The percent of failed jobs'}
+                    iconOverlayBody={'The percentage of jobs that were skipped'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -238,7 +238,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
   return getBody();
 }
 
-GithubActionsWorkflowActionableInsightDataBlocks2.propTypes = {
+GithubActionsWorkflowActionableInsightDataBlocks3.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
@@ -248,4 +248,4 @@ GithubActionsWorkflowActionableInsightDataBlocks2.propTypes = {
   branchName: PropTypes.string
 };
 
-export default GithubActionsWorkflowActionableInsightDataBlocks2;
+export default GithubActionsWorkflowActionableInsightDataBlocks3;

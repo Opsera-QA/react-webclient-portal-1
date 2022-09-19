@@ -4,11 +4,11 @@ import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable3 from "./GithubActionsWorkslfowActionableInsightTable3";
+import GitlabActionsWorkflowActionableInsightTable3 from "./GithubActionsWorkflowActionableInsightTable3";
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName, jobName}) {
+function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -50,16 +50,16 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
-        kpiConfiguration,
-        getAccessToken,
-        cancelSource,
-        filterDto,
-        dashboardTags,
-        dashboardOrgs,
-        workflow,
-        repoName,
-        appName,
-        branchName
+          kpiConfiguration,
+          getAccessToken,
+          cancelSource,
+          filterDto,
+          dashboardTags,
+          dashboardOrgs,
+          workflow,
+          repoName,
+          appName,
+          branchName
       );
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
@@ -94,6 +94,9 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
       kpiConfiguration={kpiConfiguration}
       dashboardData={dashboardData}
       repoName={repoName}
+      workflowName={workflow}
+      branchName={branchName}
+      appName={appName}
     />
   );
 }
@@ -105,8 +108,7 @@ GithubActionsWorkflowTableOverlay3.propTypes = {
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string,
-  jobName: PropTypes.string
+  branchName: PropTypes.string
 };
 
 export default GithubActionsWorkflowTableOverlay3;

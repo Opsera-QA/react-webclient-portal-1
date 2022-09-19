@@ -4,11 +4,11 @@ import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkflowActionableInsightTable2";
+import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkslfowActionableInsightTable2";
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName }) {
+function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -50,16 +50,16 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
-          kpiConfiguration,
-          getAccessToken,
-          cancelSource,
-          filterDto,
-          dashboardTags,
-          dashboardOrgs,
-          workflow,
-          repoName,
-          appName,
-          branchName
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        filterDto,
+        dashboardTags,
+        dashboardOrgs,
+        workflow,
+        repoName,
+        appName,
+        branchName
       );
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data

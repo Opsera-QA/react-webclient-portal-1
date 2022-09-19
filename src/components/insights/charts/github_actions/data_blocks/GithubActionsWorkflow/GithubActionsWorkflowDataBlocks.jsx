@@ -81,7 +81,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
       <>
         <div>
           <Row style={{justifyContent: "space-evenly"}}>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -94,7 +94,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -107,7 +107,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -120,7 +120,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -133,20 +133,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.failures}
-                    subtitle={'Total Failed Runs'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'The total number of failed runs'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
@@ -159,20 +146,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.failedPercentage}
-                    subtitle={'% Failures'}
-                    icon={faInfoCircle}
-                    iconOverlayTitle={''}
-                    iconOverlayBody={'Percent of failed runs out of all runs'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -185,7 +159,33 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={3} className="mb-3">
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.failures}
+                    subtitle={'Total Failed Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of failed runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.failedPercentage}
+                    subtitle={'% Failures'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Percent of failed runs out of all runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock

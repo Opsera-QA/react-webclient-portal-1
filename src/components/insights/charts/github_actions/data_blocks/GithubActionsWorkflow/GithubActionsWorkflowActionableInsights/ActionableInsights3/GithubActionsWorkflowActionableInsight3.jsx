@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
   from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import GithubActionsWorkflowActionableInsightDataBlocks3 from "./GithubActionsWorkflowActionableInsightsDataBlock3";
+import GithubActionsWorkflowActionableInsightDataBlocks3 from "./GithubActionsWorkflowActionableInsightDataBlocks3";
 import GithubActionsWorkflowActionableTableOverlay3 from "./GithubActionsWorkflowActionableTableOverlay3";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName}) {
+function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -51,9 +51,6 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
             <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
             </div>
-            <div className={'mr-4'}>
-              <b>Job Name:</b> {jobName}
-            </div>
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
@@ -65,18 +62,15 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
             appName={appName}
             workflow={workflow}
             branchName={branchName}
-            jobName={jobName}
           />
           <GithubActionsWorkflowActionableTableOverlay3
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            workflowName={workflowName}
-            repoName={repoName}
-            appName={appName}
-            workflow={workflow}
-            branchName={branchName}
-            jobName={jobName}
-          />
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              workflowName={workflowName}
+              repoName={repoName}
+              appName={appName}
+              workflow={workflow}
+              branchName={branchName}/>
         </div>
       </div>
     );
@@ -86,7 +80,7 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Actionable Report 2`}
+      titleText={`Github Actions Workflow Actionable Report 3`}
       showToasts={true}
     >
       <div className={"p-3"}>
@@ -103,8 +97,7 @@ GithubActionsWorkflowActionableInsight3.propTypes = {
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string,
-  jobName: PropTypes.string
+  branchName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsight3;

@@ -6,14 +6,14 @@ import {getStaticIconColumn, getTableTextColumn} from "../../../../../../../comm
 import {getField} from "../../../../../../../common/metadata/metadata-helpers";
 import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights3/GithubActionsWorkflowActionableInsights3";
+import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 
-function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
+function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel,
                                                         kpiConfiguration,dashboardData, repoName, appName,
                                                         branchName, workflowName }) {
   const toastContext = useContext(DialogToastContext);
-  const tableTitle = "Github Actions Repository Summary";
+  const tableTitle = "Github Actions Jobs Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
 
@@ -32,24 +32,9 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
       getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
-      getStaticIconColumn(faExternalLink),
     ],
     []
   );
-
-  const onRowSelect = (rowData) => {
-    toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight3
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        appName={appName}
-        repoName={repoName}
-        workflowName={workflowName}
-        branchName={branchName}
-        jobName={rowData.original.jobName}
-      />
-    );
-  };
 
   const getBody = () => {
     return (
@@ -76,7 +61,6 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
-        onRowSelect={onRowSelect}
       />
     );
   };
@@ -103,7 +87,7 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
   );
 }
 
-GithubActionsWorkflowActionableInsightTable2.propTypes = {
+GithubActionsWorkflowActionableInsightTable3.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
@@ -117,4 +101,4 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   workflowName: PropTypes.string
 };
 
-export default GithubActionsWorkflowActionableInsightTable2;
+export default GithubActionsWorkflowActionableInsightTable3;
