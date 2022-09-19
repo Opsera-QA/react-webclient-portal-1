@@ -415,18 +415,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Jira KPIs
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
-        return (
-          <Col xl={12} md={12} className="p-2">
-            <JiraChangeFailureRate
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
+      // case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+      //   return (
+      //     <Col xl={12} md={12} className="p-2">
+      //       <JiraChangeFailureRate
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
       case "jira-tickets-assigned-by-user":
         return (
           <Col xl={6} md={12} className="p-2">
