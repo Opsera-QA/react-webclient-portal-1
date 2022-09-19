@@ -10,16 +10,20 @@ import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
-import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
 import PlatformSystemParameterManagementSubNavigationBar
   from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
 import PlatformSystemParameterDetailPanel
   from "components/admin/system_parameters/details/PlatformSystemParameterDetailPanel";
+import { platformSettingsActions } from "components/admin/platform_settings/platformSettings.actions";
+import { platformSettingsMetadata } from "components/admin/platform_settings/platformSettings.metadata";
+import PlatformSettingsManagementSubNavigationBar
+  from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
+import PlatformSettingsDetailPanel from "components/admin/platform_settings/details/PlatformSettingsDetailPanel";
 
-export default function PlatformSystemParameterDetailView() {
-  const { systemParameterId } = useParams();
+export default function PlatformSettingsDetailView() {
+  const { settingsId } = useParams();
   const toastContext = useContext(DialogToastContext);
-  const [platformSystemParameterModel, setPlatformSystemParameterModel] = useState(undefined);
+  const [platformSettingsModel, setPlatformSettingsModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const {
     isMounted,
@@ -42,7 +46,7 @@ export default function PlatformSystemParameterDetailView() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getSystemParameter();
+      await getPlatformSettingsRecord();
     } catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
@@ -54,21 +58,21 @@ export default function PlatformSystemParameterDetailView() {
     }
   };
 
-  const getSystemParameter = async () => {
-    const response = await platformSystemParameterActions.getPlatformSystemParameterById(
+  const getPlatformSettingsRecord = async () => {
+    const response = await platformSettingsActions.getPlatformSettingRecordById(
       getAccessToken,
       cancelTokenSource,
-      systemParameterId,
+      settingsId,
     );
 
     const systemParameter = response?.data?.data;
     if (isMounted?.current === true && systemParameter) {
-      setPlatformSystemParameterModel({ ...modelHelpers.parseObjectIntoModel(systemParameter, platformSystemParametersMetadata) });
+      setPlatformSettingsModel({ ...modelHelpers.parseObjectIntoModel(systemParameter, platformSettingsMetadata) });
     }
   };
 
   const getActionBar = () => {
-    if (platformSystemParameterModel == null) {
+    if (platformSettingsModel == null) {
       return <></>;
     }
 
@@ -78,43 +82,43 @@ export default function PlatformSystemParameterDetailView() {
           <ActionBarBackButton path={"/admin/platform/system-parameters"} />
         </div>
         <div className={"d-flex"}>
-          <ActionBarShowJsonButton dataObject={platformSystemParameterModel} />
+          <ActionBarShowJsonButton dataObject={platformSettingsModel} />
           <ActionBarDeleteButton2
             relocationPath={"/admin/platform/system-parameters"}
-            dataObject={platformSystemParameterModel}
-            handleDelete={deletePlatformSystemParameter}
+            dataObject={platformSettingsModel}
+            handleDelete={deletePlatformSettingsRecord}
           />
         </div>
       </ActionBarContainer>
     );
   };
 
-  const deletePlatformSystemParameter = async () => {
-    return await platformSystemParameterActions.deletePlatformSystemParameter(
+  const deletePlatformSettingsRecord = async () => {
+    return await platformSettingsActions.deletePlatformSystemParameter(
       getAccessToken,
       cancelTokenSource,
-      platformSystemParameterModel,
+      platformSettingsModel,
     );
   };
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"platformSystemParameterDetailView"}
+      breadcrumbDestination={"platformSettingsDetailView"}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      dataObject={platformSystemParameterModel}
+      dataObject={platformSettingsModel}
       isLoading={isLoading}
-      metadata={platformSystemParametersMetadata}
+      metadata={platformSettingsMetadata}
       actionBar={getActionBar()}
       navigationTabContainer={
-        <PlatformSystemParameterManagementSubNavigationBar
-          activeTab={"platformSystemParameterViewer"}
+        <PlatformSettingsManagementSubNavigationBar
+          activeTab={"platformSettingsViewer"}
         />
       }
       detailPanel={
-        <PlatformSystemParameterDetailPanel
-          setPlatformSystemParameterModel={setPlatformSystemParameterModel}
-          platformSystemParameterModel={platformSystemParameterModel}
+        <PlatformSettingsDetailPanel
+          platformSettingsModel={platformSettingsModel}
+          setPlatformSettingsModel={setPlatformSettingsModel}
         />
       }
     />

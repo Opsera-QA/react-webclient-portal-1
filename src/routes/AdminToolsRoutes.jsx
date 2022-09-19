@@ -42,6 +42,8 @@ import PlatformSystemParameterManagement from "components/admin/system_parameter
 import PlatformSystemParameterDetailView
   from "components/admin/system_parameters/details/PlatformSystemParameterDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PlatformSettingsManagement from "components/admin/platform_settings/PlatformSettingsManagement";
+import PlatformSettingsDetailView from "components/admin/platform_settings/details/PlatformSettingsDetailView";
 
 export default function AdminToolsRoutes() {
   const {
@@ -91,6 +93,9 @@ export default function AdminToolsRoutes() {
 
       <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
       <SecureRoute path="/admin/templates/tasks/details/:templateId" exact component={TaskTemplateDetailView} />
+
+      <SecureRoute path="/admin/platform/settings" exact component={PlatformSettingsManagement} />
+      <SecureRoute path="/admin/platform/settings/details/:settingsId" exact component={PlatformSettingsDetailView} />
 
       <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
       <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact
