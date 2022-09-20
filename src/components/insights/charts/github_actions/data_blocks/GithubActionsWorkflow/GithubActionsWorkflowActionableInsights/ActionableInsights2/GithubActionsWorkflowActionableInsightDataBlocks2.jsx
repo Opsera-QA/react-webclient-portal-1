@@ -9,8 +9,9 @@ import TwoLinePercentageDataBlock from "../../../../../../../common/metrics/perc
 import {AuthContext} from "../../../../../../../../contexts/AuthContext";
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
+import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow }) {
+function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow, jobName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -82,122 +83,168 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
     }
 
     return (
-      <>
-        <div>
-          <Row style={{justifyContent: "space-evenly"}}>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.totalJobs}
-                    subtitle={'Total Jobs'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.jobsExecuted}
-                    subtitle={'Total Jobs Executed'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.jobsSkipped}
-                    subtitle={'Total Jobs Skipped'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.PercentageExecuted}
-                    subtitle={'% Jobs Executed'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.PercentageSkipped}
-                    subtitle={'% Jobs Skipped'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.Success}
-                    subtitle={'Total Success'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                    score={metrics?.Failed}
-                    subtitle={'Total Failed'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.SuccessPercentage}
-                    subtitle={'% Success'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                    percentage={metrics?.FailedPercentage}
-                    subtitle={'% Failed'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLineScoreDataBlock
-                      score={metrics?.jobsCanceled}
-                      subtitle={'Jobs Canceled'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-            <Col md={3} className="mb-3">
-              <DataBlockBoxContainer showBorder={true}>
-                <div className={'p-2'}>
-                  <TwoLinePercentageDataBlock
-                      percentage={metrics?.PercentageCanceled}
-                      subtitle={'% Canceled'}
-                  />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
-          </Row>
-        </div>
-      </>
+        <>
+          <div>
+            <Row style={{justifyContent: "space-evenly"}}>
+              <Col md={4} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.uniqueJobNames}
+                        subtitle={'Total Unique Job Names'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of runs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={4} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.runs}
+                        subtitle={'Total Runs'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of runs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={4} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.runsExecuted}
+                        subtitle={'Runs Executed'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percentage of jobs that were executed'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={4} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLinePercentageDataBlock
+                        percentage={metrics?.PercentageExecuted}
+                        subtitle={'% Runs Executed'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percentage of jobs that were executed'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.jobsSuccess}
+                        subtitle={'Total Success'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of successful jobs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLinePercentageDataBlock
+                        percentage={metrics?.SuccessPercentage}
+                        subtitle={'% Success'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percent of successful jobs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.jobsFailed}
+                        subtitle={'Total Failed'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of failed jobs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLinePercentageDataBlock
+                        percentage={metrics?.FailedPercentage}
+                        subtitle={'% Failed'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percent of failed jobs'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.jobsSkipped}
+                        subtitle={'Total Skipped'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of jobs that were skipped'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLinePercentageDataBlock
+                        percentage={metrics?.PercentageSkipped}
+                        subtitle={'% Skipped'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percentage of jobs that were skipped'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLineScoreDataBlock
+                        score={metrics?.jobsCanceled}
+                        subtitle={'Total Canceled'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The total number of jobs that were cancelled'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+              <Col md={3} className="mb-3">
+                <DataBlockBoxContainer showBorder={true}>
+                  <div className={'p-2'}>
+                    <TwoLinePercentageDataBlock
+                        percentage={metrics?.PercentageCanceled}
+                        subtitle={'% Canceled'}
+                        icon={faInfoCircle}
+                        iconOverlayTitle={''}
+                        iconOverlayBody={'The percentage of jobs cancelled.'}
+                    />
+                  </div>
+                </DataBlockBoxContainer>
+              </Col>
+            </Row>
+          </div>
+        </>
     );
   };
 
@@ -211,7 +258,9 @@ GithubActionsWorkflowActionableInsightDataBlocks2.propTypes = {
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsightDataBlocks2;
+
