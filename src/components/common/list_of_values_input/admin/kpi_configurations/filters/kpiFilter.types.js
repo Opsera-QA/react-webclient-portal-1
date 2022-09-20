@@ -30,7 +30,8 @@ export const KPI_FILTER_TYPES = {
   DEPLOYMENT_STAGE: "deployment-stage",
   GITLAB_PROJECT: "gitlab-project",
   JIRA_PRIORITIES:"jira-priorities",
-  JIRA_PROJECTS:"jira-projects"
+  JIRA_PROJECTS:"jira-projects",
+  JIRA_CHANGE_TYPES: "jira-change-types"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
