@@ -9,8 +9,8 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight2 from "./GithubActionsWorkflowActionableInsight2";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import GithubActionsWorkflowActionableInsight2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsight2";
 
 // TODO: Convert to cards
 function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName }) {

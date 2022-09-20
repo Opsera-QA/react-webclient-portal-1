@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
-import CustomTable from "../../../../../../common/table/CustomTable";
-import {getTableTextColumn} from "../../../../../../common/table/table-column-helpers";
-import {getField} from "../../../../../../common/metadata/metadata-helpers";
-import FilterContainer from "../../../../../../common/table/FilterContainer";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import CustomTable from "../../../../../../../common/table/CustomTable";
+import {getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
+import {getField} from "../../../../../../../common/metadata/metadata-helpers";
+import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, repoName }) {

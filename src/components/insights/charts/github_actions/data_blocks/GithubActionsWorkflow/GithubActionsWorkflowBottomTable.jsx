@@ -11,7 +11,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 import {githubActionsWorkflowMetadata} from "./githubActionsWorkflow.metadata";
 import GithubActionsWorkflowActionableInsight1
-    from "./GithubActionsWorkflowActionableInsights/GithubActionsWorkflowActionableInsight1";
+    from "./GithubActionsWorkflowActionableInsights/ActionableInsights1/GithubActionsWorkflowActionableInsight1";
 import {getStaticIconColumn} from "../../../../../common/table/table-column-helpers";
 
 // TODO: Convert to cards

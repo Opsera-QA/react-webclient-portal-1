@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkflowActionableInsightTable2";
-import {metricHelpers} from "../../../../../metric.helpers";
-import githubActionsWorkflowActions from "../github-actions-workflow-actions";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
 function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName }) {
   const { getAccessToken } = useContext(AuthContext);

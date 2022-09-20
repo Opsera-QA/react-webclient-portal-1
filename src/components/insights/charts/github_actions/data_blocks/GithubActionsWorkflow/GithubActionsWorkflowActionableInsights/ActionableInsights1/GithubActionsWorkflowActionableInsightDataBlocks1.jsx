@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
-import DataBlockBoxContainer from "../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import DataBlockBoxContainer from "../../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import PropTypes from "prop-types";
-import LoadingDialog from "../../../../../../common/status_notifications/loading";
-import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLineScoreDataBlock";
-import TwoLinePercentageDataBlock from "../../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import {AuthContext} from "../../../../../../../contexts/AuthContext";
-import {metricHelpers} from "../../../../../metric.helpers";
-import githubActionsWorkflowActions from "../github-actions-workflow-actions";
+import LoadingDialog from "../../../../../../../common/status_notifications/loading";
+import TwoLineScoreDataBlock from "../../../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "../../../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import {AuthContext} from "../../../../../../../../contexts/AuthContext";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
 function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, dashboardData, workflowName }) {
   const { getAccessToken } = useContext(AuthContext);
