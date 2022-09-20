@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
   from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightsDataBlock2";
+import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightDataBlocks2";
 import GithubActionsWorkflowActionableTableOverlay2 from "./GithubActionsWorkflowActionableTableOverlay2";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName}) {
+function GithubActionsWorkflowActionableInsights2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -93,7 +93,7 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
   );
 }
 
-GithubActionsWorkflowActionableInsight2.propTypes = {
+GithubActionsWorkflowActionableInsights2.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
@@ -104,4 +104,4 @@ GithubActionsWorkflowActionableInsight2.propTypes = {
   jobName: PropTypes.string
 };
 
-export default GithubActionsWorkflowActionableInsight2;
+export default GithubActionsWorkflowActionableInsights2;
