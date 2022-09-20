@@ -11,14 +11,14 @@ export default function ToolchainRoutes() {
     isPowerUser,
   } = useComponentStateReference();
 
-  if (
-    isOpseraAdministrator !== true
-    && isSiteAdministrator !== true
-    && isSassUser !== true
-    && isPowerUser !== true
-  ) {
-    return null;
-  }
+  // if (
+  //   isOpseraAdministrator !== true
+  //   && isSiteAdministrator !== true
+  //   && isSassUser !== true
+  //   && isPowerUser !== true
+  // ) {
+  //   return null;
+  // }
 
   return (
     <>
