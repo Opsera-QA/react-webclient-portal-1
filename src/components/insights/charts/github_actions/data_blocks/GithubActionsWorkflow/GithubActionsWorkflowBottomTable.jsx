@@ -15,7 +15,7 @@ import GithubActionsWorkflowActionableInsight1
 import {getStaticIconColumn} from "../../../../../common/table/table-column-helpers";
 
 // TODO: Convert to cards
-function GithubActionsBottomTable({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData }) {
+function GithubActionsBottomTable({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, stats }) {
     const toastContext = useContext(DialogToastContext);
     const fields = githubActionsWorkflowMetadata.fields;
     const tableTitle = "Github Actions Workflow Summary";
@@ -77,15 +77,12 @@ function GithubActionsBottomTable({ data, isLoading, loadData, filterModel, setF
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={'mr-4'}>
-            <b>Most Skipped Job:</b> {''}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Failed Job:</b> {''}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Time Consuming Job:</b> {''}
-          </div>
+            <div className={'mr-4'}>
+                <b>Most Failed Job:</b> {stats?.mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Most Time Consuming Job:</b> {stats?.mostTime}
+            </div>
         </div>
       </div>
       <div className={"p-3"}>
@@ -103,6 +100,7 @@ GithubActionsBottomTable.propTypes = {
     setFilterModel: PropTypes.func,
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    stats: PropTypes.object
 };
 
 export default GithubActionsBottomTable;

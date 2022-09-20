@@ -54,6 +54,10 @@ export const githubActionsWorkflowMetadata = {
       id: "canceled",
     },
     {
+      label: "Runs Canceled",
+      id: "runsCanceled",
+    },
+    {
       label: "% Canceled",
       id: "canceledPercentage",
     },
@@ -92,6 +96,10 @@ export const githubActionsWorkflowMetadata = {
     {
       label: "Jobs Skipped",
       id: "skipped"
+    },
+    {
+      label: "Runs Skipped",
+      id: "runsSkipped"
     },
     {
       label: "% Run",

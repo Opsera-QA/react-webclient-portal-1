@@ -12,6 +12,7 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -61,16 +62,20 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
         appName,
         branchName
       );
+
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
         ? response?.data?.data[0]?.count[0]?.count
         : [];
+      let stats = response?.data?.stats;
+
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setStats(stats);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -97,6 +102,7 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       workflowName={workflow}
       branchName={branchName}
       appName={appName}
+      stats={stats}
     />
   );
 }

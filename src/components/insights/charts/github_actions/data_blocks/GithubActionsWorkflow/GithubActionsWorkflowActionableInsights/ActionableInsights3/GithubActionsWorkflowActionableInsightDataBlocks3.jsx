@@ -11,7 +11,7 @@ import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow }) {
+function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflowName, jobName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -25,16 +25,17 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      const response = await githubActionsWorkflowActions.githubActionsActionableTwoDataBlocks(
+      const response = await githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
           dashboardTags,
           dashboardOrgs,
-          workflow,
+          workflowName,
           repoName,
           appName,
-          branchName
+          branchName,
+          jobName
       );
       let dataObject = response?.data?.data[0];
       if (isMounted?.current === true && dataObject) {
@@ -129,7 +130,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                    score={metrics?.Success}
+                    score={metrics?.jobsSuccess}
                     subtitle={'Total Success'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
@@ -155,7 +156,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                    score={metrics?.Failed}
+                    score={metrics?.jobsFailed}
                     subtitle={'Total Failed'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
@@ -244,8 +245,8 @@ GithubActionsWorkflowActionableInsightDataBlocks3.propTypes = {
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
-  workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsightDataBlocks3;

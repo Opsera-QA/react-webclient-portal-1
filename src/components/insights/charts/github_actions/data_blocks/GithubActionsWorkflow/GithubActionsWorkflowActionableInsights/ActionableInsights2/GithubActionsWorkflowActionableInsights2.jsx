@@ -51,9 +51,6 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
             <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
             </div>
-            <div className={'mr-4'}>
-              <b>Job Name:</b> {jobName}
-            </div>
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">

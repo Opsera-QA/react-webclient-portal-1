@@ -9,7 +9,7 @@ import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icon
 import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 
-function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel,
+function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
                                                         kpiConfiguration,dashboardData, repoName, appName,
                                                         branchName, workflowName }) {
   const toastContext = useContext(DialogToastContext);
@@ -69,15 +69,15 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={'mr-4'}>
-            <b>Most Skipped Job:</b> {''}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Failed Job:</b> {''}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Time Consuming Job:</b> {''}
-          </div>
+            <div className={'mr-4'}>
+                <b>Most Skipped Job:</b> {stats?.mostSkipped}
+            </div>
+            <div className={'mr-4'}>
+                <b>Most Failed Job:</b> {stats?.mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Most Time Consuming Job:</b> {stats?.mostTime}
+            </div>
         </div>
       </div>
       <div className={"p-2"}>
@@ -98,7 +98,8 @@ GithubActionsWorkflowActionableInsightTable3.propTypes = {
   repoName:PropTypes.string,
   appName: PropTypes.string,
   branchName: PropTypes.string,
-  workflowName: PropTypes.string
+  workflowName: PropTypes.string,
+  stats:PropTypes.object
 };
 
 export default GithubActionsWorkflowActionableInsightTable3;

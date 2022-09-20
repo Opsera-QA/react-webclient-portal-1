@@ -11,7 +11,7 @@ import {DialogToastContext} from "../../../../../../../../contexts/DialogToastCo
 
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
                                                         kpiConfiguration,dashboardData, repoName, appName,
-                                                        branchName, workflowName }) {
+                                                        branchName, workflowName, stats }) {
   const tableTitle = "Github Actions Repositories Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
@@ -21,11 +21,10 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
     () => [
       getTableTextColumn(getField(fields, "jobName")),
       getTableTextColumn(getField(fields, "runs")),
-      getTableTextColumn(getField(fields, "jobs")),
-      getTableTextColumn(getField(fields, "jobsSuccess")),
-      getTableTextColumn(getField(fields, "jobsFailures")),
-      getTableTextColumn(getField(fields, "skipped")),
-      getTableTextColumn(getField(fields, "canceled")),
+      getTableTextColumn(getField(fields, "success")),
+      getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
       getTableTextColumn(getField(fields, "successPercentage")),
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
@@ -86,13 +85,13 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
           <div className={'mr-4'}>
-            <b>Most Skipped Job:</b> {''}
+            <b>Most Skipped Job:</b> {stats?.mostSkipped}
           </div>
           <div className={'mr-4'}>
-            <b>Most Failed Job:</b> {''}
+            <b>Most Failed Job:</b> {stats?.mostFailed}
           </div>
           <div className={'mr-4'}>
-            <b>Most Time Consuming Job:</b> {''}
+            <b>Most Time Consuming Job:</b> {stats?.mostTime}
           </div>
         </div>
       </div>
@@ -114,7 +113,8 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   repoName:PropTypes.string,
   appName: PropTypes.string,
   branchName: PropTypes.string,
-  workflowName: PropTypes.string
+  workflowName: PropTypes.string,
+  stats: PropTypes.object
 };
 
 export default GithubActionsWorkflowActionableInsightTable2;

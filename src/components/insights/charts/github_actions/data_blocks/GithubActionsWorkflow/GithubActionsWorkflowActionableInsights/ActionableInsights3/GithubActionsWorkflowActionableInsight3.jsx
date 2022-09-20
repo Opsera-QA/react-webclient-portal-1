@@ -7,7 +7,7 @@ import GithubActionsWorkflowActionableInsightDataBlocks3 from "./GithubActionsWo
 import GithubActionsWorkflowActionableTableOverlay3 from "./GithubActionsWorkflowActionableTableOverlay3";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName}) {
+function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardData, workflowName, repoName, appName, branchName, jobName}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -51,6 +51,9 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
             <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
             </div>
+            <div className={'mr-4'}>
+              <b>Job Name:</b> {jobName}
+            </div>
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
@@ -60,8 +63,8 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
-            workflow={workflow}
             branchName={branchName}
+            jobName={jobName}
           />
           <GithubActionsWorkflowActionableTableOverlay3
               kpiConfiguration={kpiConfiguration}
@@ -69,8 +72,9 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
               workflowName={workflowName}
               repoName={repoName}
               appName={appName}
-              workflow={workflow}
-              branchName={branchName}/>
+              branchName={branchName}
+              jobName={jobName}
+          />
         </div>
       </div>
     );
@@ -96,8 +100,8 @@ GithubActionsWorkflowActionableInsight3.propTypes = {
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
-  workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsight3;

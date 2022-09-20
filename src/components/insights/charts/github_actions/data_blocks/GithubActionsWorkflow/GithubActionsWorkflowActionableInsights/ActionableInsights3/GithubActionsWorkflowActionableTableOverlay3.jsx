@@ -8,10 +8,11 @@ import GitlabActionsWorkflowActionableInsightTable3 from "./GithubActionsWorkflo
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName }) {
+function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflowName, branchName, jobName }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -49,28 +50,32 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
+      const response = await githubActionsWorkflowActions.githubActionsActionableThreeTable(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
           filterDto,
           dashboardTags,
           dashboardOrgs,
-          workflow,
+          workflowName,
           repoName,
           appName,
-          branchName
+          branchName,
+          jobName
       );
+
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
         ? response?.data?.data[0]?.count[0]?.count
         : [];
+      let stats = response?.data?.stats;
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setStats(stats);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -94,9 +99,11 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
       kpiConfiguration={kpiConfiguration}
       dashboardData={dashboardData}
       repoName={repoName}
-      workflowName={workflow}
+      workflowName={workflowName}
       branchName={branchName}
       appName={appName}
+      jobName={jobName}
+      stats={stats}
     />
   );
 }
@@ -107,8 +114,8 @@ GithubActionsWorkflowTableOverlay3.propTypes = {
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
-  workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
 export default GithubActionsWorkflowTableOverlay3;
