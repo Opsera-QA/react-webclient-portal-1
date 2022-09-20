@@ -14,7 +14,7 @@ function RiskFactorDisplayer({riskFactors, className, showNoTagsAppliedBadge}) {
           {riskFactors.map((riskFactor, index) => {
             if (typeof riskFactor === "string") {
               return (
-                <div className={"mb-2"}>
+                <div className={"mb-2"} key={index}>
                   <WarningBadge
                     badgeText={riskFactor}
                     key={index}

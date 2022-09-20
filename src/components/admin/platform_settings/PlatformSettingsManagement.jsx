@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PlatformSystemParameterManagementSubNavigationBar
-  from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
-import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
-import PlatformSystemParameterTable from "components/admin/system_parameters/PlatformSystemParameterTable";
+import PlatformSettingsManagementSubNavigationBar
+  from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
+import { platformSettingsActions } from "components/admin/platform_settings/platformSettings.actions";
+import PlatformSettingsTable from "components/admin/platform_settings/PlatformSettingsTable";
 
-export default function PlatformSystemParameterManagement() {
+export default function PlatformSettingsManagement() {
   const [isLoading, setIsLoading] = useState(false);
-  const [systemParameters, setSystemParameters] = useState([]);
+  const [platformSettings, setPlatformSettings] = useState([]);
   const {
     isMounted,
     cancelTokenSource,
@@ -20,7 +20,7 @@ export default function PlatformSystemParameterManagement() {
   } = useComponentStateReference();
 
   useEffect(() => {
-    setSystemParameters([]);
+    setPlatformSettings([]);
 
     if (isOpseraAdministrator === true) {
       loadData().catch((error) => {
@@ -34,7 +34,7 @@ export default function PlatformSystemParameterManagement() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getPlatformSystemParameters();
+      await getPlatformSettingsRecords();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -46,32 +46,32 @@ export default function PlatformSystemParameterManagement() {
     }
   };
 
-  const getPlatformSystemParameters = async () => {
-    const response = await platformSystemParameterActions.getPlatformSystemParameters(
+  const getPlatformSettingsRecords = async () => {
+    const response = await platformSettingsActions.getPlatformSettings(
       getAccessToken,
       cancelTokenSource,
     );
-    const parameters = response?.data?.data;
+    const settings = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(parameters)) {
-      setSystemParameters([...parameters]);
+    if (isMounted?.current === true && Array.isArray(settings)) {
+      setPlatformSettings([...settings]);
     }
   };
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"platformSystemParameterManagement"}
+      breadcrumbDestination={"platformSettingsManagement"}
       isLoading={isLoading}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       navigationTabContainer={
-        <PlatformSystemParameterManagementSubNavigationBar
-          activeTab={"platformSystemParameterManagement"}
+        <PlatformSettingsManagementSubNavigationBar
+          activeTab={"platformSettingsManagement"}
         />
       }
     >
-      <PlatformSystemParameterTable
-        systemParameters={systemParameters}
+      <PlatformSettingsTable
+        platformSettings={platformSettings}
         isLoading={isLoading}
         loadData={loadData}
       />

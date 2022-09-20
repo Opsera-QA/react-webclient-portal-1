@@ -71,7 +71,8 @@
   },
   "scripts": {
     "lint": "eslint --fix --ext .js,.jsx .",
-    "start-linux-mac": "PORT=8080 react-scripts start",
+    "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
+    "start-linux-mac": "npm run refresh-internal-libraries && PORT=8080 react-scripts start",
     "start-windows": "set PORT=8080 && react-scripts start",
     "build:test": "env-cmd -f .env.test react-scripts build && mv build build-test",
     "build:staging": "env-cmd -f .env.staging react-scripts build && mv build build-staging",
