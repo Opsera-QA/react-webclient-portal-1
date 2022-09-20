@@ -54,6 +54,10 @@ export const githubActionsWorkflowMetadata = {
       id: "canceled",
     },
     {
+      label: "Runs Canceled",
+      id: "runsCanceled",
+    },
+    {
       label: "% Canceled",
       id: "canceledPercentage",
     },
@@ -66,8 +70,8 @@ export const githubActionsWorkflowMetadata = {
       id: "failedPercentage",
     },
     {
-       label: "Average Time For Success",
-       id: "successTime",
+      label: "Average Time For Success",
+      id: "successTime",
     },
     {
       label: "Average Time For Failures",
@@ -92,6 +96,10 @@ export const githubActionsWorkflowMetadata = {
     {
       label: "Jobs Skipped",
       id: "skipped"
+    },
+    {
+      label: "Runs Skipped",
+      id: "runsSkipped"
     },
     {
       label: "% Run",
@@ -119,13 +127,13 @@ export const githubActionsWorkflowMetadata = {
     },
   ],
   getActiveFilters(filterDto) {
-         let activeFilters = [];
+    let activeFilters = [];
 
-         if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-           activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-         }
+    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    }
 
-         return activeFilters;
+    return activeFilters;
   },
   newObjectFields: {
     tags: [],
