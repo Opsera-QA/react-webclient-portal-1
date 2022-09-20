@@ -184,3 +184,49 @@ export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
+
+export function getJiraChangeTypesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value &&
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ].value;
+  }
+  return null;
+}
+
+/*
+* This method is to calculate the trend and decide the color of the icon.
+* @currentValue Value of selected date range
+* @previousValue Value of date range before the selected date range.
+* Returns the classname for trend
+*/
+export const getTrend = (currentValue, previousValue) => {
+  currentValue = !isNaN(currentValue)? parseFloat(currentValue) : 0;
+  previousValue = !isNaN(previousValue)? parseFloat(previousValue) : 0;
+
+  let trend = "";
+  if(currentValue > previousValue){
+    trend = "green";
+  }
+  else if(currentValue === previousValue){
+    trend = "light-gray-text-secondary";
+  }
+  else if(currentValue < previousValue){
+    trend = "red";
+  }
+  else{ trend = "black";}
+  return trend;
+};
