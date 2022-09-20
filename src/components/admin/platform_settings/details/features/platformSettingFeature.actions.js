@@ -35,7 +35,7 @@ platformSettingFeatureActions.createPlatformSettingFeature = async (
   platformSettingId,
   platformSettingFeatureModel,
 ) => {
-  const apiUrl = `/configuration/platform/settings/${platformSettingId}/features/`;
+  const apiUrl = `/configuration/platform/settings/${platformSettingId}/features`;
   const postBody = {
     ...platformSettingFeatureModel?.getPersistData(),
   };
@@ -54,7 +54,7 @@ platformSettingFeatureActions.updatePlatformSystemFeature = async (
   platformSettingId,
   platformSettingFeatureModel,
 ) => {
-  const apiUrl = `//configuration/platform/settings/${platformSettingId}/features/${platformSettingFeatureModel?.getMongoDbId()}`;
+  const apiUrl = `/configuration/platform/settings/${platformSettingId}/features/${platformSettingFeatureModel?.getMongoDbId()}`;
   const postBody = {
     ...platformSettingFeatureModel?.getPersistData(),
   };
