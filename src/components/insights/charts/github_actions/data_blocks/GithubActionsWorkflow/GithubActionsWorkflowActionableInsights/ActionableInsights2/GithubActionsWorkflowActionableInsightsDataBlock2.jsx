@@ -86,7 +86,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
       <>
         <div>
           <Row style={{justifyContent: "space-evenly"}}>
-            <Col md={4} className="mb-3">
+            <Col md={3} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -99,7 +99,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={4} className="mb-3">
+            <Col md={3} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -112,7 +112,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={4} className="mb-3">
+            <Col md={3} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
@@ -125,7 +125,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            <Col md={4} className="mb-3">
+            <Col md={3} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
