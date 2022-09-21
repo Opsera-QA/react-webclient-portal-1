@@ -23,7 +23,7 @@ export default function PlatformSettingsManagementSubNavigationBar({activeTab}) 
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "platformSystemParameterViewer":
+      case "platformSettingsViewer":
         return (
           <NavigationTab
             icon={faFolderCog}

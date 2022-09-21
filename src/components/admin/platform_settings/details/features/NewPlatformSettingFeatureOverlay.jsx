@@ -2,12 +2,12 @@ import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
-import ExternalApiIntegratorEndpointEditorPanel
-  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 import PlatformSettingFeatureEditorPanel
   from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
+import {
+  platformSettingFeatureMetadata
+} from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
 
 function NewPlatformSettingFeatureOverlay(
   {
@@ -16,7 +16,7 @@ function NewPlatformSettingFeatureOverlay(
     isMounted,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const [platformSettingFeatureModel, setPlatformSettingFeatureModel] = useState(modelHelpers.parseObjectIntoModel(undefined, externalApiIntegratorEndpointMetadata));
+  const [platformSettingFeatureModel, setPlatformSettingFeatureModel] = useState(modelHelpers.parseObjectIntoModel(undefined, platformSettingFeatureMetadata));
 
   const closePanelFunction = () => {
     if (isMounted?.current === true) {
@@ -33,14 +33,14 @@ function NewPlatformSettingFeatureOverlay(
 
   return (
     <CreateCenterPanel
-      objectType={externalApiIntegratorEndpointMetadata?.type}
+      objectType={platformSettingFeatureMetadata?.type}
       loadData={loadData}
       closePanel={closePanelFunction}
     >
       <div className={"m-3"}>
         <PlatformSettingFeatureEditorPanel
-          externalApiIntegratorModel={platformSettingFeatureModel}
-          setExternalApiIntegratorModel={setPlatformSettingFeatureModel}
+          platformSettingFeatureModel={platformSettingFeatureModel}
+          setPlatformSettingFeatureModel={setPlatformSettingFeatureModel}
           closePanelFunction={closePanelFunction}
           platformSettingsId={platformSettingsId}
         />
