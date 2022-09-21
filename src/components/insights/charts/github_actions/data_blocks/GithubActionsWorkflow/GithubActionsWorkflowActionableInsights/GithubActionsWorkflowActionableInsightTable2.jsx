@@ -1,13 +1,25 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
+import { githubActionsWorkflowMetadata } from "../githubActionsWorkflow.metadata";
 import CustomTable from "../../../../../../common/table/CustomTable";
-import {getTableTextColumn} from "../../../../../../common/table/table-column-helpers";
-import {getField} from "../../../../../../common/metadata/metadata-helpers";
+import { getTableTextColumn } from "../../../../../../common/table/table-column-helpers";
+import { getField } from "../../../../../../common/metadata/metadata-helpers";
 import FilterContainer from "../../../../../../common/table/FilterContainer";
-import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
+import ExportGithubActionsWorkflowReportActionableInsights2Panel from "../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
+import ExportGithubActionsWorkflowReportButton from "../export/ExportGithubActionWorkflowReportButton";
 
-function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, repoName }) {
+function GithubActionsWorkflowActionableInsightTable2({
+  data,
+  isLoading,
+  loadData,
+  filterModel,
+  setFilterModel,
+  kpiConfiguration,
+  dashboardData,
+  repoName,
+}) {
+  const [showExportPanel, setShowExportPanel] = useState(false);
   const tableTitle = "Github Actions Repository Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
@@ -19,16 +31,16 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
       getTableTextColumn(getField(fields, "jobs")),
       getTableTextColumn(getField(fields, "jobsSuccess")),
       getTableTextColumn(getField(fields, "jobsFailures")),
-        getTableTextColumn(getField(fields, "skipped")),
-        getTableTextColumn(getField(fields, "canceled")),
+      getTableTextColumn(getField(fields, "skipped")),
+      getTableTextColumn(getField(fields, "canceled")),
       getTableTextColumn(getField(fields, "successPercentage")),
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
-        getTableTextColumn(getField(fields, "canceledPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
       //getTableTextColumn(getField(fields, "successTime")),
       //(getField(fields, "failedTime")),
     ],
-    []
+    [],
   );
 
   const getBody = () => {
@@ -44,10 +56,27 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
         setFilterDto={setFilterModel}
         filterDto={filterModel}
         supportSearch={true}
+        exportButton={
+          <ExportGithubActionsWorkflowReportButton
+            className={"ml-2"}
+            setShowExportPanel={setShowExportPanel}
+            showExportPanel={showExportPanel}
+          />
+        }
       />
     );
   };
   const getTable = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportGithubActionsWorkflowReportActionableInsights2Panel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          githubActionData={data}
+        />
+      );
+    }
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -76,9 +105,7 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
       {/*    </div>*/}
       {/*  </div>*/}
       {/*</div>*/}
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
+      <div className={"p-3"}>{getBody()}</div>
     </div>
   );
 }
@@ -91,7 +118,7 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   setFilterModel: PropTypes.func,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  repoName:PropTypes.string
+  repoName: PropTypes.string,
 };
 
 export default GithubActionsWorkflowActionableInsightTable2;
