@@ -11,6 +11,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
+import PlatformSettingsFeatureNameComboBoxInput
+  from "components/common/list_of_values_input/platform/settings/features/PlatformSettingsFeatureNameComboBoxInput";
 
 export default function PlatformSettingFeatureEditorPanel(
   {
@@ -93,10 +95,10 @@ export default function PlatformSettingFeatureEditorPanel(
     >
       <Row>
         <Col xl={8} sm={6}>
-          <TextInputBase
+          <PlatformSettingsFeatureNameComboBoxInput
             fieldName={"name"}
-            dataObject={platformSettingFeatureModel}
-            setDataObject={setPlatformSettingFeatureModel}
+            model={platformSettingFeatureModel}
+            setModel={setPlatformSettingFeatureModel}
           />
         </Col>
         <Col lg={4} sm={6}>
