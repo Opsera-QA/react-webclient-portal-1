@@ -92,8 +92,8 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
           className={"ml-2"}
           warningMessage={"Warning: Use of the component or keyword search filter in the tables below will not alter the final filtered file list."}
         />
-        <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
-          <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>
+        <Row className="mt-2 d-flex">
+          <Col className={"pr-1"}>
             <SfdcPipelineWizardOriginOrganizationFilesTable
               pipelineWizardModel={pipelineWizardModel}
               setFilteredFileCount={setFilteredFileCount}
@@ -102,9 +102,9 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
               filePullCompleted={filePullCompleted}
             />
           </Col>
-          <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
-            <SfdcPipelineWizardDestinationOrganizationFilesTable pipelineWizardModel={pipelineWizardModel} />
-          </Col>
+          {/*<Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>*/}
+          {/*  <SfdcPipelineWizardDestinationOrganizationFilesTable pipelineWizardModel={pipelineWizardModel} />*/}
+          {/*</Col>*/}
         </Row>
       </>
     );

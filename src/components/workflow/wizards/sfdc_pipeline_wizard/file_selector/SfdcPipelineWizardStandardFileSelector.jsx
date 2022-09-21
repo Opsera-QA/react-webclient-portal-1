@@ -110,14 +110,14 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab
-          activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"Salesforce Files"}
-          handleTabClick={handleTabClick}
-          tabName={"sfdc"}
-          toolTipText={"Salesforce Files"}
-          icon={faSalesforce}
-        />
+        {/*<CustomTab*/}
+        {/*  activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}*/}
+        {/*  tabText={"Salesforce Files"}*/}
+        {/*  handleTabClick={handleTabClick}*/}
+        {/*  tabName={"sfdc"}*/}
+        {/*  toolTipText={"Salesforce Files"}*/}
+        {/*  icon={faSalesforce}*/}
+        {/*/>*/}
         <CustomTab
           activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
           tabText={"Git Files"}
