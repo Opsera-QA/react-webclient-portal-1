@@ -8,6 +8,9 @@ import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
+import ExportGithubActionsWorkflowReportActionableInsights1Panel
+  from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 
 function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
                                                         kpiConfiguration,dashboardData, repoName, appName,
@@ -16,6 +19,7 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
   const tableTitle = "Github Actions Jobs Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
+  const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -47,11 +51,27 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
         loadData={loadData}
         setFilterDto={setFilterModel}
         filterDto={filterModel}
-        supportSearch={true}
+        supportSearch={true}exportButton={
+        <ExportGithubActionsWorkflowReportButton
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
+        />
+      }
       />
     );
   };
   const getTable = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          githubActionData={data}
+        />
+      );
+    }
+    
     return (
       <CustomTable
         isLoading={isLoading}
