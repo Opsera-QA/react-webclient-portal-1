@@ -11,6 +11,7 @@ import MyUserProfile from "components/user/user_settings/profile/MyUserProfile";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
+import MyCurrentToken from "components/user/user_settings/current_token/MyCurrentToken";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -109,6 +110,8 @@ function UserSettings() {
         return <MyUserRecord />;
       case "accessTokens":
         return <MyAccessTokens />;
+      // case "currentToken":
+      //   return <MyCurrentToken />;
       case "subscriptions":
         return <MySubscriptions />;
       default:
@@ -122,6 +125,7 @@ function UserSettings() {
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
         <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
+        {/*<NavigationTab icon={faKey} tabName={"currentToken"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Current Access Token"} />*/}
         <NavigationTab icon={faRss} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
       </NavigationTabContainer>
     );
