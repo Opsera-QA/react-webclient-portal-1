@@ -7,14 +7,13 @@ import VanityMetricContainer from "components/common/panels/insights/charts/Vani
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequency_kpi_datapoint_identifiers";
-import GitlabDeploymentFrequencyDataBlockContainer from "./GitlabDeploymentFrequencyDataBlockContainer";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
-import GitlabDeployFrequencyChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
-
-const DEFAULT_GOALS = {
-  deployment_frequency_rate: 10,
-};
+import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
+import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
+import {getDeploymentStageFromKpiConfiguration, getTrend, getReverseIcon} from "../../charts-helpers";
+import GitlabDeploymentFrequencyRecentStagesDataBlock from "./GitlabDeploymentFrequencyRecentStagesDataBlock";
+import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
+import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -25,14 +24,13 @@ function GitlabDeploymentFrequency({
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [deploymentFrequencyMetricData, setDeploymentFrequencyMetricData] =
+  const [metricData, setMetricData] =
     useState(undefined);
-  const [deploymentFrequencyChartData, setDeploymentFrequencyChartData] =
+  const [chartData, setChartData] =
     useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [goalsData, setGoalsData] = useState(undefined);
   const [deploymentFrequencyDataPoint, setBuildFrequencyDataPoint] =
     useState(undefined);
 
@@ -71,28 +69,24 @@ function GitlabDeploymentFrequency({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
-      let goals =
-        kpiConfiguration?.dataPoints[0]?.strategic_criteria?.data_point_evaluation_rules?.success_rule?.primary_trigger_value;
-      if (goals) {
-        setGoalsData({deployment_frequency_rate: goals});
-      } else {
-        setGoalsData(DEFAULT_GOALS);
-      }
 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-          getAccessToken,
-          cancelSource,
-          "gitlabDeploymentStatistics",
-          kpiConfiguration,
-          dashboardTags,
-          null,
-          null,
-          dashboardOrgs
+        getAccessToken,
+        cancelSource,
+        "gitlabDeploymentStatistics",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs,
       );
       const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
       if (isMounted?.current === true && Array.isArray(metrics)) {
-        setDeploymentFrequencyMetricData(metrics[0]?.statisticsData);
-        setDeploymentFrequencyChartData(metrics[0]?.chartData);
+        setMetricData(metrics[0]?.statisticsData);
+        setChartData(metrics[0]?.chartData);
+      } else {
+        setMetricData({});
+        setChartData([]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -117,27 +111,88 @@ function GitlabDeploymentFrequency({
   };
 
   const getChartBody = () => {
-    if (!deploymentFrequencyMetricData || !deploymentFrequencyChartData) {
+    if (
+      !metricData?.step?.total ||
+      !chartData?.step?.length
+    ) {
       return null;
     }
+    const recentStageDate = new Date(metricData?.step?.stepFinishedAt).toLocaleDateString();
+    const selectedDeploymentStages =
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration);
     return (
-      <Row className={"mx-0 p-2 justify-content-between"}>
-        {dataPointHelpers.isDataPointVisible(deploymentFrequencyDataPoint) && (
-          <Col
-            className={"px-0"}
-            xl={12}
-            md={12}
+      <div
+        className="new-chart m-3 p-0"
+        style={{ minHeight: "450px", display: "flex" }}
+      >
+        <Row className={"w-100"}>
+          <Row
+            xl={6}
+            lg={6}
+            md={7}
+            className={"mb-2 d-flex justify-content-center"}
           >
-            <GitlabDeploymentFrequencyDataBlockContainer
-              metricData={deploymentFrequencyMetricData}
-              chartData={deploymentFrequencyChartData}
-              goalsData={goalsData?.deployment_frequency_rate}
-              kpiConfiguration={kpiConfiguration}
-              dataPoint={deploymentFrequencyDataPoint}
+            <Col
+              md={12}
+              className={"mx-2"}
+            >
+              <GitlabDeploymentFrequencyDataBlock
+                value={selectedDeploymentStages?.length || 0}
+                prevValue={""}
+                topText={"Selected Stage(s)"}
+                bottomText={""}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabDeploymentFrequencyTrendDataBlock
+                value={metricData?.step?.averageStepRuns}
+                prevValue={
+                  metricData?.step?.previousAverageStepRuns
+                }
+                dataPoint={deploymentFrequencyDataPoint}
+                trend={getTrend(metricData?.step?.averageStepRuns,
+                  metricData?.step?.previousAverageStepRuns)}
+                getReverseIcon={getReverseIcon}
+                topText={"Average Deployment Frequency"}
+                bottomText={"Prev Average: "}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabDeploymentFrequencyDataBlock
+                value={metricData?.pipeline?.totalSuccess}
+                prevValue={
+                  metricData?.pipeline?.previousTotalSuccess
+                }
+                topText={"Total Pipelines"}
+                bottomText={"Prev Runs: "}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabDeploymentFrequencyDataBlock
+                value={metricData?.step?.totalSuccess}
+                prevValue={
+                  metricData?.step?.previousTotalSuccess
+                }
+                topText={"Total Stages Run"}
+                bottomText={"Prev Runs: "}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabDeploymentFrequencyRecentStagesDataBlock
+                stage={metricData?.step?.stepType}
+                date={recentStageDate}
+                topText={"Recent Stage"}
+                bottomText={"Date: "}
+              />
+            </Col>
+          </Row>
+          <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
+            <GitlabDeploymentFrequencyLineChartContainer
+              chartData={chartData}
             />
           </Col>
-        )}
-      </Row>
+        </Row>
+      </div>
     );
   };
 
