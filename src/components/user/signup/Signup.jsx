@@ -51,7 +51,7 @@ function Signup() {
       cancelTokenSource,
       registrationDataDto?.getData("email")
     );
-    const isEmailAvailable = response?.data?.emailExists === true;
+    const isEmailAvailable = response?.data?.emailExists === false;
 
     if (!isEmailAvailable) {
       toastContext.showEmailAlreadyExistsErrorDialog();
