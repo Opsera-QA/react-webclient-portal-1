@@ -200,6 +200,58 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
                 </div>
               </DataBlockBoxContainer>
             </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.jobsSkipped}
+                    subtitle={'Total Skipped'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of workflow that were skipped'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.PercentageSkipped}
+                    subtitle={'% Skipped'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percentage of workflow that were skipped'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.jobsCanceled}
+                    subtitle={'Total Canceled'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of workflow that were cancelled'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.PercentageCanceled}
+                    subtitle={'% Canceled'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percentage of workflow cancelled.'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
           </Row>
         </div>
       </>

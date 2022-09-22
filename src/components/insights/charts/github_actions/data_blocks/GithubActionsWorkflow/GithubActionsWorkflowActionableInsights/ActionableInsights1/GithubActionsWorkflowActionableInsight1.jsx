@@ -40,7 +40,7 @@ function GithubActionsWorkflowActionableInsight1({ kpiConfiguration, dashboardDa
         <div className={"p-2"}>
           <div className={"d-flex details-title-text"}>
             <div className={'mr-4'}>
-              <b>Workflow Name:</b> {workflowName}
+              <b>Unique Workflow Name:</b> {workflowName}
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@ function GithubActionsWorkflowActionableInsight1({ kpiConfiguration, dashboardDa
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Actionable Report 1`}
+      titleText={`Github Actions Detailed Workflow Summary`}
       showToasts={true}
     >
       <div className={"p-3"}>

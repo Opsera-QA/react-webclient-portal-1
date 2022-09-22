@@ -1,4 +1,4 @@
-export const githubActionsWorkflowMetadata = {
+export const githubActionsWorkflowActionableInsights3Metadata = {
   type: "Github Actions Workflow",
   fields: [
     {
@@ -38,19 +38,19 @@ export const githubActionsWorkflowMetadata = {
       id: "failures",
     },
     {
-      label: "Total Jobs",
+      label: "Total Steps",
       id: "jobs",
     },
     {
-      label: "Successful Jobs",
+      label: "Successful Steps",
       id: "jobsSuccess",
     },
     {
-      label: "Failed Jobs",
+      label: "Failed Steps",
       id: "jobsFailures",
     },
     {
-      label: "Canceled Jobs",
+      label: "Canceled Steps",
       id: "canceled",
     },
     {

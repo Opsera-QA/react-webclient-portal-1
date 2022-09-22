@@ -15,7 +15,7 @@ import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubAc
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
                                                         kpiConfiguration,dashboardData, repoName, appName,
                                                         branchName, workflowName, stats }) {
-  const tableTitle = "Github Actions Repositories Summary";
+  const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
   const toastContext = useContext(DialogToastContext);

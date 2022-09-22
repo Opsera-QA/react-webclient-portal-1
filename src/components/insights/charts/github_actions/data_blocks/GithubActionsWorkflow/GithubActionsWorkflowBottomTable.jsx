@@ -29,7 +29,7 @@ function GithubActionsBottomTable({
   const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
-  const tableTitle = "Github Actions Workflow Summary";
+  const tableTitle = "Github Actions Unique Workflow Summary";
   const noDataMessage = "No data available";
 
   const columns = useMemo(
@@ -39,8 +39,12 @@ function GithubActionsBottomTable({
       getTableTextColumn(getField(fields, "repos")),
       getTableTextColumn(getField(fields, "success")),
       getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
       getTableTextColumn(getField(fields, "successPercentage")),
       getTableTextColumn(getField(fields, "failedPercentage")),
+      getTableTextColumn(getField(fields, "skippedPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
       getStaticIconColumn(faExternalLink),
@@ -89,7 +93,6 @@ function GithubActionsBottomTable({
       title={tableTitle}
       titleIcon={faDraftingCompass}
       body={getTable()}
-      className={"px-2 pb-2"}
       loadData={loadData}
       setFilterDto={setFilterModel}
       filterDto={filterModel}
@@ -107,19 +110,15 @@ function GithubActionsBottomTable({
 
   return (
     <div>
-      <div className={"p-2"}>
-        <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-                <b>Most Failed Job:</b> {stats?.mostFailed}
-            </div>
-            <div className={'mr-4'}>
-                <b>Most Time Consuming Job:</b> {stats?.mostTime}
-            </div>
-        </div>
+      <div className={"d-flex details-title-text"}>
+          <div className={'mr-4'}>
+              <b>Most Failed Workflow:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+              <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
+          </div>
       </div>
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
+      {getBody()}
     </div>
   );
 }

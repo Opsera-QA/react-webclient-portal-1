@@ -84,7 +84,7 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Actionable Report 3`}
+      titleText={`Github Actions Workflow Step Summary`}
       showToasts={true}
     >
       <div className={"p-3"}>

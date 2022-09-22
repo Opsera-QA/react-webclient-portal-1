@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import {githubActionsWorkflowActionableInsights3Metadata} from "./githubActionsWorkflowActionableInsights3.metadata";
 import CustomTable from "../../../../../../../common/table/CustomTable";
-import {getStaticIconColumn, getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
+import {getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
 import {getField} from "../../../../../../../common/metadata/metadata-helpers";
 import FilterContainer from "../../../../../../../common/table/FilterContainer";
-import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 
@@ -14,9 +14,9 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
                                                         kpiConfiguration,dashboardData, repoName, appName,
                                                         branchName, workflowName }) {
   const toastContext = useContext(DialogToastContext);
-  const tableTitle = "Github Actions Jobs Summary";
+  const tableTitle = "Github Actions Workflow Step Summary";
   const noDataMessage = "No data available";
-  const fields = githubActionsWorkflowMetadata.fields;
+  const fields = githubActionsWorkflowActionableInsights3Metadata.fields;
   const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
