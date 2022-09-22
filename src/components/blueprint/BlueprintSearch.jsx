@@ -13,32 +13,32 @@ import blueprintsActions from "components/blueprint/blueprints-actions";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { numberHelpers } from "components/common/helpers/number/number.helpers";
 
 function BlueprintSearch({sideBySide, id, run}) {
   const {getAccessToken} = useContext(AuthContext);
   const [logData, setLogData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [blueprintSearchModel, setBlueprintSearchModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [currentBlueprintTab, setCurrentBlueprintTab] = useState(0);
+  const {
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+    const newModel = new Model({...blueprintMetadata.newObjectFields}, blueprintMetadata, false);
+    const mongoId = isMongoDbId(id) === true ? id : undefined;
+    const runNumber = numberHelpers.hasNumberValue(run) === true ? Number(run) : undefined;
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    let newModel = new Model({...blueprintMetadata.newObjectFields}, blueprintMetadata, false);
-
-    if (id != null && run != null) {
+    if (mongoId && run) {
       newModel.setData("title", id);
       newModel.setData("pipelineId", id);
-      newModel.setData("runNumber", run);
+      newModel.setData("runNumber", runNumber);
 
-      getSearchResults(false, newModel, source).catch((error) => {
+      getSearchResults(false, newModel).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -46,19 +46,14 @@ function BlueprintSearch({sideBySide, id, run}) {
     }
 
     setBlueprintSearchModel({...newModel});
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  }, [id, run]);
 
   const cancelSearchClicked = () => {
     setLogData([]);
     setBlueprintSearchModel(new Model({...blueprintMetadata.newObjectFields}, blueprintMetadata, false));
   };
 
-  const getSearchResults = async (newTab, blueprintModel = blueprintSearchModel, cancelSource = cancelTokenSource) => {
+  const getSearchResults = async (newTab, blueprintModel = blueprintSearchModel) => {
     try {
       const newLogTab = newTab === true && !sideBySide && logData.length < 4 ? logData.length : currentBlueprintTab;
       let newLogTabData = logData;
@@ -79,7 +74,7 @@ function BlueprintSearch({sideBySide, id, run}) {
       newLogTabData[newLogTab] = newLog;
       setIsSearching(true);
 
-      const response = await blueprintsActions.getBlueprintSearchResults(getAccessToken, cancelSource, blueprintModel);
+      const response = await blueprintsActions.getBlueprintSearchResults(getAccessToken, cancelTokenSource, blueprintModel);
 
       if (isMounted?.current === true && response?.data) {
         newLog.data = response?.data?.data ? response?.data?.data : [];
@@ -173,7 +168,7 @@ function BlueprintSearch({sideBySide, id, run}) {
           <NumberPickerInputBase
             dataObject={blueprintSearchModel}
             setDataObject={setBlueprintSearchModel}
-            placeholderText="Run Number"
+            placeholderText={"Run Number"}
             fieldName={"runNumber"}
             showLabel={false}
           />
