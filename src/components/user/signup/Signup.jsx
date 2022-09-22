@@ -53,7 +53,7 @@ function Signup() {
     );
     const isEmailAvailable = response?.data?.emailExists === false;
 
-    if (!isEmailAvailable) {
+    if (isEmailAvailable !== true) {
       toastContext.showEmailAlreadyExistsErrorDialog();
       return;
     }
