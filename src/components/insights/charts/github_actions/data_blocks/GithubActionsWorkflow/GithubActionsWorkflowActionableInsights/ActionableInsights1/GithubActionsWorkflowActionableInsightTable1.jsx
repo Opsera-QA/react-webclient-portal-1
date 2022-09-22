@@ -129,7 +129,7 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
-  stats:PropTypes.object
+  stats: PropTypes.object
 };
 
 export default GitlabActionsWorkflowActionableInsightTable1;

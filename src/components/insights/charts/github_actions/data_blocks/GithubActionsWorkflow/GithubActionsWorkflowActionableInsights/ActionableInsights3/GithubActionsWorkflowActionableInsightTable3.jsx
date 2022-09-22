@@ -9,8 +9,6 @@ import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icon
 import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel
-  from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 
 function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
                                                         kpiConfiguration,dashboardData, repoName, appName,
@@ -51,7 +49,8 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
         loadData={loadData}
         setFilterDto={setFilterModel}
         filterDto={filterModel}
-        supportSearch={true}exportButton={
+        supportSearch={true}
+        exportButton={
         <ExportGithubActionsWorkflowReportButton
           className={"ml-2"}
           setShowExportPanel={setShowExportPanel}
@@ -62,16 +61,7 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
     );
   };
   const getTable = () => {
-    if (showExportPanel === true) {
-      return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
-          showExportPanel={showExportPanel}
-          setShowExportPanel={setShowExportPanel}
-          githubActionData={data}
-        />
-      );
-    }
-    
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -119,7 +109,7 @@ GithubActionsWorkflowActionableInsightTable3.propTypes = {
   appName: PropTypes.string,
   branchName: PropTypes.string,
   workflowName: PropTypes.string,
-  stats:PropTypes.object
+  stats: PropTypes.object
 };
 
 export default GithubActionsWorkflowActionableInsightTable3;
