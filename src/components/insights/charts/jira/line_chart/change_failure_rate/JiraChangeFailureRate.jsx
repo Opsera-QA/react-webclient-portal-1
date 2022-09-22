@@ -123,13 +123,8 @@ function JiraChangeFailureRate({
   };
 
   const getDataBlock = () => {
-    if (dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) === false) {
-      return null;
-    }
-
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>
-        {dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) && (
           <Col className={"px-0"} xl={12} md={12}>
             <JiraChangeFailureRateDataBlockContainer
               metricData={metricData}
@@ -140,7 +135,6 @@ function JiraChangeFailureRate({
               trend={getTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
             />
           </Col>
-        )}
       </Row>
     );
   };

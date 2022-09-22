@@ -16,6 +16,7 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import {getResultFromKpiConfiguration} from "../../../charts-helpers";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
   
@@ -131,16 +132,17 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       </div>
     );
   };
-
+console.log(dataPoint,'**** data point');
   return (
     <HorizontalDataBlocksContainer
       title={"Change Failure Rate"}
     >
       <Container>
         <Row className="align-items-center">
+        {dataPointHelpers.isDataPointVisible(dataPoint) && (
           <Col sm={3} className={"p-2"}>
             {getLeftDataBlock()}
-          </Col>
+          </Col>)}
           <Col sm={9} className={"p-2"}>
             {getTrendChart()}
           </Col>

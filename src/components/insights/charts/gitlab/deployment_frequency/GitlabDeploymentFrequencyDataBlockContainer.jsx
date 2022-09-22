@@ -15,6 +15,7 @@ import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../charts-views";
 import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 
 function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint }) {
   
@@ -116,9 +117,10 @@ function GitlabDeploymentFrequencyDataBlockContainer({ metricData, chartData, go
     >
       <Container>
         <Row className="align-items-center">
+        {dataPointHelpers.isDataPointVisible(dataPoint) && (
           <Col sm={3} className={"p-2"}>
-            {getLeftDataBlock()}
-          </Col>
+            { getLeftDataBlock()}
+          </Col>)}
           <Col sm={9} className={"p-2"}>
             {getTrendChart()}
           </Col>

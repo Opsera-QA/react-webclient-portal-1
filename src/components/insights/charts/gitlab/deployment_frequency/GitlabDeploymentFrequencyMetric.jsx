@@ -122,7 +122,6 @@ function GitlabDeploymentFrequency({
     }
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>
-        {dataPointHelpers.isDataPointVisible(deploymentFrequencyDataPoint) && (
           <Col
             className={"px-0"}
             xl={12}
@@ -136,7 +135,6 @@ function GitlabDeploymentFrequency({
               dataPoint={deploymentFrequencyDataPoint}
             />
           </Col>
-        )}
       </Row>
     );
   };
