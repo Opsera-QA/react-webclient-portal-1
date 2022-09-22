@@ -38,6 +38,10 @@ sfdcTableConstants.fields = [
   {
     label: "Count",
     id: "componentCount"
+  },
+  {
+    label: "Reason",
+    id: "errorReason"
   }
 ];
 
