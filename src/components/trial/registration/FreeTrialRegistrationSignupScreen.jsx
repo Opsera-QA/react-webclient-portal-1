@@ -32,12 +32,11 @@ export default function FreeTrialRegistrationSignupScreen (
         throw "Opsera.io email addresses are not supported.";
       }
 
-      const emailIsAvailable = await userActions.isEmailAvailable(email);
-
-      if (!emailIsAvailable) {
-        toastContext.showEmailAlreadyExistsErrorDialog();
-        return;
-      }
+      const response = await userActions.isEmailAvailable(
+        cancelTokenSource,
+        registrationModel?.getData("email")
+      );
+      const isEmailAvailable = response?.data?.emailExists === false;
 
       try {
         const response = await userActions.createFreeTrialAccount(cancelTokenSource, registrationModel);
