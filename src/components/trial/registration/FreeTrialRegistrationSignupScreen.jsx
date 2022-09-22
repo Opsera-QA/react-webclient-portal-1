@@ -38,6 +38,11 @@ export default function FreeTrialRegistrationSignupScreen (
       );
       const isEmailAvailable = response?.data?.emailExists === false;
 
+      if (isEmailAvailable !== true) {
+        toastContext.showEmailAlreadyExistsErrorDialog();
+        return;
+      }
+
       try {
         const response = await userActions.createFreeTrialAccount(cancelTokenSource, registrationModel);
         setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
