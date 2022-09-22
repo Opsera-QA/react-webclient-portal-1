@@ -89,20 +89,6 @@ function GitlabRepositorySelectInput({
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setGitlabRepositories([...repositories]);
-
-      const existingRepository = model?.getData(fieldName);
-
-      if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find(
-          (repository) => repository[valueField] === existingRepository,
-        );
-
-        if (existingRepositoryExists == null) {
-          setError(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list.",
-          );
-        }
-      }
     }
   };
 
@@ -111,7 +97,7 @@ function GitlabRepositorySelectInput({
   };
 
   const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm) => loadData(searchTerm, toolId), 600),
+    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
     [],
   );
 
