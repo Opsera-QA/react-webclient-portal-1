@@ -5,6 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { numberHelpers } from "components/common/helpers/number/number.helpers";
 
 function NumberPickerInputBase(
   {
@@ -27,10 +28,9 @@ function NumberPickerInputBase(
   const [errorMessage, setErrorMessage] = useState("");
 
   const validateAndSetData = (newValue) => {
-    let newDataObject = dataObject;
-    newDataObject.setTextData(fieldName, newValue);
-    setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    dataObject.setTextData(fieldName, newValue);
+    setErrorMessage(dataObject.getFieldError(fieldName));
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
@@ -60,7 +60,7 @@ function NumberPickerInputBase(
       <StandaloneNumberPickerInput
         placeholderText={placeholderText}
         disabled={disabled}
-        value={dataObject?.getData(fieldName)}
+        value={numberHelpers.hasNumberValue(dataObject?.getData(fieldName)) === true ? Number(dataObject?.getData(fieldName)) : undefined}
         setDataFunction={updateValue}
         minimum={typeof minimum === "number" ? minimum : field?.minNumber}
         maximum={typeof maximum === "number" ? maximum : field?.maxNumber}
