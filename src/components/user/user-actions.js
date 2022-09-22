@@ -1,5 +1,4 @@
 import { ApiService, axiosApiService } from "../../api/apiService";
-//import toolsActions from "../inventory/tools/tools-actions";
 import baseActions from "../../utils/actionsBase";
 import { stringHelper } from "components/common/helpers/string/string.helper";
 import { generateUUID } from "components/common/helpers/string-helpers";
@@ -19,22 +18,20 @@ userActions.getAnalyticsSettings = async (getAccessToken) => {
 };
 
 //Check if the email is already registered in the system
-userActions.isEmailAvailable = async (emailAddress) => {
-  console.log("checking if email exists: " + emailAddress);
-  const apiCall = new ApiService("/users/check-email", {}, null, { "email": emailAddress, "hostname": window.location.hostname });
-  return await apiCall
-    .post()
-    .then(function (response) {
-      if (response.data?.emailExists === true) {
-        return false; //cannot create new account beacuse this account is already enabled
-      } else {
-        return true;
-      }
-    })
-    .catch(function (error) {
-      console.error(error);
-      return true;
-    });
+userActions.isEmailAvailable = async (cancelTokenSource, emailAddress) => {
+  const token = apiTokenHelper.generateApiCallToken("does-email-exist");
+  const apiUrl = "/users/check-email";
+  const postBody = {
+    email: emailAddress,
+    hostname: window.location.hostname,
+  };
+
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    postBody,
+  );
 };
 
 //Check if the domain is already registered in the system

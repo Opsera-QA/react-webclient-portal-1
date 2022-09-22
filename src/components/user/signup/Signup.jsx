@@ -47,7 +47,11 @@ function Signup() {
       return;
     }
 
-    const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
+    const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
+      registrationDataDto?.getData("email")
+    );
+    const isEmailAvailable = response?.data?.emailExists === true;
 
     if (!isEmailAvailable) {
       toastContext.showEmailAlreadyExistsErrorDialog();

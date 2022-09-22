@@ -12,6 +12,7 @@ import awsAccountRegistrationMetadata from "components/user/aws_registration/aws
 import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AwsAccountRegistration() {
   const { customerId } = useParams();
@@ -19,6 +20,9 @@ function AwsAccountRegistration() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationModel, setRegistrationModel] = useState(undefined);
+  const {
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -46,7 +50,11 @@ function AwsAccountRegistration() {
 
     // TODO: We should probably add check for unique customer IDs and throw error if found
 
-    const isEmailAvailable = await userActions.isEmailAvailable(registrationModel?.getData("email"));
+    const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
+      registrationModel?.getData("email")
+    );
+    const isEmailAvailable = response?.data?.emailExists === true;
 
     if (!isEmailAvailable) {
       toastContext.showEmailAlreadyExistsErrorDialog();
