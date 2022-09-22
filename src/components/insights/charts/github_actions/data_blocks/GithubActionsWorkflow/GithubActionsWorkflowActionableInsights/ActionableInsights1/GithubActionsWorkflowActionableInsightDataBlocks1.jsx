@@ -80,129 +80,181 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
     }
 
     return (
-        <>
-          <div>
-            <Row style={{justifyContent: "space-evenly"}}>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.runs}
-                        subtitle={'Total Runs'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The total number of runs in selected workflow'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.applications}
-                        subtitle={'Total Applications'}
-                        iconOverlayTitle={''}
-                        icon={faInfoCircle}
-                        iconOverlayBody={'The total number of applications in selected workflow'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.repos}
-                        subtitle={'Total Repositories'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The total number of repositories in selected workflow'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.success}
-                        subtitle={'Total Success Runs'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The total number of successful runs'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLinePercentageDataBlock
-                        percentage={metrics?.successPercentage}
-                        subtitle={'% Success'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'Percent of successful runs out of all runs'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.avgSuccessTime}
-                        subtitle={'Average Time For Success Runs (mins)'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The average time taken for successful runs to complete'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.failures}
-                        subtitle={'Total Failed Runs'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The total number of failed runs'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLinePercentageDataBlock
-                        percentage={metrics?.failedPercentage}
-                        subtitle={'% Failures'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'Percent of failed runs out of all runs'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.avgFailedTime}
-                        subtitle={'Average Time For Failed Runs'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'Average time take for failed runs to complete (mins)'}
-                    />
-                  </div>
-                </DataBlockBoxContainer>
-              </Col>
-            </Row>
-          </div>
-        </>
+      <>
+        <div>
+          <Row style={{justifyContent: "space-evenly"}}>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.runs}
+                    subtitle={'Total Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of runs in selected workflow'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.applications}
+                    subtitle={'Total Applications'}
+                    iconOverlayTitle={''}
+                    icon={faInfoCircle}
+                    iconOverlayBody={'The total number of applications in selected workflow'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.repos}
+                    subtitle={'Total Repositories'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of repositories in selected workflow'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.success}
+                    subtitle={'Total Success Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of successful runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.successPercentage}
+                    subtitle={'% Success'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Percent of successful runs out of all runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.avgSuccessTime}
+                    subtitle={'Average Time For Success Runs (mins)'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The average time taken for successful runs to complete'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.failures}
+                    subtitle={'Total Failed Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of failed runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.failedPercentage}
+                    subtitle={'% Failures'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Percent of failed runs out of all runs'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.avgFailedTime}
+                    subtitle={'Average Time For Failed Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Average time take for failed runs to complete (mins)'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.jobsSkipped}
+                    subtitle={'Total Skipped'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of workflow that were skipped'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.PercentageSkipped}
+                    subtitle={'% Skipped'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percentage of workflow that were skipped'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.jobsCanceled}
+                    subtitle={'Total Canceled'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of workflow that were cancelled'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={3} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLinePercentageDataBlock
+                    percentage={metrics?.PercentageCanceled}
+                    subtitle={'% Canceled'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The percentage of workflow cancelled.'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+          </Row>
+        </div>
+      </>
     );
   };
 

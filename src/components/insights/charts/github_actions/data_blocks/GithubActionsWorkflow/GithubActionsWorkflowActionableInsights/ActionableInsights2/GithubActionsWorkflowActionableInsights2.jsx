@@ -80,16 +80,16 @@ function GithubActionsWorkflowActionableInsights2({ kpiConfiguration, dashboardD
   };
 
   return (
-      <FullScreenCenterOverlayContainer
-          closePanel={closePanel}
-          showPanel={true}
-          titleText={`Github Actions Workflow Actionable Report 2`}
-          showToasts={true}
-      >
-        <div className={"p-3"}>
-          {getBody()}
-        </div>
-      </FullScreenCenterOverlayContainer>
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={`Github Actions Workflow Job Summary`}
+      showToasts={true}
+    >
+      <div className={"p-3"}>
+        {getBody()}
+      </div>
+    </FullScreenCenterOverlayContainer>
   );
 }
 

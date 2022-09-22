@@ -80,18 +80,18 @@ function GithubActionsWorkflowActionableInsight3({ kpiConfiguration, dashboardDa
         );
     };
 
-    return (
-        <FullScreenCenterOverlayContainer
-            closePanel={closePanel}
-            showPanel={true}
-            titleText={`Github Actions Workflow Actionable Report 3`}
-            showToasts={true}
-        >
-            <div className={"p-3"}>
-                {getBody()}
-            </div>
-        </FullScreenCenterOverlayContainer>
-    );
+  return (
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={`Github Actions Workflow Step Summary`}
+      showToasts={true}
+    >
+      <div className={"p-3"}>
+        {getBody()}
+      </div>
+    </FullScreenCenterOverlayContainer>
+  );
 }
 
 GithubActionsWorkflowActionableInsight3.propTypes = {

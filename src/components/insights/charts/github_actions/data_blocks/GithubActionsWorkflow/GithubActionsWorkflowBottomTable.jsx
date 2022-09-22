@@ -13,29 +13,41 @@ import {githubActionsWorkflowMetadata} from "./githubActionsWorkflow.metadata";
 import GithubActionsWorkflowActionableInsight1
     from "./GithubActionsWorkflowActionableInsights/ActionableInsights1/GithubActionsWorkflowActionableInsight1";
 import {getStaticIconColumn} from "../../../../../common/table/table-column-helpers";
-
 // TODO: Convert to cards
-function GithubActionsBottomTable({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, stats }) {
-    const toastContext = useContext(DialogToastContext);
-    const fields = githubActionsWorkflowMetadata.fields;
-    const tableTitle = "Github Actions Workflow Summary";
-    const noDataMessage = "No data available";
+function GithubActionsBottomTable({
+  data,
+  isLoading,
+  loadData,
+  filterModel,
+  setFilterModel,
+  kpiConfiguration,
+  dashboardData,
+  stats
+}) {
+  const toastContext = useContext(DialogToastContext);
+  const fields = githubActionsWorkflowMetadata.fields;
+  const tableTitle = "Github Actions Unique Workflow Summary";
+  const noDataMessage = "No data available";
 
-    const columns = useMemo(
-        () => [
-            getTableTextColumn(getField(fields, "_id")),
-            getTableTextColumn(getField(fields, "runs")),
-            getTableTextColumn(getField(fields, "repos")),
-            getTableTextColumn(getField(fields, "success")),
-            getTableTextColumn(getField(fields, "failures")),
-            getTableTextColumn(getField(fields, "successPercentage")),
-            getTableTextColumn(getField(fields, "failedPercentage")),
-            getTableTextColumn(getField(fields, "successTime")),
-            getTableTextColumn(getField(fields, "failedTime")),
-            getStaticIconColumn(faExternalLink),
-        ],
-        []
-    );
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "_id")),
+      getTableTextColumn(getField(fields, "runs")),
+      getTableTextColumn(getField(fields, "repos")),
+      getTableTextColumn(getField(fields, "success")),
+      getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
+      getTableTextColumn(getField(fields, "successPercentage")),
+      getTableTextColumn(getField(fields, "failedPercentage")),
+      getTableTextColumn(getField(fields, "skippedPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
+      getTableTextColumn(getField(fields, "successTime")),
+      getTableTextColumn(getField(fields, "failedTime")),
+      getStaticIconColumn(faExternalLink),
+    ],
+    [],
+  );
 
     const onRowSelect = (rowData) => {
         toastContext.showInfoOverlayPanel(
@@ -43,53 +55,49 @@ function GithubActionsBottomTable({ data, isLoading, loadData, filterModel, setF
         );
     };
 
-    const getTable = () => {
-        return (
-            <CustomTable
-                isLoading={isLoading}
-                loadData={loadData}
-                columns={columns}
-                data={data}
-                noDataMessage={noDataMessage}
-                paginationDto={filterModel}
-                setPaginationDto={setFilterModel}
-                onRowSelect={onRowSelect}
-            />
-        );
-    };
-
-    const getBody = () => {
-        return (
-            <FilterContainer
-                isLoading={isLoading}
-                title={tableTitle}
-                titleIcon={faDraftingCompass}
-                body={getTable()}
-                loadData={loadData}
-                setFilterDto={setFilterModel}
-                filterDto={filterModel}
-                supportSearch={true}
-            />
-        );
-    };
+  const getTable = () => {
 
     return (
-        <div>
-            <div className={"p-2"}>
-                <div className={"d-flex details-title-text"}>
-                    <div className={'mr-4'}>
-                        <b>Most Failed Job:</b> {stats?.mostFailed}
-                    </div>
-                    <div className={'mr-4'}>
-                        <b>Most Time Consuming Job:</b> {stats?.mostTime}
-                    </div>
-                </div>
-            </div>
-            <div className={"p-3"}>
-                {getBody()}
-            </div>
-        </div>
+      <CustomTable
+        isLoading={isLoading}
+        loadData={loadData}
+        columns={columns}
+        data={data}
+        noDataMessage={noDataMessage}
+        paginationDto={filterModel}
+        setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
+      />
     );
+  };
+  const getBody = () => {
+  return (
+    <FilterContainer
+      isLoading={isLoading}
+      title={tableTitle}
+      titleIcon={faDraftingCompass}
+      body={getTable()}
+      loadData={loadData}
+      setFilterDto={setFilterModel}
+      filterDto={filterModel}
+      supportSearch={true}
+    />
+  );
+      };
+
+  return (
+    <div>
+      <div className={"d-flex details-title-text"}>
+          <div className={'mr-4'}>
+              <b>Most Failed Workflow:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+              <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
+          </div>
+      </div>
+      {getBody()}
+    </div>
+  );
 }
 
 GithubActionsBottomTable.propTypes = {

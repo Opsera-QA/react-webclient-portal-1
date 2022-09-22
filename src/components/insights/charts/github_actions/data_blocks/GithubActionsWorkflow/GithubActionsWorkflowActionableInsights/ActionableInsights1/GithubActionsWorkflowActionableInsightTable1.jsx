@@ -14,28 +14,32 @@ import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/Git
 
 // TODO: Convert to cards
 function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName, stats }) {
-    const toastContext = useContext(DialogToastContext);
-    const fields = githubActionsWorkflowMetadata.fields;
-    const tableTitle = "Github Actions Workflow Summary";
-    const noDataMessage = "No data available";
+  const toastContext = useContext(DialogToastContext);
+  const fields = githubActionsWorkflowMetadata.fields;
+  const tableTitle = "Github Actions Detailed Workflow Summary";
+  const noDataMessage = "No data available";
 
-    const columns = useMemo(
-        () => [
-            getTableTextColumn(getField(fields, "workflow")),
-            getTableTextColumn(getField(fields, "repoName")),
-            getTableTextColumn(getField(fields, "branchName")),
-            getTableTextColumn(getField(fields, "appName")),
-            getTableTextColumn(getField(fields, "runs")),
-            getTableTextColumn(getField(fields, "success")),
-            getTableTextColumn(getField(fields, "failures")),
-            getTableTextColumn(getField(fields, "successPercentage")),
-            getTableTextColumn(getField(fields, "failedPercentage")),
-            getTableTextColumn(getField(fields, "successTime")),
-            getTableTextColumn(getField(fields, "failedTime")),
-            getStaticIconColumn(faExternalLink),
-        ],
-        []
-    );
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "workflow")),
+      getTableTextColumn(getField(fields, "repoName")),
+      getTableTextColumn(getField(fields, "branchName")),
+      getTableTextColumn(getField(fields, "appName")),
+      getTableTextColumn(getField(fields, "runs")),
+      getTableTextColumn(getField(fields, "success")),
+      getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
+      getTableTextColumn(getField(fields, "successPercentage")),
+      getTableTextColumn(getField(fields, "failedPercentage")),
+      getTableTextColumn(getField(fields, "skippedPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
+      getTableTextColumn(getField(fields, "successTime")),
+      getTableTextColumn(getField(fields, "failedTime")),
+      getStaticIconColumn(faExternalLink),
+    ],
+    [],
+  );
 
     const onRowSelect = (rowData) => {
         toastContext.showInfoOverlayPanel(
@@ -81,23 +85,23 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
         );
     };
 
-    return (
-        <div>
-            <div className={"p-2"}>
-                <div className={"d-flex details-title-text"}>
-                    <div className={'mr-4'}>
-                        <b>Most Failed Job:</b> {stats?.mostFailed}
-                    </div>
-                    <div className={'mr-4'}>
-                        <b>Most Time Consuming Job:</b> {stats?.mostTime}
-                    </div>
-                </div>
+  return (
+    <div>
+      <div className={"p-2"}>
+        <div className={"d-flex details-title-text"}>
+            <div className={'mr-4'}>
+                <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
             </div>
-            <div className={"p-2"}>
-                {getBody()}
+            <div className={'mr-4'}>
+                <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
             </div>
         </div>
-    );
+      </div>
+      <div className={"p-2"}>
+        {getBody()}
+      </div>
+    </div>
+  );
 }
 
 GitlabActionsWorkflowActionableInsightTable1.propTypes = {
@@ -109,7 +113,7 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     workflowName: PropTypes.string,
-    stats:PropTypes.object
+    stats: PropTypes.object
 };
 
 export default GitlabActionsWorkflowActionableInsightTable1;
