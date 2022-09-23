@@ -8,6 +8,8 @@ import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights3/GithubActionsWorkflowActionableInsight3";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import ExportGithubActionsWorkflowReportActionableInsights2Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
+import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
                                                         kpiConfiguration,dashboardData, repoName, appName,
@@ -16,6 +18,7 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowMetadata.fields;
   const toastContext = useContext(DialogToastContext);
+  const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -62,11 +65,26 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
         setFilterDto={setFilterModel}
         filterDto={filterModel}
         supportSearch={true}
+        exportButton={
+          <ExportGithubActionsWorkflowReportButton
+            className={"ml-2"}
+            setShowExportPanel={setShowExportPanel}
+            showExportPanel={showExportPanel}
+          />
+        }
       />
     );
   };
   const getTable = () => {
-
+    if (showExportPanel === true) {
+      return (
+        <ExportGithubActionsWorkflowReportActionableInsights2Panel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          githubActionData={data}
+        />
+      );
+    }
     return (
       <CustomTable
         isLoading={isLoading}
