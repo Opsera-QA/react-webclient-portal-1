@@ -13,11 +13,23 @@ import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../../exp
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
+import {
+  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 
 // TODO: Convert to cards
-function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName, stats }) {
+function GitlabActionsWorkflowActionableInsightTable1(
+  {
+    data,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+    stats,
+    setActionableInsight1DataObject,
+    setCurrentScreen,
+  }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
-  const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
   const tableTitle = "Github Actions Detailed Workflow Summary";
   const noDataMessage = "No data available";
@@ -45,17 +57,8 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showInfoOverlayPanel(
-        <GithubActionsWorkflowActionableInsights2
-            workflowName={workflowName}
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            appName={rowData.original.appName}
-            repoName={rowData.original.repoName}
-            workflow={rowData.original.workflow}
-            branchName={rowData.original.branchName}
-        />
-    );
+    setActionableInsight1DataObject(rowData.original);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
   };
 
   const getTable = () => {
@@ -109,12 +112,12 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-                <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
-            </div>
-            <div className={'mr-4'}>
-                <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
-            </div>
+          <div className={'mr-4'}>
+            <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+            <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
+          </div>
         </div>
       </div>
       <div className={"p-2"}>
@@ -130,10 +133,9 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  workflowName: PropTypes.string,
-  stats: PropTypes.object
+  stats: PropTypes.object,
+  setCurrentScreen: PropTypes.func,
+  setActionableInsight1DataObject: PropTypes.func,
 };
 
 export default GitlabActionsWorkflowActionableInsightTable1;

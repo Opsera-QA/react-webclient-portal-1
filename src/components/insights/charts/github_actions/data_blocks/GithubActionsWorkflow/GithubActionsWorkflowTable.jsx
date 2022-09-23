@@ -13,6 +13,8 @@ import { DialogToastContext } from "../../../../../../contexts/DialogToastContex
 import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActionableInsights/GithubActionsWorkflowActionableInsight1";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
+import GithubActionsWorkflowActionableInsightOverlay
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 
 function GithubActionsWorkflowTable({
   kpiConfiguration,
@@ -126,7 +128,7 @@ function GithubActionsWorkflowTable({
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight1
+      <GithubActionsWorkflowActionableInsightOverlay
         workflowName={rowData.original._id}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}

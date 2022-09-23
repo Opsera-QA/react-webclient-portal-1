@@ -15,6 +15,8 @@ import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActi
 import { getStaticIconColumn } from "../../../../../common/table/table-column-helpers";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
+import GithubActionsWorkflowActionableInsightOverlay
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 // TODO: Convert to cards
 function GithubActionsBottomTable({
   data,
@@ -54,7 +56,7 @@ function GithubActionsBottomTable({
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight1
+      <GithubActionsWorkflowActionableInsightOverlay
         workflowName={rowData.original._id}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
