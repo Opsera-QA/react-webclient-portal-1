@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import {githubActionsWorkflowMetadata} from "../githubActionsWorkflow.metadata";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import GitlabActionsWorkflowActionableInsightTable1 from "./GithubActionsWorkflowActionableInsightTable1";
-import {metricHelpers} from "../../../../../metric.helpers";
-import githubActionsWorkflowActions from "../github-actions-workflow-actions";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
 
 function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, workflowName }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
+    const [stats, setStats] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -63,12 +64,14 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             let dataCount = response?.data
                 ? response?.data?.data[0]?.count[0]?.count
                 : [];
+            let stats = response?.data?.stats;
 
             let newFilterDto = filterDto;
             newFilterDto.setData("totalCount", dataCount);
             setFilterModel({ ...newFilterDto });
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
+                setStats(stats);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -92,6 +95,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             workflowName={workflowName}
+            stats={stats}
         />
     );
 }

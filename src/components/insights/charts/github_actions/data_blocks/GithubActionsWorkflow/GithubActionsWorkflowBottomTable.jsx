@@ -11,11 +11,10 @@ import {
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 import { githubActionsWorkflowMetadata } from "./githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActionableInsights/GithubActionsWorkflowActionableInsight1";
+import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActionableInsights/ActionableInsights1/GithubActionsWorkflowActionableInsight1";
 import { getStaticIconColumn } from "../../../../../common/table/table-column-helpers";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
-
 // TODO: Convert to cards
 function GithubActionsBottomTable({
   data,
@@ -25,11 +24,12 @@ function GithubActionsBottomTable({
   setFilterModel,
   kpiConfiguration,
   dashboardData,
+  stats
 }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
-  const tableTitle = "Github Actions Workflow Summary";
+  const tableTitle = "Github Actions Unique Workflow Summary";
   const noDataMessage = "No data available";
 
   const columns = useMemo(
@@ -39,8 +39,12 @@ function GithubActionsBottomTable({
       getTableTextColumn(getField(fields, "repos")),
       getTableTextColumn(getField(fields, "success")),
       getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
       getTableTextColumn(getField(fields, "successPercentage")),
       getTableTextColumn(getField(fields, "failedPercentage")),
+      getTableTextColumn(getField(fields, "skippedPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
       getStaticIconColumn(faExternalLink),
@@ -82,17 +86,17 @@ function GithubActionsBottomTable({
       />
     );
   };
-
+  const getBody = () => {
   return (
     <FilterContainer
       isLoading={isLoading}
       title={tableTitle}
       titleIcon={faDraftingCompass}
       body={getTable()}
-      className={"px-2 pb-2"}
       loadData={loadData}
       setFilterDto={setFilterModel}
       filterDto={filterModel}
+      supportSearch={true}
       exportButton={
         <ExportGithubActionsWorkflowReportButton
           className={"ml-2"}
@@ -101,6 +105,21 @@ function GithubActionsBottomTable({
         />
       }
     />
+  );
+      };
+
+  return (
+    <div>
+      <div className={"d-flex details-title-text"}>
+          <div className={'mr-4'}>
+              <b>Most Failed Workflow:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+              <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
+          </div>
+      </div>
+      {getBody()}
+    </div>
   );
 }
 
@@ -112,6 +131,7 @@ GithubActionsBottomTable.propTypes = {
   setFilterModel: PropTypes.func,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  stats: PropTypes.object
 };
 
 export default GithubActionsBottomTable;
