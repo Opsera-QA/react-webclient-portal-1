@@ -11,7 +11,6 @@ import { dataPointHelpers } from "components/common/helpers/metrics/data_point/d
 import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
 import {getDeploymentStageFromKpiConfiguration, getTrend, getReverseIcon} from "../../charts-helpers";
-import GitlabDeploymentFrequencyRecentStagesDataBlock from "./GitlabDeploymentFrequencyRecentStagesDataBlock";
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
 
@@ -81,9 +80,9 @@ function GitlabDeploymentFrequency({
         dashboardOrgs,
       );
       const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
-      if (isMounted?.current === true && Array.isArray(metrics)) {
-        setMetricData(metrics[0]?.statisticsData);
-        setChartData(metrics[0]?.chartData);
+      if (isMounted?.current === true && metrics?.statisticsData.step.total) {
+        setMetricData(metrics?.statisticsData);
+        setChartData(metrics?.chartData);
       } else {
         setMetricData({});
         setChartData([]);
@@ -119,7 +118,11 @@ function GitlabDeploymentFrequency({
     }
     const recentStageDate = new Date(metricData?.step?.stepFinishedAt).toLocaleDateString();
     const selectedDeploymentStages =
-      getDeploymentStageFromKpiConfiguration(kpiConfiguration);
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+    const dataBlockTextForDeployment = {
+      current: selectedDeploymentStages ? "Total Deployments" : "Total Stages Run",
+      previous: selectedDeploymentStages ? "Prev Deployments" : "Prev Runs",
+    };
     return (
       <div
         className="new-chart m-3 p-0"
@@ -127,9 +130,9 @@ function GitlabDeploymentFrequency({
       >
         <Row className={"w-100"}>
           <Row
-            xl={6}
-            lg={6}
-            md={7}
+            xl={5}
+            lg={5}
+            md={5}
             className={"mb-2 d-flex justify-content-center"}
           >
             <Col
@@ -137,7 +140,7 @@ function GitlabDeploymentFrequency({
               className={"mx-2"}
             >
               <GitlabDeploymentFrequencyDataBlock
-                value={selectedDeploymentStages?.length || 0}
+                value={selectedDeploymentStages}
                 prevValue={""}
                 topText={"Selected Stage(s)"}
                 bottomText={""}
@@ -173,19 +176,20 @@ function GitlabDeploymentFrequency({
                 prevValue={
                   metricData?.step?.previousTotalSuccess
                 }
-                topText={"Total Stages Run"}
-                bottomText={"Prev Runs: "}
-              />
-            </Col>
-            <Col md={12}>
-              <GitlabDeploymentFrequencyRecentStagesDataBlock
-                stage={metricData?.step?.stepType}
-                date={recentStageDate}
-                topText={"Recent Stage"}
-                bottomText={"Date: "}
+                topText={`${dataBlockTextForDeployment.current}`}
+                bottomText={`${dataBlockTextForDeployment.previous}: `}
               />
             </Col>
           </Row>
+          <Col md={12}>
+            <div className={"d-flex md-2"}>
+              <div className={'mr-4'}>
+                <b>Recent Stage:</b> {metricData?.step?.stepType || "NA"}
+                <div className="row"/>
+                <b>Date: </b>{recentStageDate}
+              </div>
+            </div>
+          </Col>
           <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <GitlabDeploymentFrequencyLineChartContainer
               chartData={chartData}
