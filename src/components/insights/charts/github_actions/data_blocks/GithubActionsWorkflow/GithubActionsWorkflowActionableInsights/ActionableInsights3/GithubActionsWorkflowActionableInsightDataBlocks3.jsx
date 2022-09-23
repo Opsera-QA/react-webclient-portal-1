@@ -92,7 +92,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.totalJobs}
-                                        subtitle={'Total Steps'}
+                                        subtitle={'Total Steps Run'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
                                         iconOverlayBody={'The total number of steps in the repository'}
