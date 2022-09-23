@@ -183,4 +183,68 @@ githubActionsWorkflowActions.githubActionsActionableTwoTable = async(kpiConfigur
 
 };
 
+githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, workflowName, repoName, appName, branchName, jobName)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/githubActions/v1/githubActionsActionableThreeDataBlocks";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
+    workflowName: workflowName,
+    repoName: repoName,
+    appName: appName,
+    branchName: branchName,
+    jobName: jobName,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+githubActionsWorkflowActions.githubActionsActionableThreeTable = async(kpiConfiguration, getAccessToken, cancelTokenSource,tableFilterDto, dashboardTags, dashboardOrgs, workflowName, repoName, appName, branchName, jobName)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/githubActions/v1/githubActionsActionableThreeTable";
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
+    workflowName: workflowName,
+    repoName: repoName,
+    appName: appName,
+    branchName: branchName,
+    jobName: jobName,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+
+};
+
 export default githubActionsWorkflowActions;

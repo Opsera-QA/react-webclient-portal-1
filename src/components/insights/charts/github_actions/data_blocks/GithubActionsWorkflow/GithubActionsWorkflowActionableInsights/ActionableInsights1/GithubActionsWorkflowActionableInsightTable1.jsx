@@ -7,31 +7,19 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faDraftingCompass,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { githubActionsWorkflowMetadata } from "../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight2 from "./GithubActionsWorkflowActionableInsight2";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
-import ExportGithubActionsWorkflowReportButton from "../export/ExportGithubActionWorkflowReportButton";
+import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 
 // TODO: Convert to cards
-function GitlabActionsWorkflowActionableInsightTable1({
-  data,
-  isLoading,
-  loadData,
-  filterModel,
-  setFilterModel,
-  kpiConfiguration,
-  dashboardData,
-  workflowName,
-}) {
+function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadData, filterModel, setFilterModel, kpiConfiguration,dashboardData, workflowName, stats }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
-  const tableTitle = "Github Actions Workflow Summary";
+  const tableTitle = "Github Actions Detailed Workflow Summary";
   const noDataMessage = "No data available";
 
   const columns = useMemo(
@@ -43,8 +31,12 @@ function GitlabActionsWorkflowActionableInsightTable1({
       getTableTextColumn(getField(fields, "runs")),
       getTableTextColumn(getField(fields, "success")),
       getTableTextColumn(getField(fields, "failures")),
+      getTableTextColumn(getField(fields, "runsSkipped")),
+      getTableTextColumn(getField(fields, "runsCanceled")),
       getTableTextColumn(getField(fields, "successPercentage")),
       getTableTextColumn(getField(fields, "failedPercentage")),
+      getTableTextColumn(getField(fields, "skippedPercentage")),
+      getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
       getStaticIconColumn(faExternalLink),
@@ -54,15 +46,15 @@ function GitlabActionsWorkflowActionableInsightTable1({
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight2
-        workflowName={workflowName}
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        appName={rowData.original.appName}
-        repoName={rowData.original.repoName}
-        workflow={rowData.original.workflow}
-        branchName={rowData.original.branchName}
-      />,
+        <GithubActionsWorkflowActionableInsights2
+            workflowName={workflowName}
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            appName={rowData.original.appName}
+            repoName={rowData.original.repoName}
+            workflow={rowData.original.workflow}
+            branchName={rowData.original.branchName}
+        />
     );
   };
 
@@ -91,24 +83,44 @@ function GitlabActionsWorkflowActionableInsightTable1({
     );
   };
 
+  const getBody = () => {
+    return (
+      <FilterContainer
+        isLoading={isLoading}
+        title={tableTitle}
+        titleIcon={faDraftingCompass}
+        body={getTable()}
+        className={"px-2 pb-2"}
+        loadData={loadData}
+        setFilterDto={setFilterModel}
+        filterDto={filterModel}
+        exportButton={
+          <ExportGithubActionsWorkflowReportButton
+            className={"ml-2"}
+            setShowExportPanel={setShowExportPanel}
+            showExportPanel={showExportPanel}
+          />
+        }
+      />
+    );
+  };
+
   return (
-    <FilterContainer
-      isLoading={isLoading}
-      title={tableTitle}
-      titleIcon={faDraftingCompass}
-      body={getTable()}
-      className={"px-2 pb-2"}
-      loadData={loadData}
-      setFilterDto={setFilterModel}
-      filterDto={filterModel}
-      exportButton={
-        <ExportGithubActionsWorkflowReportButton
-          className={"ml-2"}
-          setShowExportPanel={setShowExportPanel}
-          showExportPanel={showExportPanel}
-        />
-      }
-    />
+    <div>
+      <div className={"p-2"}>
+        <div className={"d-flex details-title-text"}>
+            <div className={'mr-4'}>
+                <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
+            </div>
+        </div>
+      </div>
+      <div className={"p-2"}>
+        {getBody()}
+      </div>
+    </div>
   );
 }
 
@@ -121,6 +133,7 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
+  stats: PropTypes.object
 };
 
 export default GitlabActionsWorkflowActionableInsightTable1;
