@@ -8,6 +8,8 @@ import {getField} from "../../../../../../../common/metadata/metadata-helpers";
 import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import ExportGithubActionsWorkflowReportActionableInsights3Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights3Panel";
+import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 
 function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
                                                         kpiConfiguration,dashboardData, repoName, appName,
@@ -49,10 +51,26 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
                 setFilterDto={setFilterModel}
                 filterDto={filterModel}
                 supportSearch={true}
+                exportButton={
+                  <ExportGithubActionsWorkflowReportButton
+                    className={"ml-2"}
+                    setShowExportPanel={setShowExportPanel}
+                    showExportPanel={showExportPanel}
+                  />
+                }
             />
         );
     };
     const getTable = () => {
+      if (showExportPanel === true) {
+        return (
+          <ExportGithubActionsWorkflowReportActionableInsights3Panel
+            showExportPanel={showExportPanel}
+            setShowExportPanel={setShowExportPanel}
+            githubActionData={data}
+          />
+        );
+      }
         return (
             <CustomTable
                 isLoading={isLoading}
