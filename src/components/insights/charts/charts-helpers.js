@@ -1,5 +1,6 @@
 import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-thin-svg-icons";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
@@ -209,8 +210,8 @@ export function getJiraChangeTypesFromKpiConfiguration(kpiConfiguration) {
 
 /*
 * This method is to calculate the trend and decide the color of the icon.
-* @currentValue Value of selected date range
-* @previousValue Value of date range before the selected date range.
+* @param currentValue Value of selected date range
+* @param previousValue Value of date range before the selected date range.
 * Returns the classname for trend
 */
 export const getTrend = (currentValue, previousValue) => {
@@ -229,4 +230,23 @@ export const getTrend = (currentValue, previousValue) => {
   }
   else{ trend = "black";}
   return trend;
+};
+
+/*
+* This method is to get the icon according to the severity.
+* @param severity Value of trend
+* Returns the icon
+*/
+
+export const getReverseIcon = (severity) => {
+  switch (severity) {
+    case "red":
+      return faArrowCircleDown;
+    case "green":
+      return faArrowCircleUp;
+    case "light-gray-text-secondary":
+      return faMinusCircle;
+    default:
+      break;
+  }
 };
