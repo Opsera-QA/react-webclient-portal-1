@@ -92,10 +92,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.totalJobs}
-                                        subtitle={'Total Jobs'}
+                                        subtitle={'Total Steps'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of jobs in the repository'}
+                                        iconOverlayBody={'The total number of steps in the repository'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -105,10 +105,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLinePercentageDataBlock
                                         percentage={metrics?.PercentageExecuted}
-                                        subtitle={'% Jobs Executed'}
+                                        subtitle={'% Steps Executed'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The percentage of jobs that were executed'}
+                                        iconOverlayBody={'The percentage of steps that were executed'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -118,10 +118,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.jobsExecuted}
-                                        subtitle={'Total Jobs Executed'}
+                                        subtitle={'Total Steps Executed'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of jobs executed in the repository'}
+                                        iconOverlayBody={'The total number of steps executed in the repository'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -134,7 +134,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                         subtitle={'Total Success'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of successful jobs'}
+                                        iconOverlayBody={'The total number of successful steps'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -147,7 +147,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                         subtitle={'% Success'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The percent of successful jobs'}
+                                        iconOverlayBody={'The percent of successful steps'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -160,7 +160,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                         subtitle={'Total Failed'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of failed jobs'}
+                                        iconOverlayBody={'The total number of failed ssteps'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -173,7 +173,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                         subtitle={'% Failed'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The percent of failed jobs'}
+                                        iconOverlayBody={'The percent of failed steps'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -183,10 +183,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.jobsSkipped}
-                                        subtitle={'Total Jobs Skipped'}
+                                        subtitle={'Total Steps Skipped'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of jobs that were skipped'}
+                                        iconOverlayBody={'The total number of steps that were skipped'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -196,10 +196,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLinePercentageDataBlock
                                         percentage={metrics?.PercentageSkipped}
-                                        subtitle={'% Jobs Skipped'}
+                                        subtitle={'% Steps Skipped'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The percentage of jobs that were skipped'}
+                                        iconOverlayBody={'The percentage of steps that were skipped'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -209,10 +209,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.jobsCanceled}
-                                        subtitle={'Jobs Canceled'}
+                                        subtitle={'Steps Canceled'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The total number of jobs that were cancelled'}
+                                        iconOverlayBody={'The total number of steps that were cancelled'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>
@@ -222,10 +222,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLinePercentageDataBlock
                                         percentage={metrics?.PercentageCanceled}
-                                        subtitle={'% Canceled'}
+                                        subtitle={'% Steps Canceled'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
-                                        iconOverlayBody={'The percentage of jobs cancelled.'}
+                                        iconOverlayBody={'The percentage of steps cancelled.'}
                                     />
                                 </div>
                             </DataBlockBoxContainer>

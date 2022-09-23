@@ -89,13 +89,13 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
             <div className={"p-2"}>
                 <div className={"d-flex details-title-text"}>
                     <div className={'mr-4'}>
-                        <b>Most Skipped Job:</b> {stats?.mostSkipped}
+                        <b>Most Skipped Steps:</b> {stats?.mostSkipped}
                     </div>
                     <div className={'mr-4'}>
-                        <b>Most Failed Job:</b> {stats?.mostFailed}
+                        <b>Most Failed Steps:</b> {stats?.mostFailed}
                     </div>
                     <div className={'mr-4'}>
-                        <b>Most Time Consuming Job:</b> {stats?.mostTime}
+                        <b>Most Time Consuming Steps:</b> {stats?.mostTime}
                     </div>
                 </div>
             </div>
