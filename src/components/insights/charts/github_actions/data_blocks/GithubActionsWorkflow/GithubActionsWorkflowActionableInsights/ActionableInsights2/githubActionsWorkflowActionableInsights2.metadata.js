@@ -1,4 +1,4 @@
-export const githubActionsWorkflowActionableInsights3Metadata = {
+export const githubActionsWorkflowActionableInsights2Metadata = {
   type: "Github Actions Workflow",
   fields: [
     {
@@ -22,7 +22,7 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       id: "workflow",
     },
     {
-      label: "Total Runs",
+      label: "Total Jobs",
       id: "runs",
     },
     {
@@ -30,31 +30,31 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       id: "repos",
     },
     {
-      label: "Total Success Runs",
+      label: "Total Successful Jobs",
       id: "success",
     },
     {
-      label: "Total Failure Runs",
+      label: "Total Failure Jobs",
       id: "failures",
     },
     {
-      label: "Total Steps Run",
+      label: "Total Jobs",
       id: "jobs",
     },
     {
-      label: "Successful Steps",
+      label: "Successful Jobs",
       id: "jobsSuccess",
     },
     {
-      label: "Failed Steps",
+      label: "Failed Jobs",
       id: "jobsFailures",
     },
     {
-      label: "Canceled Steps",
+      label: "Canceled Jobs",
       id: "canceled",
     },
     {
-      label: "Runs Canceled",
+      label: "Jobs Canceled",
       id: "runsCanceled",
     },
     {
@@ -90,7 +90,7 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       id: "appName"
     },
     {
-      label: "Step Name",
+      label: "Job Name",
       id: "jobName"
     },
     {
