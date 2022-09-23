@@ -19,7 +19,7 @@ function GitlabDeploymentFrequencyTrendDataBlock({
       className="h-100"
     >
       <ThreeLineDataBlockBase
-        className={`${trend} h-100`}
+        className={`${trend} p-2 h-100`}
         topText={topText}
         icon={getReverseIcon(trend)}
         bottomText={`${bottomText}${prevValue}`}
