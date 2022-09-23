@@ -38,7 +38,7 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       id: "failures",
     },
     {
-      label: "Total Steps",
+      label: "Total Steps Run",
       id: "jobs",
     },
     {

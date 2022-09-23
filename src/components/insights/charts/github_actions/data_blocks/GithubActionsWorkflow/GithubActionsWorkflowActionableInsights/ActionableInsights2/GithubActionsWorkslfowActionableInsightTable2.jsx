@@ -1,24 +1,19 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import FilterContainer from "components/common/table/FilterContainer";
-import {
-  getTableTextColumn,
-  getStaticIconColumn,
-} from "components/common/table/table-column-helpers";
-import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import {getStaticIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionsWorkflowReportActionableInsights1Panel
+  from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
-import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
+import {githubActionsWorkflowActionableInsights2Metadata} from "./githubActionsWorkflowActionableInsights2.metadata";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 
-// TODO: Convert to cards
-function GitlabActionsWorkflowActionableInsightTable1(
+function GithubActionsWorkflowActionableInsightTable2(
   {
     data,
     isLoading,
@@ -26,20 +21,17 @@ function GitlabActionsWorkflowActionableInsightTable1(
     filterModel,
     setFilterModel,
     stats,
-    setActionableInsight1DataObject,
     setCurrentScreen,
+    setSelectedJobName,
   }) {
-  const [showExportPanel, setShowExportPanel] = useState(false);
-  const fields = githubActionsWorkflowMetadata.fields;
-  const tableTitle = "Github Actions Detailed Workflow Summary";
+  const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
+  const fields = githubActionsWorkflowActionableInsights2Metadata.fields;
+  const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "workflow")),
-      getTableTextColumn(getField(fields, "repoName")),
-      getTableTextColumn(getField(fields, "branchName")),
-      getTableTextColumn(getField(fields, "appName")),
+      getTableTextColumn(getField(fields, "jobName")),
       getTableTextColumn(getField(fields, "runs")),
       getTableTextColumn(getField(fields, "success")),
       getTableTextColumn(getField(fields, "failures")),
@@ -53,14 +45,36 @@ function GitlabActionsWorkflowActionableInsightTable1(
       getTableTextColumn(getField(fields, "failedTime")),
       getStaticIconColumn(faExternalLink),
     ],
-    [],
+    []
   );
 
   const onRowSelect = (rowData) => {
-    setActionableInsight1DataObject(rowData.original);
-    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY);
+    setSelectedJobName(rowData?.original?.jobName);
   };
 
+  const getBody = () => {
+    return (
+      <FilterContainer
+        body={getTable()}
+        metadata={data}
+        isLoading={isLoading}
+        title={tableTitle}
+        titleIcon={faDraftingCompass}
+        loadData={loadData}
+        setFilterDto={setFilterModel}
+        filterDto={filterModel}
+        supportSearch={true}
+        exportButton={
+          <ExportGithubActionsWorkflowReportButton
+            className={"ml-2"}
+            setShowExportPanel={setShowExportPanel}
+            showExportPanel={showExportPanel}
+          />
+        }
+      />
+    );
+  };
   const getTable = () => {
     if (showExportPanel === true) {
       return (
@@ -86,56 +100,37 @@ function GitlabActionsWorkflowActionableInsightTable1(
     );
   };
 
-  const getBody = () => {
-    return (
-      <FilterContainer
-        isLoading={isLoading}
-        title={tableTitle}
-        titleIcon={faDraftingCompass}
-        body={getTable()}
-        className={"px-2 pb-2"}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-        exportButton={
-          <ExportGithubActionsWorkflowReportButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
-          />
-        }
-      />
-    );
-  };
-
   return (
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
           <div className={'mr-4'}>
-            <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
+            <b>Most Skipped Job:</b> {stats?.mostSkipped}
           </div>
           <div className={'mr-4'}>
-            <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
+            <b>Most Failed Job:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Time Consuming Job:</b> {stats?.mostTime}
           </div>
         </div>
       </div>
-      <div className={"p-2"}>
+      <div className={"p-3"}>
         {getBody()}
       </div>
     </div>
   );
 }
 
-GitlabActionsWorkflowActionableInsightTable1.propTypes = {
+GithubActionsWorkflowActionableInsightTable2.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   stats: PropTypes.object,
+  setSelectedJobName: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
 };
 
-export default GitlabActionsWorkflowActionableInsightTable1;
+export default GithubActionsWorkflowActionableInsightTable2;

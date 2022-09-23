@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import { getTableTextColumn } from "components/common/table/table-column-helpers";
@@ -15,9 +15,8 @@ import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActi
 import { getStaticIconColumn } from "../../../../../common/table/table-column-helpers";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel
-  from "./export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
-
+import GithubActionsWorkflowActionableInsightOverlay
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 // TODO: Convert to cards
 function GithubActionsBottomTable({
   data,
@@ -27,13 +26,13 @@ function GithubActionsBottomTable({
   setFilterModel,
   kpiConfiguration,
   dashboardData,
-  stats,
+  stats
 }) {
+  const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
   const tableTitle = "Github Actions Unique Workflow Summary";
   const noDataMessage = "No data available";
-  const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -57,7 +56,7 @@ function GithubActionsBottomTable({
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight1
+      <GithubActionsWorkflowActionableInsightOverlay
         workflowName={rowData.original._id}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
@@ -68,13 +67,14 @@ function GithubActionsBottomTable({
   const getTable = () => {
     if (showExportPanel === true) {
       return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+        <ExportGithubActionsWorkflowReportPanel
           showExportPanel={showExportPanel}
           setShowExportPanel={setShowExportPanel}
           githubActionData={data}
         />
       );
     }
+
     return (
       <CustomTable
         isLoading={isLoading}
@@ -89,36 +89,36 @@ function GithubActionsBottomTable({
     );
   };
   const getBody = () => {
-    return (
-      <FilterContainer
-        isLoading={isLoading}
-        title={tableTitle}
-        titleIcon={faDraftingCompass}
-        body={getTable()}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-        supportSearch={true}
-        exportButton={
-          <ExportGithubActionsWorkflowReportButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
-          />
-        }
-      />
-    );
-  };
+  return (
+    <FilterContainer
+      isLoading={isLoading}
+      title={tableTitle}
+      titleIcon={faDraftingCompass}
+      body={getTable()}
+      loadData={loadData}
+      setFilterDto={setFilterModel}
+      filterDto={filterModel}
+      supportSearch={true}
+      exportButton={
+        <ExportGithubActionsWorkflowReportButton
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
+        />
+      }
+    />
+  );
+      };
 
   return (
     <div>
       <div className={"d-flex details-title-text"}>
-        <div className={"mr-4"}>
-          <b>Most Failed Workflow:</b> {stats?.mostFailed}
-        </div>
-        <div className={"mr-4"}>
-          <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
-        </div>
+          <div className={'mr-4'}>
+              <b>Most Failed Workflow:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+              <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
+          </div>
       </div>
       {getBody()}
     </div>
@@ -133,7 +133,7 @@ GithubActionsBottomTable.propTypes = {
   setFilterModel: PropTypes.func,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  stats: PropTypes.object,
+  stats: PropTypes.object
 };
 
 export default GithubActionsBottomTable;
