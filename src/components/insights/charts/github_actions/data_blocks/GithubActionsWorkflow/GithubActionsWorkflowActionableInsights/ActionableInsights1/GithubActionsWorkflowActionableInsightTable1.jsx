@@ -59,15 +59,16 @@ function GitlabActionsWorkflowActionableInsightTable1({
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsights2
-        workflowName={workflowName}
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        appName={rowData.original.appName}
-        repoName={rowData.original.repoName}
-        workflow={rowData.original.workflow}
-        branchName={rowData.original.branchName}
-      />,
+        <GithubActionsWorkflowActionableInsights2
+            workflowName={workflowName}
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            appName={rowData.original.appName}
+            repoName={rowData.original.repoName}
+            workflow={rowData.original.workflow}
+            branchName={rowData.original.branchName}
+            workflowRuns={rowData.original.runs}
+        />
     );
   };
 

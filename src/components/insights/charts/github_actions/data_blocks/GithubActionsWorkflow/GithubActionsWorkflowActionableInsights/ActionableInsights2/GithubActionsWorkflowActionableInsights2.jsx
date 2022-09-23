@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
   from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightDataBlocks2";
+import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightsDataBlock2";
 import GithubActionsWorkflowActionableTableOverlay2 from "./GithubActionsWorkflowActionableTableOverlay2";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsights2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName}) {
+function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName, workflowRuns}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -36,46 +36,49 @@ function GithubActionsWorkflowActionableInsights2({ kpiConfiguration, dashboardD
 
   const getBody = () => {
     return (
-        <div>
-          <div className={"p-2"}>
-            <div className={"d-flex details-title-text"}>
-              <div className={'mr-4'}>
-                <b>Workflow Name:</b> {workflowName}
-              </div>
-              <div className={'mr-4'}>
-                <b>Repository Name:</b> {repoName}
-              </div>
-              <div className={'mr-4'}>
-                <b>Application Name:</b> {appName}
-              </div>
-              <div className={'mr-4'}>
-                <b>Branch Name:</b> {branchName}
-              </div>
+      <div>
+        <div className={"p-2"}>
+          <div className={"d-flex details-title-text"}>
+            <div className={'mr-4'}>
+              <b>Workflow Name:</b> {workflowName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Repository Name:</b> {repoName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Application Name:</b> {appName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Branch Name:</b> {branchName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Workflow Runs:</b> {workflowRuns}
             </div>
           </div>
-          <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
-            <GithubActionsWorkflowActionableInsightDataBlocks2
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-                workflowName={workflowName}
-                repoName={repoName}
-                appName={appName}
-                workflow={workflow}
-                branchName={branchName}
-                jobName={jobName}
-            />
-            <GithubActionsWorkflowActionableTableOverlay2
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-                workflowName={workflowName}
-                repoName={repoName}
-                appName={appName}
-                workflow={workflow}
-                branchName={branchName}
-                jobName={jobName}
-            />
-          </div>
         </div>
+        <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
+          <GithubActionsWorkflowActionableInsightDataBlocks2
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+          />
+          <GithubActionsWorkflowActionableTableOverlay2
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+          />
+        </div>
+      </div>
     );
   };
 
@@ -93,7 +96,7 @@ function GithubActionsWorkflowActionableInsights2({ kpiConfiguration, dashboardD
   );
 }
 
-GithubActionsWorkflowActionableInsights2.propTypes = {
+GithubActionsWorkflowActionableInsight2.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   workflowName: PropTypes.string,
@@ -101,7 +104,8 @@ GithubActionsWorkflowActionableInsights2.propTypes = {
   appName: PropTypes.string,
   workflow: PropTypes.string,
   branchName: PropTypes.string,
-  jobName: PropTypes.string
+  jobName: PropTypes.string,
+  workflowRuns: PropTypes.string
 };
 
-export default GithubActionsWorkflowActionableInsights2;
+export default GithubActionsWorkflowActionableInsight2;

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import CustomTable from "../../../../../../../common/table/CustomTable";
 import {getStaticIconColumn, getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
 import {getField} from "../../../../../../../common/metadata/metadata-helpers";
@@ -11,12 +10,14 @@ import {DialogToastContext} from "../../../../../../../../contexts/DialogToastCo
 import ExportGithubActionsWorkflowReportActionableInsights2Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 
+import {githubActionsWorkflowActionableInsights2Metadata} from "./githubActionsWorkflowActionableInsights2.metadata";
+
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
                                                         kpiConfiguration,dashboardData, repoName, appName,
                                                         branchName, workflowName, stats }) {
   const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
-  const fields = githubActionsWorkflowMetadata.fields;
+  const fields = githubActionsWorkflowActionableInsights2Metadata.fields;
   const toastContext = useContext(DialogToastContext);
   const [showExportPanel, setShowExportPanel] = useState(false);
 

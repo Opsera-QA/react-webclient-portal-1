@@ -94,7 +94,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                       subtitle={'Total Unique Job Names'}
                       icon={faInfoCircle}
                       iconOverlayTitle={''}
-                      iconOverlayBody={'The total number of runs'}
+                      iconOverlayBody={'The total number of unique job names'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -104,10 +104,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
                       score={metrics?.runs}
-                      subtitle={'Total Runs'}
+                      subtitle={'Total Jobs'}
                       icon={faInfoCircle}
                       iconOverlayTitle={''}
-                      iconOverlayBody={'The total number of runs'}
+                      iconOverlayBody={'The total number of jobs'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -117,10 +117,10 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
                       score={metrics?.runsExecuted}
-                      subtitle={'Runs Executed'}
+                      subtitle={'Jobs Executed'}
                       icon={faInfoCircle}
                       iconOverlayTitle={''}
-                      iconOverlayBody={'The percentage of jobs that were executed'}
+                      iconOverlayBody={'The jobs that were executed'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -130,7 +130,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
                     percentage={metrics?.PercentageExecuted}
-                    subtitle={'% Runs Executed'}
+                    subtitle={'% Jobs Executed'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
                     iconOverlayBody={'The percentage of jobs that were executed'}
