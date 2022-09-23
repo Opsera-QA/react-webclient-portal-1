@@ -9,6 +9,8 @@ import FilterContainer from "../../../../../../../common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
+import ExportGithubActionsWorkflowReportActionableInsights1Panel
+    from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 
 function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
                                                         kpiConfiguration,dashboardData, repoName, appName,
@@ -59,7 +61,16 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
       />
     );
   };
-  const getTable = () => {
+    const getTable = () => {
+        if (showExportPanel === true) {
+            return (
+                <ExportGithubActionsWorkflowReportActionableInsights1Panel
+                    showExportPanel={showExportPanel}
+                    setShowExportPanel={setShowExportPanel}
+                    githubActionData={data}
+                />
+            );
+        }
 
     return (
       <CustomTable
