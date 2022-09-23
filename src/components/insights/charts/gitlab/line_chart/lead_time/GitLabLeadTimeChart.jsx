@@ -8,7 +8,7 @@ import {
     defaultConfig,
     getColorByData,
     adjustBarWidth,
-    assignSuccessBarColors,
+    assignSuccessBarColors, goalSuccessColor,
 } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Container, Col, Row } from "react-bootstrap";
@@ -18,6 +18,9 @@ import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/fr
 import {ResponsiveBar} from "@nivo/bar";
 import GitlabLeadTimeHelpDocumentation
     from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
+import IconBase from "../../../../../common/icons/IconBase";
+import {faMinus, faSquare} from "@fortawesome/pro-solid-svg-icons";
+import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 
 function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -139,6 +142,10 @@ function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardD
         const getBarChart = () => {
             return (
                 <div className="new-chart p-0" style={{height: "300px"}}>
+                    <div className={"mr-2"} style={{ float: "right", fontSize: "10px" }}>
+                        Commits
+                        <IconBase className={'ml-2'} icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
+                    </div>
                     <ResponsiveBar
                         data={metrics}
                         {...defaultConfig("Frequency (commits)", "Days",

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapCustomerOnboardEditorPanel from "./LdapCustomerOnboardEditorPanel";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import AccessDeniedMessage from "components/common/status_notifications/AccessDeniedMessage";
 import {AuthContext} from "contexts/AuthContext";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -30,7 +30,7 @@ function LdapCustomerOnboard() {
   }
 
   if (!accessRoleData?.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+    return (<AccessDeniedMessage roleData={accessRoleData}/>);
   }
 
   return (

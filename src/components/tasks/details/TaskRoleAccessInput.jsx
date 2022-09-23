@@ -1,45 +1,34 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import {AuthContext} from "contexts/AuthContext";
 import taskActions from "components/tasks/task.actions";
-import axios from "axios";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import GitRoleAccessHelpDocumentation
   from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
-  const { getAccessToken, getAccessRoleData, isSassUser } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [canEditRoles, setCanEditRoles] = useState(undefined);
+  const {
+    isMounted,
+    getAccessToken,
+    cancelTokenSource,
+    isSassUser,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = async () => {
     const owner = dataObject?.getData("owner");
     const objectRoles = dataObject?.getData("roles");
-    const accessRoleData = await getAccessRoleData();
 
     setCanEditRoles(workflowAuthorizedActions.gitItems(accessRoleData, "edit_access_roles", owner, objectRoles));
   };
@@ -62,7 +51,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
     );
   };
 
-  if (canEditRoles == null || isSassUser()) {
+  if (canEditRoles == null || isSassUser !== false) {
     return null;
   }
 

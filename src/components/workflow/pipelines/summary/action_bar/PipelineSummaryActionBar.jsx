@@ -49,6 +49,7 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
         toggleHelp={toggleHelp}
       />
       <ActionBarDeletePipelineButton
+        className={"ml-3"}
         pipeline={pipeline}
         isActionAllowedFunction={isActionAllowedFunction}
       />

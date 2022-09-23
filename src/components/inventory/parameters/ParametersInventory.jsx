@@ -1,7 +1,4 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -10,43 +7,34 @@ import ParameterFilterModel from "components/inventory/parameters/parameter.filt
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ParametersHelpDocumentation from "../../common/help/documentation/tool_registry/ParametersHelpDocumentation";
 import {isActionAllowed} from "components/common/helpers/role-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ParametersInventory() {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
   const [parameterMetadata, setParameterMetadata] = useState(undefined);
   const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(parameterFilterModel, source).catch((error) => {
+    loadData(parameterFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterDto = parameterFilterModel) => {
     try {
       setIsLoading(true);
-      await getParameters(filterDto, cancelSource);
+      await getParameters(filterDto);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -58,10 +46,9 @@ function ParametersInventory() {
     }
   };
 
-  const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto?.getData("search"));
+  const getParameters = async (filterDto = parameterFilterModel) => {
+    const response = await parametersActions.getParameters(getAccessToken, cancelTokenSource, filterDto?.getData("search"));
     const parameters = response?.data?.data;
-    const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(parameters)) {
       const newParameterMetadata = response?.data?.metadata;
@@ -69,13 +56,13 @@ function ParametersInventory() {
       const roleDefinitions = response?.data?.roles;
       setParameterRoleDefinitions(roleDefinitions);
 
-      if (Array.isArray(parameters) && parameters.length > 0) {
-        let modelWrappedArray = [];
+      if (Array.isArray(parameters)) {
+        const modelWrappedArray = [];
 
         parameters.forEach((parameter) => {
-          const deleteAllowed = isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
-          const updateAllowed = isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
-          const canEditAccessRoles = isActionAllowed(userRoleAccess, "edit_access_roles", parameter.owner, parameter.roles, roleDefinitions);
+          const deleteAllowed = isActionAllowed(accessRoleData, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const updateAllowed = isActionAllowed(accessRoleData, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const canEditAccessRoles = isActionAllowed(accessRoleData, "edit_access_roles", parameter.owner, parameter.roles, roleDefinitions);
           const newModel = {...new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed, canEditAccessRoles)};
 
           modelWrappedArray.push(newModel);

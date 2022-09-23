@@ -4,7 +4,7 @@ import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import BadgeBase from "components/common/badges/BadgeBase";
 import { faCircleInfo } from "@fortawesome/pro-light-svg-icons";
-import BetaBadge from "components/common/badges/TooltipBadgeBase";
+import BetaBadge from "components/common/badges/BetaBadge";
 
 function TitleBar(
   {
@@ -27,8 +27,11 @@ function TitleBar(
       <div className="ml-auto d-flex mr-2">
         {getInactiveText()}
         {titleActionBar}
-        <LaunchHelpIcon helpComponent={helpComponent} className={"mx-1"} />
-        <BetaBadge isBeta={isBeta} />
+        <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
+        <BetaBadge
+          isBeta={isBeta}
+          className={"mr-1 ml-2 my-auto"}
+        />
       </div>
     );
   };

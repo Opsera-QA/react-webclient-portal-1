@@ -82,14 +82,14 @@ export default function PlatformSystemParameterDetailView() {
           <ActionBarDeleteButton2
             relocationPath={"/admin/platform/system-parameters"}
             dataObject={platformSystemParameterModel}
-            handleDelete={deleteTemplate}
+            handleDelete={deletePlatformSystemParameter}
           />
         </div>
       </ActionBarContainer>
     );
   };
 
-  const deleteTemplate = async () => {
+  const deletePlatformSystemParameter = async () => {
     return await platformSystemParameterActions.deletePlatformSystemParameter(
       getAccessToken,
       cancelTokenSource,

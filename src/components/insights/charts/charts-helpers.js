@@ -1,5 +1,6 @@
 import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-thin-svg-icons";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
@@ -27,319 +28,146 @@ export function getUseDashboardTagsFromKpiConfiguration(kpiConfiguration) {
   return kpiConfiguration?.settings?.useDashboardTags !== false;
 }
 
-export function getTagsFromKpiConfiguration(kpiConfiguration) {
+export function getResultFromKpiConfiguration(kpiConfiguration , filter) {
   if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value.length > 0
+      typeof(filter) === 'string' &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === filter)]?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === filter)]?.value.length > 0
   ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")].value;
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === filter)].value;
   }
   return null;
+}
+
+export function getTagsFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration( kpiConfiguration, "tags");
 }
 
 export function getJenkinsResultFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jenkins-result");
+
 }
 
 export function getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jenkins-job-url");
 }
 
 export function getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jenkins-build-number");
 }
 
 export function getJiraIssueTypeFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-type");
 }
 
 export function getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-components")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-components");
 }
 
 export function getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-labels")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-labels");
 }
 
 export function getJiraIssueStatusFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-status");
 }
 
 export function getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]
-      ?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-start-status");
 }
 
 export function getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "jira-issue-done-status");
 }
 
 export function getSonarProjectKeyFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "sonar-project-key");
 }
 
 export function getDomainFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "domain");
 }
 
 export function getApplicationFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "application");
 }
 
 export function getReleaseFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "release");
 }
 
 export function getSprintFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "sprint");
 }
 
 export function getProjectFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "project");
 }
 
 export function getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "selenium-test-suites");
 }
 
 export function getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
-      ?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
-      .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "sonar-project-languages");
 }
 
 export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
-  if (
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
-          ?.value &&
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]?.value
-          .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "deployment-stage")]
-        .value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "deployment-stage");
 }
 
 export function getGitlabProjectFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration( kpiConfiguration, "gitlab-project");
+}
+
+export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-priorities");
+}
+
+export function getJiraPrioritiesFromKpiConfiguration(kpiConfiguration) {
   if (
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
           ?.value &&
-      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]?.value
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]?.value
           .length > 0
   ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "gitlab-project")]
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
         .value;
   }
   return null;
 }
 
-export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
+export function getJiraProjectsFromKpiConfiguration(kpiConfiguration) {
   if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]?.value
-      .length > 0
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]?.value
+          .length > 0
   ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-priorities")]
-      .value;
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+        .value;
   }
   return null;
 }
 
 export function getServiceNowToolsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")]?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")]?.value
-      .length > 0
-  ) {
-    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-tools")].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-tools");
 }
 
 export function getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")]
-      ?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-assignment-groups")
-    ].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-assignment-groups");
 }
 
 export function getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")]
-      ?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-service-offerings")
-    ].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-service-offerings");
 }
 
 export function getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
-    ]?.value &&
-    kpiConfiguration?.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
-    ]?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-configuration-items")
-    ].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-configuration-items");
 }
 
 export function getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration) {
-  if (
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")]
-      ?.value &&
-    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")]
-      ?.value.length > 0
-  ) {
-    return kpiConfiguration.filters[
-      kpiConfiguration.filters.findIndex((obj) => obj.type === "servicenow-business-services")
-    ].value;
-  }
-  return null;
+  return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-business-services");
 }
 
 export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
@@ -357,3 +185,68 @@ export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
+
+export function getJiraChangeTypesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value &&
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ].value;
+  }
+  return null;
+}
+
+/*
+* This method is to calculate the trend and decide the color of the icon.
+* @param currentValue Value of selected date range
+* @param previousValue Value of date range before the selected date range.
+* Returns the classname for trend
+*/
+export const getTrend = (currentValue, previousValue) => {
+  currentValue = !isNaN(currentValue)? parseFloat(currentValue) : 0;
+  previousValue = !isNaN(previousValue)? parseFloat(previousValue) : 0;
+
+  let trend = "";
+  if(currentValue > previousValue){
+    trend = "green";
+  }
+  else if(currentValue === previousValue){
+    trend = "light-gray-text-secondary";
+  }
+  else if(currentValue < previousValue){
+    trend = "red";
+  }
+  else{ trend = "black";}
+  return trend;
+};
+
+/*
+* This method is to get the icon according to the severity.
+* @param severity Value of trend
+* Returns the icon
+*/
+
+export const getReverseIcon = (severity) => {
+  switch (severity) {
+    case "red":
+      return faArrowCircleDown;
+    case "green":
+      return faArrowCircleUp;
+    case "light-gray-text-secondary":
+      return faMinusCircle;
+    default:
+      break;
+  }
+};

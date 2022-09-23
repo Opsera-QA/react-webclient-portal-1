@@ -4,7 +4,7 @@ const sfdcTableConstants = {};
 
 sfdcTableConstants.fields = [
   {
-    label: "Component",
+    label: "Component Type",
     id: "componentType"
   },
   {
@@ -16,11 +16,11 @@ sfdcTableConstants.fields = [
     id: "committedFile"
   },
   {
-    label: "Commit Time",
+    label: "Last Modified Time",
     id: "committedTime"
   },
   {
-    label: "Committed By",
+    label: "Last Modified By",
     id: "committedBy"
   },
   {

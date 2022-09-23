@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {faMicrosoft, faSlack} from "@fortawesome/free-brands-svg-icons";
+import {faMicrosoft, faSlack, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 
@@ -44,6 +44,13 @@ function TaskNotificationVerticalTabContainer(
         icon={faSlack}
         tabText={"Slack"}
         tabName={"slack"}
+        handleTabClick={handleTabClickFunction}
+        activeTab={activeTab}
+      />
+      <VanitySetVerticalTab
+        icon={faGoogle}
+        tabText={"Google Chat"}
+        tabName={"gchat"}
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}
       />

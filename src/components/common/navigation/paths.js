@@ -30,6 +30,12 @@ paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
 paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
 paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
 
+paths.platformSettingsManagement = paths.admin + "/platform/settings";
+paths.platformSettingsDetailView = paths.platformSettingsManagement + "/details";
+
+paths.freeTrialCustomerWorkspaceManagement = paths.admin + "/customer/workspaces";
+paths.freeTrialCustomerWorkspaceDetailView = paths.freeTrialCustomerWorkspaceManagement + "/user/";
+
 paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
 paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
 

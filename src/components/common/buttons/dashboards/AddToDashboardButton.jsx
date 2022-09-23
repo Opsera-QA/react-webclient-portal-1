@@ -47,6 +47,7 @@ function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePa
         kpi_settings: kpiData.settings,
         filters: kpiData.supported_filters,
         dataPoints: kpiData.dataPoints,
+        dashboardNotifications: kpiData.dashboardNotificationsEnabled,
         tags: [],
         active: kpiData.active,
       };

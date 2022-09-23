@@ -69,8 +69,8 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
   };
 
   const getSelectedOptions = () => {
-    let selectedArray = [];
-    let selectedOptions = pipelineWizardModel.getData("selectedComponentTypes");
+    const selectedArray = [];
+    const selectedOptions = pipelineWizardModel.getArrayData("selectedComponentTypes");
 
     if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
       selectedOptions.forEach((selectedOptionName) => {
@@ -107,9 +107,8 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
 
   // TODO: This is a workaround for the refresh issue.
   const handleRemoveFromSelected = (fieldName, valueArray) => {
-    let newModel = pipelineWizardModel;
     pipelineWizardModel.setData(fieldName, valueArray);
-    setPipelineWizardModel({...newModel});
+    setPipelineWizardModel({...pipelineWizardModel});
     setComponentTypes([...componentTypes]);
   };
 

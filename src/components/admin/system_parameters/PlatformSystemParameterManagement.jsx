@@ -34,7 +34,7 @@ export default function PlatformSystemParameterManagement() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getTemplates();
+      await getPlatformSystemParameters();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -46,7 +46,7 @@ export default function PlatformSystemParameterManagement() {
     }
   };
 
-  const getTemplates = async () => {
+  const getPlatformSystemParameters = async () => {
     const response = await platformSystemParameterActions.getPlatformSystemParameters(
       getAccessToken,
       cancelTokenSource,

@@ -178,6 +178,13 @@ function KpiIdentifierEditorPanel({ kpiData, handleClose }) {
             dataObject={kpiData}
           />
         </Col>
+        <Col lg={12}>
+          <BooleanToggleInput
+            fieldName={"dashboardNotificationsEnabled"}
+            setDataObject={setKpiDataDto}
+            dataObject={kpiData}
+          />
+        </Col>
       </Row>
     </EditorPanelContainer>
   );

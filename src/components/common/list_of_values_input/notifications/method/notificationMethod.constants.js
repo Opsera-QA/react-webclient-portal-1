@@ -4,6 +4,7 @@ export const NOTIFICATION_METHODS = {
   JIRA: "jira",
   TEAMS: "teams",
   SERVICE_NOW: "servicenow",
+  GCHAT: "gchat",
 };
 
 export const NOTIFICATION_METHOD_LABELS = {
@@ -12,6 +13,7 @@ export const NOTIFICATION_METHOD_LABELS = {
   JIRA: "Jira",
   TEAMS: "Teams",
   SERVICE_NOW: "Service Now",
+  GCHAT: "GChat",
 };
 
 export const NOTIFICATION_METHOD_SELECT_OPTIONS = [
@@ -35,6 +37,10 @@ export const NOTIFICATION_METHOD_SELECT_OPTIONS = [
     value: NOTIFICATION_METHODS.TEAMS,
     text: NOTIFICATION_METHOD_LABELS.TEAMS
   },
+  {
+    value: NOTIFICATION_METHODS.GCHAT,
+    text: NOTIFICATION_METHOD_LABELS.GCHAT
+  },
 ];
 
 export const getNotificationMethodLabel = (notificationMethod) => {
@@ -49,6 +55,8 @@ export const getNotificationMethodLabel = (notificationMethod) => {
       return NOTIFICATION_METHOD_LABELS.SLACK;
     case NOTIFICATION_METHODS.TEAMS:
       return NOTIFICATION_METHOD_LABELS.TEAMS;
+    case NOTIFICATION_METHODS.GCHAT:
+      return NOTIFICATION_METHOD_LABELS.GCHAT;
     default:
       return notificationMethod;
   }

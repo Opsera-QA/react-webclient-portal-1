@@ -181,15 +181,13 @@ function BlueprintSearchResult({ logData, closeModal }) {
                 <div className="blueprint-title mb-3">Steps</div>
                 <Nav variant="pills" className="flex-column">
                   {logData.data.map((item, idx) => (
-                    <>
-                      <Nav.Item key={idx}>
-                        <Nav.Link key={idx} eventKey={idx}>
-                          {makeUpper(
-                            item?.step_name
-                          )}
-                        </Nav.Link>
-                      </Nav.Item>
-                    </>
+                    <Nav.Item key={idx}>
+                      <Nav.Link key={idx} eventKey={idx}>
+                        {makeUpper(
+                          item?.step_name,
+                        )}
+                      </Nav.Link>
+                    </Nav.Item>
                   ))}
 
                   {completeInput.length > 0 && (
