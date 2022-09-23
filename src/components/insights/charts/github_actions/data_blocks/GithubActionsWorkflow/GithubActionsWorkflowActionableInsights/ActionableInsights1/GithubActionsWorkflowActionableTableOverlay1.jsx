@@ -2,25 +2,25 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import { AuthContext } from "contexts/AuthContext";
-import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
-import chartsActions from "components/insights/charts/charts-actions";
-import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
-import IconBase from "components/common/icons/IconBase";
+import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import GitlabActionsWorkflowActionableInsightTable1 from "./GithubActionsWorkflowActionableInsightTable1";
-import {metricHelpers} from "../../../../../metric.helpers";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
+
 
 function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, workflowName }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
+    const [stats, setStats] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
     const [filterModel, setFilterModel] = useState(
         new Model(
-            { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-            actionableInsightsGenericChartFilterMetadata,
+            { ...githubActionsWorkflowMetadata.newObjectFields },
+            githubActionsWorkflowMetadata,
             false
         )
     );
@@ -51,7 +51,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
-            const response = await chartsActions.githubActionsActionableOneTable(
+            const response = await githubActionsWorkflowActions.githubActionsActionableOneTable(
                 kpiConfiguration,
                 getAccessToken,
                 cancelSource,
@@ -62,14 +62,16 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             );
             let dataObject = response?.data ? response?.data?.data[0]?.data : [];
             let dataCount = response?.data
-                ? response?.data?.data[0][0]?.count[0]?.count
+                ? response?.data?.data[0]?.count[0]?.count
                 : [];
+            let stats = response?.data?.stats;
 
             let newFilterDto = filterDto;
             newFilterDto.setData("totalCount", dataCount);
             setFilterModel({ ...newFilterDto });
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
+                setStats(stats);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -93,6 +95,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData, wo
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             workflowName={workflowName}
+            stats={stats}
         />
     );
 }

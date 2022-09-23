@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
+import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
-  from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightDataBlocks2";
+  from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightsDataBlock2";
 import GithubActionsWorkflowActionableTableOverlay2 from "./GithubActionsWorkflowActionableTableOverlay2";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName}) {
+function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName, workflowRuns}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -51,6 +51,9 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
             <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
             </div>
+            <div className={'mr-4'}>
+              <b>Workflow Runs:</b> {workflowRuns}
+            </div>
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
@@ -62,15 +65,18 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
             appName={appName}
             workflow={workflow}
             branchName={branchName}
+            jobName={jobName}
           />
           <GithubActionsWorkflowActionableTableOverlay2
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-              workflowName={workflowName}
-              repoName={repoName}
-              appName={appName}
-              workflow={workflow}
-              branchName={branchName}/>
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+          />
         </div>
       </div>
     );
@@ -80,7 +86,7 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Actionable Report 2`}
+      titleText={`Github Actions Workflow Job Summary`}
       showToasts={true}
     >
       <div className={"p-3"}>
@@ -97,7 +103,9 @@ GithubActionsWorkflowActionableInsight2.propTypes = {
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  jobName: PropTypes.string,
+  workflowRuns: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsight2;

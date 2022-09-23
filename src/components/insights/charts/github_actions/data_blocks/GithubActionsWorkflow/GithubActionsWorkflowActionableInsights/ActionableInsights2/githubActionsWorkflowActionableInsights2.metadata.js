@@ -1,4 +1,4 @@
-export const githubActionsWorkflowMetadata = {
+export const githubActionsWorkflowActionableInsights2Metadata = {
   type: "Github Actions Workflow",
   fields: [
     {
@@ -22,7 +22,7 @@ export const githubActionsWorkflowMetadata = {
       id: "workflow",
     },
     {
-      label: "Total Runs",
+      label: "Total Jobs",
       id: "runs",
     },
     {
@@ -30,11 +30,11 @@ export const githubActionsWorkflowMetadata = {
       id: "repos",
     },
     {
-      label: "Total Success Runs",
+      label: "Total Successful Jobs",
       id: "success",
     },
     {
-      label: "Total Failure Runs",
+      label: "Total Failure Jobs",
       id: "failures",
     },
     {
@@ -54,7 +54,7 @@ export const githubActionsWorkflowMetadata = {
       id: "canceled",
     },
     {
-      label: "Runs Canceled",
+      label: "Jobs Canceled",
       id: "runsCanceled",
     },
     {
@@ -70,8 +70,8 @@ export const githubActionsWorkflowMetadata = {
       id: "failedPercentage",
     },
     {
-      label: "Average Time For Success",
-      id: "successTime",
+       label: "Average Time For Success",
+       id: "successTime",
     },
     {
       label: "Average Time For Failures",
@@ -127,13 +127,13 @@ export const githubActionsWorkflowMetadata = {
     },
   ],
   getActiveFilters(filterDto) {
-    let activeFilters = [];
+         let activeFilters = [];
 
-    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-    }
+         if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+           activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+         }
 
-    return activeFilters;
+         return activeFilters;
   },
   newObjectFields: {
     tags: [],

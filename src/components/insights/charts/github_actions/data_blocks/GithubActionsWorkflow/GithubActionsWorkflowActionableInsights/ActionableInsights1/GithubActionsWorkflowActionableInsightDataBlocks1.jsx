@@ -1,44 +1,37 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
-import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import DataBlockBoxContainer from "../../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import PropTypes from "prop-types";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
-import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import LoadingDialog from "../../../../../../../common/status_notifications/loading";
+import TwoLineScoreDataBlock from "../../../../../../../common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "../../../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
+import {AuthContext} from "../../../../../../../../contexts/AuthContext";
+import {metricHelpers} from "../../../../../../metric.helpers";
+import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
-import {metricHelpers} from "../../../../metric.helpers";
-import githubActionsWorkflowActions from "./github-actions-workflow-actions";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  GITHUB_ACTIONS_WORKFLOW_METRIC_CONSTANTS as dataPointConstants
-} from "./GithubActionsWorkflow_kpi_datapoint_identifiers";
 
-function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
+function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, dashboardData, workflowName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
+  const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [successPercentDataPoint, setSuccessPercentDataPoint] = useState(undefined);
-  const [averageSuccessDataPoint, setAverageSuccessDataPoint] = useState(undefined);
-  const [failurePercentDataPoint, setFailurePercentDataPoint] = useState(undefined);
-  const [averageFailureDataPoint, setAverageFailureDataPoint] = useState(undefined);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadDataPoints(cancelSource);
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      const response = await githubActionsWorkflowActions.githubActionsBaseKPIDataBlocks(
+      const response = await githubActionsWorkflowActions.githubActionsActionableOneDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
           dashboardTags,
-          dashboardOrgs
+          dashboardOrgs,
+          workflowName
       );
       let dataObject = response?.data?.data[0];
       if (isMounted?.current === true && dataObject) {
@@ -56,18 +49,6 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         setIsLoading(false);
       }
     }
-  };
-
-  const loadDataPoints = async () => {
-    const dataPoints = kpiConfiguration?.dataPoints;
-    const successPercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BASE_KPI_SUCCESS_PERCENT_DATA_POINT);
-    setSuccessPercentDataPoint(successPercentageDataPoint);
-    const avgSuccessDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BASE_KPI_AVERAGE_SUCCESS_DATA_POINT);
-    setAverageSuccessDataPoint(avgSuccessDataPoint);
-    const failurePercentageDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BASE_KPI_FAILURE_PERCENT_DATA_POINT);
-    setFailurePercentDataPoint(failurePercentageDataPoint);
-    const avgFailedTestsDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BASE_KPI_AVERAGE_FAILED_DATA_POINT);
-    setAverageFailureDataPoint(avgFailedTestsDataPoint);
   };
 
 
@@ -99,22 +80,9 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
     }
 
     return (
-        <>
-          <div>
-            <Row style={{justifyContent: "space-evenly"}}>
-              <Col md={4} className="mb-3">
-                <DataBlockBoxContainer showBorder={true}>
-                  <div className={'p-2'}>
-                    <TwoLineScoreDataBlock
-                        score={metrics?.workflows}
-                        subtitle={'Total Unique Workflow Names'}
-                        icon={faInfoCircle}
-                        iconOverlayTitle={''}
-                        iconOverlayBody={'The total number of unique workflow names'}
-                    />
-                </div>
-              </DataBlockBoxContainer>
-            </Col>
+      <>
+        <div>
+          <Row style={{justifyContent: "space-evenly"}}>
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
@@ -123,7 +91,20 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     subtitle={'Total Runs'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
-                    iconOverlayBody={'The total number of runs'}
+                    iconOverlayBody={'The total number of runs in selected workflow'}
+                  />
+                </div>
+              </DataBlockBoxContainer>
+            </Col>
+            <Col md={4} className="mb-3">
+              <DataBlockBoxContainer showBorder={true}>
+                <div className={'p-2'}>
+                  <TwoLineScoreDataBlock
+                    score={metrics?.applications}
+                    subtitle={'Total Applications'}
+                    iconOverlayTitle={''}
+                    icon={faInfoCircle}
+                    iconOverlayBody={'The total number of applications in selected workflow'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -136,7 +117,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                     subtitle={'Total Repositories'}
                     icon={faInfoCircle}
                     iconOverlayTitle={''}
-                    iconOverlayBody={'The total number of repositories'}
+                    iconOverlayBody={'The total number of repositories in selected workflow'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -154,30 +135,32 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            {dataPointHelpers.isDataPointVisible(successPercentDataPoint) &&
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
                     percentage={metrics?.successPercentage}
                     subtitle={'% Success'}
-                    dataPoint={successPercentDataPoint}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Percent of successful runs out of all runs'}
                   />
                 </div>
               </DataBlockBoxContainer>
-            </Col> }
-            {dataPointHelpers.isDataPointVisible(averageSuccessDataPoint) &&
+            </Col>
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
                     score={metrics?.avgSuccessTime}
                     subtitle={'Average Time For Success Runs (mins)'}
-                    dataPoint={averageSuccessDataPoint}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The average time taken for successful runs to complete'}
                   />
                 </div>
               </DataBlockBoxContainer>
-            </Col> }
+            </Col>
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
@@ -191,30 +174,32 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 </div>
               </DataBlockBoxContainer>
             </Col>
-            {dataPointHelpers.isDataPointVisible(failurePercentDataPoint) &&
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLinePercentageDataBlock
                     percentage={metrics?.failedPercentage}
                     subtitle={'% Failures'}
-                    dataPoint={failurePercentDataPoint}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Percent of failed runs out of all runs'}
                   />
                 </div>
               </DataBlockBoxContainer>
-            </Col> }
-            {dataPointHelpers.isDataPointVisible(averageFailureDataPoint) &&
+            </Col>
             <Col md={4} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
                     score={metrics?.avgFailedTime}
-                    subtitle={'Average Time For Failed Runs (mins)'}
-                    dataPoint={averageFailureDataPoint}
+                    subtitle={'Average Time For Failed Runs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'Average time take for failed runs to complete (mins)'}
                   />
                 </div>
               </DataBlockBoxContainer>
-            </Col> }
+            </Col>
             <Col md={3} className="mb-3">
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
@@ -276,10 +261,10 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
   return getBody();
 }
 
-GithubActionsWorkflowDataBlocks.propTypes = {
+GithubActionsWorkflowActionableInsightDataBlocks1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  setError: PropTypes.func
+  workflowName:PropTypes.string
 };
 
-export default GithubActionsWorkflowDataBlocks;
+export default GithubActionsWorkflowActionableInsightDataBlocks1;
