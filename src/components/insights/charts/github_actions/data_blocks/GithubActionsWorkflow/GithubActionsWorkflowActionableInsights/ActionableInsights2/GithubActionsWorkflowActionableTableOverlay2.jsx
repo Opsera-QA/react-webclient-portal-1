@@ -1,21 +1,27 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
 import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkslfowActionableInsightTable2";
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, repoName , appName, workflow, branchName}) {
-  const { getAccessToken } = useContext(AuthContext);
+function GithubActionsWorkflowTableOverlay2(
+  {
+    kpiConfiguration,
+    dashboardData,
+    repoName,
+    appName,
+    workflow,
+    branchName,
+    setCurrentScreen,
+    setSelectedJobName,
+  }) {
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
     new Model(
       { ...githubActionsWorkflowMetadata.newObjectFields },
@@ -23,28 +29,21 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       false
     )
   );
+  const {
+    getAccessToken,
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [JSON.stringify(dashboardData)]);
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+
+  const loadData = async (filterDto = filterModel) => {
     try {
       setIsLoading(true);
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
@@ -53,7 +52,7 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
         kpiConfiguration,
         getAccessToken,
-        cancelSource,
+        cancelTokenSource,
         filterDto,
         dashboardTags,
         dashboardOrgs,
@@ -96,13 +95,10 @@ function GithubActionsWorkflowTableOverlay2({ kpiConfiguration, dashboardData, r
       loadData={loadData}
       filterModel={filterModel}
       setFilterModel={setFilterModel}
-      kpiConfiguration={kpiConfiguration}
-      dashboardData={dashboardData}
-      repoName={repoName}
-      workflowName={workflow}
-      branchName={branchName}
       appName={appName}
       stats={stats}
+      setCurrentScreen={setCurrentScreen}
+      setSelectedJobName={setSelectedJobName}
     />
   );
 }
@@ -114,7 +110,9 @@ GithubActionsWorkflowTableOverlay2.propTypes = {
   repoName: PropTypes.string,
   appName: PropTypes.string,
   workflow: PropTypes.string,
-  branchName: PropTypes.string
+  branchName: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
+  setSelectedJobName: PropTypes.func,
 };
 
 export default GithubActionsWorkflowTableOverlay2;

@@ -1,32 +1,31 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import FullScreenCenterOverlayContainer
-  from "../../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWorkflowActionableInsightsDataBlock2";
 import GithubActionsWorkflowActionableTableOverlay2 from "./GithubActionsWorkflowActionableTableOverlay2";
-import axios from "axios";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CloseButton from "components/common/buttons/CloseButton";
+import {
+  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
-function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName, workflowRuns}) {
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(dashboardData)]);
-
+function GithubActionsWorkflowActionableInsight2(
+  {
+    kpiConfiguration,
+    dashboardData,
+    workflowName,
+    repoName,
+    appName,
+    workflow,
+    branchName,
+    jobName,
+    workflowRuns,
+    setCurrentScreen,
+    setSelectedJobName,
+    setActionableInsight1DataObject,
+  }) {
   const toastContext1 = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -76,8 +75,33 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
             workflow={workflow}
             branchName={branchName}
             jobName={jobName}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
           />
         </div>
+      </div>
+    );
+  };
+
+  const handleBackButtonFunction = () => {
+    setActionableInsight1DataObject(undefined);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
+  };
+
+  const getButtonContainer = () => {
+    return (
+      <div className={"mx-3"}>
+        <ButtonContainerBase
+          leftSideButtons={
+            <BackButtonBase
+              backButtonFunction={handleBackButtonFunction}
+            />
+          }
+        >
+          <CloseButton
+            closeEditorCallback={closePanel}
+          />
+        </ButtonContainerBase>
       </div>
     );
   };
@@ -88,6 +112,7 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
       showPanel={true}
       titleText={`Github Actions Workflow Job Summary`}
       showToasts={true}
+      buttonContainer={getButtonContainer()}
     >
       <div className={"p-3"}>
         {getBody()}
@@ -105,7 +130,10 @@ GithubActionsWorkflowActionableInsight2.propTypes = {
   workflow: PropTypes.string,
   branchName: PropTypes.string,
   jobName: PropTypes.string,
-  workflowRuns: PropTypes.string
+  workflowRuns: PropTypes.string,
+  setSelectedJobName: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
+  setActionableInsight1DataObject: PropTypes.func,
 };
 
 export default GithubActionsWorkflowActionableInsight2;

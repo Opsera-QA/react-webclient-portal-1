@@ -1,25 +1,32 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "../../../../../../../common/table/CustomTable";
-import {getStaticIconColumn, getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
-import {getField} from "../../../../../../../common/metadata/metadata-helpers";
-import FilterContainer from "../../../../../../../common/table/FilterContainer";
+import CustomTable from "components/common/table/CustomTable";
+import {getStaticIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import GithubActionsWorkflowActionableInsight3 from "../ActionableInsights3/GithubActionsWorkflowActionableInsight3";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportActionableInsights1Panel
   from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
-
 import {githubActionsWorkflowActionableInsights2Metadata} from "./githubActionsWorkflowActionableInsights2.metadata";
+import {
+  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
 
-function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
-                                                        kpiConfiguration,dashboardData, repoName, appName,
-                                                        branchName, workflowName, stats }) {
+function GithubActionsWorkflowActionableInsightTable2(
+  {
+    data,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+    stats,
+    setCurrentScreen,
+    setSelectedJobName,
+  }) {
   const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowActionableInsights2Metadata.fields;
-  const toastContext = useContext(DialogToastContext);
   const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
@@ -42,17 +49,8 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showInfoOverlayPanel(
-      <GithubActionsWorkflowActionableInsight3
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        appName={appName}
-        repoName={repoName}
-        workflowName={workflowName}
-        branchName={branchName}
-        jobName={rowData.original.jobName}
-      />
-    );
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY);
+    setSelectedJobName(rowData?.original?.jobName);
   };
 
   const getBody = () => {
@@ -130,13 +128,9 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  repoName:PropTypes.string,
-  appName: PropTypes.string,
-  branchName: PropTypes.string,
-  workflowName: PropTypes.string,
-  stats: PropTypes.object
+  stats: PropTypes.object,
+  setSelectedJobName: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
 };
 
 export default GithubActionsWorkflowActionableInsightTable2;

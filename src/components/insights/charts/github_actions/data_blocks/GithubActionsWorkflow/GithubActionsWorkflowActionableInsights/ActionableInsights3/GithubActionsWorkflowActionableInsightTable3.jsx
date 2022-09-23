@@ -1,21 +1,24 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import {githubActionsWorkflowActionableInsights3Metadata} from "./githubActionsWorkflowActionableInsights3.metadata";
-import CustomTable from "../../../../../../../common/table/CustomTable";
-import {getTableTextColumn} from "../../../../../../../common/table/table-column-helpers";
-import {getField} from "../../../../../../../common/metadata/metadata-helpers";
-import FilterContainer from "../../../../../../../common/table/FilterContainer";
-import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import { githubActionsWorkflowActionableInsights3Metadata } from "./githubActionsWorkflowActionableInsights3.metadata";
+import CustomTable from "components/common/table/CustomTable";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportActionableInsights1Panel
     from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 
-function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadData, filterModel, setFilterModel, stats,
-                                                        kpiConfiguration,dashboardData, repoName, appName,
-                                                        branchName, workflowName }) {
-  const toastContext = useContext(DialogToastContext);
+function GithubActionsWorkflowActionableInsightTable3(
+  {
+    data,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+    stats,
+  }) {
   const tableTitle = "Github Actions Workflow Step Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsWorkflowActionableInsights3Metadata.fields;
@@ -24,6 +27,7 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "jobName")),
+      getTableTextColumn(getField(fields, "runs")),
       getTableTextColumn(getField(fields, "jobs")),
       getTableTextColumn(getField(fields, "jobsSuccess")),
       getTableTextColumn(getField(fields, "jobsFailures")),
@@ -36,7 +40,7 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
     ],
-    []
+    [],
   );
 
   const getBody = () => {
@@ -61,16 +65,17 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
       />
     );
   };
-    const getTable = () => {
-        if (showExportPanel === true) {
-            return (
-                <ExportGithubActionsWorkflowReportActionableInsights1Panel
-                    showExportPanel={showExportPanel}
-                    setShowExportPanel={setShowExportPanel}
-                    githubActionData={data}
-                />
-            );
-        }
+
+  const getTable = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          githubActionData={data}
+        />
+      );
+    }
 
     return (
       <CustomTable
@@ -89,13 +94,13 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={'mr-4'}>
+          <div className={"mr-4"}>
             <b>Most Skipped Steps:</b> {stats?.mostSkipped}
           </div>
-          <div className={'mr-4'}>
+          <div className={"mr-4"}>
             <b>Most Failed Steps:</b> {stats?.mostFailed}
           </div>
-          <div className={'mr-4'}>
+          <div className={"mr-4"}>
             <b>Most Time Consuming Steps:</b> {stats?.mostTime}
           </div>
         </div>
@@ -113,13 +118,7 @@ GithubActionsWorkflowActionableInsightTable3.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  repoName:PropTypes.string,
-  appName: PropTypes.string,
-  branchName: PropTypes.string,
-  workflowName: PropTypes.string,
-  stats: PropTypes.object
+  stats: PropTypes.object,
 };
 
 export default GithubActionsWorkflowActionableInsightTable3;
