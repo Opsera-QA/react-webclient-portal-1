@@ -46,16 +46,16 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
 
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
-        <GithubActionsWorkflowActionableInsights2
-            workflowName={workflowName}
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            appName={rowData.original.appName}
-            repoName={rowData.original.repoName}
-            workflow={rowData.original.workflow}
-            branchName={rowData.original.branchName}
-            workflowRuns={rowData.original.runs}
-        />
+      <GithubActionsWorkflowActionableInsights2
+        workflowName={workflowName}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        appName={rowData.original.appName}
+        repoName={rowData.original.repoName}
+        workflow={rowData.original.workflow}
+        branchName={rowData.original.branchName}
+        workflowRuns={rowData.original.runs}
+      />
     );
   };
 
@@ -110,12 +110,12 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-                <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
-            </div>
-            <div className={'mr-4'}>
-                <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
-            </div>
+          <div className={'mr-4'}>
+            <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+            <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
+          </div>
         </div>
       </div>
       <div className={"p-2"}>

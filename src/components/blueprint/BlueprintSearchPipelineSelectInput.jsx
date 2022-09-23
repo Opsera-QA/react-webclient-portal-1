@@ -7,6 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, showLabel}) {
   const toastContext = useContext(DialogToastContext);
@@ -14,37 +15,26 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   const [pipelines, setPipelines] = useState([]);
   const [disabledPipelines, setDisabledPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPipeline, setCurrentPipeline] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source, searchTerm).catch((error) => {
+    loadData(searchTerm).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [searchTerm]);
 
-  const loadData = async (cancelSource = cancelTokenSource, searchTerm) => {
+  const loadData = async (searchTerm) => {
     let canceled = false;
     try {
       setIsLoading(true);
-      canceled = await loadPipelines(cancelSource, searchTerm);
+      canceled = await loadPipelines(searchTerm);
     }
     catch (error) {
       if(isMounted?.current === true){
@@ -59,7 +49,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     }
   };
 
-  const loadPipelines = async (cancelSource = cancelTokenSource, searchTerm) => {
+  const loadPipelines = async (searchTerm) => {
     const fields = [
       "name",
       "_id",
@@ -67,7 +57,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       "roles",
       "workflow.run_count"
     ];
-    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelSource, undefined, searchTerm, "all", fields);
+    const response = await pipelineActions.getPipelinesV3(getAccessToken, cancelTokenSource, undefined, searchTerm, "all", fields);
     const pipelines = response?.data?.data;
 
     if (Array.isArray(pipelines) && pipelines.length > 0) {
@@ -106,6 +96,18 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     setDataObject({...newDataObject});
   };
 
+  const getTextField = (pipeline) => {
+    if (pipeline) {
+      return `${pipeline?.name} (${pipeline?._id})`;
+    }
+
+    if (isLoading) {
+      return "Loading Data";
+    }
+
+    return dataObject?.getData(fieldName);
+  };
+
   if (visible === false) {
     return <></>;
   }
@@ -126,7 +128,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       dataObject={dataObject}
       setDataObject={setDataObject}
       valueField={"_id"}
-      textField={(pipeline) => `${pipeline?.name} (${pipeline?._id})`}
+      textField={getTextField}
       setDataFunction={setDataFunction}
       busy={isLoading}
       placeholderText={"Select A Pipeline"}

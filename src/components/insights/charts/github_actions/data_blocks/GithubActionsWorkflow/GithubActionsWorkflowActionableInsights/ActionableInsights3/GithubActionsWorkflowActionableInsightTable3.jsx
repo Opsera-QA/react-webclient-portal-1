@@ -51,12 +51,12 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
         filterDto={filterModel}
         supportSearch={true}
         exportButton={
-        <ExportGithubActionsWorkflowReportButton
-          className={"ml-2"}
-          setShowExportPanel={setShowExportPanel}
-          showExportPanel={showExportPanel}
-        />
-      }
+          <ExportGithubActionsWorkflowReportButton
+            className={"ml-2"}
+            setShowExportPanel={setShowExportPanel}
+            showExportPanel={showExportPanel}
+          />
+        }
       />
     );
   };
@@ -75,26 +75,26 @@ function GithubActionsWorkflowActionableInsightTable3({ data, isLoading, loadDat
     );
   };
 
-    return (
-        <div>
-            <div className={"p-2"}>
-                <div className={"d-flex details-title-text"}>
-                    <div className={'mr-4'}>
-                        <b>Most Skipped Steps:</b> {stats?.mostSkipped}
-                    </div>
-                    <div className={'mr-4'}>
-                        <b>Most Failed Steps:</b> {stats?.mostFailed}
-                    </div>
-                    <div className={'mr-4'}>
-                        <b>Most Time Consuming Steps:</b> {stats?.mostTime}
-                    </div>
-                </div>
-            </div>
-            <div className={"p-2"}>
-                {getBody()}
-            </div>
+  return (
+    <div>
+      <div className={"p-2"}>
+        <div className={"d-flex details-title-text"}>
+          <div className={'mr-4'}>
+            <b>Most Skipped Steps:</b> {stats?.mostSkipped}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Failed Steps:</b> {stats?.mostFailed}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Time Consuming Steps:</b> {stats?.mostTime}
+          </div>
         </div>
-    );
+      </div>
+      <div className={"p-2"}>
+        {getBody()}
+      </div>
+    </div>
+  );
 }
 
 GithubActionsWorkflowActionableInsightTable3.propTypes = {

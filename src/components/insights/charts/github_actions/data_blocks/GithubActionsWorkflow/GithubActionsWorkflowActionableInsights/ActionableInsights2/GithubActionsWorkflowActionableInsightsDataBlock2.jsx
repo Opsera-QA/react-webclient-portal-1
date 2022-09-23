@@ -90,11 +90,11 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                      score={metrics?.uniqueJobNames}
-                      subtitle={'Total Unique Job Names'}
-                      icon={faInfoCircle}
-                      iconOverlayTitle={''}
-                      iconOverlayBody={'The total number of unique job names'}
+                    score={metrics?.uniqueJobNames}
+                    subtitle={'Total Unique Job Names'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of unique job names'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -103,11 +103,11 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                      score={metrics?.runs}
-                      subtitle={'Total Jobs'}
-                      icon={faInfoCircle}
-                      iconOverlayTitle={''}
-                      iconOverlayBody={'The total number of jobs'}
+                    score={metrics?.runs}
+                    subtitle={'Total Jobs'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The total number of jobs'}
                   />
                 </div>
               </DataBlockBoxContainer>
@@ -116,11 +116,11 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
               <DataBlockBoxContainer showBorder={true}>
                 <div className={'p-2'}>
                   <TwoLineScoreDataBlock
-                      score={metrics?.runsExecuted}
-                      subtitle={'Jobs Executed'}
-                      icon={faInfoCircle}
-                      iconOverlayTitle={''}
-                      iconOverlayBody={'The jobs that were executed'}
+                    score={metrics?.runsExecuted}
+                    subtitle={'Jobs Executed'}
+                    icon={faInfoCircle}
+                    iconOverlayTitle={''}
+                    iconOverlayBody={'The jobs that were executed'}
                   />
                 </div>
               </DataBlockBoxContainer>
