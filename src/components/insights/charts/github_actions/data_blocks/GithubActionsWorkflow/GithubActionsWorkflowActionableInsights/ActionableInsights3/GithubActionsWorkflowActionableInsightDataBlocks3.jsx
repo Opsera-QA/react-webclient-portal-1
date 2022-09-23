@@ -12,76 +12,76 @@ import githubActionsWorkflowActions from "../../github-actions-workflow-actions"
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
 function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflowName, jobName }) {
-    const { getAccessToken } = useContext(AuthContext);
-    const isMounted = useRef(false);
-    const [error, setError] = useState(undefined);
-    const [metrics, setMetrics] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { getAccessToken } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-    const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setIsLoading(true);
-            let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
-            let dashboardTags = dashboardMetricFilter?.tags;
-            let dashboardOrgs = dashboardMetricFilter?.organizations;
-            const response = await githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks(
-                kpiConfiguration,
-                getAccessToken,
-                cancelSource,
-                dashboardTags,
-                dashboardOrgs,
-                workflowName,
-                repoName,
-                appName,
-                branchName,
-                jobName
-            );
-            let dataObject = response?.data?.data[0];
-            if (isMounted?.current === true && dataObject) {
-                setMetrics(dataObject);
-            }
-        }
-        catch (error) {
-            if (isMounted?.current === true) {
-                console.error(error);
-                setError(error);
-            }
-        }
-        finally {
-            if (isMounted?.current === true) {
-                setIsLoading(false);
-            }
-        }
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+      let dashboardTags = dashboardMetricFilter?.tags;
+      let dashboardOrgs = dashboardMetricFilter?.organizations;
+      const response = await githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks(
+          kpiConfiguration,
+          getAccessToken,
+          cancelSource,
+          dashboardTags,
+          dashboardOrgs,
+          workflowName,
+          repoName,
+          appName,
+          branchName,
+          jobName
+      );
+      let dataObject = response?.data?.data[0];
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
     };
+  }, [JSON.stringify(dashboardData)]);
 
 
-    useEffect(() => {
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
-        }
-
-        const source = axios.CancelToken.source();
-        setCancelTokenSource(source);
-
-        isMounted.current = true;
-        loadData(source).catch((error) => {
-            if (isMounted?.current === true) {
-                throw error;
-            }
-        });
-
-        return () => {
-            source.cancel();
-            isMounted.current = false;
-        };
-    }, [JSON.stringify(dashboardData)]);
-
-
-    const getBody = () => {
-        if (isLoading) {
-            return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
-        }
+  const getBody = () => {
+    if (isLoading) {
+      return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
+    }
 
         return (
             <>
@@ -92,7 +92,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
                                 <div className={'p-2'}>
                                     <TwoLineScoreDataBlock
                                         score={metrics?.totalJobs}
-                                        subtitle={'Total Steps'}
+                                        subtitle={'Total Steps Run'}
                                         icon={faInfoCircle}
                                         iconOverlayTitle={''}
                                         iconOverlayBody={'The total number of steps in the repository'}
@@ -236,17 +236,17 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
         );
     };
 
-    return getBody();
+  return getBody();
 }
 
 GithubActionsWorkflowActionableInsightDataBlocks3.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    workflowName: PropTypes.string,
-    repoName: PropTypes.string,
-    appName: PropTypes.string,
-    branchName: PropTypes.string,
-    jobName: PropTypes.string
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  workflowName: PropTypes.string,
+  repoName: PropTypes.string,
+  appName: PropTypes.string,
+  branchName: PropTypes.string,
+  jobName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsightDataBlocks3;
