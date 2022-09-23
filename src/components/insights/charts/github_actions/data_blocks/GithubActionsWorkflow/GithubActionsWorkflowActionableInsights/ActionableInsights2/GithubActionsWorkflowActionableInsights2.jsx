@@ -7,7 +7,7 @@ import GithubActionsWorkflowActionableInsightDataBlocks2 from "./GithubActionsWo
 import GithubActionsWorkflowActionableTableOverlay2 from "./GithubActionsWorkflowActionableTableOverlay2";
 import axios from "axios";
 
-function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName}) {
+function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardData, workflowName, repoName, appName, workflow, branchName, jobName, workflowRuns}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -50,6 +50,9 @@ function GithubActionsWorkflowActionableInsight2({ kpiConfiguration, dashboardDa
             </div>
             <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Workflow Runs:</b> {workflowRuns}
             </div>
           </div>
         </div>
@@ -101,7 +104,8 @@ GithubActionsWorkflowActionableInsight2.propTypes = {
   appName: PropTypes.string,
   workflow: PropTypes.string,
   branchName: PropTypes.string,
-  jobName: PropTypes.string
+  jobName: PropTypes.string,
+  workflowRuns: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsight2;

@@ -54,6 +54,7 @@ function GitlabActionsWorkflowActionableInsightTable1({ data, isLoading, loadDat
             repoName={rowData.original.repoName}
             workflow={rowData.original.workflow}
             branchName={rowData.original.branchName}
+            workflowRuns={rowData.original.runs}
         />
     );
   };
