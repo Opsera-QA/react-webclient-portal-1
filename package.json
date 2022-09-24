@@ -25,6 +25,7 @@
     "@okta/okta-signin-widget": "^6.5.0",
     "@opsera/dhx-suite-package": "^7.1.2",
     "@opsera/definitions": "latest",
+    "@opsera/know-your-role": "latest",
     "@opsera/persephone": "latest",
     "@types/react-router-dom": "^5.1.7",
     "ace-builds": "^1.4.14",
@@ -72,6 +73,7 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.jsx .",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
+    "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install",
     "start-linux-mac": "npm run refresh-internal-libraries && PORT=8080 react-scripts start",
     "start-windows": "set PORT=8080&& react-scripts start",
     "build:kube-generic": "env-cmd -f .env.kube-generic react-scripts build && mv build build-kube-generic",

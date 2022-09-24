@@ -3,6 +3,7 @@ import baseActions from "../../utils/actionsBase";
 import { stringHelper } from "components/common/helpers/string/string.helper";
 import { generateUUID } from "components/common/helpers/string-helpers";
 import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
+import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
@@ -19,7 +20,7 @@ userActions.getAnalyticsSettings = async (getAccessToken) => {
 
 //Check if the email is already registered in the system
 userActions.isEmailAvailable = async (cancelTokenSource, emailAddress) => {
-  const token = apiTokenHelper.generateApiCallToken("does-email-exist");
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.DOES_EMAIL_EXIST);
   const apiUrl = "/users/check-email";
   const postBody = {
     email: emailAddress,
@@ -78,7 +79,7 @@ userActions.createFreeTrialAccount = async (cancelTokenSource, registrationModel
   finalObject.attributes = attributes;
   finalObject.configuration = configuration;
   finalObject.organizationName = `${stringHelper.replaceSpacesWithUnderscores(company)}-${finalObject?.email}-${generateUUID()}`;
-  const token = apiTokenHelper.generateApiCallToken("create-opsera-account");
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
   const apiUrl = "/users/create";
 
   return await baseActions.customTokenApiPostCallV2(
@@ -104,7 +105,7 @@ userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto)
   delete finalObject["cloudProvider"];
   finalObject["configuration"] = configuration;
   finalObject["attributes"] = attributes;
-  const token = apiTokenHelper.generateApiCallToken("create-opsera-account");
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
   const apiUrl = "/users/create";
 
   return await baseActions.customTokenApiPostCallV2(
@@ -150,7 +151,7 @@ userActions.createAwsMarketplaceOpseraAccount = async (cancelTokenSource, regist
 
   finalObject["configuration"] = configuration;
   finalObject["attributes"] = attributes;
-  const token = apiTokenHelper.generateApiCallToken("create-opsera-account");
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
 
   return await baseActions.customTokenApiPostCallV2(
     cancelTokenSource,
