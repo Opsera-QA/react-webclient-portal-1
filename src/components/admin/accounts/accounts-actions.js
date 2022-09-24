@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
+import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 const accountsActions = {};
 
@@ -141,7 +142,7 @@ accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTok
 };
 
 accountsActions.isFreeTrialAccountActive = async (cancelTokenSource, email) => {
-  const token = apiTokenHelper.generateApiCallToken("is-account-active");
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.IS_ACCOUNT_ACTIVE);
   const apiUrl = "/users/trial/is-account-active";
   const postBody = {
     email: email,
