@@ -13,7 +13,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
     return {
       x: new Date(timestamp),
       y: timestamp.substr(11, 2) + "." + hoursFraction,
-      commitTimeStamp: timestamp,
+      commitTimeStamp: new Date(timestamp).toLocaleString(),
       repositoryName: commit["repositoryName"],
       userName: commit["userName"],
       leadTime: commit["leadTime"],
@@ -41,8 +41,8 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       type: "deploy", // type not api not used here
       x: new Date(timestamp),
       y: 24,
-      stepFinishedAt: timestamp,
-      stepType: deployment?.stepType,
+      stepFinishedAt: new Date(timestamp).toLocaleString(),
+      stepName: deployment?.stepName,
       deployAverageLeadTime: deployment?.deployAverageLeadTime,
       stepId: deployment?.stepId,
     };
@@ -102,7 +102,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
                     Deployment Time: <strong>{node?.data?.stepFinishedAt}</strong>
                   </div>
                   <div className={"py-1"}>
-                    Deployment Stage: <strong>{node?.data?.stepType}</strong>
+                    Deployment Stage: <strong>{node?.data?.stepName}</strong>
                   </div>
                   <div className={"py-1"}>
                     Average Lead Time: <strong>{node?.data?.deployAverageLeadTime || "NA"}</strong> Day(s)
