@@ -29,8 +29,6 @@ export default function NewKpiDataPointOverlay(
     return null;
   }
 
-  kpiDataPointModel.loadData = loadData;
-
   return (
     <CreateCenterPanel
       objectType={kpiDataPointModel?.getType()}
