@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import PipelineExportToGitOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function PipelineWorkflowExportWorkflowButton(
   {
@@ -20,7 +19,7 @@ export default function PipelineWorkflowExportWorkflowButton(
   }) {
   const {
     isOpseraAdministrator,
-    accessRoleData,
+    userData,
     toastContext,
   } = useComponentStateReference();
   const tooltip =
@@ -38,13 +37,9 @@ export default function PipelineWorkflowExportWorkflowButton(
   };
 
   // TODO: Wire up role definitions
-  if (WorkflowAuthorizedActions.workflowItems(
-    accessRoleData,
-    "view_pipeline_configuration",
-    pipeline?.owner,
-    pipeline?.roles,
-  ) !== true
-  || editingWorkflow === true
+  if (
+    PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true
+    || editingWorkflow === true
   ) {
     return null;
   }

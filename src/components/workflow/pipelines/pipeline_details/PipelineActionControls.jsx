@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import ApprovalModal from "../../approvalModal";
@@ -15,11 +14,8 @@ import {
   faRedo,
   faFlag, faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
-import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import pipelineHelpers from "../../pipelineHelpers";
-import axios from "axios";
 import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
@@ -30,6 +26,8 @@ import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistant
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import SapCpqPipelineRunAssistantOverlay from "../../run_assistants/sap_cpq/SapCpqPipelineRunAssistantOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -37,12 +35,9 @@ let internalRefreshCount = 1;
 function PipelineActionControls(
   {
     pipeline,
-    customerAccessRules,
     disabledActionState,
     fetchData,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [workflowStatus, setWorkflowStatus] = useState(false);
   const [resetPipeline, setResetPipeline] = useState(false);
   const [startPipeline, setStartPipeline] = useState(false);
@@ -61,9 +56,13 @@ function PipelineActionControls(
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
+  const {
+    isMounted,
+    cancelTokenSource,
+    userData,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   /***
    * Used to get status of Pipeline Queuing Flag specifically
@@ -72,26 +71,6 @@ function PipelineActionControls(
   const getFeatureFlags = async () => {
     const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
     return response?.data;
-  };
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const authorizedAction = (action, owner) => {
-    let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
@@ -547,7 +526,7 @@ function PipelineActionControls(
                     onClick={() => {
                       handleStopWorkflowClick(pipeline._id);
                     }}
-                    disabled={!authorizedAction("stop_pipeline_btn", pipeline.owner)}>
+                    disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}>
                 <IconBase isLoading={stopPipeline} icon={faStopCircle} className="mr-1" />
               Stop
             </Button>
@@ -565,7 +544,7 @@ function PipelineActionControls(
                       onClick={() => {
                         handleApprovalClick();
                       }}
-                      disabled={!authorizedAction("approve_step_btn", pipeline.owner)}>
+                      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}>
                   <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />Approve</Button>
             </OverlayTrigger>
           </>}
@@ -582,7 +561,7 @@ function PipelineActionControls(
                       onClick={() => {
                         handleRunPipelineClick(pipeline._id);
                       }}
-                      disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline || hasQueuedRequest}>
+                      disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || startPipeline || hasQueuedRequest}>
                 {startPipeline ? <><IconBase isLoading={true} icon={faSpinner} className={"mr-1"} /> Starting</> :
                   <><IconBase icon={faPlay} className={"mr-1"} /> Start Pipeline</>}
               </Button>
@@ -619,7 +598,7 @@ function PipelineActionControls(
                     onClick={() => {
                       handleResumeWorkflowClick(pipeline._id);
                     }}
-                    disabled={!authorizedAction("start_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+                    disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || startPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
@@ -636,7 +615,7 @@ function PipelineActionControls(
                       onClick={() => {
                         handleResetWorkflowClick(pipeline._id);
                       }}
-                      disabled={!authorizedAction("reset_pipeline_btn", pipeline.owner) || disabledActionState || startPipeline}>
+                      disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || disabledActionState || startPipeline}>
                   <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
                 <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
@@ -707,7 +686,6 @@ function renderTooltip(props) {
 
 PipelineActionControls.propTypes = {
   pipeline: PropTypes.object,
-  customerAccessRules: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
 };
