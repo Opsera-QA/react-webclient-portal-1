@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import scriptsLibrariesRoles from "@opsera/know-your-role/roles/registry/script_library/scriptsLibrary.roles";
 
-function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
+function ScriptsHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -41,17 +41,13 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <AssignedRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+        <AssignedRoleAccessTable roleAccessDefinitions={scriptsLibrariesRoles} />
       </div>
       <div className={"my-2"}>
-        <SiteRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+        <SiteRoleAccessTable roleAccessDefinitions={scriptsLibrariesRoles} />
       </div>
     </HelpOverlayBase>
   );
 }
-
-ScriptsHelpDocumentation.propTypes = {
-  scriptRoleDefinitions: PropTypes.object,
-};
 
 export default React.memo(ScriptsHelpDocumentation);

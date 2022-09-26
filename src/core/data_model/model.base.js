@@ -1,6 +1,8 @@
 import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -16,14 +18,22 @@ export const temporaryObjectProperties = [
   "__v"
 ];
 
-export class ModelBase {
-  constructor(data, metaData, newModel, setStateFunction) {
+// TODO: Investigate making this a hook
+export default class ModelBase {
+  constructor(
+    data,
+    metaData,
+    newModel,
+    setStateFunction,
+    loadDataFunction,
+  ) {
     this.metaData = dataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
+    this.loadDataFunction = loadDataFunction;
     this.changeMap = new Map();
     this.initializeObjectProperties({...metaData});
     this.isLoading = false;
@@ -31,8 +41,10 @@ export class ModelBase {
     this.deleteAllowed = false;
     this.editAccessRolesAllowed = false;
     this.roleDefinitions = {};
+    this.userData = undefined;
   }
 
+  // TODO: This causes numerous problems and should be removed asap
   initializeObjectProperties = (metaData) => {
     const fields = metaData?.fields;
     if (Array.isArray(fields)) {
@@ -252,6 +264,10 @@ export class ModelBase {
     return this.trimStrings();
   };
 
+  getCurrentData = () => {
+    return this.data;
+  };
+
   trimStrings = () => {
     let data = this.data;
 
@@ -416,11 +432,6 @@ export class ModelBase {
     return field?.maxItems;
   };
 
-  getId = (fieldName) => {
-    const field = this.getFieldById(fieldName);
-    return field?.id;
-  };
-
   getMongoDbId = () => {
     return this.getData("_id");
   };
@@ -470,8 +481,11 @@ export class ModelBase {
     return dataParsingHelper.cloneDeep(this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
-    return new ModelBase({...newData}, this.metaData, isNew);
+  getNewInstance = (newData = this.getNewObjectFields()) => {
+    const parsedData = DataParsingHelper.parseObject(newData, this.getNewObjectFields());
+    const newInstance = this;
+    newInstance.data = { ...parsedData };
+    return newInstance;
   };
 
   canUpdate = () => {
@@ -482,24 +496,13 @@ export class ModelBase {
     return this.deleteAllowed === true;
   };
 
-  // TODO: Implement
-  // isOwner = () => {
-  //
-  // };
-
   canEditAccessRoles = () => {
     return this.canUpdate() === true && this.editAccessRolesAllowed === true;
-  };
-
-  canPerformAction = () => {
-    return false;
   };
 
   handleLiveMessage = (liveMessage) => {
     throw "This action is not supported yet";
   };
 }
-
-export default ModelBase;
 
 
