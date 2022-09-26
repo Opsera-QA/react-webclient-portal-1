@@ -1,10 +1,10 @@
 import ModelBase from "core/data_model/model.base";
 import taskActions from "components/tasks/task.actions";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export class TaskModel extends ModelBase {
   constructor(
     data,
-    metaData,
     newModel,
     getAccessToken,
     cancelTokenSource,
@@ -13,7 +13,7 @@ export class TaskModel extends ModelBase {
     canDelete = false,
     setStateFunction,
     ) {
-    super(data, metaData, newModel);
+    super(data, tasksMetadata, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;

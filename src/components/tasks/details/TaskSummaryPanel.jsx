@@ -17,7 +17,7 @@ import TaskOrchestrationNotificationInlineInput
   from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
-import GitScraperActionButton from "components/tasks/buttons/gitscraper/GitScraperActionButton";
+import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";

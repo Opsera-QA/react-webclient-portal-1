@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import taskActions from "components/tasks/task.actions";
@@ -10,7 +9,6 @@ import TaskConfigurationPanel
   from "components/tasks/details/tasks/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import AwsEcsClusterCreationTaskHelpDocumentation
   from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
@@ -36,40 +34,25 @@ import modelHelpers from "components/common/model/modelHelpers";
 import SfdcQuickDeployTaskHelpDocumentation
   from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
 import GitCustodianTaskHelpDocumentation from "../../common/help/documentation/tasks/GitCustodianTaskHelpDocumentation";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TaskEditorPanel({ taskData, handleClose }) {
-  const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const [taskModel, setTaskModel] = useState(undefined);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    isSaasUser,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+    setTaskModel(undefined);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    if (isMounted?.current === true) {
+    if (taskData) {
       setTaskModel({...taskData});
     }
-  };
+  }, [taskData]);
 
   const createGitTask = async () => {
     const configuration = taskConfigurationModel ? taskConfigurationModel.getPersistData() : {};
@@ -149,7 +132,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
   };
 
   const getDynamicFields = () => {
-    if (taskModel?.isNew() && !isSassUser()) {
+    if (taskModel?.isNew() && isSaasUser === false) {
       return (
         <Col lg={12} className="mb-4">
           <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>

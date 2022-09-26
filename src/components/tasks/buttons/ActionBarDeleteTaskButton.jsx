@@ -25,9 +25,8 @@ export default function ActionBarDeleteTaskButton(
 
     if (taskModel != null && accessRoleData != null) {
       // TODO: Wire up through the model when ready
-      // TODO: Make admin delete one
       if (taskModel?.getData("type") === "sfdc-cert-gen") {
-        setCanDelete(TaskRoleHelper.canDeleteTask(userData, taskModel?.getPersistData()));
+        setCanDelete(TaskRoleHelper.canDeleteAdminTask(userData, taskModel?.getPersistData()));
       } else {
         setCanDelete(TaskRoleHelper.canDeleteTask(userData, taskModel?.getPersistData()));
       }
