@@ -22,7 +22,7 @@ function ToolApplicationsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Applications"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_applications")}
+      accessRestricted={toolModel?.canUpdateRegistryToolApplications() !== true}
     />
   );
 }

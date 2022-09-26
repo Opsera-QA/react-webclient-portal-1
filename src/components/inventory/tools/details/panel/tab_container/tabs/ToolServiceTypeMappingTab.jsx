@@ -21,7 +21,7 @@ function ToolServiceTypeMappingTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Validation Rules"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_applications")}
+      accessRestricted={toolModel.canUpdateRegistryToolApplications() !== true}
     />
   );
 }
