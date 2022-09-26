@@ -16,98 +16,83 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, disabled }) {
-  const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const toastContext = useContext(DialogToastContext);
   const [roles, setRoles] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingGroups, setLoadingGroups] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    isSaasUser,
+    accessRoleData,
+    userData,
+    getAccessToken,
+  } = useComponentStateReference();
+  const field = dataObject?.getFieldById(fieldName);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (isSaasUser === false) {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
+  }, [userData]);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const {ldap} = user;
-    const userRoleAccess = await setAccessRoles(user);
+  const loadData = async () => {
     unpackData();
 
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
+    const ldap = userData?.ldap;
+    if (accessRoleData) {
       if (ldap.domain != null) {
-        await getGroupsByDomain(cancelSource, ldap.domain);
-        await getLdapUsers(cancelSource, ldap.domain);
+        await getGroupsByDomain(ldap.domain);
+        await getLdapUsers(ldap.domain);
       }
     }
   };
 
-  const getGroupsByDomain = async (cancelSource = cancelTokenSource, ldapDomain) => {
+  const getGroupsByDomain = async (ldapDomain) => {
     try {
       setLoadingGroups(true);
-      let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
+      const response = await accountsActions.getLdapUserGroupsWithDomainV2(
+        getAccessToken,
+        cancelTokenSource,
+        ldapDomain,
+      );
 
-      const groupResponse = response?.data;
-
-      if (Array.isArray(groupResponse) && groupResponse.length > 0) {
-        let filteredGroups = [];
-
-        groupResponse.map((group) => {
-          let groupType = group.groupType.toLowerCase();
-          if (groupType !== "role" && groupType !== "dept") {
-            filteredGroups.push(group);
-          }
-        });
-
-        setGroupList(filteredGroups);
-      }
+      const newGroups = DataParsingHelper.parseArray(response?.data?.data, []);
+      setGroupList(newGroups);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error);
     } finally {
       setLoadingGroups(false);
     }
   };
 
-  const getLdapUsers = async (cancelSource = cancelTokenSource, ldapDomain) => {
+  const getLdapUsers = async (ldapDomain) => {
     try {
       setLoadingUsers(true);
-      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, ldapDomain);
+      const response = await accountsActions.getLdapUsersWithDomainV2(
+        getAccessToken,
+        cancelTokenSource,
+        ldapDomain,
+      );
 
       if (response?.data) {
         setUserList(response.data);
       }
-
     } catch (error) {
+      console.error("error: " + JSON.stringify(error));
       toastContext.showLoadingErrorDialog(error);
-      console.error(error);
     } finally {
       setLoadingUsers(false);
     }
@@ -447,7 +432,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     `);
   };
 
-  if (field == null || isSassUser() === true) {
+  if (field == null || isSaasUser === true) {
     return <></>;
   }
 

@@ -2,19 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import ActionBarViewDetailsButtonBase from "components/common/actions/buttons/ActionBarViewDetailsButtonBase";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function ActionBarShowPipelineSummaryOverlayButton({pipeline, isActionAllowedFunction}) {
+function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
   const {
     toastContext,
     isOpseraAdministrator,
+    userData,
   } = useComponentStateReference();
 
   const showDetailsFunction = () => {
     toastContext.showOverlayPanel(<PipelineDetailsOverviewOverlay pipeline={pipeline} />);
   };
 
-  if (pipeline == null || isActionAllowedFunction("view_template_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canViewPipelineTemplate(userData, pipeline) !== true) {
     return null;
   }
 
@@ -40,5 +42,6 @@ export default function ActionBarShowPipelineSummaryOverlayButton({pipeline, isA
 
 ActionBarShowPipelineSummaryOverlayButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func
 };
+
+export default ActionBarShowPipelineSummaryOverlayButton;

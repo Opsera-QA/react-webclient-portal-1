@@ -7,10 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function SingleTagUsedInToolsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -74,7 +74,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
           return (
             <Col md={6} key={tool._id}>
               <RegistryToolSummaryCard
-                toolData={new Model(tool, toolMetadata, false)}
+                toolData={new Model(tool, registryToolMetadata, false)}
                 loadToolInNewWindow={false}
                 closePanel={closePanel}
               />

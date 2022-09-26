@@ -2,16 +2,18 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarDuplicateButtonBase from "components/common/actions/buttons/ActionBarDuplicateButtonBase";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
+function ActionBarDuplicatePipelineButton({pipeline}) {
   const [isDuplicating, setIsDuplicating] = useState(false);
   const {
-    toastContext,
     cancelTokenSource,
     isMounted,
     isOpseraAdministrator,
     getAccessToken,
+    toastContext,
+    userData,
   } = useComponentStateReference();
 
   const duplicatePipelineFunction = async () => {
@@ -32,7 +34,7 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
     }
   };
 
-  if (pipeline == null || isActionAllowedFunction("duplicate_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canDuplicatePipeline(userData, pipeline) !== true) {
     return null;
   }
 
@@ -60,7 +62,6 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
 
 ActionBarDuplicatePipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func
 };
 
 export default ActionBarDuplicatePipelineButton;

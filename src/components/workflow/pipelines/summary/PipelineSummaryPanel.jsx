@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect,} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
@@ -9,31 +9,30 @@ import {
   faUser,
   faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import EditPipelineRolesOverlay from "components/workflow/EditPipelineRolesOverlay";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import InformationDialog from "components/common/status_notifications/info";
+import { AuthContext } from "contexts/AuthContext";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {
-  getPipelineTypeLabel,
-  PIPELINE_TYPE_SELECT_OPTIONS
+  getPipelineTypeLabel, PIPELINE_TYPE_SELECT_OPTIONS,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import InformationDialog from "components/common/status_notifications/info";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -70,7 +69,6 @@ function PipelineSummaryPanel(
     setPipeline,
     showActionControls,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
@@ -83,6 +81,8 @@ function PipelineSummaryPanel(
     cancelTokenSource,
     getAccessToken,
     isOpseraAdministrator,
+    userData,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -92,11 +92,6 @@ function PipelineSummaryPanel(
       }
     });
   }, []);
-
-  const authorizedAction = (action, owner) => {
-    let objectRoles = pipeline?.roles;
-    return workflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
-  };
 
   const loadData = async () => {
     try {
@@ -262,7 +257,7 @@ function PipelineSummaryPanel(
         </CustomBadgeContainer>
         }
         <div>
-          {authorizedAction("edit_tags", pipeline.owner) && isOpseraAdministrator === true && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+          {PipelineRoleHelper.canEditPipelineTags(userData, pipeline) && isOpseraAdministrator === true && parentWorkflowStatus !== "running" && getEditIcon("tags")}
         </div>
 
         {editTags &&
@@ -307,7 +302,7 @@ function PipelineSummaryPanel(
   const launchRolesEditOverlay = () => {
     const tempPipelineModel = new Model({...pipeline}, pipelineMetadata, false);
 
-    if (authorizedAction("edit_access_roles", pipeline.owner) === true) {
+    if (PipelineRoleHelper.canEditAccessRoles(userData, pipeline) === true) {
       toastContext.showOverlayPanel(
         <EditPipelineRolesOverlay
           pipelineModel={tempPipelineModel}
@@ -325,7 +320,7 @@ function PipelineSummaryPanel(
 
         {!editRoles && pipeline.roles &&
         <span className="item-field role-access">{getRoleBadges(pipeline.roles)}</span>}
-        {authorizedAction("edit_access_roles", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
+        {PipelineRoleHelper.canEditAccessRoles(userData, pipeline) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
 
         {editRoles &&
         <EditPipelineRolesOverlay setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles}
@@ -347,7 +342,7 @@ function PipelineSummaryPanel(
         <Col xs={12} sm={6}>
           <PipelineSchedulerField
             pipelineModel={pipelineModel}
-            canEditPipelineSchedule={authorizedAction("edit_pipeline_attribute", pipeline?.owner) && parentWorkflowStatus !== "running"}
+            canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
           />
         </Col>
       );
@@ -389,7 +384,7 @@ function PipelineSummaryPanel(
           </>
           :
           <>{pipeline.name}
-            {authorizedAction("edit_pipeline_name", pipeline.owner)
+            {PipelineRoleHelper.canEditPipelineName(userData, pipeline)
             && parentWorkflowStatus !== "running"
               ? getEditIcon("name")
               : null}
@@ -458,7 +453,7 @@ function PipelineSummaryPanel(
       <span>
         <span className="text-muted mr-2">Type:</span>
         {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && isOpseraAdministrator === true
+        {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && isOpseraAdministrator === true
         && parentWorkflowStatus !== "running" && !editType
           ? getEditIcon("type")
           : null}
@@ -507,7 +502,7 @@ function PipelineSummaryPanel(
       <>
         <Col sm={12} className="py-2">
           <span className="text-muted mr-1">Notes:</span>{pipeline.description}
-          {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+          {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
           && parentWorkflowStatus !== "running"
             ? getEditIcon("description")
             : null}
@@ -543,6 +538,9 @@ function PipelineSummaryPanel(
 
       <div className="pr-1">
         <Row>
+          {/*<RbacWarningField*/}
+          {/*  model={pipelineModel}*/}
+          {/*/>*/}
           <Col sm={9}>
             {getPipelineTitleField()}
           </Col>
@@ -552,7 +550,6 @@ function PipelineSummaryPanel(
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
               refreshAfterDeletion={showActionControls === false}
-              isActionAllowedFunction={authorizedAction} // TODO: Handle this without passing the function in
             />
           </Col>
           <Col sm={12} md={6} className="py-2">

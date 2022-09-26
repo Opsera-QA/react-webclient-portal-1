@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faSave} from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
 import {
   persistNewRecord,
   persistNewRecordAndAddAnother,
   persistNewRecordAndClose,
-  persistNewRecordAndViewDetails
+  persistNewRecordAndViewDetails,
 } from "./saving-helpers";
-import {useHistory} from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { useHistory } from "react-router-dom";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 
 function CreateButton(
@@ -89,11 +89,9 @@ function CreateButton(
           isIncomplete,
         );
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsSaving(false);
       }
@@ -121,7 +119,8 @@ function CreateButton(
       return (
         <div className="d-flex mr-3 mt-auto">
           <div><span className="text-muted mr-2">Add Another</span></div>
-          <div><input className="mt-1" type="checkbox" checked={addAnother} onChange={() => setAddAnother(!addAnother)} /></div>
+          <div><input className="mt-1" type="checkbox" checked={addAnother}
+                      onChange={() => setAddAnother(!addAnother)} /></div>
         </div>
       );
     }
@@ -133,7 +132,7 @@ function CreateButton(
         {getAddAnotherCheckbox()}
         {/*TODO: Make sure button is not clickable until form is valid*/}
         <Button size={size} variant={variant} disabled={isSaving || disable} onClick={() => persistRecord()}>
-          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
+          <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2" />{getLabel()}</span>
         </Button>
       </div>
     </div>
@@ -162,7 +161,7 @@ CreateButton.defaultProps = {
   showSuccessToasts: true,
   addAnotherOption: true,
   size: "md",
-  icon: faSave
+  icon: faSave,
 };
 
 export default CreateButton;

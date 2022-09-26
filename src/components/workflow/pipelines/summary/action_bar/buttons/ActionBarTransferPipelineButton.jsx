@@ -1,25 +1,22 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import CancelButton from "components/common/buttons/CancelButton";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarTransferPipelineButton(
   {
     pipeline,
     loadPipeline,
-    isActionAllowedFunction,
   }) {
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
@@ -31,16 +28,16 @@ function ActionBarTransferPipelineButton(
     isMounted,
     isOpseraAdministrator,
     getAccessToken,
+    isSaasUser,
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (isOpseraAdministrator === true) {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          toastContext.showLoadingErrorDialog(error);
-        }
-      });
-    }
+    if (isSaasUser !== true)
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    });
   }, []);
 
   const loadData = async () => {
@@ -126,7 +123,11 @@ function ActionBarTransferPipelineButton(
     // );
   }
 
-  if (pipeline == null || pipeline?.account == null || isActionAllowedFunction("transfer_pipeline_btn", pipeline.owner) !== true) {
+  if (
+    isSaasUser !== false
+    || pipeline == null
+    || pipeline?.account == null
+    || PipelineRoleHelper.canTransferPipelineOwnership(userData, pipeline) !== true) {
     return null;
   }
 
@@ -154,7 +155,6 @@ function ActionBarTransferPipelineButton(
 ActionBarTransferPipelineButton.propTypes = {
   pipeline: PropTypes.object,
   loadPipeline: PropTypes.func,
-  isActionAllowedFunction: PropTypes.func,
 };
 
 export default ActionBarTransferPipelineButton;

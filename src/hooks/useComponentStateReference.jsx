@@ -40,7 +40,8 @@ export default function useComponentStateReference() {
     isSiteAdministrator: isSiteAdministrator,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
-    isSassUser: isSassUser(), // TODO: Test this and ensure it doesn't cause anything weird
+    isSassUser: isSassUser(), // TODO: Remove and replace with the proper spelling
+    isSaasUser: isSassUser(),
     userData: userData,
     isFreeTrial: true,
     backgroundColor: backgroundColor,

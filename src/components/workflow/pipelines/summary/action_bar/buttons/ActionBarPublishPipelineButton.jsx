@@ -4,8 +4,9 @@ import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
-function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
+function ActionBarPublishPipelineButton({pipeline}) {
   const [isPublishing, setIsPublishing] = useState(false);
   const {
     toastContext,
@@ -13,6 +14,7 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
     isMounted,
     isOpseraAdministrator,
     getAccessToken,
+    userData,
   } = useComponentStateReference();
 
   const handlePublishPipelineFunction = async () => {
@@ -31,7 +33,7 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
     }
   };
 
-  if (pipeline == null || isActionAllowedFunction("publish_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canPublishPipelineToCatalog(userData, pipeline) !== true) {
     return null;
   }
 
@@ -60,7 +62,6 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
 
 ActionBarPublishPipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func,
 };
 
 export default ActionBarPublishPipelineButton;
