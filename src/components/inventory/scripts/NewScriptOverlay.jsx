@@ -1,18 +1,20 @@
-import React, {useState, useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ScriptsEditorPanel from "components/inventory/scripts/details/ScriptsEditorPanel";
-import ScriptModel from "components/inventory/scripts/script.model";
+import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
+import useGetNewScriptModel from "components/inventory/scripts/hooks/useGetNewScriptModel";
 
-function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken, cancelTokenSource }) {
+export default function NewScriptOverlay({ loadData }) {
   const toastContext = useContext(DialogToastContext);
-  const [scriptModel, setScriptModel] = useState(
-    new ScriptModel({...scriptMetadata.newObjectFields}, scriptMetadata, true, getAccessToken, cancelTokenSource, loadData, true, false, true)
-  );
+  const {
+    scriptModel,
+    setScriptModel,
+  } = useGetNewScriptModel();
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
 
@@ -21,22 +23,24 @@ function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken,
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={scriptMetadata?.type} loadData={loadData}>
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={scriptsLibraryMetadata?.type}
+      loadData={loadData}
+    >
       <div className={"mx-2"}>
-        <ScriptsEditorPanel handleClose={closePanel} setScriptModel={setScriptModel} scriptModel={scriptModel}/>
+        <ScriptsEditorPanel
+          handleClose={closePanel}
+          setScriptModel={setScriptModel}
+          scriptModel={scriptModel}
+        />
       </div>
     </CreateCenterPanel>
   );
 }
 
 NewScriptOverlay.propTypes = {
-  isMounted: PropTypes.object,
   loadData: PropTypes.func,
-  scriptMetadata: PropTypes.object,
-  getAccessToken: PropTypes.func,
-  cancelTokenSource: PropTypes.object,
 };
-
-export default NewScriptOverlay;
 
 

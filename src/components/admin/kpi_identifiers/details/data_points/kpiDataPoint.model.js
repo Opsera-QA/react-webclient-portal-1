@@ -1,29 +1,26 @@
 import ModelBase from "core/data_model/model.base";
-import {isActionAllowed} from "components/common/helpers/role-helpers";
 import kpiDataPointActions from "components/admin/kpi_identifiers/details/data_points/kpiDataPoint.actions";
+import KpiDataPointRoleHelper from "@opsera/know-your-role/roles/analytics/data_points/kpiDataPointRole.helper";
+import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 
-export class KpiDataPointModel extends ModelBase {
+export default class KpiDataPointModel extends ModelBase {
   constructor(
+    userData,
     data,
     metadata,
     newModel,
     getAccessToken,
     cancelTokenSource,
     loadData,
-    customerAccessRules,
-    roleDefinitions,
     setStateFunction,
     parentId,
   ) {
     super(data, metadata, newModel);
+    this.userData = userData;
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
     this.setStateFunction = setStateFunction;
-    this.customerAccessRules = customerAccessRules;
-    this.roleDefinitions = roleDefinitions;
-    this.updateAllowed = this.canPerformAction("update_kpi_data_point");
-    this.deleteAllowed = this.canPerformAction("delete_kpi_data_point");
     this.kpiId = parentId;
   }
 
@@ -39,6 +36,24 @@ export class KpiDataPointModel extends ModelBase {
    return await kpiDataPointActions.deleteKpiDataPointV2(this.getAccessToken, this.cancelTokenSource, this, this.kpiId);
   };
 
+  canCreate = () => {
+    return KpiDataPointRoleHelper.canCreateKpiDataPoint(this.userData);
+  };
+
+  canUpdate = () => {
+    return KpiDataPointRoleHelper.canUpdateKpiDataPoint(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canDelete = () => {
+    return KpiDataPointRoleHelper.canDeleteKpiDataPoint(
+      this.userData,
+      this.data,
+    );
+  };
+
   getDetailViewTitle = () => {
     return `${this?.getOriginalValue("name")}`;
   };
@@ -46,27 +61,6 @@ export class KpiDataPointModel extends ModelBase {
   getType = () => {
     return `KPI Data Point`;
   };
-
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new KpiDataPointModel(
-      {...newData},
-      this.metaData,
-      this.newModel,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.customerAccessRules,
-      this.roleDefinitions,
-      this.setStateFunction,
-      this.kpiId,
-    );
-  };
-
-  canPerformAction = (action) => {
-    return isActionAllowed(this.customerAccessRules, action, undefined, undefined, this.roleDefinitions, true);
-  }
 }
-
-export default KpiDataPointModel;
 
 

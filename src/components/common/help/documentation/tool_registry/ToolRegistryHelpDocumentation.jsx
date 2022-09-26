@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import PropTypes from "prop-types";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import registryToolRoles from "@opsera/know-your-role/roles/registry/tools/registryTool.roles";
 
-function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
+function ToolRegistryHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -42,20 +42,16 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
     >
       <div className={"my-2"}>
         <AssignedRoleAccessTable
-          roleAccessDefinitions={registryToolRoleDefinitions}
+          roleAccessDefinitions={registryToolRoles}
         />
       </div>
       <div className={"my-2"}>
         <SiteRoleAccessTable
-          roleAccessDefinitions={registryToolRoleDefinitions}
+          roleAccessDefinitions={registryToolRoles}
         />
       </div>
     </HelpOverlayBase>
   );
 }
-
-ToolRegistryHelpDocumentation.propTypes = {
-  registryToolRoleDefinitions: PropTypes.object,
-};
 
 export default React.memo(ToolRegistryHelpDocumentation);

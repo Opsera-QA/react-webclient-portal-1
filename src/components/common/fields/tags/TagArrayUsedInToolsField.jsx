@@ -5,13 +5,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsUsedInToolsTable from "components/reports/tags/tools/TagsUsedInToolsTable";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function TagArrayUsedInToolsField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,7 +75,7 @@ function TagArrayUsedInToolsField({ tags, showTable }) {
           return (
             <Col md={6} key={tool._id}>
               <RegistryToolSummaryCard
-                toolData={new Model(tool, toolMetadata, false)}
+                toolData={new Model(tool, registryToolMetadata, false)}
                 loadToolInNewWindow={false}
               />
             </Col>

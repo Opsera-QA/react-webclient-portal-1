@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import taskActions from "components/tasks/task.actions";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import GitRoleAccessHelpDocumentation
   from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 
 function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const [canEditRoles, setCanEditRoles] = useState(undefined);
@@ -15,7 +14,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
     getAccessToken,
     cancelTokenSource,
     isSassUser,
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -27,10 +26,8 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
   }, []);
 
   const loadData = async () => {
-    const owner = dataObject?.getData("owner");
-    const objectRoles = dataObject?.getData("roles");
-
-    setCanEditRoles(workflowAuthorizedActions.gitItems(accessRoleData, "edit_access_roles", owner, objectRoles));
+    // TODO: Wire up through the model when ready
+    setCanEditRoles(TaskRoleHelper.canEditAccessRoles(userData, dataObject?.getPersistData()));
   };
 
   const saveData = async (newRoles) => {

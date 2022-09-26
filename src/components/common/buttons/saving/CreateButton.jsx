@@ -57,7 +57,7 @@ function CreateButton(
         isIncomplete,
         );
     }
-    else if (recordDto.getDetailViewLink() != null) {
+    else if (recordDto.getDetailViewLink != null) {
       await persistNewRecordAndViewDetails(
         recordDto,
         toastContext,

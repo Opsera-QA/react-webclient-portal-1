@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
@@ -21,14 +21,10 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import { AuthContext } from "contexts/AuthContext";
-import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineStepNotificationConfigurationOverlay
   from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
@@ -37,6 +33,8 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
 import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -57,8 +55,6 @@ const PipelineWorkflowItem = (
     toolIdentifier,
     loadPipeline,
   }) => {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -70,11 +66,11 @@ const PipelineWorkflowItem = (
   const [isLoading, setIsLoading] = useState(false);
   const [isToolSet, setIsToolSet] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
-
-  const authorizedAction = (action, owner) => {
-    let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
-  };
+  const {
+    toastContext,
+    getAccessToken,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -157,7 +153,7 @@ const PipelineWorkflowItem = (
   };
 
   const handleEditClick = async (type, tool, itemId, pipelineStep) => {
-    if (!authorizedAction("edit_step_details", pipeline.owner)) {
+    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
       setInfoModal({
         show: true,
         header: "Permission Denied",
@@ -194,7 +190,7 @@ const PipelineWorkflowItem = (
   };
 
   const editStepNotificationConfiguration = async (pipelineStep) => {
-    if (!authorizedAction("edit_step_notification", pipeline.owner)) {
+    if (PipelineRoleHelper.canUpdatePipelineStepNotifications(userData, pipeline) !== true) {
       setInfoModal({
         show: true,
         header: "Permission Denied",
@@ -470,7 +466,7 @@ const PipelineWorkflowItem = (
           <div className={"ml-auto d-flex"}>
             {!editWorkflow &&
             <>
-              {authorizedAction("view_step_configuration", pipeline.owner) &&
+              {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}

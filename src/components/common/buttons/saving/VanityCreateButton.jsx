@@ -1,31 +1,37 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faSave} from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
 import {
   persistNewRecord,
   persistNewRecordAndAddAnother,
   persistNewRecordAndClose,
-  persistNewRecordAndViewDetails
+  persistNewRecordAndViewDetails,
 } from "./saving-helpers-v2";
-import {useHistory} from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function VanityCreateButton({model, setModel, disable, showSuccessToasts, handleClose, size, icon, className, showTypeOnLabel, customLabel}) {
+function VanityCreateButton(
+  {
+    model,
+    setModel,
+    disable,
+    showSuccessToasts,
+    handleClose,
+    size,
+    icon,
+    className,
+    showTypeOnLabel,
+    customLabel,
+  }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
-  let toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    isMounted,
+    toastContext,
+  } = useComponentStateReference();
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -33,7 +39,7 @@ function VanityCreateButton({model, setModel, disable, showSuccessToasts, handle
     if (addAnother) {
       await persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, setModel);
     }
-    else if (model.getDetailViewLink() != null) {
+    else if (model.getDetailViewLink != null) {
       await persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, history);
     }
     else if (handleClose != null) {

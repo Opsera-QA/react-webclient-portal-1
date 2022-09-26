@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import { AuthContext } from "contexts/AuthContext";
 import { SteppedLineTo } from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -10,18 +9,15 @@ import {
   faFileAlt,
   faCog,
   faPen,
-  faSpinner,
   faCheck,
   faClipboardCheck,
   faCode,
-  faSearchMinus, faFolder, faCodeBranch,
+  faSearchMinus, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
 import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import IconBase from "components/common/icons/IconBase";
@@ -31,6 +27,8 @@ import PipelineSourceConfigurationDetailsOverviewOverlay
 import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -42,8 +40,6 @@ function PipelineWorkflow({
   softLoading,
 }) {
   const [modalHeader, setModalHeader] = useState("");
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [lastStep, setLastStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
@@ -53,11 +49,11 @@ function PipelineWorkflow({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled; 
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
-
-  const authorizedAction = (action, owner) => {
-    let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
-  };
+  const {
+    userData,
+    toastContext,
+    getAccessToken
+   } = useComponentStateReference();
 
   useEffect(() => {
     loadFormData(pipeline);
@@ -114,7 +110,7 @@ function PipelineWorkflow({
 
   const handleViewPipelineClick = () => {
 
-    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
+    if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
       setInfoModal({
         show: true,
         header: "Permission Denied",
@@ -128,7 +124,7 @@ function PipelineWorkflow({
 
   const handleExportToGitClick = () => {
 
-    if (!authorizedAction("view_pipeline_configuration", pipeline.owner)) {
+    if (PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) !== true) {
       setInfoModal({
         show: true,
         header: "Permission Denied",
@@ -189,7 +185,7 @@ function PipelineWorkflow({
   };
 
   const handleEditSourceSettingsClick = () => {
-    if (!authorizedAction("edit_step_details", pipeline.owner)) {
+    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
       setInfoModal({
         show: true,
         header: "Permission Denied",
@@ -287,7 +283,7 @@ function PipelineWorkflow({
 
         <div className="d-flex align-items-end flex-row m-2">
           <div className="ml-auto d-flex">
-            {authorizedAction("view_step_configuration", pipeline.owner) && <OverlayTrigger
+            {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) && <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip({ message: "View Settings" })}>
@@ -344,7 +340,7 @@ function PipelineWorkflow({
       <div>
         <div className="pb-1">
 
-          {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
+          {PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) &&
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -369,7 +365,7 @@ function PipelineWorkflow({
 
           {!editWorkflow &&
           <>
-            {authorizedAction("edit_workflow_structure", pipeline.owner) && <>
+            {PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) && <>
               {!editWorkflow &&
               <OverlayTrigger
                 placement="top"
@@ -387,7 +383,7 @@ function PipelineWorkflow({
           </>}
           {!editWorkflow &&
           <>
-            {authorizedAction("view_pipeline_configuration", pipeline.owner) && <>
+            {PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) && <>
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}

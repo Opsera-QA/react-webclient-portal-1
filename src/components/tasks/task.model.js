@@ -34,19 +34,6 @@ export class TaskModel extends ModelBase {
     return await taskActions.deleteGitTaskV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
-    return new TaskModel(
-      {...newData},
-      this.metaData,
-      isNew,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.updateAllowed,
-      this.deleteAllowed,
-    );
-  };
-
   getDetailViewTitle = () => {
     return `${this.getData("name")} Task Details`;
   };

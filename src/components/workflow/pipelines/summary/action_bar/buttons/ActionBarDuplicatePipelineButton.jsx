@@ -1,32 +1,19 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ActionBarDuplicateButton from "components/common/actions/buttons/ActionBarDuplicateButton";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+function ActionBarDuplicatePipelineButton({pipeline}) {
   const [isDuplicating, setIsDuplicating] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    toastContext,
+    userData,
+  } = useComponentStateReference();
 
   const duplicatePipelineFunction = async () => {
     try {
@@ -46,7 +33,7 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
     }
   };
 
-  if (pipeline == null || isActionAllowedFunction("duplicate_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canDuplicatePipeline(userData, pipeline) !== true) {
     return null;
   }
 
@@ -62,7 +49,6 @@ function ActionBarDuplicatePipelineButton({pipeline, isActionAllowedFunction}) {
 
 ActionBarDuplicatePipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func
 };
 
 export default ActionBarDuplicatePipelineButton;

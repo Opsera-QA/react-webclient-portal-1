@@ -1,55 +1,42 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import taskActions from "components/tasks/task.actions";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
 import TaskTypeSelectInputBase from "components/common/list_of_values_input/tasks/TaskTypeSelectInputBase";
 import {TASK_TYPES} from "components/tasks/task.types";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TasksTaskTypeSelectInput({ fieldName, model, setModel, setTaskConfigurationModel, disabled, placeholderText }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const isMounted = useRef(false);
   const [canCreateCertificateGenerationTask, setCanCreateCertificateGenerationTask] = useState(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    userData,
+    cancelTokenSource,
+    isMounted,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     // TODO: Remove this check when Certificate Generation is released.
     if (!featureFlagHideItemInProd()) {
-      getTasksList(source).catch((error) => {
+      getTasksList().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
   
-  const getTasksList = async (cancelSource = cancelTokenSource) => {
+  const getTasksList = async () => {
     try {
       setIsLoading(true);
-      const customerAccessRules = await getAccessRoleData();
       const gitTask = model?.getPersistData();
-      const canCreateCertificateGenerationTask = workflowAuthorizedActions.gitItems(customerAccessRules, "create_cert_task", gitTask.owner, gitTask.roles);
+      const canCreateCertificateGenerationTask = TaskRoleHelper.canCreateCertificateTask(userData, gitTask);
 
-      const response = await taskActions.doesCertificateGenerationTaskExist(getAccessToken, cancelSource);
+      const response = await taskActions.doesCertificateGenerationTaskExist(getAccessToken, cancelTokenSource);
 
       if (isMounted?.current === true) {
         setCanCreateCertificateGenerationTask(canCreateCertificateGenerationTask && response?.data === false);
