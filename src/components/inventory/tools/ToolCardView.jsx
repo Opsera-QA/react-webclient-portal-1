@@ -4,19 +4,16 @@ import RegistryToolCard from "components/common/fields/inventory/RegistryToolCar
 import Model from "core/data_model/model";
 import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
-function ToolCardView({ data, toolFilterDto, toolMetadata, setToolFilterDto, loadData, isLoading }) {
+function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const getRegistryToolCard = (tool) => {
     return (
       <RegistryToolCard
-        toolData={new Model({ ...tool }, toolMetadata, false)}
+        toolData={new Model({ ...tool }, registryToolMetadata, false)}
       />
     );
   };
-
-  if (toolMetadata == null) {
-    return null;
-  }
 
   return (
     <CardView
@@ -41,7 +38,6 @@ ToolCardView.propTypes = {
   setToolFilterDto: PropTypes.func,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolMetadata: PropTypes.object,
 };
 
 export default ToolCardView;

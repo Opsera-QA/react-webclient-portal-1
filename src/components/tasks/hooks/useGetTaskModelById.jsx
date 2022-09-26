@@ -54,8 +54,8 @@ export default function useGetTaskModelById(
   };
 
   return ({
-    dashboardModel: taskModel,
-    setDashboardModel: setTaskModel,
+    taskModel: taskModel,
+    setTaskModel: setTaskModel,
     loadData: loadData,
     isLoading: isLoading,
   });
