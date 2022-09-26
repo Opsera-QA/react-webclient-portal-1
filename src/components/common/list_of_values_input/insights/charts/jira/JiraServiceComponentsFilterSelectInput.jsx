@@ -97,7 +97,7 @@ JiraServiceComponentsFilterSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
-  project: PropTypes.string
+  project: PropTypes.array
 };
 
 JiraServiceComponentsFilterSelectInput.defaultProps = {
