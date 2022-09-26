@@ -88,7 +88,7 @@ function JiraChangeFailureRate({
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
-          jiraChangeTypes
+          jiraChangeTypes,
         );
         const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
         if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
