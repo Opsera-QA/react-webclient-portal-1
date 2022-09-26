@@ -80,7 +80,6 @@ function JiraChangeFailureRate({
         setGoalsData(DEFAULT_GOALS);
       }
       const jiraChangeTypes = getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types');
-      const jiraServiceComponents = getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components');
       let response;
       if(jiraChangeTypes?.length){
         response = await jiraAction.getJiraChangeFailureRate(
@@ -89,8 +88,7 @@ function JiraChangeFailureRate({
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
-          jiraChangeTypes,
-          jiraServiceComponents
+          jiraChangeTypes
         );
         const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
         if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
