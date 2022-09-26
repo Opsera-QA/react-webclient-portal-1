@@ -161,7 +161,7 @@ const sfdcPipelineWizardMetadata = {
     isOrgToOrg: false,
     isProfiles: false,
     isTranslations: false,
-    modifiedFilesOrigin: "git",
+    modifiedFilesOrigin: "sfdc",
     unitTestSteps: [],
     gitTaskId: "",
     xml: "",
