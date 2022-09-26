@@ -14,6 +14,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       x: new Date(timestamp),
       y: timestamp.substr(11, 2) + "." + hoursFraction,
       commitTimeStamp: new Date(timestamp).toLocaleString(),
+      commitTimeStamp: timestamp,
       repositoryName: commit["repositoryName"],
       userName: commit["userName"],
       leadTime: commit["leadTime"],
