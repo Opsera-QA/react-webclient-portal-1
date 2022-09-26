@@ -1,51 +1,38 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
-import axios from "axios";
-import workflowAuthorizedActions
-from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import IconBase from "components/common/icons/IconBase";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+
 function GenerateSalesforceCertificateButton({refreshData, recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
-  const { getAccessToken, getUserRecord, setAccessRoles, getAccessRoleData } = useContext(AuthContext);
   let toastContext = useContext(DialogToastContext);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [canGenerate, setCanGenerate] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const isMounted = useRef(false);
+  const {
+    userData,
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsSaving(true);
-      const customerAccessRules = await getAccessRoleData();
       const gitTask = recordDto.getPersistData();
-      setCanGenerate(workflowAuthorizedActions.gitItems(customerAccessRules, "sfdc_cert_gen", gitTask.owner, gitTask.roles));
+      setCanGenerate(TaskRoleHelper.canGenerateSalesforceCertificate(userData, gitTask));
     }
     catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {

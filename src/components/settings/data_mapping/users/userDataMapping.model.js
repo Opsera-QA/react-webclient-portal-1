@@ -55,20 +55,6 @@ export class UserDataMappingModel extends ModelBase {
   getDetailViewTitle = () => {
     return `${this.getData("opsera_user_email")} User Data Mapping Tag`;
   };
-
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new UserDataMappingModel(
-      {...newData},
-      this.metaData,
-      this.newModel,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.customerAccessRules,
-      this.roleDefinitions,
-      this.setStateFunction
-    );
-  };
 }
 
 export default UserDataMappingModel;

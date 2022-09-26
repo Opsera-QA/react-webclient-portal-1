@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import PropTypes from "prop-types";
 import ToolJobsPanel from "components/inventory/tools/tool_details/ToolJobsPanel";
@@ -24,45 +24,16 @@ import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummar
 import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolTaggingPanel from "components/inventory/tools/tool_details/ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
-import { AuthContext } from "contexts/AuthContext";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "components/inventory/tools/tool_details/ToolRepositoriesPanel";
 import ToolConfigurationSummaryPanel from "components/inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import ToolVaultSummaryPanel from "components/inventory/tools/tool_details/vault/ToolVaultSummaryPanel";
-import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 // TODO: This is in progress and needs to be cleaned up
 function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
   const toastContext = useContext(DialogToastContext);
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
-
-  useEffect(() => {
-    initRoleAccess().catch(error => {
-      throw { error };
-    });
-  }, [isLoading]);
-
-  const initRoleAccess = async () => {
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-  };
-
-  const authorizedAction = (action, dataObject) => {
-    if (dataObject == null) {
-      return false;
-    }
-
-    const owner = dataObject?.owner;
-    const objectRoles = dataObject?.roles;
-    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
-  };
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -77,7 +48,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
           activeTab={activeTab}
         />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolModel?.data)}/>
+        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"}/>
         {/*<CustomTab icon={faDraftingCompass} tabName={"usage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>*/}
       </CustomTabContainer>
     );
@@ -93,7 +64,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
       case "summary":
         return <ToolSummaryPanel toolData={toolModel} />;
       case "attributes":
-        return <ToolAttributesPanel toolData={toolModel} customerAccessRules={customerAccessRules} />;
+        return <ToolAttributesPanel toolData={toolModel}  />;
       case "configuration":
         return (
           <ToolConfigurationSummaryPanel
@@ -129,7 +100,6 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
     <DetailTabPanelContainer
       detailView={getCurrentView()}
       tabContainer={getTabContainer()}
-      customerAccessRules={customerAccessRules}
     />
   );
 }

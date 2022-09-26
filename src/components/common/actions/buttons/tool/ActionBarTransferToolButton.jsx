@@ -17,7 +17,6 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
   const [isLoading, setIsLoading] = useState(true);
   const [toolCopy, setToolCopy] = useState(undefined);
   const [isTransferringOwnership, setIsTransferringOwnership] = useState(false);
-  const [canTransferTool, setCanTransferTool] = useState(false);
   const {
     isMounted,
     cancelTokenSource,
@@ -26,10 +25,7 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (toolModel?.canPerformAction("update_tool_owner") === true) {
-      setToolCopy(toolModel?.clone());
-      setCanTransferTool(true);
-    }
+    setToolCopy(toolModel?.clone());
   }, [toolModel]);
 
   const transferToolOwnership = async () => {
@@ -82,7 +78,7 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
     );
   };
 
-  if (isSassUser !== false || toolCopy == null || canTransferTool !== true) {
+  if (isSassUser !== false || toolCopy == null || toolModel?.canTransferRegistryToolOwnership() !== true) {
     return null;
   }
 

@@ -20,7 +20,7 @@ function ToolDataTransformerRulesMappingTab({ toolModel, handleTabClick, activeT
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"MetaData Transformer Rules"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_applications")}
+      accessRestricted={toolModel.canUpdateRegistryToolApplications() !== true}
     />
   );
 }

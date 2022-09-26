@@ -19,7 +19,7 @@ function ToolJobsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Jobs"}
-      accessRestricted={!toolModel?.canPerformAction("update_tool_jobs")}
+      accessRestricted={toolModel?.canUpdateRegistryToolJobs() !== true}
     />
   );
 }

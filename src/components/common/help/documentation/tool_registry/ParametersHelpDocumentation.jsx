@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import PropTypes from "prop-types";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import customParametersRoles from "@opsera/know-your-role/roles/registry/parameters/customParameters.roles";
 
-function ParametersHelpDocumentation({parameterRoleDefinitions}) {
+function ParametersHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -42,17 +42,13 @@ function ParametersHelpDocumentation({parameterRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <AssignedRoleAccessTable roleAccessDefinitions={parameterRoleDefinitions} />
+        <AssignedRoleAccessTable roleAccessDefinitions={customParametersRoles} />
       </div>
       <div className={"my-2"}>
-        <SiteRoleAccessTable roleAccessDefinitions={parameterRoleDefinitions} />
+        <SiteRoleAccessTable roleAccessDefinitions={customParametersRoles} />
       </div>
     </HelpOverlayBase>
   );
 }
-
-ParametersHelpDocumentation.propTypes = {
-  parameterRoleDefinitions: PropTypes.object,
-};
 
 export default React.memo(ParametersHelpDocumentation);

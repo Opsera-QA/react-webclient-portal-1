@@ -6,12 +6,12 @@ import {
   getRoleAccessLevelColumn
 } from "components/common/table/table-column-helpers-v2";
 import {useHistory} from "react-router-dom";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import VanityTable from "components/common/table/VanityTable";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function ConsolidatedUserReportToolAccessTable({ data, isLoading, paginationModel, setPaginationModel, loadData }) {
   let history = useHistory();
-  const fields = toolMetadata.fields;
+  const fields = registryToolMetadata.fields;
 
   const onRowSelect = (grid, row) => {
     history.push(`/inventory/tools/details/${row?._id}`);

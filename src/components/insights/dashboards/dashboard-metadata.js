@@ -5,7 +5,7 @@ const dashboardMetadata = {
   type: "Dashboard",
   activeField: "active",
   detailView: function (record) {
-    return `/insights/dashboards/${record?.getData("_id")}/viewer`;
+    return `/insights/dashboards/${record?.getMongoDbId()}/viewer`;
   },
   detailViewTitle: function (record) {
     return ` ${capitalizeFirstLetter(record?.getOriginalValue("name"))}`;

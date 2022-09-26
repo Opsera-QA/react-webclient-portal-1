@@ -1,55 +1,50 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {AuthContext} from "contexts/AuthContext";
 import ToolRegistryRoleAccessHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
-import axios from "axios";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+export default function RegistryToolRoleAccessInput(
+  {
+    fieldName, 
+    toolModel, 
+    setToolModel, 
+    visible,
+  }) {
+  const {
+    userData,
+    cancelTokenSource,
+    getAccessToken,
+    isSaasUser,
+  } = useComponentStateReference();
 
   const saveData = async (newRoles) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, newRoles);
-    const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newDataObject);
-    setDataObject({...newDataObject});
+    toolModel.setData(fieldName, newRoles);
+    const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolModel);
+    setToolModel({...toolModel});
     return response;
   };
 
   const getNoDataMessage = () => {
     return (
-      <span>No Access Rules are currently applied. All users can see or edit this {dataObject?.getType()}.</span>
+      <span>No Access Rules are currently applied. All users can see or edit this {toolModel?.getType()}.</span>
     );
   };
 
-  if (dataObject == null || isSassUser()) {
+  if (toolModel == null || isSaasUser !== false) {
     return null;
   }
+
+  const canEdit = RegistryToolRoleHelper.canEditAccessRoles(userData, toolModel?.getPersistData());
 
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
-      model={dataObject}
-      disabled={disabled}
+      model={toolModel}
+      disabled={canEdit !== true}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}
       helpComponent={<ToolRegistryRoleAccessHelpDocumentation/>}
@@ -60,8 +55,8 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
 
 RegistryToolRoleAccessInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  toolModel: PropTypes.object,
+  setToolModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
 };
@@ -69,5 +64,3 @@ RegistryToolRoleAccessInput.propTypes = {
 RegistryToolRoleAccessInput.defaultProps = {
   fieldName: "roles"
 };
-
-export default RegistryToolRoleAccessInput;

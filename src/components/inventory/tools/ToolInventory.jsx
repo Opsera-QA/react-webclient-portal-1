@@ -1,54 +1,43 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
+import React, {useEffect, useState} from "react";
 import toolsActions from "components/inventory/tools/tools-actions";
 import PropTypes from "prop-types";
 import ToolTableCardView from "components/inventory/tools/ToolTableCardView";
-import axios from "axios";
 import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 
 function ToolInventory() {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
-  const [toolFilterModel, setToolFilterModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
-  const [registryToolRoleDefinitions, setRegistryToolRoleDefinitions] = useState(undefined);
-  const [toolMetadata, setToolMetadata] = useState(undefined);
+  const [toolFilterModel, setToolFilterModel] = useState(new ToolFilterModel());
+  const {
+    isMounted,
+    toastContext,
+    getAccessToken,
+    cancelTokenSource,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    setToolRegistryList([]);
+
+    if (RegistryToolRoleHelper.canGetRegistryTools(userData)) {
+      loadData(toolFilterModel).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
+  }, [userData]);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    const newToolFilterModel = new ToolFilterModel();
-    loadData(newToolFilterModel, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = toolFilterModel) => {
     try {
       setLoading(true);
-      await getToolRegistryList(newFilterModel, cancelSource);
+      await getToolRegistryList(newFilterModel);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -60,18 +49,12 @@ function ToolInventory() {
     }
   };
 
-  const getToolRegistryList = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelSource, newFilterModel);
+  const getToolRegistryList = async (newFilterModel = toolFilterModel) => {
+    const response = await toolsActions.getRoleLimitedToolRegistryListV3(getAccessToken, cancelTokenSource, newFilterModel);
     const toolArray = response?.data?.data;
-    const accessRoleData = await getAccessRoleData();
-    setCustomerAccessRules(accessRoleData);
 
     if (isMounted?.current === true && Array.isArray(toolArray)) {
-      const roleDefinitions = response?.data?.roles;
-      const metadata = response?.data?.metadata;
-      setToolMetadata(metadata);
       setToolRegistryList(toolArray);
-      setRegistryToolRoleDefinitions(roleDefinitions);
       newFilterModel.updateTotalCount(response?.data?.count);
       newFilterModel.updateActiveFilters();
       setToolFilterModel({ ...newFilterModel });
@@ -87,7 +70,7 @@ function ToolInventory() {
         one centralized location.
       `}
       helpComponent={
-        <ToolRegistryHelpDocumentation registryToolRoleDefinitions={registryToolRoleDefinitions} />
+        <ToolRegistryHelpDocumentation />
       }
     >
       <ToolTableCardView
@@ -95,11 +78,8 @@ function ToolInventory() {
         loadData={loadData}
         tools={toolRegistryList}
         toolFilterDto={toolFilterModel}
-        toolMetadata={toolMetadata}
         isMounted={isMounted}
         setToolFilterDto={setToolFilterModel}
-        customerAccessRules={customerAccessRules}
-        roleDefinitions={registryToolRoleDefinitions}
       />
     </ScreenContainer>
   );

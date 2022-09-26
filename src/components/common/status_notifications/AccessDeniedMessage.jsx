@@ -30,6 +30,6 @@ AccessDeniedMessage.propTypes = {
 };
 
 AccessDeniedMessage.defaultProps = {
-  text: "Access Denied! You do not have permissions to access this resource.",
+  text: "Access Denied! You do not have permissions to access this resource or it may no longer exist.",
   className: "danger-red",
 };

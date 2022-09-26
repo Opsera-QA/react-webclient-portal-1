@@ -36,7 +36,8 @@ export default function useComponentStateReference() {
     isSiteAdministrator: isSiteAdministrator,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
-    isSassUser: isSassUser(),
+    isSassUser: isSassUser(), // TODO: Remove and replace with the proper spelling
+    isSaasUser: isSassUser(),
     userData: userData,
     isFreeTrial: false,
     isPowerUser: isPowerUser,
