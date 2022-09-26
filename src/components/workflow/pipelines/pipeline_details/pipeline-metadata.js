@@ -1,5 +1,6 @@
 const pipelineMetadata = {
   idProperty: "_id",
+  type: "Pipeline",
   fields: [
     {
       label: "ID",
