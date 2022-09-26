@@ -10,6 +10,8 @@ import InventorySubNavigationBar from "components/inventory/InventorySubNavigati
 import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";
+import RegistryToolViewJsonActionBarButton
+  from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
@@ -27,6 +29,10 @@ function ToolDetailView() {
           <ActionBarBackButton path={"/inventory/tools"} />
         </div>
         <div className="d-flex">
+          <RegistryToolViewJsonActionBarButton
+            toolModel={toolModel}
+            className={"ml-3"}
+          />
           <ActionBarTransferToolButton
             className={"ml-3"}
             toolModel={toolModel}
