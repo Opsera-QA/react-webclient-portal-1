@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -14,6 +14,7 @@ import NewKpiDataPointOverlay from "components/admin/kpi_identifiers/details/dat
 import KpiDataPointModel from "components/admin/kpi_identifiers/details/data_points/kpiDataPoint.model";
 import {AuthContext} from "contexts/AuthContext";
 import {getDataPointTypeLabel} from "components/common/list_of_values_input/insights/data_points/type/dataPoint.types";
+import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 
 function KpiDataPointsTable(
   {
@@ -30,34 +31,22 @@ function KpiDataPointsTable(
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [columns, setColumns] = useState([]);
-
-  useEffect(() => {
-    setColumns([]);
-    loadColumnMetadata(dataPointMetadata);
-  }, [JSON.stringify(dataPointMetadata)]);
-
-  const loadColumnMetadata = (newMetadata) => {
-    if (isMounted?.current === true && newMetadata?.fields) {
-      const fields = newMetadata.fields;
-
-      setColumns(
-        [
-          getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-          getTableTextColumn(getField(fields, "identifier"), "no-wrap-inline"),
-          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getDataPointTypeLabel, "no-wrap-inline"),
-          // TODO: Make Strategic Criteria overlay column definition with overlay like the tags overlay
-          // getTableDateColumn(getField(fields, "strategic_criteria")),
-          getLimitedTableTextColumn(getField(fields, "description"), 100, "no-wrap-inline"),
-        ]
-      );
-    }
-  };
+  const fields = kpiDataPointMetadata.fields;
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "identifier"), "no-wrap-inline"),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getDataPointTypeLabel, "no-wrap-inline"),
+      // TODO: Make Strategic Criteria overlay column definition with overlay like the tags overlay
+      // getTableDateColumn(getField(fields, "strategic_criteria")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100, "no-wrap-inline"),
+    ],
+    []
+  );
 
   const onRowSelect = (tableRow) => {
     const newDataPointModel = new KpiDataPointModel(
       {...tableRow?.original},
-      dataPointMetadata,
       false,
       getAccessToken,
       cancelTokenSource,
@@ -77,7 +66,6 @@ function KpiDataPointsTable(
         loadData={loadData}
         isMounted={isMounted}
         kpiId={kpiId}
-        dataPointMetadata={dataPointMetadata}
       />
     );
   };

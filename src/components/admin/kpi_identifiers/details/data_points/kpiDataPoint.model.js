@@ -2,12 +2,12 @@ import ModelBase from "core/data_model/model.base";
 import kpiDataPointActions from "components/admin/kpi_identifiers/details/data_points/kpiDataPoint.actions";
 import KpiDataPointRoleHelper from "@opsera/know-your-role/roles/analytics/data_points/kpiDataPointRole.helper";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 
 export default class KpiDataPointModel extends ModelBase {
   constructor(
     userData,
     data,
-    metadata,
     newModel,
     getAccessToken,
     cancelTokenSource,
@@ -15,7 +15,7 @@ export default class KpiDataPointModel extends ModelBase {
     setStateFunction,
     parentId,
   ) {
-    super(data, metadata, newModel);
+    super(data, kpiDataPointMetadata, newModel);
     this.userData = userData;
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;

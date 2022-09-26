@@ -42,7 +42,6 @@ function NewKpiDataPointOverlay(
 
   const createNewDataPointModel = async (cancelSource = cancelTokenSource) => {
     try {
-      const accessRoleData = await getAccessRoleData();
       const newDataPointModel = new KpiDataPointModel(
         {...dataPointMetadata.newObjectFields},
         dataPointMetadata,
@@ -50,8 +49,6 @@ function NewKpiDataPointOverlay(
         getAccessToken,
         cancelSource,
         loadData,
-        accessRoleData,
-        [],
         setDataPointModel,
         kpiId,
       );
