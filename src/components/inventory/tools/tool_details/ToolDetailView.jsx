@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import ToolDetailPanel from "components/inventory/tools/details/panel/ToolDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -40,7 +40,7 @@ function ToolDetailView() {
           />
           <ActionBarDeleteToolButton
             className={"ml-3"}
-            toolModel={toolModel}
+            toolModel={toolModel}I
           />
         </div>
       </ActionBarContainer>

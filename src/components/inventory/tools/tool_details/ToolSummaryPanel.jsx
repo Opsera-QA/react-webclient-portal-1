@@ -10,6 +10,7 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
 import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function ToolSummaryPanel({ toolData, setToolData, setActiveTab }) {
   if (toolData == null) {
@@ -19,9 +20,21 @@ export default function ToolSummaryPanel({ toolData, setToolData, setActiveTab }
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={toolData?.canUpdate()}>
       <Row>
-        <RbacWarningField model={toolData} />
+        <Col xs={12}>
+          <CenteredContentWrapper>
+            <RbacWarningField
+              model={toolData}
+            />
+          </CenteredContentWrapper>
+        </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"name"} />
+        </Col>
+        <Col lg={12}>
+          <RegistryToolRoleAccessInput
+            toolModel={toolData}
+            setToolModel={setToolData}
+          />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"owner_name"} />
@@ -48,12 +61,6 @@ export default function ToolSummaryPanel({ toolData, setToolData, setActiveTab }
         </Col>
         <Col lg={6}>
           <DateFieldBase dataObject={toolData} fieldName={"createdAt"} />
-        </Col>
-        <Col lg={6}>
-          <RegistryToolRoleAccessInput
-            toolModel={toolData}
-            setToolModel={setToolData}
-          />
         </Col>
         <Col lg={6}>
           <ToolVaultField model={toolData} fieldName={"vault"} />

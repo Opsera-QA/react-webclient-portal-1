@@ -535,9 +535,6 @@ function PipelineSummaryPanel(
 
       <div className="pr-1">
         <Row>
-          <RbacWarningField
-            model={pipelineModel}
-          />
           <Col sm={9}>
             {getPipelineTitleField()}
           </Col>
@@ -546,6 +543,11 @@ function PipelineSummaryPanel(
               pipeline={pipeline}
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
+            />
+          </Col>
+          <Col xs={12}>
+            <RbacWarningField
+              model={pipelineModel}
             />
           </Col>
           <Col sm={12} md={6} className="py-2">
