@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import DeleteTaskConfirmationOverlay from "components/tasks/buttons/DeleteTaskConfirmationOverlay";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 
 // TODO: use role definitions
 export default function ActionBarDeleteTaskButton(
@@ -17,6 +16,7 @@ export default function ActionBarDeleteTaskButton(
   const {
     accessRoleData,
     toastContext,
+    userData,
   } = useComponentStateReference();
   const [canDelete, setCanDelete] = useState(false);
 
@@ -24,14 +24,12 @@ export default function ActionBarDeleteTaskButton(
     setCanDelete(false);
 
     if (taskModel != null && accessRoleData != null) {
-      setCanDelete(
-        workflowAuthorizedActions.gitItems(
-          accessRoleData,
-          taskModel?.getData("type") === "sfdc-cert-gen" ? "delete_admin_task" : "delete_task",
-          taskModel?.getData("owner"),
-          taskModel?.getData("roles"),
-        )
-      );
+      // TODO: Wire up through the model when ready
+      if (taskModel?.getData("type") === "sfdc-cert-gen") {
+        setCanDelete(TaskRoleHelper.canDeleteAdminTask(userData, taskModel?.getCurrentData()));
+      } else {
+        setCanDelete(TaskRoleHelper.canDeleteTask(userData, taskModel?.getCurrentData()));
+      }
     }
   }, [accessRoleData, taskModel]);
 

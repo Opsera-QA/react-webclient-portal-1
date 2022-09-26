@@ -19,7 +19,7 @@ function ToolLicenseTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"License"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_license")}
+      accessRestricted={toolModel.canUpdateRegistryToolLicense() !== true}
     />
   );
 }

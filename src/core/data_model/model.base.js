@@ -109,7 +109,7 @@ export default class ModelBase {
   };
 
   getDetailViewTitle = () => {
-    console.error("No getDetailViewTitle function was wired up");
+    return null;
   };
 
   getManagementScreenLink = () => {

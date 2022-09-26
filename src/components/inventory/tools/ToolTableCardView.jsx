@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
@@ -9,36 +9,34 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {isActionAllowed} from "components/common/helpers/role-helpers";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function ToolTableCardView(
   {
     toolFilterDto,
     setToolFilterDto,
-    toolMetadata,
     isLoading,
     loadData,
     tools,
-    customerAccessRules,
-    roleDefinitions,
-    isMounted
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    userData,
+    toastContext,
+  } = useComponentStateReference();
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(
       <NewToolOverlay
         loadData={loadData}
-        isMounted={isMounted}
-        toolMetadata={toolMetadata}
       />
     );
   };
 
   const getCreateNewToolFunction = () => {
-    const canCreate = isActionAllowed(customerAccessRules, "create_tool", undefined, undefined, roleDefinitions);
+    const canCreate = RegistryToolRoleHelper.canCreateRegistryTool(userData);
     if (canCreate === true) {
      return createNewTool;
     }
@@ -83,7 +81,6 @@ function ToolTableCardView(
         isLoading={isLoading}
         loadData={loadData}
         data={tools}
-        toolMetadata={toolMetadata}
         toolFilterDto={toolFilterDto}
         setToolFilterDto={setToolFilterDto}
       />
@@ -96,8 +93,6 @@ function ToolTableCardView(
         isLoading={isLoading}
         loadData={loadData}
         data={tools}
-        isMounted={isMounted}
-        toolMetadata={toolMetadata}
         toolFilterDto={toolFilterDto}
         setToolFilterDto={setToolFilterDto}
       />
@@ -125,7 +120,7 @@ function ToolTableCardView(
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
-        metadata={toolMetadata}
+        metadata={registryToolMetadata}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
@@ -141,13 +136,7 @@ ToolTableCardView.propTypes = {
   isLoading: PropTypes.bool,
   toolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
-  createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
-  saveCookies: PropTypes.func,
-  customerAccessRules: PropTypes.object,
-  isMounted: PropTypes.object,
-  toolMetadata: PropTypes.object,
-  roleDefinitions: PropTypes.object,
 };
 
 export default ToolTableCardView;

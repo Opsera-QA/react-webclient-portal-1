@@ -9,9 +9,9 @@ export default function useGetTaskModel() {
     userData,
   } = useComponentStateReference();
 
-  const getNewTaskModel = (dashboard, isNew) => {
+  const getNewTaskModel = (task, isNew) => {
     const newModel = new TaskModel(
-      dashboard,
+      task,
       isNew,
     );
     newModel.getAccessToken = getAccessToken;

@@ -22,7 +22,7 @@ function ToolPathsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Paths"}
-      accessRestricted={!toolModel?.canPerformAction("update_tool_paths")}
+      accessRestricted={toolModel?.canUpdateRegistryToolPathSettings() !== true}
     />
   );
 }

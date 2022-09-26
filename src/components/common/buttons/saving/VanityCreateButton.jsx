@@ -11,6 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function VanityCreateButton(
   {
@@ -39,7 +40,7 @@ function VanityCreateButton(
     if (addAnother) {
       await persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, setModel);
     }
-    else if (model.getDetailViewLink != null) {
+    else if (model.getDetailViewLink != null && hasStringValue(model.getDetailViewLink()) === true) {
       await persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, history);
     }
     else if (handleClose != null) {

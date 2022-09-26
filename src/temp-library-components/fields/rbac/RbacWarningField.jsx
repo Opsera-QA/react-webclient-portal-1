@@ -5,13 +5,16 @@ import InlineErrorText from "components/common/status_notifications/inline/Inlin
 import PropType from "prop-types";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { Col } from "react-bootstrap";
+import useGetUserById from "components/user/hooks/useGetUserById";
 
 export default function RbacWarningField({ model }) {
   const currentData = model?.getCurrentData();
   const {
-    userData,
     isSassUser,
   } = useComponentStateReference();
+  const {
+    user,
+  } = useGetUserById(model?.getData("owner"));
 
   if (isSassUser !== false) {
     return null;
@@ -30,13 +33,13 @@ export default function RbacWarningField({ model }) {
     );
   }
 
-  if (ObjectAccessRoleHelper.doesOnlyUserHaveAccessToObject(userData, currentData) === true) {
+  if (ObjectAccessRoleHelper.doesOnlyOwnerHaveAccessToObject(user?.email, currentData) === true) {
     return (
       <Col xs={12}>
         <CenteredContentWrapper>
           <InlineErrorText
             className={"mx-auto mb-2"}
-            error={`Warning, only the owner ${model.getData("owner_name")} has access to this ${model.getType()}. Please adjust access rules if this ${model.getType()} is to be used by others.`}
+            error={`Warning, only the owner ${user?.firstName} ${user?.lastName} (${user?.email}) has access to this ${model.getType()}. Please adjust access rules if this ${model.getType()} is to be used by others.`}
           />
         </CenteredContentWrapper>
       </Col>

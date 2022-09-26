@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import taskActions from "components/tasks/task.actions";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
@@ -20,35 +18,22 @@ import TaskOrchestrationNotificationInlineInput
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 
-function TaskSummaryPanel(
-  {
-    gitTasksData,
-    setGitTasksData,
-    setActiveTab,
-    loadData,
-  }) {
+function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData }) {
   const {
     cancelTokenSource,
     getAccessToken,
-    accessRoleData,
-    isFreeTrial,
+    userData,
   } = useComponentStateReference();
 
   const updateRecord = async (newDataModel) => {
     const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
     loadData();
     return response;
-  };
-
-  const actionAllowed = (action) => {
-    if (gitTasksData == null) {
-      return false;
-    }
-
-    return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
   const updateRunCount = async () => {
@@ -103,7 +88,7 @@ function TaskSummaryPanel(
             taskModel={gitTasksData}
             setTaskModel={setGitTasksData}
             loadData={loadData}
-            actionAllowed={actionAllowed("run_task")}
+            actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
             taskType={gitTasksData?.getData("type")}
           />
         );
@@ -116,7 +101,7 @@ function TaskSummaryPanel(
         <Col md={6}>
           <TaskSchedulerField
             taskModel={gitTasksData}
-            canEditTaskSchedule={actionAllowed("run_task")}
+            canEditTaskSchedule={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
           />
         </Col>
       );
@@ -152,8 +137,9 @@ function TaskSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={actionAllowed("edit_settings")}>
+    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
       <Row>
+        {/*<RbacWarningField model={gitTasksData} />*/}
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
@@ -185,7 +171,7 @@ function TaskSummaryPanel(
             fieldName={"tags"}
             saveDataFunction={updateRecord}
             tags={gitTasksData?.getData("tags")}
-            disabled={!actionAllowed("edit_settings")}
+            disabled={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData()) !== true}
           />
         </Col>
         <Col md={12} className={"pt-1"}>
@@ -195,7 +181,7 @@ function TaskSummaryPanel(
           <TaskRoleAccessInput
             dataObject={gitTasksData}
             setDataObject={setGitTasksData}
-            disabled={!actionAllowed("edit_access_roles")}
+            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
           />
         </Col>
       </Row>

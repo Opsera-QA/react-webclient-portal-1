@@ -11,6 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function CreateButton(
   {
@@ -58,7 +59,7 @@ function CreateButton(
           setRecordDto,
           isIncomplete,
         );
-      } else if (recordDto.getDetailViewLink && recordDto.getDetailViewLink() != null) {
+      } else if (recordDto.getDetailViewLink && hasStringValue(recordDto.getDetailViewLink())) {
         await persistNewRecordAndViewDetails(
           recordDto,
           toastContext,
