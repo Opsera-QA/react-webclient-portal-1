@@ -13,7 +13,6 @@ function MetricJiraServiceComponentsFilterInput(
     metricModel,
     fieldName
   }) {
-    console.log('MetricJiraServiceComponentFilterInput', { metricModel: metricModel.data });
   return (
     <>
     <SupportedMetricFilterInputContainer
