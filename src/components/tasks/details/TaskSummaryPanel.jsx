@@ -21,6 +21,7 @@ import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData }) {
   const {
@@ -124,7 +125,11 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
       <Row>
-        <RbacWarningField model={gitTasksData} />
+        <Col xs={12}>
+          <CenteredContentWrapper>
+            <RbacWarningField model={gitTasksData} />
+          </CenteredContentWrapper>
+        </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
