@@ -65,7 +65,6 @@ function MetricFilterGitLabProjectSelectInput({
             cancelSource,
             "gitlabProjectsList"
         );
-        console.log(response);
         if (response.data != null) {
             setStages(response?.data?.data[0]?.gitlabProjectsList?.data);
         }
