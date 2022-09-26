@@ -6,7 +6,7 @@ import {KPI_FILTER_TYPES} from "components/common/list_of_values_input/admin/kpi
 import JiraServiceComponentsFilterSelectInput
     from "../../../../list_of_values_input/insights/charts/jira/JiraServiceComponentsFilterSelectInput";
 
-function MetricJiraServiceComponentFilterInput(
+function MetricJiraServiceComponentsFilterInput(
   {
     metricFilterModel,
     setMetricFilterModel,
@@ -33,15 +33,15 @@ function MetricJiraServiceComponentFilterInput(
   );
 }
 
-MetricJiraServiceComponentFilterInput.propTypes = {
+MetricJiraServiceComponentsFilterInput.propTypes = {
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
   fieldName: PropTypes.string,
 };
 
-MetricJiraServiceComponentFilterInput.defaultProps = {
+MetricJiraServiceComponentsFilterInput.defaultProps = {
   fieldName: "jira-service-components",
 };
 
-export default MetricJiraServiceComponentFilterInput;
+export default MetricJiraServiceComponentsFilterInput;
