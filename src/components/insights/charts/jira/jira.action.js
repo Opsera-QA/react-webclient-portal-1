@@ -120,7 +120,7 @@ jiraActions.getJiraChangeFailureRate = async (
   kpiConfiguration,
   dashboardTags,
   dashboardOrgs,
-  jiraChangeTypes
+  jiraChangeTypes,
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
