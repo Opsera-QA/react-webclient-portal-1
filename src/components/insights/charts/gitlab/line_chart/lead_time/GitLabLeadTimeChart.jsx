@@ -1,232 +1,250 @@
+import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import config from "./gitLabLeadTimeChartConfigs";
-import React, { useState, useEffect, useContext, useRef } from "react";
-import axios from "axios";
-import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
-import {
-    defaultConfig,
-    getColorByData,
-    adjustBarWidth,
-    assignSuccessBarColors, goalSuccessColor,
-} from "../../../charts-views";
-import ChartTooltip from "../../../ChartTooltip";
-import { Container, Col, Row } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import GitLabMeanLeadTimeDataBlock from "../../data_blocks/GitLabMeanLeadTimeDataBlock";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
-import {ResponsiveBar} from "@nivo/bar";
-import GitlabLeadTimeHelpDocumentation
-    from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
-import IconBase from "../../../../../common/icons/IconBase";
-import {faMinus, faSquare} from "@fortawesome/pro-solid-svg-icons";
-import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
+import chartsActions from "components/insights/charts/charts-actions";
+import axios from "axios";
+import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
+import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
+import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
+import {
+  getDeploymentStageFromKpiConfiguration,
+  getReverseIcon,
+  getTrend,
+} from "../../../charts-helpers";
+import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 
-function GitLabLeadTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-    const { getAccessToken } = useContext(AuthContext);
-    const [error, setError] = useState(undefined);
-    const [metrics, setMetrics] = useState([]);
-    const [meanData, setMeanData] = useState({});
-    const [meanCommitData, setMeanCommitData] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const isMounted = useRef(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+function GitLabLeadTimeChart({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metricData, setMetricData] = useState(undefined);
+  const [chartData, setChartData] = useState(undefined);
+  const [meanCommitData, setMeanCommitData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-    useEffect(() => {
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
-        }
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-        const source = axios.CancelToken.source();
-        setCancelTokenSource(source);
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
 
-        isMounted.current = true;
-        loadData(source).catch((error) => {
-            if (isMounted?.current === true) {
-                throw error;
-            }
-        });
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
-        return () => {
-            source.cancel();
-            isMounted.current = false;
-        };
-    }, [JSON.stringify(dashboardData)]);
-
-    const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setIsLoading(true);
-            let dashboardTags =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-            let dashboardOrgs =
-                dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-                    ?.value;
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-                getAccessToken,
-                cancelSource,
-                "gitlabLeadTimeForChange",
-                kpiConfiguration,
-                dashboardTags,
-                null,
-                null,
-                dashboardOrgs
-            );
-            const response2 = await chartsActions.parseConfigurationAndGetChartMetrics(
-                getAccessToken,
-                cancelSource,
-                "gitlabAverageCommitTimeToMerge",
-                kpiConfiguration,
-                dashboardTags,
-                null,
-                null,
-                dashboardOrgs
-            );
-            const dataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0].leadTimeCommits;
-            const meanDataObject = response?.data?.data[0]?.gitlabLeadTimeForChange?.data[0] || {};
-            const meanCommitTimeDataObject = response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
-            assignSuccessBarColors(dataObject);
-
-            if (isMounted?.current === true && Array.isArray(dataObject)) {
-                setMetrics(dataObject);
-                setMeanData(meanDataObject);
-                setMeanCommitData(meanCommitTimeDataObject);
-            }
-        } catch (error) {
-            if (isMounted?.current === true) {
-                console.error(error);
-                setError(error);
-            }
-        } finally {
-            if (isMounted?.current === true) {
-                setIsLoading(false);
-            }
-        }
+    return () => {
+      source.cancel();
+      isMounted.current = false;
     };
-    const getMaxValue = (data) => {
-        let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
-        return countsMax;
-    };
-    const getChartBody = () => {
-        if (!Array.isArray(metrics) || metrics.length === 0) {
-            return null;
-        }
+  }, [JSON.stringify(dashboardData)]);
 
-        const getIcon = (data, previousData) => {
-            if (data > previousData) {
-                return faArrowCircleUp;
-            } else
-            if (data < previousData) {
-                return faArrowCircleDown;
-            } else
-            if (data === previousData) {
-                return faMinusCircle;
-            } else {
-                return undefined;
-            }
-        };
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
 
-        const getLeadTimeIconColor = (data, previousData) => {
-            if (data > previousData) {
-                return "green";
-            } else
-            if (data < previousData) {
-                return "red";
-            } else
-            if (data === previousData) {
-                return "light-gray-text-secondary";
-            } else {
-                return "black";
-            }
-        };
-
-        const getBarChart = () => {
-            return (
-                <div className="new-chart p-0" style={{height: "300px"}}>
-                    <div className={"mr-2"} style={{ float: "right", fontSize: "10px" }}>
-                        Commits
-                        <IconBase className={'ml-2'} icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-                    </div>
-                    <ResponsiveBar
-                        data={metrics}
-                        {...defaultConfig("Frequency (commits)", "Days",
-                            false, false, "wholeNumbers", "wholeNumbers", true)}
-                        {...config(getColorByData, getMaxValue(metrics))}
-                        {...adjustBarWidth(metrics)}
-                        tooltip={({ indexValue, value, data, color }) => <ChartTooltip
-                            titles={["Number of Commits"]}
-                            values={[data.count ]}
-                            style={false}
-                            color={color} />}
-                    />
-                </div>
-            );
-        };
-
-        const getLeftDataBlocks = () => {
-            return (
-                <div>
-                    <GitLabMeanLeadTimeDataBlock
-                        data={meanData.currentAvgLeadTime}
-                        previousData={meanData.previousAvgLeadTime}
-                        getIcon={getIcon}
-                        topText={"Average Lead Time (Days)"}
-                        bottomText={"Previous Average Lead Time: "}
-                        getIconColor={getLeadTimeIconColor}/>
-                    <GitLabMeanLeadTimeDataBlock
-                        data={meanCommitData.currentAvgCommitToMergeTime}
-                        previousData={meanCommitData.previousAvgCommitToMergeTime != undefined? meanCommitData.previousAvgCommitToMergeTime : "N/A" }
-                        getIcon={getIcon}
-                        topText={"Average Merge Time (Days)"}
-                        bottomText={"Previous Average Merge Time: "}
-                        getIconColor={getLeadTimeIconColor}/>
-                </div>
-            );
-        };
-        return (
-            <Container fluid>
-                <Row className="align-items-center">
-                    <Col sm={4} className={"p-2"}>
-                        {getLeftDataBlocks()}
-                    </Col>
-                    <Col sm={8} className={"p-2"}>
-                        {getBarChart()}
-                    </Col>
-                </Row>
-            </Container>
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "gitlabLeadTimeForChange",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs,
+      );
+      const response2 =
+        await chartsActions.parseConfigurationAndGetChartMetrics(
+          getAccessToken,
+          cancelSource,
+          "gitlabAverageCommitTimeToMerge",
+          kpiConfiguration,
+          dashboardTags,
+          null,
+          null,
+          dashboardOrgs,
         );
-    };
 
+      const metrics = response?.data?.data[0]?.gitlabLeadTimeForChange?.data;
+      const meanCommitTimeDataObject =
+        response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
+
+      if (
+        isMounted?.current === true &&
+        metrics?.statisticsData?.totalDeployments
+      ) {
+        setMetricData(metrics?.statisticsData);
+        setChartData(metrics?.chartData);
+        setMeanCommitData(meanCommitTimeDataObject);
+      } else {
+        setMetricData({});
+        setChartData([]);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  // const loadDataPoints = async () => {
+  //     const dataPoints = kpiConfiguration?.dataPoints;
+  //     const dataPoint = dataPointHelpers.getDataPoint(
+  //         dataPoints,
+  //         constants.SUPPORTED_DATA_POINT_IDENTIFIERS
+  //             .DEPLOYMENT_FREQUENCY_DATA_POINT,
+  //     );
+  //     setBuildFrequencyDataPoint(dataPoint);
+  // };
+
+  const getChartBody = () => {
+    if (!metricData?.totalDeployments || !chartData?.commits?.length) {
+      return null;
+    }
+
+    const recentStageDate = new Date(
+      metricData?.lastDeploymentTime,
+    ).toLocaleDateString();
+    const selectedDeploymentStages =
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+    const dataBlockTextForDeployment = {
+      current: selectedDeploymentStages
+        ? "Total Deployments"
+        : "Total Stages Run",
+      previous: selectedDeploymentStages ? "Prev Deployments: " : "Prev Runs: ",
+    };
     return (
-        <div>
-            <VanityMetricContainer
-                title={"Gitlab Lead Time"}
-                kpiConfiguration={kpiConfiguration}
-                setKpiConfiguration={setKpiConfiguration}
-                chart={getChartBody()}
-                loadChart={loadData}
-                dashboardData={dashboardData}
-                index={index}
-                error={error}
-                setKpis={setKpis}
-                isLoading={isLoading}
-                chartHelpComponent={(closeHelpPanel) => (
-                  <GitlabLeadTimeHelpDocumentation
-                    closeHelpPanel={closeHelpPanel}
-                  />
+      <div
+        className="new-chart m-3 p-0"
+        style={{ minHeight: "450px", display: "flex" }}
+      >
+        <Row className={"w-100"}>
+          <Row
+            xl={5}
+            lg={5}
+            md={5}
+            className={"mb-2 d-flex justify-content-center"}
+          >
+            <Col
+              md={12}
+              className={"mx-2"}
+            >
+              <GitlabLeadTimeDataBlock
+                value={`${selectedDeploymentStages}`}
+                prevValue={""}
+                topText={"Selected Stage(s)"}
+                bottomText={""}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabLeadTimeTrendDataBlock
+                value={metricData?.totalAverageLeadTime}
+                prevValue={`${metricData?.previousTotalAverageLeadTime} Day(s)`}
+                trend={getTrend(
+                  metricData?.totalAverageLeadTime,
+                  metricData?.previousTotalAverageLeadTime,
                 )}
-            />
-        </div>
+                getReverseIcon={getReverseIcon}
+                topText={"Average Lead Time for Changes"}
+                bottomText={"Prev LTFC: "}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabLeadTimeTrendDataBlock
+                value={meanCommitData?.currentAvgCommitToMergeTime}
+                prevValue={`${meanCommitData?.previousAvgCommitToMergeTime} Day(s)`}
+                trend={getTrend(
+                  meanCommitData?.currentAvgCommitToMergeTime,
+                  meanCommitData?.previousAvgCommitToMergeTime,
+                )}
+                getReverseIcon={getReverseIcon}
+                topText={`Average Merge Time`}
+                bottomText={`Prev Merge Time: `}
+              />
+            </Col>
+            <Col md={12}>
+              <GitlabLeadTimeDataBlock
+                value={metricData?.totalDeployments}
+                prevValue={metricData?.previousTotalDeployments}
+                topText={`${dataBlockTextForDeployment.current}`}
+                bottomText={`${dataBlockTextForDeployment.previous}`}
+              />
+            </Col>
+          </Row>
+          <Col md={12}>
+            <div className={"d-flex md-2"}>
+              <div className={"mr-4"}>
+                <b>Recent Stage:</b> {metricData?.lastDeploymentStage || "NA"}
+                <div className="row" />
+                <b>Date: </b>
+                {recentStageDate}
+              </div>
+            </div>
+          </Col>
+          <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
+            <GitlabLeadTimeScatterPlotContainer chartData={chartData} />
+          </Col>
+        </Row>
+      </div>
     );
+  };
+
+  return (
+    <div>
+      <VanityMetricContainer
+        title={"Gitlab Lead Time"}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GitlabLeadTimeHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
+      />
+    </div>
+  );
 }
+
 GitLabLeadTimeChart.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    index: PropTypes.number,
-    setKpiConfiguration: PropTypes.func,
-    setKpis: PropTypes.func,
-    nodes: PropTypes.any,
-    xScale: PropTypes.any,
-    yScale: PropTypes.any,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func,
 };
 
 export default GitLabLeadTimeChart;
