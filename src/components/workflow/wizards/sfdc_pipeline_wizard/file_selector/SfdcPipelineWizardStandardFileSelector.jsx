@@ -47,10 +47,13 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
     try {
       setIsLoading(true);
       await pullSfdcFiles(cancelSource);
+      if (!pipelineWizardModel?.getData("isOrgToOrg")) {
+        pipelineWizardModel.setData("modifiedFilesOrigin", "git");
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
-        const prependMessage = "Service Error Pulling File List from Salesforce:";
+        const prependMessage = "Service Error Pulling File List :";
         toastContext.showInlineErrorMessage(error, prependMessage);
       }
     }
