@@ -33,6 +33,7 @@ jiraActions.getJiraMTTR = async (
     dashboardOrgs: dashboardOrgs,
     jiraProjects: getResultFromKpiConfiguration(kpiConfiguration, 'jira-projects'),
     jiraPriorities: getResultFromKpiConfiguration(kpiConfiguration, 'jira-priorities'),
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
