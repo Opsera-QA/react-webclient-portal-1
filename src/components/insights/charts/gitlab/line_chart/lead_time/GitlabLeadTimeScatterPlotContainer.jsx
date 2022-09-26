@@ -99,16 +99,13 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
                     Job Id: <strong>{node?.data?.stepId}</strong>
                   </div>
                   <div className={"py-1"}>
-                    Deployment Time:{" "}
-                    <strong>{node?.data?.stepFinishedAt}</strong>
+                    Deployment Time: <strong>{node?.data?.stepFinishedAt}</strong>
                   </div>
                   <div className={"py-1"}>
                     Deployment Stage: <strong>{node?.data?.stepType}</strong>
                   </div>
                   <div className={"py-1"}>
-                    Average Lead Time:{" "}
-                    <strong>{node?.data?.deployAverageLeadTime || "NA"}</strong>{" "}
-                    Day(s)
+                    Average Lead Time: <strong>{node?.data?.deployAverageLeadTime || "NA"}</strong> Day(s)
                   </div>
                 </div>
               );
