@@ -1,6 +1,6 @@
 import {axiosApiService} from "api/apiService";
 import {nodeAnalyticsApiService} from "api/nodeAnalyticsApi.service";
-import { apiServiceV2, parseAxiosError } from "api/apiServiceV2";
+import { apiServiceV2 } from "api/apiServiceV2";
 
 const baseActions = {};
 
