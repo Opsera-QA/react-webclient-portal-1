@@ -82,7 +82,7 @@ function MigratePackageSubform({ model, setModel, plan, stepId }) {
                 setDataObject={setModel}
                 idField={"targetEnvironmentId"}
                 fieldName={"targetEnvironmentName"}
-                disabled={model?.getData("environmentName")?.length === 0}
+                disabled={model?.getData("boomiToolId")?.length === 0}
                 tool={model?.getData("boomiToolId")}
             />
             <BoomiMigrationScmDetailsToggleInput
