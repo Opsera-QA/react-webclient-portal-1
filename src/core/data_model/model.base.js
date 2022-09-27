@@ -39,7 +39,7 @@ export default class ModelBase {
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
-    this.editAccessRolesAllowed = false;
+    this.editAccessRolesAllowed = true;
     this.roleDefinitions = {};
     this.userData = undefined;
   }
