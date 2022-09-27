@@ -236,7 +236,7 @@ function ParameterSelectListInputBase({
       <>
         <div className="flex-fill">
           {(dataObject?.getData(fieldName) && Array.isArray(dataObject?.getData(fieldName))
-            ? dataObject?.getData(fieldName)
+            ? dataObject.getData(fieldName)
             : []
           ).map((property, index) => {
             return getPropertyRow(property, index);

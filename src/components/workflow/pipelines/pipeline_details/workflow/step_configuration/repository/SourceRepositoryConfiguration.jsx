@@ -105,7 +105,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
 
   //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
   const validateRequiredFields = () => {
-    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
+    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel.getPersistData();
 
     if (service.length === 0) {
       return false;
