@@ -17,7 +17,7 @@ function ActionBarDeleteToolButton({ toolModel, className }) {
     );
   };
 
-  if (toolModel?.canPerformAction("delete_tool") !== true) {
+  if (toolModel?.canDelete() !== true) {
     return <></>;
   }
 

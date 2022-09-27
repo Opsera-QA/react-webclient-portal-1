@@ -23,7 +23,7 @@ function ToolVaultTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Vault"}
-      accessRestricted={!toolModel?.canPerformAction("update_tool_vault")}
+      accessRestricted={toolModel?.canUpdateRegistryToolVaultSettings() !== true}
     />
   );
 }

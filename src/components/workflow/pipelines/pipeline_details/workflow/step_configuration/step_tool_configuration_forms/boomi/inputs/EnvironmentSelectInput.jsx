@@ -92,7 +92,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
         setDataObject({ ...newDataObject });
     };
 
-    const clearDataFunction = async (fieldName, value) => {
+    const clearDataFunction = async (fieldName) => {
         let newDataObject = dataObject;
         newDataObject.setData(fieldName, "");
         newDataObject.setData(idField, "");

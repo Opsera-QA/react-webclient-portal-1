@@ -1,31 +1,17 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ParameterTable from "components/inventory/parameters/ParameterTable";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import TableAndDetailPanelContainer from "components/common/table/TableAndDetailPanelContainer";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 
-function ParametersView({isLoading, loadData, parameterList, parameterMetadata, parameterRoleDefinitions, parameterFilterModel}) {
-  const { getAccessToken } = useContext(AuthContext);
+function ParametersView(
+  {
+    isLoading,
+    loadData,
+    parameterList,
+    parameterFilterModel,
+  }) {
   const [parameterData, setParameterData] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
 
   const getTableView = () => {
     return (
@@ -33,12 +19,7 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
         isLoading={isLoading}
         loadData={loadData}
         data={parameterList}
-        parameterMetadata={parameterMetadata}
-        parameterRoleDefinitions={parameterRoleDefinitions}
         parameterFilterModel={parameterFilterModel}
-        cancelTokenSource={cancelTokenSource}
-        isMounted={isMounted}
-        getAccessToken={getAccessToken}
         setParameterData={setParameterData}
         parameterData={parameterData}
       />
@@ -49,8 +30,6 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
     return (
       <ParametersEditorPanel
         isLoading={isLoading}
-        loadData={loadData}
-        parameterModelId={parameterData?.getData("_id")}
         parameterModel={parameterData}
         setParameterModel={setParameterData}
       />
@@ -58,7 +37,10 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
   };
 
   return (
-    <TableAndDetailPanelContainer detailPanel={getEditorPanel()} table={getTableView()} />
+    <TableAndDetailPanelContainer
+      detailPanel={getEditorPanel()}
+      table={getTableView()}
+    />
   );
 }
 
@@ -68,7 +50,7 @@ ParametersView.propTypes = {
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
   parameterFilterModel: PropTypes.object,
-  parameterRoleDefinitions: PropTypes.object
+  parameterRoleDefinitions: PropTypes.object,
 };
 
 export default ParametersView;

@@ -7,10 +7,10 @@ import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import ConsolidatedUserReportToolAccessTable
   from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserReportToolAccessTable";
 import genericFilterMetadata from "components/common/filters/generic-filter-metadata";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function ConsolidatedUserToolAccessReport({ userEmailAddress }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -95,7 +95,7 @@ function ConsolidatedUserToolAccessReport({ userEmailAddress }) {
       setFilterDto={setToolFilterModel}
       supportSearch={true}
       isLoading={isLoading}
-      metadata={toolMetadata}
+      metadata={registryToolMetadata}
       type={"Tools"}
       body={getToolAccessTable()}
       titleIcon={faTools}

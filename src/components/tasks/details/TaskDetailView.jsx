@@ -1,12 +1,9 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import taskActions from "components/tasks/task.actions";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import TaskModel from "components/tasks/task.model";
 import VanitySetDetailScreenContainer
   from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -32,61 +29,23 @@ import SfdxQuickDeployTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
 import GitCustodianTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
-import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 function TaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
-  const toastContext = useContext(DialogToastContext);
-  const [taskData, setTaskData] = useState(undefined);
-  const [taskMetadata, setTaskMetadata] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
   const {
-    isMounted,
-    getAccessToken,
-    cancelTokenSource,
     accessRoleData,
-    userData,
-    isOpseraAdministrator,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getTaskData();
-    }
-    catch (error) {
-      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getTaskData = async () => {
-    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelTokenSource, id);
-    const task = response?.data?.data;
-    const taskMetadata = response?.data?.metadata;
-
-    if (isMounted.current === true && task != null) {
-      setTaskMetadata(taskMetadata);
-      setTaskData(new TaskModel(task, taskMetadata, false, getAccessToken, cancelTokenSource, loadData, false, false, setTaskData));
-    }
-  };
+  const {
+    taskModel,
+    setTaskModel,
+    loadData,
+    isLoading,
+  } = useGetTaskModelById(id);
 
   const getActionBar = () => {
     return (
@@ -96,7 +55,7 @@ function TaskDetailView() {
         </div>
         <div>
           <ActionBarDeleteTaskButton
-            taskModel={taskData}
+            taskModel={taskModel}
           />
         </div>
       </ActionBarContainer>
@@ -104,7 +63,7 @@ function TaskDetailView() {
   };
 
   const getHelpComponent = () => {
-    switch (taskData?.getData("type")) {
+    switch (taskModel?.getData("type")) {
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return <AwsEcsClusterCreationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
@@ -137,19 +96,19 @@ function TaskDetailView() {
   return (
     <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
-      metadata={taskMetadata}
-      model={taskData}
+      metadata={tasksMetadata}
+      model={taskModel}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
-      objectRoles={taskData?.getData("roles")}
+      objectRoles={taskModel?.getData("roles")}
       actionBar={getActionBar()}
       helpComponent={getHelpComponent()}
       detailPanel={
         <TaskDetailPanel
-          gitTasksData={taskData}
+          gitTasksData={taskModel}
           isLoading={isLoading}
-          setGitTasksData={setTaskData}
+          setGitTasksData={setTaskModel}
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}

@@ -4,10 +4,9 @@ import { Button } from "react-bootstrap";
 import { faFileAlt, } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function PipelineWorkflowViewConfigurationButton(
   {
@@ -15,7 +14,7 @@ export default function PipelineWorkflowViewConfigurationButton(
   }) {
   const {
     isOpseraAdministrator,
-    accessRoleData,
+    userData,
     toastContext,
   } = useComponentStateReference();
 
@@ -28,12 +27,7 @@ export default function PipelineWorkflowViewConfigurationButton(
   };
 
   // TODO: Wire up role definitions
-  if (WorkflowAuthorizedActions.workflowItems(
-    accessRoleData,
-    "view_pipeline_configuration",
-    pipeline?.owner,
-    pipeline?.roles,
-  ) !== true) {
+  if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
     return null;
   }
 
