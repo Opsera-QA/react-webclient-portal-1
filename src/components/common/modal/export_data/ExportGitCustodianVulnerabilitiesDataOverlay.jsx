@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
-import jsPDF from "jspdf";
 import ExportDataOverlay from "./ExportDataOverlay";
+import jsPDF from "jspdf";
 
 function ExportGitCustodianVulnerabilitiesDataOverlay({ formattedData, rawData, isLoading}) {
-
   const getRawData = () => {
     return new Blob([JSON.stringify(rawData)], {type : 'text/plain'});
   };

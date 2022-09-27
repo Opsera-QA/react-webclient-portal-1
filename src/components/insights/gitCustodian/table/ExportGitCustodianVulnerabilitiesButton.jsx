@@ -9,27 +9,21 @@ import IconBase from "components/common/icons/IconBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "../../charts/charts-actions";
-import { DialogToastContext} from "../../../../contexts/DialogToastContext";
 import ExportDataButtonBase from "../../../common/modal/export_data/ExportDataButtonBase";
+import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import ExportReportsDataOverlay from "../../../common/modal/export_data/ExportReportsDataOverlay";
 
-function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, isLoading }) {
+function ExportGitCustodianVulnerabilitiesButton(
+  { className,
+    gitCustodianData,
+    isLoading }) {
+
   const toastContext = useContext(DialogToastContext);
-
-  const launchOverlayFunction = () => {
-    toastContext.showOverlayPanel(
-      <ExportGitCustodianVulnerabilitiesDataOverlay
-        isLoading={isLoading}
-        formattedData={formattedData()}
-        rawData={rawDataResults()}
-      />
-    );
-  };
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [isDownloadDataLoading, setIsDownloadDataLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [issuesData, setIssuesData] = useState([]);
-  const [showExportModal, setShowExportModal] = useState(false);  
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -46,6 +40,15 @@ function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, i
     };
   }, []);
 
+  const launchOverlayFunction = () => {
+    toastContext.showOverlayPanel(
+    <ExportGitCustodianVulnerabilitiesDataOverlay
+      isLoading={isDownloadDataLoading}
+      formattedData={formattedData()}
+      rawData={rawDataResults()}
+    />
+    );
+  };
 
   const rawDataResults = () =>{
     return issuesData;
@@ -62,7 +65,6 @@ function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, i
   const fetchDownloadData = async () => {
     try {
       setIsDownloadDataLoading(true);
-      setShowExportModal(true);
       const dataResponse = await chartsActions.exportGitCustodianData(getAccessToken, cancelTokenSource, gitCustodianData);
       const issuesArr = dataResponse?.data?.data?.data;
       if (Array.isArray(issuesArr)) {
@@ -86,7 +88,6 @@ function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, i
       className={className}
       launchOverlayFunction={launchOverlayFunction}
     />
-
   );
 }
 
