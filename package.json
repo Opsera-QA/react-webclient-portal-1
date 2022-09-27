@@ -25,7 +25,7 @@
     "@okta/okta-signin-widget": "^6.5.0",
     "@opsera/definitions": "latest",
     "@opsera/dhx-suite-package": "^7.1.2",
-    "@opsera/know-your-role": "latest",
+    "@opsera/know-your-role": "0.1.11",
     "@opsera/persephone": "latest",
     "@types/react-router-dom": "^5.1.7",
     "ace-builds": "^1.4.14",

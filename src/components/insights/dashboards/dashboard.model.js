@@ -107,12 +107,12 @@ export default class DashboardModel extends ModelBase {
     );
   };
 
-  canEditAccessRoles = () => {
-    return DashboardRoleHelper.canEditAccessRoles(
-      this.userData,
-      this.data,
-    );
-  };
+  // canEditAccessRoles = () => {
+  //   return DashboardRoleHelper.canEditAccessRoles(
+  //     this.userData,
+  //     this.data,
+  //   );
+  // };
 }
 
 

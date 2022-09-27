@@ -497,7 +497,7 @@ export default class ModelBase {
   };
 
   canEditAccessRoles = () => {
-    return this.canUpdate() === true;
+    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
 
   handleLiveMessage = (liveMessage) => {
