@@ -12,7 +12,7 @@ import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary
 import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
 
-function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipeline, loadPipeline}) {
+function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
 
   const toggleHelp = () => {
@@ -29,20 +29,16 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
       />
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
       <ActionBarPublishPipelineButton
-        isActionAllowedFunction={isActionAllowedFunction}
         pipeline={pipeline}
       />
       <ActionBarDuplicatePipelineButton
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
       <ActionBarTransferPipelineButton
         loadPipeline={loadPipeline}
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
       <ActionBarToggleHelpButton
         className={"ml-3 action-bar-icon pointer"}
@@ -51,14 +47,12 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
       <ActionBarDeletePipelineButton
         className={"ml-3"}
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
     </div>
   );
 }
 
 PipelineSummaryActionBar.propTypes = {
-  isActionAllowedFunction: PropTypes.func,
   loadPipeline: PropTypes.func,
   pipeline: PropTypes.object,
   pipelineModel: PropTypes.object

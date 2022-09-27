@@ -20,7 +20,7 @@ function ToolClustersTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Clusters"}
-      // accessRestricted={!toolModel.canPerformAction("update_tool_clusters")}
+      // accessRestricted={toolModel.canUpdate() !== true}
     />
   );
 }

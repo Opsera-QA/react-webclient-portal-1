@@ -6,28 +6,18 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
-function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+function ActionBarPublishPipelineButton({pipeline}) {
   const [isPublishing, setIsPublishing] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    isMounted,
+    toastContext,
+    getAccessToken,
+    cancelTokenSource,
+    userData,
+  } = useComponentStateReference();
 
   const handlePublishPipelineFunction = async () => {
     try {
@@ -45,7 +35,7 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
     }
   };
 
-  if (pipeline == null || isActionAllowedFunction("publish_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canPublishPipelineToCatalog(userData, pipeline) !== true) {
     return null;
   }
 
@@ -62,7 +52,6 @@ function ActionBarPublishPipelineButton({pipeline, isActionAllowedFunction}) {
 
 ActionBarPublishPipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func,
 };
 
 export default ActionBarPublishPipelineButton;

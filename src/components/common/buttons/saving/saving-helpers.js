@@ -18,8 +18,9 @@ export async function persistNewRecordAndViewDetails(model, toastContext, showSu
     let link = updatedDto.getDetailViewLink();
 
     if (hasStringValue(link) === true) {
+      toastContext.removeInlineMessage();
       toastContext.clearOverlayPanel();
-      if (link != null) {
+      if (hasStringValue(link)) {
         history.push(link);
       }
     }
@@ -40,6 +41,7 @@ export async function persistNewRecordAndClose(model, toastContext, showSuccessT
   );
 
   if (response != null && response !== false && handleClose) {
+    toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
     handleClose();
   }

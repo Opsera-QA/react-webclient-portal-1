@@ -14,9 +14,7 @@ import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks
 import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
-import { AuthContext } from "contexts/AuthContext";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
-import workflowAuthorizedActions from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
 import SfdcOrgSyncPrerunHelpDocumentation
@@ -28,7 +26,6 @@ import azureAksClusterTaskConfigurationMetadata
 import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 import {
   mergeSyncTaskConfigurationMetadata
@@ -43,6 +40,8 @@ import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskC
 import SnaplogicProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicProjectSelectInput";
 import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicScmBranchSelectInput";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -50,7 +49,9 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const [report, setReport] = useState({});
-  const { getAccessRoleData } = useContext(AuthContext);
+  const {
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadRoles();
@@ -58,14 +59,12 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   }, []);
 
   const loadRoles = async () => {
-    const customerAccessRules = await getAccessRoleData();
     const gitTask = taskModel?.getPersistData();
+    
     setCanEdit(
-      workflowAuthorizedActions.gitItems(
-        customerAccessRules,
-        "edit_settings",
-        gitTask.owner,
-        gitTask.roles,
+      TaskRoleHelper.canUpdateTask(
+        userData,
+        gitTask,
       ),
     );
   };

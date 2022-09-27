@@ -7,9 +7,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function PipelineWorkflowWorkflowEditingToggleButton(
   {
@@ -20,7 +19,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   }) {
   const {
     isOpseraAdministrator,
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   if (editingWorkflow === true) {
@@ -37,12 +36,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   }
 
   // TODO: Wire up role definitions
-  if (WorkflowAuthorizedActions.workflowItems(
-    accessRoleData,
-    "edit_workflow_structure",
-    pipeline?.owner,
-    pipeline?.roles,
-  ) !== true) {
+  if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
     return null;
   }
 

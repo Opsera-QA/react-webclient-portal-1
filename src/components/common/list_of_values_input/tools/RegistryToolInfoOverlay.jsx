@@ -8,12 +8,12 @@ import FilterContainer from "components/common/table/FilterContainer";
 import TableCardView from "components/common/table/TableCardView";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function RegistryToolInfoOverlay(
   {
     tools,
     fieldName,
-    toolMetadata,
     isMounted,
     loadData,
     isLoading,
@@ -41,9 +41,7 @@ function RegistryToolInfoOverlay(
     return (
       <ToolsTable
         loadData={loadData}
-        isMounted={isMounted}
         data={tools}
-        toolMetadata={toolMetadata}
         isLoading={isLoading}
         rowClickFunction={rowClickFunction}
       />
@@ -68,7 +66,7 @@ function RegistryToolInfoOverlay(
         </div>
         <FilterContainer
           isLoading={isLoading}
-          metadata={toolMetadata}
+          metadata={registryToolMetadata}
           loadData={loadData}
           titleIcon={faTools}
           body={
@@ -113,7 +111,6 @@ RegistryToolInfoOverlay.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   selectedToolId: PropTypes.string,
-  toolMetadata: PropTypes.object,
   isMounted: PropTypes.object,
   setDataFunction: PropTypes.func,
   fieldName: PropTypes.string,

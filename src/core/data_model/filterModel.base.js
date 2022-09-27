@@ -224,6 +224,10 @@ export class FilterModelBase {
     return parsedBrowserStorage;
   };
 
+  getCurrentData = () => {
+    return this.data;
+  };
+
   isFieldValid = (fieldName) => {
     return validateField(this, this.getFieldById(fieldName));
   };

@@ -13,7 +13,6 @@ import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteMod
 import Model from "../../../core/data_model/model";
 import CustomTable from "components/common/table/CustomTable";
 import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
-import ToolPipelinesTable from 'components/inventory/tools/tool_details/ToolPipelinesTable';
 import DeleteToolDependenciesView from './DeleteToolDependenciesView';
 
 function DeleteToolsTable({ data, loadData, isLoading, className }) {

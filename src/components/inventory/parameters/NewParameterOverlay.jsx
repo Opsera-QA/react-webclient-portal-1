@@ -1,18 +1,18 @@
-import React, {useState, useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
-import ParameterModel from "components/inventory/parameters/parameter.model";
+import useGetNewParameterModel from "components/inventory/parameters/hooks/useGetNewParameterModel";
+import customParametersMetadata
+  from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 
-function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccessToken, cancelTokenSource }) {
+export default function NewParameterOverlay({ loadData }) {
   const toastContext = useContext(DialogToastContext);
-  const [parameterModel, setParameterModel] = useState(
-    new ParameterModel({...parameterMetadata.newObjectFields}, parameterMetadata, true, getAccessToken, cancelTokenSource, loadData, true, false, true)
-  );
+  const { parameterModel, setParameterModel } = useGetNewParameterModel();
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
 
@@ -21,7 +21,7 @@ function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccess
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={parameterMetadata?.type} loadData={loadData}>
+    <CreateCenterPanel closePanel={closePanel} objectType={customParametersMetadata?.type} loadData={loadData}>
       <div className={"mx-2"}>
         <ParametersEditorPanel
           handleClose={closePanel}
@@ -34,13 +34,7 @@ function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccess
 }
 
 NewParameterOverlay.propTypes = {
-  isMounted: PropTypes.object,
   loadData: PropTypes.func,
-  parameterMetadata: PropTypes.object,
-  getAccessToken: PropTypes.func,
-  cancelTokenSource: PropTypes.object,
 };
-
-export default NewParameterOverlay;
 
 

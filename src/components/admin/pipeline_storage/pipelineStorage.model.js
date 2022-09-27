@@ -25,10 +25,6 @@ export class PipelineStorageModel extends ModelBase {
   getManagementScreenLink = () => {
     return `/admin/pipeline-storage`;
   };
-
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new PipelineStorageModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed, this.setStateFunction);
-  };
 }
 
 export default PipelineStorageModel;

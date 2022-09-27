@@ -8,7 +8,7 @@ import FavoritesFilter from "components/common/filters/dashboards/favorites/Favo
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
+import CreateNewDashboardOverlay from "components/insights/dashboards/CreateNewDashboardOverlay";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
@@ -65,7 +65,7 @@ function DashboardTableView(
 
   const createNewDashboard = () => {
     toastContext.showOverlayPanel(
-      <NewDashboardModal
+      <CreateNewDashboardOverlay
         loadData={loadData}
         isMounted={isMounted}
       />

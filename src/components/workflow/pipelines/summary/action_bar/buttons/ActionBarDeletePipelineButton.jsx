@@ -4,17 +4,17 @@ import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionB
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DeletePipelineConfirmationOverlay
   from "components/workflow/pipelines/summary/action_bar/buttons/DeletePipelineConfirmationOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
-// TODO: Wire up Role Definitions
 export default function ActionBarDeletePipelineButton(
   {
     pipeline,
-    isActionAllowedFunction,
     refreshAfterDeletion,
     className,
   }) {
   const {
     toastContext,
+    userData,
   } = useComponentStateReference();
 
   const showDeleteConfirmationOverlay = () => {
@@ -26,7 +26,7 @@ export default function ActionBarDeletePipelineButton(
     );
   };
 
-  if (pipeline == null || isActionAllowedFunction == null || isActionAllowedFunction("delete_pipeline_btn", pipeline?.owner) !== true) {
+  if (pipeline == null || PipelineRoleHelper.canDeletePipeline(userData, pipeline) !== true) {
     return null;
   }
 
@@ -41,7 +41,6 @@ export default function ActionBarDeletePipelineButton(
 
 ActionBarDeletePipelineButton.propTypes = {
   pipeline: PropTypes.object,
-  isActionAllowedFunction: PropTypes.func,
   refreshAfterDeletion: PropTypes.bool,
   className: PropTypes.string,
 };
