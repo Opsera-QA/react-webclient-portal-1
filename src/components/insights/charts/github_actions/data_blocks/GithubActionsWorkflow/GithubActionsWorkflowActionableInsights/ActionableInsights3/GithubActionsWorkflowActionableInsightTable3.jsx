@@ -27,7 +27,6 @@ function GithubActionsWorkflowActionableInsightTable3(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "jobName")),
-      getTableTextColumn(getField(fields, "runs")),
       getTableTextColumn(getField(fields, "jobs")),
       getTableTextColumn(getField(fields, "jobsSuccess")),
       getTableTextColumn(getField(fields, "jobsFailures")),
