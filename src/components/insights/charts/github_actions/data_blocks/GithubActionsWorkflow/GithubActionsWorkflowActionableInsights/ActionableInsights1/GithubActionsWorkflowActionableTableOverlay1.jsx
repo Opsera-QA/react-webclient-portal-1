@@ -46,6 +46,7 @@ export default function GithubActionsWorkflowTableOverlay(
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
+      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableOneTable(
         kpiConfiguration,
         getAccessToken,
@@ -53,6 +54,7 @@ export default function GithubActionsWorkflowTableOverlay(
         filterDto,
         dashboardTags,
         dashboardOrgs,
+        dashboardFilters,
         workflowName,
       );
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];

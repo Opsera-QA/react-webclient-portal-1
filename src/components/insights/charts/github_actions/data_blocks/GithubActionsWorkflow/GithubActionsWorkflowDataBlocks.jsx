@@ -33,12 +33,14 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
+      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsBaseKPIDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
           dashboardTags,
-          dashboardOrgs
+          dashboardOrgs,
+          dashboardFilters
       );
       let dataObject = response?.data?.data[0];
       if (isMounted?.current === true && dataObject) {

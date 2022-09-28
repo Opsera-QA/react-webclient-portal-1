@@ -50,13 +50,15 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
             let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
+            let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
             const response = await githubActionsWorkflowActions.githubActionsBaseKPITable(
                 kpiConfiguration,
                 getAccessToken,
                 cancelSource,
                 filterDto,
                 dashboardTags,
-                dashboardOrgs
+                dashboardOrgs,
+                dashboardFilters
             );
 
             let dataObject = response?.data ? response?.data?.data[0]?.data : [];

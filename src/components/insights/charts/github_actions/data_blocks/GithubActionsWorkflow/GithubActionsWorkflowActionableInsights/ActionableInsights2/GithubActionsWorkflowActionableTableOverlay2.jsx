@@ -49,6 +49,7 @@ function GithubActionsWorkflowTableOverlay2(
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
+      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
         kpiConfiguration,
         getAccessToken,
@@ -56,6 +57,7 @@ function GithubActionsWorkflowTableOverlay2(
         filterDto,
         dashboardTags,
         dashboardOrgs,
+        dashboardFilters,
         workflow,
         repoName,
         appName,

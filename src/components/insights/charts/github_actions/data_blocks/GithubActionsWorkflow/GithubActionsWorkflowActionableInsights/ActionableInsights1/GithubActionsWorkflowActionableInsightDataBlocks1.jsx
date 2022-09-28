@@ -25,12 +25,14 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
+      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableOneDataBlocks(
           kpiConfiguration,
           getAccessToken,
           cancelSource,
           dashboardTags,
           dashboardOrgs,
+          dashboardFilters,
           workflowName
       );
       let dataObject = response?.data?.data[0];
