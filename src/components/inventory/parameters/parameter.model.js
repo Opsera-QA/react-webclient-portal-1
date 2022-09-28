@@ -33,8 +33,11 @@ export default class ParameterModel extends ModelBase {
       this,
     );
 
-    if (this.loadDataFunction) {
-      await this.loadDataFunction();
+    const parameter = response?.data;
+
+    if (parameter) {
+      this.data = parameter;
+      this.updateState();
     }
 
     return response;
@@ -73,7 +76,6 @@ export default class ParameterModel extends ModelBase {
     }
 
     this.unselectModel();
-
     return response;
   };
 

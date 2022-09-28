@@ -125,16 +125,18 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
       <Row>
-        <Col xs={12}>
-          <CenteredContentWrapper>
-            <RbacWarningField model={gitTasksData} />
-          </CenteredContentWrapper>
-        </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
         <Col md={6}>
           <TaskTypeField fieldName={"type"} model={gitTasksData} />
+        </Col>
+        <Col lg={12}>
+          <TaskRoleAccessInput
+            dataObject={gitTasksData}
+            setDataObject={setGitTasksData}
+            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
+          />
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
@@ -163,13 +165,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         </Col>
         <Col md={12} className={"pt-1"}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
-        </Col>
-        <Col lg={12}>
-          <TaskRoleAccessInput
-            dataObject={gitTasksData}
-            setDataObject={setGitTasksData}
-            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
-          />
         </Col>
       </Row>
       <Row className={"mx-0 w-100 my-2"}>

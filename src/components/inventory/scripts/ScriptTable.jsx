@@ -4,21 +4,22 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import NewScriptOverlay from "components/inventory/scripts/NewScriptOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
-import {
-  getOwnerNameField,
-  getScriptLanguageColumn,
-  getTableTextColumn
-} from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/script_library/scriptLibraryRole.helper";
 import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetScriptModel from "components/inventory/scripts/hooks/useGetScriptModel";
+import {
+  getOwnerNameField,
+  getScriptLanguageColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers-v2";
 
 function ScriptTable(
   {
     data,
-    setScriptData,
-    scriptData,
+    setScriptModel,
+    scriptModel,
     loadData,
     isLoading,
     scriptFilterModel
@@ -32,6 +33,7 @@ function ScriptTable(
     ],
     []
   );
+  const { getNewScriptModel } = useGetScriptModel();
   const {
     userData,
     toastContext,
@@ -45,6 +47,22 @@ function ScriptTable(
     );
   };
 
+  const handleRowSelectFunction = (row) => {
+    if (row == null) {
+      setScriptModel(undefined);
+      return;
+    }
+
+    const newModel = getNewScriptModel(
+      row,
+      false,
+      setScriptModel,
+      loadData,
+    );
+
+    setScriptModel({...newModel});
+  };
+
   const getScriptTable = () => {
     return (
       <VanitySelectionTable
@@ -54,9 +72,10 @@ function ScriptTable(
         isLoading={isLoading}
         loadData={loadData}
         paginationModel={scriptFilterModel}
-        setParentModel={setScriptData}
+        setParentModel={setScriptModel}
         tableHeight={"calc(25vh)"}
-        parentModel={scriptData}
+        parentModel={scriptModel}
+        handleRowSelectFunction={handleRowSelectFunction}
       />
     );
   };
@@ -89,9 +108,9 @@ ScriptTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  setScriptData: PropTypes.func,
+  setScriptModel: PropTypes.func,
   scriptFilterModel: PropTypes.object,
-  scriptData: PropTypes.object
+  scriptModel: PropTypes.object
 };
 
 export default ScriptTable;
