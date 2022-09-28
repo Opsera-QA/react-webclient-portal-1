@@ -9,6 +9,7 @@ import exportDataMetadata from "components/common/modal/export_data/export-data.
 import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 export default function ExportDataPanel(
   {
@@ -84,9 +85,17 @@ export default function ExportDataPanel(
     );
   };
 
+  if (isLoading === true) {
+    return (
+      <CenterLoadingIndicator
+        type={"Export Data"}
+      />
+    );
+  }
+
   return (
     <div
-     className={"text-color"}
+      className={"text-color"}
     >
       {toastContext.getInlineBanner()}
       <div className="p-3">
@@ -122,4 +131,3 @@ ExportDataPanel.propTypes = {
   getPdfExporter: PropTypes.func,
   closePanelFunction: PropTypes.func,
 };
-
