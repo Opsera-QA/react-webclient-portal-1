@@ -8,7 +8,7 @@ import GitlabActionsWorkflowActionableInsightTable3 from "./GithubActionsWorkflo
 import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 
-function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, repoName , appName, workflowName, branchName, jobName }) {
+function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, dashboardFilters,repoName , appName, workflowName, branchName, jobName }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
@@ -50,7 +50,7 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
             let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
-            let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
+            //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
             const response = await githubActionsWorkflowActions.githubActionsActionableThreeTable(
                 kpiConfiguration,
                 getAccessToken,
@@ -113,6 +113,7 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, r
 GithubActionsWorkflowTableOverlay3.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    dashboardFilters: PropTypes.any,
     workflowName: PropTypes.string,
     repoName: PropTypes.string,
     appName: PropTypes.string,

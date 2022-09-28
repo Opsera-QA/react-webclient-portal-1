@@ -17,11 +17,13 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
   {
     kpiConfiguration,
     dashboardData,
+    dashboardFilters,
     workflowName,
   }) {
   const [currentScreen, setCurrentScreen] = useState(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
   const [actionableInsight1DataObject, setActionableInsight1DataObject] = useState(undefined);
   const [selectedJobName, setSelectedJobName] = useState(undefined);
+  const [selectedJobRuns, setSelectedJobRuns] = useState(undefined);
 
 
   const getBody = () => {
@@ -31,6 +33,7 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
           <GithubActionsWorkflowActionableInsight1
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             setCurrentScreen={setCurrentScreen}
             setActionableInsight1DataObject={setActionableInsight1DataObject}
@@ -42,6 +45,7 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
             workflowName={workflowName}
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             appName={actionableInsight1DataObject?.appName}
             repoName={actionableInsight1DataObject?.repoName}
             workflow={actionableInsight1DataObject?.workflow}
@@ -57,14 +61,17 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
           <GithubActionsWorkflowActionableInsight3
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             appName={actionableInsight1DataObject?.appName}
             repoName={actionableInsight1DataObject?.repoName}
             workflow={actionableInsight1DataObject?.workflow}
             workflowName={actionableInsight1DataObject?.workflow}
             branchName={actionableInsight1DataObject?.branchName}
             jobName={selectedJobName}
+            runs={selectedJobRuns}
             setCurrentScreen={setCurrentScreen}
             setSelectedJobName={setSelectedJobName}
+            setSelectedJobRuns={setSelectedJobRuns}
           />
         );
     }
@@ -80,5 +87,6 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
 GithubActionsWorkflowActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
 };

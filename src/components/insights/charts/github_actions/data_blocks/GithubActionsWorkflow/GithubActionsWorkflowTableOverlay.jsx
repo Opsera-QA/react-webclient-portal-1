@@ -13,6 +13,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
     const [stats, setStats] = useState({});
+    const [dashboardFilters, setFilters] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -74,6 +75,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
                 setStats(stats);
+                setFilters(dashboardFilters);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -87,6 +89,8 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
         }
     };
 
+    console.log("dashboard",dashboardFilters);
+
     return (
         <GithubActionsBottomTable
             data={metrics}
@@ -96,6 +100,7 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
             setFilterModel={setFilterModel}
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             stats={stats}
         />
     );

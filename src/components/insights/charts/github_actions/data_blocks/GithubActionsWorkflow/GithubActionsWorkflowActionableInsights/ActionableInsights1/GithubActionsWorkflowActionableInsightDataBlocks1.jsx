@@ -11,7 +11,7 @@ import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, dashboardData, workflowName }) {
+function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, dashboardData, dashboardFilters, workflowName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -19,13 +19,15 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
+  console.log("actionable filters", dashboardFilters);
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
+      //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableOneDataBlocks(
           kpiConfiguration,
           getAccessToken,
@@ -33,7 +35,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
           dashboardTags,
           dashboardOrgs,
           dashboardFilters,
-          workflowName
+          workflowName,
       );
       let dataObject = response?.data?.data[0];
       if (isMounted?.current === true && dataObject) {
@@ -266,7 +268,8 @@ function GithubActionsWorkflowActionableInsightDataBlocks1({ kpiConfiguration, d
 GithubActionsWorkflowActionableInsightDataBlocks1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  workflowName:PropTypes.string
+  dashboardFilters: PropTypes.any,
+  workflowName: PropTypes.string
 };
 
 export default GithubActionsWorkflowActionableInsightDataBlocks1;

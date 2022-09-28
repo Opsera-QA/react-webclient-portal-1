@@ -15,11 +15,13 @@ function GithubActionsWorkflowActionableInsight3(
   {
     kpiConfiguration,
     dashboardData,
+    dashboardFilters,
     workflowName,
     repoName,
     appName,
     branchName,
     jobName,
+    runs,
     setCurrentScreen,
     setSelectedJobName,
   }) {
@@ -50,12 +52,16 @@ function GithubActionsWorkflowActionableInsight3(
             <div className={"mr-4"}>
               <b>Job Name:</b> {jobName}
             </div>
+              {/*<div className={"mr-4"}>*/}
+              {/*    <b>Job Runs:</b> {runs}*/}
+              {/*</div>*/}
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
           <GithubActionsWorkflowActionableInsightDataBlocks3
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
@@ -65,6 +71,7 @@ function GithubActionsWorkflowActionableInsight3(
           <GithubActionsWorkflowActionableTableOverlay3
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
@@ -117,11 +124,13 @@ function GithubActionsWorkflowActionableInsight3(
 GithubActionsWorkflowActionableInsight3.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
   branchName: PropTypes.string,
   jobName: PropTypes.string,
+  runs: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setSelectedJobName: PropTypes.func,
 };

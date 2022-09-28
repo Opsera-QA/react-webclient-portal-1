@@ -11,7 +11,7 @@ import {metricHelpers} from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, branchName, repoName, appName, workflow, jobName }) {
+function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, dashboardData, dashboardFilters, branchName, repoName, appName, workflow, jobName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -25,7 +25,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
+      //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoDataBlocks(
           kpiConfiguration,
           getAccessToken,
@@ -256,6 +256,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks2({ kpiConfiguration, d
 GithubActionsWorkflowActionableInsightDataBlocks2.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
