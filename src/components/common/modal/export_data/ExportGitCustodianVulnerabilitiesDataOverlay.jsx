@@ -42,13 +42,13 @@ function ExportGitCustodianVulnerabilitiesDataOverlay({ gitCustodianData }) {
     return [["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Jira Ticket"],
       ...issuesData.map((item) =>
         [
-          item.commitDate.substring(0, 10), 
-          item.repository, 
-          item.author, 
-          item.path, 
-          item.lineNumber, 
-          item.service, 
-          item.type, 
+          item.commitDate.substring(0, 10),
+          item.repository,
+          item.author,
+          item.path,
+          item.lineNumber,
+          item.service,
+          item.type,
           item?.jiraTicket?.key]
       )];
   };

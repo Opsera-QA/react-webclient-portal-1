@@ -95,7 +95,7 @@ export default function ExportDataPanel(
 
   return (
     <div
-     className={"text-color"}
+      className={"text-color"}
     >
       {toastContext.getInlineBanner()}
       <div className="p-3">
@@ -131,4 +131,3 @@ ExportDataPanel.propTypes = {
   getPdfExporter: PropTypes.func,
   closePanelFunction: PropTypes.func,
 };
-
