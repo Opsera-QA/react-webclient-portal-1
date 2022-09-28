@@ -9,6 +9,7 @@ import exportDataMetadata from "components/common/modal/export_data/export-data.
 import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 export default function ExportDataPanel(
   {
@@ -83,6 +84,14 @@ export default function ExportDataPanel(
       </RadioButtonInputContainer>
     );
   };
+
+  if (isLoading === true) {
+    return (
+      <CenterLoadingIndicator
+        type={"Export Data"}
+      />
+    );
+  }
 
   return (
     <div
