@@ -4,7 +4,6 @@ import registryToolMetadata from "@opsera/definitions/constants/registry/tools/r
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import { toolHelper } from "components/inventory/tools/tool.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import toolsActions from "components/inventory/tools/tools-actions";
 import vaultActions from "components/vault/vault.actions";
 
@@ -129,6 +128,11 @@ export default class ToolModel extends ModelBase {
   };
 
   getDetailViewLink = () => {
+    // TODO: incorporate better workaround
+    if (this.getMongoDbId() == null) {
+      return "no-details-yet";
+    }
+
     return toolHelper.getDetailViewLink(this.getMongoDbId());
   };
 
