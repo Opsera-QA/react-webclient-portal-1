@@ -8,11 +8,13 @@ import ScriptsHelpDocumentation from "../../common/help/documentation/tool_regis
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/script_library/scriptLibraryRole.helper";
 import useGetScriptModel from "components/inventory/scripts/hooks/useGetScriptModel";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function ScriptsInventory() {
   const [isLoading, setLoading] = useState(false);
   const [scriptList, setScriptList] = useState([]);
   const [scriptFilterModel, setScriptFilterModel] = useState(new ScriptsFilterModel());
+  const [scriptModel, setScriptModel] = useState(undefined);
   const {
     isMounted,
     userData,
@@ -34,10 +36,10 @@ function ScriptsInventory() {
     }
   }, []);
 
-  const loadData = async (filterModel = scriptFilterModel) => {
+  const loadData = async (filterModel = scriptFilterModel, selectedItemId) => {
     try {
       setLoading(true);
-      await getScripts(filterModel);
+      await getScripts(filterModel, selectedItemId);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -49,19 +51,31 @@ function ScriptsInventory() {
     }
   };
 
-  const getScripts = async (filterModel = scriptFilterModel) => {
-    const response = await scriptsActions.getScripts(getAccessToken, cancelTokenSource, filterModel?.getData("search"));
+  const getScripts = async (filterModel = scriptFilterModel, selectedItemId) => {
+    const response = await scriptsActions.getScripts(
+      getAccessToken,
+      cancelTokenSource,
+      filterModel?.getData("search"),
+    );
     const scripts = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(scripts)) {
-      const modelWrappedArray = [];
+      if (isMongoDbId(selectedItemId) === true) {
+        const foundScript = scripts.find((script) => script._id === selectedItemId);
 
-      scripts.forEach((script) => {
-        const newModel = getNewScriptModel(script, false, undefined, loadData,);
-        modelWrappedArray.push(newModel);
-      });
+        if (foundScript) {
+          const newModel = getNewScriptModel(
+            foundScript,
+            false,
+            setScriptModel,
+            loadData,
+          );
 
-      setScriptList([...modelWrappedArray]);
+          setScriptModel({ ...newModel });
+        }
+      }
+
+      setScriptList([...scripts]);
       filterModel.setData("totalCount", response.data.count);
       filterModel.setData("activeFilters", filterModel.getActiveFilters());
       setScriptFilterModel({ ...filterModel });
@@ -89,6 +103,8 @@ function ScriptsInventory() {
         scriptList={scriptList}
         setScriptList={setScriptList}
         scriptFilterModel={scriptFilterModel}
+        scriptModel={scriptModel}
+        setScriptModel={setScriptModel}
       />
     </ScreenContainer>
   );

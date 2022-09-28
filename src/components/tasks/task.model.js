@@ -98,11 +98,7 @@ export class TaskModel extends ModelBase {
   };
 
   getDetailViewLink = () => {
-    if (isMongoDbId(this.getMongoDbId()) !== true) {
-      return "new-item";
-    }
-
-    return taskHelper.getDetailViewLink(this.getMongoDbId());
+    return taskHelper.getModelDetailViewLink(this);
   };
 }
 

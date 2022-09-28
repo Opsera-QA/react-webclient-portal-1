@@ -13,9 +13,6 @@ import {
   faDraftingCompass,
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { LETTER_GRADES } from "../../../../../../common/metrics/grade/MetricLetterGradeText";
-import { getTableTextColumn } from "../../../../../../common/table/column_definitions/model-table-column-definitions";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards

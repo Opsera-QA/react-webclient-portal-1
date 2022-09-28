@@ -21,6 +21,7 @@ export default function RegistryToolRoleAccessInput(
     isSaasUser,
   } = useComponentStateReference();
 
+  // TODO: Make update tool roles route
   const saveData = async (newRoles) => {
     toolModel.setData(fieldName, newRoles);
     const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolModel);
@@ -28,17 +29,11 @@ export default function RegistryToolRoleAccessInput(
     return response;
   };
 
-  const getNoDataMessage = () => {
-    return (
-      <span>No Access Rules are currently applied. All users can see or edit this {toolModel?.getType()}.</span>
-    );
-  };
-
   if (toolModel == null || isSaasUser !== false) {
     return null;
   }
 
-  const canEdit = RegistryToolRoleHelper.canEditAccessRoles(userData, toolModel?.getPersistData());
+  const canEdit = RegistryToolRoleHelper.canEditAccessRoles(userData, toolModel?.getCurrentData());
 
   return (
     <RoleAccessInlineInputBase
@@ -46,7 +41,6 @@ export default function RegistryToolRoleAccessInput(
       model={toolModel}
       disabled={canEdit !== true}
       saveData={saveData}
-      noDataMessage={getNoDataMessage()}
       helpComponent={<ToolRegistryRoleAccessHelpDocumentation/>}
       visible={visible}
     />

@@ -4,15 +4,15 @@ import ParameterTable from "components/inventory/parameters/ParameterTable";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import TableAndDetailPanelContainer from "components/common/table/TableAndDetailPanelContainer";
 
-function ParametersView(
+export default function ParametersView(
   {
     isLoading,
     loadData,
     parameterList,
     parameterFilterModel,
+    parameterModel,
+    setParameterModel,
   }) {
-  const [parameterData, setParameterData] = useState(undefined);
-
   const getTableView = () => {
     return (
       <ParameterTable
@@ -20,8 +20,8 @@ function ParametersView(
         loadData={loadData}
         data={parameterList}
         parameterFilterModel={parameterFilterModel}
-        setParameterData={setParameterData}
-        parameterData={parameterData}
+        setParameterModel={setParameterModel}
+        parameterModel={parameterModel}
       />
     );
   };
@@ -30,8 +30,8 @@ function ParametersView(
     return (
       <ParametersEditorPanel
         isLoading={isLoading}
-        parameterModel={parameterData}
-        setParameterModel={setParameterData}
+        parameterModel={parameterModel}
+        setParameterModel={setParameterModel}
       />
     );
   };
@@ -48,9 +48,7 @@ ParametersView.propTypes = {
   parameterList: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  parameterMetadata: PropTypes.object,
   parameterFilterModel: PropTypes.object,
-  parameterRoleDefinitions: PropTypes.object,
+  parameterModel: PropTypes.object,
+  setParameterModel: PropTypes.func,
 };
-
-export default ParametersView;
