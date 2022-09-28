@@ -32,6 +32,8 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleAccessInput from "components/workflow/pipelines/summary/inputs/PipelineRoleAccessInput";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -60,7 +62,6 @@ const getWorkflowStatus = (pipeline) => {
 function PipelineSummaryPanel(
   {
     pipeline,
-    ownerName,
     customerAccessRules,
     parentWorkflowStatus,
     fetchPlan,
@@ -291,18 +292,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getRoleAccessField = () => {
-    return (
-      <Col xs={12}>
-        <PipelineRoleAccessInput
-          loadData={fetchPlan}
-          pipelineModel={pipelineModel}
-          setPipelineModel={setPipelineModel}
-        />
-      </Col>
-    );
-  };
-
   const getSchedulerField = () => {
     const pipelineTypes = pipeline?.type;
     // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
@@ -360,29 +349,11 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getPipelineIdField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">ID:</span>
-        {pipeline._id}
-      </span>
-    );
-  };
-
   const getPipelineRunCountField = () => {
     return (
       <span>
         <span className="text-muted mr-1">Pipeline Run Count:</span>
         {pipeline.workflow.run_count || "0"}
-      </span>
-    );
-  };
-
-  const getPipelineOwnerField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Owner:</span>
-        {ownerName}
       </span>
     );
   };
@@ -514,15 +485,26 @@ function PipelineSummaryPanel(
               loadPipeline={fetchPlan}
             />
           </Col>
-          {getRoleAccessField()}
+          <Col xs={12} sm={6} className="py-2">
+            <TextFieldBase
+              dataObject={pipelineModel}
+              fieldName={"owner_name"}
+            />
+          </Col>
           <Col sm={12} md={6} className="py-2">
-            {getPipelineIdField()}
+            <SmartIdField
+              model={pipelineModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <PipelineRoleAccessInput
+              loadData={fetchPlan}
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+            />
           </Col>
           <Col sm={12} md={6} className="py-2">
             {getPipelineRunCountField()}
-          </Col>
-          <Col xs={12} sm={6} className="py-2">
-            {getPipelineOwnerField()}
           </Col>
           <Col xs={12} sm={6} className="py-2">
             {getCreatedAtField()}

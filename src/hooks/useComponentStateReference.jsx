@@ -20,11 +20,7 @@ export default function useComponentStateReference() {
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
-  // useEffect(() => {
-  //   return () => {
-  //     toastContext.removeAllBanners();
-  //   };
-  // }, []);
+  useEffect(() => {}, []);
 
   return ({
     isMounted: isMounted,
