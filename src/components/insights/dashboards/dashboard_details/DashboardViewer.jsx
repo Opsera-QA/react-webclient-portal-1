@@ -57,6 +57,8 @@ function DashboardViewer({ dashboardModel, loadData }) {
     let filter4Filters = dashboardModel.getData("filters").find(x => x.type === "hierarchyFilters")?.value?.filter4?.map((value) => {return {"type": "Application Director", "value": value};});
     let filter5Filters = dashboardModel.getData("filters").find(x => x.type === "hierarchyFilters")?.value?.filter5?.map((value) => {return {"type": "Application", "value": value};});
     let filter6Filters = dashboardModel.getData("filters").find(x => x.type === "hierarchyFilters")?.value?.filter6?.map((value) => {return {"type": "GitHub Action", "value": value};});
+    let filter7Filters = dashboardModel.getData("filters").find(x => x.type === "hierarchyFilters")?.value?.filter7?.map((value) => {return {"type": "Repository", "value": value};});
+    let filter8Filters = dashboardModel.getData("filters").find(x => x.type === "hierarchyFilters")?.value?.filter8?.map((value) => {return {"type": "Branch", "value": value};});
     let organizationFilters = dashboardModel.getData("filters").find(x => x.type === "organizations")?.value?.map((value) => {return {"type": "Organization", "value": value?.name};});
     let tagFilters = dashboardModel.getData("filters").find(x => x.type === "tags")?.value;
     let activeFilters = [];
@@ -66,6 +68,8 @@ function DashboardViewer({ dashboardModel, loadData }) {
     if (Array.isArray(filter4Filters)) {activeFilters = [...activeFilters, ...filter4Filters];}
     if (Array.isArray(filter5Filters)) {activeFilters = [...activeFilters, ...filter5Filters];}
     if (Array.isArray(filter6Filters)) {activeFilters = [...activeFilters, ...filter6Filters];}
+    if (Array.isArray(filter7Filters)) {activeFilters = [...activeFilters, ...filter7Filters];}
+    if (Array.isArray(filter8Filters)) {activeFilters = [...activeFilters, ...filter8Filters];}
     if (Array.isArray(organizationFilters)) {activeFilters = [...activeFilters, ...organizationFilters];}
     if (Array.isArray(tagFilters)) {activeFilters = [...activeFilters, ...tagFilters];}
 

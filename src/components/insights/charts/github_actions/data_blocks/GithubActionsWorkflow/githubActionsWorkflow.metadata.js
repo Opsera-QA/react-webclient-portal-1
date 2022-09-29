@@ -79,35 +79,35 @@ export const githubActionsWorkflowMetadata = {
     },
     {
       label: "Repository Name",
-      id: "repoName"
+      id: "repoName",
     },
     {
       label: "Branch Name",
-      id: "branchName"
+      id: "branchName",
     },
     {
       label: "App Name",
-      id: "appName"
+      id: "appName",
     },
     {
       label: "Job Name",
-      id: "jobName"
+      id: "jobName",
     },
     {
       label: "Steps Skipped",
-      id: "skipped"
+      id: "skipped",
     },
     {
       label: "Runs Skipped",
-      id: "runsSkipped"
+      id: "runsSkipped",
     },
     {
       label: "% Run",
-      id: "runPercentage"
+      id: "runPercentage",
     },
     {
       label: "% Skipped",
-      id: "skippedPercentage"
+      id: "skippedPercentage",
     },
     {
       label: "Page Size",
@@ -129,8 +129,14 @@ export const githubActionsWorkflowMetadata = {
   getActiveFilters(filterDto) {
     let activeFilters = [];
 
-    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    if (
+      filterDto.getData("search") != null &&
+      filterDto.getData("search") !== ""
+    ) {
+      activeFilters.push({
+        filterId: "search",
+        text: `Keywords: ${filterDto.getData("search")}`,
+      });
     }
 
     return activeFilters;
@@ -149,6 +155,8 @@ export const githubActionsWorkflowMetadata = {
       filter4: [],
       filter5: [],
       filter6: [],
+      filter7: [],
+      filter8: [],
     },
   },
 };

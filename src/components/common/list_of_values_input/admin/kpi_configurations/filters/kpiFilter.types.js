@@ -29,9 +29,9 @@ export const KPI_FILTER_TYPES = {
   HIERARCHY_FILTERS: "hierarchyFilters",
   DEPLOYMENT_STAGE: "deployment-stage",
   GITLAB_PROJECT: "gitlab-project",
-  JIRA_PRIORITIES:"jira-priorities",
-  JIRA_PROJECTS:"jira-projects",
-  JIRA_CHANGE_TYPES: "jira-change-types"
+  JIRA_PRIORITIES: "jira-priorities",
+  JIRA_PROJECTS: "jira-projects",
+  JIRA_CHANGE_TYPES: "jira-change-types",
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -65,9 +65,9 @@ export const KPI_FILTER_TYPE_LABELS = {
   HIERARCHY_FILTERS: "Hierarchy Filters",
   DEPLOYMENT_STAGE: "Deployment Stage",
   GITLAB_PROJECT: "Gitlab Repository",
-  JIRA_PRIORITIES:"Jira Priorities",
-  JIRA_PROJECTS:"Jira Projects",
-  JIRA_CHANGE_TYPES:"Jira Change Types"
+  JIRA_PRIORITIES: "Jira Priorities",
+  JIRA_PROJECTS: "Jira Projects",
+  JIRA_CHANGE_TYPES: "Jira Change Types",
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -284,6 +284,8 @@ export const KPI_FILTER_SELECT_OPTIONS = [
       filter4: [],
       filter5: [],
       filter6: [],
+      filter7: [],
+      filter8: [],
     },
   },
   {

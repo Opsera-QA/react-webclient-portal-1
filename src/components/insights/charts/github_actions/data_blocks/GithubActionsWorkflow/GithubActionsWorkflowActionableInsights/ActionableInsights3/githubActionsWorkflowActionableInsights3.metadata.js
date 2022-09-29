@@ -70,8 +70,8 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       id: "failedPercentage",
     },
     {
-       label: "Average Time For Success",
-       id: "successTime",
+      label: "Average Time For Success",
+      id: "successTime",
     },
     {
       label: "Average Time For Failures",
@@ -79,35 +79,35 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
     },
     {
       label: "Repository Name",
-      id: "repoName"
+      id: "repoName",
     },
     {
       label: "Branch Name",
-      id: "branchName"
+      id: "branchName",
     },
     {
       label: "App Name",
-      id: "appName"
+      id: "appName",
     },
     {
       label: "Step Name",
-      id: "jobName"
+      id: "jobName",
     },
     {
       label: "Steps Skipped",
-      id: "skipped"
+      id: "skipped",
     },
     {
       label: "Runs Skipped",
-      id: "runsSkipped"
+      id: "runsSkipped",
     },
     {
       label: "% Run",
-      id: "runPercentage"
+      id: "runPercentage",
     },
     {
       label: "% Skipped",
-      id: "skippedPercentage"
+      id: "skippedPercentage",
     },
     {
       label: "Page Size",
@@ -127,13 +127,19 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
     },
   ],
   getActiveFilters(filterDto) {
-         let activeFilters = [];
+    let activeFilters = [];
 
-         if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-           activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-         }
+    if (
+      filterDto.getData("search") != null &&
+      filterDto.getData("search") !== ""
+    ) {
+      activeFilters.push({
+        filterId: "search",
+        text: `Keywords: ${filterDto.getData("search")}`,
+      });
+    }
 
-         return activeFilters;
+    return activeFilters;
   },
   newObjectFields: {
     tags: [],
@@ -149,6 +155,8 @@ export const githubActionsWorkflowActionableInsights3Metadata = {
       filter4: [],
       filter5: [],
       filter6: [],
+      filter7: [],
+      filter8: [],
     },
   },
 };

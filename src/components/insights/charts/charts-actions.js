@@ -817,7 +817,6 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     dashboardTags = null;
     dashboardOrgs = null;
   }
-
   const postBody = {
     request: request,
     startDate: date.start,

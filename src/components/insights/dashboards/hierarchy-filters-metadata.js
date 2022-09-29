@@ -25,6 +25,14 @@ export const hierarchyFiltersMetadata = {
       label: "GitHub Action",
       id: "filter6",
     },
+    {
+      label: "Repository",
+      id: "filter7",
+    },
+    {
+      label: "Branch",
+      id: "filter8",
+    },
   ],
   newObjectFields: {
     filter1: [],
@@ -33,5 +41,7 @@ export const hierarchyFiltersMetadata = {
     filter4: [],
     filter5: [],
     filter6: [],
+    filter7: [],
+    filter8: [],
   },
 };
