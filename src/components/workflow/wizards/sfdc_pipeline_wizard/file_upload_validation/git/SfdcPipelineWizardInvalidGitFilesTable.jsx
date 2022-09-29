@@ -110,6 +110,7 @@ const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
       filePullCompleted={filePullCompleted}
       title={"Invalid Files"}
       pipelineWizardModel={pipelineWizardModel}
+      reasonAvailable={true}
     />
   );
 };
