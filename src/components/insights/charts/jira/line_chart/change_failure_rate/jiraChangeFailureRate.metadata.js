@@ -18,6 +18,10 @@ export const jiraChangeFailureRateMetadata = {
       id: "jira-service-components"
     },
     {
+      label: "Jira Resolution Names",
+      id: "jira-resolution-names"
+    },
+    {
       label: "Date Range",
       id: "date",
     },
