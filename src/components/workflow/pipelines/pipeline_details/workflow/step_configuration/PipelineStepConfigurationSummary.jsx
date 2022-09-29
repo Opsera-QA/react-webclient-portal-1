@@ -226,6 +226,10 @@ import LiquibasePipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/LiquibasePipelineStepConfigurationSummary";
 import LiquibaseStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
+import FortifyPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/FortifyPipelineStepConfigurationSummary";
+import FortifyStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/fortify-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -718,6 +722,13 @@ function PipelineStepConfigurationSummary({
             <LiquibasePipelineStepConfigurationSummary
                 pipelineData={pipelineData}
                 liquibasePipelineDataObject={getModelWrappedObject(LiquibaseStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+            <FortifyPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                fortifyPipelineDataObject={getModelWrappedObject(FortifyStepFormMetadata)}
             />
         );
       default:
