@@ -78,7 +78,7 @@ function SelectInputBase(
       validateAndSetData(field?.id, "");
     }
     else if (clearDataFunction) {
-      clearDataFunction();
+      clearDataFunction(field?.id);
     }
   };
 

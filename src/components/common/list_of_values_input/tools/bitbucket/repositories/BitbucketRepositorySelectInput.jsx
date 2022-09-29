@@ -101,7 +101,7 @@ function BitbucketRepositorySelectInput(
   };
 
   const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm) => loadData(searchTerm, toolId), 600),
+      _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
       [],
   );
 

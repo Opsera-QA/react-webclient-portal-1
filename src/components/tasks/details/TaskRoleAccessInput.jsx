@@ -27,7 +27,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
 
   const loadData = async () => {
     // TODO: Wire up through the model when ready
-    setCanEditRoles(TaskRoleHelper.canEditAccessRoles(userData, dataObject?.getPersistData()));
+    setCanEditRoles(TaskRoleHelper.canEditAccessRoles(userData, dataObject?.getCurrentData()));
   };
 
   const saveData = async (newRoles) => {

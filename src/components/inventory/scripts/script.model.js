@@ -39,8 +39,11 @@ export default class ScriptModel extends ModelBase {
       this,
     );
 
-    if (this.loadDataFunction) {
-      await this.loadDataFunction();
+    const script = response?.data;
+
+    if (script) {
+      this.data = script;
+      this.updateState();
     }
 
     return response;

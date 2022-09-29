@@ -71,6 +71,14 @@ const boomiMetadata = {
             id: "environmentId",
         },
         {
+            label: "Source Environment",
+            id: "sourceEnvironmentName",
+        },
+        {
+            label: "Source Environment",
+            id: "sourceEnvironmentId",
+        },
+        {
             label: "Target Environment",
             id: "targetEnvironmentName",
         },
@@ -78,6 +86,10 @@ const boomiMetadata = {
             label: "Target Environment",
             id: "targetEnvironmentId",
         },
+        {
+            label: "Fetch components from SCM",
+            id: "fetchComponentsFromGit"
+        }
     ],
     newObjectFields: {
         boomiToolId: "",
@@ -98,7 +110,10 @@ const boomiMetadata = {
         environmentName: "",
         environmentId: "",
         targetEnvironmentName: "",
-        targetEnvironmentId: ""
+        targetEnvironmentId: "",
+        sourceEnvironmentName: "",
+        sourceEnvironmentId: "",
+        fetchComponentsFromGit: false,
     }
 };
 

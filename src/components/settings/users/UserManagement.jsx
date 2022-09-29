@@ -14,6 +14,7 @@ import PendingUsersTable from "components/settings/users/PendingUsersTable";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 import UserManagementHelpDocumentation
   from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function UserManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -69,9 +70,11 @@ function UserManagement() {
 
   const getUsersByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
     try {
-      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelSource, ldapDomain);
-      if (isMounted?.current === true && organizationResponse?.data?.users) {
-        setUsers(organizationResponse?.data?.users);
+      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, ldapDomain);
+      const users = DataParsingHelper.parseArray(response?.data, []);
+
+      if (isMounted?.current === true) {
+        setUsers(users);
       }
     } catch (error) {
       if (isMounted?.current === true) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import ToolDetailPanel from "components/inventory/tools/details/panel/ToolDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -12,6 +12,8 @@ import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReferen
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";
+import RegistryToolViewJsonActionBarButton
+  from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
 
 function ToolDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
@@ -30,6 +32,10 @@ function ToolDetailView() {
           <ActionBarBackButton path={"/inventory/tools"} />
         </div>
         <div className="d-flex">
+          <RegistryToolViewJsonActionBarButton
+            toolModel={toolModel}
+            className={"ml-3"}
+          />
           <ActionBarTransferToolButton
             className={"ml-3"}
             toolModel={toolModel}
@@ -37,7 +43,7 @@ function ToolDetailView() {
           />
           <ActionBarDeleteToolButton
             className={"ml-3"}
-            toolModel={toolModel}
+            toolModel={toolModel}I
           />
         </div>
       </ActionBarContainer>

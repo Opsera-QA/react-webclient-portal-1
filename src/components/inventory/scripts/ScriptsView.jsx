@@ -12,9 +12,9 @@ function ScriptsView(
     loadData,
     scriptList,
     scriptFilterModel,
+    scriptModel,
+    setScriptModel,
   }) {
-  const [scriptData, setScriptData] = useState(undefined);
-
   const getTableView = () => {
     return (
       <ScriptTable
@@ -22,19 +22,10 @@ function ScriptsView(
         loadData={loadData}
         data={scriptList}
         scriptFilterModel={scriptFilterModel}
-        setScriptData={setModel}
+        setScriptModel={setScriptModel}
+        scriptModel={scriptModel}
       />
     );
-  };
-
-  const setModel = (newModel) => {
-    const newValue = !newModel || newModel?.isDeleted() ? undefined : {...newModel};
-
-    if (newModel) {
-      newValue.setSetStateFunction(setScriptData);
-    }
-
-    setScriptData(newValue);
   };
 
   const getEditorPanel = () => {
@@ -42,9 +33,8 @@ function ScriptsView(
       <ScriptsEditorPanel
         isLoading={isLoading}
         loadData={loadData}
-        scriptModel={scriptData}
-        setScriptModel={setScriptData}
-        scriptModelId={scriptData?.getData("_id")}
+        scriptModel={scriptModel}
+        setScriptModel={setScriptModel}
       />
     );
   };
@@ -62,7 +52,9 @@ ScriptsView.propTypes = {
   isLoading: PropTypes.bool,
   createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
-  scriptFilterModel: PropTypes.object
+  scriptFilterModel: PropTypes.object,
+  scriptModel: PropTypes.object,
+  setScriptModel: PropTypes.func,
 };
 
 export default ScriptsView;
