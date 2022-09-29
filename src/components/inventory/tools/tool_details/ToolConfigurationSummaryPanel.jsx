@@ -109,6 +109,9 @@ import InformaticaIdqToolConfigurationSummaryPanel
 import gchatConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/gchat/gchat-connection-metadata";
 import GChatToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/gchat/GChatToolConfigurationSummaryPanel";
+import FortifyToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
+import FortifyMetadata from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -309,6 +312,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             gChatToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gchatConnectionMetadata)}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+          <FortifyToolConfigurationSummaryPanel
+            fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
+          />
+        );        
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }
