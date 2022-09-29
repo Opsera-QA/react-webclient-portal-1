@@ -1,6 +1,6 @@
 import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-thin-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
