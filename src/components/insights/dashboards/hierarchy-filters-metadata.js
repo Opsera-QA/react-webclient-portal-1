@@ -29,10 +29,10 @@ export const hierarchyFiltersMetadata = {
       label: "Repository",
       id: "filter7",
     },
-    {
-      label: "Branch",
-      id: "filter8",
-    },
+    // {
+    //   label: "Branch",
+    //   id: "filter8",
+    // },
   ],
   newObjectFields: {
     filter1: [],
