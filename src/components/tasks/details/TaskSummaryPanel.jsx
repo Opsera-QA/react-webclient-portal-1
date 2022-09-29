@@ -138,13 +138,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
             disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
           />
         </Col>
-        <Col lg={12}>
-          <TaskRoleAccessInput
-            dataObject={gitTasksData}
-            setDataObject={setGitTasksData}
-            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
-          />
-        </Col>
         <Col md={6}>
           <TaskTypeField fieldName={"type"} model={gitTasksData} />
         </Col>
