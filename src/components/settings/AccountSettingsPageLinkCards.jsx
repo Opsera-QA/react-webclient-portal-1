@@ -14,8 +14,12 @@ import TagManagementPageLinkCard from "components/settings/tags/TagManagementPag
 import OrganizationManagementPageLinkCard from "components/settings/organizations/OrganizationManagementPageLinkCard";
 import UserSettingsPageLinkCard from "components/user/user_settings/UserSettingsPageLinkCard";
 import LogsExportManagementPageLinkCard from "components/settings/logs_management/LogsExportManagementPageLinkCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialUserExpirationManagementPageLinkCard
+  from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementPageLinkCard";
 
 function AccountSettingsPageLinkCards({accessRoleData}) {
+
   if (accessRoleData == null) {
     return (<LoadingDialog size={"sm"} />);
   }
@@ -58,6 +62,7 @@ function AccountSettingsPageLinkCards({accessRoleData}) {
       <UserManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <FreeTrialUserExpirationManagementPageLinkCard />
     </div>
   );
 }

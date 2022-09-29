@@ -1,0 +1,21 @@
+import baseActions from "utils/actionsBase";
+
+export const freeTrialUserExpirationActions = {};
+
+freeTrialUserExpirationActions.getPlatformUsers = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/users/platform`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+freeTrialUserExpirationActions.getUserById = async (
+  getAccessToken,
+  cancelTokenSource,
+  id,
+) => {
+  const apiUrl = `/users/user/${id}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

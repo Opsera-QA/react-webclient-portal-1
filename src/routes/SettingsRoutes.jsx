@@ -27,6 +27,8 @@ import PipelineDataMappingDetailView
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialUserExpirationManagement
+  from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
 
 export default function SettingsRoutes() {
   const {
@@ -80,6 +82,12 @@ export default function SettingsRoutes() {
                    component={PipelineDataMappingDetailView} />
       <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                    component={UserDataMappingDetailView} />
+
+      <SecureRoute
+        path="/settings/trial/user-expiration-management"
+        exact
+        component={FreeTrialUserExpirationManagement}
+      />
     </>
   );
 }
