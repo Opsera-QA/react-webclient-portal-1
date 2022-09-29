@@ -26,6 +26,7 @@ function GithubActionsBottomTable({
   setFilterModel,
   kpiConfiguration,
   dashboardData,
+  dashboardFilters,
   stats
 }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
@@ -60,6 +61,7 @@ function GithubActionsBottomTable({
         workflowName={rowData.original._id}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
+        dashboardFilters={dashboardFilters}
       />,
     );
   };
@@ -133,6 +135,7 @@ GithubActionsBottomTable.propTypes = {
   setFilterModel: PropTypes.func,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   stats: PropTypes.object
 };
 

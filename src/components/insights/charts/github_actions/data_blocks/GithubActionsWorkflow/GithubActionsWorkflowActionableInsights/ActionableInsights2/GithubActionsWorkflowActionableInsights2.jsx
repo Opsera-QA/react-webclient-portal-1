@@ -15,6 +15,7 @@ function GithubActionsWorkflowActionableInsight2(
   {
     kpiConfiguration,
     dashboardData,
+    dashboardFilters,
     workflowName,
     repoName,
     appName,
@@ -59,6 +60,7 @@ function GithubActionsWorkflowActionableInsight2(
           <GithubActionsWorkflowActionableInsightDataBlocks2
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
@@ -69,6 +71,7 @@ function GithubActionsWorkflowActionableInsight2(
           <GithubActionsWorkflowActionableTableOverlay2
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
@@ -124,6 +127,7 @@ function GithubActionsWorkflowActionableInsight2(
 GithubActionsWorkflowActionableInsight2.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,

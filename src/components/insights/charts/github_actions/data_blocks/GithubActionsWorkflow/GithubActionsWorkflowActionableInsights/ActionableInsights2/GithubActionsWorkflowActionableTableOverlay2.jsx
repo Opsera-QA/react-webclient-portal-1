@@ -11,6 +11,7 @@ function GithubActionsWorkflowTableOverlay2(
   {
     kpiConfiguration,
     dashboardData,
+    dashboardFilters,
     repoName,
     appName,
     workflow,
@@ -49,7 +50,7 @@ function GithubActionsWorkflowTableOverlay2(
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
+      //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
         kpiConfiguration,
         getAccessToken,
@@ -97,6 +98,7 @@ function GithubActionsWorkflowTableOverlay2(
       loadData={loadData}
       filterModel={filterModel}
       setFilterModel={setFilterModel}
+      dashboardFilters={dashboardFilters}
       appName={appName}
       stats={stats}
       setCurrentScreen={setCurrentScreen}
@@ -108,6 +110,7 @@ function GithubActionsWorkflowTableOverlay2(
 GithubActionsWorkflowTableOverlay2.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,

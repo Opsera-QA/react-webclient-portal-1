@@ -12,6 +12,7 @@ function GithubActionsWorkflowActionableInsight1(
   {
     kpiConfiguration,
     dashboardData,
+    dashboardFilters,
     workflowName,
     setCurrentScreen,
     setActionableInsight1DataObject,
@@ -34,10 +35,11 @@ function GithubActionsWorkflowActionableInsight1(
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
-          <GithubActionsWorkflowActionableInsightDataBlocks1 kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} workflowName={workflowName}/>
+          <GithubActionsWorkflowActionableInsightDataBlocks1 kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} dashboardFilters={dashboardFilters} workflowName={workflowName}/>
           <GithubActionsWorkflowActionableTableOverlay1
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             setCurrentScreen={setCurrentScreen}
             setActionableInsight1DataObject={setActionableInsight1DataObject}
@@ -77,6 +79,7 @@ function GithubActionsWorkflowActionableInsight1(
 GithubActionsWorkflowActionableInsight1.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setActionableInsight1DataObject: PropTypes.func,

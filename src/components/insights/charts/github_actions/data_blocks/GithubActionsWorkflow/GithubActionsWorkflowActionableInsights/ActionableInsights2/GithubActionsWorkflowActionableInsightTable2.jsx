@@ -13,7 +13,7 @@ import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubAc
 import {githubActionsWorkflowActionableInsights2Metadata} from "./githubActionsWorkflowActionableInsights2.metadata";
 
 function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadData, filterModel, setFilterModel,
-                                                        kpiConfiguration,dashboardData, repoName, appName,
+                                                        kpiConfiguration,dashboardData, dashboardFilters, repoName, appName,
                                                         branchName, workflowName, stats }) {
   const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
@@ -40,16 +40,19 @@ function GithubActionsWorkflowActionableInsightTable2({ data, isLoading, loadDat
     []
   );
 
+
   const onRowSelect = (rowData) => {
     toastContext.showInfoOverlayPanel(
       <GithubActionsWorkflowActionableInsight3
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
+        dashboardFilters={dashboardFilters}
         appName={appName}
         repoName={repoName}
         workflowName={workflowName}
         branchName={branchName}
         jobName={rowData.original.jobName}
+        runs={rowData.original.runs}
       />
     );
   };
@@ -130,6 +133,7 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   setFilterModel: PropTypes.func,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
   repoName:PropTypes.string,
   appName: PropTypes.string,
   branchName: PropTypes.string,
