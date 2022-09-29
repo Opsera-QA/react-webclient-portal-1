@@ -29,6 +29,7 @@ function ActionBarTransferPipelineButton(
     isOpseraAdministrator,
     getAccessToken,
     isSaasUser,
+    userData,
   } = useComponentStateReference();
 
   useEffect(() => {
