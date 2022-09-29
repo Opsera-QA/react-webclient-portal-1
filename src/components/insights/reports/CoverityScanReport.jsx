@@ -73,6 +73,7 @@ function CoverityScanReport({ kpiConfiguration, dashboardData }) {
         undefined,
         coveritySeverity,
         null,
+        null,
         projectName,
         runCount,
         pipelineId
@@ -123,6 +124,7 @@ function CoverityScanReport({ kpiConfiguration, dashboardData }) {
         undefined,
         undefined,
         coveritySeverity,
+        null,
         null,
         projectName,
         runCount,
