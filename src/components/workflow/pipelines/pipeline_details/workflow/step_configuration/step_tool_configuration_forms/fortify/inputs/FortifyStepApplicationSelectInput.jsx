@@ -74,6 +74,13 @@ function FortifyStepApplicationSelectInput({ model, setModel, disabled, toolId }
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {    
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption.applicationId);
+    newModel.setDefaultValue("releaseId");
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"applicationId"}
@@ -81,6 +88,7 @@ function FortifyStepApplicationSelectInput({ model, setModel, disabled, toolId }
       setDataObject={setModel}
       placeholderText={placeholderText}
       selectOptions={applicationList}
+      setDataFunction={setDataFunction}
       textField={"applicationName"}
       valueField={"applicationId"}
       busy={isLoading}

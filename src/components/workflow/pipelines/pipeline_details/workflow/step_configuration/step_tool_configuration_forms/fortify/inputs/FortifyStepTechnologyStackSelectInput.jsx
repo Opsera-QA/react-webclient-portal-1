@@ -71,13 +71,21 @@ function FortifyStepTechnologyStackSelectInput({ model, setModel, disabled }) {
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {    
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption.name);
+    newModel.setDefaultValue("languageLevelId");    
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"technologyStackId"}
       dataObject={model}
       setDataObject={setModel}
       placeholderText={placeholderText}
-      selectOptions={technologyStackList}    
+      selectOptions={technologyStackList}
+      setDataFunction={setDataFunction}
       textField={"name"}
       valueField={"name"}  
       busy={isLoading}
