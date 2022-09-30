@@ -2,7 +2,9 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 import {getTaskTypeLabel, TASK_TYPES} from "../../../../tasks/task.types";
-
+import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
+import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import tasksRoles from "@opsera/know-your-role/roles/tasks/tasks.roles";
 
 function TasksHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
@@ -40,6 +42,16 @@ function TasksHelpDocumentation() {
       helpTopic={"Opsera Tasks"}
       helpDocumentation={getHelpDocumentation()}
     >
+      <div className={"my-2"}>
+        <AssignedRoleAccessTable
+          roleAccessDefinitions={tasksRoles}
+        />
+      </div>
+      <div className={"my-2"}>
+        <SiteRoleAccessTable
+          roleAccessDefinitions={tasksRoles}
+        />
+      </div>
     </HelpOverlayBase>
   );
 }

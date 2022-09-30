@@ -17,6 +17,7 @@ function VanitySelectionTableBase(
     selectedId,
     selectedModel,
     rowSelection,
+    sortable,
   }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
@@ -62,7 +63,7 @@ function VanitySelectionTableBase(
       data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
-      sortable: false,
+      sortable: sortable,
       selection: rowSelection,
       headerRowHeight: 30,
       rowHeight: 30,
@@ -135,13 +136,15 @@ VanitySelectionTableBase.propTypes = {
   onCellEdit: PropTypes.func,
   rowSelection: PropTypes.string,
   selectedModel: PropTypes.object,
+  sortable: PropTypes.bool,
 };
 
 VanitySelectionTableBase.defaultProps = {
   data: [],
   isLoading: false,
   height: "500px",
-  rowSelection: "row"
+  rowSelection: "row",
+  sortable: true,
 };
 
 export default VanitySelectionTableBase;
