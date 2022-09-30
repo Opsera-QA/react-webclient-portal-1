@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import MultiEmailListInput from "components/common/inputs/list/text/email/MultiEmailListInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function EmailStepNotificationEditorPanel(
+function EmailNotificationEditorPanel(
   {
     emailNotificationModel,
     setEmailNotificationModel,
@@ -39,21 +39,13 @@ function EmailStepNotificationEditorPanel(
           setModel={setEmailNotificationModel}
         />
       </Col>
-      <Col xs={12}>
-        <BooleanToggleInput
-          dataObject={emailNotificationModel}
-          setDataObject={setEmailNotificationModel}
-          disabled={emailNotificationModel?.getData("enabled") === false}
-          fieldName={"logEnabled"}
-        />
-      </Col>
     </Row>
   );
 }
 
-EmailStepNotificationEditorPanel.propTypes = {
+EmailNotificationEditorPanel.propTypes = {
   emailNotificationModel: PropTypes.object,
   setEmailNotificationModel: PropTypes.func,
 };
 
-export default EmailStepNotificationEditorPanel;
+export default EmailNotificationEditorPanel;
