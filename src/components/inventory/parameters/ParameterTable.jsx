@@ -4,16 +4,18 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
-import {
-  getColumnHeader, getColumnId,
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-} from "components/common/table/column_definitions/model-table-column-definitions";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import customParametersMetadata
   from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
+import useGetParameterModel from "components/inventory/parameters/hooks/useGetParameterModel";
+import {
+  getColumnHeader,
+  getColumnId,
+  getTableBooleanIconColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers-v2";
 
 export const getParameterValueColumn = (field, className, width) => {
   return {
@@ -21,21 +23,21 @@ export const getParameterValueColumn = (field, className, width) => {
     id: getColumnId(field),
     width: width,
     template: function (text, row) {
-      if (row?.getData("vaultEnabled") === true) {
+      if (row?.vaultEnabled === true) {
         return "[Encrypted Value]";
       }
 
-      return (row?.getData("value"));
+      return (row?.value);
     },
     class: className,
   };
 };
 
-function ParameterTable(
+export default function ParameterTable(
   {
     data,
-    setParameterData,
-    parameterData,
+    setParameterModel,
+    parameterModel,
     loadData,
     isLoading,
     parameterFilterModel,
@@ -46,6 +48,7 @@ function ParameterTable(
     userData,
     toastContext,
   } = useComponentStateReference();
+  const { getNewParameterModel } = useGetParameterModel();
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
@@ -63,6 +66,22 @@ function ParameterTable(
     );
   };
 
+  const handleRowSelectFunction = (row) => {
+    if (row == null) {
+      setParameterModel(undefined);
+      return;
+    }
+
+    const newModel = getNewParameterModel(
+      row,
+      false,
+      setParameterModel,
+      loadData,
+    );
+
+    setParameterModel({...newModel});
+  };
+
   const getParameterTable = () => {
     return (
       <VanitySelectionTable
@@ -72,10 +91,11 @@ function ParameterTable(
         columns={columns}
         isLoading={isLoading}
         loadData={loadData}
-        setParentModel={setParameterData}
+        setParentModel={setParameterModel}
         paginationModel={parameterFilterModel}
         tableHeight={"calc(25vh)"}
-        parentModel={parameterData}
+        parentModel={parameterModel}
+        handleRowSelectFunction={handleRowSelectFunction}
       />
     );
   };
@@ -107,9 +127,7 @@ ParameterTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  setParameterData: PropTypes.func,
+  setParameterModel: PropTypes.func,
   parameterFilterModel: PropTypes.object,
-  parameterData: PropTypes.object
+  parameterModel: PropTypes.object
 };
-
-export default ParameterTable;

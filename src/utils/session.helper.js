@@ -47,7 +47,7 @@ sessionHelper.replaceStoredUrlParameter = (queryParameter, value) => {
     url.searchParams.set(queryParameter, value);
   }
 
-  return sessionHelper.updateUrlWithQueryParameters(url);
+  sessionHelper.updateUrlWithQueryParameters(url);
 };
 
 sessionHelper.addStoredUrlParameter = (queryParameter, value) => {

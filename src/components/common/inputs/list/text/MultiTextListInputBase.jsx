@@ -81,7 +81,7 @@ function MultiTextListInputBase(
   };
 
   const deleteValueFunction = (index) => {
-    const newFields = [...model?.getArrayData(fieldName)];
+    const newFields = [...model.getArrayData(fieldName)];
     newFields.splice(index, 1);
     updateValue(newFields);
   };

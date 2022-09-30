@@ -211,7 +211,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           busy={isLoading}
           manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
-          value={[...dataObject?.getArrayData(fieldName)]}
+          value={[...dataObject.getArrayData(fieldName)]}
           placeholderText={errorMessage ? errorMessage : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
           setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}

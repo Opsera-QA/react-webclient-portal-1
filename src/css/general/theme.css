@@ -1627,7 +1627,7 @@ div.data-blocks-ellipses {
     }
     .overlay-panel-body {
         overflow-x: hidden;        
-    }    
+    }
 }
 
 @media (min-width: 1500px) {

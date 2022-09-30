@@ -33,6 +33,7 @@ jiraActions.getJiraMTTR = async (
     dashboardOrgs: dashboardOrgs,
     jiraProjects: getResultFromKpiConfiguration(kpiConfiguration, 'jira-projects'),
     jiraPriorities: getResultFromKpiConfiguration(kpiConfiguration, 'jira-priorities'),
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -88,6 +89,56 @@ jiraActions.getJiraChangeTypes = async (
   );
 };
 
+jiraActions.getJiraServiceComponents = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraServiceComponents";
+  let postBody = {};
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+jiraActions.getJiraResolutionNames = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraResolutionNames";
+  let postBody = {};
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 jiraActions.getJiraChangeFailureRate = async (
   getAccessToken,
   cancelTokenSource,
@@ -112,6 +163,8 @@ jiraActions.getJiraChangeFailureRate = async (
     dashboardOrgs: dashboardOrgs,
     jiraProjects: [getResultFromKpiConfiguration(kpiConfiguration,'jira-projects')],
     jiraChangeTypes: jiraChangeTypes,
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
+    jiraResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

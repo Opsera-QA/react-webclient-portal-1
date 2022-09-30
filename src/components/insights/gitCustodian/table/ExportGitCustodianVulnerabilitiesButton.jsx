@@ -1,82 +1,27 @@
-import React, {useState, useContext, useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportGitCustodianVulnerabilitiesDataOverlay from "components/common/modal/export_data/ExportGitCustodianVulnerabilitiesDataOverlay";
-import IconBase from "components/common/icons/IconBase";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import chartsActions from "../../charts/charts-actions";
-import { DialogToastContext} from "../../../../contexts/DialogToastContext";
+import ExportGitCustodianVulnerabilitiesDataOverlay
+  from "components/common/modal/export_data/ExportGitCustodianVulnerabilitiesDataOverlay";
 import ExportDataButtonBase from "../../../common/modal/export_data/ExportDataButtonBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, isLoading }) {
-  const toastContext = useContext(DialogToastContext);
+export default function ExportGitCustodianVulnerabilitiesButton(
+  {
+    className,
+    gitCustodianData,
+    isLoading,
+  }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   const launchOverlayFunction = () => {
     toastContext.showOverlayPanel(
       <ExportGitCustodianVulnerabilitiesDataOverlay
-        isLoading={isLoading}
-        formattedData={formattedData()}
-        rawData={rawDataResults()}
-      />
+        gitCustodianData={gitCustodianData}
+      />,
     );
-  };
-  const { getAccessToken } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [isDownloadDataLoading, setIsDownloadDataLoading] = useState(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [issuesData, setIssuesData] = useState([]);
-  const [showExportModal, setShowExportModal] = useState(false);  
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-
-  const rawDataResults = () =>{
-    return issuesData;
-   };
-
-  const formattedData = () => {
-    let formattedData = issuesData;
-
-    //any data formatting goes here
-
-    return formattedData;
-  };
-
-  const fetchDownloadData = async () => {
-    try {
-      setIsDownloadDataLoading(true);
-      setShowExportModal(true);
-      const dataResponse = await chartsActions.exportGitCustodianData(getAccessToken, cancelTokenSource, gitCustodianData);
-      const issuesArr = dataResponse?.data?.data?.data;
-      if (Array.isArray(issuesArr)) {
-        setIssuesData(issuesArr);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsDownloadDataLoading(false);        
-      }
-    }    
   };
 
   // TODO: Refine when more is complete
@@ -86,14 +31,11 @@ function ExportGitCustodianVulnerabilitiesButton({className, gitCustodianData, i
       className={className}
       launchOverlayFunction={launchOverlayFunction}
     />
-
   );
 }
 
-ExportGitCustodianVulnerabilitiesButton.propTypes = {  
+ExportGitCustodianVulnerabilitiesButton.propTypes = {
   className: PropTypes.string,
   gitCustodianData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
-
-export default ExportGitCustodianVulnerabilitiesButton;

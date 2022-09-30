@@ -13,7 +13,7 @@ export default function NewParameterOverlay({ loadData }) {
 
   const closePanel = () => {
     if (loadData) {
-      loadData();
+      loadData(undefined, parameterModel?.getMongoDbId());
     }
 
     toastContext.removeInlineMessage();
@@ -21,7 +21,10 @@ export default function NewParameterOverlay({ loadData }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={customParametersMetadata?.type} loadData={loadData}>
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={customParametersMetadata?.type}
+    >
       <div className={"mx-2"}>
         <ParametersEditorPanel
           handleClose={closePanel}

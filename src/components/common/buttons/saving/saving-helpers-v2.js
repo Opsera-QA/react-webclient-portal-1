@@ -48,7 +48,6 @@ export async function persistNewRecordAndClose(
 
   if (response != null && response !== false && handleClose) {
     toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
     handleClose();
   }
 

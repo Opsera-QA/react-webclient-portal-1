@@ -11,7 +11,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 function NewPipelineTemplateOverlay({ loadData} ) {
   const toastContext = useContext(DialogToastContext);
   const { isMounted } = useComponentStateReference();
-  const [templateData, setTemplateData] = useState(new Model({...templateEditorMetadata.newObjectFields}, templateEditorMetadata, true));
+  const [templateModel, setTemplateModel] = useState(new Model({...templateEditorMetadata.newObjectFields}, templateEditorMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -24,7 +24,11 @@ function NewPipelineTemplateOverlay({ loadData} ) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={templateEditorMetadata.type} loadData={loadData}>
-      <PipelineTemplateEditorPanel setTemplateData={setTemplateData} handleClose={closePanel} templateData={templateData}/>
+      <PipelineTemplateEditorPanel
+        setTemplateModel={setTemplateModel}
+        handleClose={closePanel}
+        templateModel={templateModel}
+      />
     </CreateCenterPanel>
   );
 }

@@ -18,6 +18,7 @@ export default function VanityButtonBase(
     successText,
     errorText,
     tooltip,
+    buttonSize,
   }) {
 
   const getLabel = () => {
@@ -57,6 +58,7 @@ export default function VanityButtonBase(
           disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
           onClick={onClickFunction}
           variant={getButtonVariant()}
+          size={buttonSize}
         >
           <span>
             <IconBase
@@ -84,6 +86,7 @@ VanityButtonBase.propTypes = {
   successText: PropTypes.string,
   errorText: PropTypes.string,
   tooltip: PropTypes.any,
+  buttonSize: PropTypes.any,
 };
 
 VanityButtonBase.defaultProps = {

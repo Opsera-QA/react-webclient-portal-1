@@ -12,8 +12,8 @@ function GitlabDeployFrequencyChartHelpDocumentation({closeHelpPanel}) {
         <div className={"mb-2"}>This chart displays an overall summary of deployment in pipelines. To customize goals based on your organization&#39;s goal, provide values in Settings.</div>
         <div>
           <ul style={{listStyleType: "none"}}>
-            <li><b>Deployment Frequency Chart</b> - Displays the average number of deployments that occur daily for the chosen period of time.</li>
-            <li><b>Deployment Frequency Value</b> - Displays the overall average number of deployments for the chosen period of time, along with a trend.
+            <li><b>Deployment Frequency Chart</b> - Displays the average number of pipelines and deployment that occur daily for the chosen period of time.</li>
+            <li><b>Total Deployments</b> - Displays the number of deployments for the chosen period of time, along with a trend.
               <ul>
                 <li><b>Deployment Frequency</b> = <i>(Successful deployments for selected time interval/ Total number of days selected)</i></li>
                 <li><b>Previous Frequency</b> = <i>(Successful deployments for <b>Previous Time Interval*</b>/ Total number of days selected)</i></li>

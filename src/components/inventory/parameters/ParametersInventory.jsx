@@ -8,11 +8,13 @@ import ParametersHelpDocumentation from "../../common/help/documentation/tool_re
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
 import useGetParameterModel from "components/inventory/parameters/hooks/useGetParameterModel";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function ParametersInventory() {
   const [isLoading, setIsLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
+  const [parameterModel, setParameterModel] = useState(undefined);
   const { getNewParameterModel } = useGetParameterModel();
   const {
     isMounted,
@@ -34,10 +36,10 @@ export default function ParametersInventory() {
     }
   }, [userData]);
 
-  const loadData = async (filterModel = parameterFilterModel) => {
+  const loadData = async (filterModel = parameterFilterModel, selectedItemId) => {
     try {
       setIsLoading(true);
-      await getParameters(filterModel);
+      await getParameters(filterModel, selectedItemId);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -49,19 +51,30 @@ export default function ParametersInventory() {
     }
   };
 
-  const getParameters = async (filterModel = parameterFilterModel) => {
-    const response = await parametersActions.getParameters(getAccessToken, cancelTokenSource, filterModel?.getData("search"));
+  const getParameters = async (filterModel = parameterFilterModel, selectedItemId) => {
+    const response = await parametersActions.getParameters(
+      getAccessToken,
+      cancelTokenSource,
+      filterModel?.getData("search")
+    );
     const parameters = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(parameters)) {
-      const modelWrappedArray = [];
+      if (isMongoDbId(selectedItemId) === true) {
+        const foundParameter = parameters.find((parameter) => parameter?._id === selectedItemId);
 
-      parameters.forEach((parameter) => {
-        const newModel = getNewParameterModel(parameter, false, undefined, loadData);
-        modelWrappedArray.push(newModel);
-      });
+        if (foundParameter) {
+          const newModel = getNewParameterModel(
+            foundParameter,
+            false,
+            setParameterModel,
+            loadData,
+          );
+          setParameterModel({ ...newModel });
+        }
+      }
 
-      setParameterList([...modelWrappedArray]);
+      setParameterList([...parameters]);
       filterModel.setData("totalCount", response.data.count);
       filterModel.setData("activeFilters", filterModel.getActiveFilters());
       setParameterFilterModel({ ...filterModel });
@@ -89,6 +102,8 @@ export default function ParametersInventory() {
         parameterList={parameterList}
         setParameterList={setParameterList}
         parameterFilterModel={parameterFilterModel}
+        parameterModel={parameterModel}
+        setParameterModel={setParameterModel}
       />
     </ScreenContainer>
   );

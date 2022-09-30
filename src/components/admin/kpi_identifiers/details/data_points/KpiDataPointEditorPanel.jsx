@@ -16,36 +16,10 @@ import MetricDataPointVisibilityInput
 
 function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
   const [kpiDataPointModel, setKpiDataPointModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    setIsLoading(true);
     setKpiDataPointModel(dataPointModel);
-    setIsLoading(false);
-  };
+  }, [dataPointModel]);
 
   if (kpiDataPointModel == null) {
     return <Loading size="sm" />;
@@ -55,7 +29,6 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
     <VanityEditorPanelContainer
       model={kpiDataPointModel}
       setModel={setKpiDataPointModel}
-      isLoading={isLoading}
       handleClose={closeEditorPanel}
     >
       <Row>

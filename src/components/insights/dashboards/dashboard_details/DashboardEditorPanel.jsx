@@ -12,7 +12,6 @@ import DashboardAccessSelectInput
 import DashboardPersonaSelectInput
   from "components/common/list_of_values_input/insights/dashboards/DashboardPersonaSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
 import TagManager from "components/common/inputs/tags/TagManager";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
@@ -22,7 +21,6 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
   const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
   const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const {
     getAccessToken,
     isSaasUser,
@@ -115,9 +113,9 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={6}>
             <DashboardPersonaSelectInput dataObject={dashboardAttributesDataDto} setDataObject={setDashboardAttributesDataDto}/>
           </Col>
-          <Col md={6}>
-            <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
-          </Col>
+          {/*<Col md={6}>*/}
+          {/*  <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>*/}
+          {/*</Col>*/}
           {getRolesInput()}
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
@@ -128,7 +126,6 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           {getActivityToggleInput()}
         </Row>
       </div>
-      <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
     </EditorPanelContainer>
   );
 }
