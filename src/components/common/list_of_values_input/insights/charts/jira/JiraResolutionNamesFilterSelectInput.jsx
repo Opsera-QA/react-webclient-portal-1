@@ -65,7 +65,7 @@ function JiraResolutionNamesFilterSelectInput({
       project
     );
     if (response.data != null) {
-      setResolutionNames(response?.data?.data?.jiraResolutionNamesList?.data);
+      setResolutionNames(response?.data?.data);
     }
   };
   const disabled = model.getData('jira-projects').length === 0;
