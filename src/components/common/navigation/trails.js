@@ -49,7 +49,7 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog,
+  faDiamondExclamation, faFolderCog, faShield,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -585,6 +585,17 @@ const breadcrumbs = {
     linkText: "Logs Backup Management",
     icon: faTags,
     pageDescription: "Manage backup of pipeline activity audit logs."
+  },
+
+  // Unassigned Rules Items Report
+  unassignedRulesItems: {
+    parent: "accountSettings",
+    name: "unassignedRulesItems",
+    path: paths.unassignedRulesItems,
+    title: "Unassigned Rules",
+    linkText: "Unassigned Rules",
+    icon: faShield,
+    pageDescription: "View items that haven't been assigned access rules"
   },
 
   // Organization Management

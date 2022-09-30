@@ -86,6 +86,7 @@ paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
 paths.logsBackupManagement = paths.accountSettings + "/logs-backup-management";
+paths.unassignedRulesItems = paths.accountSettings + "/unassigned-rules-items";
 paths.activeUserDetailView = paths.userManagement;
 paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
