@@ -6,6 +6,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CloseButton from "components/common/buttons/CloseButton";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 // TODO: Pick better names for components and state variables
 function GithubActionsWorkflowActionableInsight1(
@@ -52,7 +53,13 @@ function GithubActionsWorkflowActionableInsight1(
   const getButtonContainer = () => {
     return (
       <div className={"mx-3"}>
-        <ButtonContainerBase>
+        <ButtonContainerBase
+          leftSideButtons={
+            <BackButtonBase
+              backButtonFunction={closePanel}
+            />
+          }
+        >
           <CloseButton
             closeEditorCallback={closePanel}
           />
