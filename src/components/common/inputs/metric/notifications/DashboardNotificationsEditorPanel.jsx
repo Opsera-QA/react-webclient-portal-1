@@ -9,6 +9,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import gChatNotificationMetadata from "./inputs/gchat/gChatNotificationMetadata";
 import DashboardNotificationTabView from "./DashboardNotificationTabView";
+import emailNotificationMetadata from "./inputs/email/emailNotificationMetadata";
 
 function DashboardNotificationsEditorPanel(
   {
@@ -19,6 +20,7 @@ function DashboardNotificationsEditorPanel(
   const [teamsNotificationModel, setTeamsNotificationModel] = useState(undefined);
   const [slackNotificationModel, setSlackNotificationModel] = useState(undefined);
   const [gChatNotificationModel, setGChatNotificationModel] = useState(undefined);
+  const [emailNotificationModel, setEmailNotificationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -57,6 +59,8 @@ function DashboardNotificationsEditorPanel(
   };
 
   const loadConfiguration = async () => {
+    const emailNotification = model?.getArrayData("notification")?.find((notification) => notification.type === "email");
+    setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailNotificationMetadata));
 
     const slackNotification = model?.getArrayData("notification")?.find((notification) => notification.type === "slack");
     setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackNotificationMetadata));
@@ -66,6 +70,11 @@ function DashboardNotificationsEditorPanel(
 
     const gChatNotification = model?.getArrayData("notification")?.find((notification) => notification.type === "gchat");
     setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatNotificationMetadata));
+  };
+
+  const setEmailNotificationHandler = (newModel) => {
+    setModelValues(newModel.getPersistData(), "email");
+    setEmailNotificationModel({...newModel});
   };
 
   const setGChatNotificationHandler = (newModel) => {
@@ -88,25 +97,6 @@ function DashboardNotificationsEditorPanel(
     const notificationArray = newModel?.getArrayData("notification");
     let newNotificationArray = notificationArray.filter((notification) => notification.type !== notificationId);
     newModel.setData("notification", [...newNotificationArray, data]);
-  };
-
-  const validateRequiredFields = () => {
-    if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
-      toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
-      return false;
-    }
-
-    if (slackNotificationModel.getData("enabled") === true && !slackNotificationModel.isModelValid()) {
-      toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
-      return false;
-    }
-
-    if (gChatNotificationModel.getData("enabled") === true && !gChatNotificationModel.isModelValid()) {
-      toastContext.showInlineErrorMessage("Error: Cannot enable GChat notification without tool selected.");
-      return false;
-    }
-
-    return true;
   };
 
   const getTitleBar = () => {
@@ -134,6 +124,8 @@ function DashboardNotificationsEditorPanel(
         setTeamsNotificationModel={setTeamsNotificationHandler}
         gChatNotificationModel={gChatNotificationModel}
         setGChatNotificationModel={setGChatNotificationHandler}
+        emailNotificationModel={emailNotificationModel}
+        setEmailNotificationModel={setEmailNotificationHandler}
       />
     </OverlayPanelBodyContainer>
   );

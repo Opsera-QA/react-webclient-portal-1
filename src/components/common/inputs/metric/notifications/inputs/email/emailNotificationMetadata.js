@@ -1,17 +1,12 @@
 // TODO: put metadata on node server and pull down that way?
-const emailStepNotificationMetadata = {
+const emailNotificationMetadata = {
   idProperty: "name",
   type: "Email Notification",
   fields: [
     {
       label: "Type",
       id: "type",
-    },
-    {
-      label: "Notification Level",
-      id: "event",
-      isRequired: true
-    },
+    },    
     {
       label: "Email Addresses",
       id: "addresses",
@@ -24,19 +19,13 @@ const emailStepNotificationMetadata = {
     {
       label: "Email Notifications",
       id: "enabled",
-    },
-    {
-      label: "Include last 10 lines of log (limited to 1000 characters)",
-      id: "logEnabled",
-    },
+    },    
   ],
   newObjectFields: {
     type: "email",
     addresses: [],
-    event: "error",
     enabled: false,
-    logEnabled: false,
   }
 };
 
-export default emailStepNotificationMetadata;
+export default emailNotificationMetadata;

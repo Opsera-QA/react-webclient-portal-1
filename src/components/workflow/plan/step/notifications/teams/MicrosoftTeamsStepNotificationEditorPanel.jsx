@@ -7,6 +7,7 @@ import TeamsStepNotificationTeamsToolSelectInput
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function MicrosoftTeamsStepNotificationEditorPanel(
   {
@@ -39,6 +40,14 @@ function MicrosoftTeamsStepNotificationEditorPanel(
         <TeamsStepNotificationTeamsToolSelectInput
           model={teamsNotificationModel}
           setModel={setTeamsNotificationModel}
+        />
+      </Col>
+      <Col xs={12}>
+        <BooleanToggleInput
+          dataObject={teamsNotificationModel}
+          setDataObject={setTeamsNotificationModel}
+          disabled={teamsNotificationModel?.getData("enabled") === false}
+          fieldName={"logEnabled"}
         />
       </Col>
     </Row>
