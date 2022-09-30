@@ -2,42 +2,30 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CloseButton from "components/common/buttons/CloseButton";
-import ExportButton, {
-  ExportTypes,
-} from "components/common/buttons/export/ExportButton";
+import ExportButton, { ExportTypes } from "components/common/buttons/export/ExportButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import exportDataMetadata from "components/common/modal/export_data/export-data.metadata";
 import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-export default function ExportDataPanel({
-  children,
-  isLoading,
-  getRawData,
-  getPdfExporter,
-  closePanelFunction,
-  getCsvData,
-}) {
-  const [exportDataModel, setExportDataModel] = useState(
-    new Model(
-      { ...exportDataMetadata.newObjectFields },
-      exportDataMetadata,
-      true,
-    ),
-  );
+export default function ExportDataPanel(
+  {
+    children,
+    isLoading,
+    getRawData,
+    getPdfExporter,
+    closePanelFunction,
+    getCsvData,
+  }) {
+  const [exportDataModel, setExportDataModel] = useState(new Model({ ...exportDataMetadata.newObjectFields }, exportDataMetadata, true));
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     toastContext.removeInlineMessage();
-    setExportDataModel(
-      new Model(
-        { ...exportDataMetadata.newObjectFields },
-        exportDataMetadata,
-        true,
-      ),
-    );
+    setExportDataModel(new Model({ ...exportDataMetadata.newObjectFields }, exportDataMetadata, true));
   }, []);
 
   const closePanel = () => {
@@ -53,10 +41,7 @@ export default function ExportDataPanel({
   // TODO: I'm going to refactor this after everything is known
   const getExportOptions = (fieldName = "exportOption") => {
     return (
-      <RadioButtonInputContainer
-        dataObject={exportDataModel}
-        fieldName={fieldName}
-      >
+      <RadioButtonInputContainer dataObject={exportDataModel} fieldName={fieldName}>
         <RadioButtonOption
           fieldName={fieldName}
           dataObject={exportDataModel}
@@ -66,9 +51,7 @@ export default function ExportDataPanel({
           visible={getPdfExporter != null}
           label={
             <span>
-              <div>
-                <strong>Format Data Before Export</strong>
-              </div>
+              <div><strong>Format Data Before Export</strong></div>
             </span>
           }
         />
@@ -81,9 +64,7 @@ export default function ExportDataPanel({
           visible={getRawData != null}
           label={
             <span>
-              <div>
-                <strong>Raw Data</strong>
-              </div>
+              <div><strong>Raw Data</strong></div>
             </span>
           }
         />
@@ -96,9 +77,7 @@ export default function ExportDataPanel({
           visible={getCsvData != null}
           label={
             <span>
-              <div>
-                <strong>CSV</strong>
-              </div>
+              <div><strong>CSV</strong></div>
             </span>
           }
         />
@@ -106,8 +85,18 @@ export default function ExportDataPanel({
     );
   };
 
+  if (isLoading === true) {
+    return (
+      <CenterLoadingIndicator
+        type={"Export Data"}
+      />
+    );
+  }
+
   return (
-    <div className={"text-color"}>
+    <div
+      className={"text-color"}
+    >
       {toastContext.getInlineBanner()}
       <div className="p-3">
         {children}
@@ -128,10 +117,7 @@ export default function ExportDataPanel({
           isLoading={isLoading}
           closeEditorCallback={closePanel}
         />
-        <CloseButton
-          closeEditorCallback={closePanel}
-          showUnsavedChangesMessage={false}
-        />
+        <CloseButton closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
       </ButtonContainerBase>
     </div>
   );
