@@ -113,9 +113,9 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={6}>
             <DashboardPersonaSelectInput dataObject={dashboardAttributesDataDto} setDataObject={setDashboardAttributesDataDto}/>
           </Col>
-          <Col md={6}>
-            <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
-          </Col>
+          {/*<Col md={6}>*/}
+          {/*  <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>*/}
+          {/*</Col>*/}
           {getRolesInput()}
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
