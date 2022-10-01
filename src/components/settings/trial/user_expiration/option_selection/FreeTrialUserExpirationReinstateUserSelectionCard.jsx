@@ -37,7 +37,7 @@ export default function FreeTrialUserExpirationReinstateUserSelectionCard(
   return (
     <SelectionIconCardBase
       selectedOption={currentScreen}
-      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.EXTEND_USER_EXPIRATION_SCREEN}
+      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REINSTATE_USER_ACCESS_SCREEN}
       titleBar={getTitleBar()}
       onClickFunction={setCurrentScreen}
       disabled={disabled}

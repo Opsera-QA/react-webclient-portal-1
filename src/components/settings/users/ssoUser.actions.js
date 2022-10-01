@@ -19,3 +19,27 @@ ssoUserActions.getUserById = async (
     apiUrl,
   );
 };
+
+ssoUserActions.getRevokedUsers = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/users/revoked`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+ssoUserActions.getActiveUsers = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/users/active`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

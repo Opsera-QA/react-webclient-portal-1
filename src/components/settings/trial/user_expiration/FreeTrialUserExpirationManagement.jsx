@@ -6,6 +6,12 @@ import FreeTrialUserExpirationManagementSubNavigationBar
   from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
 import FreeTrialUserExpirationOptionSelectionScreen
   from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+import FreeTrialUserExpirationUserRevocationScreen
+  from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationUserRevocationScreen";
+import FreeTrialUserExpirationUserReinstatementScreen
+  from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
+import useGetFreeTrialUserExpirationManagementModel
+  from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
 
 export const FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS = {
   OPTION_SELECTION_SCREEN: "option_selection_screen",
@@ -20,6 +26,10 @@ export default function FreeTrialUserExpirationManagement() {
     accessRoleData,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const {
+    freeTrialUserExpirationModel,
+    setFreeTrialUserExpirationModel,
+  } = useGetFreeTrialUserExpirationManagementModel();
 
   const getBody = () => {
     switch (currentScreen) {
@@ -30,8 +40,23 @@ export default function FreeTrialUserExpirationManagement() {
           />
         );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.EXTEND_USER_EXPIRATION_SCREEN:
+        break;
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REVOKE_USER_ACCESS_SCREEN:
+        return (
+          <FreeTrialUserExpirationUserRevocationScreen
+            setCurrentScreen={setCurrentScreen}
+            freeTrialUserExpirationModel={freeTrialUserExpirationModel}
+            setFreeTrialUserExpirationModel={setFreeTrialUserExpirationModel}
+          />
+        );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REINSTATE_USER_ACCESS_SCREEN:
+        return (
+          <FreeTrialUserExpirationUserReinstatementScreen
+            setCurrentScreen={setCurrentScreen}
+            freeTrialUserExpirationModel={freeTrialUserExpirationModel}
+            setFreeTrialUserExpirationModel={setFreeTrialUserExpirationModel}
+          />
+        );
       default:
         return null;
     }
