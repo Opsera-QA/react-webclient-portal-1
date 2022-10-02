@@ -12,6 +12,8 @@ import FreeTrialUserExpirationUserReinstatementScreen
   from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
 import useGetFreeTrialUserExpirationManagementModel
   from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
+import FreeTrialUserExpirationExtendUserAccessScreen
+  from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
 
 export const FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS = {
   OPTION_SELECTION_SCREEN: "option_selection_screen",
@@ -40,7 +42,14 @@ export default function FreeTrialUserExpirationManagement() {
           />
         );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.EXTEND_USER_EXPIRATION_SCREEN:
-        break;
+        return (
+          <FreeTrialUserExpirationExtendUserAccessScreen
+            setCurrentScreen={setCurrentScreen}
+            freeTrialUserExpirationModel={freeTrialUserExpirationModel}
+            setFreeTrialUserExpirationModel={setFreeTrialUserExpirationModel}
+            className={"m-3"}
+          />
+        );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REVOKE_USER_ACCESS_SCREEN:
         return (
           <FreeTrialUserExpirationUserRevocationScreen
