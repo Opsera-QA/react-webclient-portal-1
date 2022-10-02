@@ -13,6 +13,7 @@ export default function ActiveSsoUserSelectInput(
     showClearValueButton,
     setDataFunction,
     className,
+    disabled,
   }) {
   const {
     activeSsoUsers,
@@ -33,6 +34,7 @@ export default function ActiveSsoUserSelectInput(
       setDataFunction={setDataFunction}
       dataObject={model}
       selectOptions={activeSsoUsers}
+      disabled={disabled}
     />
   );
 }
@@ -49,6 +51,10 @@ ActiveSsoUserSelectInput.propTypes = {
   ]),
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
+  disabled: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
 };
 
 ActiveSsoUserSelectInput.defaultProps = {

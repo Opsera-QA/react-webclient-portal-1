@@ -6,6 +6,9 @@ import {
 } from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
 import RevokedSsoUserSelectInput
   from "components/common/list_of_values_input/users/sso/revoked/RevokedSsoUserSelectInput";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import FreeTrialUserExpirationReinstateUserAccessButton
+  from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationReinstateUserAccessButton";
 
 export default function FreeTrialUserExpirationUserReinstatementScreen(
   {
@@ -21,9 +24,17 @@ export default function FreeTrialUserExpirationUserReinstatementScreen(
         setModel={setFreeTrialUserExpirationModel}
         fieldName={"activeUserId"}
       />
-      <BackButtonBase
-        backButtonFunction={() => setCurrentScreen(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.OPTION_SELECTION_SCREEN)}
-      />
+      <ButtonContainerBase
+        leftSideButtons={
+          <BackButtonBase
+            backButtonFunction={() => setCurrentScreen(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.OPTION_SELECTION_SCREEN)}
+          />
+        }
+      >
+        <FreeTrialUserExpirationReinstateUserAccessButton
+          userId={freeTrialUserExpirationModel?.getData("activeUserId")}
+        />
+      </ButtonContainerBase>
     </div>
   );
 }

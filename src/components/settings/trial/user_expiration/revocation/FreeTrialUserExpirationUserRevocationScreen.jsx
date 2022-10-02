@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import {
   FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS
 } from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
-import ActiveSsoUserSelectInput from "components/common/list_of_values_input/users/sso/active/ActiveSsoUserSelectInput";
+import FreeTrialRevokeUserSelectInput
+  from "components/settings/trial/user_expiration/revocation/input/FreeTrialRevokeUserSelectInput";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import FreeTrialUserExpirationRevokeUserAccessButton
+  from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationRevokeUserAccessButton";
 
 export default function FreeTrialUserExpirationUserRevocationScreen(
   {
@@ -15,14 +19,21 @@ export default function FreeTrialUserExpirationUserRevocationScreen(
   }) {
   return (
     <div className={className}>
-      <ActiveSsoUserSelectInput
+      <FreeTrialRevokeUserSelectInput
         model={freeTrialUserExpirationModel}
         setModel={setFreeTrialUserExpirationModel}
-        fieldName={"revokeUserId"}
       />
-      <BackButtonBase
-        backButtonFunction={() => setCurrentScreen(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.OPTION_SELECTION_SCREEN)}
-      />
+      <ButtonContainerBase
+        leftSideButtons={
+          <BackButtonBase
+            backButtonFunction={() => setCurrentScreen(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.OPTION_SELECTION_SCREEN)}
+          />
+        }
+      >
+        <FreeTrialUserExpirationRevokeUserAccessButton
+          userId={freeTrialUserExpirationModel?.getData("revokeUserId")}
+        />
+      </ButtonContainerBase>
     </div>
   );
 }

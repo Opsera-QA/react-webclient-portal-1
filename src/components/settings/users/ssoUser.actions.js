@@ -43,3 +43,29 @@ ssoUserActions.getActiveUsers = async (
     apiUrl,
   );
 };
+
+ssoUserActions.revokeUserById = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+) => {
+  const apiUrl = `/users/${userId}/access/revoke`;
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+ssoUserActions.reinstateUserById = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+) => {
+  const apiUrl = `/users/${userId}/access/reinstate`;
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

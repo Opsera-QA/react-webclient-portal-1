@@ -47,6 +47,7 @@ export default function FreeTrialUserExpirationManagement() {
             setCurrentScreen={setCurrentScreen}
             freeTrialUserExpirationModel={freeTrialUserExpirationModel}
             setFreeTrialUserExpirationModel={setFreeTrialUserExpirationModel}
+            className={"m-3"}
           />
         );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REINSTATE_USER_ACCESS_SCREEN:
@@ -55,6 +56,7 @@ export default function FreeTrialUserExpirationManagement() {
             setCurrentScreen={setCurrentScreen}
             freeTrialUserExpirationModel={freeTrialUserExpirationModel}
             setFreeTrialUserExpirationModel={setFreeTrialUserExpirationModel}
+            className={"m-3"}
           />
         );
       default:
