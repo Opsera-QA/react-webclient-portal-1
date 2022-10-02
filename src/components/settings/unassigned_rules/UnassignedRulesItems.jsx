@@ -6,6 +6,7 @@ import unassignedRulesActions from "./unassigned-rules-functions";
 import UnassignedRulesItemsTable from "./UnassignedRulesItemsTable";
 import Model from "core/data_model/model";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function UnassignedRulesItems() {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +42,14 @@ function UnassignedRulesItems() {
           itemFilterModel,
         );
       const items = unassignedItemsData?.data?.message?.data;
-      setItems(items);
+      const parsedItems = DataParsingHelper.parseArray(items, []);
+
+      if (isMounted.current === true) {
+        setItems(items);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted?.current === true) {
