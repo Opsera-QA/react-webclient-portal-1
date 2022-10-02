@@ -1,13 +1,11 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
 import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineSchedulerField(
   {
@@ -15,39 +13,30 @@ function PipelineSchedulerField(
     canEditPipelineSchedule,
     fieldName,
   }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [pipelineTypes, setPipelineTypes] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+    isFreeTrial,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     if (pipelineModel && isMongoDbId(pipelineModel?.getMongoDbId())) {
-      loadData(source).catch((error) => {
+      loadData().catch((error) => {
         if (isMounted.current === true) {
           setError(error);
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [pipelineModel]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
       setError(undefined);
@@ -55,7 +44,7 @@ function PipelineSchedulerField(
       setPipelineTypes(types);
 
       if (Array.isArray(types) && !pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc")) {
-        await getScheduledTasksCount(cancelSource);
+        await getScheduledTasksCount();
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -68,8 +57,8 @@ function PipelineSchedulerField(
     }
   };
 
-  const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelSource, pipelineModel?.getMongoDbId());
+  const getScheduledTasksCount = async () => {
+    const response = await scheduledTaskActions.getScheduledPipelineTasksV2(getAccessToken, cancelTokenSource, pipelineModel?.getMongoDbId());
     const scheduledTasks = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(scheduledTasks)) {
@@ -87,8 +76,10 @@ function PipelineSchedulerField(
   };
 
   if (
-    Array.isArray(pipelineTypes)
-    && (pipelineTypes.includes(PIPELINE_TYPES.INFORMATICA) || pipelineTypes.includes(PIPELINE_TYPES.SALESFORCE) || pipelineTypes.includes(PIPELINE_TYPES.APIGEE))) {
+    (isFreeTrial === true && isOpseraAdministrator !== true)
+    || (Array.isArray(pipelineTypes)
+    && (pipelineTypes.includes(PIPELINE_TYPES.INFORMATICA) || pipelineTypes.includes(PIPELINE_TYPES.SALESFORCE) || pipelineTypes.includes(PIPELINE_TYPES.APIGEE)) )
+    ) {
     return null;
   }
 
