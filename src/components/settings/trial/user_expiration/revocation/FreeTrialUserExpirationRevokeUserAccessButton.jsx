@@ -6,6 +6,9 @@ import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
+import {
+  freeTrialUserExpirationActions
+} from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
 
 export default function FreeTrialUserExpirationRevokeUserAccessButton(
   {
@@ -22,7 +25,7 @@ export default function FreeTrialUserExpirationRevokeUserAccessButton(
   const revokeUserAccess = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await ssoUserActions.revokeUserById(
+      await freeTrialUserExpirationActions.revokeUserAccessById(
         getAccessToken,
         cancelTokenSource,
         userId,
@@ -33,7 +36,6 @@ export default function FreeTrialUserExpirationRevokeUserAccessButton(
       toastContext.showInlineErrorMessage(error, "Error Revoking User Access");
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
     }
-
   };
 
   return (

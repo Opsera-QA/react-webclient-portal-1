@@ -27,6 +27,18 @@ freeTrialUserExpirationActions.extendUserAccessById = async (
   );
 };
 
+freeTrialUserExpirationActions.getRevocableFreeTrialUserList = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/trial/users/revocable`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 freeTrialUserExpirationActions.revokeUserAccessById = async (
   getAccessToken,
   cancelTokenSource,
