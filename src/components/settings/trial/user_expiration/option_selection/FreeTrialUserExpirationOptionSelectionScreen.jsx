@@ -20,7 +20,7 @@ export default function FreeTrialUserExpirationOptionSelectionScreen(
     <div className={className}>
       <CenteredContentWrapper>
         <H5FieldSubHeader
-          className={"mb-3 mx-3"}
+          className={"mb-3"}
           subheaderText={"How would you like to modify a Free Trial User?"}
         />
       </CenteredContentWrapper>

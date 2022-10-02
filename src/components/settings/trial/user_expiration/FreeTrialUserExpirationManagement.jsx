@@ -39,6 +39,7 @@ export default function FreeTrialUserExpirationManagement() {
         return (
           <FreeTrialUserExpirationOptionSelectionScreen
             setCurrentScreen={setCurrentScreen}
+            className={"m-3"}
           />
         );
       case FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.EXTEND_USER_EXPIRATION_SCREEN:
