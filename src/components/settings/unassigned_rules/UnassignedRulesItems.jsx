@@ -4,7 +4,6 @@ import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
 import unassignedRulesActions from "./unassigned-rules-functions";
 import UnassignedRulesItemsTable from "./UnassignedRulesItemsTable";
-import Model from "core/data_model/model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -34,7 +33,6 @@ function UnassignedRulesItems() {
     try {
       setItems([]);
       setIsLoading(true);
-      setItemFilterModel(new Model({ ...itemFilterModel }));
       const unassignedItemsData =
         await unassignedRulesActions.getUnassingedRulesItems(
           getAccessToken,
@@ -45,7 +43,7 @@ function UnassignedRulesItems() {
       const parsedItems = DataParsingHelper.parseArray(items, []);
 
       if (isMounted.current === true) {
-        setItems(items);
+        setItems(parsedItems);
       }
     } catch (error) {
       if (isMounted?.current === true) {
