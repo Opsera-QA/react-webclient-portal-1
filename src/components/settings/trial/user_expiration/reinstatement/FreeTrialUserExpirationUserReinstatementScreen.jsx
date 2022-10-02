@@ -9,39 +9,58 @@ import RevokedSsoUserSelectInput
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import FreeTrialUserExpirationReinstateUserAccessButton
   from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationReinstateUserAccessButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetFreeTrialUserExpirationManagementModel
+  from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
+import { useHistory } from "react-router-dom";
+import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
+import FreeTrialUserExpirationManagementSubNavigationBar
+  from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
-export default function FreeTrialUserExpirationUserReinstatementScreen(
-  {
-    setCurrentScreen,
-    className,
+export default function FreeTrialUserExpirationUserReinstatementScreen() {
+  const {
+    accessRoleData,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
+  const {
     freeTrialUserExpirationModel,
     setFreeTrialUserExpirationModel,
-  }) {
+  } = useGetFreeTrialUserExpirationManagementModel();
+  const history = useHistory();
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
-    <div className={className}>
-      <RevokedSsoUserSelectInput
-        model={freeTrialUserExpirationModel}
-        setModel={setFreeTrialUserExpirationModel}
-        fieldName={"activeUserId"}
-      />
-      <ButtonContainerBase
-        leftSideButtons={
-          <BackButtonBase
-            backButtonFunction={() => setCurrentScreen(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.OPTION_SELECTION_SCREEN)}
-          />
-        }
-      >
-        <FreeTrialUserExpirationReinstateUserAccessButton
-          userId={freeTrialUserExpirationModel?.getData("activeUserId")}
+    <ScreenContainer
+      breadcrumbDestination={"freeTrialUserExpirationManagement"}
+      isLoading={!accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      accessRoleData={accessRoleData}
+      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"users"} />}
+    >
+      <div className={"m-3"}>
+        <RevokedSsoUserSelectInput
+          model={freeTrialUserExpirationModel}
+          setModel={setFreeTrialUserExpirationModel}
+          fieldName={"activeUserId"}
         />
-      </ButtonContainerBase>
+        <ButtonContainerBase
+          leftSideButtons={
+            <BackButtonBase
+              backButtonFunction={() => history.push("/settings/trial/user-expiration-management")}
+            />
+          }
+        >
+          <FreeTrialUserExpirationReinstateUserAccessButton
+            userId={freeTrialUserExpirationModel?.getData("activeUserId")}
+          />
+        </ButtonContainerBase>
     </div>
+    </ScreenContainer>
   );
 }
 
-FreeTrialUserExpirationUserReinstatementScreen.propTypes = {
-  setCurrentScreen: PropTypes.func,
-  className: PropTypes.string,
-  freeTrialUserExpirationModel: PropTypes.object,
-  setFreeTrialUserExpirationModel: PropTypes.func,
-};
+FreeTrialUserExpirationUserReinstatementScreen.propTypes = {};

@@ -8,6 +8,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
   freeTrialUserExpirationActions
 } from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
+import { useHistory } from "react-router-dom";
 
 export default function FreeTrialUserExpirationExtendUserAccessButton(
   {
@@ -20,6 +21,7 @@ export default function FreeTrialUserExpirationExtendUserAccessButton(
     cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
+  const history = useHistory();
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
   const extendFreeTrialUserAccess = async () => {
@@ -32,6 +34,7 @@ export default function FreeTrialUserExpirationExtendUserAccessButton(
       );
       toastContext.showSystemSuccessToast("Successfully extended user access.");
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+      history.push(history.location);
     } catch (error) {
       toastContext.showInlineErrorMessage(error, "Error Extending User Access");
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);

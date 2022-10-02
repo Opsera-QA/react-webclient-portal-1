@@ -29,6 +29,12 @@ import UserDataMappingDetailView from "components/settings/data_mapping/users/de
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialUserExpirationManagement
   from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
+import FreeTrialUserExpirationExtendUserAccessScreen
+  from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
+import FreeTrialUserExpirationUserReinstatementScreen
+  from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
+import FreeTrialUserExpirationUserRevocationScreen
+  from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationUserRevocationScreen";
 
 export default function SettingsRoutes() {
   const {
@@ -84,9 +90,24 @@ export default function SettingsRoutes() {
                    component={UserDataMappingDetailView} />
 
       <SecureRoute
-        path="/settings/trial/user-expiration-management"
+        path={"/settings/trial/user-expiration-management"}
         exact
         component={FreeTrialUserExpirationManagement}
+      />
+      <SecureRoute
+        path={"/settings/trial/user-expiration-management/revocation"}
+        exact
+        component={FreeTrialUserExpirationUserRevocationScreen}
+      />
+      <SecureRoute
+        path={"/settings/trial/user-expiration-management/reinstatement"}
+        exact
+        component={FreeTrialUserExpirationUserReinstatementScreen}
+      />
+      <SecureRoute
+        path={"/settings/trial/user-expiration-management/extension"}
+        exact
+        component={FreeTrialUserExpirationExtendUserAccessScreen}
       />
     </>
   );

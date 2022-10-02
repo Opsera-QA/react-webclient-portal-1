@@ -5,19 +5,23 @@ import SelectionIconCardBase from "components/common/card_containers/SelectionIc
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faHourglassClock } from "@fortawesome/pro-light-svg-icons";
 import {
-  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS
-} from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
+  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
+} from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+import { useHistory } from "react-router-dom";
 
 export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard(
   {
-    currentScreen,
-    setCurrentScreen,
     disabled,
     className,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
+  const history = useHistory();
+
+  const onClickFunction = () => {
+    history.push(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.EXTEND_USER_EXPIRATION_SCREEN);
+  };
 
   const getTitleBar = () => {
     return (
@@ -36,10 +40,9 @@ export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard
 
   return (
     <SelectionIconCardBase
-      selectedOption={currentScreen}
-      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.EXTEND_USER_EXPIRATION_SCREEN}
+      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.EXTEND_USER_EXPIRATION_SCREEN}
       titleBar={getTitleBar()}
-      onClickFunction={setCurrentScreen}
+      onClickFunction={onClickFunction}
       disabled={disabled}
       className={className}
     />
@@ -47,8 +50,6 @@ export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard
 }
 
 FreeTrialUserExpirationExtendUserExpirationSelectionCard.propTypes = {
-  currentScreen: PropTypes.string,
-  setCurrentScreen: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
 };

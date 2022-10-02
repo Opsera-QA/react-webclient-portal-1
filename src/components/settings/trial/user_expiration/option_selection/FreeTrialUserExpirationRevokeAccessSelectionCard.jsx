@@ -4,20 +4,24 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
+import { useHistory } from "react-router-dom";
 import {
-  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS
-} from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
+  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
+} from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 
 export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
   {
-    currentScreen,
-    setCurrentScreen,
     disabled,
     className,
   }) {
   const {
     themeConstants,
   } = useComponentStateReference();
+  const history = useHistory();
+
+  const onClickFunction = () => {
+    history.push(FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.REVOKE_USER_ACCESS_SCREEN);
+  };
 
   const getTitleBar = () => {
     return (
@@ -36,10 +40,9 @@ export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
 
   return (
     <SelectionIconCardBase
-      selectedOption={currentScreen}
-      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS.REVOKE_USER_ACCESS_SCREEN}
+      option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.REVOKE_USER_ACCESS_SCREEN}
       titleBar={getTitleBar()}
-      onClickFunction={setCurrentScreen}
+      onClickFunction={onClickFunction}
       disabled={disabled}
       className={className}
     />
@@ -47,8 +50,6 @@ export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
 }
 
 FreeTrialUserExpirationRevokeAccessSelectionCard.propTypes = {
-  currentScreen: PropTypes.string,
-  setCurrentScreen: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
 };

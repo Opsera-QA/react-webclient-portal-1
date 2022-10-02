@@ -23,6 +23,7 @@ export default function MainViewContainer(
   };
 
   return (
+    <ToastContextProvider navBar={getNavBar()}>
       <div
         className={"w-100"}
         key={locationKey}
@@ -32,10 +33,9 @@ export default function MainViewContainer(
           paddingBottom: "30px",
         }}
       >
-        <ToastContextProvider navBar={getNavBar()}>
-          {children}
-        </ToastContextProvider>
+        {children}
       </div>
+    </ToastContextProvider>
   );
 }
 

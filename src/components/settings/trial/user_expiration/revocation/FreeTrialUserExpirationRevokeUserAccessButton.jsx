@@ -9,6 +9,7 @@ import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
 import {
   freeTrialUserExpirationActions
 } from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
+import { useHistory } from "react-router-dom";
 
 export default function FreeTrialUserExpirationRevokeUserAccessButton(
   {
@@ -20,6 +21,7 @@ export default function FreeTrialUserExpirationRevokeUserAccessButton(
     cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
+  const history = useHistory();
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
   const revokeUserAccess = async () => {
@@ -32,6 +34,7 @@ export default function FreeTrialUserExpirationRevokeUserAccessButton(
       );
       toastContext.showSystemSuccessToast("Successfully revoked user access.");
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+      history.push(history.location);
     } catch (error) {
       toastContext.showInlineErrorMessage(error, "Error Revoking User Access");
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);

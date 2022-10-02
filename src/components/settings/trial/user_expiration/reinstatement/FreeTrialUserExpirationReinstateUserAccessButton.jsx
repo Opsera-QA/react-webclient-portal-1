@@ -6,6 +6,7 @@ import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
+import { useHistory } from "react-router-dom";
 
 export default function FreeTrialUserExpirationReinstateUserAccessButton(
   {
@@ -17,6 +18,7 @@ export default function FreeTrialUserExpirationReinstateUserAccessButton(
     cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
+  const history = useHistory();
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
   const reinstateUserAccess = async () => {
@@ -29,6 +31,7 @@ export default function FreeTrialUserExpirationReinstateUserAccessButton(
       );
       toastContext.showSystemSuccessToast("Successfully revoked user access.");
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+      history.push(history.location);
     } catch (error) {
       toastContext.showInlineErrorMessage(error, "Error Revoking User Access");
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
