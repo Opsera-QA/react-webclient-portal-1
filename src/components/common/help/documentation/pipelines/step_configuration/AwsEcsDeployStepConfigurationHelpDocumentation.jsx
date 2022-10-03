@@ -24,7 +24,7 @@ function AwsEcsDeployStepConfigurationHelpDocumentation() {
         </div>
         <div className={"mb-1 ml-4"}>
           The prerequisites for ECS Service creation pipeline also include task creation in <b>Tasks</b>.
-          To view in depth documentation on task and pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/H0TPP1JD/" target="_blank" rel="noreferrer">AWS Elastic Container Services documentation</a>.
+          To view in depth documentation on task and pipeline setup, view the <a href="https://docs.opsera.io/archive/aws-integrations/amazon-elastic-container-services-amazon-ecs" target="_blank" rel="noreferrer">AWS Elastic Container Services documentation</a>.
           Once step is configured with AWS ECS Deploy set as tool, set the following values:
         </div>
         <ul style={{listStyleType: "none"}}>

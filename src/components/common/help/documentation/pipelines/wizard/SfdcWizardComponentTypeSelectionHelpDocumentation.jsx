@@ -7,7 +7,7 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
     <HelpDocumentationContainer
       helpTopic={"Salesforce Pipeline Run: Component Type Selection"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
     >
       <div>Set the following parameters and select <b>Proceed with Selected Components</b>. This will generate a list of
         files matching the parameters.

@@ -12,7 +12,7 @@ function AnsibleStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>Select an Ansible playbook to execute in this pipeline step. Ansible server will execute the playbook file located within the selected SCM repository. Prior to this setup, Ansible tool must be successfully configured and registered in Opsera’s Tool Registry. For more detailed information on the Ansible workflow, view the <a href="https://opsera.atlassian.net/l/c/RSJswEfv" target="_blank" rel="noreferrer"><b>Ansible Pipeline Help Documentation</b>. </a>
+        <div className={"ml-2 mb-2"}>Select an Ansible playbook to execute in this pipeline step. Ansible server will execute the playbook file located within the selected SCM repository. Prior to this setup, Ansible tool must be successfully configured and registered in Opsera’s Tool Registry. For more detailed information on the Ansible workflow, view the <a href="https://docs.opsera.io/archive/building-a-declarative-pipeline/ansible-pipeline-help-documentation" target="_blank" rel="noreferrer"><b>Ansible Pipeline Help Documentation</b>. </a>
         </div>
         <div className={"ml-4"}>
           <ol>

@@ -7,7 +7,7 @@ function SfdcWizardXmlViewerHelpDocumentation({closeHelpPanel}) {
     <HelpDocumentationContainer
       helpTopic={"Salesforce Pipeline Run: XML Viewer"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
     >
       <div>Review the XML package and Unit Test classes and select <b>Proceed</b> to trigger the pipeline run.</div>
     </HelpDocumentationContainer>
