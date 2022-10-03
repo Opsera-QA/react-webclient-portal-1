@@ -49,7 +49,7 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog, faUserShield,
+  faDiamondExclamation, faFolderCog, faUserShield, faHourglassClock, faUserAltSlash, faUserCheck,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -1130,6 +1130,33 @@ const breadcrumbs = {
     linkText: "Free Trial User Expiration Management",
     icon: faUserShield,
     pageDescription: "Extend or Revoke a User's Free Trial access."
+  },
+  freeTrialUserExtensionScreen: {
+    parent: "freeTrialUserExpirationManagement",
+    name: "freeTrialUserExtensionScreen",
+    path: paths.freeTrialUserExtensionScreen,
+    title: "Extend Free Trial User Access",
+    linkText: "Extend Free Trial User Access",
+    icon: faHourglassClock,
+    pageDescription: "Extend a User's Free Trial access."
+  },
+  freeTrialUserRevocationScreen: {
+    parent: "freeTrialUserExpirationManagement",
+    name: "freeTrialUserRevocationScreen",
+    path: paths.freeTrialUserRevocationScreen,
+    title: "Revoke Free Trial User Access",
+    linkText: "Revoke Free Trial User Access",
+    icon: faUserAltSlash,
+    pageDescription: "Revoke a User's Free Trial access."
+  },
+  freeTrialUserReinstatementScreen: {
+    parent: "freeTrialUserExpirationManagement",
+    name: "freeTrialUserReinstatementScreen",
+    path: paths.freeTrialUserReinstatementScreen,
+    title: "Reinstate Free Trial User Access",
+    linkText: "Reinstate Free Trial User Access",
+    icon: faUserCheck,
+    pageDescription: "Reinstate a User's Free Trial access."
   },
 
   pageNotFound: {

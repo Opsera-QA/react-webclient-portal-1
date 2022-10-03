@@ -2,7 +2,13 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faUser} from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowLeft,
+  faHourglassClock,
+  faUserAltSlash,
+  faUserCheck,
+  faUserShield,
+} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function FreeTrialUserExpirationManagementSubNavigationBar({activeTab}) {
@@ -16,28 +22,47 @@ function FreeTrialUserExpirationManagementSubNavigationBar({activeTab}) {
         history.push(`/settings`);
         return;
       case "freeTrialUserExpirationManagement":
-        history.push(`/settings/free-trial-user-expiration-management`);
+        history.push(`/settings/trial/user-expiration-management`);
         return;
     }
   };
 
-  // TODO: Determine if necessary
-  // const getActiveViewerTab = () => {
-  //   switch (activeTab) {
-  //     case "userViewer":
-  //       return (
-  //         <NavigationTab
-  //           icon={faUser}
-  //           tabName={"userViewer"}
-  //           handleTabClick={handleTabClick}
-  //           activeTab={activeTab}
-  //           tabText={"User Viewer"}
-  //         />
-  //       );
-  //     default:
-  //       return null;
-  //   }
-  // };
+  const getActiveViewerTab = () => {
+    switch (activeTab) {
+      case "userRevocation":
+        return (
+          <NavigationTab
+            icon={faUserAltSlash}
+            tabName={"userRevocation"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Revoke User Screen"}
+          />
+        );
+      case "userExtension":
+        return (
+          <NavigationTab
+            icon={faHourglassClock}
+            tabName={"userExtension"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Extend User Screen"}
+          />
+        );
+      case "userReinstatement":
+        return (
+          <NavigationTab
+            icon={faUserCheck}
+            tabName={"userReinstatement"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Reinstate User Screen"}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <NavigationTabContainer>
@@ -49,12 +74,13 @@ function FreeTrialUserExpirationManagementSubNavigationBar({activeTab}) {
         tabText={"Back to Account Settings"}
       />
       <NavigationTab
-        icon={faUser}
+        icon={faUserShield}
         tabName={"freeTrialUserExpirationManagement"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"Free Trial User Expiration Management"}
       />
+      {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }

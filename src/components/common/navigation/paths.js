@@ -109,6 +109,9 @@ paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/d
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
 paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
+paths.freeTrialUserExtensionScreen = `${paths.freeTrialUserExpirationManagement}/extension`;
+paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement}/revocation`;
+paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
 
 //Reports
 paths.reports = "reports";

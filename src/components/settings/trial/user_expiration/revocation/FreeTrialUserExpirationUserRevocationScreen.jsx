@@ -31,11 +31,11 @@ export default function FreeTrialUserExpirationUserRevocationScreen() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"freeTrialUserExpirationManagement"}
+      breadcrumbDestination={"freeTrialUserRevocationScreen"}
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
-      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"users"} />}
+      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"userRevocation"} />}
     >
       <div className={"m-3"}>
       <FreeTrialRevokeUserSelectInput

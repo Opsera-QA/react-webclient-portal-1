@@ -35,11 +35,11 @@ export default function FreeTrialUserExpirationUserReinstatementScreen() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"freeTrialUserExpirationManagement"}
+      breadcrumbDestination={"freeTrialUserReinstatementScreen"}
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
-      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"users"} />}
+      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"userReinstatement"} />}
     >
       <div className={"m-3"}>
         <RevokedSsoUserSelectInput

@@ -23,7 +23,7 @@ export default function FreeTrialUserExpirationManagement() {
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
-      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"users"} />}
+      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"freeTrialUserExpirationManagement"} />}
     >
       <FreeTrialUserExpirationOptionSelectionScreen
         className={"m-3"}

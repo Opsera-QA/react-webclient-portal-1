@@ -32,11 +32,11 @@ export default function FreeTrialUserExpirationExtendUserAccessScreen() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"freeTrialUserExpirationManagement"}
+      breadcrumbDestination={"freeTrialUserExtensionScreen"}
       isLoading={!accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
-      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"users"} />}
+      navigationTabContainer={<FreeTrialUserExpirationManagementSubNavigationBar activeTab={"userExtension"} />}
     >
       <div className={"m-3"}>
         <H5FieldSubHeader
