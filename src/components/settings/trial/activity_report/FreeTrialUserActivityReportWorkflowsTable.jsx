@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
+  getCustomTablePipelineStateColumnDefinition,
   getPipelineStatusIcon,
   getTableDateTimeColumn,
   getTableTextColumn,
@@ -32,7 +33,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       getTableTextColumn(getField(fields, "run_count")),
       getTableDateTimeColumn(getField(fields, "firstRunDate")),
       getTableDateTimeColumn(getField(fields, "lastRunDate")),
-      getPipelineStatusIcon(getField(fields, "lastRunStatus")),
+      getCustomTablePipelineStateColumnDefinition(getField(fields, "lastRunStatus")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
     []
