@@ -109,6 +109,8 @@ paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/detail
 paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
+paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
+
 //Reports
 paths.reports = "reports";
 paths.toolReports = paths.reports + "/tools";

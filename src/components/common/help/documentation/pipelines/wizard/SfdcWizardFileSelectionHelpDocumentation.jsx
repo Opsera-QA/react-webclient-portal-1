@@ -7,7 +7,7 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
     <HelpDocumentationContainer
       helpTopic={"Salesforce Pipeline Run: File Selection"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
     >
     <div><b>Note: </b> Salesforce limits retrieval or deployment of upto <b>10,000</b> files at once.</div>
       <div><b>Rule Filters</b> allow you to select which components will be included or excluded in this pipeline
