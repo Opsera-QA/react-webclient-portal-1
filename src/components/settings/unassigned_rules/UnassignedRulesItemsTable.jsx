@@ -10,9 +10,6 @@ import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import UnassignedRulesItemsVerticalTabContainer from "./UnassignedRulesItemsVerticalTabContainer";
 
 function UnassignedRulesItemsTable({
   items,
@@ -27,7 +24,6 @@ function UnassignedRulesItemsTable({
   const history = useHistory();
 
   const onRowSelect = (grid, row) => {
-    console.log(row);
     if (row?.type === "pipeline" && row?.id) {
       history.push(`/workflow/details/${row.id}/summary`);
     }
@@ -95,32 +91,15 @@ function UnassignedRulesItemsTable({
 
   const getUnassignedRulesItemsTable = () => {
     return (
-      <Row className={"mx-0"}>
-        <Col
-          sm={2}
-          className={"px-0 makeup-tree-container"}
-        >
-          <UnassignedRulesItemsVerticalTabContainer
-            isLoading={isLoading}
-            loadData={loadDataFunction}
-            itemFilterModel={itemFilterModel}
-          />
-        </Col>
-        <Col
-          sm={10}
-          className={"px-0"}
-        >
-          <VanityTable
-            columns={columns}
-            onRowSelect={onRowSelect}
-            loadData={loadDataFunction}
-            data={items}
-            isLoading={isLoading}
-            setPaginationModel={setPaginationModel}
-            paginationModel={paginationModel}
-          />
-        </Col>
-      </Row>
+      <VanityTable
+        columns={columns}
+        onRowSelect={onRowSelect}
+        loadData={loadDataFunction}
+        data={items}
+        isLoading={isLoading}
+        setPaginationModel={setPaginationModel}
+        paginationModel={paginationModel}
+      />
     );
   };
 

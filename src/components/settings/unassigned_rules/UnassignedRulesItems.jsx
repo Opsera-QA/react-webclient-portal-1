@@ -6,8 +6,9 @@ import OrganizationsSubNavigationBar from "components/settings/organizations/Org
 import axios from "axios";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import unassignedRulesActions from "./unassigned-rules-functions";
-import UnassignedRulesItemsTable from "./UnassignedRulesItemsTable";
 import Model from "core/data_model/model";
+import UnassignedRulesItemsView from "./UnassignedRulesItemsView";
+import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
 
 function UnassignedRulesItems() {
   const { userAccessRoles } = useContext(AuthContext);
@@ -17,7 +18,9 @@ function UnassignedRulesItems() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [items, setItems] = useState([]);
-  const [itemFilterModel, setItemFilterModel] = useState(undefined);
+  const [itemFilterModel, setItemFilterModel] = useState(
+    new Model({ ...unassignedRulesItemsMetadata.newObjectFields }),
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,7 +50,6 @@ function UnassignedRulesItems() {
     try {
       setItems([]);
       setIsLoading(true);
-      setItemFilterModel(new Model({ ...itemFilterModel }));
       const unassignedItemsData =
         await unassignedRulesActions.getUnassingedRulesItems(
           getAccessToken,
@@ -77,11 +79,12 @@ function UnassignedRulesItems() {
         <OrganizationsSubNavigationBar activeTab={"organizations"} />
       }
     >
-      <UnassignedRulesItemsTable
+      <UnassignedRulesItemsView
         items={items}
-        isLoading={isLoading}
-        loadDataFunction={loadData}
         itemFilterModel={itemFilterModel}
+        setItemsFilterModel={setItemFilterModel}
+        loadData={loadData}
+        isLoading={isLoading}
         isMounted={isMounted}
       />
     </ScreenContainer>

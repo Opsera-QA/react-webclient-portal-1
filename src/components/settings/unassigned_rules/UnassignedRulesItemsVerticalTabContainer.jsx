@@ -9,8 +9,6 @@ import {
   faFileCode,
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import { isTaskTypeOfCategory } from "components/tasks/task.types";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function UnassignedRulesItemsVerticalTabContainer({
   isLoading,
@@ -19,15 +17,6 @@ function UnassignedRulesItemsVerticalTabContainer({
 }) {
   const handleTabClick = (category) => {
     itemFilterModel?.setData("category", category);
-    const type = itemFilterModel?.getData("type");
-
-    if (
-      hasStringValue(type) === true &&
-      ["", "owner"].includes(category) !== true &&
-      isTaskTypeOfCategory(type, category) !== true
-    ) {
-      itemFilterModel?.setData("type", "");
-    }
     loadData(itemFilterModel);
   };
 

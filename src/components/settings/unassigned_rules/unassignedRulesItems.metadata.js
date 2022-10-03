@@ -29,6 +29,7 @@ const unassignedRulesMetadata = {
     name: "",
     owner: "",
     createdAt: "",
+    category: "all",
   },
 };
 
