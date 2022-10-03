@@ -5,16 +5,16 @@ import PropTypes from "prop-types";
 function SfdcWizardInitializationHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Initialization"}
+      helpTopic={"Salesforce Pipeline Run: Initialization"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
     >
       <b>Manual Pipeline Wizard Run</b>
       <ul>
         <li>To continue with any parameters selected within the past 24 hours, select <b>Continue Where The Last Instance Left Off</b>.</li>
-        <li>To start a new instance without any previously selected parameters, select <b>Start A New Instance</b></li>
+        <li>To start a new instance without any previously selected parameters, select <b>Start A New Instance</b>.</li>
       </ul>
-      <b>XML/File Upload Process</b> - For a more in depth outline of this process including a CSV template, view the <a href="https://opsera.atlassian.net/l/c/xX5DTbEF" target="blank">CSV Upload Wizard documentation</a>.
+      <b>XML/File Upload Process</b> - For a more in depth outline of this process including a CSV template, view the <a href="https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-and-task-csv-upload-wizard-how-to" target="blank">CSV Upload Wizard documentation</a>.
       <ul>
         <li>Confirm that the prepared CSV file matches these upload requirements:</li>
         <ol>

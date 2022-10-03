@@ -13,7 +13,7 @@ function ApprovalGateStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>The Approval Gate step will halt the running pipeline and notify the configured user in order to allow the pipeline to proceed. There are 2 steps required in this workflow: configuring the Approval Gate step and adding a pipeline step notification to the configured step. For more detailed information on Approval Gate setup, view the <b><a href="https://opsera.atlassian.net/l/c/o7JLXdPX" target="_blank" rel="noreferrer">Approval Gate Step Configuration Help Documentation</a></b>.
+        <div className={"ml-2 mb-2"}>The Approval Gate step will halt the running pipeline and notify the configured user in order to allow the pipeline to proceed. There are 2 steps required in this workflow: configuring the Approval Gate step and adding a pipeline step notification to the configured step. For more detailed information on Approval Gate setup, view the <b><a href="https://docs.opsera.io/approval-gate#pipelines-approval-gate-configuration-1" target="_blank" rel="noreferrer">Approval Gate Step Configuration Help Documentation</a></b>.
         </div>
           <div className={"ml-4 mb-2"}>
             <div><h6>Approval Gate Step Configuration:</h6></div>
