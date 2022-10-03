@@ -3,49 +3,36 @@ import { AuthContext } from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
-import axios from "axios";
-import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import unassignedRulesActions from "./unassigned-rules-functions";
 import Model from "core/data_model/model";
 import UnassignedRulesItemsViews from "components/settings/unassigned_rules/UnassignedRulesItemsViews";
 import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UnassignedRulesItems() {
-  const { userAccessRoles } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [items, setItems] = useState([]);
   const [itemFilterModel, setItemFilterModel] = useState(
     new Model({ ...unassignedRulesItemsMetadata.newObjectFields }),
   );
+  const {
+    isMounted,
+    cancelTokenSource,
+    accessRoleData,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(itemFilterModel, source).catch((error) => {
+    loadData(itemFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = async (
     itemFilterModel,
-    cancelSource = cancelTokenSource,
   ) => {
     try {
       setItems([]);
@@ -61,7 +48,6 @@ function UnassignedRulesItems() {
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted?.current === true) {
@@ -73,7 +59,7 @@ function UnassignedRulesItems() {
   return (
     <ScreenContainer
       breadcrumbDestination={"unassignedRulesItems"}
-      accessRoleData={userAccessRoles}
+      accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={
         <OrganizationsSubNavigationBar activeTab={"organizations"} />
