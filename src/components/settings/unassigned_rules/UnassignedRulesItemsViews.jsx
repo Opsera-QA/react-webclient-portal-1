@@ -1,23 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { faShield } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import UnassignedRulesItemsVerticalTabContainer from "./UnassignedRulesItemsVerticalTabContainer";
 import UnassignedRulesItemsTable from "./UnassignedRulesItemsTable";
 
-function UnassignedRulesItemsView({
+function UnassignedRulesItemsViews({
   items,
   itemFilterModel,
   setItemFilterModel,
   loadData,
   isLoading,
-  isMounted,
 }) {
-  const toastContext = useContext(DialogToastContext);
-
   const getVerticalTabContainer = () => {
     return (
       <UnassignedRulesItemsVerticalTabContainer
@@ -64,7 +60,7 @@ function UnassignedRulesItemsView({
   );
 }
 
-UnassignedRulesItemsView.propTypes = {
+UnassignedRulesItemsViews.propTypes = {
   items: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -73,4 +69,4 @@ UnassignedRulesItemsView.propTypes = {
   isMounted: PropTypes.object,
 };
 
-export default UnassignedRulesItemsView;
+export default UnassignedRulesItemsViews;

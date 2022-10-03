@@ -7,7 +7,7 @@ import axios from "axios";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import unassignedRulesActions from "./unassigned-rules-functions";
 import Model from "core/data_model/model";
-import UnassignedRulesItemsView from "./UnassignedRulesItemsView";
+import UnassignedRulesItemsViews from "components/settings/unassigned_rules/UnassignedRulesItemsViews";
 import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
 
 function UnassignedRulesItems() {
@@ -79,7 +79,7 @@ function UnassignedRulesItems() {
         <OrganizationsSubNavigationBar activeTab={"organizations"} />
       }
     >
-      <UnassignedRulesItemsView
+      <UnassignedRulesItemsViews
         items={items}
         itemFilterModel={itemFilterModel}
         setItemsFilterModel={setItemFilterModel}
