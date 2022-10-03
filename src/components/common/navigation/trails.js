@@ -49,7 +49,7 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog,
+  faDiamondExclamation, faFolderCog, faUserShield,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -214,17 +214,17 @@ const breadcrumbs = {
     parent: "admin",
     name: "platformSystemParameterManagement",
     path: paths.platformSystemParameterManagement,
-    title: "Platform System Parameter Management",
-    linkText: "Platform System Parameter Management",
+    title: "Custom Parameters Management",
+    linkText: "Custom Parameters Management",
     icon: faCogs,
-    pageDescription: "Manage platform-wide system settings"
+    pageDescription: "Allows for registration of custom parameters that can be used by capabilities of the system."
   },
   platformSystemParameterDetailView: {
     parent: "platformSystemParameterManagement",
     name: "platformSystemParameterDetailView",
     path: paths.platformSystemParameterDetailView,
-    title: "Platform System Parameter Details",
-    linkText: "Platform System Parameter Details",
+    title: "Custom Parameter Details",
+    linkText: "Custom Parameter Details",
     icon: faCogs
   },
 
@@ -232,17 +232,17 @@ const breadcrumbs = {
     parent: "admin",
     name: "platformSettingsManagement",
     path: paths.platformSettingsManagement,
-    title: "Platform Settings Management",
-    linkText: "Platform Settings Management",
-    icon: faFolderCog,
-    pageDescription: "Manage platform-wide system settings"
+    title: "Features Management",
+    linkText: "Features Management",
+    icon: faFlag,
+    pageDescription: "Control specific features in the application that support this capability."
   },
   platformSettingsDetailView: {
     parent: "platformSettingsManagement",
     name: "platformSettingsDetailView",
     path: paths.platformSettingsDetailView,
-    title: "Platform Settings Details",
-    linkText: "Platform Settings Details",
+    title: "Feature Details",
+    linkText: "Feature Details",
     icon: faFolderCog
   },
 
@@ -576,7 +576,7 @@ const breadcrumbs = {
     icon: faTags
   },
 
-  // Audit Logging 
+  // Audit Logging
   logsBackupManagement: {
     parent: "accountSettings",
     name: "logsBackupManagement",
@@ -1120,6 +1120,16 @@ const breadcrumbs = {
     title: "Home",
     linkText: "Home",
     icon: faHouseUser,
+  },
+
+  freeTrialUserExpirationManagement: {
+    parent: "settings",
+    name: "freeTrialUserExpirationManagement",
+    path: paths.freeTrialUserExpirationManagement,
+    title: "Free Trial User Expiration Management",
+    linkText: "Free Trial User Expiration Management",
+    icon: faUserShield,
+    pageDescription: "Extend or Revoke a User's Free Trial access."
   },
 
   pageNotFound: {
