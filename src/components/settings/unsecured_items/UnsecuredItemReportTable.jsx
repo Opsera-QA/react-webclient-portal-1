@@ -7,16 +7,16 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
-import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
+import { unsecureItemsReportMetadata } from "components/settings/unsecured_items/unsecuredItemReport.metadata";
 
-function UnassignedRulesItemsTable({
+function UnsecuredItemReportTable({
   items,
   isLoading,
   paginationModel,
   setPaginationModel,
   loadDataFunction,
 }) {
-  const fields = unassignedRulesItemsMetadata.fields;
+  const fields = unsecureItemsReportMetadata.fields;
   const history = useHistory();
 
   const onRowSelect = (grid, row) => {
@@ -99,7 +99,7 @@ function UnassignedRulesItemsTable({
   );
 }
 
-UnassignedRulesItemsTable.propTypes = {
+UnsecuredItemReportTable.propTypes = {
   items: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
@@ -107,4 +107,4 @@ UnassignedRulesItemsTable.propTypes = {
   loadDataFunction: PropTypes.func,
 };
 
-export default UnassignedRulesItemsTable;
+export default UnsecuredItemReportTable;

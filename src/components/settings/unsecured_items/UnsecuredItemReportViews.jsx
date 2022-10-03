@@ -4,10 +4,10 @@ import { faShield } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
-import UnassignedRulesItemsVerticalTabContainer from "./UnassignedRulesItemsVerticalTabContainer";
-import UnassignedRulesItemsTable from "./UnassignedRulesItemsTable";
+import UnsecuredItemReportVerticalTabContainer from "components/settings/unsecured_items/UnsecuredItemReportVerticalTabContainer";
+import UnsecuredItemReportTable from "components/settings/unsecured_items/UnsecuredItemReportTable";
 
-function UnassignedRulesItemsViews({
+function UnsecuredItemReportViews({
   items,
   itemFilterModel,
   setItemFilterModel,
@@ -16,7 +16,7 @@ function UnassignedRulesItemsViews({
 }) {
   const getVerticalTabContainer = () => {
     return (
-      <UnassignedRulesItemsVerticalTabContainer
+      <UnsecuredItemReportVerticalTabContainer
         itemFilterModel={itemFilterModel}
         loadData={loadData}
         isLoading={isLoading}
@@ -26,7 +26,7 @@ function UnassignedRulesItemsViews({
 
   const getUnassignedRulesItemsTable = () => {
     return (
-      <UnassignedRulesItemsTable
+      <UnsecuredItemReportTable
         items={items}
         loadData={loadData}
         isLoading={isLoading}
@@ -60,7 +60,7 @@ function UnassignedRulesItemsViews({
   );
 }
 
-UnassignedRulesItemsViews.propTypes = {
+UnsecuredItemReportViews.propTypes = {
   items: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -69,4 +69,4 @@ UnassignedRulesItemsViews.propTypes = {
   isMounted: PropTypes.object,
 };
 
-export default UnassignedRulesItemsViews;
+export default UnsecuredItemReportViews;

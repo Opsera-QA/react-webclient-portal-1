@@ -1,9 +1,8 @@
-import { axiosApiService } from "api/apiService";
 import baseActions from "utils/actionsBase";
 
-const unassignedRulesActions = {};
+export const unsecuredItemReportActions = {};
 
-unassignedRulesActions.getUnassingedRulesItems = async (
+unsecuredItemReportActions.getUnassingedRulesItems = async (
   getAccessToken,
   cancelTokenSource,
   itemFilterModel,
@@ -21,5 +20,3 @@ unassignedRulesActions.getUnassingedRulesItems = async (
     apiUrl,
   );
 };
-
-export default unassignedRulesActions;

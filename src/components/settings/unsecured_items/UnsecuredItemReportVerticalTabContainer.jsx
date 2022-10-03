@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 
-function UnassignedRulesItemsVerticalTabContainer({
+function UnsecuredItemReportVerticalTabContainer({
   isLoading,
   itemFilterModel,
   loadData,
@@ -74,10 +74,10 @@ function UnassignedRulesItemsVerticalTabContainer({
   );
 }
 
-UnassignedRulesItemsVerticalTabContainer.propTypes = {
+UnsecuredItemReportVerticalTabContainer.propTypes = {
   isLoading: PropTypes.bool,
   itemFilterModel: PropTypes.object,
   loadData: PropTypes.func,
 };
 
-export default UnassignedRulesItemsVerticalTabContainer;
+export default UnsecuredItemReportVerticalTabContainer;

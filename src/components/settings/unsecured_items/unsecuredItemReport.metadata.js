@@ -1,6 +1,4 @@
-const unassignedRulesMetadata = {
-  idProperty: "id",
-  type: "Unassigned Rules Items",
+export const unsecureItemsReportMetadata = {
   fields: [
     {
       label: "ID",
@@ -29,8 +27,5 @@ const unassignedRulesMetadata = {
     name: "",
     owner: "",
     createdAt: "",
-    category: "all",
   },
 };
-
-export default unassignedRulesMetadata;

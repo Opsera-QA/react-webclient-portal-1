@@ -602,12 +602,12 @@ const breadcrumbs = {
   },
 
   // Unassigned Rules Items Report
-  unassignedRulesItems: {
+  unsecuredItemReport: {
     parent: "accountSettings",
-    name: "unassignedRulesItems",
-    path: paths.unassignedRulesItems,
-    title: "Unassigned Rules",
-    linkText: "Unassigned Rules",
+    name: "unsecuredItemReport",
+    path: paths.unsecuredItemReport,
+    title: "Unsecured Items",
+    linkText: "Unsecured Items",
     icon: faShield,
     pageDescription: "View items that haven't been assigned access rules",
   },
