@@ -20,6 +20,7 @@ export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
 
   const loadData = async () => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getExtendableSsoUsers();
     } catch (error) {
@@ -38,10 +39,10 @@ export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
       cancelTokenSource,
     );
 
-    const activeUsers = DataParsingHelper.parseArray(response?.data?.data, []);
+    const revocableUsers = DataParsingHelper.parseArray(response?.data?.data, []);
 
     if (revocableFreeTrialUsers) {
-      setRevocableFreeTrialUsers([...activeUsers]);
+      setRevocableFreeTrialUsers([...revocableUsers]);
     }
   };
 

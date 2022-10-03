@@ -7,7 +7,7 @@ import {
 
 export default function useGetExtendableFreeTrialSsoUsers(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
-  const [error  , setError] = useState(false);
+  const [error  , setError] = useState(undefined);
   const [extendableSsoUsers, setExtendableSsoUsers] = useState([]);
   const {
     getAccessToken,
@@ -20,6 +20,7 @@ export default function useGetExtendableFreeTrialSsoUsers(handleErrorFunction) {
 
   const loadData = async () => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getExtendableSsoUsers();
     } catch (error) {
@@ -38,10 +39,10 @@ export default function useGetExtendableFreeTrialSsoUsers(handleErrorFunction) {
       cancelTokenSource,
     );
 
-    const activeUsers = DataParsingHelper.parseArray(response?.data?.data, []);
+    const extendableUsers = DataParsingHelper.parseArray(response?.data?.data, []);
 
     if (extendableSsoUsers) {
-      setExtendableSsoUsers([...activeUsers]);
+      setExtendableSsoUsers([...extendableUsers]);
     }
   };
 
