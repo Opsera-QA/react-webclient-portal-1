@@ -17,6 +17,8 @@ import LogsExportManagementPageLinkCard from "components/settings/logs_managemen
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialUserExpirationManagementPageLinkCard
   from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementPageLinkCard";
+import FreeTrialUserActivityReportPageLinkCard
+  from "components/settings/trial/activity_report/FreeTrialUserActivityReportPageLinkCard";
 
 function AccountSettingsPageLinkCards({accessRoleData}) {
 
@@ -63,6 +65,7 @@ function AccountSettingsPageLinkCards({accessRoleData}) {
         accessRoleData={accessRoleData}
       />
       <FreeTrialUserExpirationManagementPageLinkCard />
+      <FreeTrialUserActivityReportPageLinkCard />
     </div>
   );
 }

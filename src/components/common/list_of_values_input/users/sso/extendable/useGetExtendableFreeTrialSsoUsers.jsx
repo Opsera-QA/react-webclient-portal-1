@@ -41,7 +41,7 @@ export default function useGetExtendableFreeTrialSsoUsers(handleErrorFunction) {
 
     const extendableUsers = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (extendableSsoUsers) {
+    if (extendableUsers) {
       setExtendableSsoUsers([...extendableUsers]);
     }
   };

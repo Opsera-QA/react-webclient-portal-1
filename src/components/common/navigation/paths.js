@@ -113,6 +113,8 @@ paths.freeTrialUserExtensionScreen = `${paths.freeTrialUserExpirationManagement}
 paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement}/revocation`;
 paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
 
+paths.freeTrialUserActivityReport = `${paths.accountSettings}/trial/user/activity-report`;
+
 //Reports
 paths.reports = "reports";
 paths.toolReports = paths.reports + "/tools";

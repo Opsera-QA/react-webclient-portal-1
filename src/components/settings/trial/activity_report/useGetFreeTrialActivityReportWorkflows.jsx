@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { ssoUserActions } from "components/settings/users/ssoUser.actions";
+import { workspaceActions } from "components/workspace/workspace.actions";
 
-export default function useGetActiveSsoUsers(handleErrorFunction) {
+export default function useGetFreeTrialActivityReportWorkflows(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
   const [error  , setError] = useState(false);
-  const [activeSsoUsers, setActiveSsoUsers] = useState([]);
+  const [activityReportWorkflows, setActivityReportWorkflows] = useState([]);
   const {
     getAccessToken,
     cancelTokenSource,
@@ -31,21 +31,21 @@ export default function useGetActiveSsoUsers(handleErrorFunction) {
   };
 
   const getActiveSsoUsers = async () => {
-    const response = await ssoUserActions.getActiveUsers(
+    const response = await workspaceActions.getFreeTrialUserActivityReport(
       getAccessToken,
       cancelTokenSource,
     );
 
-    const activeUsers = DataParsingHelper.parseArray(response?.data?.data, []);
+    const workflows = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (activeUsers) {
-      setActiveSsoUsers([...activeUsers]);
+    if (workflows) {
+      setActivityReportWorkflows([...workflows]);
     }
   };
 
   return ({
-    activeSsoUsers: activeSsoUsers,
-    setActiveSsoUsers: setActiveSsoUsers,
+    activityReportWorkflows: activityReportWorkflows,
+    setActivityReportWorkflows: setActivityReportWorkflows,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

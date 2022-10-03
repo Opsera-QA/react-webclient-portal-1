@@ -41,7 +41,7 @@ export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
 
     const revocableUsers = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (revocableFreeTrialUsers) {
+    if (revocableUsers) {
       setRevocableFreeTrialUsers([...revocableUsers]);
     }
   };

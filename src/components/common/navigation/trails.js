@@ -49,7 +49,7 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog, faUserShield, faHourglassClock, faUserAltSlash, faUserCheck,
+  faDiamondExclamation, faFolderCog, faUserShield, faHourglassClock, faUserAltSlash, faUserCheck, faClipboardUser,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -1157,6 +1157,16 @@ const breadcrumbs = {
     linkText: "Reinstate Free Trial User Access",
     icon: faUserCheck,
     pageDescription: "Reinstate a User's Free Trial access."
+  },
+
+  freeTrialUserActivityReport: {
+    parent: "settings",
+    name: "freeTrialUserActivityReport",
+    path: paths.freeTrialUserActivityReport,
+    title: "Free Trial Activity Report",
+    linkText: "Free Trial Activity Report",
+    icon: faClipboardUser,
+    pageDescription: "Extend or Revoke a User's Free Trial access."
   },
 
   pageNotFound: {
