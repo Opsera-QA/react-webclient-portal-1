@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
-  getCustomTablePipelineStateColumnDefinition,
+  getCustomTablePipelineStateColumnDefinition, getFormattedLabelWithFunctionColumnDefinition,
   getPipelineStatusIcon,
   getTableDateTimeColumn,
   getTableTextColumn,
@@ -16,6 +16,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import {
   freeTrialUserActivityReportMetadata
 } from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
+import { workspaceConstants } from "components/workspace/workspace.constants";
 
 export default function FreeTrialUserActivityReportWorkflowsTable(
   {
@@ -30,6 +31,10 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "owner_email")),
+      getFormattedLabelWithFunctionColumnDefinition(
+        getField(fields, "workspaceType"),
+        workspaceConstants.getLabelForWorkspaceType,
+      ),
       getTableTextColumn(getField(fields, "run_count")),
       getTableDateTimeColumn(getField(fields, "firstRunDate")),
       getTableDateTimeColumn(getField(fields, "lastRunDate")),
