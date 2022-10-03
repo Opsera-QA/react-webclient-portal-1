@@ -20,7 +20,7 @@ function AzureAcrPushPipelineStepConfigurationHelpDocumentation() {
             <li>AKS Deploy - Step configured with Azure AKS Deploy tool. </li>
           </ul>
         </div>
-        <div className={"ml-2 mb-2"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). There must also be a successfully configured Jenkins tool containing an Azure Docker Push job. In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://opsera.atlassian.net/l/c/iCgHTCUY" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>.</div>
+        <div className={"ml-2 mb-2"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). There must also be a successfully configured Jenkins tool containing an Azure Docker Push job. In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://docs.opsera.io/archive/azure-integrations/azure-aks-functionality" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>.</div>
         <div className={"ml-2"}>
           <ol>
             <li>Once the initial Step Setup is configured with the Azure ACR Push tool, set the following values:

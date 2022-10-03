@@ -20,7 +20,7 @@ function DockerEcrPushStepConfigurationHelpDocumentation() {
             <li>Deploy - Uses AWS ECS Deploy tool. </li>
           </ul>
         </div>
-        <div className={"ml-2 mb-2"}>The prerequisites for ECS Service creation pipeline also include task creation in <b>Tasks</b>. To view in depth documentation on task and pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/H0TPP1JD/" target="_blank" rel="noreferrer">AWS Elastic Container Services documentation</a>.
+        <div className={"ml-2 mb-2"}>The prerequisites for ECS Service creation pipeline also include task creation in <b>Tasks</b>. To view in depth documentation on task and pipeline setup, view the <a href="https://docs.opsera.io/archive/aws-integrations/amazon-elastic-container-services-amazon-ecs" target="_blank" rel="noreferrer">AWS Elastic Container Services documentation</a>.
         </div>
         <div className={"ml-2"}>
           <ol>
