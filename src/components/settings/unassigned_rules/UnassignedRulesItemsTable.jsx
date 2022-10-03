@@ -1,12 +1,10 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
   getTableDateTimeColumn,
 } from "components/common/table/table-column-helpers-v2";
-import { faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
-import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import unassignedRulesItemsMetadata from "./unassignedRulesItems.metadata";
@@ -17,8 +15,6 @@ function UnassignedRulesItemsTable({
   paginationModel,
   setPaginationModel,
   loadDataFunction,
-  isMounted,
-  itemFilterModel,
 }) {
   const fields = unassignedRulesItemsMetadata.fields;
   const history = useHistory();
@@ -48,6 +44,7 @@ function UnassignedRulesItemsTable({
   const getTooltipTemplate = () => {
     return "Click row to view/edit details";
   };
+
   const columns = useMemo(
     () => [
       getTableTextColumn(
@@ -89,34 +86,15 @@ function UnassignedRulesItemsTable({
     [],
   );
 
-  const getUnassignedRulesItemsTable = () => {
-    return (
-      <VanityTable
-        columns={columns}
-        onRowSelect={onRowSelect}
-        loadData={loadDataFunction}
-        data={items}
-        isLoading={isLoading}
-        setPaginationModel={setPaginationModel}
-        paginationModel={paginationModel}
-      />
-    );
-  };
-
-  if (isMounted?.current === false) {
-    return null;
-  }
-
   return (
-    <FilterContainer
+    <VanityTable
+      columns={columns}
+      onRowSelect={onRowSelect}
       loadData={loadDataFunction}
+      data={items}
       isLoading={isLoading}
-      titleIcon={faCalendarAlt}
-      type={"Unassinged Rules Items"}
-      title={"Unassinged Rules Items"}
-      metadata={unassignedRulesItemsMetadata}
-      body={getUnassignedRulesItemsTable()}
-      className={"mt-3 mx-3"}
+      setPaginationModel={setPaginationModel}
+      paginationModel={paginationModel}
     />
   );
 }
@@ -127,11 +105,6 @@ UnassignedRulesItemsTable.propTypes = {
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
-  isMounted: PropTypes.object,
-  s3ToolId: PropTypes.string,
-  taskFilterModel: PropTypes.object,
-  setTaskFilterModel: PropTypes.func,
-  itemFilterModel: PropTypes.object,
 };
 
 export default UnassignedRulesItemsTable;
