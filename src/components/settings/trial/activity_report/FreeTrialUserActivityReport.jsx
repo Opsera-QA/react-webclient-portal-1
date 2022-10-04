@@ -54,7 +54,6 @@ export default function FreeTrialUserActivityReport() {
     );
     const workflows = [];
     const pipelines = DataParsingHelper.parseArray(pipelineResponse?.data?.data, []);
-    console.log("pipelines: " + JSON.stringify(pipelines));
     workflows.push(...pipelines);
 
     const taskResponse = await workspaceActions.getFreeTrialUserActivityReportTasks(
