@@ -56,7 +56,10 @@ export class FilterModelBase {
 
     if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
       sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
-      this.updateBrowserStorage();
+
+      if (hasStringValue(this.sessionDataKey) === true) {
+        this.updateBrowserStorage();
+      }
     }
   };
 
