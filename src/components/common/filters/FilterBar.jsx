@@ -54,7 +54,7 @@ function FilterBar(
           setFilterModel={setFilterModel}
           isLoading={isLoading}
           supportClientSideSearching={supportClientSideSearching}
-          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "ml-2 d-none d-md-block" : null}
         />
       );
     }
@@ -65,7 +65,7 @@ function FilterBar(
           isLoading={isLoading}
           paginationModel={filterModel}
           loadData={loadData}
-          className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
+          className={dropdownFilters != null || loadData != null || supportViewToggle ? "ml-2 d-none d-md-block" : null}
           metadata={metadata}
         />
       );
@@ -78,7 +78,7 @@ function FilterBar(
         filterDto={filterModel}
         setFilterDto={setFilterModel}
         loadData={loadData}
-        className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2 d-none d-md-block" : null}
+        className={dropdownFilters != null || loadData != null || supportViewToggle ? "ml-2 d-none d-md-block" : null}
         metadata={metadata}
       />
     );
@@ -89,7 +89,7 @@ function FilterBar(
       <div className="d-flex my-auto">
         <div className="d-flex my-auto">
           <NewRecordButton
-            className={"mr-2 my-auto text-nowrap"}
+            className={"ml-2 my-auto text-nowrap"}
             addRecordFunction={addRecordFunction}
             type={getType()}
             isLoading={isLoading}
@@ -97,36 +97,38 @@ function FilterBar(
             disabled={disableNewRecordButton}
           />
           <ImportDataButton
-            className={"mr-2"}
+            className={"ml-2"}
             importDataFunction={handleImportFunction}
             isLoading={isLoading}
           />
           <ExportDataButton
-            className={"mr-2"}
+            className={"ml-2"}
             exportDataFunction={handleExportFunction}
             isLoading={isLoading}
           />
-          <span className="d-none d-xl-inline">{inlineFilters}</span>
+          <span className={"d-none d-xl-inline ml-2"}>{inlineFilters}</span>
           {getSearchBar()}
           <ViewToggle
             supportViewToggle={supportViewToggle}
             filterModel={filterModel}
             setFilterModel={setFilterModel}
             isLoading={isLoading}
-            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
+            className={"ml-2"}
           />
           {showRefreshButton &&
             <RefreshButton
               isLoading={isLoading}
               loadDataFunction={loadData}
-              className={dropdownFilters != null ? "mr-2" : null}
+              className={"ml-2"}
             />
           }          
           <FilterButtons
             isLoading={isLoading}
             loadData={loadData}
             dropdownFilters={dropdownFilters}
+            inlineFilters={inlineFilters}
             filterDto={filterModel}
+            className={"ml-2"}
           />
           {exportButton}
         </div>

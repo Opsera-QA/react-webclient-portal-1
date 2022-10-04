@@ -18,6 +18,7 @@ function FilterButtons(
     filterBtnClassName,
     includeButtonText,
     filterDropdownTitle,
+    inlineFilters,
   }) {
   const loadFilters = async () => {
     if (isLoading === true) {
@@ -105,7 +106,7 @@ function FilterButtons(
     );
   };
 
-  if (dropdownFilters == null) {
+  if (dropdownFilters == null && inlineFilters == null) {
     return null;
   }
 
@@ -121,7 +122,13 @@ function FilterButtons(
           </div>
         </OverlayTrigger>
         <div>
-          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="secondary" size="sm" onClick={() => resetFilters()}>
+          <Button
+            className={`ml-2 ${filterBtnClassName}`}
+            disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading}
+            variant={"secondary"}
+            size={"sm"}
+            onClick={() => resetFilters()}
+          >
             <StackedFilterRemovalIcon />
             {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
           </Button>
@@ -135,6 +142,7 @@ FilterButtons.propTypes = {
   isLoading: PropTypes.bool,
   filterDto: PropTypes.object,
   dropdownFilters: PropTypes.any,
+  inlineFilters: PropTypes.any,
   loadData: PropTypes.func,
   className: PropTypes.string,
   filterBtnClassName: PropTypes.string,

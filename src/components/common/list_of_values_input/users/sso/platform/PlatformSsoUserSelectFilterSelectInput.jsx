@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useGetPlatformSsoUsers from "components/common/list_of_values_input/users/sso/platform/useGetPlatformSsoUsers";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-export default function PlatformSsoUserSelectInput(
+export default function PlatformSsoUserSelectFilterSelectInput(
   {
-    model,
-    setModel,
+    filterModel,
+    setFilterModel,
     fieldName,
     valueField,
     textField,
-    showClearValueButton,
     setDataFunction,
     className,
+    inline,
   }) {
   const {
     platformSsoUsers,
@@ -21,27 +21,25 @@ export default function PlatformSsoUserSelectInput(
   } = useGetPlatformSsoUsers();
 
   return (
-    <SelectInputBase
+    <FilterSelectInputBase
+      inline={inline}
       fieldName={fieldName}
-      busy={isLoading}
-      error={error}
-      valueField={valueField}
       className={className}
+      placeholderText={"Filter By User"}
+      setDataObject={setFilterModel}
+      dataObject={filterModel}
+      busy={isLoading}
       textField={textField}
-      showClearValueButton={showClearValueButton}
-      setDataObject={setModel}
-      setDataFunction={setDataFunction}
-      dataObject={model}
+      valueField={valueField}
       selectOptions={platformSsoUsers}
-      pluralTopic={"Users"}
-      singularTopic={"User"}
+      setDataFunction={setDataFunction}
     />
   );
 }
 
-PlatformSsoUserSelectInput.propTypes = {
-  model: PropTypes.object,
-  setModel: PropTypes.func,
+PlatformSsoUserSelectFilterSelectInput.propTypes = {
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   fieldName: PropTypes.string,
   valueField: PropTypes.string,
   showClearValueButton: PropTypes.bool,
@@ -51,11 +49,11 @@ PlatformSsoUserSelectInput.propTypes = {
   ]),
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
+  inline: PropTypes.bool,
 };
 
-PlatformSsoUserSelectInput.defaultProps = {
+PlatformSsoUserSelectFilterSelectInput.defaultProps = {
   valueField: "_id",
   textField: "email",
-  showClearValueButton: true,
 };
 
