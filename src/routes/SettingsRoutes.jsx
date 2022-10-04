@@ -17,6 +17,7 @@ import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
 import LogsBackupManagement from "components/settings/logs_backup/LogsBackupManagement";
+import UnsecuredItemReport from "components/settings/unsecured_items/UnsecuredItemReport";
 import TagEditor from "components/settings/tags/TagManagement";
 import TagDetailView from "components/settings/tags/tags_detail_view/TagDetailView";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
@@ -70,6 +71,11 @@ export default function SettingsRoutes() {
                    component={SsoUserDetailView} />
 
       <SecureRoute path="/settings/logs-backup-management" exact component={LogsBackupManagement} />
+      <SecureRoute
+        path="/settings/unsecured-items"
+        exact
+        component={UnsecuredItemReport}
+      />
       <SecureRoute path="/settings/tags" exact component={TagEditor} />
       <SecureRoute path="/settings/tags/:id" exact component={TagDetailView} />
       <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings} />

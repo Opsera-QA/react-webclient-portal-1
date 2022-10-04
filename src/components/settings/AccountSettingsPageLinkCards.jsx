@@ -14,6 +14,7 @@ import TagManagementPageLinkCard from "components/settings/tags/TagManagementPag
 import OrganizationManagementPageLinkCard from "components/settings/organizations/OrganizationManagementPageLinkCard";
 import UserSettingsPageLinkCard from "components/user/user_settings/UserSettingsPageLinkCard";
 import LogsBackupManagementPageLinkCard from "components/settings/logs_backup/LogsBackupManagementPageLinkCard";
+import UnsecuredItemReportPageLinkCard from "components/settings/unsecured_items/UnsecuredItemReportPageLinkCard";
 
 function AccountSettingsPageLinkCards({accessRoleData}) {
   if (accessRoleData == null) {
@@ -49,6 +50,7 @@ function AccountSettingsPageLinkCards({accessRoleData}) {
       <LogsBackupManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <UnsecuredItemReportPageLinkCard />
       <LdapSiteRoleManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
