@@ -2,6 +2,8 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import sessionHelper from "utils/session.helper";
+import { toolHelper } from "components/inventory/tools/tool.helper";
+import { taskHelper } from "components/tasks/task.helper";
 
 const taskFilterMetadata = {
   type: "Task",
@@ -198,6 +200,10 @@ export class TaskFilterModel extends FilterModelBase {
         this.setData("type", type);
       }
     }
+  };
+
+  getDetailViewLink = (taskId) => {
+    return taskHelper.getDetailViewLink(taskId);
   };
 }
 
