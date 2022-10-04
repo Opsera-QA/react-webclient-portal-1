@@ -29,11 +29,11 @@ export default function FreeTrialUserExpirationReinstateUserAccessButton(
         cancelTokenSource,
         userId,
       );
-      toastContext.showSystemSuccessToast("Successfully revoked user access.");
+      toastContext.showSystemSuccessToast("Successfully reinstated user access.");
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       history.push(history.location);
     } catch (error) {
-      toastContext.showInlineErrorMessage(error, "Error Revoking User Access");
+      toastContext.showInlineErrorMessage(error, "Error Reinstating User Access");
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
     }
 
