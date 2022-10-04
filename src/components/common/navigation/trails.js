@@ -49,7 +49,10 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog, faUserShield,
+  faDiamondExclamation,
+  faFolderCog,
+  faUserShield,
+  faShield,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -80,7 +83,7 @@ const breadcrumbs = {
     path: paths.toolRegistry,
     linkText: "Tool Registry",
     title: "Tool Registry",
-    icon: faClipboardList
+    icon: faClipboardList,
   },
   toolDetailView: {
     parent: "toolRegistry",
@@ -88,7 +91,7 @@ const breadcrumbs = {
     path: paths.toolDetailView,
     linkText: "Tool Details",
     title: "Tool Details",
-    icon: faTools
+    icon: faTools,
   },
   toolProjectDetailView: {
     parent: "toolRegistry",
@@ -96,7 +99,7 @@ const breadcrumbs = {
     path: paths.toolProjectDetailView,
     linkText: "Tool Project Details",
     title: "Tool Project Details",
-    icon: faProjectDiagram
+    icon: faProjectDiagram,
   },
   platform: {
     parent: undefined,
@@ -104,7 +107,7 @@ const breadcrumbs = {
     path: paths.toolRegistry,
     linkText: "Platform",
     title: "Platform",
-    icon: faServer
+    icon: faServer,
   },
   customParameters: {
     parent: undefined,
@@ -112,7 +115,7 @@ const breadcrumbs = {
     path: paths.toolRegistry,
     linkText: "Parameters",
     title: "Parameters",
-    icon: faHandshake
+    icon: faHandshake,
   },
   scripts: {
     parent: undefined,
@@ -120,7 +123,7 @@ const breadcrumbs = {
     path: paths.toolRegistry,
     linkText: "Scripts",
     title: "Scripts",
-    icon: faFileCode
+    icon: faFileCode,
   },
 
   // Administration
@@ -130,7 +133,7 @@ const breadcrumbs = {
     path: paths.admin,
     linkText: "Administration Tools",
     title: "Administration Tools",
-    icon: faTools
+    icon: faTools,
   },
 
   customEnvironmentVariableManagement: {
@@ -149,7 +152,7 @@ const breadcrumbs = {
     path: paths.systemStatus,
     linkText: "System Status",
     title: "System Status",
-    icon: faHeartbeat
+    icon: faHeartbeat,
   },
   systemHealthCheck: {
     parent: "admin",
@@ -157,7 +160,7 @@ const breadcrumbs = {
     path: paths.systemHealthCheck,
     linkText: "System Health Check",
     title: "System Health Check",
-    icon: faHeartbeat
+    icon: faHeartbeat,
   },
   deprecatedReports: {
     parent: "admin",
@@ -165,7 +168,7 @@ const breadcrumbs = {
     path: paths.deprecatedReports,
     linkText: "Reports",
     title: "Reports",
-    icon: faLink
+    icon: faLink,
   },
   reportsRegistration: {
     parent: "admin",
@@ -173,7 +176,7 @@ const breadcrumbs = {
     path: paths.reportsRegistration,
     linkText: "Reports Registration",
     title: "Reports Registration",
-    icon: faChartBar
+    icon: faChartBar,
   },
   systemManagement: {
     parent: "admin",
@@ -181,7 +184,7 @@ const breadcrumbs = {
     path: paths.systemManagement,
     title: "System Management",
     linkText: "System Management",
-    icon: faEdit
+    icon: faEdit,
   },
 
   siteNotificationManagement: {
@@ -190,7 +193,7 @@ const breadcrumbs = {
     path: paths.siteNotificationManagement,
     title: "Site Notification Management",
     linkText: "Site Notification Management",
-    icon: faFlag
+    icon: faFlag,
   },
   siteNotificationDetailView: {
     parent: "siteNotificationManagement",
@@ -198,7 +201,7 @@ const breadcrumbs = {
     path: paths.siteNotificationDetailView,
     title: "Site Notification Detail View",
     linkText: "Site Notification Detail View",
-    icon: faFlag
+    icon: faFlag,
   },
   siteNotificationManager: {
     parent: "admin",
@@ -207,7 +210,8 @@ const breadcrumbs = {
     title: "Site Notification Manager",
     linkText: "Site Notification Manager",
     icon: faFlag,
-    pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
+    pageDescription:
+      "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   },
 
   platformSystemParameterManagement: {
@@ -217,7 +221,8 @@ const breadcrumbs = {
     title: "Custom Parameters Management",
     linkText: "Custom Parameters Management",
     icon: faCogs,
-    pageDescription: "Allows for registration of custom parameters that can be used by capabilities of the system."
+    pageDescription:
+      "Allows for registration of custom parameters that can be used by capabilities of the system.",
   },
   platformSystemParameterDetailView: {
     parent: "platformSystemParameterManagement",
@@ -225,7 +230,7 @@ const breadcrumbs = {
     path: paths.platformSystemParameterDetailView,
     title: "Custom Parameter Details",
     linkText: "Custom Parameter Details",
-    icon: faCogs
+    icon: faCogs,
   },
 
   platformSettingsManagement: {
@@ -235,7 +240,8 @@ const breadcrumbs = {
     title: "Features Management",
     linkText: "Features Management",
     icon: faFlag,
-    pageDescription: "Control specific features in the application that support this capability."
+    pageDescription:
+      "Control specific features in the application that support this capability.",
   },
   platformSettingsDetailView: {
     parent: "platformSettingsManagement",
@@ -243,7 +249,7 @@ const breadcrumbs = {
     path: paths.platformSettingsDetailView,
     title: "Feature Details",
     linkText: "Feature Details",
-    icon: faFolderCog
+    icon: faFolderCog,
   },
 
   freeTrialCustomerWorkspaceManagement: {
@@ -253,7 +259,8 @@ const breadcrumbs = {
     title: "Free Trial Customer Workspace Management",
     linkText: "Free Trial Customer Workspace Management",
     icon: faUsers,
-    pageDescription: "Opsera Customer Workspace Management allows you to configure and track all customer pipelines, tasks, and tools in one central location."
+    pageDescription:
+      "Opsera Customer Workspace Management allows you to configure and track all customer pipelines, tasks, and tools in one central location.",
   },
   freeTrialCustomerWorkspaceDetailView: {
     parent: "freeTrialCustomerWorkspaceManagement",
@@ -273,7 +280,7 @@ const breadcrumbs = {
     icon: faStream,
     pageDescription: `
       Create and manage personalized task templates according to your organization’s needs. 
-    `
+    `,
   },
   taskTemplateDetailView: {
     parent: "taskTemplateManagement",
@@ -281,7 +288,7 @@ const breadcrumbs = {
     path: paths.taskTemplateDetailView,
     title: "Task emplate Details",
     linkText: "Task Template Details",
-    icon: faStream
+    icon: faStream,
   },
 
   templateManagement: {
@@ -294,7 +301,7 @@ const breadcrumbs = {
     pageDescription: `
       Create and manage personalized pipeline templates according to your organization’s needs. 
       Templates created will be stored in Pipeline Catalog
-    `
+    `,
   },
   templateDetailView: {
     parent: "templateManagement",
@@ -302,7 +309,7 @@ const breadcrumbs = {
     path: paths.templateDetailView,
     title: "Template Details",
     linkText: "Template Details",
-    icon: faStream
+    icon: faStream,
   },
 
   pipelineStorageManagement: {
@@ -312,7 +319,8 @@ const breadcrumbs = {
     title: "Pipeline Storage Management",
     linkText: "Pipeline Storage Management",
     icon: faFileArchive,
-    pageDescription: "View and Manage records created during the use of Tasks and Pipelines",
+    pageDescription:
+      "View and Manage records created during the use of Tasks and Pipelines",
   },
   pipelineStorageDetailView: {
     parent: "pipelineStorageManagement",
@@ -320,9 +328,8 @@ const breadcrumbs = {
     path: paths.pipelineStorageDetailView,
     title: "Pipeline Storage Record Details",
     linkText: "Pipeline Storage Record Details",
-    icon: faFileArchive
+    icon: faFileArchive,
   },
-
 
   toolManagement: {
     parent: "admin",
@@ -331,7 +338,8 @@ const breadcrumbs = {
     title: "Tool Management",
     linkText: "Tool Management",
     icon: faWrench,
-    pageDescription: "Manage and onboard new Tools for Registry and Pipeline use by creating Tool Categories and Identifiers",
+    pageDescription:
+      "Manage and onboard new Tools for Registry and Pipeline use by creating Tool Categories and Identifiers",
   },
   toolCategoryDetailView: {
     parent: "toolManagement",
@@ -339,7 +347,7 @@ const breadcrumbs = {
     path: paths.toolCategoryDetailView,
     title: "Tool Category Details",
     linkText: "Tool Category Details",
-    icon: faWrench
+    icon: faWrench,
   },
   toolIdentifierDetailView: {
     parent: "toolManagement",
@@ -347,7 +355,7 @@ const breadcrumbs = {
     path: paths.toolIdentifierDetailView,
     title: "Tool Identifier Details",
     linkText: "Tool Identifier Details",
-    icon: faWrench
+    icon: faWrench,
   },
 
   kpiManagement: {
@@ -357,7 +365,8 @@ const breadcrumbs = {
     title: "KPI Identifier Management",
     linkText: "KPI Identifier Management",
     icon: faFileInvoice,
-    pageDescription: "Create and manage KPI Identifiers to add metrics to the Insights Marketplace",
+    pageDescription:
+      "Create and manage KPI Identifiers to add metrics to the Insights Marketplace",
   },
   kpiDetailView: {
     parent: "kpiManagement",
@@ -365,7 +374,7 @@ const breadcrumbs = {
     path: paths.kpiManagement,
     title: "KPI Identifier Details",
     linkText: "KPI Identifier Details",
-    icon: faFileInvoice
+    icon: faFileInvoice,
   },
 
   registeredUsersManagement: {
@@ -375,7 +384,8 @@ const breadcrumbs = {
     title: "Registered Users Management",
     linkText: "Registered Users Management",
     icon: faUserCircle,
-    pageDescription: "Manage Opsera User settings, deactivate Opsera Users, and deploy ELK tool stacks for Opsera Users",
+    pageDescription:
+      "Manage Opsera User settings, deactivate Opsera Users, and deploy ELK tool stacks for Opsera Users",
   },
   registeredUsersDetailView: {
     parent: "registeredUsersManagement",
@@ -383,7 +393,7 @@ const breadcrumbs = {
     path: paths.registeredUsersManagement,
     title: "Registered User Details",
     linkText: "Registered User Details",
-    icon: faUserCircle
+    icon: faUserCircle,
   },
 
   apiConnectionTest: {
@@ -393,7 +403,8 @@ const breadcrumbs = {
     title: "API Connection Test",
     linkText: "API Connection Test",
     icon: faLink,
-    pageDescription: "Run an API connection test against the server using the Okta Authentication Token and Axios.js",
+    pageDescription:
+      "Run an API connection test against the server using the Okta Authentication Token and Axios.js",
   },
 
   // Account settings
@@ -403,7 +414,7 @@ const breadcrumbs = {
     path: paths.accountSettings,
     title: "Account Settings",
     linkText: "Account Settings",
-    icon: faCogs
+    icon: faCogs,
   },
   freeTrialSettings: {
     parent: undefined,
@@ -411,7 +422,7 @@ const breadcrumbs = {
     path: paths.accountSettings,
     title: "Free Trial Settings",
     linkText: "Free Trial Settings",
-    icon: faCogs
+    icon: faCogs,
   },
 
   // Customer System Status
@@ -421,7 +432,7 @@ const breadcrumbs = {
     path: paths.customerSystemStatus,
     title: "Platform Status",
     linkText: "Platform Status",
-    icon: faHeartbeat
+    icon: faHeartbeat,
   },
 
   // Analytics Data Entry Management>
@@ -432,7 +443,8 @@ const breadcrumbs = {
     title: "Analytics Data Entry Management",
     linkText: "Analytics Data Entry",
     icon: faUserChart,
-    pageDescription: "Manage analytics data manually and see it reflected in corresponding dashboard KPIs for specific charts.",
+    pageDescription:
+      "Manage analytics data manually and see it reflected in corresponding dashboard KPIs for specific charts.",
   },
   analyticsDataEntryDetailView: {
     parent: "analyticsDataEntryManagement",
@@ -440,7 +452,7 @@ const breadcrumbs = {
     path: paths.analyticsDataEntryDetailView,
     title: "Analytics Data Entry Details",
     linkText: "Analytics Data Entry Details",
-    icon: faUserChart
+    icon: faUserChart,
   },
 
   // LDAP Users Administration
@@ -450,7 +462,7 @@ const breadcrumbs = {
     path: paths.ldapUserManagement,
     title: "User Management",
     linkText: "Users",
-    icon: faUser
+    icon: faUser,
   },
   ldapUserDetailView: {
     parent: "ldapUserManagement",
@@ -458,7 +470,7 @@ const breadcrumbs = {
     path: paths.ldapUserDetailView,
     title: "User Details",
     linkText: "User Details",
-    icon: faUser
+    icon: faUser,
   },
   ldapUserDetailViewLimited: {
     parent: "accountSettings",
@@ -466,7 +478,7 @@ const breadcrumbs = {
     path: paths.ldapUserDetailView,
     title: "My User Details",
     linkText: "My User Details",
-    icon: faUser
+    icon: faUser,
   },
 
   // User Management
@@ -489,7 +501,7 @@ const breadcrumbs = {
     path: paths.activeUserDetailView,
     title: "User Details",
     linkText: "User Details",
-    icon: faUser
+    icon: faUser,
   },
   pendingUserDetailView: {
     parent: "userManagement",
@@ -497,7 +509,7 @@ const breadcrumbs = {
     path: paths.pendingUserDetailView,
     title: "Pending User Details",
     linkText: "Pending User Details",
-    icon: faUserHardHat
+    icon: faUserHardHat,
   },
 
   // LDAP Groups Administration
@@ -508,7 +520,7 @@ const breadcrumbs = {
     title: "Group Management",
     linkText: "Groups",
     icon: faUserFriends,
-    pageDescription: "Manage Groups and their Membership"
+    pageDescription: "Manage Groups and their Membership",
   },
   ldapGroupDetailView: {
     parent: "ldapGroupManagement",
@@ -516,7 +528,7 @@ const breadcrumbs = {
     path: paths.ldapGroupDetailView,
     title: "Group Details",
     linkText: "Group Details",
-    icon: faUserFriends
+    icon: faUserFriends,
   },
 
   // LDAP Site Roles Administration
@@ -527,7 +539,8 @@ const breadcrumbs = {
     title: "Site Roles Management",
     linkText: "Site Roles",
     icon: faServer,
-    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users."
+    pageDescription:
+      "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
   },
   ldapSiteRoleDetailView: {
     parent: "ldapSiteRolesManagement",
@@ -535,7 +548,7 @@ const breadcrumbs = {
     path: paths.ldapSiteRoleDetailView,
     title: "Site Role Details",
     linkText: "Site Role Details",
-    icon: faServer
+    icon: faServer,
   },
 
   // LDAP Departments Administration
@@ -546,7 +559,7 @@ const breadcrumbs = {
     title: "Departments",
     linkText: "Departments",
     icon: faBuilding,
-    pageDescription: "Manage Departments and their Membership."
+    pageDescription: "Manage Departments and their Membership.",
   },
   ldapDepartmentDetailView: {
     parent: "ldapDepartmentManagement",
@@ -554,7 +567,7 @@ const breadcrumbs = {
     path: paths.ldapDepartmentDetailView,
     title: "Department Details",
     linkText: "Department Details",
-    icon: faBuilding
+    icon: faBuilding,
   },
 
   // Tag Management
@@ -565,7 +578,8 @@ const breadcrumbs = {
     title: "Tag Management",
     linkText: "Tags",
     icon: faTags,
-    pageDescription: "Manage Tags and view their usage in Tools, Pipelines, and Dashboards.",
+    pageDescription:
+      "Manage Tags and view their usage in Tools, Pipelines, and Dashboards.",
   },
   tagDetailView: {
     parent: "tagManagement",
@@ -573,7 +587,7 @@ const breadcrumbs = {
     path: paths.tagDetailView,
     title: "Tag Details",
     linkText: "Tag Details",
-    icon: faTags
+    icon: faTags,
   },
 
   // Audit Logging
@@ -584,7 +598,18 @@ const breadcrumbs = {
     title: "Logs Backup Management",
     linkText: "Logs Backup Management",
     icon: faTags,
-    pageDescription: "Manage backup of pipeline activity audit logs."
+    pageDescription: "Manage backup of pipeline activity audit logs.",
+  },
+
+  // Unassigned Rules Items Report
+  unsecuredItemReport: {
+    parent: "accountSettings",
+    name: "unsecuredItemReport",
+    path: paths.unsecuredItemReport,
+    title: "Unsecured Items",
+    linkText: "Unsecured Items",
+    icon: faShield,
+    pageDescription: "View items that haven't been assigned access rules",
   },
 
   // Organization Management
@@ -595,7 +620,7 @@ const breadcrumbs = {
     title: "Organization Management",
     linkText: "Organizations",
     icon: faSitemap,
-    pageDescription: "Manage Organizations"
+    pageDescription: "Manage Organizations",
   },
   organizationDetailView: {
     parent: "organizationManagement",
@@ -603,7 +628,7 @@ const breadcrumbs = {
     path: paths.organizationDetailView,
     title: "Organization Details",
     linkText: "Organization Details",
-    icon: faSitemap
+    icon: faSitemap,
   },
 
   // Ldap Organizations Administration
@@ -614,7 +639,7 @@ const breadcrumbs = {
     title: "Organization Management",
     linkText: "Organization Management",
     icon: faSitemap,
-    pageDescription: "Create and manage LDAP Organizations"
+    pageDescription: "Create and manage LDAP Organizations",
   },
   ldapOrganizationDetailView: {
     parent: "ldapOrganizationManagement",
@@ -622,7 +647,7 @@ const breadcrumbs = {
     path: paths.ldapOrganizationDetailView,
     title: "Organization Details",
     linkText: "Organization Details",
-    icon: faSitemap
+    icon: faSitemap,
   },
 
   // Ldap Organization Account Administration
@@ -632,7 +657,7 @@ const breadcrumbs = {
     path: paths.ldapOrganizationAccountManagement,
     title: "Organization Account Management",
     linkText: "Organization Account Management",
-    icon: faSitemap
+    icon: faSitemap,
   },
   ldapOrganizationAccountDetailView: {
     parent: "admin",
@@ -640,7 +665,7 @@ const breadcrumbs = {
     path: paths.ldapOrganizationDetailView,
     title: "Organization Account Details",
     linkText: "Organization Account Details",
-    icon: faUsers
+    icon: faUsers,
   },
 
   customerOnboarding: {
@@ -673,7 +698,7 @@ const breadcrumbs = {
     path: paths.pipelines,
     title: "Pipelines",
     linkText: "Pipelines",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
   },
   catalog: {
     parent: "pipelines",
@@ -681,7 +706,7 @@ const breadcrumbs = {
     path: paths.pipelines,
     title: "Catalog",
     linkText: "Catalog",
-    icon: faHexagon
+    icon: faHexagon,
   },
   pipelineDetailView: {
     parent: "pipelines",
@@ -689,7 +714,7 @@ const breadcrumbs = {
     path: paths.pipelineDetailView,
     title: "Pipeline Details",
     linkText: "Pipeline Details",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
   },
 
   //Insights
@@ -699,7 +724,7 @@ const breadcrumbs = {
     path: paths.insights,
     title: "Insights",
     linkText: "Insights",
-    icon: faChartNetwork
+    icon: faChartNetwork,
   },
   analytics: {
     parent: "insights",
@@ -707,7 +732,7 @@ const breadcrumbs = {
     path: paths.analytics,
     title: "Analytics",
     linkText: "Analytics",
-    icon: faAnalytics
+    icon: faAnalytics,
   },
   dashboardDetails: {
     parent: "insights",
@@ -715,7 +740,7 @@ const breadcrumbs = {
     path: paths.dashboardDetails,
     title: "Dashboard Details",
     linkText: "Dashboard Details",
-    icon: faChartNetwork
+    icon: faChartNetwork,
   },
   lookup: {
     parent: "insights",
@@ -732,7 +757,7 @@ const breadcrumbs = {
     path: paths.marketplace,
     title: "Marketplace",
     linkText: "Marketplace",
-    icon: faChartArea
+    icon: faChartArea,
   },
   release360: {
     parent: "insights",
@@ -740,7 +765,7 @@ const breadcrumbs = {
     path: paths.release360,
     title: "Release 360",
     linkText: "Release 360",
-    icon: faCircle
+    icon: faCircle,
   },
   insightsSummary: {
     parent: "insights",
@@ -757,7 +782,7 @@ const breadcrumbs = {
     title: "Connected Assets",
     linkText: "Connected Assets",
     icon: faLink,
-    isBeta: true
+    isBeta: true,
   },
   insightsGitCustodian: {
     parent: "insights",
@@ -774,7 +799,7 @@ const breadcrumbs = {
     path: paths.reports,
     title: "All Reports",
     linkText: "All Reports",
-    icon: faAnalytics
+    icon: faAnalytics,
   },
 
   toolReports: {
@@ -783,7 +808,7 @@ const breadcrumbs = {
     path: paths.toolReports,
     title: "Tool Reports",
     linkText: "Tool Reports",
-    icon: faTools
+    icon: faTools,
   },
   sonarReports: {
     parent: undefined,
@@ -791,7 +816,7 @@ const breadcrumbs = {
     path: paths.sonarReports,
     title: "Sonar Reports",
     linkText: "Sonar Reports",
-    icon: faAnalytics
+    icon: faAnalytics,
   },
   coverityReports: {
     parent: undefined,
@@ -799,7 +824,7 @@ const breadcrumbs = {
     path: paths.coverityReports,
     title: "Coverity Reports",
     linkText: "Coverity Reports",
-    icon: faAnalytics
+    icon: faAnalytics,
   },
   toolsUsedInPipelineReport: {
     parent: "toolReports",
@@ -825,7 +850,7 @@ const breadcrumbs = {
     path: paths.detailedToolReport,
     title: "Detailed Tool Report",
     linkText: "Detailed Tool Report",
-    icon: faFileInvoice
+    icon: faFileInvoice,
   },
 
   tagReports: {
@@ -834,7 +859,7 @@ const breadcrumbs = {
     path: paths.tagReports,
     title: "Tag Reports",
     linkText: "Tag Reports",
-    icon: faTags
+    icon: faTags,
   },
   tagsUsedInPipelineReport: {
     parent: "tagReports",
@@ -870,7 +895,7 @@ const breadcrumbs = {
     path: paths.userReports,
     title: "User Reports",
     linkText: "User Reports",
-    icon: faUser
+    icon: faUser,
   },
   groupMembershipReport: {
     parent: "userReports",
@@ -879,7 +904,7 @@ const breadcrumbs = {
     title: "Group Membership",
     linkText: "Group Membership",
     icon: faUsers,
-    pageDescription: "View the Group Membership of a selected User."
+    pageDescription: "View the Group Membership of a selected User.",
   },
   pipelineOwnershipReport: {
     parent: "userReports",
@@ -888,7 +913,7 @@ const breadcrumbs = {
     title: "Pipelines by Owner",
     linkText: "Pipelines by Owner",
     icon: faDraftingCompass,
-    pageDescription: "Find all Pipelines owned by the selected User."
+    pageDescription: "Find all Pipelines owned by the selected User.",
   },
   toolOwnershipReport: {
     parent: "userReports",
@@ -897,7 +922,7 @@ const breadcrumbs = {
     title: "Tools by Owner",
     linkText: "Tools by Owner",
     icon: faTools,
-    pageDescription: "Find all Tools owned by the selected user."
+    pageDescription: "Find all Tools owned by the selected user.",
   },
   taskOwnershipReport: {
     parent: "userReports",
@@ -906,7 +931,7 @@ const breadcrumbs = {
     title: "Tasks by Owner",
     linkText: "Tasks by Owner",
     icon: faTasks,
-    pageDescription: "Find all Tasks owned by the selected user."
+    pageDescription: "Find all Tasks owned by the selected user.",
   },
   consolidatedUserReport: {
     parent: "userReports",
@@ -915,7 +940,7 @@ const breadcrumbs = {
     title: "User Report",
     linkText: "User Report",
     icon: faUser,
-    pageDescription: "View the consolidated report for selected user."
+    pageDescription: "View the consolidated report for selected user.",
   },
 
   pipelineReports: {
@@ -924,7 +949,7 @@ const breadcrumbs = {
     path: paths.pipelineReports,
     title: "Pipeline Reports",
     linkText: "Pipeline Reports",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
   },
 
   //Analytics
@@ -944,49 +969,50 @@ const breadcrumbs = {
     title: "Data Mappings",
     linkText: "Data Mappings",
     icon: faProjectDiagram,
-    pageDescription: "Apply and connect Tags to incoming external data with Opsera.",
+    pageDescription:
+      "Apply and connect Tags to incoming external data with Opsera.",
   },
   projectTaggingDetailView: {
-    parent : "dataMappingManagement",
+    parent: "dataMappingManagement",
     name: "projectTaggingDetailView",
     path: paths.projectTaggingDetailView,
     title: "Project Mapping Details",
     linkText: "Project Mapping Details",
-    icon: faProjectDiagram
+    icon: faProjectDiagram,
   },
   pipelineDataMappingDetailView: {
-    parent : "dataMappingManagement",
+    parent: "dataMappingManagement",
     name: "pipelineDataMappingDetailView",
     path: paths.pipelineDataMappingDetailView,
     title: "Pipeline Data Mapping Details",
     linkText: "Pipeline Data Mapping Details",
-    icon: faDraftingCompass
+    icon: faDraftingCompass,
   },
   userTaggingDetailView: {
-    parent : "dataMappingManagement",
+    parent: "dataMappingManagement",
     name: "userTaggingDetailView",
     path: paths.userTaggingDetailView,
     title: "User Mapping Details",
     linkText: "User Mapping Details",
-    icon: faUserTag
+    icon: faUserTag,
   },
 
   //Notifications
-  notificationManagement : {
+  notificationManagement: {
     parent: undefined,
     name: "notificationManagement",
     path: paths.notificationManagement,
     title: "Notification Management",
     linkText: "Notification Management",
-    icon: faEnvelope
+    icon: faEnvelope,
   },
-  notificationActivityLogs : {
+  notificationActivityLogs: {
     parent: undefined,
     name: "notificationActivityLogs",
     path: paths.notificationActivityLogs,
     title: "Notification Policy Activity Logs",
     linkText: "Notification Policy Activity Logs",
-    icon: faClipboardList
+    icon: faClipboardList,
   },
   notificationDetailView: {
     parent: "notificationManagement",
@@ -994,11 +1020,11 @@ const breadcrumbs = {
     path: paths.notificationDetailView,
     title: "Notification Details",
     linkText: "Notification Details",
-    icon: faEnvelope
+    icon: faEnvelope,
   },
 
   // Tasks
-  taskManagement : {
+  taskManagement: {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskManagement,
@@ -1007,13 +1033,13 @@ const breadcrumbs = {
     icon: faTasks,
     pageDescription: "Create and Manage Opsera Related Tasks.",
   },
-  taskActivityLogs : {
+  taskActivityLogs: {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskActivityLogs,
     title: "Opsera Task Activity Logs",
     linkText: "Opsera Task Activity Logs",
-    icon: faClipboardList
+    icon: faClipboardList,
   },
   taskManagementDetailView: {
     parent: "taskManagement",
@@ -1021,7 +1047,7 @@ const breadcrumbs = {
     path: paths.taskManagementDetailView,
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
-    icon: faTasks
+    icon: faTasks,
   },
 
   //General
@@ -1031,7 +1057,7 @@ const breadcrumbs = {
     path: paths.userProfile,
     title: "My User Profile",
     linkText: "My User Profile",
-    icon: faIdCard
+    icon: faIdCard,
   },
   myUserRecord: {
     parent: "userProfile",
@@ -1043,7 +1069,7 @@ const breadcrumbs = {
     pageDescription: `
       Review and manage your user profile information as well as platform settings from this page. 
       Please note, profile details are stored in your identity provider, so some changes my not be possible from this portal at this time.
-    `
+    `,
   },
   subscriptions: {
     parent: "userProfile",
@@ -1051,7 +1077,7 @@ const breadcrumbs = {
     path: paths.userRecord,
     title: "My Subscriptions",
     linkText: "My Subscriptions",
-    icon: faRss
+    icon: faRss,
   },
   myAccessTokens: {
     parent: "userProfile",
@@ -1059,7 +1085,7 @@ const breadcrumbs = {
     path: paths.accessTokens,
     title: "Personal Access Tokens",
     linkText: "Personal Access Tokens",
-    icon: faKey
+    icon: faKey,
   },
   accessTokenDetailView: {
     parent: "myAccessTokens",
@@ -1067,7 +1093,7 @@ const breadcrumbs = {
     path: paths.userProfile,
     title: "Access Token Details",
     linkText: "Access Token Details",
-    icon: faKey
+    icon: faKey,
   },
   home: {
     parent: undefined,
@@ -1075,7 +1101,7 @@ const breadcrumbs = {
     path: paths.home,
     title: "Welcome back",
     linkText: "Welcome back",
-    icon: faHome
+    icon: faHome,
   },
   logs: {
     parent: undefined,
@@ -1083,7 +1109,7 @@ const breadcrumbs = {
     path: paths.logs,
     title: "Logs",
     linkText: "Logs",
-    icon: faListAlt
+    icon: faListAlt,
   },
   blueprint: {
     parent: undefined,
@@ -1091,7 +1117,7 @@ const breadcrumbs = {
     path: paths.blueprint,
     title: "Pipeline Blueprint",
     linkText: "Pipeline Blueprint",
-    icon: faListAlt
+    icon: faListAlt,
   },
 
   accessDenied: {
@@ -1100,7 +1126,7 @@ const breadcrumbs = {
     path: undefined,
     title: "Access Denied",
     linkText: "Access Denied",
-    icon: faEnvelope
+    icon: faEnvelope,
   },
 
   workspace: {
@@ -1110,7 +1136,8 @@ const breadcrumbs = {
     title: "Workspace",
     linkText: "Workspace",
     icon: faRectangleList,
-    pageDescription: "The Opsera workspace allows you to configure and track all workflows in one central location.",
+    pageDescription:
+      "The Opsera workspace allows you to configure and track all workflows in one central location.",
   },
 
   freeTrialLanding: {
@@ -1129,7 +1156,7 @@ const breadcrumbs = {
     title: "Free Trial User Expiration Management",
     linkText: "Free Trial User Expiration Management",
     icon: faUserShield,
-    pageDescription: "Extend or Revoke a User's Free Trial access."
+    pageDescription: "Extend or Revoke a User's Free Trial access.",
   },
 
   pageNotFound: {
@@ -1152,7 +1179,7 @@ export const getTrail = (breadcrumb) => {
     breadcrumbPath.unshift(trail);
   }
 
-  return {trail: breadcrumbPath, breadcrumb: endPath};
+  return { trail: breadcrumbPath, breadcrumb: endPath };
 };
 
 export const getBreadcrumb = (breadcrumb) => {
