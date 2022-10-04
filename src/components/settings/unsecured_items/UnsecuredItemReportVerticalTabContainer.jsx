@@ -7,6 +7,7 @@ import {
   faHandshake,
   faCompassDrafting,
   faFileCode,
+  faClipboardList,
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 
@@ -23,7 +24,7 @@ function UnsecuredItemReportVerticalTabContainer({
   return (
     <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
-        icon={faTasks}
+        icon={faClipboardList}
         tabText={"All"}
         tabName={"all"}
         disabled={isLoading}
