@@ -2,11 +2,11 @@ export const unsecureItemsReportMetadata = {
   fields: [
     {
       label: "ID",
-      id: "id",
+      id: "_id",
     },
     {
       label: "Type",
-      id: "type",
+      id: "object_type",
     },
     {
       label: "Name",
@@ -14,7 +14,7 @@ export const unsecureItemsReportMetadata = {
     },
     {
       label: "Owner",
-      id: "owner_name",
+      id: "owner_email",
     },
     {
       label: "Created",
