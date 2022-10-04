@@ -7,6 +7,7 @@ import FreeTrialUserActivityReportSubNavigationBar
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 import FreeTrialUserActivityReportWorkflowsTable
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportWorkflowsTable";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialUserActivityReport() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
@@ -45,16 +46,28 @@ export default function FreeTrialUserActivityReport() {
   };
 
   const getFreeTrialActivityReportWorkflows = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    const response = await workspaceActions.getFreeTrialUserActivityReport(
+    const pipelineResponse = await workspaceActions.getFreeTrialUserActivityReportPipelines(
       getAccessToken,
       cancelTokenSource,
       newWorkspaceFilterModel?.getFilterValue("userId"),
       newWorkspaceFilterModel?.getFilterValue("search"),
     );
-    const users = response?.data?.data;
+    const workflows = [];
+    const pipelines = DataParsingHelper.parseArray(pipelineResponse?.data?.data, []);
+    console.log("pipelines: " + JSON.stringify(pipelines));
+    workflows.push(...pipelines);
 
-    if (isMounted?.current === true && Array.isArray(users)) {
-      setActivityReportWorkflows([...users]);
+    const taskResponse = await workspaceActions.getFreeTrialUserActivityReportTasks(
+      getAccessToken,
+      cancelTokenSource,
+      newWorkspaceFilterModel?.getFilterValue("userId"),
+      newWorkspaceFilterModel?.getFilterValue("search"),
+    );
+    const tasks = DataParsingHelper.parseArray(taskResponse?.data?.data, []);
+    workflows.push(...tasks);
+
+    if (isMounted?.current === true) {
+      setActivityReportWorkflows([...workflows]);
       newWorkspaceFilterModel.updateActiveFilters();
       setWorkspaceFilterModel({...newWorkspaceFilterModel});
     }
