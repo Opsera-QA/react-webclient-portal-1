@@ -8,6 +8,8 @@ import FreeTrialUserActivityReportSubNavigationBar
 import FreeTrialUserActivityReportWorkflowsTable
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportWorkflowsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function FreeTrialUserActivityReport() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
@@ -78,6 +80,12 @@ export default function FreeTrialUserActivityReport() {
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"freeTrialUserActivityReport"} />}
     >
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          subheaderText={"Please note, this report does not include opsera.io users."}
+          className={"mb-3"}
+        />
+      </CenteredContentWrapper>
       <FreeTrialUserActivityReportWorkflowsTable
         workspaceFilterModel={workspaceFilterModel}
         setWorkspaceFilterModel={setWorkspaceFilterModel}
