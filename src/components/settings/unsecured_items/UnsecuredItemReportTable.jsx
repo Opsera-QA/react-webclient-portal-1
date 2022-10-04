@@ -48,14 +48,7 @@ function UnsecuredItemReportTable({
   const columns = useMemo(
     () => [
       getTableTextColumn(
-        getField(fields, "id"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-        getTooltipTemplate,
-      ),
-      getTableTextColumn(
-        getField(fields, "type"),
+        getField(fields, "_id"),
         "no-wrap-inline",
         undefined,
         undefined,
@@ -69,7 +62,14 @@ function UnsecuredItemReportTable({
         getTooltipTemplate,
       ),
       getTableTextColumn(
-        getField(fields, "owner"),
+        getField(fields, "object_type"),
+        "no-wrap-inline",
+        undefined,
+        undefined,
+        getTooltipTemplate,
+      ),
+      getTableTextColumn(
+        getField(fields, "owner_email"),
         "no-wrap-inline",
         undefined,
         undefined,
