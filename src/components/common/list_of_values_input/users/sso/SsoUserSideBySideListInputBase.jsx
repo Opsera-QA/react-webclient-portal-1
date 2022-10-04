@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetPlatformSsoUsers from "components/common/list_of_values_input/users/sso/platform/useGetPlatformSsoUsers";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 export default function SsoUserSideBySideListInputBase(
   {
@@ -17,46 +18,15 @@ export default function SsoUserSideBySideListInputBase(
     valueField,
     setDataFunction,
   }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [ssoUsers, setSsoUsers] = useState([]);
   const {
-    toastContext,
-    getAccessToken,
-    isMounted,
-    cancelTokenSource,
     isOpseraAdministrator,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    if (isOpseraAdministrator === true) {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-
-      const response = await ssoUserActions.getPlatformUsers(getAccessToken, cancelTokenSource);
-      const users = response?.data?.data;
-
-      if (isMounted?.current === true && Array.isArray(users)) {
-        setSsoUsers(users);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showInlineErrorMessage(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
+  const {
+    platformSsoUsers,
+    isLoading,
+    error,
+    setPlatformSsoUsers,
+  } = useGetPlatformSsoUsers();
 
   const searchFunction = (user, searchTerm) => {
     const parsedSearchTerm = DataParsingHelper.parseAndLowercaseString(searchTerm, undefined);
@@ -90,7 +60,7 @@ export default function SsoUserSideBySideListInputBase(
 
     if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
       selectedOptions.forEach((selectedOptionName) => {
-        const user = ssoUsers.find((user) => user[valueField] === selectedOptionName);
+        const user = platformSsoUsers.find((user) => user[valueField] === selectedOptionName);
 
         if (user != null) {
           selectedArray.push(user);
@@ -123,10 +93,10 @@ export default function SsoUserSideBySideListInputBase(
       model.setData(fieldName, valueArray);
       setModel({ ...model });
     }
-    setSsoUsers([...ssoUsers]);
+    setPlatformSsoUsers([...platformSsoUsers]);
   };
 
-  if (model == null) {
+  if (model == null || isOpseraAdministrator !== true) {
     return <CenterLoadingIndicator customMessage={"Initializing"} />;
   }
 
@@ -135,7 +105,7 @@ export default function SsoUserSideBySideListInputBase(
       <Col lg={6}>
         <ListInputBase
           fieldName={fieldName}
-          selectOptions={ssoUsers}
+          selectOptions={platformSsoUsers}
           dataObject={model}
           setDataObject={setModel}
           showSelectAllButton={true}
@@ -167,6 +137,9 @@ export default function SsoUserSideBySideListInputBase(
           disabled={isLoading || getSelectedOptions().length === 0}
           customTemplate={customTemplate}
         />
+      </Col>
+      <Col xs={12}>
+        <InfoText errorMessage={error} />
       </Col>
     </Row>
   );

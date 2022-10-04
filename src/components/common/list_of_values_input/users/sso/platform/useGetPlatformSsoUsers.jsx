@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {
-  freeTrialUserExpirationActions
-} from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
+import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 
-export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
+export default function useGetPlatformSsoUsers(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
   const [error  , setError] = useState(undefined);
-  const [revocableFreeTrialUsers, setRevocableFreeTrialUsers] = useState([]);
+  const [platformSsoUsers, setPlatformSsoUsers] = useState([]);
   const {
     getAccessToken,
     cancelTokenSource,
@@ -22,7 +20,7 @@ export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
     try {
       setError(undefined);
       setIsLoading(true);
-      await getExtendableSsoUsers();
+      await getRevokedSsoUsers();
     } catch (error) {
       setError(error);
       if (handleErrorFunction) {
@@ -33,22 +31,22 @@ export default function useGetRevocableFreeTrialSsoUsers(handleErrorFunction) {
     }
   };
 
-  const getExtendableSsoUsers = async () => {
-    const response = await freeTrialUserExpirationActions.getRevocableFreeTrialUserList(
+  const getRevokedSsoUsers = async () => {
+    const response = await ssoUserActions.getPlatformUsers(
       getAccessToken,
       cancelTokenSource,
-    );
+      );
 
-    const revocableUsers = DataParsingHelper.parseArray(response?.data?.data, []);
+    const users = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (revocableUsers) {
-      setRevocableFreeTrialUsers([...revocableUsers]);
+    if (users) {
+      setPlatformSsoUsers([...users]);
     }
   };
 
   return ({
-    revocableFreeTrialUsers: revocableFreeTrialUsers,
-    setRevocableFreeTrialUsers: setRevocableFreeTrialUsers,
+    platformSsoUsers: platformSsoUsers,
+    setPlatformSsoUsers: setPlatformSsoUsers,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

@@ -5,7 +5,7 @@ import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 
 export default function useGetRevokedSsoUsers(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
-  const [error  , setError] = useState(false);
+  const [error  , setError] = useState(undefined);
   const [revokedSsoUsers, setRevokedSsoUsers] = useState([]);
   const {
     getAccessToken,
@@ -18,6 +18,7 @@ export default function useGetRevokedSsoUsers(handleErrorFunction) {
 
   const loadData = async () => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getRevokedSsoUsers();
     } catch (error) {
