@@ -55,13 +55,6 @@ function UnsecuredItemReportTable({
         getTooltipTemplate,
       ),
       getTableTextColumn(
-        getField(fields, "type"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-        getTooltipTemplate,
-      ),
-      getTableTextColumn(
         getField(fields, "name"),
         "no-wrap-inline",
         undefined,
@@ -69,7 +62,14 @@ function UnsecuredItemReportTable({
         getTooltipTemplate,
       ),
       getTableTextColumn(
-        getField(fields, "owner"),
+        getField(fields, "type"),
+        "no-wrap-inline",
+        undefined,
+        undefined,
+        getTooltipTemplate,
+      ),
+      getTableTextColumn(
+        getField(fields, "owner_name"),
         "no-wrap-inline",
         undefined,
         undefined,

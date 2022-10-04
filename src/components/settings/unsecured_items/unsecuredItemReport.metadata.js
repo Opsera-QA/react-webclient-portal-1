@@ -14,7 +14,7 @@ export const unsecureItemsReportMetadata = {
     },
     {
       label: "Owner",
-      id: "owner",
+      id: "owner_name",
     },
     {
       label: "Created",
