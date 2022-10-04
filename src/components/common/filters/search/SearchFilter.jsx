@@ -19,7 +19,6 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
 
       if (isMongoDbId(searchString) && paginationModel?.getDetailViewLink && paginationModel?.getDetailViewLink(searchString) != null) {
         const link = paginationModel?.getDetailViewLink(searchString);
-        console.log("link: " + JSON.stringify(link));
 
         if (hasStringValue(link) === true) {
           history.push(link);
