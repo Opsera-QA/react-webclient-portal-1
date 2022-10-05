@@ -16,7 +16,6 @@ export default function GithubActionsWorkflowTableOverlay(
     setCurrentScreen,
     setActionableInsight1DataObject,
   }) {
-  const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +30,7 @@ export default function GithubActionsWorkflowTableOverlay(
     isMounted,
     cancelTokenSource,
     getAccessToken,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -73,8 +73,7 @@ export default function GithubActionsWorkflowTableOverlay(
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
+        toastContext.showInlineErrorMessage(error, "Error pulling workflow metrics:");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -90,6 +89,7 @@ export default function GithubActionsWorkflowTableOverlay(
       loadData={loadData}
       filterModel={filterModel}
       setFilterModel={setFilterModel}
+      workflowName={workflowName}
       dashboardFilters={dashboardFilters}
       stats={stats}
       setCurrentScreen={setCurrentScreen}
