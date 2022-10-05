@@ -1,17 +1,17 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import GithubActionsUniqueRunSummaryDataBlocks from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDataBlocks";
-import GithubActionsUniqueRunSummaryOverlayTable from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryOverlayTable";
+import GithubActionsDetailedJobSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryDataBlocks";
+import GithubActionsWorkflowActionableTableOverlay3 from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import CloseButton from "components/common/buttons/CloseButton";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import CloseButton from "components/common/buttons/CloseButton";
 
-function GithubActionsUniqueRunSummaryOverlay(
+function GithubActionsDetailedJobSummaryOverlay(
   {
     kpiConfiguration,
     dashboardData,
@@ -19,13 +19,11 @@ function GithubActionsUniqueRunSummaryOverlay(
     workflowName,
     repoName,
     appName,
-    workflow,
     branchName,
     jobName,
-    workflowRuns,
+    runs,
     setCurrentScreen,
     setSelectedJobName,
-    setActionableInsight1DataObject,
   }) {
   const toastContext1 = useContext(DialogToastContext);
 
@@ -39,47 +37,46 @@ function GithubActionsUniqueRunSummaryOverlay(
       <div>
         <div className={"p-2"}>
           <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
+            <div className={"mr-4"}>
               <b>Workflow Name:</b> {workflowName}
             </div>
-            <div className={'mr-4'}>
+            <div className={"mr-4"}>
               <b>Repository Name:</b> {repoName}
             </div>
-            <div className={'mr-4'}>
+            <div className={"mr-4"}>
               <b>Application Name:</b> {appName}
             </div>
-            <div className={'mr-4'}>
+            <div className={"mr-4"}>
               <b>Branch Name:</b> {branchName}
             </div>
-            <div className={'mr-4'}>
-              <b>Workflow Runs:</b> {workflowRuns}
+            <div className={"mr-4"}>
+              <b>Job Name:</b> {jobName}
             </div>
+              {/*<div className={"mr-4"}>*/}
+              {/*    <b>Job Runs:</b> {runs}*/}
+              {/*</div>*/}
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
-          <GithubActionsUniqueRunSummaryDataBlocks
+          <GithubActionsDetailedJobSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
-            workflow={workflow}
             branchName={branchName}
             jobName={jobName}
           />
-          <GithubActionsUniqueRunSummaryOverlayTable
+          <GithubActionsWorkflowActionableTableOverlay3
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
-            workflow={workflow}
             branchName={branchName}
             jobName={jobName}
-            setSelectedJobName={setSelectedJobName}
-            setCurrentScreen={setCurrentScreen}
           />
         </div>
       </div>
@@ -87,8 +84,8 @@ function GithubActionsUniqueRunSummaryOverlay(
   };
 
   const handleBackButtonFunction = () => {
-    setActionableInsight1DataObject(undefined);
-    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
+    setSelectedJobName(undefined);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
   };
 
   const getButtonContainer = () => {
@@ -113,7 +110,7 @@ function GithubActionsUniqueRunSummaryOverlay(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Job Summary`}
+      titleText={`Github Actions Workflow Step Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
@@ -124,20 +121,18 @@ function GithubActionsUniqueRunSummaryOverlay(
   );
 }
 
-GithubActionsUniqueRunSummaryOverlay.propTypes = {
+GithubActionsDetailedJobSummaryOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
-  workflow: PropTypes.string,
   branchName: PropTypes.string,
   jobName: PropTypes.string,
-  workflowRuns: PropTypes.string,
-  setSelectedJobName: PropTypes.func,
+  runs: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
+  setSelectedJobName: PropTypes.func,
 };
 
-export default GithubActionsUniqueRunSummaryOverlay;
+export default GithubActionsDetailedJobSummaryOverlay;

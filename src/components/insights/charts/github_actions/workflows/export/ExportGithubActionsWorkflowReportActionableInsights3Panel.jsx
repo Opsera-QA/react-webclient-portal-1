@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
-import ExportGithubActionWorkflowReportActionalbeInsights1Panel from "./ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionWorkflowReportActionalbeInsights1Panel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 
 export default function ExportGithubActionWorkflowReportActionalbeInsights3Panel({
   showExportPanel,

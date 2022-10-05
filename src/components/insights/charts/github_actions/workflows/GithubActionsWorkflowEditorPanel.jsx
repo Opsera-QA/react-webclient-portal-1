@@ -6,7 +6,7 @@ import axios from "axios";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import {githubActionsWorkflowMetadata} from "./githubActionsWorkflow.metadata";
+import {githubActionsWorkflowMetadata} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import {hierarchyFiltersMetadata} from "components/insights/dashboards/hierarchy-filters-metadata.js";
 import chartsActions from "components/insights/charts/charts-actions";

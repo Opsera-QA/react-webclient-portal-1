@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import ChartContainer from "../../../../../common/panels/insights/charts/ChartContainer";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
-import GithubActionsWorkflowDataBlocks from "./GithubActionsWorkflowDataBlocks";
-import GithubActionsWorkflowTableOverlay from "./GithubActionsWorkflowTableOverlay";
+import GithubActionsWorkflowDataBlocks from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowDataBlocks";
+import GithubActionsWorkflowTableOverlay from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowTableOverlay";
 
 function GithubActionsWorkflowChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle}) {
   const isMounted = useRef(false);const [cancelTokenSource, setCancelTokenSource] = useState(undefined);

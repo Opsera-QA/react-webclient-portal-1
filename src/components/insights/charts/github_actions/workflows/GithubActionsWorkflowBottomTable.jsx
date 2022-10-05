@@ -9,12 +9,12 @@ import {
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { githubActionsWorkflowMetadata } from "./githubActionsWorkflow.metadata";
-import { getStaticIconColumn } from "../../../../../common/table/table-column-helpers";
-import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
-import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
+import { githubActionsWorkflowMetadata } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
+import { getStaticIconColumn } from "components/common/table/table-column-helpers";
+import ExportGithubActionsWorkflowReportPanel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
+import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+  from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 // TODO: Convert to cards
 function GithubActionsBottomTable({
   data,

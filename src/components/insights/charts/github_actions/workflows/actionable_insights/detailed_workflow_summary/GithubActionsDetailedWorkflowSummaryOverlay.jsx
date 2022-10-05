@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import GithubActionsDetailedWorkflowSummaryDataBlocks from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryDataBlocks";
-import GithubActionsWorkflowActionableTableOverlay1 from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
+import GithubActionsDetailedWorkflowSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryDataBlocks";
+import GithubActionsWorkflowActionableTableOverlay1 from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";

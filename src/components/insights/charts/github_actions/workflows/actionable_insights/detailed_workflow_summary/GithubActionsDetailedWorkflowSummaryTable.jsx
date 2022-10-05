@@ -8,15 +8,15 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
-import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
-import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
+import ExportGithubActionsWorkflowReportActionableInsights1Panel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
+import {githubActionsWorkflowMetadata} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 // TODO: Convert to cards
-export default function GitlabActionsWorkflowActionableInsightTable1(
+export default function GithubActionsDetailedWorkflowSummaryTable(
   {
     data,
     isLoading,
@@ -127,7 +127,7 @@ export default function GitlabActionsWorkflowActionableInsightTable1(
   );
 }
 
-GitlabActionsWorkflowActionableInsightTable1.propTypes = {
+GithubActionsDetailedWorkflowSummaryTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

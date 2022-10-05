@@ -92,7 +92,7 @@ import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/Git
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
-import GithubActionsWorkflowChart from "./github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowChart";
+import GithubActionsWorkflowChart from "./github_actions/workflows/GithubActionsWorkflowChart";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs

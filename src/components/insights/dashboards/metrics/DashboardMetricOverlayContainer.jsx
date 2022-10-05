@@ -36,7 +36,7 @@ import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryE
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
 import GithubActionsWorkflowEditorPanel
-  from "../../charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowEditorPanel";
+  from "../../charts/github_actions/workflows/GithubActionsWorkflowEditorPanel";
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";

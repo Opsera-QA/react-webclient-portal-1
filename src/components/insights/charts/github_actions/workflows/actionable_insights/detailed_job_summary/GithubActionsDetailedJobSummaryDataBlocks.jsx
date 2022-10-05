@@ -1,17 +1,17 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Row,Col } from "react-bootstrap";
 import axios from "axios";
-import DataBlockBoxContainer from "../../../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
+import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import PropTypes from "prop-types";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import TwoLineScoreDataBlock from "../../../../../../../common/metrics/score/TwoLineScoreDataBlock";
-import TwoLinePercentageDataBlock from "../../../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
-import {AuthContext} from "../../../../../../../../contexts/AuthContext";
-import {metricHelpers} from "../../../../../../metric.helpers";
-import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
+import {AuthContext} from "contexts/AuthContext";
+import {metricHelpers} from "components/insights/metric.helpers";
+import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, dashboardData, dashboardFilters, branchName, repoName, appName, workflowName, jobName }) {
+function GithubActionsDetailedJobSummaryDataBlocks({ kpiConfiguration, dashboardData, dashboardFilters, branchName, repoName, appName, workflowName, jobName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [error, setError] = useState(undefined);
@@ -241,7 +241,7 @@ function GithubActionsWorkflowActionableInsightDataBlocks3({ kpiConfiguration, d
   return getBody();
 }
 
-GithubActionsWorkflowActionableInsightDataBlocks3.propTypes = {
+GithubActionsDetailedJobSummaryDataBlocks.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
@@ -252,4 +252,4 @@ GithubActionsWorkflowActionableInsightDataBlocks3.propTypes = {
   jobName: PropTypes.string
 };
 
-export default GithubActionsWorkflowActionableInsightDataBlocks3;
+export default GithubActionsDetailedJobSummaryDataBlocks;

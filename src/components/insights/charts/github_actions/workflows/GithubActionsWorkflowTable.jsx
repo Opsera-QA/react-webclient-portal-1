@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { githubActionsWorkflowMetadata } from "./githubActionsWorkflow.metadata";
-import CustomTable from "../../../../../common/table/CustomTable";
-import { getTableTextColumn } from "../../../../../common/table/table-column-helpers";
-import { getField } from "../../../../../common/metadata/metadata-helpers";
-import FilterContainer from "../../../../../common/table/FilterContainer";
-import Model from "../../../../../../core/data_model/model";
+import { githubActionsWorkflowMetadata } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
+import CustomTable from "components/common/table/CustomTable";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import Model from "core/data_model/model";
 import axios from "axios";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import chartsActions from "../../../charts-actions";
-import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
-import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
-import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
+import { AuthContext } from "contexts/AuthContext";
+import chartsActions from "components/insights/charts/charts-actions";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
+import ExportGithubActionsWorkflowReportPanel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+  from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 function GithubActionsWorkflowTable({
   kpiConfiguration,
