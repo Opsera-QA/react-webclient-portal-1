@@ -13,7 +13,6 @@ function RoleAccessInlineInputBase(
     disabled,
     saveData,
     visible,
-    noDataMessage,
     helpComponent,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -41,7 +40,6 @@ function RoleAccessInlineInputBase(
           <RoleAccessField
             model={model}
             fieldName={fieldName}
-            noDataMessage={noDataMessage}
           />
         </div>
         <div className="edit-button d-flex">
@@ -69,7 +67,6 @@ RoleAccessInlineInputBase.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   saveData: PropTypes.func,
-  noDataMessage: PropTypes.any
 };
 
 export default RoleAccessInlineInputBase;

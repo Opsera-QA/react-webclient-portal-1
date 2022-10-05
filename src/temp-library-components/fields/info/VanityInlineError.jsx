@@ -13,7 +13,6 @@ export default function VanityInlineError(
       borderRadius: "1rem",
       // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
       color: "#dc3545",
-      fontSize: "15px",
     });
   };
 
@@ -27,7 +26,7 @@ export default function VanityInlineError(
           <IconBase
             icon={faExclamationCircle}
             className={"mr-2"}
-            iconSize={"xl"}
+            iconSize={"lg"}
           />
         </div>
         <div>

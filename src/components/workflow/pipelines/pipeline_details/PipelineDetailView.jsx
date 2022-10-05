@@ -190,7 +190,7 @@ function PipelineDetailView() {
     return (
       <div>
         <div
-          className="max-content-width-1080 content-block-no-height p-2 mb-2"
+          className="max-content-width content-block-no-height p-2 mb-2"
           style={{ width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0" }}
         >
           <PipelineSummaryPanel

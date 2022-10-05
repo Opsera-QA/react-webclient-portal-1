@@ -13,7 +13,6 @@ export default function VanityInlineWarning(
       borderRadius: "1rem",
       // boxShadow: "0 0 40px rgba(0, 0, 0, 0.1)",
       color: "#CF940C",
-      fontSize: "15px",
     });
   };
 
@@ -27,7 +26,7 @@ export default function VanityInlineWarning(
           <IconBase
             icon={faTriangleExclamation}
             className={"mr-2"}
-            iconSize={"xl"}
+            iconSize={"lg"}
           />
         </div>
         <div>

@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import FilterBar from "components/common/filters/FilterBar";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+
+const TITLE_BAR_HEIGHT = "46px";
+const screenContainerMargin = "30px";
+export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerMargin} - ${TITLE_BAR_HEIGHT})`;
+export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION = `calc(${FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;
 
 function FilterContainer(
   {

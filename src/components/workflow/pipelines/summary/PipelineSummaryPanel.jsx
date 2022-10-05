@@ -9,7 +9,6 @@ import {
   faUser,
   faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
-import EditPipelineRolesOverlay from "components/workflow/EditPipelineRolesOverlay";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
@@ -32,7 +31,10 @@ import PipelineSchedulerField from "components/workflow/pipelines/summary/fields
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
+import PipelineRoleAccessInput from "components/workflow/pipelines/summary/inputs/PipelineRoleAccessInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -73,7 +75,6 @@ function PipelineSummaryPanel(
   const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
-  const [editRoles, setEditRoles] = useState(false);
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
@@ -147,21 +148,18 @@ function PipelineSummaryPanel(
           };
           setEditType(false);
           break;
-        case "roles":
-
-          pipeline.roles = [...value];
-          postBody = {
-            "roles": [...value],
-          };
-          setEditRoles(false);
-          break;
       }
 
       setPipelineModel(new Model({ ...pipeline }, pipelineMetadata, false));
 
       if (Object.keys(postBody).length > 0) {
         try {
-          await pipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
+          await pipelineActions.updatePipelineV2(
+            getAccessToken,
+            cancelTokenSource,
+            pipelineId,
+            pipeline,
+          );
           setFormData(INITIAL_FORM_DATA);
           toastContext.showUpdateSuccessResultDialog("Pipeline");
           await fetchPlan();
@@ -193,9 +191,6 @@ function PipelineSummaryPanel(
         break;
       case "type":
         setEditType(true);
-        break;
-      case "roles":
-        launchRolesEditOverlay();
         break;
       default:
         console.error("Missing value or type for edit field");
@@ -299,41 +294,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  const launchRolesEditOverlay = () => {
-    const tempPipelineModel = new Model({...pipeline}, pipelineMetadata, false);
-
-    if (PipelineRoleHelper.canEditAccessRoles(userData, pipeline) === true) {
-      toastContext.showOverlayPanel(
-        <EditPipelineRolesOverlay
-          pipelineModel={tempPipelineModel}
-          fieldName={"roles"}
-          saveDataFunction={(roles) => handleSavePropertyClick(pipeline._id, roles, "roles")}
-          loadData={fetchPlan}
-        />
-      );
-    }
-  };
-
-  const getRoleAccessField = () => {
-    return (
-      <Col xs={12} className="py-2"><span className="text-muted mr-1">Access Rules:</span>
-
-        {!editRoles && pipeline.roles &&
-        <span className="item-field role-access">{getRoleBadges(pipeline.roles)}</span>}
-        {PipelineRoleHelper.canEditAccessRoles(userData, pipeline) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
-
-        {editRoles &&
-        <EditPipelineRolesOverlay setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles}
-                                  visible={editRoles} onHide={() => {
-          setEditRoles(false);
-        }} onClick={(roles) => {
-          handleSavePropertyClick(pipeline._id, roles, "roles");
-        }} />}
-
-      </Col>
-    );
-  };
-
   const getSchedulerField = () => {
     const pipelineTypes = pipeline?.type;
     // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
@@ -391,29 +351,11 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getPipelineIdField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">ID:</span>
-        {pipeline._id}
-      </span>
-    );
-  };
-
   const getPipelineRunCountField = () => {
     return (
       <span>
         <span className="text-muted mr-1">Pipeline Run Count:</span>
         {pipeline.workflow.run_count || "0"}
-      </span>
-    );
-  };
-
-  const getPipelineOwnerField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Owner:</span>
-        {ownerName}
       </span>
     );
   };
@@ -535,9 +477,6 @@ function PipelineSummaryPanel(
 
       <div className="pr-1">
         <Row>
-          {/*<RbacWarningField*/}
-          {/*  model={pipelineModel}*/}
-          {/*/>*/}
           <Col sm={9}>
             {getPipelineTitleField()}
           </Col>
@@ -548,14 +487,26 @@ function PipelineSummaryPanel(
               loadPipeline={fetchPlan}
             />
           </Col>
+          <Col xs={12} sm={6} className="py-2">
+            <TextFieldBase
+              dataObject={pipelineModel}
+              fieldName={"owner_name"}
+            />
+          </Col>
           <Col sm={12} md={6} className="py-2">
-            {getPipelineIdField()}
+            <SmartIdField
+              model={pipelineModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <PipelineRoleAccessInput
+              loadData={fetchPlan}
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+            />
           </Col>
           <Col sm={12} md={6} className="py-2">
             {getPipelineRunCountField()}
-          </Col>
-          <Col xs={12} sm={6} className="py-2">
-            {getPipelineOwnerField()}
           </Col>
           <Col xs={12} sm={6} className="py-2">
             {getCreatedAtField()}
@@ -571,8 +522,6 @@ function PipelineSummaryPanel(
           </Col>
           {getSchedulerField()}
           {getTagField()}
-
-          {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
 
           {getDescriptionField()}
           {getPipelineSummaryField()}

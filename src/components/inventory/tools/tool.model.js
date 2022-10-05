@@ -129,12 +129,7 @@ export default class ToolModel extends ModelBase {
   };
 
   getDetailViewLink = () => {
-    // TODO: incorporate better workaround
-    if (this.getMongoDbId() == null) {
-      return "no-details-yet";
-    }
-
-    return toolHelper.getDetailViewLink(this.getMongoDbId());
+    return toolHelper.getModelDetailViewLink(this);
   };
 
   getDetailViewTitle = () => {
