@@ -14,6 +14,7 @@ import {githubActionsWorkflowMetadata} from "components/insights/charts/github_a
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import { Col, Row } from "react-bootstrap";
 
 // TODO: Convert to cards
 export default function GithubActionsDetailedWorkflowSummaryTable(
@@ -105,9 +106,13 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
             />
           }
         />
-        <div className={"ml-auto"}>
-          {"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}
-        </div>
+        <Row>
+          <Col xs={12} className={"w-100 d-flex"}>
+            <div className={"ml-auto mr-2"}>
+              {"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}
+            </div>
+          </Col>
+        </Row>
       </>
     );
   };

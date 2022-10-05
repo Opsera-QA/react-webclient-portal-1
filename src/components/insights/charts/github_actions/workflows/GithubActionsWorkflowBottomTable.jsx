@@ -21,17 +21,18 @@ import GithubActionsWorkflowActionableInsightOverlay
 import { Col, Row } from "react-bootstrap";
 
 // TODO: Convert to cards
-function GithubActionsBottomTable({
-                                    data,
-                                    isLoading,
-                                    loadData,
-                                    filterModel,
-                                    setFilterModel,
-                                    kpiConfiguration,
-                                    dashboardData,
-                                    dashboardFilters,
-                                    stats,
-                                  }) {
+function GithubActionsBottomTable(
+  {
+    data,
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+    kpiConfiguration,
+    dashboardData,
+    dashboardFilters,
+    stats,
+  }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const fields = githubActionsWorkflowMetadata.fields;
@@ -117,7 +118,7 @@ function GithubActionsBottomTable({
         />
         <Row>
           <Col xs={12} className={"mt-2 w-100 d-flex"}>
-            <div className={"ml-auto"}>
+            <div className={"ml-auto mr-2"}>
               {"* Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}
             </div>
           </Col>
