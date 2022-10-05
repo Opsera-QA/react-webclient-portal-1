@@ -13,6 +13,7 @@ export default function PlatformSsoUserSelectFilterSelectInput(
     setDataFunction,
     className,
     inline,
+    disabled,
   }) {
   const {
     platformSsoUsers,
