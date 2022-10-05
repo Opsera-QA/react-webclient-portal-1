@@ -4,12 +4,12 @@ import Model from "core/data_model/model";
 import {
   githubActionsWorkflowMetadata,
 } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable3
-  from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryTable";
 import { metricHelpers } from "components/insights/metric.helpers";
 import githubActionsWorkflowActions
   from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import GithubActionsDetailedJobSummaryTable
+  from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryTable";
 
 function GithubActionsDetailedJobSummary(
   {
@@ -95,7 +95,7 @@ function GithubActionsDetailedJobSummary(
   };
 
   return (
-    <GitlabActionsWorkflowActionableInsightTable3
+    <GithubActionsDetailedJobSummaryTable
       data={metrics}
       isLoading={isLoading}
       loadData={loadData}

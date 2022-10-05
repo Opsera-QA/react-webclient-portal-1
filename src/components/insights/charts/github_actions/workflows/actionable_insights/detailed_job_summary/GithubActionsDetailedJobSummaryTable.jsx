@@ -24,7 +24,6 @@ function GithubActionsDetailedJobSummaryTable(
     setFilterModel,
     stats,
   }) {
-  const tableTitle = "Github Actions Workflow Step Summary";
   const noDataMessage = "No data available";
   const fields = githubActionsDetailedJobSummaryMetadata.fields;
   const [showExportPanel, setShowExportPanel] = useState(false);
@@ -46,32 +45,6 @@ function GithubActionsDetailedJobSummaryTable(
     ],
     [],
   );
-
-  const getBody = () => {
-    return (
-      <>
-        <FilterContainer
-          body={getTable()}
-          metadata={data}
-          isLoading={isLoading}
-          title={tableTitle}
-          titleIcon={faDraftingCompass}
-          loadData={loadData}
-          setFilterDto={setFilterModel}
-          filterDto={filterModel}
-          supportSearch={true}
-          exportButton={
-            <ExportGithubActionsWorkflowReportButton
-              className={"ml-2"}
-              setShowExportPanel={setShowExportPanel}
-              showExportPanel={showExportPanel}
-            />
-          }
-        />
-        <GithubActionsWorkflowWarningMessage />
-      </>
-    );
-  };
 
   const getTable = () => {
     if (showExportPanel === true) {
@@ -98,7 +71,7 @@ function GithubActionsDetailedJobSummaryTable(
   };
 
   return (
-    <div>
+    <div className={"mx-3"}>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
           <div className={"mr-4"}>
@@ -112,8 +85,27 @@ function GithubActionsDetailedJobSummaryTable(
           </div>
         </div>
       </div>
-      <div className={"p-2"}>
-        {getBody()}
+      <div>
+        <FilterContainer
+          body={getTable()}
+          metadata={data}
+          isLoading={isLoading}
+          title={"Github Actions Workflow Step Summary"}
+          titleIcon={faDraftingCompass}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          className={"pb-2"}
+          supportSearch={true}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <GithubActionsWorkflowWarningMessage />
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ function GithubActionsDetailedJobSummaryOverlay(
               {/*</div>*/}
           </div>
         </div>
-        <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
+        <div>
           <GithubActionsDetailedJobSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
@@ -114,9 +114,7 @@ function GithubActionsDetailedJobSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
+      {getBody()}
     </FullScreenCenterOverlayContainer>
   );
 }
