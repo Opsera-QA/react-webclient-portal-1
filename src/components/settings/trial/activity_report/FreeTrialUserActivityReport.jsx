@@ -78,7 +78,6 @@ export default function FreeTrialUserActivityReport() {
 
   return (
     <ScreenContainer
-      className={"mt-3"}
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"freeTrialUserActivityReport"} />}
     >

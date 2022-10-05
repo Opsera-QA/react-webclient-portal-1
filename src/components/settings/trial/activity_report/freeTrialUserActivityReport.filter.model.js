@@ -60,10 +60,6 @@ export default class FreeTrialUserActivityReportFilterModel extends FilterModelB
     return true;
   };
 
-  canSearch = () => {
-    return true;
-  };
-
   unpackUrlParameters = () => {
     this.unpackCommonUrlParameters();
 

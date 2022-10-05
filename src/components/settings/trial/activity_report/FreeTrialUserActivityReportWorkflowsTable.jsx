@@ -10,9 +10,8 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer, {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION,
 } from "components/common/table/FilterContainer";
-import { faUsers } from "@fortawesome/pro-light-svg-icons";
+import { faClipboardUser, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import {
@@ -91,10 +90,8 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       filterDto={activityReportFilterModel}
       setFilterDto={setActivityReportFilterModel}
       body={getTable()}
-      supportSearch={true}
-      titleIcon={faUsers}
-      title={"Free Trial Users"}
-      minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+      titleIcon={faClipboardUser}
+      title={"Free Trial User Workflows"}
       className={"px-2 pb-2"}
     />
   );
