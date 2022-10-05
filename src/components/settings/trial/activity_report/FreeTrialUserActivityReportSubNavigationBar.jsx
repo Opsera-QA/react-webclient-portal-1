@@ -13,12 +13,16 @@ export default function FreeTrialUserActivityReportSubNavigationBar({activeTab})
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (activeTab === tabSelection) {
+      return;
+    }
+
     switch (tabSelection) {
       case "accountSettings":
         history.push(`/settings`);
         return;
       case "freeTrialUserActivityReport":
-        history.push(`/settings/trial/user/account-report`);
+        history.push(`/settings/trial/user/activity-report`);
         return;
     }
   };
