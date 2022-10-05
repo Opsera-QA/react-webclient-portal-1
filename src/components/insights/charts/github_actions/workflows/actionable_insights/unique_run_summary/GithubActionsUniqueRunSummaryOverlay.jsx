@@ -113,7 +113,7 @@ function GithubActionsUniqueRunSummaryOverlay(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Job Summary`}
+      titleText={`${workflowName}: Github Actions Unique Run Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >

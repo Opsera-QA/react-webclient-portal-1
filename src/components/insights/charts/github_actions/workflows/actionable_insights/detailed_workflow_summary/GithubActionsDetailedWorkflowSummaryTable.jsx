@@ -59,16 +59,6 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
   };
 
   const getTable = () => {
-    if (showExportPanel === true) {
-      return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
-          showExportPanel={showExportPanel}
-          setShowExportPanel={setShowExportPanel}
-          githubActionData={data}
-        />
-      );
-    }
-
     return (
       <div>
       <CustomTable
@@ -81,30 +71,44 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
         setPaginationDto={setFilterModel}
         onRowSelect={onRowSelect}
       />
-      <div className="m-3">{"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}</div>
       </div>
     );
   };
 
   const getBody = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          githubActionData={data}
+        />
+      );
+    }
+
     return (
-      <FilterContainer
-        isLoading={isLoading}
-        title={`${workflowName} Workflow Summary Details`}
-        titleIcon={faDraftingCompass}
-        body={getTable()}
-        className={"px-2 pb-2"}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-        exportButton={
-          <ExportGithubActionsWorkflowReportButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
-          />
-        }
-      />
+      <>
+        <FilterContainer
+          isLoading={isLoading}
+          title={`${workflowName} Workflow Summary Details`}
+          titleIcon={faDraftingCompass}
+          body={getTable()}
+          className={"px-2 pb-2"}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <div className={"ml-auto"}>
+          {"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}
+        </div>
+      </>
     );
   };
 
@@ -120,7 +124,7 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
           </div>
         </div>
       </div>
-      <div className={"p-2"}>
+      <div>
         {getBody()}
       </div>
     </div>

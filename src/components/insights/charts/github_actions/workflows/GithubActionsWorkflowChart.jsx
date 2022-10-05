@@ -1,55 +1,50 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
+import React, { useState } from "react";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
-import GithubActionsWorkflowDataBlocks from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowDataBlocks";
-import GithubActionsWorkflowTableOverlay from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowTableOverlay";
+import GithubActionsWorkflowDataBlocks
+  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowDataBlocks";
+import GithubActionsWorkflowTableOverlay
+  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowTableOverlay";
 
-function GithubActionsWorkflowChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, showSettingsToggle}) {
-  const isMounted = useRef(false);const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+function GithubActionsWorkflowChart(
+  {
+    kpiConfiguration,
+    setKpiConfiguration,
+    dashboardData,
+    index,
+    setKpis,
+    showSettingsToggle,
+  }) {
   const [error, setError] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(dashboardData)]);
 
   const getChartBody = () => {
     return (
-      <>
-        <div className="new-chart m-3 all-github-actions-data-block">
-          <GithubActionsWorkflowDataBlocks kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} setError={setError}/>
-          <GithubActionsWorkflowTableOverlay kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} setError={setError}/>
-        </div>
-      </>
+      <div className={"new-chart"}>
+        <GithubActionsWorkflowDataBlocks
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          setError={setError}
+        />
+        <GithubActionsWorkflowTableOverlay
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          setError={setError}
+        />
+      </div>
     );
   };
 
   return (
-    <>
-      <ChartContainer
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        chart={getChartBody()}
-        dashboardData={dashboardData}
-        index={index}
-        setKpis={setKpis}
-        showSettingsToggle={showSettingsToggle}
-        error={error}
-      />
-    </>
+    <ChartContainer
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      chart={getChartBody()}
+      dashboardData={dashboardData}
+      index={index}
+      setKpis={setKpis}
+      showSettingsToggle={showSettingsToggle}
+      error={error}
+    />
   );
 }
 

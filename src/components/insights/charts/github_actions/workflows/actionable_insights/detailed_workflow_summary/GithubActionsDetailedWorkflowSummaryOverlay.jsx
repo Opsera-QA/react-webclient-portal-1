@@ -1,12 +1,13 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import GithubActionsDetailedWorkflowSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryDataBlocks";
-import GithubActionsWorkflowActionableTableOverlay1 from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CloseButton from "components/common/buttons/CloseButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import GithubActionsDetailedWorkflowSummary
+  from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
 
 // TODO: Pick better names for components and state variables
 function GithubActionsDetailedWorkflowSummaryOverlay(
@@ -28,21 +29,19 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
   const getBody = () => {
     return (
       <div>
-        <div className={"p-2"}>
-          <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-              <b>Unique Workflow Name:</b> {workflowName}
-            </div>
+        <div className={"d-flex details-title-text"}>
+          <div className={"mr-4"}>
+            <b>Unique Workflow Name:</b> {workflowName}
           </div>
         </div>
-        <div className="new-chart m-3">
+        <div className={"new-chart"}>
           <GithubActionsDetailedWorkflowSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
           />
-          <GithubActionsWorkflowActionableTableOverlay1
+          <GithubActionsDetailedWorkflowSummary
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
@@ -77,7 +76,7 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`${workflowName}: Detailed Workflow Summary`}
+      titleText={`${workflowName}: Github Actions Detailed Workflow Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >

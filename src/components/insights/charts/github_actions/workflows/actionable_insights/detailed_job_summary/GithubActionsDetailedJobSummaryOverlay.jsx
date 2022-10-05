@@ -110,7 +110,7 @@ function GithubActionsDetailedJobSummaryOverlay(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Step Summary`}
+      titleText={`${workflowName}: Github Actions Workflow Detailed Job Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
