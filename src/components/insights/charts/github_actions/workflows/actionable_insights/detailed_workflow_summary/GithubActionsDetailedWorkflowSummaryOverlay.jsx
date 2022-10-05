@@ -29,12 +29,12 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
   const getBody = () => {
     return (
       <div>
-        <div className={"d-flex details-title-text"}>
+        <div className={"d-flex details-title-text p-2 mx-3"}>
           <div className={"mr-4"}>
             <b>Unique Workflow Name:</b> {workflowName}
           </div>
         </div>
-        <div className={"new-chart"}>
+        <div>
           <GithubActionsDetailedWorkflowSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
@@ -80,9 +80,7 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
+      {getBody()}
     </FullScreenCenterOverlayContainer>
   );
 }

@@ -62,23 +62,6 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
   };
 
   const getTable = () => {
-    return (
-      <div>
-      <CustomTable
-        isLoading={isLoading}
-        loadData={loadData}
-        columns={columns}
-        data={data}
-        noDataMessage={noDataMessage}
-        paginationDto={filterModel}
-        setPaginationDto={setFilterModel}
-        onRowSelect={onRowSelect}
-      />
-      </div>
-    );
-  };
-
-  const getBody = () => {
     if (showExportPanel === true) {
       return (
         <ExportGithubActionsWorkflowReportActionableInsights1Panel
@@ -90,26 +73,16 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
     }
 
     return (
-      <>
-        <FilterContainer
-          isLoading={isLoading}
-          title={`${workflowName} Workflow Summary Details`}
-          titleIcon={faDraftingCompass}
-          body={getTable()}
-          className={"px-2 pb-2"}
-          loadData={loadData}
-          setFilterDto={setFilterModel}
-          filterDto={filterModel}
-          exportButton={
-            <ExportGithubActionsWorkflowReportButton
-              className={"ml-2"}
-              setShowExportPanel={setShowExportPanel}
-              showExportPanel={showExportPanel}
-            />
-          }
-        />
-        <GithubActionsWorkflowWarningMessage />
-      </>
+      <CustomTable
+        isLoading={isLoading}
+        loadData={loadData}
+        columns={columns}
+        data={data}
+        noDataMessage={noDataMessage}
+        paginationDto={filterModel}
+        setPaginationDto={setFilterModel}
+        onRowSelect={onRowSelect}
+      />
     );
   };
 
@@ -125,8 +98,25 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
           </div>
         </div>
       </div>
-      <div>
-        {getBody()}
+      <div className={"mx-3"}>
+        <FilterContainer
+          isLoading={isLoading}
+          title={`${workflowName} Workflow Summary Details`}
+          titleIcon={faDraftingCompass}
+          body={getTable()}
+          className={"pb-2"}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <GithubActionsWorkflowWarningMessage />
       </div>
     </div>
   );
