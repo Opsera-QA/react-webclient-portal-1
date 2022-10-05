@@ -33,6 +33,7 @@ export default function PlatformSsoUserSelectFilterSelectInput(
       valueField={valueField}
       selectOptions={platformSsoUsers}
       setDataFunction={setDataFunction}
+      disabled={disabled}
     />
   );
 }
@@ -50,6 +51,7 @@ PlatformSsoUserSelectFilterSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
   inline: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 PlatformSsoUserSelectFilterSelectInput.defaultProps = {

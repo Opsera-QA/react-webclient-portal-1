@@ -11,6 +11,7 @@ export default function InlinePlatformSsoUserFilterSelectInput(
     textField,
     className,
     loadDataFunction,
+    disabled,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
     filterModel.setData(fieldName, selectedOption?._id);
@@ -31,6 +32,7 @@ export default function InlinePlatformSsoUserFilterSelectInput(
       setDataFunction={setDataFunction}
       filterModel={filterModel}
       inline={true}
+      disabled={disabled}
     />
   );
 }
@@ -46,4 +48,5 @@ InlinePlatformSsoUserFilterSelectInput.propTypes = {
     PropTypes.string,
   ]),
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 };

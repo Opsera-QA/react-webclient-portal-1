@@ -29,7 +29,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     loadData,
     isLoading,
   }) {
-  let fields = freeTrialUserActivityReportMetadata.fields;
+  const fields = freeTrialUserActivityReportMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
@@ -47,7 +47,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       getCustomTablePipelineStateColumnDefinition(getField(fields, "lastRunStatus")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
-    []
+    [fields]
   );
 
   const onRowSelect = (row) => {
@@ -66,6 +66,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
           fieldName={"userId"}
           loadDataFunction={loadData}
           className={"mr-2"}
+          disabled={isLoading}
         />
       </div>
     );
