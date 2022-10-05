@@ -70,11 +70,11 @@ export const githubActionsWorkflowMetadata = {
       id: "failedPercentage",
     },
     {
-      label: "Average Time For Success",
+      label: "Average Time For Success*",
       id: "successTime",
     },
     {
-      label: "Average Time For Failures",
+      label: "Average Time For Failures*",
       id: "failedTime",
     },
     {
