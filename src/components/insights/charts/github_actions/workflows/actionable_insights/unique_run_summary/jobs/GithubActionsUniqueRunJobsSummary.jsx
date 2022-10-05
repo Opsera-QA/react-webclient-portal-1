@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import {githubActionsWorkflowMetadata} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
-import GithubActionsUniqueRunSummaryTable from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryTable";
+import GithubActionsUniqueRunSummaryJobsTable from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/GithubActionsUniqueRunSummaryJobsTable";
 import {metricHelpers} from "components/insights/metric.helpers";
 import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubActionsUniqueRunSummary(
+function GithubActionsUniqueRunJobsSummary(
   {
     kpiConfiguration,
     dashboardData,
@@ -91,7 +91,7 @@ function GithubActionsUniqueRunSummary(
   };
 
   return (
-    <GithubActionsUniqueRunSummaryTable
+    <GithubActionsUniqueRunSummaryJobsTable
       data={metrics}
       isLoading={isLoading}
       loadData={loadData}
@@ -106,7 +106,7 @@ function GithubActionsUniqueRunSummary(
   );
 }
 
-GithubActionsUniqueRunSummary.propTypes = {
+GithubActionsUniqueRunJobsSummary.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
@@ -119,4 +119,4 @@ GithubActionsUniqueRunSummary.propTypes = {
   setSelectedJobName: PropTypes.func,
 };
 
-export default GithubActionsUniqueRunSummary;
+export default GithubActionsUniqueRunJobsSummary;

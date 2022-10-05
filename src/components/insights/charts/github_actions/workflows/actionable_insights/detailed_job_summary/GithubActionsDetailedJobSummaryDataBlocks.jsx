@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, } from "react";
 import { Row, Col } from "react-bootstrap";
-import axios from "axios";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
-import { AuthContext } from "contexts/AuthContext";
 import { metricHelpers } from "components/insights/metric.helpers";
 import githubActionsWorkflowActions
   from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
@@ -64,7 +62,7 @@ function GithubActionsDetailedJobSummaryDataBlocks(
       );
 
       let dataObject = response?.data?.data[0];
-      
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }

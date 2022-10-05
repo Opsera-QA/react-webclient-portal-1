@@ -8,14 +8,14 @@ import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icon
 import ExportGithubActionsWorkflowReportActionableInsights1Panel
   from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
-import {githubActionsUniqueRunSummaryMetadata} from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/githubActionsUniqueRunSummary.metadata";
+import {githubActionsUniqueRunJobsSummaryMetadata} from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/githubActionsUniqueRunJobsSummary.metadata";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import GithubActionsWorkflowWarningMessage
   from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
-function GithubActionsUniqueRunSummaryTable(
+function GithubActionsUniqueRunSummaryJobsTable(
   {
     data,
     isLoading,
@@ -26,9 +26,8 @@ function GithubActionsUniqueRunSummaryTable(
     setCurrentScreen,
     setSelectedJobName,
   }) {
-  const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
-  const fields = githubActionsUniqueRunSummaryMetadata.fields;
+  const fields = githubActionsUniqueRunJobsSummaryMetadata.fields;
   const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
@@ -81,7 +80,7 @@ function GithubActionsUniqueRunSummaryTable(
   };
 
   return (
-    <div className={"mx-3"}>
+    <div className={"mt-2"}>
       <div>
         <div className={"d-flex details-title-text"}>
           <div className={'mr-4'}>
@@ -100,7 +99,7 @@ function GithubActionsUniqueRunSummaryTable(
           body={getTable()}
           metadata={data}
           isLoading={isLoading}
-          title={tableTitle}
+          title={"Github Actions Workflow Job Summary"}
           titleIcon={faDraftingCompass}
           loadData={loadData}
           setFilterDto={setFilterModel}
@@ -120,7 +119,7 @@ function GithubActionsUniqueRunSummaryTable(
   );
 }
 
-GithubActionsUniqueRunSummaryTable.propTypes = {
+GithubActionsUniqueRunSummaryJobsTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
@@ -131,4 +130,4 @@ GithubActionsUniqueRunSummaryTable.propTypes = {
   setCurrentScreen: PropTypes.func,
 };
 
-export default GithubActionsUniqueRunSummaryTable;
+export default GithubActionsUniqueRunSummaryJobsTable;

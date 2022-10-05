@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import GithubActionsUniqueRunSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDataBlocks";
-import GithubActionsUniqueRunSummary from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummary";
+import GithubActionsUniqueRunJobsSummary from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/GithubActionsUniqueRunJobsSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -10,6 +10,8 @@ import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import GithubActionsUniqueRunSummaryDetailPanel
+  from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDetailPanel";
 
 function GithubActionsUniqueRunSummaryOverlay(
   {
@@ -32,58 +34,6 @@ function GithubActionsUniqueRunSummaryOverlay(
   const closePanel = () => {
     toastContext1.removeInlineMessage();
     toastContext1.clearInfoOverlayPanel();
-  };
-
-  const getBody = () => {
-    return (
-      <div>
-        <div className={"p-2"}>
-          <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-              <b>Workflow Name:</b> {workflowName}
-            </div>
-            <div className={'mr-4'}>
-              <b>Repository Name:</b> {repoName}
-            </div>
-            <div className={'mr-4'}>
-              <b>Application Name:</b> {appName}
-            </div>
-            <div className={'mr-4'}>
-              <b>Branch Name:</b> {branchName}
-            </div>
-            <div className={'mr-4'}>
-              <b>Workflow Runs:</b> {workflowRuns}
-            </div>
-          </div>
-        </div>
-        <div>
-          <GithubActionsUniqueRunSummaryDataBlocks
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            dashboardFilters={dashboardFilters}
-            workflowName={workflowName}
-            repoName={repoName}
-            appName={appName}
-            workflow={workflow}
-            branchName={branchName}
-            jobName={jobName}
-          />
-          <GithubActionsUniqueRunSummary
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            dashboardFilters={dashboardFilters}
-            workflowName={workflowName}
-            repoName={repoName}
-            appName={appName}
-            workflow={workflow}
-            branchName={branchName}
-            jobName={jobName}
-            setSelectedJobName={setSelectedJobName}
-            setCurrentScreen={setCurrentScreen}
-          />
-        </div>
-      </div>
-    );
   };
 
   const handleBackButtonFunction = () => {
@@ -117,7 +67,53 @@ function GithubActionsUniqueRunSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
-      {getBody()}
+      <div>
+        <div className={"p-2"}>
+          <div className={"d-flex details-title-text"}>
+            <div className={'mr-4'}>
+              <b>Workflow Name:</b> {workflowName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Repository Name:</b> {repoName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Application Name:</b> {appName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Branch Name:</b> {branchName}
+            </div>
+            <div className={'mr-4'}>
+              <b>Workflow Runs:</b> {workflowRuns}
+            </div>
+          </div>
+        </div>
+        <div>
+          <GithubActionsUniqueRunSummaryDataBlocks
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+          />
+          <GithubActionsUniqueRunSummaryDetailPanel
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
+          />
+        </div>
+      </div>
     </FullScreenCenterOverlayContainer>
   );
 }

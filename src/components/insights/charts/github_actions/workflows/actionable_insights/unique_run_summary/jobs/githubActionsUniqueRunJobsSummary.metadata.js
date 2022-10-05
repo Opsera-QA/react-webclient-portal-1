@@ -1,4 +1,4 @@
-export const githubActionsUniqueRunSummaryMetadata = {
+export const githubActionsUniqueRunJobsSummaryMetadata = {
   type: "Github Actions Workflow",
   fields: [
     {
