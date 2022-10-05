@@ -19,7 +19,6 @@ function GithubActionsUniqueRunSummary(
     setCurrentScreen,
     setSelectedJobName,
   }) {
-  const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +33,7 @@ function GithubActionsUniqueRunSummary(
     getAccessToken,
     isMounted,
     cancelTokenSource,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -81,8 +81,7 @@ function GithubActionsUniqueRunSummary(
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
+        toastContext.showInlineErrorMessage(error, "Error pulling workflow metrics:");
       }
     } finally {
       if (isMounted?.current === true) {

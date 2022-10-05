@@ -56,7 +56,7 @@ function GithubActionsUniqueRunSummaryOverlay(
             </div>
           </div>
         </div>
-        <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
+        <div>
           <GithubActionsUniqueRunSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}

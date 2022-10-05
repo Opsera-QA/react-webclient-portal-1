@@ -55,31 +55,6 @@ function GithubActionsUniqueRunSummaryTable(
     setSelectedJobName(rowData?.original?.jobName);
   };
 
-  const getBody = () => {
-    return (
-      <>
-        <FilterContainer
-          body={getTable()}
-          metadata={data}
-          isLoading={isLoading}
-          title={tableTitle}
-          titleIcon={faDraftingCompass}
-          loadData={loadData}
-          setFilterDto={setFilterModel}
-          filterDto={filterModel}
-          supportSearch={true}
-          exportButton={
-            <ExportGithubActionsWorkflowReportButton
-              className={"ml-2"}
-              setShowExportPanel={setShowExportPanel}
-              showExportPanel={showExportPanel}
-            />
-          }
-        />
-        <GithubActionsWorkflowWarningMessage />
-      </>
-    );
-  };
   const getTable = () => {
     if (showExportPanel === true) {
       return (
@@ -106,8 +81,8 @@ function GithubActionsUniqueRunSummaryTable(
   };
 
   return (
-    <div>
-      <div className={"p-2"}>
+    <div className={"mx-3"}>
+      <div>
         <div className={"d-flex details-title-text"}>
           <div className={'mr-4'}>
             <b>Most Skipped Job:</b> {stats?.mostSkipped}
@@ -120,8 +95,26 @@ function GithubActionsUniqueRunSummaryTable(
           </div>
         </div>
       </div>
-      <div className={"p-3"}>
-        {getBody()}
+      <div>
+        <FilterContainer
+          body={getTable()}
+          metadata={data}
+          isLoading={isLoading}
+          title={tableTitle}
+          titleIcon={faDraftingCompass}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          supportSearch={true}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <GithubActionsWorkflowWarningMessage />
       </div>
     </div>
   );

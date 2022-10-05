@@ -1,124 +1,127 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
-import {githubActionsWorkflowMetadata} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable3 from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryTable";
-import {metricHelpers} from "components/insights/metric.helpers";
-import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+import {
+  githubActionsWorkflowMetadata,
+} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
+import GitlabActionsWorkflowActionableInsightTable3
+  from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryTable";
+import { metricHelpers } from "components/insights/metric.helpers";
+import githubActionsWorkflowActions
+  from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubActionsDetailedJobSummary({ kpiConfiguration, dashboardData, dashboardFilters,repoName , appName, workflowName, branchName, jobName }) {
-    const { getAccessToken } = useContext(AuthContext);
-    const [error, setError] = useState(undefined);
-    const [metrics, setMetrics] = useState([]);
-    const [stats, setStats] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const isMounted = useRef(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-    const [filterModel, setFilterModel] = useState(
-        new Model(
-            { ...githubActionsWorkflowMetadata.newObjectFields },
-            githubActionsWorkflowMetadata,
-            false
-        )
-    );
+function GithubActionsDetailedJobSummary(
+  {
+    kpiConfiguration,
+    dashboardData,
+    dashboardFilters,
+    repoName,
+    appName,
+    workflowName,
+    branchName,
+    jobName,
+  }) {
+  const [metrics, setMetrics] = useState([]);
+  const [stats, setStats] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...githubActionsWorkflowMetadata.newObjectFields },
+      githubActionsWorkflowMetadata,
+      false,
+    ),
+  );
+  const {
+    toastContext,
+    getAccessToken,
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
-    useEffect(() => {
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
-        }
+  useEffect(() => {
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+  }, [JSON.stringify(dashboardData)]);
 
-        const source = axios.CancelToken.source();
-        setCancelTokenSource(source);
+  const loadData = async (filterDto = filterModel) => {
+    try {
+      setIsLoading(true);
+      let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+      let dashboardTags = dashboardMetricFilter?.tags;
+      let dashboardOrgs = dashboardMetricFilter?.organizations;
+      //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
+      const response = await githubActionsWorkflowActions.githubActionsActionableThreeTable(
+        kpiConfiguration,
+        getAccessToken,
+        cancelTokenSource,
+        filterDto,
+        dashboardTags,
+        dashboardOrgs,
+        dashboardFilters,
+        workflowName,
+        repoName,
+        appName,
+        branchName,
+        jobName,
+      );
 
-        isMounted.current = true;
-        loadData(source).catch((error) => {
-            if (isMounted?.current === true) {
-                throw error;
-            }
-        });
+      let dataObject = response?.data ? response?.data?.data[0]?.data : [];
+      let dataCount = response?.data
+        ? response?.data?.data[0]?.count[0]?.count
+        : [];
+      let stats = response?.data?.stats;
 
-        return () => {
-            source.cancel();
-            isMounted.current = false;
-        };
-    }, [JSON.stringify(dashboardData)]);
-    const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-        try {
-            setIsLoading(true);
-            let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
-            let dashboardTags = dashboardMetricFilter?.tags;
-            let dashboardOrgs = dashboardMetricFilter?.organizations;
-            //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
-            const response = await githubActionsWorkflowActions.githubActionsActionableThreeTable(
-                kpiConfiguration,
-                getAccessToken,
-                cancelSource,
-                filterDto,
-                dashboardTags,
-                dashboardOrgs,
-                dashboardFilters,
-                workflowName,
-                repoName,
-                appName,
-                branchName,
-                jobName
-            );
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataCount);
+      setFilterModel({ ...newFilterDto });
 
-            let dataObject = response?.data ? response?.data?.data[0]?.data : [];
-            let dataCount = response?.data
-                ? response?.data?.data[0]?.count[0]?.count
-                : [];
-            let stats = response?.data?.stats;
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        setStats(stats);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error, "Error pulling workflow metrics:");
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
 
-            let newFilterDto = filterDto;
-            newFilterDto.setData("totalCount", dataCount);
-            setFilterModel({ ...newFilterDto });
-            if (isMounted?.current === true && dataObject) {
-                setMetrics(dataObject);
-                setStats(stats);
-            }
-        } catch (error) {
-            if (isMounted?.current === true) {
-                console.error(error);
-                setError(error);
-            }
-        } finally {
-            if (isMounted?.current === true) {
-                setIsLoading(false);
-            }
-        }
-    };
-
-    return (
-        <GitlabActionsWorkflowActionableInsightTable3
-            data={metrics}
-            isLoading={isLoading}
-            loadData={loadData}
-            filterModel={filterModel}
-            setFilterModel={setFilterModel}
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            repoName={repoName}
-            workflowName={workflowName}
-            branchName={branchName}
-            appName={appName}
-            jobName={jobName}
-            stats={stats}
-        />
-    );
+  return (
+    <GitlabActionsWorkflowActionableInsightTable3
+      data={metrics}
+      isLoading={isLoading}
+      loadData={loadData}
+      filterModel={filterModel}
+      setFilterModel={setFilterModel}
+      kpiConfiguration={kpiConfiguration}
+      dashboardData={dashboardData}
+      repoName={repoName}
+      workflowName={workflowName}
+      branchName={branchName}
+      appName={appName}
+      jobName={jobName}
+      stats={stats}
+    />
+  );
 }
 
 GithubActionsDetailedJobSummary.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    dashboardFilters: PropTypes.any,
-    workflowName: PropTypes.string,
-    repoName: PropTypes.string,
-    appName: PropTypes.string,
-    branchName: PropTypes.string,
-    jobName: PropTypes.string
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  dashboardFilters: PropTypes.any,
+  workflowName: PropTypes.string,
+  repoName: PropTypes.string,
+  appName: PropTypes.string,
+  branchName: PropTypes.string,
+  jobName: PropTypes.string,
 };
 
 export default GithubActionsDetailedJobSummary;
