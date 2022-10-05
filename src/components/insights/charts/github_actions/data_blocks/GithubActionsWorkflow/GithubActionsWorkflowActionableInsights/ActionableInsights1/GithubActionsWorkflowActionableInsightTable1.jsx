@@ -85,7 +85,7 @@ function GitlabActionsWorkflowActionableInsightTable1(
         setPaginationDto={setFilterModel}
         onRowSelect={onRowSelect}
       />
-      <div className="m-3">{"*Average times may be higher than seen in GitHub due to workflow runs being re-tried. Duration is considered from the first run attempt to the final attempt."}</div>
+      <div className="m-3">{"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}</div>
       </div>
     );
   };
