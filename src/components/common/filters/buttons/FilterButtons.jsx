@@ -111,7 +111,7 @@ function FilterButtons(
       return (
         <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div className={"mr-2"}>
-            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
+            <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="secondary" size="sm">
               <span><IconBase icon={faFilter}/></span>
               {includeButtonText && <span>Filter Results</span>}
             </Button>
@@ -133,7 +133,7 @@ function FilterButtons(
           <Button
             className={`${filterBtnClassName}`}
             disabled={filterDto == null || filterDto?.getArrayData("activeFilters").length === 0 || isLoading}
-            variant={"outline-primary"}
+            variant={"secondary"}
             size={"sm"}
             onClick={() => resetFilters()}
           >
