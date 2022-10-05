@@ -36,6 +36,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "owner_email")),
+      getTableTextColumn(getField(fields, "_id")),
       getFormattedLabelWithFunctionColumnDefinition(
         getField(fields, "workspaceType"),
         workspaceConstants.getLabelForWorkspaceType,
