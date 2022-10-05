@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import GithubActionsWorkflowActionableInsightDataBlocks3 from "./GithubActionsWorkflowActionableInsightDataBlocks3";
-import GithubActionsWorkflowActionableTableOverlay3 from "./GithubActionsWorkflowActionableTableOverlay3";
+import GithubActionsUniqueRunSummaryDataBlocks from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDataBlocks";
+import GithubActionsUniqueRunSummaryOverlayTable from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryOverlayTable";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CloseButton from "components/common/buttons/CloseButton";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import CloseButton from "components/common/buttons/CloseButton";
 
-function GithubActionsWorkflowActionableInsight3(
+function GithubActionsUniqueRunSummaryOverlay(
   {
     kpiConfiguration,
     dashboardData,
@@ -19,11 +19,13 @@ function GithubActionsWorkflowActionableInsight3(
     workflowName,
     repoName,
     appName,
+    workflow,
     branchName,
     jobName,
-    runs,
+    workflowRuns,
     setCurrentScreen,
     setSelectedJobName,
+    setActionableInsight1DataObject,
   }) {
   const toastContext1 = useContext(DialogToastContext);
 
@@ -37,46 +39,47 @@ function GithubActionsWorkflowActionableInsight3(
       <div>
         <div className={"p-2"}>
           <div className={"d-flex details-title-text"}>
-            <div className={"mr-4"}>
+            <div className={'mr-4'}>
               <b>Workflow Name:</b> {workflowName}
             </div>
-            <div className={"mr-4"}>
+            <div className={'mr-4'}>
               <b>Repository Name:</b> {repoName}
             </div>
-            <div className={"mr-4"}>
+            <div className={'mr-4'}>
               <b>Application Name:</b> {appName}
             </div>
-            <div className={"mr-4"}>
+            <div className={'mr-4'}>
               <b>Branch Name:</b> {branchName}
             </div>
-            <div className={"mr-4"}>
-              <b>Job Name:</b> {jobName}
+            <div className={'mr-4'}>
+              <b>Workflow Runs:</b> {workflowRuns}
             </div>
-              {/*<div className={"mr-4"}>*/}
-              {/*    <b>Job Runs:</b> {runs}*/}
-              {/*</div>*/}
           </div>
         </div>
         <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
-          <GithubActionsWorkflowActionableInsightDataBlocks3
+          <GithubActionsUniqueRunSummaryDataBlocks
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
+            workflow={workflow}
             branchName={branchName}
             jobName={jobName}
           />
-          <GithubActionsWorkflowActionableTableOverlay3
+          <GithubActionsUniqueRunSummaryOverlayTable
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             repoName={repoName}
             appName={appName}
+            workflow={workflow}
             branchName={branchName}
             jobName={jobName}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
           />
         </div>
       </div>
@@ -84,8 +87,8 @@ function GithubActionsWorkflowActionableInsight3(
   };
 
   const handleBackButtonFunction = () => {
-    setSelectedJobName(undefined);
-    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
+    setActionableInsight1DataObject(undefined);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
   };
 
   const getButtonContainer = () => {
@@ -110,7 +113,7 @@ function GithubActionsWorkflowActionableInsight3(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Workflow Step Summary`}
+      titleText={`Github Actions Workflow Job Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
@@ -121,18 +124,20 @@ function GithubActionsWorkflowActionableInsight3(
   );
 }
 
-GithubActionsWorkflowActionableInsight3.propTypes = {
+GithubActionsUniqueRunSummaryOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   repoName: PropTypes.string,
   appName: PropTypes.string,
+  workflow: PropTypes.string,
   branchName: PropTypes.string,
   jobName: PropTypes.string,
-  runs: PropTypes.string,
-  setCurrentScreen: PropTypes.func,
+  workflowRuns: PropTypes.string,
   setSelectedJobName: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
+  setActionableInsight1DataObject: PropTypes.func,
 };
 
-export default GithubActionsWorkflowActionableInsight3;
+export default GithubActionsUniqueRunSummaryOverlay;

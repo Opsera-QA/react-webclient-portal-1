@@ -8,36 +8,32 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportActionableInsights1Panel from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
 import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsights2 from "../ActionableInsights2/GithubActionsWorkflowActionableInsights2";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 // TODO: Convert to cards
-function GitlabActionsWorkflowActionableInsightTable1(
+export default function GitlabActionsWorkflowActionableInsightTable1(
   {
     data,
     isLoading,
     loadData,
     filterModel,
     setFilterModel,
-    dashboardFilters,
     stats,
     setActionableInsight1DataObject,
     setCurrentScreen,
+    workflowName,
   }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = githubActionsWorkflowMetadata.fields;
-  const tableTitle = "Github Actions Detailed Workflow Summary";
   const noDataMessage = "No data available";
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "workflow")),
       getTableTextColumn(getField(fields, "repoName")),
       getTableTextColumn(getField(fields, "branchName")),
       getTableTextColumn(getField(fields, "appName")),
@@ -94,7 +90,7 @@ function GitlabActionsWorkflowActionableInsightTable1(
     return (
       <FilterContainer
         isLoading={isLoading}
-        title={tableTitle}
+        title={`${workflowName} Workflow Summary Details`}
         titleIcon={faDraftingCompass}
         body={getTable()}
         className={"px-2 pb-2"}
@@ -141,6 +137,5 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
   stats: PropTypes.object,
   setCurrentScreen: PropTypes.func,
   setActionableInsight1DataObject: PropTypes.func,
+  workflowName: PropTypes.string,
 };
-
-export default GitlabActionsWorkflowActionableInsightTable1;

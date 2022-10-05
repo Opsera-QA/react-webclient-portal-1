@@ -10,11 +10,10 @@ import axios from "axios";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import chartsActions from "../../../charts-actions";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
-import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActionableInsights/GithubActionsWorkflowActionableInsight1";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 function GithubActionsWorkflowTable({
   kpiConfiguration,

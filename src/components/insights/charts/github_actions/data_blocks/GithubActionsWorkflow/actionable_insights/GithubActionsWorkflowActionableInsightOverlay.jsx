@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import GithubActionsWorkflowActionableInsight1
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsights/ActionableInsights1/GithubActionsWorkflowActionableInsight1";
-import GithubActionsWorkflowActionableInsights2
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsights/ActionableInsights2/GithubActionsWorkflowActionableInsights2";
+import GithubActionsDetailedWorkflowSummaryOverlay
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryOverlay";
 import GithubActionsWorkflowActionableInsight3
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsights/ActionableInsights3/GithubActionsWorkflowActionableInsight3";
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_job_summary/GithubActionsWorkflowActionableInsight3";
+import GithubActionsUniqueRunSummaryOverlay
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryOverlay";
 
 export const GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS = {
   GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY: "github_actions_detailed_workflow_summary",
@@ -30,7 +30,7 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
     switch (currentScreen) {
       case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY:
         return (
-          <GithubActionsWorkflowActionableInsight1
+          <GithubActionsDetailedWorkflowSummaryOverlay
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             dashboardFilters={dashboardFilters}
@@ -41,7 +41,7 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
         );
       case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY:
         return (
-          <GithubActionsWorkflowActionableInsights2
+          <GithubActionsUniqueRunSummaryOverlay
             workflowName={workflowName}
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}

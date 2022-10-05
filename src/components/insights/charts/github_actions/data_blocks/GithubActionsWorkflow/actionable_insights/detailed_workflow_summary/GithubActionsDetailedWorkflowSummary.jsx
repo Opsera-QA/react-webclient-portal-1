@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import {githubActionsWorkflowMetadata} from "../../githubActionsWorkflow.metadata";
-import GitlabActionsWorkflowActionableInsightTable2 from "./GithubActionsWorkslfowActionableInsightTable2";
-import {metricHelpers} from "../../../../../../metric.helpers";
+import { githubActionsWorkflowMetadata } from "../../githubActionsWorkflow.metadata";
+import GitlabActionsWorkflowActionableInsightTable1 from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryTable";
+import { metricHelpers } from "../../../../../../metric.helpers";
 import githubActionsWorkflowActions from "../../github-actions-workflow-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubActionsWorkflowTableOverlay2(
+export default function GithubActionsDetailedWorkflowSummary(
   {
     kpiConfiguration,
     dashboardData,
     dashboardFilters,
-    repoName,
-    appName,
-    workflow,
-    branchName,
+    workflowName,
     setCurrentScreen,
-    setSelectedJobName,
+    setActionableInsight1DataObject,
   }) {
-  const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -27,13 +23,14 @@ function GithubActionsWorkflowTableOverlay2(
     new Model(
       { ...githubActionsWorkflowMetadata.newObjectFields },
       githubActionsWorkflowMetadata,
-      false
-    )
+      false,
+    ),
   );
   const {
-    getAccessToken,
     isMounted,
     cancelTokenSource,
+    getAccessToken,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -51,7 +48,7 @@ function GithubActionsWorkflowTableOverlay2(
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
       //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
-      const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
+      const response = await githubActionsWorkflowActions.githubActionsActionableOneTable(
         kpiConfiguration,
         getAccessToken,
         cancelTokenSource,
@@ -59,18 +56,13 @@ function GithubActionsWorkflowTableOverlay2(
         dashboardTags,
         dashboardOrgs,
         dashboardFilters,
-        workflow,
-        repoName,
-        appName,
-        branchName
+        workflowName,
       );
-
       let dataObject = response?.data ? response?.data?.data[0]?.data : [];
       let dataCount = response?.data
         ? response?.data?.data[0]?.count[0]?.count
         : [];
       let stats = response?.data?.stats;
-
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
@@ -81,8 +73,7 @@ function GithubActionsWorkflowTableOverlay2(
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
+        toastContext.showInlineErrorMessage(error, "Error pulling workflow metrics:");
       }
     } finally {
       if (isMounted?.current === true) {
@@ -92,32 +83,26 @@ function GithubActionsWorkflowTableOverlay2(
   };
 
   return (
-    <GitlabActionsWorkflowActionableInsightTable2
+    <GitlabActionsWorkflowActionableInsightTable1
       data={metrics}
       isLoading={isLoading}
       loadData={loadData}
       filterModel={filterModel}
       setFilterModel={setFilterModel}
+      workflowName={workflowName}
       dashboardFilters={dashboardFilters}
-      appName={appName}
       stats={stats}
       setCurrentScreen={setCurrentScreen}
-      setSelectedJobName={setSelectedJobName}
+      setActionableInsight1DataObject={setActionableInsight1DataObject}
     />
   );
 }
 
-GithubActionsWorkflowTableOverlay2.propTypes = {
+GithubActionsDetailedWorkflowSummary.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
-  repoName: PropTypes.string,
-  appName: PropTypes.string,
-  workflow: PropTypes.string,
-  branchName: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  setSelectedJobName: PropTypes.func,
+  setActionableInsight1DataObject: PropTypes.func,
 };
-
-export default GithubActionsWorkflowTableOverlay2;

@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import GithubActionsWorkflowActionableInsightDataBlocks1 from "./GithubActionsWorkflowActionableInsightDataBlocks1";
-import GithubActionsWorkflowActionableTableOverlay1 from "./GithubActionsWorkflowActionableTableOverlay1";
+import GithubActionsDetailedWorkflowSummaryDataBlocks from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummaryDataBlocks";
+import GithubActionsWorkflowActionableTableOverlay1 from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -9,7 +9,7 @@ import CloseButton from "components/common/buttons/CloseButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 // TODO: Pick better names for components and state variables
-function GithubActionsWorkflowActionableInsight1(
+function GithubActionsDetailedWorkflowSummaryOverlay(
   {
     kpiConfiguration,
     dashboardData,
@@ -35,8 +35,13 @@ function GithubActionsWorkflowActionableInsight1(
             </div>
           </div>
         </div>
-        <div className="new-chart mb-3 mb-3 ml-3 all-github-actions-data-block">
-          <GithubActionsWorkflowActionableInsightDataBlocks1 kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} dashboardFilters={dashboardFilters} workflowName={workflowName}/>
+        <div className="new-chart m-3">
+          <GithubActionsDetailedWorkflowSummaryDataBlocks
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+          />
           <GithubActionsWorkflowActionableTableOverlay1
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
@@ -72,7 +77,7 @@ function GithubActionsWorkflowActionableInsight1(
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Github Actions Detailed Workflow Summary`}
+      titleText={`${workflowName}: Detailed Workflow Summary`}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
@@ -83,7 +88,7 @@ function GithubActionsWorkflowActionableInsight1(
   );
 }
 
-GithubActionsWorkflowActionableInsight1.propTypes = {
+GithubActionsDetailedWorkflowSummaryOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
@@ -92,4 +97,4 @@ GithubActionsWorkflowActionableInsight1.propTypes = {
   setActionableInsight1DataObject: PropTypes.func,
 };
 
-export default GithubActionsWorkflowActionableInsight1;
+export default GithubActionsDetailedWorkflowSummaryOverlay;

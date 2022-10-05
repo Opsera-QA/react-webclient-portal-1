@@ -9,14 +9,12 @@ import {
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { useHistory } from "react-router-dom";
 import { githubActionsWorkflowMetadata } from "./githubActionsWorkflow.metadata";
-import GithubActionsWorkflowActionableInsight1 from "./GithubActionsWorkflowActionableInsights/ActionableInsights1/GithubActionsWorkflowActionableInsight1";
 import { getStaticIconColumn } from "../../../../../common/table/table-column-helpers";
 import ExportGithubActionsWorkflowReportPanel from "./export/ExportGithubActionsWorkflowReportPanel";
 import ExportGithubActionsWorkflowReportButton from "./export/ExportGithubActionWorkflowReportButton";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
+  from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 // TODO: Convert to cards
 function GithubActionsBottomTable({
   data,

@@ -8,12 +8,12 @@ import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icon
 import ExportGithubActionsWorkflowReportActionableInsights1Panel
   from "../../export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "../../export/ExportGithubActionWorkflowReportButton";
-import {githubActionsWorkflowActionableInsights2Metadata} from "./githubActionsWorkflowActionableInsights2.metadata";
+import {githubActionsUniqueRunSummaryMetadata} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/unique_run_summary/githubActionsUniqueRunSummary.metadata";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowActionableInsightOverlay";
+} from "components/insights/charts/github_actions/data_blocks/GithubActionsWorkflow/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
-function GithubActionsWorkflowActionableInsightTable2(
+function GithubActionsUniqueRunSummaryTable(
   {
     data,
     isLoading,
@@ -26,7 +26,7 @@ function GithubActionsWorkflowActionableInsightTable2(
   }) {
   const tableTitle = "Github Actions Workflow Job Summary";
   const noDataMessage = "No data available";
-  const fields = githubActionsWorkflowActionableInsights2Metadata.fields;
+  const fields = githubActionsUniqueRunSummaryMetadata.fields;
   const [showExportPanel, setShowExportPanel] = useState(false);
 
   const columns = useMemo(
@@ -125,7 +125,7 @@ function GithubActionsWorkflowActionableInsightTable2(
   );
 }
 
-GithubActionsWorkflowActionableInsightTable2.propTypes = {
+GithubActionsUniqueRunSummaryTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
@@ -136,4 +136,4 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   setCurrentScreen: PropTypes.func,
 };
 
-export default GithubActionsWorkflowActionableInsightTable2;
+export default GithubActionsUniqueRunSummaryTable;
