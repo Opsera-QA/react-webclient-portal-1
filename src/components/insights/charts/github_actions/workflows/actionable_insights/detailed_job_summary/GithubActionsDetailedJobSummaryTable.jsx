@@ -1,14 +1,19 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { githubActionsDetailedJobSummaryMetadata } from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/githubActionsDetailedJobSummary.metadata";
+import {
+  githubActionsDetailedJobSummaryMetadata,
+} from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/githubActionsDetailedJobSummary.metadata";
 import CustomTable from "components/common/table/CustomTable";
 import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
-import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
+import ExportGithubActionsWorkflowReportButton
+  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportActionableInsights1Panel
-    from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import GithubActionsWorkflowWarningMessage
+  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
 function GithubActionsDetailedJobSummaryTable(
   {
@@ -44,24 +49,27 @@ function GithubActionsDetailedJobSummaryTable(
 
   const getBody = () => {
     return (
-      <FilterContainer
-        body={getTable()}
-        metadata={data}
-        isLoading={isLoading}
-        title={tableTitle}
-        titleIcon={faDraftingCompass}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-        supportSearch={true}
-        exportButton={
-          <ExportGithubActionsWorkflowReportButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
-          />
-        }
-      />
+      <>
+        <FilterContainer
+          body={getTable()}
+          metadata={data}
+          isLoading={isLoading}
+          title={tableTitle}
+          titleIcon={faDraftingCompass}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          supportSearch={true}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <GithubActionsWorkflowWarningMessage />
+      </>
     );
   };
 
@@ -77,7 +85,6 @@ function GithubActionsDetailedJobSummaryTable(
     }
 
     return (
-      <div>
       <CustomTable
         isLoading={isLoading}
         loadData={loadData}
@@ -87,8 +94,6 @@ function GithubActionsDetailedJobSummaryTable(
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
       />
-      <div className="m-3">{"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}</div>
-      </div>
     );
   };
 

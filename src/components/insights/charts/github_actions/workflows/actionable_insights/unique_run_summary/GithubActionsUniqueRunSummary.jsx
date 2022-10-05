@@ -7,7 +7,7 @@ import {metricHelpers} from "components/insights/metric.helpers";
 import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GithubActionsUniqueRunSummaryOverlayTable(
+function GithubActionsUniqueRunSummary(
   {
     kpiConfiguration,
     dashboardData,
@@ -107,7 +107,7 @@ function GithubActionsUniqueRunSummaryOverlayTable(
   );
 }
 
-GithubActionsUniqueRunSummaryOverlayTable.propTypes = {
+GithubActionsUniqueRunSummary.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
@@ -120,4 +120,4 @@ GithubActionsUniqueRunSummaryOverlayTable.propTypes = {
   setSelectedJobName: PropTypes.func,
 };
 
-export default GithubActionsUniqueRunSummaryOverlayTable;
+export default GithubActionsUniqueRunSummary;

@@ -12,6 +12,8 @@ import {githubActionsUniqueRunSummaryMetadata} from "components/insights/charts/
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import GithubActionsWorkflowWarningMessage
+  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
 function GithubActionsUniqueRunSummaryTable(
   {
@@ -55,24 +57,27 @@ function GithubActionsUniqueRunSummaryTable(
 
   const getBody = () => {
     return (
-      <FilterContainer
-        body={getTable()}
-        metadata={data}
-        isLoading={isLoading}
-        title={tableTitle}
-        titleIcon={faDraftingCompass}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-        supportSearch={true}
-        exportButton={
-          <ExportGithubActionsWorkflowReportButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
-          />
-        }
-      />
+      <>
+        <FilterContainer
+          body={getTable()}
+          metadata={data}
+          isLoading={isLoading}
+          title={tableTitle}
+          titleIcon={faDraftingCompass}
+          loadData={loadData}
+          setFilterDto={setFilterModel}
+          filterDto={filterModel}
+          supportSearch={true}
+          exportButton={
+            <ExportGithubActionsWorkflowReportButton
+              className={"ml-2"}
+              setShowExportPanel={setShowExportPanel}
+              showExportPanel={showExportPanel}
+            />
+          }
+        />
+        <GithubActionsWorkflowWarningMessage />
+      </>
     );
   };
   const getTable = () => {
@@ -87,7 +92,6 @@ function GithubActionsUniqueRunSummaryTable(
     }
 
     return (
-      <div>
       <CustomTable
         isLoading={isLoading}
         loadData={loadData}
@@ -98,8 +102,6 @@ function GithubActionsUniqueRunSummaryTable(
         setPaginationDto={setFilterModel}
         onRowSelect={onRowSelect}
       />
-      <div className="m-3">{"*Average times may be higher than seen in GitHub due to workflow runs being re-tried or re-run. Duration is considered from the first run attempt to the final attempt."}</div>
-      </div>
     );
   };
 

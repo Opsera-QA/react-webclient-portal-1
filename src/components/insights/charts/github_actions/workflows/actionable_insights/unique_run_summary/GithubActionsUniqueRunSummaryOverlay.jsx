@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import GithubActionsUniqueRunSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDataBlocks";
-import GithubActionsUniqueRunSummaryOverlayTable from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryOverlayTable";
+import GithubActionsUniqueRunSummary from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -68,7 +68,7 @@ function GithubActionsUniqueRunSummaryOverlay(
             branchName={branchName}
             jobName={jobName}
           />
-          <GithubActionsUniqueRunSummaryOverlayTable
+          <GithubActionsUniqueRunSummary
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
@@ -117,9 +117,7 @@ function GithubActionsUniqueRunSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
+      {getBody()}
     </FullScreenCenterOverlayContainer>
   );
 }
