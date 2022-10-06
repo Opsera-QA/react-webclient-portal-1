@@ -18,6 +18,7 @@ function FilterButtons(
     filterBtnClassName,
     includeButtonText,
     filterDropdownTitle,
+    inlineFilters,
   }) {
   const loadFilters = async () => {
     if (isLoading === true) {
@@ -105,23 +106,37 @@ function FilterButtons(
     );
   };
 
-  if (dropdownFilters == null) {
-    return null;
-  }
-
-  return (
-    <div className={className}>
-      <div className="d-flex">
+  const getFilterButton = () => {
+    if (dropdownFilters) {
+      return (
         <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
-          <div>
+          <div className={"mr-2"}>
             <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
               <span><IconBase icon={faFilter}/></span>
               {includeButtonText && <span>Filter Results</span>}
             </Button>
           </div>
         </OverlayTrigger>
+      );
+    }
+  };
+
+  if (dropdownFilters == null && inlineFilters == null) {
+    return null;
+  }
+
+  return (
+    <div className={className}>
+      <div className="d-flex">
+        {getFilterButton()}
         <div>
-          <Button className={`ml-2 ${filterBtnClassName}`} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <Button
+            className={`${filterBtnClassName}`}
+            disabled={filterDto == null || filterDto?.getArrayData("activeFilters").length === 0 || isLoading}
+            variant={"outline-primary"}
+            size={"sm"}
+            onClick={() => resetFilters()}
+          >
             <StackedFilterRemovalIcon />
             {includeButtonText && <span className={'ml-1'}>Clear Results</span>}
           </Button>
@@ -135,6 +150,7 @@ FilterButtons.propTypes = {
   isLoading: PropTypes.bool,
   filterDto: PropTypes.object,
   dropdownFilters: PropTypes.any,
+  inlineFilters: PropTypes.any,
   loadData: PropTypes.func,
   className: PropTypes.string,
   filterBtnClassName: PropTypes.string,

@@ -15,7 +15,7 @@ export default function NewScriptOverlay({ loadData }) {
 
   const closePanel = () => {
     if (loadData) {
-      loadData();
+      loadData(undefined, scriptModel?.getMongoDbId());
     }
 
     toastContext.removeInlineMessage();

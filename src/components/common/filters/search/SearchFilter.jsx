@@ -4,8 +4,9 @@ import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
-import regexDefinitions from "utils/regexDefinitions";
 import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function SearchFilter({ paginationModel, loadData, disabled, fieldName, className, isLoading, metadata}) {
   let history = useHistory();
@@ -14,24 +15,31 @@ function SearchFilter({ paginationModel, loadData, disabled, fieldName, classNam
 
   const handleSearch = async () => {
     try {
-      let newPaginationModel = {...paginationModel};
       const searchString = currentSearchTerm;
-      const mongoIdRegex = regexDefinitions.mongoId.regex;
 
-      if (metadata?.detailView != null && searchString.match(mongoIdRegex)) {
+      if (isMongoDbId(searchString) && paginationModel?.getDetailViewLink && paginationModel?.getDetailViewLink(searchString) != null) {
+        const link = paginationModel?.getDetailViewLink(searchString);
+
+        if (hasStringValue(link) === true) {
+          history.push(link);
+          return;
+        }
+      }
+
+      if (metadata?.detailView != null && isMongoDbId(searchString)) {
         const model = new Model({_id: searchString}, metadata, true);
-        const link = model.getDetailViewLink();
+        const link = model.getDetailViewLink(searchString);
 
-        if (link !== null) {
+        if (hasStringValue(link) === true) {
           history.push(link);
           return;
         }
       }
 
       setIsSearching(true);
-      newPaginationModel.setData(fieldName, searchString);
-      newPaginationModel.setData("currentPage", 1);
-      await loadData(newPaginationModel);
+      paginationModel.setData(fieldName, searchString);
+      paginationModel.setData("currentPage", 1);
+      await loadData(paginationModel);
     }
     finally {
       setIsSearching(false);

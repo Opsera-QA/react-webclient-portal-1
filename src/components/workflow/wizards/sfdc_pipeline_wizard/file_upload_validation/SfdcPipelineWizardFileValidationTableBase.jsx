@@ -11,7 +11,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 
 // TODO: If we need to show different fields based on type,
 //  just copy this into each individual directory (sfdc, git, org to org) and wire up the relevant fields
-const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
+const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted, reasonAvailable }) => {
   const fields = sfdcTableConstants.fields;
   const noDataFilesPulledMessage = "The file validation has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The file validation has not been been completed by the service yet. Please click the table's refresh button to resume polling for the files.";
@@ -24,11 +24,20 @@ const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadDa
     ],
     [],
   );
+  const reasonColumns = useMemo(
+      () => [
+        getTableTextColumn(getField(fields, "commitAction")),
+        getTableTextColumn(getField(fields, "componentType")),
+        getTableTextColumn(getField(fields, "componentName")),
+        getTableTextColumn(getField(fields, "errorReason")),
+      ],
+      [],
+  );
 
   const getFilesTable = () => {
     return (
       <VanityTable
-        columns={columns}
+        columns={reasonAvailable ? reasonColumns : columns}
         data={data}
         isLoading={isLoading}
         loadData={loadData}
@@ -64,7 +73,12 @@ SfdcPipelineWizardFileValidationTableBase.propTypes = {
   pipelineWizardModel: PropTypes.object,
   filePullCompleted: PropTypes.bool,
   fileUploadFlag: PropTypes.bool,
-  setFileUploadFlag: PropTypes.func
+  setFileUploadFlag: PropTypes.func,
+  reasonAvailable: PropTypes.bool
+};
+
+SfdcPipelineWizardFileValidationTableBase.defaultProps = {
+  reasonAvailable: false,
 };
 
 export default SfdcPipelineWizardFileValidationTableBase;

@@ -18,6 +18,7 @@ function VanitySelectionTable(
     isLoading,
     sort,
     paginationModel,
+    handleRowSelectFunction,
     tableHeight,
     rowSelection,
   }) {
@@ -26,11 +27,6 @@ function VanitySelectionTable(
   const onRowSelect = async (model, grid, row) => {
     // Don't change rows if invalid, save before changing rows if valid
     if (model != null) {
-      // We are still on same row
-      if (model?.getData("_id") === row?.getData("_id")) {
-        return true;
-      }
-
       // TODO: Show save confirmation. If true, run save and on success change rows. On failure return false;
       // toastContext.showModal(
       //   <UnsavedChangesModal
@@ -47,11 +43,14 @@ function VanitySelectionTable(
         if (response === false) {
           return false;
         }
+
+        if (loadData) {
+          loadData();
+        }
       }
     }
 
-    row?.setSetStateFunction(setParentModel);
-    setParentModel({...row});
+    handleRowSelectFunction(row);
     return true;
   };
 
@@ -69,7 +68,7 @@ function VanitySelectionTable(
     return (
       <VanityPaginationContainer loadData={loadData} isLoading={isLoading} paginationModel={paginationModel}>
         <VanitySelectionTableBase
-          selectedId={parentModel?.getData("_id")}
+          selectedId={parentModel?.getMongoDbId()}
           selectedModel={parentModel}
           rowSelection={rowSelection}
           noDataMessage={noDataMessage}
@@ -108,7 +107,8 @@ VanitySelectionTable.propTypes = {
   tableHeight: PropTypes.string,
   setParentModel: PropTypes.func,
   parentModel: PropTypes.object,
-  rowSelection: PropTypes.string
+  rowSelection: PropTypes.string,
+  handleRowSelectFunction: PropTypes.func,
 };
 
 VanitySelectionTable.defaultProps = {

@@ -166,7 +166,7 @@ function GitlabDeploymentFrequency({
                 prevValue={
                   metricData?.pipeline?.previousTotalSuccess
                 }
-                topText={"Total Pipelines"}
+                topText={"Total Pipeline Runs"}
                 bottomText={"Prev Runs: "}
               />
             </Col>
@@ -184,9 +184,9 @@ function GitlabDeploymentFrequency({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={'mr-4'}>
-                <b>Recent Stage:</b> {metricData?.step?.stepName || "NA"}
+                <b>Recent Deployed Stage:</b> {metricData?.step?.stepName || "NA"}
                 <div className="row"/>
-                <b>Date: </b>{recentStageDate}
+                <b>Deployed on:</b> {recentStageDate}
               </div>
             </div>
           </Col>

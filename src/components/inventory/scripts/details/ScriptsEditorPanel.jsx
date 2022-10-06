@@ -9,7 +9,12 @@ import ScriptLanguageSelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
 
-function ScriptsEditorPanel({ scriptModel, setScriptModel, handleClose }) {
+export default function ScriptsEditorPanel(
+  {
+    scriptModel,
+    setScriptModel,
+    handleClose,
+  }) {
   if (scriptModel == null) {
     return null;
   }
@@ -42,10 +47,7 @@ function ScriptsEditorPanel({ scriptModel, setScriptModel, handleClose }) {
 ScriptsEditorPanel.propTypes = {
   scriptModel: PropTypes.object,
   handleClose: PropTypes.func,
-  scriptModelId: PropTypes.string,
   setScriptModel: PropTypes.func
 };
-
-export default ScriptsEditorPanel;
 
 
