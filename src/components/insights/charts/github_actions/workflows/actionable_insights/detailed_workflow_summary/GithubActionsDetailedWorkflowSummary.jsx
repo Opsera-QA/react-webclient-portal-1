@@ -14,7 +14,7 @@ export default function GithubActionsDetailedWorkflowSummary(
     dashboardFilters,
     workflowName,
     setCurrentScreen,
-    setActionableInsight1DataObject,
+    setSelectedWorkflowObject,
   }) {
   const [metrics, setMetrics] = useState([]);
   const [stats, setStats] = useState({});
@@ -93,7 +93,7 @@ export default function GithubActionsDetailedWorkflowSummary(
       dashboardFilters={dashboardFilters}
       stats={stats}
       setCurrentScreen={setCurrentScreen}
-      setActionableInsight1DataObject={setActionableInsight1DataObject}
+      setSelectedWorkflowObject={setSelectedWorkflowObject}
     />
   );
 }
@@ -104,5 +104,5 @@ GithubActionsDetailedWorkflowSummary.propTypes = {
   dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
+  setSelectedWorkflowObject: PropTypes.func,
 };

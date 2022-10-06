@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import GithubActionsUniqueRunSummaryDataBlocks from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDataBlocks";
-import GithubActionsUniqueRunJobsSummary from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/GithubActionsUniqueRunJobsSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -27,7 +26,8 @@ function GithubActionsUniqueRunSummaryOverlay(
     workflowRuns,
     setCurrentScreen,
     setSelectedJobName,
-    setActionableInsight1DataObject,
+    setSelectedWorkflowObject,
+    breadcrumbBar,
   }) {
   const toastContext1 = useContext(DialogToastContext);
 
@@ -37,7 +37,7 @@ function GithubActionsUniqueRunSummaryOverlay(
   };
 
   const handleBackButtonFunction = () => {
-    setActionableInsight1DataObject(undefined);
+    setSelectedWorkflowObject(undefined);
     setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
   };
 
@@ -67,6 +67,7 @@ function GithubActionsUniqueRunSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
+      {breadcrumbBar}
       <div>
         <div className={"p-2"}>
           <div className={"d-flex details-title-text"}>
@@ -131,7 +132,8 @@ GithubActionsUniqueRunSummaryOverlay.propTypes = {
   workflowRuns: PropTypes.string,
   setSelectedJobName: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
+  setSelectedWorkflowObject: PropTypes.func,
+  breadcrumbBar: PropTypes.any,
 };
 
 export default GithubActionsUniqueRunSummaryOverlay;

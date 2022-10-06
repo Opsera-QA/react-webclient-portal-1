@@ -17,7 +17,8 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
     dashboardFilters,
     workflowName,
     setCurrentScreen,
-    setActionableInsight1DataObject,
+    setSelectedWorkflowObject,
+    breadcrumbBar,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -47,7 +48,7 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             setCurrentScreen={setCurrentScreen}
-            setActionableInsight1DataObject={setActionableInsight1DataObject}
+            setSelectedWorkflowObject={setSelectedWorkflowObject}
           />
         </div>
       </div>
@@ -80,6 +81,7 @@ function GithubActionsDetailedWorkflowSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
+      {breadcrumbBar}
       {getBody()}
     </FullScreenCenterOverlayContainer>
   );
@@ -91,7 +93,8 @@ GithubActionsDetailedWorkflowSummaryOverlay.propTypes = {
   dashboardFilters: PropTypes.any,
   workflowName: PropTypes.string,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
+  setSelectedWorkflowObject: PropTypes.func,
+  breadcrumbBar: PropTypes.any,
 };
 
 export default GithubActionsDetailedWorkflowSummaryOverlay;

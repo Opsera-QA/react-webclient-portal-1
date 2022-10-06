@@ -6,10 +6,12 @@ import GithubActionsDetailedJobSummaryOverlay
   from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummaryOverlay";
 import GithubActionsUniqueRunSummaryOverlay
   from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryOverlay";
+import GithubActionsWorkflowActionableInsightSubNavigationBar
+  from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightSubNavigationBar";
 
 export const GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS = {
   GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY: "github_actions_detailed_workflow_summary",
-  GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY: "github_actions_workflow_job_summary",
+  GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY: "github_actions_workflow_unique_run_summary",
   GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY: "github_actions_workflow_step_summary",
 };
 
@@ -21,10 +23,21 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
     workflowName,
   }) {
   const [currentScreen, setCurrentScreen] = useState(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY);
-  const [actionableInsight1DataObject, setActionableInsight1DataObject] = useState(undefined);
+  const [selectedWorkflowObject, setSelectedWorkflowObject] = useState(undefined);
   const [selectedJobName, setSelectedJobName] = useState(undefined);
   const [selectedJobRuns, setSelectedJobRuns] = useState(undefined);
 
+  const getBreadcrumbBar = () => {
+    return (
+      <GithubActionsWorkflowActionableInsightSubNavigationBar
+        setCurrentScreen={setCurrentScreen}
+        currentScreen={currentScreen}
+        setSelectedWorkflowObject={setSelectedWorkflowObject}
+        setSelectedJobName={setSelectedJobName}
+        setSelectedJobRuns={setSelectedJobRuns}
+      />
+    );
+  };
 
   const getBody = () => {
     switch (currentScreen) {
@@ -36,24 +49,26 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
             dashboardFilters={dashboardFilters}
             workflowName={workflowName}
             setCurrentScreen={setCurrentScreen}
-            setActionableInsight1DataObject={setActionableInsight1DataObject}
+            setSelectedWorkflowObject={setSelectedWorkflowObject}
+            breadcrumbBar={getBreadcrumbBar()}
           />
         );
-      case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY:
+      case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY:
         return (
           <GithubActionsUniqueRunSummaryOverlay
             workflowName={workflowName}
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
-            appName={actionableInsight1DataObject?.appName}
-            repoName={actionableInsight1DataObject?.repoName}
-            workflow={actionableInsight1DataObject?.workflow}
-            branchName={actionableInsight1DataObject?.branchName}
-            workflowRuns={actionableInsight1DataObject?.runs}
+            appName={selectedWorkflowObject?.appName}
+            repoName={selectedWorkflowObject?.repoName}
+            workflow={selectedWorkflowObject?.workflow}
+            branchName={selectedWorkflowObject?.branchName}
+            workflowRuns={selectedWorkflowObject?.runs}
             setSelectedJobName={setSelectedJobName}
             setCurrentScreen={setCurrentScreen}
-            setActionableInsight1DataObject={setActionableInsight1DataObject}
+            setSelectedWorkflowObject={setSelectedWorkflowObject}
+            breadcrumbBar={getBreadcrumbBar()}
           />
         );
       case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY:
@@ -62,16 +77,17 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
-            appName={actionableInsight1DataObject?.appName}
-            repoName={actionableInsight1DataObject?.repoName}
-            workflow={actionableInsight1DataObject?.workflow}
-            workflowName={actionableInsight1DataObject?.workflow}
-            branchName={actionableInsight1DataObject?.branchName}
+            appName={selectedWorkflowObject?.appName}
+            repoName={selectedWorkflowObject?.repoName}
+            workflow={selectedWorkflowObject?.workflow}
+            workflowName={selectedWorkflowObject?.workflow}
+            branchName={selectedWorkflowObject?.branchName}
             jobName={selectedJobName}
             runs={selectedJobRuns}
             setCurrentScreen={setCurrentScreen}
             setSelectedJobName={setSelectedJobName}
             setSelectedJobRuns={setSelectedJobRuns}
+            breadcrumbBar={getBreadcrumbBar()}
           />
         );
     }

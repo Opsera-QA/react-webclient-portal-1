@@ -24,6 +24,7 @@ function GithubActionsDetailedJobSummaryOverlay(
     runs,
     setCurrentScreen,
     setSelectedJobName,
+    breadcrumbBar,
   }) {
   const toastContext1 = useContext(DialogToastContext);
 
@@ -85,7 +86,7 @@ function GithubActionsDetailedJobSummaryOverlay(
 
   const handleBackButtonFunction = () => {
     setSelectedJobName(undefined);
-    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY);
   };
 
   const getButtonContainer = () => {
@@ -114,6 +115,7 @@ function GithubActionsDetailedJobSummaryOverlay(
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
+      {breadcrumbBar}
       {getBody()}
     </FullScreenCenterOverlayContainer>
   );
@@ -131,6 +133,7 @@ GithubActionsDetailedJobSummaryOverlay.propTypes = {
   runs: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setSelectedJobName: PropTypes.func,
+  breadcrumbBar: PropTypes.any,
 };
 
 export default GithubActionsDetailedJobSummaryOverlay;

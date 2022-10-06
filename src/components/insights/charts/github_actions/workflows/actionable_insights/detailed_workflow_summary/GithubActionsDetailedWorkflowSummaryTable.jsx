@@ -27,7 +27,7 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
     filterModel,
     setFilterModel,
     stats,
-    setActionableInsight1DataObject,
+    setSelectedWorkflowObject,
     setCurrentScreen,
     workflowName,
   }) {
@@ -57,8 +57,8 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
   );
 
   const onRowSelect = (rowData) => {
-    setActionableInsight1DataObject(rowData.original);
-    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_JOB_SUMMARY);
+    setSelectedWorkflowObject(rowData.original);
+    setCurrentScreen(GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY);
   };
 
   const getTable = () => {
@@ -131,6 +131,6 @@ GithubActionsDetailedWorkflowSummaryTable.propTypes = {
   dashboardFilters: PropTypes.any,
   stats: PropTypes.object,
   setCurrentScreen: PropTypes.func,
-  setActionableInsight1DataObject: PropTypes.func,
+  setSelectedWorkflowObject: PropTypes.func,
   workflowName: PropTypes.string,
 };
