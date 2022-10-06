@@ -28,7 +28,7 @@ function ParametersHelpDocumentation() {
               </ul></li>
             <li>Select <b>Create</b> button to save the parameter. The parameter can now be referenced in a pipeline.</li>
           </ol>
-          <div className={"mb-1"}>For more detailed information on Parameter creation and how to configure them in Opsera pipelines, view the  <a href="https://opsera.atlassian.net/l/c/ERJ1YuUM" target="_blank" rel="noreferrer"><b>Custom Parameters Help Documentation</b>.</a></div>
+          <div className={"mb-1"}>For more detailed information on Parameter creation and how to configure them in Opsera pipelines, view the  <a href="https://docs.opsera.io/tool-registry/create-parameters" target="_blank" rel="noreferrer"><b>Parameters Help Documentation</b>.</a></div>
         </div>
       </div>
     );
