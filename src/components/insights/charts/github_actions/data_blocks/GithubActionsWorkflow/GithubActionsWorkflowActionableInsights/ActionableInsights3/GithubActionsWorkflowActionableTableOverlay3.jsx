@@ -12,7 +12,10 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, d
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
-    const [stats, setStats] = useState({});
+    const [mostFailed, setMostFailed] = useState("");
+    const [mostSkipped, setMostSkipped] = useState("");
+    const [mostFailedTime, setMostFailedTime] = useState("");
+    const [mostSuccessTime, setMostSuccessTime] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -70,14 +73,20 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, d
             let dataCount = response?.data
                 ? response?.data?.data[0]?.count[0]?.count
                 : [];
-            let stats = response?.data?.stats;
+            let mostFailed = response?.data ? response?.data?.data[0]?.mostFailed[0]?.mostFailed : "N/A";
+            let mostSkipped = response?.data ? response?.data?.data[0]?.mostSkipped[0]?.mostSkipped : "N/A";
+            let mostSuccessTime = response?.data ? response?.data?.data[0]?.mostSuccessTime[0]?.mostSuccessTime : "N/A";
+            let mostFailedTime = response?.data ? response?.data?.data[0]?.mostFailedTime[0]?.mostFailedTime : "N/A";
 
             let newFilterDto = filterDto;
             newFilterDto.setData("totalCount", dataCount);
             setFilterModel({ ...newFilterDto });
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
-                setStats(stats);
+                setMostFailed(mostFailed);
+                setMostSkipped(mostSkipped);
+                setMostSuccessTime(mostSuccessTime);
+                setMostFailedTime(mostFailedTime);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -105,7 +114,10 @@ function GithubActionsWorkflowTableOverlay3({ kpiConfiguration, dashboardData, d
             branchName={branchName}
             appName={appName}
             jobName={jobName}
-            stats={stats}
+            mostFailed={mostFailed}
+            mostSkipped={mostSkipped}
+            mostSuccessTime={mostSuccessTime}
+            mostFailedTime={mostFailedTime}
         />
     );
 }

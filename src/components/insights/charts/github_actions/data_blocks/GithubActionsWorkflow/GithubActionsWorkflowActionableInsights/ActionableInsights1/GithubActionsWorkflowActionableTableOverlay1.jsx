@@ -18,7 +18,10 @@ export default function GithubActionsWorkflowTableOverlay(
   }) {
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [stats, setStats] = useState({});
+  const [mostFailed, setMostFailed] = useState("");
+  const [mostSkipped, setMostSkipped] = useState("");
+  const [mostFailedTime, setMostFailedTime] = useState("");
+  const [mostSuccessTime, setMostSuccessTime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [filterModel, setFilterModel] = useState(
     new Model(
@@ -62,14 +65,23 @@ export default function GithubActionsWorkflowTableOverlay(
       let dataCount = response?.data
         ? response?.data?.data[0]?.count[0]?.count
         : [];
-      let stats = response?.data?.stats;
+      let mostFailed = response?.data ? response?.data?.data[0]?.mostFailed[0]?.mostFailed : "N/A";
+      let mostSkipped = response?.data ? response?.data?.data[0]?.mostSkipped[0]?.mostSkipped : "N/A";
+      let mostSuccessTime = response?.data ? response?.data?.data[0]?.mostSuccessTime[0]?.mostSuccessTime : "N/A";
+      let mostFailedTime = response?.data ? response?.data?.data[0]?.mostFailedTime[0]?.mostFailedTime : "N/A";
+
+      console.log("mostFailed before", mostFailed);
+
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setStats(stats);
+        setMostFailed(mostFailed);
+        setMostSkipped(mostSkipped);
+        setMostSuccessTime(mostSuccessTime);
+        setMostFailedTime(mostFailedTime);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -83,6 +95,8 @@ export default function GithubActionsWorkflowTableOverlay(
     }
   };
 
+  console.log(" aftre mostFailed", mostFailed);
+
   return (
     <GitlabActionsWorkflowActionableInsightTable1
       data={metrics}
@@ -91,7 +105,10 @@ export default function GithubActionsWorkflowTableOverlay(
       filterModel={filterModel}
       setFilterModel={setFilterModel}
       dashboardFilters={dashboardFilters}
-      stats={stats}
+      mostFailed={mostFailed}
+      mostSkipped={mostSkipped}
+      mostSuccessTime={mostSuccessTime}
+      mostFailedTime={mostFailedTime}
       setCurrentScreen={setCurrentScreen}
       setActionableInsight1DataObject={setActionableInsight1DataObject}
     />

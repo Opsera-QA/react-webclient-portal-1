@@ -20,7 +20,10 @@ function GithubActionsWorkflowActionableInsightTable2(
     loadData,
     filterModel,
     setFilterModel,
-    stats,
+      mostFailed,
+      mostSkipped,
+      mostSuccessTime,
+      mostFailedTime,
     setCurrentScreen,
     setSelectedJobName,
   }) {
@@ -107,15 +110,18 @@ function GithubActionsWorkflowActionableInsightTable2(
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={'mr-4'}>
-            <b>Most Skipped Job:</b> {stats?.mostSkipped}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Failed Job:</b> {stats?.mostFailed}
-          </div>
-          <div className={'mr-4'}>
-            <b>Most Time Consuming Job:</b> {stats?.mostTime}
-          </div>
+            <div className={'mr-4'}>
+                <b>Most Failed Job:</b> {mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Most Skipped Job:</b> {mostSkipped}
+            </div>
+            <div className={'mr-4'}>
+                <b>Job With Most Time Consuming Successful Runs:</b> {mostSuccessTime}
+            </div>
+            <div className={'mr-4'}>
+                <b>Job With Most Time Consuming Failed Runs:</b> {mostFailedTime}
+            </div>
         </div>
       </div>
       <div className={"p-3"}>
@@ -131,7 +137,10 @@ GithubActionsWorkflowActionableInsightTable2.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  stats: PropTypes.object,
+  mostFailed: PropTypes.string,
+  mostSkipped: PropTypes.string,
+  mostSuccessTime:PropTypes.string,
+  mostFailedTime:PropTypes.string,
   setSelectedJobName: PropTypes.func,
   setCurrentScreen: PropTypes.func,
 };

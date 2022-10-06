@@ -26,7 +26,10 @@ function GitlabActionsWorkflowActionableInsightTable1(
     filterModel,
     setFilterModel,
     dashboardFilters,
-    stats,
+      mostFailed,
+      mostSkipped,
+      mostSuccessTime,
+      mostFailedTime,
     setActionableInsight1DataObject,
     setCurrentScreen,
   }) {
@@ -34,6 +37,8 @@ function GitlabActionsWorkflowActionableInsightTable1(
   const fields = githubActionsWorkflowMetadata.fields;
   const tableTitle = "Github Actions Detailed Workflow Summary";
   const noDataMessage = "No data available";
+
+  console.log("mostFailed", mostFailed);
 
   const columns = useMemo(
     () => [
@@ -116,12 +121,18 @@ function GitlabActionsWorkflowActionableInsightTable1(
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={'mr-4'}>
-            <b>Repository With Most Failed Runs:</b> {stats?.mostFailed}
-          </div>
-          <div className={'mr-4'}>
-            <b>Repositories With Most Time Consuming Runs:</b> {stats?.mostTime}
-          </div>
+            <div className={'mr-4'}>
+                <b>Repository With Most Failed Runs:</b> {mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Repository With Most Skipped Runs:</b> {mostSkipped}
+            </div>
+            <div className={'mr-4'}>
+                <b>Successful Repository With Most Time Consuming Runs:</b> {mostSuccessTime}
+            </div>
+            <div className={'mr-4'}>
+                <b>Failed Repository With Most Time Consuming Runs:</b> {mostFailedTime}
+            </div>
         </div>
       </div>
       <div className={"p-2"}>
@@ -138,7 +149,10 @@ GitlabActionsWorkflowActionableInsightTable1.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   dashboardFilters: PropTypes.any,
-  stats: PropTypes.object,
+  mostFailed: PropTypes.string,
+  mostSkipped: PropTypes.string,
+  mostSuccessTime:PropTypes.string,
+  mostFailedTime:PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setActionableInsight1DataObject: PropTypes.func,
 };

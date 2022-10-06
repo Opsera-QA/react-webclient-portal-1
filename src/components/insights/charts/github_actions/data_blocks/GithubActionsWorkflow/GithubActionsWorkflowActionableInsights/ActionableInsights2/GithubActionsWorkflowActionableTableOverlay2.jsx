@@ -21,7 +21,10 @@ function GithubActionsWorkflowTableOverlay2(
   }) {
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [stats, setStats] = useState({});
+  const [mostFailed, setMostFailed] = useState("");
+  const [mostSkipped, setMostSkipped] = useState("");
+  const [mostFailedTime, setMostFailedTime] = useState("");
+  const [mostSuccessTime, setMostSuccessTime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [filterModel, setFilterModel] = useState(
     new Model(
@@ -69,7 +72,10 @@ function GithubActionsWorkflowTableOverlay2(
       let dataCount = response?.data
         ? response?.data?.data[0]?.count[0]?.count
         : [];
-      let stats = response?.data?.stats;
+      let mostFailed = response?.data ? response?.data?.data[0]?.mostFailed[0]?.mostFailed : "N/A";
+      let mostSkipped = response?.data ? response?.data?.data[0]?.mostSkipped[0]?.mostSkipped : "N/A";
+      let mostSuccessTime = response?.data ? response?.data?.data[0]?.mostSuccessTime[0]?.mostSuccessTime : "N/A";
+      let mostFailedTime = response?.data ? response?.data?.data[0]?.mostFailedTime[0]?.mostFailedTime : "N/A";
 
 
       let newFilterDto = filterDto;
@@ -77,7 +83,10 @@ function GithubActionsWorkflowTableOverlay2(
       setFilterModel({ ...newFilterDto });
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        setStats(stats);
+        setMostFailed(mostFailed);
+        setMostSkipped(mostSkipped);
+        setMostSuccessTime(mostSuccessTime);
+        setMostFailedTime(mostFailedTime);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -100,7 +109,10 @@ function GithubActionsWorkflowTableOverlay2(
       setFilterModel={setFilterModel}
       dashboardFilters={dashboardFilters}
       appName={appName}
-      stats={stats}
+      mostFailed={mostFailed}
+      mostSkipped={mostSkipped}
+      mostSuccessTime={mostSuccessTime}
+      mostFailedTime={mostFailedTime}
       setCurrentScreen={setCurrentScreen}
       setSelectedJobName={setSelectedJobName}
     />

@@ -12,7 +12,9 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
-    const [stats, setStats] = useState({});
+    const [mostFailed, setMostFailed] = useState("");
+    const [mostFailedTime, setMostFailedTime] = useState("");
+    const [mostSuccessTime, setMostSuccessTime] = useState("");
     const [dashboardFilters, setFilters] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
@@ -66,15 +68,18 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
             let dataCount = response?.data
                 ? response?.data?.data[0]?.count[0]?.count
                 : [];
-            let stats = response?.data?.stats;
-
+            let mostFailed = response?.data ? response?.data?.data[0]?.mostFailed[0]?.mostFailed : "N/A";
+            let mostSuccessTime = response?.data ? response?.data?.data[0]?.mostSuccessTime[0]?.mostSuccessTime : "N/A";
+            let mostFailedTime = response?.data ? response?.data?.data[0]?.mostFailedTime[0]?.mostFailedTime : "N/A";
 
             let newFilterDto = filterDto;
             newFilterDto.setData("totalCount", dataCount);
             setFilterModel({ ...newFilterDto });
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
-                setStats(stats);
+                setMostFailed(mostFailed);
+                setMostSuccessTime(mostSuccessTime);
+                setMostFailedTime(mostFailedTime);
                 setFilters(dashboardFilters);
             }
         } catch (error) {
@@ -89,7 +94,6 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
         }
     };
 
-    console.log("dashboard",dashboardFilters);
 
     return (
         <GithubActionsBottomTable
@@ -101,7 +105,9 @@ function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) 
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
             dashboardFilters={dashboardFilters}
-            stats={stats}
+            mostFailed={mostFailed}
+            mostSuccessTime={mostSuccessTime}
+            mostFailedTime={mostFailedTime}
         />
     );
 }

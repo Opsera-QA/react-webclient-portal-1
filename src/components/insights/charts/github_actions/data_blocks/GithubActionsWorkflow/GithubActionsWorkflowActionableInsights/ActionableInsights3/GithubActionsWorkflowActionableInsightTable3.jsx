@@ -17,7 +17,10 @@ function GithubActionsWorkflowActionableInsightTable3(
     loadData,
     filterModel,
     setFilterModel,
-    stats,
+      mostFailed,
+      mostSkipped,
+      mostSuccessTime,
+      mostFailedTime,
   }) {
   const tableTitle = "Github Actions Workflow Step Summary";
   const noDataMessage = "No data available";
@@ -96,15 +99,18 @@ function GithubActionsWorkflowActionableInsightTable3(
     <div>
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
-          <div className={"mr-4"}>
-            <b>Most Skipped Steps:</b> {stats?.mostSkipped}
-          </div>
-          <div className={"mr-4"}>
-            <b>Most Failed Steps:</b> {stats?.mostFailed}
-          </div>
-          <div className={"mr-4"}>
-            <b>Most Time Consuming Steps:</b> {stats?.mostTime}
-          </div>
+            <div className={'mr-4'}>
+                <b>Most Failed Step:</b> {mostFailed}
+            </div>
+            <div className={'mr-4'}>
+                <b>Most Skipped Step:</b> {mostSkipped}
+            </div>
+            <div className={'mr-4'}>
+                <b>Step With Most Time Consuming Successful Runs:</b> {mostSuccessTime}
+            </div>
+            <div className={'mr-4'}>
+                <b>Step With Most Time Consuming Failed Runs:</b> {mostFailedTime}
+            </div>
         </div>
       </div>
       <div className={"p-2"}>
@@ -120,7 +126,10 @@ GithubActionsWorkflowActionableInsightTable3.propTypes = {
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  stats: PropTypes.object,
+    mostFailed: PropTypes.string,
+    mostSkipped: PropTypes.string,
+    mostSuccessTime:PropTypes.string,
+    mostFailedTime:PropTypes.string,
 };
 
 export default GithubActionsWorkflowActionableInsightTable3;

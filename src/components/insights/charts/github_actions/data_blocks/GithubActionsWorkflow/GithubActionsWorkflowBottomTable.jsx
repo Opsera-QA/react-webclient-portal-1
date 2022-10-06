@@ -27,7 +27,9 @@ function GithubActionsBottomTable({
   kpiConfiguration,
   dashboardData,
   dashboardFilters,
-  stats
+  mostFailed,
+    mostSuccessTime,
+    mostFailedTime,
 }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -119,10 +121,13 @@ function GithubActionsBottomTable({
     <div>
       <div className={"d-flex details-title-text"}>
           <div className={'mr-4'}>
-              <b>Most Failed Workflow:</b> {stats?.mostFailed}
+              <b>Most Failed Workflow:</b> {mostFailed}
           </div>
           <div className={'mr-4'}>
-              <b>Most Time Consuming Workflow:</b> {stats?.mostTime}
+              <b>Most Time Consuming for Successful Workflow:</b> {mostSuccessTime}
+          </div>
+          <div className={'mr-4'}>
+              <b>Most Time Consuming for Failed Workflow:</b> {mostFailedTime}
           </div>
       </div>
       {getBody()}
@@ -139,7 +144,9 @@ GithubActionsBottomTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   dashboardFilters: PropTypes.any,
-  stats: PropTypes.object
+  mostFailed: PropTypes.string,
+  mostSuccessTime:PropTypes.string,
+  mostFailedTime:PropTypes.string,
 };
 
 export default GithubActionsBottomTable;
