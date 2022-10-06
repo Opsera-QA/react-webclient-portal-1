@@ -17,19 +17,19 @@ export default function FreeTrialCustomerWorkspaceUsersTable(
     loadData,
     isLoading,
   }) {
-  let fields = ssoUserMetadata.fields;
+  const fields = ssoUserMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "firstName")),
       getTableTextColumn(getField(fields, "lastName")),
-      getTableTextColumn(getField(fields, "company")),
+      getTableTextColumn(getField(fields, "attributes.company")),
       getTableTextColumn(getField(fields, "domain")),
       getTableTextColumn(getField(fields, "email")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
-    []
+    [fields]
   );
 
   const onRowSelect = (rowData) => {

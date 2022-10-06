@@ -31,6 +31,10 @@ export const ssoUserMetadata = {
       id: "company",
     },
     {
+      label: "Company",
+      id: "attributes.company",
+    },
+    {
       label: "Created",
       id: "createdAt",
     },
