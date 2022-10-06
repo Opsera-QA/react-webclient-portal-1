@@ -129,7 +129,7 @@ regexDefinitions.mongoId = {
 regexDefinitions.generalTextWithoutSpacesPeriod = {
   regex: /^[A-Za-z0-9\-_,]*$/,
   formText: "Letters, numbers, dashes, and commas are allowed",
-  errorFormText: "Only letters, numbers, dashes, and commas are allowed",
+  errorFormText: "Only letters, numbers, dashes, underscores and commas are allowed",
 };
 
 regexDefinitions.ecrRepoField = {

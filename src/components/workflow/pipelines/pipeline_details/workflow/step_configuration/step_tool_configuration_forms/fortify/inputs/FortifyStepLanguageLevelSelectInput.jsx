@@ -85,6 +85,7 @@ function FortifyStepLanguageLevelSelectInput({ model, setModel, disabled, techno
       valueField={"name"}    
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }

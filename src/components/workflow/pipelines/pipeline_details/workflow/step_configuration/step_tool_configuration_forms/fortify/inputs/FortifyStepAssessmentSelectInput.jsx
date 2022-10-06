@@ -80,6 +80,7 @@ function FortifyStepAssessmentSelectInput({ model, setModel, disabled }) {
       selectOptions={assessmentList}      
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }
