@@ -2,161 +2,56 @@ export const githubActionsUniqueRunRunsSummaryMetadata = {
   type: "Github Actions Workflow",
   fields: [
     {
-      label: "Tags",
-      id: "tags",
+      label: "Run ID",
+      id: "workflowRunId",
     },
     {
-      label: "Date Range",
-      id: "date",
+      label: "Workflow Name",
+      id: "workflowName",
     },
     {
-      label: "",
-      id: "hierarchy-filters",
+      label: "Start Time",
+      id: "workflowStartTime",
     },
     {
-      label: "Unique Workflow Name",
-      id: "_id",
+      label: "End Time",
+      id: "workflowEndTime",
     },
     {
-      label: "Workflow",
-      id: "workflow",
+      label: "Triggered By",
+      id: "triggeredBy",
     },
     {
-      label: "Total Jobs",
-      id: "runs",
+      label: "Event",
+      id: "triggerEvent",
     },
     {
-      label: "Total Repositories",
-      id: "repos",
+      label: "Total Duration",
+      id: "totalDuration",
     },
     {
-      label: "Total Successful Jobs",
-      id: "success",
+      label: "Conclusion",
+      id: "conclusion",
     },
     {
-      label: "Total Failure Jobs",
-      id: "failures",
+      label: "Number of Runs",
+      id: "numberOfRuns",
     },
     {
-      label: "Total Jobs",
-      id: "jobs",
-    },
-    {
-      label: "Successful Jobs",
-      id: "jobsSuccess",
-    },
-    {
-      label: "Failed Jobs",
-      id: "jobsFailures",
-    },
-    {
-      label: "Canceled Jobs",
-      id: "canceled",
-    },
-    {
-      label: "Jobs Canceled",
-      id: "runsCanceled",
-    },
-    {
-      label: "% Canceled",
-      id: "canceledPercentage",
-    },
-    {
-      label: "% Success",
-      id: "successPercentage",
-    },
-    {
-      label: "% Failures",
-      id: "failedPercentage",
-    },
-    {
-      label: "Average Time For Success*",
-      id: "successTime",
-    },
-    {
-      label: "Average Time For Failures*",
-      id: "failedTime",
-    },
-    {
-      label: "Repository Name",
-      id: "repoName",
-    },
-    {
-      label: "Branch Name",
-      id: "branchName",
-    },
-    {
-      label: "App Name",
-      id: "appName",
-    },
-    {
-      label: "Job Name",
-      id: "jobName",
-    },
-    {
-      label: "Steps Skipped",
-      id: "skipped",
-    },
-    {
-      label: "Runs Skipped",
-      id: "runsSkipped",
-    },
-    {
-      label: "% Run",
-      id: "runPercentage",
-    },
-    {
-      label: "% Skipped",
-      id: "skippedPercentage",
-    },
-    {
-      label: "Page Size",
-      id: "pageSize",
-    },
-    {
-      label: "Total Count",
-      id: "totalCount",
-    },
-    {
-      label: "Search",
-      id: "search",
-    },
-    {
-      label: "Active Filters",
-      id: "activeFilters",
+      label: "Workflow URL",
+      id: "workflowURL",
     },
   ],
-  getActiveFilters(filterDto) {
-    let activeFilters = [];
-
-    if (
-      filterDto.getData("search") != null &&
-      filterDto.getData("search") !== ""
-    ) {
-      activeFilters.push({
-        filterId: "search",
-        text: `Keywords: ${filterDto.getData("search")}`,
-      });
-    }
-
-    return activeFilters;
-  },
   newObjectFields: {
-    tags: [],
-    pageSize: 10,
-    currentPage: 1,
-    search: "",
-    activeFilters: [],
-    date: undefined,
-    hierarchyFilters: {
-      filter1: [],
-      filter2: [],
-      filter3: [],
-      filter4: [],
-      filter5: [],
-      filter6: [],
-      filter7: [],
-      filter8: [],
-    },
+    workflowRunId: "",
+    workflowName: "",
+    workflowURL: "",
+    workflowStartTime: "",
+    workflowEndTime: "",
+    triggeredBy: "",
+    triggerEvent: "",
+    totalDuration: "",
+    conclusion: "",
+    numberOfRuns: "",
   },
 };

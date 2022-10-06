@@ -25,9 +25,14 @@ export default function GithubActionsUniqueRunSummaryDetailPanel(
   }) {
   const [activeTab, setActiveTab] = useState("jobs");
 
-  const handleTabClick = (activeTab) => e => {
+  const handleTabClick = (newTab) => e => {
     e.preventDefault();
-    setActiveTab(activeTab);
+
+    if (activeTab === newTab) {
+      return;
+    }
+
+    setActiveTab(newTab);
   };
 
   const getTabContainer = () => {
@@ -110,7 +115,7 @@ export default function GithubActionsUniqueRunSummaryDetailPanel(
 
   // return (
   //   <TabPanelContainer
-  //     detailView={getCurrentView()}
+  //     currentView={getCurrentView()}
   //     tabContainer={getTabContainer()}
   //     className={"mx-3"}
   //   />
