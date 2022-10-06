@@ -22,7 +22,7 @@ export default function DeletePlatformTemplateConfirmationOverlay(
     isOpseraAdministrator,
   } = useComponentStateReference();
 
-  const handlePipelineDeletionFunction = async () => {
+  const handleDeleteFunction = async () => {
     try {
       setDeleteState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await platformDashboardTemplateActions.deleteTemplate(
@@ -50,7 +50,7 @@ export default function DeletePlatformTemplateConfirmationOverlay(
     <DeleteOverlayBase
       objectType={"Platform Dashboard Template"}
       deleteState={deleteState}
-      handleDeleteFunction={handlePipelineDeletionFunction}
+      handleDeleteFunction={handleDeleteFunction}
     />
   );
 }

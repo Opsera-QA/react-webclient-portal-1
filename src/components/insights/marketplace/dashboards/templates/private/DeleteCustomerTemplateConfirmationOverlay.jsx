@@ -21,7 +21,7 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     getAccessToken,
   } = useComponentStateReference();
 
-  const deleteCustomerTemplate = async () => {
+  const handleDeleteFunction = async () => {
     try {
       setDeleteState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await customerDashboardTemplateCatalogActions.deleteTemplate(
@@ -49,7 +49,7 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     <DeleteOverlayBase
       objectType={"Customer Dashboard Template"}
       deleteState={deleteState}
-      handleDeleteFunction={deleteCustomerTemplate}
+      handleDeleteFunction={handleDeleteFunction}
     />
   );
 }
