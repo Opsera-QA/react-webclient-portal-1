@@ -19,10 +19,9 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     cancelTokenSource,
     toastContext,
     getAccessToken,
-    isOpseraAdministrator,
   } = useComponentStateReference();
 
-  const handlePipelineDeletionFunction = async () => {
+  const deleteCustomerTemplate = async () => {
     try {
       setDeleteState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await customerDashboardTemplateCatalogActions.deleteTemplate(
@@ -42,7 +41,7 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     }
   };
 
-  if (isMongoDbId(dashboardId) !== true || isOpseraAdministrator !== true) {
+  if (isMongoDbId(dashboardId) !== true) {
     return null;
   }
 
@@ -50,7 +49,7 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     <DeleteOverlayBase
       objectType={"Customer Dashboard Template"}
       deleteState={deleteState}
-      handleDeleteFunction={handlePipelineDeletionFunction}
+      handleDeleteFunction={deleteCustomerTemplate}
     />
   );
 }
