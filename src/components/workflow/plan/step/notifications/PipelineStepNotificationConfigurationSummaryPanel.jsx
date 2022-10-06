@@ -144,7 +144,7 @@ function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData })
 
     return (
       <InfoContainer titleText={"Google Chat Notifications"} titleIcon={faEnvelope} className={"mb-2"}>
-        <PipelineStepGChatNotificationSummaryPanel gChatStepNotificationMetadata={gChatModel} />
+        <PipelineStepGChatNotificationSummaryPanel gChatNotificationModel={gChatModel} />
       </InfoContainer>
     );
   };
