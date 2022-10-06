@@ -85,6 +85,7 @@ function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, appl
       valueField={"releaseId"}
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }

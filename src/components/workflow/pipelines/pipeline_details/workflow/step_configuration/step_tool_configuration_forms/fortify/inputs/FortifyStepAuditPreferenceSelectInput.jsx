@@ -80,6 +80,7 @@ function FortifyStepAuditPreferenceSelectInput({ model, setModel, disabled }) {
       selectOptions={auditPreferenceList}      
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }
