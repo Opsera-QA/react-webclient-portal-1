@@ -8,8 +8,8 @@ import ScreenContainerBodyLoadingDialog
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import PublishDashboardToPrivateCatalogIcon
   from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
-import PublishDashboardToPublicMarketplaceIcon
-  from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
+import PublishPlatformDashboardIcon
+  from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
@@ -25,6 +25,8 @@ import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashbo
 import TransferDashboardOwnershipButton
   from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
+import PublishCustomerDashboardIcon
+  from "components/insights/marketplace/dashboards/templates/private/PublishCustomerDashboardIcon";
 
 function DashboardScreenContainer(
   {
@@ -101,12 +103,12 @@ function DashboardScreenContainer(
             dashboardModel={dashboardModel}
             kpis={dashboardModel?.getData("configuration")}
           />
-          <PublishDashboardToPrivateCatalogIcon
+          <PublishCustomerDashboardIcon
             dashboardModel={dashboardModel}
             className={"ml-3"}
           />
-          <PublishDashboardToPublicMarketplaceIcon
-            dashboardData={dashboardModel}
+          <PublishPlatformDashboardIcon
+            dashboardId={dashboardModel?.getMongoDbId()}
             className={"ml-3"}
           />
           <EditDashboardFiltersIcon
