@@ -95,31 +95,31 @@ export default function GithubActionsUniqueRunSummaryDetailPanel(
     }
   };
 
-  return (
-    <div className={"mx-3"}>
-      <GithubActionsUniqueRunJobsSummary
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        dashboardFilters={dashboardFilters}
-        workflowName={workflowName}
-        repoName={repoName}
-        appName={appName}
-        workflow={workflow}
-        branchName={branchName}
-        jobName={jobName}
-        setSelectedJobName={setSelectedJobName}
-        setCurrentScreen={setCurrentScreen}
-      />
-    </div>
-  );
-
   // return (
-  //   <TabPanelContainer
-  //     currentView={getCurrentView()}
-  //     tabContainer={getTabContainer()}
-  //     className={"mx-3"}
-  //   />
+  //   <div className={"mx-3"}>
+  //     <GithubActionsUniqueRunJobsSummary
+  //       kpiConfiguration={kpiConfiguration}
+  //       dashboardData={dashboardData}
+  //       dashboardFilters={dashboardFilters}
+  //       workflowName={workflowName}
+  //       repoName={repoName}
+  //       appName={appName}
+  //       workflow={workflow}
+  //       branchName={branchName}
+  //       jobName={jobName}
+  //       setSelectedJobName={setSelectedJobName}
+  //       setCurrentScreen={setCurrentScreen}
+  //     />
+  //   </div>
   // );
+
+  return (
+    <TabPanelContainer
+      currentView={getCurrentView()}
+      tabContainer={getTabContainer()}
+      className={"mx-3"}
+    />
+  );
 }
 
 GithubActionsUniqueRunSummaryDetailPanel.propTypes = {
