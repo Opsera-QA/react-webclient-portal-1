@@ -8,6 +8,8 @@ import ScreenContainerBodyLoadingDialog
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import PublishDashboardToPrivateCatalogIcon
   from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
+import PublishCustomerDashboardIcon
+  from "components/insights/marketplace/dashboards/templates/private/PublishCustomerDashboardIcon";
 import PublishPlatformDashboardIcon
   from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
@@ -25,8 +27,7 @@ import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashbo
 import TransferDashboardOwnershipButton
   from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
-import PublishCustomerDashboardIcon
-  from "components/insights/marketplace/dashboards/templates/private/PublishCustomerDashboardIcon";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DashboardScreenContainer(
   {
@@ -36,35 +37,13 @@ function DashboardScreenContainer(
     isLoading,
     loadData,
   }) {
-  const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
   const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
   const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
-  const [user, setUser] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    getUserDetails();
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const getUserDetails = async () => {
-    let userObject = await getUserRecord();
-    setUser(userObject);
-  };
+  const {
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const handleClose = async () => {
     setActiveTab("viewer");
@@ -115,7 +94,6 @@ function DashboardScreenContainer(
             dashboardModel={dashboardModel}
             setDashboardModel={setDashboardModel}
             loadData={loadData}
-            user={user}
             className={"ml-3"}
           />
           {getSettingsIcon()}
