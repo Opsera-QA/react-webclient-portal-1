@@ -20,6 +20,7 @@ import FortifyScmToolSelectInput from "./inputs/FortifyScmToolSelectInput";
 import FortifyBitbucketWorkspaceInput from "./inputs/FortifyBitbucketWorkspaceInput";
 import FortifyGitRepositoryInput from "./inputs/FortifyGitRepositoryInput";
 import FortifyGitBranchInput from "./inputs/FortifyGitBranchInput";
+import FortifyStepClientThresholdToggleInput from "./inputs/FortifyStepClientThresholdToggleInput";
 
 function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,6 +95,17 @@ function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
     );
   };
 
+  const getThresholdInput = () => {
+    if (fortifyStepConfigurationDto?.getData("clientSideThreshold") === true) {
+      return (
+        <FortifyStepThresholdInput 
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+        />
+      );
+    }
+  };
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -139,10 +151,11 @@ function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
         model={fortifyStepConfigurationDto}
         setModel={setFortifyConfigurationDataDto}
       />
-      <FortifyStepThresholdInput 
+      <FortifyStepClientThresholdToggleInput 
         model={fortifyStepConfigurationDto}
         setModel={setFortifyConfigurationDataDto}
       />
+      { getThresholdInput() }
       <FortifyScmToolTypeSelectInput
         model={fortifyStepConfigurationDto}
         setModel={setFortifyConfigurationDataDto}
