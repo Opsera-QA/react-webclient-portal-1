@@ -16,27 +16,6 @@ export default function CustomerDashboardTemplateCard(
     dashboardTemplate,
     loadData,
   }) {
-  // TODO: add images
-  const getImage = () => {
-    return null;
-    // {/*<Card.Img variant="top"*/}
-    // {/*  className="pt-2 pl-2 pr-2"*/}
-    // {/*  src={kpi.thumbnailPath}*/}
-    // {/*/>*/}
-  };
-
-  const getOwnerNameField = () => {
-    if (dashboardTemplate?.owner_name) {
-      return (
-        <Card.Text>
-          <span className="text-muted">
-            {dashboardTemplate.owner_name}
-          </span>
-        </Card.Text>
-      );
-    }
-  };
-
   const getDescriptionField = () => {
     if (dashboardTemplate?.description) {
       return (
@@ -70,11 +49,9 @@ export default function CustomerDashboardTemplateCard(
 
   return (
     <Card>
-      {getImage()}
       <Card.Body>
         <Card.Title>{dashboardTemplate.name}</Card.Title>
         {getDescriptionField()}
-        {getOwnerNameField()}
         <CustomBadgeContainer>
           <CustomBadge icon={faUsers} className="mr-1 upper-case-first"
                        badgeText={dashboardTemplate.attributes?.persona} />
