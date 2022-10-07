@@ -6,7 +6,6 @@ import dashboardMetadata from "components/insights/dashboards/dashboard-metadata
 import {
   getLimitedTableTextColumn,
   getTableDateColumn,
-  getTableFavoriteColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -22,7 +21,6 @@ function DashboardsTable({dashboards, dashboardFilterModel, setDashboardFilterMo
       getLimitedTableTextColumn(getField(fields, "description"), 100),
       {...getTableTextColumn(getField(fields, "type")), class: "upper-case-first"},
       getTableDateColumn(getField(fields, "createdAt")),
-      getTableFavoriteColumn(getField(fields, "isFavorite")),
     ],
     []
   );

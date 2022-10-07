@@ -12,7 +12,6 @@ import PublishDashboardToPublicMarketplaceIcon
   from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
@@ -134,12 +133,6 @@ function DashboardScreenContainer(
                 dashboardId={dashboardModel?.getMongoDbId()}
                 className={"mr-2"}
                 pullSubscriptionStatus={true}
-              />
-              <FavoriteInput
-                dataObject={dashboardModel}
-                setDataObject={setDashboardModel}
-                fieldName={"isFavorite"}
-                visible={dashboardModel?.canUpdate() === true}
               />
               <ActionBarDeleteButton2
                 relocationPath={"/insights"}
