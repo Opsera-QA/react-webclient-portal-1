@@ -31,7 +31,7 @@ export default function ActionBarDeleteCustomerDashboardTemplateButton(
   if (
     isMongoDbId(dashboardId) !== true
     || isMongoDbId(ownerId) !== true
-    || (isSiteAdministrator !== true && ownerId !== userData._id)
+    || (isSiteAdministrator !== true && ownerId !== userData?._id)
   ) {
     return null;
   }
