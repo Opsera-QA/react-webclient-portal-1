@@ -37,10 +37,6 @@ const dashboardFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
-    {
-      label: "Favorites",
-      id: "isFavorite",
-    },
   ],
   newObjectFields: {
     pageSize: 50,
@@ -50,7 +46,6 @@ const dashboardFilterMetadata = {
     status: "",
     owner: "",
     type: "",
-    isFavorite: "",
     activeFilters: []
   },
 };
@@ -101,12 +96,6 @@ export class DashboardFilterModel extends FilterModelBase {
 
     if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
       activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
-    }
-
-    const isFavorite = this.getData("isFavorite");
-
-    if (hasStringValue(isFavorite) === true) {
-      activeFilters.push({filterId: "isFavorite", text: `Only Show Favorites`});
     }
 
     return activeFilters;

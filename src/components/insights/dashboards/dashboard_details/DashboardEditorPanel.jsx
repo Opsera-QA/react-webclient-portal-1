@@ -7,8 +7,6 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DashboardTypeSelectInput
   from "components/common/list_of_values_input/insights/dashboards/types/DashboardTypeSelectInput";
-import DashboardAccessSelectInput
-  from "components/common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
 import DashboardPersonaSelectInput
   from "components/common/list_of_values_input/insights/dashboards/DashboardPersonaSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";

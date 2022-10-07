@@ -137,12 +137,6 @@ function DashboardScreenContainer(
                 className={"mr-2"}
                 pullSubscriptionStatus={true}
               />
-              <FavoriteInput
-                dataObject={dashboardModel}
-                setDataObject={setDashboardModel}
-                fieldName={"isFavorite"}
-                visible={dashboardModel?.canUpdate() === true}
-              />
               <ActionBarDeleteButton2
                 relocationPath={"/insights"}
                 dataObject={dashboardModel}

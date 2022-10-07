@@ -4,7 +4,6 @@ import { faChartNetwork } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -54,10 +53,6 @@ function DashboardTableView(
           filterDto={dashboardFilterModel}
           setFilterDto={setDashboardFilterModel}
           className={"mb-2"}
-        />
-        <FavoritesFilter
-          filterModel={dashboardFilterModel}
-          setFilterModel={setDashboardFilterModel}
         />
       </>
     );
