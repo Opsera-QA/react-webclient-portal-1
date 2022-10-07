@@ -52,6 +52,7 @@ export default function CustomerDashboardTemplateCard(
       <Card.Body>
         <Card.Title>{dashboardTemplate.name}</Card.Title>
         {getDescriptionField()}
+        {getOwnerNameField()}
         <CustomBadgeContainer>
           <CustomBadge icon={faUsers} className="mr-1 upper-case-first"
                        badgeText={dashboardTemplate.attributes?.persona} />
