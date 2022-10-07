@@ -41,6 +41,10 @@ const FortifyStepFormMetadata = {
       isRequired: true,
     },
     {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold"
+    },
+    {
       label: "Vulnerability Threshold",
       id: "thresholdVulnerability",
       isRequired: true,
@@ -93,6 +97,7 @@ const FortifyStepFormMetadata = {
     technologyStackId: "",
     languageLevelId: "",
     auditPreferenceId: "",
+    clientSideThreshold: false,
     thresholdVulnerability: "",
     service: "",
     gitToolId: "",
